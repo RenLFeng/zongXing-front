@@ -5,14 +5,14 @@ import i18n from '../i18n/i18n';
 
 class IndexPage extends React.Component {
   render() {
-    const {count, dispatch} = this.props;
+    const { count, dispatch } = this.props;
     return (
       <div className={styles.normal}>
         <div className={styles.record}>Highest Record: {count.record}</div>
-        <div className={styles.current}>{count.current}</div> 
+        <div className={styles.current}>{count.current}</div>
         <div className={styles.button}>
-          <button onClick={() => { dispatch({type: 'count/add'}); }}>{i18n('hello','你好')}</button>
-          <button onClick={() => { dispatch({type: 'count/minus'}); }}>{i18n('hello','你好')}</button>
+          <button onClick={() => { dispatch({ type: 'count/add' }); }}>{i18n('hello', '你好')}</button>
+          <button onClick={() => { dispatch({ type: 'count/minus' }); }}>{i18n('hello', '你好s')}</button>
         </div>
       </div>
     );
@@ -20,7 +20,7 @@ class IndexPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {count: state.count}
+  return { count: state.count };
 }
 
 export default connect(mapStateToProps)(IndexPage);

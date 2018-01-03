@@ -13,5 +13,5 @@ app.model(require('./models/example'));
 // 4. Router 定义dva的路由管理
 app.router(require('./router'));
 
-// 5. Start 
+// 5. Start
 app.start('#root');

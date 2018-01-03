@@ -3,7 +3,7 @@ export default {
   namespace: 'count',
   state: {
     record: 0,
-    current: 0
+    current: 0,
   },
   reducers: {
     add(state) {
@@ -15,7 +15,7 @@ export default {
       };
     },
     minus(state) {
-      return {...state, current: state.current - 1};
-    }
-  }
+      return { ...state, current: state.current - 1 };
+    },
+  },
 };
