@@ -12,7 +12,7 @@ class IndexPage extends React.Component {
         <div className={styles.current}>{count.current}</div>
         <div className={styles.button}>
           <button onClick={() => { dispatch({ type: 'count/add' }); }}>{i18n('hello', '你好')}</button>
-          <button onClick={() => { dispatch({ type: 'count/minus' }); }}>{i18n('hello', '你好s')}</button>
+          <button onClick={() => { dispatch({ type: 'count/minus' }); }}>{i18n('hello', '你好')}</button>
         </div>
       </div>
     );

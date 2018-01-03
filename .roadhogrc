@@ -4,12 +4,14 @@
     "development": {
       "extraBabelPlugins": [
         "dva-hmr",
-        "transform-runtime"
+        "transform-runtime",
+        "transform-decorators-legacy"
       ]
     },
     "production": {
       "extraBabelPlugins": [
-        "transform-runtime"
+        "transform-runtime",
+        "transform-decorators-legacy"
       ]
     }
   }
