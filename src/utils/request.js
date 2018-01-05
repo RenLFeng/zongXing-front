@@ -48,11 +48,19 @@ export default function request(url, options) {
       ...newOptions.headers,
     };
     newOptions.body = JSON.stringify(newOptions.body);
+  } else {
+
   }
+  newOptions.headers = {
+    'Content-Type': 'application/json; charset=utf-8',
+    'zjb-token': localStorage.getItem('webtoken'),
+    ...newOptions.headers,
+  };
 
   return fetch(url, newOptions)
     .then(checkStatus)
     .then((response) => {
+      console.log(response)
       if (newOptions.method === 'DELETE' || response.status === 204) {
         return response.text();
       }
