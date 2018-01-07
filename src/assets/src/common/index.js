@@ -1,0 +1,70 @@
+
+import './index.scss';
+
+window.av = {};
+av.doing = false;
+av.touch = "ontouchend" in document ? true : false;
+
+require('./module/extends');
+require('./module/ajax');
+require('./module/cookie');
+require('./module/dialog');
+require('./module/loadjs');
+
+
+av.query = function (name, url) {
+    if (!name || typeof name != 'string') return '';
+    if (!url) url = location.href;
+    var mat = new RegExp('(^|[?&])(?:' + name + ')=(.*?)(&|#|$)', 'i').exec(url);
+    if (mat && mat.length >= 2) return decodeURIComponent(mat[2]);
+    return '';
+};
+av.top = function (y) {
+    if (typeof y == 'undefined') {
+        var top1 = document.body.scrollTop;
+        var top2 = document.documentElement.scrollTop;
+        return top1 || top2;
+    }
+    document.body.scrollTop = y;
+    document.documentElement.scrollTop = y;
+};
+
+av.getWeek = function (datestr) {
+    var wk = ['日', '一', '二', '三', '四', '五', '六'];
+    var day = new Date(datestr).getDay();
+    return wk[day];
+};
+
+av.login = function(){
+    if(!window.logindiv) {
+        let lk = document.createElement('LINK');
+        lk.rel = 'stylesheet';
+        lk.type = 'text/css';
+        lk.href = '/assets/dist/login/bundle.css';
+        document.head.appendChild(lk);
+
+        av.loadjs('/assets/dist/login/bundle.js');
+    }else{
+        window.logindiv.show();
+    }
+};
+
+!(function(){
+    if (!window.JSON) {
+        var sc = document.createElement('script');
+        sc.src = '//cdn.bootcss.com/json2/20160511/json2.min.js';
+        document.head.appendChild(sc);
+    }
+}());
+$(function(){
+    
+    $('body').on('click', '[data-href]', function (event) {
+        window.location.href = $(this).attr('data-href');
+        event.preventDefault();
+    });
+
+    $('body').on('click', '.topnav .btn2', function(event){
+        av.login();
+        event.preventDefault();
+    });
+});
