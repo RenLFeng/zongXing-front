@@ -1,0 +1,136 @@
+@import '../common/_var.scss';
+.logindiv {
+    position: absolute;
+    width: 948px;
+    height: 470px;
+    top: 20%;
+    left: 50%;
+    z-index: 10;
+    margin-left: -474px;
+    background: url(../../img/login/pic1.jpg) no-repeat right center #fff;
+    transform: translate(0,-1000px);
+    transition: transform ease 0.5s;
+    .close {
+        width: 46px;
+        height: 46px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: url(../../img/login/ic_close.png) no-repeat center;
+    }
+    a.blue {
+        color: #069;
+        text-decoration: underline;
+    }
+    a.gray {
+        color: #666;
+        text-decoration: underline;
+    }
+    a:hover {
+        opacity: 0.7;
+    }
+}
+.logindiv.show {
+    transform: translate(0,0);
+}
+.logindiv .form {
+    float: left;
+    padding: 52px 0 0 88px;
+    .hd {
+        margin-bottom: 30px;
+        a {
+            width: 80px;
+            line-height: 38px;
+            border-bottom: 2px solid #D9D9D9;
+            font-size: 16px;
+            &.hover {
+                border-bottom-color: #FF8533;
+            }
+            &:hover {
+                color: #FF8533;
+            }
+        }
+    }
+    .row {
+        margin-bottom: 20px;
+    }
+    .put {
+        border: 1px solid #d9d9d9;
+        border-radius: 3px;
+        padding: 0 0 0 40px;
+        width: 258px;
+        line-height: 42px;
+        height: 42px;
+        font-size: 14px;
+        background-position: 14px center;
+        background-repeat: no-repeat;
+        &:focus {
+            border-color: #FF8533;
+        }
+    }
+    .mobile {
+        background-image: url(../../img/login/ic_mobile.png);
+    }
+    .vcode {
+        background-image: url(../../img/login/ic_redo.png);
+    }
+    .getvc {
+        position: absolute;
+        right: 0;
+        top: 1px;
+        background-color: #FF8533;
+        color: #fff;
+        line-height: 42px;
+        width: 85px;
+    }
+    .pwd {
+        background-image: url(../../img/login/ic_pwd.png);
+    }
+    .user {
+        background-image: url(../../img/login/ic_user.png);
+    }
+    .btn {
+        display: block;
+        background-color: #FF8533;
+        color: #fff;
+        line-height: 42px;
+        font-size: 14px;
+    }
+    .bot {
+        padding-top: 10px;
+    }
+}
+.logf .tright {
+    padding-top: 10px;
+}
+.logindiv .other {
+    text-align: center;
+    border-top: 1px solid #D9D9D9;
+    margin-top: 40px;
+    span {
+        display: inline-block;
+        position: relative;
+        top: -17px;
+        background-color: #fff;
+        line-height: 34px;
+        padding: 0 20px;
+        &>i {
+            margin-right: 12px;
+        }
+    }
+    a {
+        width: 34px;
+        height: 34px;
+        background-position: center;
+        background-repeat: no-repeat;
+        &.qq {
+            background-image: url(../../img/login/qq.png);
+        }
+        &.weixin {
+            background-image: url(../../img/login/weixin.png);
+        }
+        &.sina {
+            background-image: url(../../img/login/sina.png);
+        }
+    }
+}
