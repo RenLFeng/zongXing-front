@@ -12,7 +12,7 @@ export default class HomeIndex extends React.Component {
   componentDidMount() {
     setTimeout(()=>{
       startAnimate();
-    })
+    });
   }
 
   render() {

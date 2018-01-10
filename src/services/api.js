@@ -12,3 +12,11 @@ export async function userLogin(param) {
 export async function getLocation() {
 	return request(`http://restapi.amap.com/v3/ip?&key=${POSITION_KEY}`);
 }
+
+export async function getHomeSwiperImg() {
+  return request(`${BASE_URL}/zjb-website/home/banner`);
+}
+
+export async function getHomeProjectList(param) {
+  return request(`${BASE_URL}/zjb-website/project/homeProject${param ? '/?cityCode=' + param : ''}`);
+}

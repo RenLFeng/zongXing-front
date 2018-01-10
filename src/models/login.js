@@ -24,7 +24,7 @@ export default {
       });
       //登录成功做的操作
       if (response[0].fstatus === 1) {
-        localStorage.setItem('webtoken', response)
+        localStorage.setItem('webtoken', response);
         yield put(routerRedux.push('/'));
       }
     },
@@ -49,7 +49,7 @@ export default {
     },
     // 用来判断用户是否已登录的状态，之后可保存用户名之类的用户信息
     changeLoginStatus(state, {payload}) {
-      return { 
+      return {
         ...state,
         status: payload.code ,
         submitting: false,

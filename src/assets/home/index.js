@@ -2,12 +2,11 @@ import './index.scss';
 import {animate} from './animate';
 
 export function startAnimate() {
-  initPage();
-  bindEvent();
   animate();
 }
 
-function initPage() {
+
+export function initPage() {
     $('.banner .swiper-slide').css('width', $(window).width());
     var swiper = new Swiper('.swiper-container', {
         autoplay: 5000,
@@ -18,7 +17,4 @@ function initPage() {
     });
 }
 
-function bindEvent() {
-
-}
 

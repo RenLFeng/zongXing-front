@@ -25,8 +25,6 @@ export default class HomePage extends React.Component{
         localStorage.setItem('addressCode', data.adcode);
       })
     }
-    //获取首页轮播图图片接口
-
   }
 
 	render() {

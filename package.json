@@ -14,6 +14,7 @@
     "classnames": "^2.2.5",
     "dva": "^2.1.0",
     "intl-messageformat": "^2.2.0",
+    "moment": "^2.20.1",
     "qs": "^6.5.1",
     "rc-queue-anim": "^1.4.1",
     "react": "^15.4.0",
