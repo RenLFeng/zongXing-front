@@ -1,4 +1,4 @@
-module.exports = function (options) {
+export function knob (options) {
 
     options = $.extend({
         selector: '.circle',

@@ -1,11 +1,11 @@
 import './index.scss';
-import animate from './animate';
+import {animate} from './animate';
 
-$(function () {
-    initPage();
-    bindEvent();
-    animate();
-});
+export function startAnimate() {
+  initPage();
+  bindEvent();
+  animate();
+}
 
 function initPage() {
     $('.banner .swiper-slide').css('width', $(window).width());
@@ -19,6 +19,6 @@ function initPage() {
 }
 
 function bindEvent() {
-    
+
 }
 

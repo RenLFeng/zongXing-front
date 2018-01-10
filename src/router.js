@@ -5,7 +5,6 @@ import InformationPage from './routes/InformationPage';
 import PersonalPage from './routes/PersonalPage';
 import NoMatch from './routes/404page/404Page';
 
-
 function RouterConfig({ history }) {
   return (
     <Router history={history}>

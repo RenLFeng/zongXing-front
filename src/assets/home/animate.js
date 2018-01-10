@@ -1,8 +1,8 @@
 import "./_animate.scss";
 
-import knob from '../common/module/knob';
+import { knob } from '../common/module/knob';
 
-module.exports = function(){
+export function animate(){
     let secs = [{
         el: $('.sec-proj'),
         func: project
@@ -17,14 +17,14 @@ module.exports = function(){
         func: tab3
     }];
     secs.forEach(function (e) {
-        e.middle = e.el[0].offsetTop+e.el[0].offsetHeight/2;
+        e.middle = e.el[0].offsetTop + e.el[0].offsetHeight/2;
     });
     let wh = $(window).height();
     function scroll() {
         let top = av.top();
         secs.forEach(function (e) {
             // 出来了一半，或没有完全卷走，视为在可视区域-
-            if (!e.called && e.middle < top+wh && e.middle > top) {
+            if (!e.called && e.middle < top + wh && e.middle > top) {
                 e.called = true;
                 e.func(e.el);
             }

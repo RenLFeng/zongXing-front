@@ -2,8 +2,8 @@
 @import "../common/styles/pager.scss";
 @import "../home/_project.scss";
 
-body {
-    background: url(../../img/project/topbg.png) no-repeat center top $f5;
+.body1 {
+    background: url(../img/project/topbg.png) no-repeat center top $f5;
     padding-top: 274px;
 }
 
@@ -58,7 +58,7 @@ body {
         .q {
             width: 42px;
             height: 42px;
-            background: url(../../img/project/q2.png) no-repeat center center;
+            background: url(../img/project/q2.png) no-repeat center center;
         }
     }
 }

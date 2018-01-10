@@ -35,36 +35,18 @@ av.getWeek = function (datestr) {
     return wk[day];
 };
 
-av.login = function(){
-    if(!window.logindiv) {
-        let lk = document.createElement('LINK');
-        lk.rel = 'stylesheet';
-        lk.type = 'text/css';
-        lk.href = '/assets/dist/login/bundle.css';
-        document.head.appendChild(lk);
-
-        av.loadjs('/assets/dist/login/bundle.js');
-    }else{
-        window.logindiv.show();
-    }
-};
-
 !(function(){
     if (!window.JSON) {
         var sc = document.createElement('script');
-        sc.src = '//cdn.bootcss.com/json2/20160511/json2.min.js';
+        sc.src = 'http://cdn.bootcss.com/json2/20160511/json2.min.js';
         document.head.appendChild(sc);
     }
 }());
 $(function(){
-    
+
     $('body').on('click', '[data-href]', function (event) {
         window.location.href = $(this).attr('data-href');
         event.preventDefault();
     });
 
-    $('body').on('click', '.topnav .btn2', function(event){
-        av.login();
-        event.preventDefault();
-    });
 });

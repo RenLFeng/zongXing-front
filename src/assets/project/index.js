@@ -1,11 +1,11 @@
 import './index.scss';
 import '../common/module/select';
-import knob from '../common/module/knob';
+import {knob} from '../common/module/knob';
 
-$(function () {
-    initPage();
-    bindEvent();
-});
+export function startAnimate() {
+  initPage();
+  bindEvent();
+}
 
 function initPage() {
     $('.sec2 .circle').data('value', '100');

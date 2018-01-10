@@ -1,9 +1,9 @@
 import './index.scss'
 
-$(function () {
-    initPage();
-    bindEvent();
-});
+export function startAnimate() {
+  initPage();
+  bindEvent();
+}
 
 function initPage() {
 }

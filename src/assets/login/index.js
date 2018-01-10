@@ -1,7 +1,7 @@
 import './index.scss';
 import html from './template.html';
 
-!(function(){
+export function startAnimate(){
 
     $('body').append(html);
 
@@ -32,4 +32,4 @@ import html from './template.html';
             div.find('.logf').addClass('none');
         });
     }
-}());
+}

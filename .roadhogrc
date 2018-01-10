@@ -15,5 +15,6 @@
       ]
     }
   },
-  "sass": true
+  "sass": true,
+  "disableCSSModules": true
 }

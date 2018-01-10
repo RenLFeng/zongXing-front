@@ -8,17 +8,26 @@ import HowInvest from './homePage/HowInvest';
 import HomeIndex from './homePage/HomeIndex';
 import BusinessDiscount from './homePage/BusinessDiscount';
 import LoanCollege from './homePage/LoanCollege';
-import Header from '../components/Header/header';
-import Footer from '../components/Footer/footer';
-
+import Header from '../components/HomePageComponent/header';
+import Footer from '../components/HomePageComponent/footer';
+import '../assets/common/index';
+import { getLocation } from '../services/api';
 
 @connect((state) => ({
 	login: state.login
 }))
 export default class HomePage extends React.Component{
-	componentDidMount() {
+  componentDidMount() {
+    //判断本地是否已经有了城市地区编码，若没有则重新请求
+    if (!localStorage.getItem('addressCode')) {
+      //获取城市编码存入本地缓存
+      getLocation().then((data)=>{
+        localStorage.setItem('addressCode', data.adcode);
+      })
+    }
+  }
 
-	}
+
 
 	render() {
 		const { match, dispatch } = this.props;
