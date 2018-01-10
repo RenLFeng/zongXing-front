@@ -1,6 +1,10 @@
 import React from 'react';
+import { connect } from 'dva';
+import { IMG_BASE_URL } from '../../common/systemParam';
 
-
+@connect((state) => ({
+  login: state.login
+}))
 export default class Banner extends React.Component {
 
   componentDidMount() {
@@ -10,15 +14,15 @@ export default class Banner extends React.Component {
       <div className="section banner swiper-container">
         <div className="swiper-wrapper">
           <div className="swiper-slide autosize">
-            <img className="big" src={require('../../assets/img/home/1.jpg')} />
+            <img className="big" src={`${IMG_BASE_URL}/zjb-home-001.jpg`} />
             <a className="btn big" href=""><i>我要投资</i></a>
           </div>
           <div className="swiper-slide autosize">
-            <img className="big" src={require('../../assets/img/home/2.jpg')} />
+            <img className="big" src={`${IMG_BASE_URL}/zjb-home-002.jpg`} />
             <a className="btn big" href=""><i>我要投资</i></a>
           </div>
           <div className="swiper-slide autosize">
-            <img className="big" src={require('../../assets/img/home/3.jpg')} />
+            <img className="big" src={`${IMG_BASE_URL}/zjb-home-003.jpg`} />
             <a className="btn big" href=""><i>我要投资</i></a>
           </div>
         </div>
