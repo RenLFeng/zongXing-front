@@ -18,5 +18,15 @@ export async function getHomeSwiperImg() {
 }
 
 export async function getHomeProjectList(param) {
-  return request(`${BASE_URL}/zjb-website/project/homeProject${param ? '/?cityCode=' + param : ''}`);
+  return request(`${BASE_URL}/zjb-website/project/homecard?cityCode=${param ? param : ''}`);
+}
+
+export async function getProjectList(params) {
+  return request(`${BASE_URL}/zjb-website/project/list`,{
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  })
 }

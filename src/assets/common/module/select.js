@@ -4,7 +4,7 @@ $.fn.dlChange = function(idx){
     let sel = this;
     let dt = sel.find('dt');
     let op = sel.find('dd>i').eq(idx);
-    
+
     dt.next().removeClass('show');
 
     if(sel.data('index')==idx){
@@ -15,7 +15,7 @@ $.fn.dlChange = function(idx){
     sel.data('index', idx);
     sel.trigger('change');
 };
-$(function(){
+export function selectDom(){
 
     $('body').on('click', 'dl.select>dt', function(){
         let active = $(this).next().hasClass('show');
@@ -35,4 +35,4 @@ $(function(){
             $('dl.select>dd.show').removeClass('show');
         }
     });
-});
+}

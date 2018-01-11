@@ -39,6 +39,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/howInvest`} component={HowInvest}/>
             <Route path={`${match.path}/businessDiscount`} component={BusinessDiscount}/>
             <Route path={`${match.path}/loanCollege`} component={LoanCollege}/>
+            <Route path={`${match.path}/ProjectLoan/page/:id`} component={LoanCollege}/>
           </Switch>
         <Footer/>
 			</div>
