@@ -105,18 +105,12 @@ export default class Search extends React.Component {
 
   searchProject(){
     const {leaveCode, rate, period, projectName} = this.state;
-    if (this.props.fetchProject) {
-      this.props.fetchProject(leaveCode, rate, period, projectName);
-      return;
-    }
-    if (this.props.fetchProjectList) {
-      this.props.fetchProjectList(leaveCode, rate, period, projectName);
-    }
-
+    this.props.fetchProject(leaveCode, rate, period, projectName);
 
   }
 
   render() {
+    const url = window.location.href;
     return (
       <div className="sec0">
         <div className="w">
@@ -165,15 +159,23 @@ export default class Search extends React.Component {
                   <i value="12">12个月</i>
                 </dd>
               </dl>
-              <a
-                className="fr q"
-                onClick={this.searchProject}
-              />
+              {url.indexOf('/index/projectLoan/page/') !== -1 ?
+                <Link
+                  className="fr q"
+                  onClick={this.searchProject}
+                  to={'/index/projectLoan/page/1'}
+                /> :
+                <a
+                  className="fr q"
+                  onClick={this.searchProject}
+                />
+              }
+
               <input
                 type="text"
                 name="projectName"
                 className="key put1 fr"
-                onChange={(e)=>this.setState({ [e.target.name]: e.target.value })}
+                onChange={(e)=>{ console.log('修改了搜索内容');this.setState({ [e.target.name]: e.target.value })}}
               />
             </div>
           </div>

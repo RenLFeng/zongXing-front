@@ -8,10 +8,12 @@ import HowInvest from './homePage/HowInvest';
 import HomeIndex from './homePage/HomeIndex';
 import BusinessDiscount from './homePage/BusinessDiscount';
 import LoanCollege from './homePage/LoanCollege';
+import ProjectList from './homePage/ProjectList';
 import Header from '../components/HomePageComponent/header';
 import Footer from '../components/HomePageComponent/footer';
 import '../assets/common/index';
 import { getLocation } from '../services/api';
+import ApplyLoan from './homePage/ApplyLoan';
 
 @connect((state) => ({
 	login: state.login
@@ -34,12 +36,12 @@ export default class HomePage extends React.Component{
 				<Header param={this.props}/>
           <Switch>
             <Route path={`${match.path}/`} exact component={HomeIndex}/>
-            <Route path={`${match.path}/ProjectLoan`} component={ProjectLoan}/>
+            <Route path={`${match.path}/projectLoan`} component={ProjectLoan}/>
             <Route path={`${match.path}/howLoan`} component={HowLoan}/>
             <Route path={`${match.path}/howInvest`} component={HowInvest}/>
             <Route path={`${match.path}/businessDiscount`} component={BusinessDiscount}/>
             <Route path={`${match.path}/loanCollege`} component={LoanCollege}/>
-            <Route path={`${match.path}/ProjectLoan/page/:id`} component={LoanCollege}/>
+            <Route path={`${match.path}/applyLoan`} component={ApplyLoan} />
           </Switch>
         <Footer/>
 			</div>

@@ -1,7 +1,11 @@
 import React from 'react';
 import '../../assets/login/index.scss';
 import { VER_PHONE } from '../../common/systemParam';
+import { connect } from 'dva';
 
+@connect((state) => ({
+  login: state.login
+}))
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -59,6 +63,7 @@ export default class Login extends React.Component {
         this.setState({ countDown: this.state.countDown - 1 });
       }
     }, 1000)
+
   }
 
   //修改所有input的state统一方法
@@ -123,7 +128,10 @@ export default class Login extends React.Component {
       loginPhone: loginPhone,
       loginPwd: loginPwd
     };
-    console.log(login);
+    this.props.dispatch({
+      type: 'login/login',
+      payload: login
+    })
   }
 
 

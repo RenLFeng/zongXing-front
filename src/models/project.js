@@ -1,5 +1,6 @@
 import { getHomeProjectList, getProjectList } from '../services/api';
 import { animate } from '../assets/home/animate';
+import { startAnimate } from '../assets/project/index';
 
 export default {
   namespace: 'project',
@@ -39,13 +40,13 @@ export default {
       });
       const response = yield call(getProjectList, payload);
       if (response.code === 0) {
-        // 成功之后计算最大页
-        const maxPage = Math.ceil(payload.pageSize/response.data.totalCount);
         // 将数据存进页面
         yield put({
           type: 'saveCompleteProject',
-          payload: {...response.data, maxPage: maxPage, currentPage: payload.pageNow}
+          payload: {...response.data, currentPage: payload.pageNow}
         });
+        // 重置动画
+        startAnimate();
       } else {
         console.log(response.msg);
       }
@@ -89,8 +90,8 @@ export default {
         ...state,
         completeProjectList: {
           loading: false,
-          list: payload.list,
-          maxPage: payload.maxPage,
+          list: payload.projectCardVos,
+          maxPage: payload.pageCount,
           currentPage: payload.currentPage
         }
       }

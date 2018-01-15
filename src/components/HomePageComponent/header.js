@@ -41,7 +41,7 @@ export default class Header extends React.Component {
             <img src={require('../../assets/img/logo.png')} />
           </Link>
           <span className="fr">
-            <Link className="a1" to={`${match.path}/ProjectLoan`}>项目借款</Link>
+            <Link className="a1" to={`${match.path}/projectLoan`}>项目借款</Link>
             <Link className="a1" to={`${match.path}/howLoan`}>如何借款</Link>
             <Link className="a1" to={`${match.path}/howInvest`}>如何投资</Link>
             <Link className="a1" to={`${match.path}/businessDiscount`}>商家优惠</Link>

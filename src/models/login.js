@@ -4,14 +4,14 @@ import {userLogin} from '../services/api';
 export default {
   namespace: 'login',
   state: {
-    status: false
+    status: false,
+    submitting: false
   },
   effects: {
     *login({ payload }, { call, put }) {
       //开始请求之前，请求状态修改为正在请求
       yield put({
-        type: 'changeSubmitting',
-        payload: true,
+        type: 'changeSubmitting'
       });
       //向后台请求登录接口
       const response = yield call(userLogin, payload);
@@ -23,9 +23,11 @@ export default {
         },
       });
       //登录成功做的操作
-      if (response[0].fstatus === 1) {
-        localStorage.setItem('webtoken', response);
+      if (response.code === 0) {
+        localStorage.setItem('webtoken', response.token);
         yield put(routerRedux.push('/'));
+      } else {
+        console.log(response.msg);
       }
     },
     *logout(_, { put }) {
@@ -41,10 +43,10 @@ export default {
   reducers: {
     // 改变是否正在提交的状态，比如用户按下按钮等待请求发送的时间使用 submitting
     // 来判断是否正在请求 拒绝多次点击
-    changeSubmitting(state, {payload}) {
+    changeSubmitting(state) {
       return {
         ...state,
-        submitting: payload
+        submitting: true
       };
     },
     // 用来判断用户是否已登录的状态，之后可保存用户名之类的用户信息

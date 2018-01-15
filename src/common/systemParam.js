@@ -14,7 +14,7 @@ const MIN_SECONDS = 60;
 //已完成项目的一页显示个数
 export const COMPLETE_PAGE_SIZE = 8;
 // 正在筹款项目一页显示个数
-export const ING_PAGE_SIZE = 12;
+export const ING_PAGE_SIZE = 6;
 // 已完成项目 flag3
 export const COMPLETE_PROJECT_FLAG = 3;
 export const ING_PROJECT_FLAG = 3;
@@ -80,7 +80,9 @@ export function pageShow(currentPage, maxPage) {
 }
 
 //页数显示的转换 {} 前后带第一页 最后一页
-export function pageShows(currentPage, maxPage) {
+export function pageShows(currentPages, maxPages) {
+  const currentPage = currentPages *1 ;
+  const maxPage = maxPages * 1;
   const data = {
     lastPage: false,
     leftEllipsis: false,
@@ -124,6 +126,7 @@ export function pageShows(currentPage, maxPage) {
 
 //跳转锚点
 export function scrollToAnchor(anchorName) {
+  console.log(12345678);
   if (anchorName) {
     let anchorElement = document.getElementById(anchorName);
     if(anchorElement) { anchorElement.scrollIntoView(); }

@@ -3,10 +3,14 @@ import React from 'react';
 import Search from '../../components/ProjectLoanComponent/search';
 import NewPro from '../../components/ProjectLoanComponent/newPro';
 import CompletePro from '../../components/ProjectLoanComponent/completePro';
+import ProjectComList from './ProjectComList';
+import ProjectList from './ProjectList';
 import { startAnimate } from '../../assets/project/index';
 import { pageShow, scrollToAnchor, pageShows } from '../../common/systemParam';
 import { getProjectList } from '../../services/api';
 import { connect } from 'dva';
+import { Switch, Route, withRouter} from 'dva/router';
+
 import {
   COMPLETE_PAGE_SIZE,
   COMPLETE_PROJECT_FLAG,
@@ -26,14 +30,14 @@ export default class ProjectLoan extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newProList: []
+      newProList: [],
+      projectList: [],
+      leaveCode: PROJECT_LEAVE_CODE,
+      rate: PROJECT_RATE,
+      period: PROJECT_PERIOD,
+      projectName: PROJECT_NAME
     };
     this.fetchNewPro = this.fetchNewPro.bind(this);
-  }
-
-  componentDidMount() {
-    startAnimate();
-    this.fetchComplete(1);
   }
 
   componentWillUnmount() {
@@ -42,27 +46,14 @@ export default class ProjectLoan extends React.Component {
     })
   }
 
-  fetchComplete(pageNum, currentPage) {
-
-    scrollToAnchor("completeAnchor");
-    //获取已完成筹款的 项目
-    this.props.dispatch({
-      type: 'project/fetchCompleteProjectList',
-      payload: {
-        pageSize: COMPLETE_PAGE_SIZE,
-        pageNow: pageNum,
-        flag: COMPLETE_PROJECT_FLAG,
-        leaveCode: PROJECT_LEAVE_CODE,
-        rate: PROJECT_RATE,
-        period: PROJECT_PERIOD,
-        projectName: PROJECT_NAME
-      }
-    })
-  }
-
   fetchNewPro(leaveCode = PROJECT_LEAVE_CODE, rate = PROJECT_RATE, period = PROJECT_PERIOD, projectName = PROJECT_NAME) {
     // 1 是代表始终第一页
-    console.log(leaveCode, rate, period, projectName);
+    this.setState({
+      leaveCode: leaveCode,
+      rate: rate,
+      period: period,
+      projectName: projectName
+    });
     getProjectList({
       pageSize: ING_PAGE_SIZE,
       pageNow: 1,
@@ -75,57 +66,35 @@ export default class ProjectLoan extends React.Component {
       .then((data) => {
         if (data.code === 0) {
           this.setState({
-            newProList: data.data.list
-          })
+            newProList: data.data.projectCardVos
+          });
+          startAnimate();
         } else {
           console.log(data.msg);
         }
-      })
+      });
   }
 
   render() {
-    const {currentPage, maxPage} = this.props;
-    const pageData = pageShows(currentPage, maxPage);
-    console.log(this.props);
+    const {currentPage, maxPage, match} = this.props;
+    const  ProjectListComponent = withRouter(({history,location,match})=>{
+      return <ProjectList
+        leaveCode={this.state.leaveCode}
+        rate={this.state.rate}
+        period={this.state.period}
+        projectName={this.state.projectName}
+        match={match}
+      />
+    });
     return (
       <div className="body1">
-        <Search fetchProject={this.fetchNewPro}/>
-        <NewPro proNewList={this.state.newProList} fetchProject={this.fetchNewPro} match={this.props.match}/>
-        <CompletePro />
-        {/*翻译页脚实现*/}
-        <div className="bgw">
-          <div className="w tright">
-              <div className="pager">
-                {pageData.lastPage ?
-                  <a className="first">&lt;</a> :
-                  <a className="first" style={{backgroundColor:'#eee'}}>&lt;</a>}
-                {pageData.firstPage ?
-                  <a className={`${1 == currentPage  ? 'hover' : ''}`}
-                     onClick={this.fetchComplete.bind(this, 1, currentPage)}>1</a> :
-                  null}
-                {pageData.leftEllipsis ?
-                  <a>...</a> :
-                  null}
-                {pageData.page.map((pageNum) => {
-                  return (
-                    <a key={pageNum} className={`${pageNum * 1 == currentPage ? 'hover' : ''}`}
-                       onClick={this.fetchComplete.bind(this, pageNum, currentPage)}>{pageNum}</a>
-                  );
-                })}
-                {pageData.rightEllipsis ?
-                  <a>...</a> :
-                  null}
-                {pageData.finalPage ?
-                  <a className={`${maxPage == currentPage  ? 'hover' : ''}`}
-                     onClick={this.fetchComplete.bind(this, maxPage, currentPage)}>{maxPage}</a> :
-                  null}
-                {pageData.nextPage ?
-                  <a className="last">&gt;</a> :
-                  <a className="last" style={{backgroundColor:'#eee'}}>&gt;</a>}
-              </div>
-          </div>
-        </div>
-
+        <Search fetchProject={this.fetchNewPro} />
+        <Switch>
+          <Route path={`${match.path}`} exact render={()=>{
+            return (<ProjectComList newProjectList={this.state.newProList} fetchProject={this.fetchNewPro} match={match}/>)
+          }} />
+          <Route path={`${match.path}/page/:page`} component={ProjectListComponent} />
+        </Switch>
       </div>
     );
   }

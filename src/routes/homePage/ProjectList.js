@@ -1,56 +1,46 @@
 import React from 'react';
 
-import Search from '../../components/ProjectLoanComponent/search';
-import NewPro from '../../components/ProjectLoanComponent/newPro';
-import CompletePro from '../../components/ProjectLoanComponent/completePro';
 import { startAnimate } from '../../assets/project/index';
-import { pageShow, scrollToAnchor, pageShows } from '../../common/systemParam';
+import { pageShows } from '../../common/systemParam';
 import { getProjectList } from '../../services/api';
 import { connect } from 'dva';
+import { Link } from 'dva/router';
+import moment from 'moment';
+
 import {
-  COMPLETE_PAGE_SIZE,
-  COMPLETE_PROJECT_FLAG,
   PROJECT_LEAVE_CODE,
   PROJECT_RATE,
   PROJECT_PERIOD,
   PROJECT_NAME,
-  ING_PAGE_SIZE,
-  ING_PROJECT_FLAG
+  ING_PROJECT_FLAG,
+  IMG_BASE_URL,
+  conversionTime
 } from '../../common/systemParam';
 
 @connect((state) => ({
   currentPage: state.project.completeProjectList.currentPage,
   maxPage: state.project.completeProjectList.maxPage
 }))
-export default class PeojectList extends React.Component {
+export default class ProjectList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newProList: []
+      newProList: [],
+      maxPage: 0,
+      currentPage: 0
     };
     this.fetchNewPro = this.fetchNewPro.bind(this);
   }
 
   componentDidMount() {
-    startAnimate();
-    this.fetchComplete(1);
-    console.log(1233333333333333)
+    const {leaveCode, rate, period, projectName} = this.props;
+    this.fetchNewPro(leaveCode, rate, period, projectName);
   }
-
-  componentWillUnmount() {
-    this.props.dispatch({
-      type: 'project/initCompletePage'
-    })
-  }
-
 
   fetchNewPro(leaveCode = PROJECT_LEAVE_CODE, rate = PROJECT_RATE, period = PROJECT_PERIOD, projectName = PROJECT_NAME) {
-    // 1 是代表始终第一页
-    console.log(123)
-    console.log(leaveCode, rate, period, projectName);
     getProjectList({
-      pageSize: ING_PAGE_SIZE,
-      pageNow: 1,
+      pageSize: 24,
+      pageNow: this.props.match.params.page,
       flag: ING_PROJECT_FLAG,
       leaveCode: leaveCode,
       rate: rate,
@@ -60,7 +50,9 @@ export default class PeojectList extends React.Component {
       .then((data) => {
         if (data.code === 0) {
           this.setState({
-            newProList: data.data.list
+            newProList: data.data.projectCardVos,
+            currentPage: this.props.match.params.page,
+            maxPage: data.data.pageCount
           })
         } else {
           console.log(data.msg);
@@ -69,40 +61,76 @@ export default class PeojectList extends React.Component {
   }
 
   render() {
-    const {currentPage, maxPage} = this.props;
+    const {currentPage, maxPage, newProList} = this.state;
     const pageData = pageShows(currentPage, maxPage);
     return (
-      <div className="body1">
-        <Search fetchProjectList={this.fetchNewPro}/>
+      <div className="sec2" style={{paddingTop: '100px',backgroundColor:'#fff'}}>
         {/*翻译页脚实现*/}
         <div className="bgw">
+          <div className="w box6 clearfix">
+            {
+              newProList.map((data) => {
+                let dateCode = moment(data.fCreateDate).format('YYYY') + moment(data.fCreateDate).format('MM');
+                return (
+                  <div key={data.fId}>
+                    <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${data.fProjectNo}/${data.fCardPicPath}`} />
+                    <p className="name">{data.fName}</p>
+                    <div className="circle" data-value={data.fPercent}/>
+                    <i className="price">￥{data.fCreditMoney}</i>
+                    <i className="city">{data.fCityName}</i>
+                    <div className="line"/>
+                    <i className="botic botic1">年化利率<em>{data.fRateLast}%</em></i>
+                    <i className="botic botic2">剩余时间<em>{conversionTime(data.fRemainingSecond)}</em></i>
+                    <i className="level">{data.fLeveName}</i>
+                  </div>
+                );
+              })
+            }
+          </div>
           <div className="w tright">
             <div className="pager">
               {pageData.lastPage ?
-                <a className="first">&lt;</a> :
+                <Link
+                  className="first"
+                  to={`/index/projectLoan/page/${currentPage * 1 - 1}`}
+                  onClick={()=>$(window).scrollTop(0)}
+                >&lt;</Link> :
                 <a className="first" style={{backgroundColor:'#eee'}}>&lt;</a>}
               {pageData.firstPage ?
-                <a className={`${1 == currentPage  ? 'hover' : ''}`}
-                   onClick={this.fetchComplete.bind(this, 1, currentPage)}>1</a> :
+                <Link
+                  className={`${1 == currentPage  ? 'hover' : ''}`}
+                  to={'/index/projectLoan/page/1'}
+                  onClick={()=>$(window).scrollTop(0)}
+                >1</Link> :
                 null}
               {pageData.leftEllipsis ?
                 <a>...</a> :
                 null}
               {pageData.page.map((pageNum) => {
                 return (
-                  <a key={pageNum} className={`${pageNum * 1 == currentPage ? 'hover' : ''}`}
-                     onClick={this.fetchComplete.bind(this, pageNum, currentPage)}>{pageNum}</a>
+                  <Link
+                    key={pageNum} className={`${pageNum * 1 == currentPage ? 'hover' : ''}`}
+                    to={`/index/projectLoan/page/${pageNum}`}
+                    onClick={()=>$(window).scrollTop(0)}
+                  >{pageNum}</Link>
                 );
               })}
               {pageData.rightEllipsis ?
                 <a>...</a> :
                 null}
               {pageData.finalPage ?
-                <a className={`${maxPage == currentPage  ? 'hover' : ''}`}
-                   onClick={this.fetchComplete.bind(this, maxPage, currentPage)}>{maxPage}</a> :
+                <Link
+                  className={`${maxPage == currentPage  ? 'hover' : ''}`}
+                  to={`/index/projectLoan/page/${maxPage}`}
+                  onClick={()=>$(window).scrollTop(0)}
+                >{maxPage}</Link> :
                 null}
               {pageData.nextPage ?
-                <a className="last">&gt;</a> :
+                <Link
+                  className="last"
+                  to={`/index/projectLoan/page/${currentPage * 1 + 1}`}
+                  onClick={()=>$(window).scrollTop(0)}
+                >&gt;</Link> :
                 <a className="last" style={{backgroundColor:'#eee'}}>&gt;</a>}
             </div>
           </div>

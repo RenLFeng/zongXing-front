@@ -6,7 +6,12 @@ const BASE_URL = 'http://192.168.1.4:8001';
 const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59';
 
 export async function userLogin(param) {
-  return request(`${BASE_URL}/zjb-manage/users?${stringify(param)}`);
+  return request(`${BASE_URL}/zjb-website/login`, {
+    method: 'POST',
+    body: {
+      ...param
+    }
+  });
 }
 
 export async function getLocation() {
@@ -26,7 +31,7 @@ export async function getProjectList(params) {
     method: 'POST',
     body: {
       ...params,
-      method: 'post',
     },
   })
 }
+
