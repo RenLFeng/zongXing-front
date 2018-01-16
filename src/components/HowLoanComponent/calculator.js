@@ -21,7 +21,7 @@ export default class Calculator extends React.Component {
     // 初始化滑块功能
     setTimeout(()=>{
       this.initSlider();
-    },100);
+    },200);
   }
 
   // 初始化计算器滑块配置

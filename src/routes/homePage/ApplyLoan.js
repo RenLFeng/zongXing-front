@@ -9,12 +9,7 @@ export default class ApplyLoan extends React.Component {
     super(props);
     this.state = {
       loanInfo: { //借款信息字段
-        money: '',  //借款金额
-        period: '', //借款期数
-        customerChannel: '1', //获客渠道
-        purpose: '',  //借款用途
-        expectedRate: '', //预期年化利率
-        city: '', //所在城市
+
       },
       loanPerson: { //借款人信息
         name: '',  //姓名

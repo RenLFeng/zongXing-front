@@ -1,0 +1,90 @@
+我要借款 如果正在还款期或者已经申请是不准再进入这个页面的
+项目列表加一个项目周期的字段
+
+删除
+antd/es/style/index.css 25-30 
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+52-59行  删除
+body {
+  margin: 0;
+  font-family: "Monospace Number", "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #fff;
+}
+70-73行 删除
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+191 a, 删除
+a,
+area,
+button,
+[role="button"],
+input:not([type=range]),
+label,
+select,
+summary,
+textarea {
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+}
+
+138 删除
+a {
+  color: #1890ff;
+  background-color: transparent;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  -webkit-transition: color .3s;
+  transition: color .3s;
+  -webkit-text-decoration-skip: objects;
+}
+
+26 删除
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+303 删除
+::selection {
+  background: #1890ff;
+  color: #fff;
+}
+
+
+修改 antd/es/radio/style/index.css 95 94行3px改成4px
+.ant-radio-inner:after {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  left: 4px;
+  top: 4px;
+  border-radius: 4px;
+  display: table;
+  border-top: 0;
+  border-left: 0;
+  content: ' ';
+  background-color: #1890ff;
+  opacity: 0;
+  -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+          transform: scale(0);
+  -webkit-transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+}

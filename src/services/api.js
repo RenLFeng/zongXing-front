@@ -32,6 +32,54 @@ export async function getProjectList(params) {
     body: {
       ...params,
     },
-  })
+  });
 }
 
+export async function testRequest(params) {
+  return request(`${BASE_URL}/zjb-website/project/login`);
+}
+
+// 存储用户基础信息的接口
+export async function saveUserBase(params) {
+  return request(`${BASE_URL}/zjb-website/project/login`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+// 获取用户基础信息的接口
+export async function getUserBaseData() {
+  return request(`${BASE_URL}/zjb-website/project/login`);
+}
+
+// 获取用户开户信息的接口
+export async function getPersonalOpen() {
+  return request(`${BASE_URL}/zjb-website/project/login`);
+}
+
+// 获取公司开户信息的接口
+export async function getCompanyOpen() {
+  return request(`${BASE_URL}/zjb-website/project/login`);
+}
+
+// 提交用户开户信息接口
+export async function savePersonalOpen(params) {
+  return request(`${BASE_URL}/zjb-website/project/login`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+// 提交公司开户信息接口
+export async function saveCompanyOpen(params) {
+  return request(`${BASE_URL}/zjb-website/project/login`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}

@@ -44,7 +44,7 @@ export default function request(url, options) {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
-      'zjb-token': localStorage.getItem('webtoken'),
+      'accessToken': localStorage.getItem('accessToken'),
       ...newOptions.headers,
     };
     newOptions.body = JSON.stringify(newOptions.body);
@@ -53,14 +53,14 @@ export default function request(url, options) {
   }
   newOptions.headers = {
     'Content-Type': 'application/json; charset=utf-8',
-    'zjb-token': localStorage.getItem('webtoken'),
+    'accessToken': localStorage.getItem('accessToken'),
     ...newOptions.headers,
   };
 
   return fetch(url, newOptions)
     .then(checkStatus)
     .then((response) => {
-      console.log(response)
+      console.log(response);
       if (newOptions.method === 'DELETE' || response.status === 204) {
         return response.text();
       }

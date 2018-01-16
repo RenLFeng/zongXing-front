@@ -24,7 +24,7 @@ export default {
       });
       //登录成功做的操作
       if (response.code === 0) {
-        localStorage.setItem('webtoken', response.token);
+        localStorage.setItem('accessToken', response.token);
         yield put(routerRedux.push('/'));
       } else {
         console.log(response.msg);
@@ -37,6 +37,7 @@ export default {
           code: false, //退出登录修改登录状态为false
         },
       });
+      localStorage.removeItem('accessToken');
       yield put(routerRedux.replace('/'));
     },
   },

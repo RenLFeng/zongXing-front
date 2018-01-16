@@ -4,6 +4,9 @@ import HomePage from './routes/HomePage';
 import InformationPage from './routes/InformationPage';
 import PersonalPage from './routes/PersonalPage';
 import NoMatch from './routes/404page/404Page';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 
 function RouterConfig({ history }) {
   return (
