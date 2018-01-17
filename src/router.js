@@ -3,6 +3,7 @@ import { Router, Route, Switch, Redirect } from 'dva/router';
 import HomePage from './routes/HomePage';
 import InformationPage from './routes/InformationPage';
 import PersonalPage from './routes/PersonalPage';
+import Exception from './components/Exception'
 import NoMatch from './routes/404page/404Page';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -16,6 +17,7 @@ function RouterConfig({ history }) {
         <Route path="/index" component={HomePage}/>
         <Route path="/infor" component={InformationPage} />
         <Route path="/personal" component={PersonalPage} />
+        <Route path="/exception" component={Exception} />
         <Route component={NoMatch}/>
       </Switch>
     </Router>

@@ -5,7 +5,7 @@ export const VER_PHONE = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})
 export const ID_CORD = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
 
 // 用户名正则
-export const USER_REG = /^[a-zA-Z0-9_-]{4,16}$/;
+export const USER_REG = /^[a-zA-Z0-9_-]{2,16}$/;
 
 // 座机电话正则
 export const TEL_PHONE = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
@@ -19,7 +19,8 @@ const DATE_SECONDS = 86400;
 const HOURS_SECONDS = 3600;
 //一分钟多少秒
 const MIN_SECONDS = 60;
-
+//验证码冷却时间
+const AUTH_CODE_TIME = 120;
 //已完成项目的一页显示个数
 export const COMPLETE_PAGE_SIZE = 8;
 // 正在筹款项目一页显示个数

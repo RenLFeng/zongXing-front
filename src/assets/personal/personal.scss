@@ -1,0 +1,28 @@
+.safeCenter  {
+  background-color: #fff;
+  & > .tab-row {
+    display: flex;
+    border-top: 1px solid #c9c9c9;
+    height: 40px;
+    min-width: 500px;
+    padding: 10px 30px;
+    align-items: center;
+    div {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    span {
+      font-size: 16px;
+    }
+    a {
+      font-size: 14px;
+      color: #007aff;
+      text-decoration:underline;
+    }
+    i {
+      margin-top: 2px;
+      margin-right: 8px;
+    }
+  }
+}

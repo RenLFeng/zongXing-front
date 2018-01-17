@@ -36,7 +36,7 @@ class CompanyFormComponent extends React.Component {
   componentDidMount() {
     // this.props.param.dispatch({
     //   type: 'userData/getCompanyOpen'
-    // })
+    // });
   }
 
   handleSubmit(e) {

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link, Switch, Route} from 'dva/router';
 import i18n from '../i18n/i18n'
-import companyIntroduction from './information/companyIntroduction';
-import cooperativePartner from './information/cooperativePartner';
+import companyIntroduction from './information/CompanyIntroduction';
+import cooperativePartner from './information/CooperativePartner';
 
 export default class InformationPage extends React.Component{
 	render() {
@@ -17,6 +17,7 @@ export default class InformationPage extends React.Component{
 				<Switch>
 					<Route path={`${match.path}/`} exact component={companyIntroduction}/>
 					<Route path={`${match.path}/cooperativePartner`} component={cooperativePartner}/>
+
 				</Switch>
 			</div>
 		);

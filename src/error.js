@@ -1,6 +1,7 @@
+import { routerRedux } from 'dva/router';
 
-const error = (e) => {
-  if (e.name === 401 || e.name === 403) {
+const error = (e, dispatch) => {
+  if (e.name === 400 || e.name === 403) {
   	console.log('状态码403');
     return;
   }

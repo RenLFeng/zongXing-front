@@ -41,7 +41,7 @@ export async function testRequest(params) {
 
 // 存储用户基础信息的接口
 export async function saveUserBase(params) {
-  return request(`${BASE_URL}/zjb-website/project/login`, {
+  return request(`${BASE_URL}/zjb-website/userInfo/saveUserInfo`, {
     method: 'POST',
     body: {
       ...params,
@@ -51,7 +51,7 @@ export async function saveUserBase(params) {
 
 // 获取用户基础信息的接口
 export async function getUserBaseData() {
-  return request(`${BASE_URL}/zjb-website/project/login`);
+  return request(`${BASE_URL}/zjb-website/userInfo/findOne`);
 }
 
 // 获取用户开户信息的接口
@@ -81,5 +81,30 @@ export async function saveCompanyOpen(params) {
     body: {
       ...params,
     },
+  });
+}
+
+// 获取安全中心 首页数据接口
+export async function getSafeData() {
+  return request(`${BASE_URL}/zjb-website/securityCenter/findByuserId`)
+}
+
+// 校验手机号是否存在的接口
+export async function phoneExist(param) {
+  return request(`${BASE_URL}/zjb-website/check/${param}`)
+}
+
+// 获取注册验证码的接口
+export async function getAuthCode(param) {
+  return request(`${BASE_URL}/zjb-website/sendMessage/${param}`)
+}
+
+// 注册用户 接口
+export async function regUser(params) {
+  return request(`${BASE_URL}/zjb-website/register`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
   });
 }

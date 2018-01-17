@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Select, Radio, DatePicker, Cascader } from 'antd';
+import { Form, Input, Button, Select, Radio, DatePicker, Cascader, Spin } from 'antd';
 import moment from 'moment';
 import { connect } from 'dva';
 import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD} from '../../common/systemParam';
@@ -38,6 +38,12 @@ class UserBaseFormInput extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.param.dispatch({
+      type: 'userData/getUserBase'
+    });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -51,11 +57,11 @@ class UserBaseFormInput extends React.Component {
         const userBase = {
           ...values,
           fCityCode: fCityCode,
-          fBirthday: values.fBirthday.format('YYYY/MM/DD')
+          fBirthday: values.fBirthday?values.fBirthday.format('YYYY/MM/DD'): null
         };
         console.log('数据接收后台需要的数据', userBase);
         this.props.param.dispatch({
-          type: 'userData/getUserBase',
+          type: 'userData/commitUserBase',
           payload: userBase
         });
       }
@@ -91,7 +97,7 @@ class UserBaseFormInput extends React.Component {
           extra="用户名填写之后不可改!"
         >
           {getFieldDecorator('floginName', {
-            rules:[{pattern: USER_REG, message: '用户名格式应为4到16位(可用字母，数字，下划线，减号)'}],
+            rules:[{pattern: USER_REG, message: '用户名格式应为2到16位(可用字母，数字，下划线，减号)'}],
             initialValue: userBase.floginName?userBase.floginName: null
           })(<Input maxLength={'20'} disabled={!!userBase.floginName}/>)}
         </FormItem>
@@ -146,7 +152,7 @@ class UserBaseFormInput extends React.Component {
             <Select.Option value="1">大专及以下</Select.Option>
             <Select.Option value="2">大学</Select.Option>
             <Select.Option value="3">硕士</Select.Option>
-            <Select.Option value="3">硕士</Select.Option>
+            <Select.Option value="4">博士</Select.Option>
           </Select>)}
         </FormItem>
         <FormItem
@@ -198,7 +204,7 @@ class UserBaseFormInput extends React.Component {
           label="生日"
         >
           {getFieldDecorator('fBirthday', {
-            initialValue: moment(userBase.fBirthday)
+            initialValue: userBase.fBirthday ? moment(userBase.fBirthday): null
           })(
             <DatePicker />
           )}
@@ -249,7 +255,9 @@ export default class UserBaseInput extends React.Component {
   render() {
     return (
       <div>
-        <UserBaseForm param={this.props}/>
+        <Spin spinning={this.props.loading} tip="请稍后" size="large">
+          <UserBaseForm param={this.props}/>
+        </Spin>
       </div>
     );
   }

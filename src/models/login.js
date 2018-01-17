@@ -24,7 +24,7 @@ export default {
       });
       //登录成功做的操作
       if (response.code === 0) {
-        localStorage.setItem('accessToken', response.token);
+        localStorage.setItem('accessToken', response.data);
         yield put(routerRedux.push('/'));
       } else {
         console.log(response.msg);
