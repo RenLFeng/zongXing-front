@@ -101,7 +101,7 @@ export default class Login extends React.Component {
       alert('请输入正确的手机号');
       return;
     }
-    if (regAuthCode.length !== 4) {
+    if (regAuthCode.length !== 6) {
       alert('验证码格式错误');
       return;
     }
@@ -116,7 +116,7 @@ export default class Login extends React.Component {
     const reg = {
       fmobile: regPhone,
       fpwd: regPwd,
-      authCode: regAuthCode
+      authcode: regAuthCode
     };
     // 调用注册接口
     this.setState({regLoading: true});
@@ -177,7 +177,7 @@ export default class Login extends React.Component {
               <input className="put mobile" value={regPhone} maxLength={11} name="regPhone" type="tel" placeholder="请输入手机号码" onBlur={this.checkPhoneNumber}/>
             </div>
             <div className="row relative">
-              <input className="put vcode" value={regAuthCode} maxLength={4} name="regAuthCode" type="tel" placeholder="输入验证码"/>
+              <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel" placeholder="输入验证码"/>
               { // 根据倒计时时间显示是否可以点击获取验证码按钮
                 showAuthCode ?
               <a className="getvc center" onClick={this.getAuthCode}>获取验证码</a> :

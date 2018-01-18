@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/1/8 0008.
  */
 import React from 'react';
-import Login from '../Login/login';
+import Login from '../LoginComponent/login';
 import { Link } from 'dva/router';
 import { IMG_BASE_URL } from '../../common/systemParam';
 import moment from 'moment';

@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/1/8 0008.
  */
 import React from 'react';
-import Login from '../Login/login';
+import Login from '../LoginComponent/login';
 import { Link } from 'dva/router';
 
 export default class Search extends React.Component {

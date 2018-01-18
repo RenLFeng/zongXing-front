@@ -41,6 +41,7 @@ export default class BankCard extends React.Component {
       console.log('提交银行卡的数据 ', values);
       this.setState({addLoading: true});
       setTimeout(() => {
+        //添加银行卡请求
         const id = Math.random();
         const bankCardArr = this.state.bankCard;
         bankCardArr.push({id: id,cardId: values.bankCardId});
@@ -49,9 +50,11 @@ export default class BankCard extends React.Component {
       }, 1000);
     });
   };
+  // 关闭添加银行卡弹窗
   handleCancel = () => {
     this.setState({ addBankCard: false});
   };
+  // 关闭删除银行卡弹窗
   hideModal = () => {
     this.setState({showDelete: false});
   };

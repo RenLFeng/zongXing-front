@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'dva/router';
-import Login from '../Login/login';
+import Login from '../LoginComponent/login';
 import QueueAnim from 'rc-queue-anim';
 
 const styles = {
