@@ -1,0 +1,108 @@
+.uc-lbody>.navbox {
+    .hd {
+        line-height: 60px;
+        border-bottom: 1px solid #ddd;
+        background-position: 30px center;
+        background-repeat: no-repeat;
+        a {
+            display: block;
+            font-size: 18px;
+            text-indent: 66px;
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: 60px;
+                background: url(../img/ucenter/ddl1.png) no-repeat center center;
+            }
+            &:hover {
+                color: $f60;
+            }
+        }
+        &.hover a::after {
+            transform: rotate(180deg);
+        }
+    }
+    .ic1 {
+        background-image: url(../img/ucenter/ic1.png);
+    }
+    .ic2 {
+        background-image: url(../img/ucenter/ic2.png);
+    }
+    .ic3 {
+        background-image: url(../img/ucenter/ic3.png);
+    }
+    .ic4 {
+        background-image: url(../img/ucenter/ic4.png);
+    }
+    .ic5 {
+        background-image: url(../img/ucenter/ic5.png);
+    }
+    .ic6 {
+        background-image: url(../img/ucenter/ic6.png);
+    }
+    .ic7 {
+        background-image: url(../img/ucenter/ic7.png);
+    }
+    .nav {
+        display: none;
+    }
+    .hd.hover+.nav {
+        display: block;
+    }
+}
+.uc-lbody>.navbox .nav {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0 15px 64px;
+    ul,li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    a {
+        display: block;
+        line-height: 28px;
+        text-indent: 24px;
+        background: url(../img/ucenter/page.png) no-repeat left center;
+        position: relative;
+        &::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 23px;
+            height: 10px;
+            border-left: 1px solid #ccc;
+        }
+        &:hover,&.hover {
+            color: $f60;
+        }
+    }
+    ul>li:last-child>a::before {
+        display: none;
+    }
+    li.folder {
+        &>a {
+            background-image: url(../img/ucenter/add.png);
+        }
+        &>ul {
+            display: none;
+            margin-left: 5px;
+            padding-left: 18px;
+            border-left: 1px solid #ccc;
+        }
+    }
+    li:last-child>ul {
+        border-left-color: #fff;
+    }
+    li.hover {
+        &>a {
+            background-image: url(../img/ucenter/sub.png);
+        }
+        &>ul {
+            display: block;
+        }
+    }
+}

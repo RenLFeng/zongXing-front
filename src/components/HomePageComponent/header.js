@@ -33,9 +33,9 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const {match} = this.props.param;
+    const {match, location} = this.props.param;
   	return (
-      <div className="topnav">
+      <div className="topnav" style={location.pathname.indexOf('/index/uCenter') === -1 ? {backgroundColor:'transparent'}: {backgroundColor:'#333'}}>
         <div className="w clearfix">
           <Link className="logo fl" to={`${match.path}/`}>
             <img src={require('../../assets/img/logo.png')} />

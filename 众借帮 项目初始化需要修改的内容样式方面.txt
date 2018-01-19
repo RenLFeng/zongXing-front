@@ -88,3 +88,17 @@ html {
   -webkit-transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
   transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
 }
+
+如果选择less模式
+
+es/style/core/base.less 25
+*, *::before, *::after {
+    /* -webkit-box-sizing: border-box; */
+    /* box-sizing: border-box; */
+}
+
+es/radio/style/index.less 82 83 修改为14px 
+.ant-radio-inner {
+  width: 14px;
+  height: 14px
+}

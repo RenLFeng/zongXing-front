@@ -14,6 +14,7 @@ import Footer from '../components/HomePageComponent/footer';
 import '../assets/common/index';
 import { getLocation } from '../services/api';
 import ApplyLoan from './homePage/ApplyLoan';
+import UCenter from './homePage/UCenter';
 
 @connect((state) => ({
 	login: state.login
@@ -42,6 +43,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/businessDiscount`} component={BusinessDiscount}/>
             <Route path={`${match.path}/loanCollege`} component={LoanCollege}/>
             <Route path={`${match.path}/applyLoan`} component={ApplyLoan} />
+            <Route path={`${match.path}/uCenter`} component={UCenter} />
           </Switch>
         <Footer/>
 			</div>

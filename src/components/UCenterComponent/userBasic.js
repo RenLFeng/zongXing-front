@@ -1,4 +1,6 @@
+
 import React from 'react';
+import { Link } from 'dva/router';
 import { Form, Input, Button, Select, Radio, DatePicker, Cascader, Spin } from 'antd';
 import moment from 'moment';
 import { connect } from 'dva';
@@ -136,10 +138,10 @@ class UserBaseFormInput extends React.Component {
             rules:[],
             initialValue: userBase.fMarital?userBase.fMarital:'1'
           })(<Select>
-              <Select.Option value="1">未婚</Select.Option>
-              <Select.Option value="2">已婚</Select.Option>
-              <Select.Option value="3">离异</Select.Option>
-            </Select>)}
+            <Select.Option value="1">未婚</Select.Option>
+            <Select.Option value="2">已婚</Select.Option>
+            <Select.Option value="3">离异</Select.Option>
+          </Select>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -238,7 +240,9 @@ class UserBaseFormInput extends React.Component {
         </FormItem>
 
         <FormItem {...btnLayout}>
-          <Button style={{width: '200px',backgroundColor: '#FF7C11'}} type="primary"  htmlType="submit" loading={this.props.param.loading}>提交</Button>
+          <Button
+            style={{width: '200px', backgroundColor: '#FF7E10', borderColor:'#FF7E10'}}
+            type="primary" htmlType="submit" loading={this.props.param.loading}>提交</Button>
         </FormItem>
       </Form>
     );
@@ -251,10 +255,14 @@ const UserBaseForm = Form.create()(UserBaseFormInput);
   loading: state.userData.userBaseLoading,
   userBase: state.userData.userBaseData
 }))
-export default class UserBaseInput extends React.Component {
+export default class UserBasic extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
-      <div>
+      <div className="fr uc-rbody">
         <Spin spinning={this.props.loading} tip="请稍后" size="large">
           <UserBaseForm param={this.props}/>
         </Spin>
