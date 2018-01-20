@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'dva/router';
-
+import Path from '../../common/pagePath';
 
 export default class LeftMenu extends React.Component {
   constructor(props) {
@@ -9,17 +9,19 @@ export default class LeftMenu extends React.Component {
   }
 
   render() {
+    const {param} = this.props;
+    const path = param.location.pathname;
     return (
       <div className="fl uc-lbody">
         <div className="navbox">
-          <p className="hd ic1">
+          <p className="hd ic1 hover">
             <a>帐户总览</a>
           </p>
           <div className="nav">
             <ul>
-              <li><a>账户开户</a></li>
-              <li><a>个人账户</a></li>
-              <li><a>企业账户</a></li>
+              <li><Link className={path.indexOf(Path.OPEN_ACCOUNT)===-1?'':'hover'} to={Path.OPEN_ACCOUNT+'/0'}>账户开户</Link></li>
+              <li><Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'hover'} to={Path.PERSONAL_ACCOUNT}>个人账户</Link></li>
+              <li><Link className={path.indexOf(Path.COMPANY_ACCOUNT)===-1?'':'hover'} to={Path.COMPANY_ACCOUNT}>企业账户</Link></li>
             </ul>
           </div>
         </div>
@@ -29,8 +31,8 @@ export default class LeftMenu extends React.Component {
           </p>
           <div className="nav">
             <ul>
-              <li><Link to={`/index/uCenter/userBasic`}>基础资料</Link></li>
-              <li><a>安全中心</a></li>
+              <li><Link className={path.indexOf(Path.USER_BASIC)===-1?'':'hover'} to={Path.USER_BASIC}>基础资料</Link></li>
+              <li><Link className={path.indexOf(Path.SAFE_CENTER)===-1?'':'hover'} to={Path.SAFE_CENTER}>安全中心</Link></li>
               <li><a>银行卡</a></li>
               <li><a>站内消息</a></li>
               <li><a>站内公告</a></li>
@@ -44,7 +46,7 @@ export default class LeftMenu extends React.Component {
           <div className="nav">
             <ul>
               <li className="folder hover">
-                <Link className="hover" to={'/index/uCenter/personAccount'}>个人账户</Link>
+                <a>个人账户</a>
                 <ul>
                   <li><a>充值</a></li>
                   <li><a>提现</a></li>
@@ -63,7 +65,7 @@ export default class LeftMenu extends React.Component {
           </div>
         </div>
         <div className="navbox">
-          <p className="hd ic4">
+          <p className="hd ic4 hover">
             <a>我的投资</a>
           </p>
           <div className="nav">
@@ -75,7 +77,7 @@ export default class LeftMenu extends React.Component {
           </div>
         </div>
         <div className="navbox">
-          <p className="hd ic5">
+          <p className="hd ic5 hover">
             <a>我的借款</a>
           </p>
           <div className="nav">

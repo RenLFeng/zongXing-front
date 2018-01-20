@@ -18,8 +18,8 @@ export async function getLocation() {
 	return request(`http://restapi.amap.com/v3/ip?&key=${POSITION_KEY}`);
 }
 
-export async function getHomeSwiperImg() {
-  return request(`${BASE_URL}/zjb-website/home/banner`);
+export async function getHomeSwiperImg(param) {
+  return request(`${BASE_URL}/zjb-website/webpage/banner?ftype=${param}`);
 }
 
 export async function getHomeProjectList(param) {
@@ -35,8 +35,19 @@ export async function getProjectList(params) {
   });
 }
 
-export async function testRequest(params) {
-  return request(`${BASE_URL}/zjb-website/project/login`);
+// 获取账户信息的接口 ftype 0: 个人账户 1: 企业账户
+export async function getPersonAccount(param) {
+  return request(`${BASE_URL}/zjb-website/account/info?ftype=${param}`)
+}
+
+// 提交开户资料的接口
+export async function commitOpenAccount(params) {
+  return request(`${BASE_URL}/zjb-website/project/login`,{
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  })
 }
 
 // 存储用户基础信息的接口
@@ -49,39 +60,11 @@ export async function saveUserBase(params) {
   });
 }
 
+
+
 // 获取用户基础信息的接口
 export async function getUserBaseData() {
   return request(`${BASE_URL}/zjb-website/userInfo/findOne`);
-}
-
-// 获取用户开户信息的接口
-export async function getPersonalOpen() {
-  return request(`${BASE_URL}/zjb-website/project/login`);
-}
-
-// 获取公司开户信息的接口
-export async function getCompanyOpen() {
-  return request(`${BASE_URL}/zjb-website/project/login`);
-}
-
-// 提交用户开户信息接口
-export async function savePersonalOpen(params) {
-  return request(`${BASE_URL}/zjb-website/project/login`, {
-    method: 'POST',
-    body: {
-      ...params,
-    },
-  });
-}
-
-// 提交公司开户信息接口
-export async function saveCompanyOpen(params) {
-  return request(`${BASE_URL}/zjb-website/project/login`, {
-    method: 'POST',
-    body: {
-      ...params,
-    },
-  });
 }
 
 // 获取安全中心 首页数据接口

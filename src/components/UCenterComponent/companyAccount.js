@@ -3,13 +3,14 @@ import { Link } from 'dva/router';
 import PieReact from '../../components/Echarts/PieReact';
 import LineReact from '../../components/Echarts/LineReact'
 import Path from '../../common/pagePath';
+import {getPersonAccount} from '../../services/api';
 import {connect} from 'dva';
 
-@connect((state)=>({
-  personalStatus: state.account.personalStatus,
-  personal: state.account.personal
+@connect((state) => ({
+  company: state.account.company,
+  companyStatus: state.account.companyStatus
 }))
-export default class PersonAccount extends React.Component {
+export default class CompanyAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,9 +78,9 @@ export default class PersonAccount extends React.Component {
             icon: 'circle'
           }]
         },
-         grid: {
-           right: '70%'
-         },
+        grid: {
+          right: '70%'
+        },
         series: [
           {
             name:'金额',
@@ -135,16 +136,14 @@ export default class PersonAccount extends React.Component {
           }
         }]
       },
-      // 是否已经开户的标识 TODO: 需要存在redux中获取
     }
-
   }
 
   componentDidMount() {
-    // 获取个人账户信息
+    // 获取公司账户数据
     this.props.dispatch({
       type: 'account/getAccount',
-      payload: '0'
+      payload: '1'
     });
     // 获取数据之后重新渲染
     setTimeout(()=>{
@@ -199,11 +198,13 @@ export default class PersonAccount extends React.Component {
     }, 2000);
   }
 
+
+
   render() {
-    if (!this.props.personalStatus) {
+    if (!this.props.companyStatus) {
       return (
         <div className="fr uc-rbody">
-          <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+          <span>您还没有开通企业账户，开通 <Link to={Path.OPEN_ACCOUNT+'/1'} style={{color: 'blue'}}>点击此处</Link></span>
         </div>
       );
     }

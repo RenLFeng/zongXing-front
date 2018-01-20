@@ -1,17 +1,15 @@
 import { routerRedux } from 'dva/router';
+import {message} from 'antd';
 
 const error = (e, dispatch) => {
-  if (e.name === 400 || e.name === 403) {
-  	console.log('状态码403');
+  if (e.name === 403) {
+    message.error('请先登录');
+    //跳转登录页面
+    //dispatch(routerRedux.push('/exception/403'));
     return;
   }
-  if (e.name <= 504 && e.name >= 500) {
-    console.log('状态码500');
-    return;
-  }
-  if (e.name >= 404 && e.name < 422) {
-   console.log('状态码404');
-  }
+  console.log(e.name);
+  message.error('请求失败');
 };
 
 export default error;

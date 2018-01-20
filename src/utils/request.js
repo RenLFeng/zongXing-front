@@ -44,7 +44,7 @@ export default function request(url, options) {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
-      'accessToken': localStorage.getItem('accessToken'),
+      'x-access-token': localStorage.getItem('accessToken'),
       ...newOptions.headers,
     };
     newOptions.body = JSON.stringify(newOptions.body);
@@ -53,7 +53,7 @@ export default function request(url, options) {
   }
   newOptions.headers = {
     'Content-Type': 'application/json; charset=utf-8',
-    'accessToken': localStorage.getItem('accessToken'),
+    'x-access-token': localStorage.getItem('accessToken'),
     ...newOptions.headers,
   };
 

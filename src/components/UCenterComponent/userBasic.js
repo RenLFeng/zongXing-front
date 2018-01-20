@@ -241,7 +241,7 @@ class UserBaseFormInput extends React.Component {
 
         <FormItem {...btnLayout}>
           <Button
-            style={{width: '200px', backgroundColor: '#FF7E10', borderColor:'#FF7E10'}}
+            style={{width: '200px'}}
             type="primary" htmlType="submit" loading={this.props.param.loading}>提交</Button>
         </FormItem>
       </Form>

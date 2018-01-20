@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Button } from 'antd';
+import {Form, Input, Button, Select } from 'antd';
 import { connect } from 'dva';
 const FormItem = Form.Item;
 
@@ -58,6 +58,18 @@ class CompanyFormComponent extends React.Component {
     const { companyOpen } = this.props.param;
     return (
       <Form onSubmit={this.handleSubmit}>
+        <FormItem
+          {...formItemLayout}
+          label="婚否"
+        >
+          {getFieldDecorator('fMarital', {
+            rules:[],
+          })(<Select>
+            <Select.Option value="1">未婚</Select.Option>
+            <Select.Option value="2">已婚</Select.Option>
+            <Select.Option value="3">离异</Select.Option>
+          </Select>)}
+        </FormItem>
         <FormItem
           {...formItemLayout}
           label="手机"

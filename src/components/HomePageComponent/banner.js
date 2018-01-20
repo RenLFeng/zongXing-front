@@ -16,7 +16,8 @@ export default class Banner extends React.Component {
     //如果图片是个数是0 则重新加载图片资源
     if (systemData.homeImg.length === 0) {
       this.props.dispatch({
-        type: 'systemData/getHomeImg'
+        type: 'systemData/getHomeImg',
+        payload: 'home'
       });
     } else {
       initPage();

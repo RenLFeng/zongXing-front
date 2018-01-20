@@ -16,6 +16,7 @@ app.model(require('./models/system'));
 app.model(require('./models/project'));
 app.model(require('./models/userData'));
 app.model(require('./models/safeCenter'));
+app.model(require('./models/account'));
 
 // 4. Router 定义dva的路由管理
 app.router(require('./router'));

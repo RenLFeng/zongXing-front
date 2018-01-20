@@ -14,16 +14,27 @@ export default {
       yield put({
         type: 'startSafeData'
       });
-      const response = yield call(getSafeData);
-      if (response.code === 0) {
+      try {
+        const response = yield call(getSafeData);
+        if (response.code === 0) {
+          yield put({
+            type: 'endSafeData',
+            payload: response.data
+          });
+        } else {
+          yield put({
+            type: 'endSafeData',
+            payload: {
+              securityCenter: {}
+            }
+          });
+        }
+      } catch(e) {
         yield put({
           type: 'endSafeData',
-          payload: response.data
-        });
-      } else {
-        yield put({
-          type: 'endSafeData',
-          payload: {}
+          payload: {
+            securityCenter: {}
+          }
         });
       }
     },

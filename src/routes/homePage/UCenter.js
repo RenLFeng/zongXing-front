@@ -6,7 +6,10 @@ import '../../assets/ucenter/index';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import PersonAccount from '../../components/UCenterComponent/personAccount';
 import UserBasic from '../../components/UCenterComponent/userBasic';
-
+import OpenAccount from '../../components/UCenterComponent/openAccount';
+import SafeCenter from '../../components/UCenterComponent/safeCenter';
+import CompanyAccount from '../../components/UCenterComponent/companyAccount';
+import Path from '../../common/pagePath';
 export default class UCenter extends React.Component {
   constructor(props) {
     super(props);
@@ -48,10 +51,13 @@ export default class UCenter extends React.Component {
           </div>
         </div>
         <div className="w clearfix">
-          <LeftMenu />
+          <LeftMenu param={this.props}/>
           <Switch>
-            <Route path={`${match.path}/personAccount`} component={PersonAccount} />
-            <Route path={`${match.path}/userBasic`} component={UserBasic} />
+            <Route path={Path.PERSONAL_ACCOUNT} component={PersonAccount} />
+            <Route path={Path.USER_BASIC} component={UserBasic} />
+            <Route path={Path.OPEN_ACCOUNT+'/:type'} component={OpenAccount} />
+            <Route path={Path.COMPANY_ACCOUNT} component={CompanyAccount} />
+            <Route path={Path.SAFE_CENTER} component={SafeCenter} />
           </Switch>
         </div>
       </div>

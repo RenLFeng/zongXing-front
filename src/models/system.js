@@ -7,9 +7,9 @@ export default {
     homeImg: []
   },
   effects: {
-    *getHomeImg(_, { call, put }) {
+    *getHomeImg({payload}, { call, put }) {
       //开始请求 轮播图图片
-      const response = yield call(getHomeSwiperImg);
+      const response = yield call(getHomeSwiperImg, payload);
       if (response.code === 0) {
         // 将图片信息全局管理起来
         yield put({

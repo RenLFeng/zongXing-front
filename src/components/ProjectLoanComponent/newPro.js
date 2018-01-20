@@ -36,7 +36,7 @@ export default class NewPro extends React.Component {
                   <p className="name">{data.fName}</p>
                   <div className="circle" data-value={data.fPercent}/>
                   <i className="price">￥{data.fCreditMoney}</i>
-                  <i className="city"><span className="high">6<i>借款期限</i></span>个月 | {data.fCityName.replace('|',' - ')}</i>
+                  <i className="city"><span className="high">{data.fcreditMonth}<i>借款期限</i></span>个月 | {data.fCityName}</i>
                   <div className="line"/>
                   <i className="botic botic1">年化利率<em>{data.fRateLast}%</em></i>
                   <i className="botic botic2">剩余时间<em>{conversionTime(data.fRemainingSecond)}</em></i>
