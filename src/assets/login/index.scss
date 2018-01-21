@@ -1,23 +1,13 @@
 @import '../common/_var.scss';
 .logindiv1 {
-    position: absolute;
+    margin: 0 auto 300px auto;
     width: 948px;
     height: 470px;
-    top: 20%;
     left: 50%;
     z-index: 10;
-    margin-left: -474px;
     background: url(../img/login/pic1.jpg) no-repeat right center #fff;
     transform: translate(0,200px);
     transition: transform ease 0.5s;
-    .close {
-        width: 46px;
-        height: 46px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: url(../img/login/ic_close.png) no-repeat center;
-    }
     a.blue {
         color: #069;
         text-decoration: underline;
@@ -52,7 +42,12 @@
         }
     }
     .row {
-        margin-bottom: 20px;
+      margin-bottom: 20px;
+      display: block;
+      p {
+        margin-top: 5px;
+        color: red;
+      }
     }
     .put {
         border: 1px solid #d9d9d9;

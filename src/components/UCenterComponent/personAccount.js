@@ -203,6 +203,20 @@ export default class PersonAccount extends React.Component {
     if (!this.props.personalStatus) {
       return (
         <div className="fr uc-rbody">
+          <span>个人账户开户失败，请重新尝试 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+        </div>
+      );
+    }
+    if (!this.props.personalStatus) {
+      return (
+        <div className="fr uc-rbody">
+          <span>个人账户开户中，请稍后查看</span>
+        </div>
+      );
+    }
+    if (!this.props.personalStatus) {
+      return (
+        <div className="fr uc-rbody">
           <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
         </div>
       );

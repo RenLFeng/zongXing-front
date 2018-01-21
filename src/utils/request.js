@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+import { routerRedux } from 'dva/router';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据',

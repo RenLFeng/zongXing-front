@@ -5,10 +5,10 @@ const error = (e, dispatch) => {
   if (e.name === 403) {
     message.error('请先登录');
     //跳转登录页面
-    //dispatch(routerRedux.push('/exception/403'));
+    dispatch(routerRedux.push('/index/login'));
     return;
   }
-  console.log(e.name);
+  console.log(123,e.name);
   message.error('请求失败');
 };
 

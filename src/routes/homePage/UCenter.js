@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Switch, Route, withRouter} from 'dva/router';
+import {connect} from 'dva';
 
 import '../../assets/ucenter/index';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
@@ -9,7 +10,14 @@ import UserBasic from '../../components/UCenterComponent/userBasic';
 import OpenAccount from '../../components/UCenterComponent/openAccount';
 import SafeCenter from '../../components/UCenterComponent/safeCenter';
 import CompanyAccount from '../../components/UCenterComponent/companyAccount';
+import BankCard from '../../components/UCenterComponent/bankCard';
+import BankCardCreate from '../../components/UCenterComponent/bankCardCreate';
+import BankCardUpdate from '../../components/UCenterComponent/bankCardUpdate';
+
+
 import Path from '../../common/pagePath';
+
+
 export default class UCenter extends React.Component {
   constructor(props) {
     super(props);
@@ -58,6 +66,9 @@ export default class UCenter extends React.Component {
             <Route path={Path.OPEN_ACCOUNT+'/:type'} component={OpenAccount} />
             <Route path={Path.COMPANY_ACCOUNT} component={CompanyAccount} />
             <Route path={Path.SAFE_CENTER} component={SafeCenter} />
+            <Route path={Path.BANK_CARD} exact component={BankCard} />
+            <Route path={Path.BANK_CARD_UPDATE+'/:cardId'}  component={BankCardUpdate} />
+            <Route path={Path.BANK_CARD_CREATE} component={BankCardCreate} />
           </Switch>
         </div>
       </div>

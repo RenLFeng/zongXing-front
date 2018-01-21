@@ -1,5 +1,6 @@
 import { routerRedux } from 'dva/router';
 import {userLogin} from '../services/api';
+import {message} from 'antd';
 
 export default {
   namespace: 'login',
@@ -13,21 +14,32 @@ export default {
       yield put({
         type: 'changeSubmitting'
       });
-      //向后台请求登录接口
-      const response = yield call(userLogin, payload);
-      //请求结束，请求状态修改为未请求状态
-      yield put({
-        type: 'changeLoginStatus',
-        payload: {
-          code: true,
-        },
-      });
-      //登录成功做的操作
-      if (response.code === 0) {
-        localStorage.setItem('accessToken', response.data);
-        yield put(routerRedux.push('/'));
-      } else {
-        console.log(response.msg);
+      try {
+        //向后台请求登录接口
+        const response = yield call(userLogin, payload);
+        //请求结束，请求状态修改为未请求状态
+        yield put({
+          type: 'changeLoginStatus',
+          payload: {
+            code: true,
+          },
+        });
+        //登录成功做的操作
+        if (response.code === 0) {
+          message.info('登录成功');
+          localStorage.setItem('accessToken', response.data);
+          yield put(routerRedux.push('/'));
+        } else {
+          message.error(response.msg);
+        }
+      } catch (e) {
+        message.error('请求失败');
+        yield put({
+          type: 'changeLoginStatus',
+          payload: {
+            code: false,
+          },
+        });
       }
     },
     *logout(_, { put }) {

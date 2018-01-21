@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'dva/router';
+import {connect} from 'dva';
 import Login from '../LoginComponent/login';
 import QueueAnim from 'rc-queue-anim';
 
@@ -15,27 +16,20 @@ const styles = {
     zIndex: 5
   },
 };
+
+@connect((state)=>({
+  loginStatus: state.login.status
+}))
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLogin: false,
-    }
-  }
-  componentDidMount() {
 
-  }
-
-  hideLogin() {
-    this.setState({
-      isLogin: false
-    });
   }
 
   render() {
     const {match, location} = this.props.param;
   	return (
-      <div className="topnav" style={location.pathname.indexOf('/index/uCenter') === -1 ? {backgroundColor:'transparent'}: {backgroundColor:'#333'}}>
+      <div className="topnav" style={location.pathname.indexOf('/index/uCenter') === -1 && location.pathname.indexOf('/index/login') === -1 ? {backgroundColor:'transparent'}: {backgroundColor:'#333'}}>
         <div className="w clearfix">
           <Link className="logo fl" to={`${match.path}/`}>
             <img src={require('../../assets/img/logo.png')} />
@@ -47,13 +41,12 @@ export default class Header extends React.Component {
             <Link className="a1" to={`${match.path}/businessDiscount`}>商家优惠</Link>
             <a className="a1" href="">众借学院</a>
             <a className="btn btn1" href="">收藏项目<em>0</em></a>
-            <a className="btn btn2" href="javascript:void(0)" onClick={()=> this.setState({ isLogin: true })}>登录 / 注册</a>
-        </span>
+            { !this.props.loginStatus ?
+              <Link className="btn btn2" to={'/index/login'}>登录 / 注册</Link> :
+              <Link className="btn btn2" to={'/index/uCenter'}>个人中心</Link>
+            }
+          </span>
         </div>
-        {this.state.isLogin ?
-          <Login close={this.hideLogin.bind(this)}/> : null}
-        {this.state.isLogin ?
-          <div style={styles.masker}/> : null}
       </div>
   	);
   }

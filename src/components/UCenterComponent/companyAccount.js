@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'dva/router';
+import {Select,Form} from 'antd';
 import PieReact from '../../components/Echarts/PieReact';
 import LineReact from '../../components/Echarts/LineReact'
 import Path from '../../common/pagePath';
 import {getPersonAccount} from '../../services/api';
 import {connect} from 'dva';
 
+const FormItem = Form.Item;
 @connect((state) => ({
   company: state.account.company,
   companyStatus: state.account.companyStatus
@@ -136,6 +138,9 @@ export default class CompanyAccount extends React.Component {
           }
         }]
       },
+      // 显示的企业公司Id
+      companyId: this.props.company.length>0 ? this.props.company[0].companyId : '',
+      companyData: this.props.company.length>0 ? this.props.company[0] : null,
     }
   }
 
@@ -198,18 +203,36 @@ export default class CompanyAccount extends React.Component {
     }, 2000);
   }
 
+  // 获取选择的公司账户信息
+  changeCompanyData(val) {
+    const companyArr = this.props.company;
+    for (let company of companyArr) {
+      if (company.id === val) {
+        this.setState({
+          companyId: val,
+          companyData: company
+        });
+      }
+    }
+  }
 
-
-  render() {
-    if (!this.props.companyStatus) {
+  companyRender() {
+    if (this.state.companyData) {
       return (
-        <div className="fr uc-rbody">
-          <span>您还没有开通企业账户，开通 <Link to={Path.OPEN_ACCOUNT+'/1'} style={{color: 'blue'}}>点击此处</Link></span>
+        <div>
+          <span>该企业账户开通失败，请重新尝试 <Link to={Path.OPEN_ACCOUNT+'/1'} style={{color: 'blue'}}>点击此处</Link></span>
+        </div>
+      );
+    }
+    if (this.state.companyData) {
+      return (
+        <div>
+          <span>该企业账户正在开通中，请稍后查看</span>
         </div>
       );
     }
     return (
-      <div className="fr uc-rbody">
+      <div >
         <div className="ptit">
           <i>账户总资产</i>
           <b>20,986.04</b>
@@ -300,4 +323,27 @@ export default class CompanyAccount extends React.Component {
       </div>
     );
   }
+
+  render() {
+    return (
+      <div className="fr uc-rbody">
+        <Select value={this.state.companyId} onChange={(val)=>this.changeCompanyData(val)} style={{width: 500, marginBottom: 30}}>
+          {this.props.company.map((data) => {
+            return (
+              <Select.Option value={data.companyId}>data.companyName</Select.Option>
+            );
+          })}
+        </Select>
+        { this.props.company.length === 0?
+          <div>
+            <span>您还没有开通企业账户，开通 <Link to={Path.OPEN_ACCOUNT + '/1'} style={{color: 'blue'}}>点击此处</Link></span>
+          </div> : null
+        }
+        {this.state.companyData ? this.companyRender.call(this) : null}
+      </div>
+    );
+
+  }
 }
+
+

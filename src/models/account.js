@@ -4,7 +4,7 @@ export default {
   namespace: 'account',
   state: {
     personal: {},
-    company: {},
+    company: [],
     personalStatus: false,
     companyStatus: false
   },

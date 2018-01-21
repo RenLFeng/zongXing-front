@@ -162,10 +162,8 @@ export default class Login extends React.Component {
 
   render() {
     const { showReg, showAuthCode, countDown, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus } = this.state;
-    const { close } = this.props;
     return (
       <div className="logindiv1 shadow">
-        <a className="close" onClick={()=>close()}/>
         { showReg ?
         <div className="form regf" onChange={this.onChange}>
           <div className="hd center">
