@@ -8,5 +8,7 @@ export default {
   COMPANY_ACCOUNT: '/index/uCenter/companyAccount',  //企业账户页面地址
   BANK_CARD: '/index/uCenter/bankCard',  //银行卡管理页面
   BANK_CARD_UPDATE: '/index/uCenter/bankCardUpdate',  //银行卡修改
-  BANK_CARD_CREATE: '/index/uCenter/bankCardCreate',  //银行卡修改
+  BANK_CARD_CREATE: '/index/uCenter/bankCardCreate',  //银行卡绑定
+  ACCOUNT_RECHARGE: '/index/uCenter/recharge',  // 充值  type: 0 个人, 1 企业
+  ACCOUNT_WITHDRAWALS: '/index/uCenter/withdrawals',  // 充值  type: 0 个人, 1 企业
 }

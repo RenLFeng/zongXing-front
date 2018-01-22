@@ -40,12 +40,19 @@ export default function request(url, options) {
   const defaultOptions = {
     credentials: 'include',
   };
+  // 判断上一次请求的时间
+  let token = null;
+  if (localStorage.getItem('accessToken')) {
+    const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+    token = webTokenObj.webToken;
+  }
+
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
-      'x-access-token': localStorage.getItem('accessToken'),
+      'x-access-token': token,
       ...newOptions.headers,
     };
     newOptions.body = JSON.stringify(newOptions.body);
@@ -54,7 +61,7 @@ export default function request(url, options) {
   }
   newOptions.headers = {
     'Content-Type': 'application/json; charset=utf-8',
-    'x-access-token': localStorage.getItem('accessToken'),
+    'x-access-token': token,
     ...newOptions.headers,
   };
 

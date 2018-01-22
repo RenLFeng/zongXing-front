@@ -1,12 +1,12 @@
 import { routerRedux } from 'dva/router';
 import {userLogin} from '../services/api';
 import {message} from 'antd';
-
 export default {
   namespace: 'login',
   state: {
-    status: false,
-    submitting: false
+    status: !!localStorage.getItem('accessToken'),
+    submitting: false,
+    nickName: localStorage.getItem('accessToken') ? JSON.parse(localStorage.getItem('accessToken')).nickName: ''
   },
   effects: {
     *login({ payload }, { call, put }) {
@@ -18,18 +18,27 @@ export default {
         //向后台请求登录接口
         const response = yield call(userLogin, payload);
         //请求结束，请求状态修改为未请求状态
-        yield put({
-          type: 'changeLoginStatus',
-          payload: {
-            code: true,
-          },
-        });
         //登录成功做的操作
         if (response.code === 0) {
           message.info('登录成功');
-          localStorage.setItem('accessToken', response.data);
+          const access = {webToken:response.data.webToken,nickName: response.data.nickName};
+          localStorage.setItem('accessToken', JSON.stringify(access));
           yield put(routerRedux.push('/'));
+          console.log(response.data.nickName);
+          yield put({
+            type: 'changeLoginStatus',
+            payload: {
+              nickName: response.data.nickName,
+              code: true,
+            },
+          });
         } else {
+          yield put({
+            type: 'changeLoginStatus',
+            payload: {
+              code: false,
+            },
+          });
           message.error(response.msg);
         }
       } catch (e) {
@@ -47,6 +56,7 @@ export default {
         type: 'changeLoginStatus',
         payload: {
           code: false, //退出登录修改登录状态为false
+          nickName: ''
         },
       });
       localStorage.removeItem('accessToken');
@@ -66,8 +76,9 @@ export default {
     changeLoginStatus(state, {payload}) {
       return {
         ...state,
-        status: payload.code ,
-        submitting: false,
+        status: payload.code,
+        nickName: payload.nickName,
+        submitting: false
       };
     },
   },

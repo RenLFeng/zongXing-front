@@ -50,10 +50,6 @@ export default class BankCard extends React.Component {
                   <div className="mc">
                     <div className="item">
                       <span>持卡人姓名: *云峰</span>
-                      <Link
-                        style={{display:`${this.state[data.id]? 'inline': 'none'}`}}
-                        to={Path.BANK_CARD_UPDATE+'/'+data.id}
-                      >修改</Link>
                     </div>
                     <div className="item">
                       <span>手机号: 156****9171</span>
@@ -67,12 +63,6 @@ export default class BankCard extends React.Component {
              );
             })
           }
-          <Button
-            type="dashed" onClick={()=>this.setState({addBankCard: true})}
-            style={{ width: '280px',height: '136px',marginTop: '20px' }}>
-            <Icon type="plus" style={{display:'block',fontSize: 26,fontWeight: 'bolder',marginBottom:10}}/>
-            <p style={{fontSize: 18,fontWeight: 600}}>添加银行卡</p>
-          </Button>
         </div>
       </div>
     );
