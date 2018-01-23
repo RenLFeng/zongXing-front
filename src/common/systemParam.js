@@ -16,6 +16,12 @@ export const BANK_CARD = /^([1-9]{1})(\d{14}|\d{18})$/;
 // 万象优图
 export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/';
 
+// 带小数点的正则验证
+export const MONEY_REG = /^\d+(\.\d+)?$/;
+
+// 大于2 带小数
+export const MONEY_REG_ = /[2-9](\.\d*[1-9]){1}|[1-9]\d+(\.\d*[1-9])?$/;
+
 //一天多少秒
 const DATE_SECONDS = 86400;
 //一小时多少秒

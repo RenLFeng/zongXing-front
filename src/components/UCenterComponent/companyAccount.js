@@ -147,7 +147,7 @@ export default class CompanyAccount extends React.Component {
   componentDidMount() {
     // 获取公司账户数据
     this.props.dispatch({
-      type: 'account/getAccount',
+      type: 'Account/getAccount',
       payload: '1'
     });
     // 获取数据之后重新渲染

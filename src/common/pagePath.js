@@ -10,5 +10,5 @@ export default {
   BANK_CARD_UPDATE: '/index/uCenter/bankCardUpdate',  //银行卡修改
   BANK_CARD_CREATE: '/index/uCenter/bankCardCreate',  //银行卡绑定
   ACCOUNT_RECHARGE: '/index/uCenter/recharge',  // 充值  type: 0 个人, 1 企业
-  ACCOUNT_WITHDRAWALS: '/index/uCenter/withdrawals',  // 充值  type: 0 个人, 1 企业
+  ACCOUNT_WITHDRAWALS: '/index/uCenter/withdrawals',  // 提现  type: 0 个人, 1 企业
 }

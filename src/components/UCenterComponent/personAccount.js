@@ -137,13 +137,13 @@ export default class PersonAccount extends React.Component {
       },
       // 是否已经开户的标识 TODO: 需要存在redux中获取
     }
-
+    this.jumpRecharge = this.jumpRecharge.bind(this);
   }
 
   componentDidMount() {
     // 获取个人账户信息
     this.props.dispatch({
-      type: 'account/getAccount',
+      type: 'Account/getAccount',
       payload: '0'
     });
     // 获取数据之后重新渲染
@@ -199,28 +199,32 @@ export default class PersonAccount extends React.Component {
     }, 2000);
   }
 
+  jumpRecharge() {
+    this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {1:213}})
+  };
+
   render() {
-    if (!this.props.personalStatus) {
-      return (
-        <div className="fr uc-rbody">
-          <span>个人账户开户失败，请重新尝试 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
-        </div>
-      );
-    }
-    if (!this.props.personalStatus) {
-      return (
-        <div className="fr uc-rbody">
-          <span>个人账户开户中，请稍后查看</span>
-        </div>
-      );
-    }
-    if (!this.props.personalStatus) {
-      return (
-        <div className="fr uc-rbody">
-          <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
-        </div>
-      );
-    }
+    // if (!this.props.personalStatus) {
+    //   return (
+    //     <div className="fr uc-rbody">
+    //       <span>个人账户开户失败，请重新尝试 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+    //     </div>
+    //   );
+    // }
+    // if (!this.props.personalStatus) {
+    //   return (
+    //     <div className="fr uc-rbody">
+    //       <span>个人账户开户中，请稍后查看</span>
+    //     </div>
+    //   );
+    // }
+    // if (!this.props.personalStatus) {
+    //   return (
+    //     <div className="fr uc-rbody">
+    //       <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+    //     </div>
+    //   );
+    // }
     return (
       <div className="fr uc-rbody">
         <div className="ptit">
@@ -237,7 +241,7 @@ export default class PersonAccount extends React.Component {
             <i>累计提现</i>
             <b className="f18">1,000.00</b>
           </a>
-          <a className="btn btn1">充值</a>
+          <a className="btn btn1" onClick={this.jumpRecharge}>充值</a>
           <a className="btn btn2">提现</a>
           <a className="btn btn3">好友转账</a>
         </div>

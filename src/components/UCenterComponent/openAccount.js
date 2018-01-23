@@ -12,11 +12,6 @@ import {getPersonAccount, commitOpenAccount} from '../../services/api';
 
 const FormItem = Form.Item;
 
-const styles = {
-  bodyDiv: {
-    minHeight: '1000px'
-  }
-};
 const TIME_OUT = 10;
 export default class OpenAccount extends React.Component {
   constructor(props) {
