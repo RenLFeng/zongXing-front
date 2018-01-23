@@ -91,3 +91,8 @@ export async function regUser(params) {
     }
   });
 }
+
+// 测试充值 接口
+export async function rechargeTest() {
+  return request(`http://zjb2.ngrok.xiaomiqiu.cn/loan/recharge`);
+}

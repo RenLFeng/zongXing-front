@@ -13,6 +13,7 @@ import CompanyAccount from '../../components/UCenterComponent/companyAccount';
 import BankCard from '../../components/UCenterComponent/bankCard';
 import AccountRecharge from '../../components/UCenterComponent/accountRecharge';
 import AccountWithdrawals from '../../components/UCenterComponent/accountWithdrawals';
+import Test from '../../components/UCenterComponent/test';
 
 import Path from '../../common/pagePath';
 
@@ -71,6 +72,7 @@ export default class UCenter extends React.Component {
             <Route path={Path.BANK_CARD} exact component={BankCard} />
             <Route path={Path.ACCOUNT_RECHARGE + '/:type'} component={AccountRecharge} />
             <Route path={Path.ACCOUNT_WITHDRAWALS + '/:type'} component={AccountWithdrawals} />
+            <Route path={'/index/uCenter/test'} exact component={Test} />
           </Switch>
         </div>
       </div>
