@@ -17,9 +17,9 @@ export default class Risk extends React.Component {
 
   render() {
     return (
-        <div className="body1" >
+        <div className="body1" style={{minWidth: '1248px', margin: 'auto'}}>
           {/*导航栏*/}
-          <div className="nav">
+          <div className="nav1">
             <div className="nav_">
               <a onClick={() => this.a('合规运营')}>合规运营</a>
               <span>|</span>
@@ -33,10 +33,10 @@ export default class Risk extends React.Component {
 
           {/*页面1*/}
           { this.state.text === '合规运营' ?
-            <div className="page1">
+            <div className="page3">
 
               {/*第一部分*/}
-              <div className="operation">
+              <div className="operation1">
                 <div className="title">
                   <h1>合规运营</h1>
                   <div className="hover">
@@ -44,15 +44,15 @@ export default class Risk extends React.Component {
                   </div>
                 </div>
                 <p
-                  className="word">积木盒子一直秉承合规发展的原则，严格遵守各项法律、法规、政策及集团的各项内控制度，为借贷双方提供专业的居间撮合服务，借贷交易真实合法，项目披露尽职合规，让投资者安心。同时，积木盒子也积极参与行业监管政策、规则的讨论与交流，努力推动整个行业的健康发展。</p>
-                <div className="num">
+                  className="word1">积木盒子一直秉承合规发展的原则，严格遵守各项法律、法规、政策及集团的各项内控制度，为借贷双方提供专业的居间撮合服务，借贷交易真实合法，项目披露尽职合规，让投资者安心。同时，积木盒子也积极参与行业监管政策、规则的讨论与交流，努力推动整个行业的健康发展。</p>
+                <div className="num3">
                   <div className="num_1">
                     <span className="big_w">135456</span>
                     <span className="small_w">天</span>
                     <p>平台运营天数</p>
                   </div>
 
-                  <div className="num_1 center">
+                  <div className="num_1 center1">
                     <span className="big_w">135456</span>
                     <span className="small_w">亿元</span>
                     <p>累计交易量</p>
@@ -65,7 +65,7 @@ export default class Risk extends React.Component {
                 </div>
               </div>
               {/*第二部分*/}
-              <div className="content">
+              <div className="content1">
                 <div className="img_1">
                   <h2>法律地位和 <br/>
                     服务内容合法性</h2>
@@ -78,7 +78,7 @@ export default class Risk extends React.Component {
                 </div>
               </div>
               {/*第三部分*/}
-              <div className="content">
+              <div className="content1">
                 <div className="img_2">
                   <h2>出借人取得<br/>
                     收益的合法性</h2>
@@ -91,7 +91,7 @@ export default class Risk extends React.Component {
                 </div>
               </div>
               {/*第四部分*/}
-              <div className="content">
+              <div className="content1">
                 <div className="img_3">
                   <h2>积木盒子网站<br/>
                     生成电子合同合法性</h2>
@@ -111,13 +111,13 @@ export default class Risk extends React.Component {
 
           {/*页面3*/}
           {this.state.text === '风险控制' ?
-            <div className="control">
+            <div className="control1">
               <div className="control_">
                 <div className="title">
                   <h1>风险控制</h1>
                   <div className="hover"></div>
                 </div>
-                <p className="word">积木盒子建立了完善的风险架构，同时针对不同类型的产品特点和风险特征分别建立了相对应的产品管理制度和项目贷前、贷中、贷后的管理制度和风险评估流程，防范欺诈风险和信用风险。</p>
+                <p className="word1">积木盒子建立了完善的风险架构，同时针对不同类型的产品特点和风险特征分别建立了相对应的产品管理制度和项目贷前、贷中、贷后的管理制度和风险评估流程，防范欺诈风险和信用风险。</p>
                 <div className="part_1">
                   <div className="part_1_l">
                     <div className="img"><img src={require('../../assets/img/rick/3-1.png')} alt=""/></div>
@@ -186,7 +186,7 @@ export default class Risk extends React.Component {
                 <p className="word_">穹顶计划是积木盒子平台为广大投资人推出的更加合理的贷后保障制度。积木盒子通过该保障机制，纳入第三方资金，形成逾期债权收购储备资金。这笔资金将被用来收购穹顶计划保障机制覆盖范围内，未来所有发生逾期或违约的项目资产。本着信息如实披露原则，以实现投资人做出有效风险决策为目的，积木盒子将公示该项资金的金额。
                 </p>
               </div>
-              <div className="plan">
+              <div className="plan1">
                 {/*数据*/}
                 <div className="data">
                   <div className="data_1">
@@ -203,7 +203,7 @@ export default class Risk extends React.Component {
                   </div>
                 </div>
                 {/*问题*/}
-                <div className="question">
+                <div className="question1">
                   <span>穹顶计划是如何运作的？</span>
                   <p className="word2_">如果发生项目违约，穹顶计划最迟将在该项目到期日之后的第30个自然日当日收购该项目债权。在收购债权动作发生之前占用时间为操作准备期，期间的利息按照该项目原定利率支付投资人。穹顶计划的资金具体数额，会定期以银行资信证明的方式进行披露，以供投资人监督。</p>
                   <span>穹顶计划的推出，对平台的风控标准有什么影响？</span>
@@ -218,7 +218,7 @@ export default class Risk extends React.Component {
                   <div className="hover"></div>
                 </div>
                 <p
-                  className="word">积木盒子从公司自有资金中划拨300万元人民币作为法律援助基金，法律援助基金专户存储，专项用于为积木盒子平台上非自担风险融资项目提供法律支持，如非自担风险项目中的任一融资项目发生争议事项需提起诉讼或仲裁程序解决争议的，积木盒子将启用法律援助基金为投资人聘请专业律师代表投资人处理相关法律争议，协助投资人追讨违约债权，以保护相关投资人的权益。积木盒子承诺维持法律援助基金数额不低于300万元人民币，如因支付法律援助费用导致法律援助基金不足的，积木盒子将及时补足。</p>
+                  className="word1">积木盒子从公司自有资金中划拨300万元人民币作为法律援助基金，法律援助基金专户存储，专项用于为积木盒子平台上非自担风险融资项目提供法律支持，如非自担风险项目中的任一融资项目发生争议事项需提起诉讼或仲裁程序解决争议的，积木盒子将启用法律援助基金为投资人聘请专业律师代表投资人处理相关法律争议，协助投资人追讨违约债权，以保护相关投资人的权益。积木盒子承诺维持法律援助基金数额不低于300万元人民币，如因支付法律援助费用导致法律援助基金不足的，积木盒子将及时补足。</p>
               </div>
             </div> : null
           }
@@ -238,14 +238,14 @@ export default class Risk extends React.Component {
 class Money extends React.Component {
   render() {
     return (
-      <div className="money">
+      <div className="money2">
         {/*资金安全*/}
-        <div className="safe">
+        <div className="safe1">
           <div className="title">
             <h1>资产安全</h1>
             <div className="hover"></div>
           </div>
-          <p className="word">积木盒子一直秉承合规发展的原则，严格遵守各项法律、法规、政策及集团的各项内控制度，为借贷双方提供专业的居间撮合服务，借贷交易真实合法，项目披露尽职合规，让投资者安心。同时，积木盒子也积极参与行业监管政策、规则的讨论与交流，努力推动整个行业的健康发展。</p>
+          <p className="word1">积木盒子一直秉承合规发展的原则，严格遵守各项法律、法规、政策及集团的各项内控制度，为借贷双方提供专业的居间撮合服务，借贷交易真实合法，项目披露尽职合规，让投资者安心。同时，积木盒子也积极参与行业监管政策、规则的讨论与交流，努力推动整个行业的健康发展。</p>
           <div className="img_"></div>
         </div>
         {/*民生银行*/}
@@ -275,12 +275,12 @@ class Money extends React.Component {
 class Information extends React.Component {
   render(){
     return(
-      <div className="information">
+      <div className="information1">
         <div className="title">
           <h1>信息安全</h1>
           <div className="hover"></div>
         </div>
-        <p className="word">积木盒子一直将保护用户的隐私信息和数据的安全视为我们重要的责任，平台运用业界先进的技术手段，采用银行级安全防护架构和多维度的隐私保护机制，全方位保护用户的信息安全，平台现已通过ISO27001信息安全管理体系认证和公安部信息系统安全等级保护三级备案认证。</p>
+        <p className="word1">积木盒子一直将保护用户的隐私信息和数据的安全视为我们重要的责任，平台运用业界先进的技术手段，采用银行级安全防护架构和多维度的隐私保护机制，全方位保护用户的信息安全，平台现已通过ISO27001信息安全管理体系认证和公安部信息系统安全等级保护三级备案认证。</p>
        <div className="information-safe">
         <div className="part1">
           <span className="title">数据全程加密</span>
