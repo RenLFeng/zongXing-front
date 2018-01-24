@@ -143,60 +143,9 @@ export default class PersonAccount extends React.Component {
   componentDidMount() {
     // 获取个人账户信息
     this.props.dispatch({
-      type: 'Account/getAccount',
+      type: 'account/getAccount',
       payload: '0'
     });
-    // 获取数据之后重新渲染
-    setTimeout(()=>{
-      this.setState({
-        pieOption: {
-          ...this.state.pieOption,
-          legend: {
-            ...this.state.pieOption.legend,
-            formatter:  function(name){
-              if (name==='可用余额') {
-                return `${name}  {c|23,413.01}`
-              } else if (name === '冻结金额') {
-                return `${name}  {b|2.01}`
-              } else if (name === '待收金额') {
-                return `${name}  {b|100,000.01}`
-              } else if (name === '待收收益') {
-                return `${name}  {b|10,000.01}`
-              } else {
-                return `${name}  {b|100.01}`
-              }
-            }
-          },
-          series: [
-            {
-              name:'金额',
-              type:'pie',
-              radius: ['100%', '90%'],
-              avoidLabelOverlap: false,
-              hoverAnimation: false,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              data:[
-                {value:23413.01, name:'可用余额'},
-                {value:2354.00, name:'冻结金额'},
-                {value:10000.01, name:'待收本金'},
-                {value:10000.01, name:'待收收益'},
-                {value:2354.00, name:'待还总额'}
-              ]
-            }
-          ]
-        }
-      });
-    }, 2000);
   }
 
   jumpRecharge() {
@@ -204,27 +153,13 @@ export default class PersonAccount extends React.Component {
   };
 
   render() {
-    // if (!this.props.personalStatus) {
-    //   return (
-    //     <div className="fr uc-rbody">
-    //       <span>个人账户开户失败，请重新尝试 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
-    //     </div>
-    //   );
-    // }
-    // if (!this.props.personalStatus) {
-    //   return (
-    //     <div className="fr uc-rbody">
-    //       <span>个人账户开户中，请稍后查看</span>
-    //     </div>
-    //   );
-    // }
-    // if (!this.props.personalStatus) {
-    //   return (
-    //     <div className="fr uc-rbody">
-    //       <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
-    //     </div>
-    //   );
-    // }
+    if (!this.props.personal) {
+      return (
+        <div className="fr uc-rbody">
+          <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+        </div>
+      );
+    }
     return (
       <div className="fr uc-rbody">
         <div className="ptit">

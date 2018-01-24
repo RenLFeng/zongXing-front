@@ -26,6 +26,7 @@ export default class UCenter extends React.Component {
   }
 
   componentDidMount() {
+
     setTimeout(()=>{
       this.initPage();
     }, 200);

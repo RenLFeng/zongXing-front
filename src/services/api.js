@@ -40,9 +40,14 @@ export async function getPersonAccount(param) {
   return request(`${BASE_URL}/zjb-website/account/info?ftype=${param}`)
 }
 
+// 获取企业信息的接口
+export async function getCompany() {
+  return request(`${BASE_URL}/zjb-website/company/self/show/num`)
+}
+
 // 提交开户资料的接口
 export async function commitOpenAccount(params) {
-  return request(`${BASE_URL}/zjb-website/project/login`,{
+  return request(`${BASE_URL}/zjb-dc/account/add`,{
     method: 'POST',
     body: {
       ...params,
