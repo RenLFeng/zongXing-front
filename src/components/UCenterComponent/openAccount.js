@@ -72,7 +72,6 @@ class FormComponent extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll( async (err, values) => {
       console.log(err);
-      this.commitSuccess();
       if (!err) {
         console.log('表单获取的数据', values);
         // 提交表单接口
@@ -80,8 +79,14 @@ class FormComponent extends React.Component {
         try {
           const response = await commitOpenAccount(values);
           if (response.code === 0) {
+            message.info(response.msg);
             // 提交表单接口回调成功使用
-            this.commitSuccess();
+            // this.commitSuccess();
+            if (values.accountType === '0') {
+              this.props.history.push(Path.PERSONAL_ACCOUNT);
+            } else if (values.accountType === '1') {
+              this.props.history.push(Path.COMPANY_ACCOUNT);
+            }
           } else {
             message.error(response.msg);
           }
@@ -179,7 +184,7 @@ class FormComponent extends React.Component {
           {...formItemLayout}
           label="开户类型"
         >
-          {getFieldDecorator('ftype', {
+          {getFieldDecorator('accountType', {
             rules:[{ required: true, message: '请选择开户类型' }],
             initialValue: this.props.type === '1' ? '1' : '0'
           })(
@@ -193,7 +198,7 @@ class FormComponent extends React.Component {
           {...formItemLayout}
           label="手机"
         >
-          {getFieldDecorator('ftelephone', {
+          {getFieldDecorator('mobile', {
             rules: [{ pattern: VER_PHONE, message: '手机格式不正确' },
               { required: true, message: '请填写手机' }],
           })(<Input maxLength={'20'}/>)}
@@ -202,7 +207,7 @@ class FormComponent extends React.Component {
           {...formItemLayout}
           label="邮箱"
         >
-          {getFieldDecorator('femail', {
+          {getFieldDecorator('email', {
             rules: [{ type: 'email', message: '邮箱格式不正确', },
               { required: true, message: '请填写邮箱' }],
           })(<Input maxLength={'40'}/>)}
@@ -213,7 +218,7 @@ class FormComponent extends React.Component {
               {...formItemLayout}
               label="真实姓名"
             >
-              {getFieldDecorator('freal_name', {
+              {getFieldDecorator('realName', {
                 rules: [{ required: true, message: '请填写真实姓名' }],
               })(<Input maxLength={'20'}/>)}
             </FormItem>
@@ -221,7 +226,7 @@ class FormComponent extends React.Component {
               {...formItemLayout}
               label="身份证号"
             >
-              {getFieldDecorator('idCard', {
+              {getFieldDecorator('identificationNo', {
                 rules: [
                   { pattern: ID_CORD, message: '身份证格式不正确' },
                   { required: true, message: '请填写身份证号' },
@@ -235,7 +240,7 @@ class FormComponent extends React.Component {
               {...formItemLayout}
               label="企业名称"
             >
-              {getFieldDecorator('companyName', {
+              {getFieldDecorator('realName', {
                 rules: [{ required: true, message: '请填写企业名称' }],
               })(<Input maxLength={'50'}/>)}
             </FormItem>
@@ -243,7 +248,7 @@ class FormComponent extends React.Component {
               {...formItemLayout}
               label="营业执照号"
             >
-              {getFieldDecorator('companyNumber', {
+              {getFieldDecorator('identificationNo', {
                 rules: [{ required: true, message: '请填写营业执照号' }],
               })(<Input maxLength={'60'} onChange={(e)=>this.setState({companyNumber: e.target.value})}/>)}
             </FormItem>

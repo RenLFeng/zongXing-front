@@ -9,6 +9,7 @@ import HomeIndex from './homePage/HomeIndex';
 import BusinessDiscount from './homePage/BusinessDiscount';
 import LoanCollege from './homePage/LoanCollege';
 import ProjectList from './homePage/ProjectList';
+import ProjectDetail from './homePage/ProjectDetail';
 import Risk from './homePage/Risk';
 import Login from './homePage/login';
 import Header from '../components/HomePageComponent/header';
@@ -48,6 +49,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/uCenter`} component={UCenter} />
             <Route path={`${match.path}/login`} component={Login} />
             <Route path={`${match.path}/risk`} component={Risk} />
+            <Route path={`${match.path}/projectDetail`} component={ProjectDetail} />
           </Switch>
         <Footer/>
 			</div>

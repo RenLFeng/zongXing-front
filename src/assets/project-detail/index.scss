@@ -1,0 +1,116 @@
+@import '../common/_var.scss';
+@import 'images';
+@import './_jiekuan.scss';
+@import './_zixun.scss';
+@import 'genzong';
+@import './_licheng.scss';
+@import './_right.scss';
+@import 'form';
+@import 'data';
+
+.pd-head {
+    .video {
+        position: absolute;
+        left: 38px;
+        top: 200px;
+        width: 476px;
+        height: 270px;
+    }
+    .info {
+        position: absolute;
+        right: 0;
+        top: 200px;
+        width: 666px;
+        color: #fff;
+        .tit {
+            font-size: 30px;
+            padding-bottom: 34px;
+            border-bottom: 2px solid #fff;
+            line-height: 100%;
+        }
+        .user {
+            padding-left: 90px;
+            height: 136px;
+            position: relative;
+            .av {
+                position: absolute;
+                left: 0;
+                top: 30px;
+                width: 72px;
+                height: 72px;
+                border-radius: 100%;
+            }
+            .t1 {
+                padding-top: 30px;
+                font-size: 18px;
+                line-height: 46px;
+            }
+        }
+        .data {
+            background: url(../img/project-detail/head_bg.png) no-repeat;
+            background-size: cover;
+            padding: 30px 0;
+            &>div {
+                float: left;
+                width: 32%;
+                border-left: 1px solid #fff;
+                text-align: center;
+                &:first-child {
+                    border-left: none;
+                }
+                .t1 {
+                    font-size: 16px;
+                }
+                .t2 {
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}
+
+#bigpic {
+  background-image:url(../img/project-detail/pic4.png)
+}
+.pd-body {
+    padding: 50px 0 100px 0;
+    &>.lbody {
+        width: 774px;
+        padding: 30px 26px 50px 26px;
+        position: relative;
+        .tnav {
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 38px;
+            a {
+                width: 158px;
+                text-align: center;
+                line-height: 50px;
+                font-size: 20px;
+                border-bottom: 6px solid #fff;
+                &:hover,&.hover {
+                    color: $f90;
+                    &>em {
+                        background-color: $f90;
+                    }
+                }
+                &.hover {
+                    border-bottom-color: $f90;
+                }
+                &>em {
+                    background-color: #000;
+                    color: #fff;
+                    font-size: 12px;
+                    line-height: 1em;
+                    padding: 3px 10px;
+                    border-radius: 10px;
+                    position: relative;
+                    top: -2px;
+                    left: 6px;
+                }
+            }
+        }
+    }
+    &>.rbody {
+        width: 390px;
+    }
+}
