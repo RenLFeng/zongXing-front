@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { IMG_BASE_URL } from '../../common/systemParam';
 import moment from 'moment';
 import { conversionTime } from '../../common/systemParam';
-
+import Path from '../../common/pagePath';
 @connect((state) => ({
   homeProject: state.project.homeProjectList
 }))
@@ -23,6 +23,11 @@ export default class Project extends React.Component {
     });
   }
 
+  jumpProjectDetail(fId) {
+    $(window).scrollTop(0);
+    this.props.history.push(Path.PROJECT_DETAIL+`/${fId}`);
+  }
+
   render() {
     const {path}  = this.props.param;
     return (
@@ -37,7 +42,7 @@ export default class Project extends React.Component {
             this.props.homeProject.map((data) => {
               let dateCode = moment(data.fCreateDate).format('YYYY') + moment(data.fCreateDate).format('MM');
               return (
-                <div key={data.fId}>
+                <div style={{ cursor:'pointer' }} key={data.fId} onClick={()=>this.jumpProjectDetail(data.fId)}>
                   <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${data.fProjectNo}/${data.fCardPicPath}`} />
                   <p className="name">{data.fName}</p>
                   <div className="circle" data-value={data.fPercent}/>

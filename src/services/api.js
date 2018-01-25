@@ -55,6 +55,10 @@ export async function commitOpenAccount(params) {
   })
 }
 
+export async function getProjectDetail(param) {
+  return request(`${BASE_URL}/zjb-website/projectInfo/getOne/${param}`);
+}
+
 // 存储用户基础信息的接口
 export async function saveUserBase(params) {
   return request(`${BASE_URL}/zjb-website/userInfo/saveUserInfo`, {

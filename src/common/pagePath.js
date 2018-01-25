@@ -11,4 +11,6 @@ export default {
   BANK_CARD_CREATE: '/index/uCenter/bankCardCreate',  //银行卡绑定
   ACCOUNT_RECHARGE: '/index/uCenter/recharge',  // 充值  type: 0 个人, 1 企业
   ACCOUNT_WITHDRAWALS: '/index/uCenter/withdrawals',  // 提现  type: 0 个人, 1 企业
+  PROJECT_LIST: '/index/projectLoan',  // 项目列表页面
+  PROJECT_DETAIL: '/index/projectDetail',  // 项目列表页面
 }

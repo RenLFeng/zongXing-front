@@ -4,9 +4,9 @@
 import React from 'react';
 import Login from '../LoginComponent/login';
 import { Link } from 'dva/router';
-import { IMG_BASE_URL } from '../../common/systemParam';
+import { IMG_BASE_URL, conversionTime } from '../../common/systemParam';
+import Path from '../../common/pagePath';
 import moment from 'moment';
-import { conversionTime } from '../../common/systemParam';
 
 export default class NewPro extends React.Component {
   constructor(props) {
@@ -17,6 +17,10 @@ export default class NewPro extends React.Component {
     this.props.fetchProject();
   }
 
+  jumpProjectDetail(fId) {
+    this.props.history.push(Path.PROJECT_DETAIL+`/${fId}`);
+    $(window).scrollTop(0);
+  }
   render() {
     const { proNewList } = this.props;
     return (
@@ -31,7 +35,7 @@ export default class NewPro extends React.Component {
             proNewList.map((data) => {
               let dateCode = moment(data.fCreateDate).format('YYYY') + moment(data.fCreateDate).format('MM');
               return (
-                <div key={data.fId}>
+                <div style={{ cursor: 'pointer' }} key={data.fId} onClick={()=>this.jumpProjectDetail(data.fId)}>
                   <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${data.fProjectNo}/${data.fCardPicPath}`} />
                   <p className="name">{data.fName}</p>
                   <div className="circle" data-value={data.fPercent}/>

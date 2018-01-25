@@ -89,8 +89,8 @@ export default class ProjectLoan extends React.Component {
     const pageData = pageShows(currentPage, maxPage);
     return (
       <div>
-        <NewPro proNewList={newProjectList} fetchProject={fetchProject} match={this.props.match}/>
-        <CompletePro />
+        <NewPro proNewList={newProjectList} fetchProject={fetchProject} match={this.props.match} history={this.props.history}/>
+        <CompletePro history={this.props.history}/>
         {/*翻译页脚实现*/}
         <div className="bgw">
           <div className="w tright">

@@ -76,7 +76,7 @@ export default class ProjectLoan extends React.Component {
   }
 
   render() {
-    const {currentPage, maxPage, match} = this.props;
+    const {currentPage, maxPage, match, history} = this.props;
     const  ProjectListComponent = withRouter(({history,location,match})=>{
       return <ProjectList
         leaveCode={this.state.leaveCode}
@@ -84,6 +84,7 @@ export default class ProjectLoan extends React.Component {
         period={this.state.period}
         projectName={this.state.projectName}
         match={match}
+        history={history}
       />
     });
     return (
@@ -91,7 +92,7 @@ export default class ProjectLoan extends React.Component {
         <Search fetchProject={this.fetchNewPro} />
         <Switch>
           <Route path={`${match.path}`} exact render={()=>{
-            return (<ProjectComList newProjectList={this.state.newProList} fetchProject={this.fetchNewPro} match={match}/>)
+            return (<ProjectComList newProjectList={this.state.newProList} fetchProject={this.fetchNewPro} match={match} history={history} />)
           }} />
           <Route path={`${match.path}/page/:page`} component={ProjectListComponent} />
         </Switch>

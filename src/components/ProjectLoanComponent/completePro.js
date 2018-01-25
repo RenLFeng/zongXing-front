@@ -7,16 +7,23 @@ import { Link } from 'dva/router';
 import { connect } from 'dva';
 import moment from 'moment';
 import {conversionTime, IMG_BASE_URL} from '../../common/systemParam';
-
+import Path from '../../common/pagePath';
 @connect((state) => ({
   projectList: state.project.completeProjectList.list
 }))
-export default class Search extends React.Component {
+export default class CompletePro extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  jumpDetail(fId) {
+    $(window).scrollTop(0);
+    this.props.history.push(Path.PROJECT_DETAIL+`/${fId}`);
+  }
+
   render() {
-    const {projectList} = this.props;
+    const {projectList, history} = this.props;
+    console.log(this.props);
     return (
       <div className="section sec2" id="completeAnchor">
         <div className="w center">
@@ -29,7 +36,7 @@ export default class Search extends React.Component {
             projectList.map((data) => {
               let dateCode = moment(data.fCreateDate).format('YYYY') + moment(data.fCreateDate).format('MM');
               return (
-                <div key={data.fId}>
+                <div style={{ cursor:'pointer' }} key={data.fId} onClick={()=>this.jumpDetail(data.fId)}>
                   <img className="pic"
                        src={`${IMG_BASE_URL}project/${dateCode}/${data.fProjectNo}/${data.fCardPicPath}`}/>
                   <p className="name">{data.fName}</p>

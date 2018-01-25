@@ -2,6 +2,7 @@ import React from 'react';
 
 import { startAnimate } from '../../assets/project/index';
 import { pageShows } from '../../common/systemParam';
+import Path from '../../common/pagePath';
 import { getProjectList } from '../../services/api';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
@@ -53,15 +54,22 @@ export default class ProjectList extends React.Component {
             newProList: data.data.projectCardVos,
             currentPage: this.props.match.params.page,
             maxPage: data.data.pageCount
-          })
+          });
+          startAnimate();
         } else {
           console.log(data.msg);
         }
       })
   }
 
+  jumpProjectDetail(fId) {
+    this.props.history.push(Path.PROJECT_DETAIL+`/${fId}`);
+    $(window).scrollTop(0);
+  }
+
   render() {
     const {currentPage, maxPage, newProList} = this.state;
+    console.log(this.props);
     const pageData = pageShows(currentPage, maxPage);
     return (
       <div className="sec2" style={{paddingTop: '100px',backgroundColor:'#fff'}}>
@@ -72,7 +80,7 @@ export default class ProjectList extends React.Component {
               newProList.map((data) => {
                 let dateCode = moment(data.fCreateDate).format('YYYY') + moment(data.fCreateDate).format('MM');
                 return (
-                  <div key={data.fId}>
+                  <div key={data.fId} onClick={()=>this.jumpProjectDetail(data.fId)}>
                     <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${data.fProjectNo}/${data.fCardPicPath}`} />
                     <p className="name">{data.fName}</p>
                     <div className="circle" data-value={data.fPercent}/>

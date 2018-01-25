@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
+import { Link } from 'dva/router';
 import { IMG_BASE_URL } from '../../common/systemParam';
 import { initPage } from '../../assets/home/index';
+import Path from '../../common/pagePath';
 
 @connect((state) => ({
   systemData: state.systemData
@@ -33,7 +35,7 @@ export default class Banner extends React.Component {
               return (
                 <div className="swiper-slide autosize" key={data.fId}>
                   <img className="big" src={`${IMG_BASE_URL}${data.fPath}`} alt={data.fDesc}/>
-                  <a className="btn big" href=""><i>我要投资</i></a>
+                  <Link className="btn big" to={Path.PROJECT_LIST}><i>我要投资</i></Link>
                 </div>
               );
             })

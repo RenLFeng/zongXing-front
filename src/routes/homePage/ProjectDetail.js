@@ -6,15 +6,32 @@ import SecConsultation from '../../components/ProjectDetailComponent/sec-consult
 import SecTrack from '../../components/ProjectDetailComponent/sec-track';
 import SecCourse from '../../components/ProjectDetailComponent/sec-course';
 import Right from '../../components/ProjectDetailComponent/right';
-
+import {getProjectDetail} from '../../services/api';
+import { message } from 'antd'
 export default class ProjectDetail extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      projectDetail: null
+    }
+  }
   componentDidMount() {
+    this.fetchProjectDetail();
     initPage();
   }
 
   componentWillUnmount() {
     $(window).off('scroll');
+  }
+
+  async fetchProjectDetail() {
+    const {projectId} = this.props.match.params;
+    const response = await getProjectDetail(projectId);
+    if (response.code === 0) {
+
+    } else {
+      message.error(response.msg);
+    }
   }
 
   render() {

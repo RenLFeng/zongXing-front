@@ -20,7 +20,7 @@ export default class HomeIndex extends React.Component {
       <div className="body">
         <Banner />
         <Company />
-        <Project param={this.props.match}/>
+        <Project param={this.props.match} history={this.props.history}/>
         <div className="section sec-touzi">
           <div className="w">
             <div className="center sec1">

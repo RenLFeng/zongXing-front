@@ -64,7 +64,7 @@ export default function request(url, options) {
     'x-access-token': token,
     ...newOptions.headers,
   };
-
+  console.log(url);
   return fetch(url, newOptions)
     .then(checkStatus)
     .then((response) => {
