@@ -1,24 +1,25 @@
 import React from 'react';
+import { Icon,Button } from 'antd';
 import '../../assets/Risk/rick.scss';
 
 export default class Risk extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      text:'合规运营'
-    }
+    this.state = {
+      text: '合规运营',
+    };
   }
 
-  a(x){
+  a(x) {
     this.setState({
-      text:x
-  });
+      text: x,
+    });
   }
 
   render() {
     return (
         <div className="body1" >
-          {/*导航栏*/}
+          {/* 导航栏 */}
           <div className="nav">
             <div className="nav_">
               <a onClick={() => this.a('合规运营')}>合规运营</a>
@@ -31,20 +32,17 @@ export default class Risk extends React.Component {
             </div>
           </div>
 
-          {/*页面1*/}
+          {/* 页面1 */}
           { this.state.text === '合规运营' ?
             <div className="page1">
 
-              {/*第一部分*/}
+              {/* 第一部分 */}
               <div className="operation">
                 <div className="title">
                   <h1>合规运营</h1>
-                  <div className="hover">
-
-                  </div>
+                  <div className="hover" />
                 </div>
-                <p
-                  className="word">积木盒子一直秉承合规发展的原则，严格遵守各项法律、法规、政策及集团的各项内控制度，为借贷双方提供专业的居间撮合服务，借贷交易真实合法，项目披露尽职合规，让投资者安心。同时，积木盒子也积极参与行业监管政策、规则的讨论与交流，努力推动整个行业的健康发展。</p>
+                <p className="word"> 积木盒子一直秉承合规发展的原则，严格遵守各项法律、法规、政策及集团的各项内控制度，为借贷双方提供专业的居间撮合服务，借贷交易真实合法，项目披露尽职合规，让投资者安心。同时，积木盒子也积极参与行业监管政策、规则的讨论与交流，努力推动整个行业的健康发展。</p>
                 <div className="num">
                   <div className="num_1">
                     <span className="big_w">135456</span>
@@ -64,36 +62,34 @@ export default class Risk extends React.Component {
                   </div>
                 </div>
               </div>
-              {/*第二部分*/}
+              {/* 第二部分 */}
               <div className="content">
                 <div className="img_1">
-                  <h2>法律地位和 <br/>
+                  <h2>法律地位和 <br />
                     服务内容合法性</h2>
                   <p>合法机构 合法服务</p>
                 </div>
                 <div className="text">
-                  <div
-                    className="text_">根据《网络借贷信息中介机构业务活动管理暂行办法》第2条规定，网络借贷信息中介机构是指依法设立，专门从事网络借贷信息中介业务活动的金融信息中介公司。该类机构以互联网为主要渠道，为借款人与出借人（即贷款人）实现直接借贷提供信息搜集、信息公布、资信评估、信息交互、借贷撮合等服务。
+                  <div className="text_" >根据《网络借贷信息中介机构业务活动管理暂行办法》第2条规定，网络借贷信息中介机构是指依法设立，专门从事网络借贷信息中介业务活动的金融信息中介公司。该类机构以互联网为主要渠道，为借款人与出借人（即贷款人）实现直接借贷提供信息搜集、信息公布、资信评估、信息交互、借贷撮合等服务。
                   </div>
                 </div>
               </div>
-              {/*第三部分*/}
+              {/* 第三部分 */}
               <div className="content">
                 <div className="img_2">
-                  <h2>出借人取得<br/>
+                  <h2>出借人取得<br />
                     收益的合法性</h2>
                   <p>收益合法，受法律保护</p>
                 </div>
                 <div className="text">
-                  <div
-                    className="text_">《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》第一条明确指出，“本规定所称的民间借贷，是指自然人、法人、其他组织之间及其相互之间进行资金融通的行为”，《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》第二十六条：“借贷双方约定的利率未超过年利率24%，出借人请求借款人按照约定的利率支付利息的，人民法院应予支持。”积木盒子平台上资金借出方向资金借入方出借资金并按照约定利率收取利息，且该等利率未超过年利率24%，为合法利息收益，受到法律保护。
+                  <div className="text_" >《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》第一条明确指出，“本规定所称的民间借贷，是指自然人、法人、其他组织之间及其相互之间进行资金融通的行为”，《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》第二十六条：“借贷双方约定的利率未超过年利率24%，出借人请求借款人按照约定的利率支付利息的，人民法院应予支持。”积木盒子平台上资金借出方向资金借入方出借资金并按照约定利率收取利息，且该等利率未超过年利率24%，为合法利息收益，受到法律保护。
                   </div>
                 </div>
               </div>
-              {/*第四部分*/}
+              {/* 第四部分 */}
               <div className="content">
                 <div className="img_3">
-                  <h2>积木盒子网站<br/>
+                  <h2>积木盒子网站<br />
                     生成电子合同合法性</h2>
                   <p>电子合同合法有效可执行</p>
                 </div>
@@ -104,12 +100,12 @@ export default class Risk extends React.Component {
               </div>
             </div> : null
           }
-          {/*页面2*/}
+          {/* 页面 2*/}
           {this.state.text === '资金存管' ?
-            <Money/> : null
+            <Money /> : null
           }
 
-          {/*页面3*/}
+          {/* 页面 3*/}
           {this.state.text === '风险控制' ?
             <div className="control">
               <div className="control_">
@@ -136,14 +132,15 @@ export default class Risk extends React.Component {
                 </div>
                 <div className="part_1">
                   <div className="part_1_l">
-                    <div className="img"><img src={require('../../assets/img/rick/3-3.png')} alt=""/></div>
+                    <div className="img"><img src={require('../../assets/img/rick/3-3.png')} alt="" /></div>
                     <div className="text_3">
                       <span>大数据风控甄别风险</span>
-                      <p>通过新一代智能大数据风控引擎，经由借款人授权从数十个数据源调取并验证借款人个人信息、消费行为信息、社交信息、第三方征信信息、以及交易环境设备信息等近千个信息维度，对借款人的信用风险、欺诈风险以及产品风险进行全面评估。</p>
+                      <p>通过新一代智能大数据风控引擎，经由借款人授权从数十个数据源调取并验证借款人个人信息、消费行为信息、社交信息、第三方征信信息、以及交易环境设备信息等近千个信息维度，对借款人的信用风险、欺诈风险以及产品风险进行全面评估。
+                      </p>
                     </div>
                   </div>
                   <div className="part_1_r">
-                    <div className="img"><img src={require('../../assets/img/rick/3-4.png')} alt=""/></div>
+                    <div className="img"><img src={require('../../assets/img/rick/3-4.png')} alt="" /></div>
                     <div className="text_3">
                       <span>交易结构设计打造资金闭环</span>
                       <p>融资需求基于特定的消费情景，在传统风险控制技术之外，通过将借款和还款资金内嵌于交易流程的结构设计，确保融资需求的真实、合法，锁定还款来源，降低融资人道德风险和操作风险。</p>
@@ -156,22 +153,22 @@ export default class Risk extends React.Component {
                 <p className="word">积木盒子建立了一套风险预警系统，针对不同的风险，制定预警监控指标，并根据预警信号进行风险预警处理。</p>
                 <div className="system">
                   <div className="system_1">
-                    <div className="img"><img src={require('../../assets/img/rick/3-5.png')} alt=""/></div>
+                    <div className="img"><img src={require('../../assets/img/rick/3-5.png')} alt="" /></div>
                     <p className="title">日常风险预警管理</p>
                     <p className="text">监控平台各类资金的流入、流出，跟踪穹顶保证金变化，每日对外披露，定时对各类资产质量进行分析，及时掌握各类资产质量变化情况，采取相关应对措施。</p>
                   </div>
                   <div className="system_1">
-                    <div className="img"><img src={require('../../assets/img/rick/3-6.png')} alt=""/></div>
+                    <div className="img"><img src={require('../../assets/img/rick/3-6.png')} alt="" /></div>
                     <p className="title">项目约定还款日前</p>
                     <p className="text">通过短信、电话等方式提醒客户及时还款。</p>
                   </div>
                   <div className="system_1">
-                    <div className="img"><img src={require('../../assets/img/rick/3-7.png')} alt=""/></div>
+                    <div className="img"><img src={require('../../assets/img/rick/3-7.png')} alt="" /></div>
                     <p className="title">项目逾期-早期</p>
                     <p className="text">积极配合合作渠道进行电话、短信、信函等催收，并做好相应的逾期管理。</p>
                   </div>
                   <div className="system_1">
-                    <div className="img"><img src={require('../../assets/img/rick/3-8.png')} alt=""/></div>
+                    <div className="img"><img src={require('../../assets/img/rick/3-8.png')} alt="" /></div>
                     <p className="title">项目逾期-后期</p>
                     <p className="text">准备逾期项目证明、资金流向等资料，协助相关方面进行法律诉讼追偿逾期款项或委托第三方专业机构进行实地外访与属地催收。</p>
                   </div>
@@ -187,7 +184,7 @@ export default class Risk extends React.Component {
                 </p>
               </div>
               <div className="plan">
-                {/*数据*/}
+                {/* 数据 */}
                 <div className="data">
                   <div className="data_1">
                     <span className="text">穹顶储备资金：</span>
@@ -202,7 +199,7 @@ export default class Risk extends React.Component {
                     <span className="num_3">807,592,370.15</span>
                   </div>
                 </div>
-                {/*问题*/}
+                {/* 问题 */}
                 <div className="question">
                   <span>穹顶计划是如何运作的？</span>
                   <p className="word2_">如果发生项目违约，穹顶计划最迟将在该项目到期日之后的第30个自然日当日收购该项目债权。在收购债权动作发生之前占用时间为操作准备期，期间的利息按照该项目原定利率支付投资人。穹顶计划的资金具体数额，会定期以银行资信证明的方式进行披露，以供投资人监督。</p>
@@ -217,20 +214,22 @@ export default class Risk extends React.Component {
                   <h1>法律援助</h1>
                   <div className="hover"></div>
                 </div>
-                <p
-                  className="word">积木盒子从公司自有资金中划拨300万元人民币作为法律援助基金，法律援助基金专户存储，专项用于为积木盒子平台上非自担风险融资项目提供法律支持，如非自担风险项目中的任一融资项目发生争议事项需提起诉讼或仲裁程序解决争议的，积木盒子将启用法律援助基金为投资人聘请专业律师代表投资人处理相关法律争议，协助投资人追讨违约债权，以保护相关投资人的权益。积木盒子承诺维持法律援助基金数额不低于300万元人民币，如因支付法律援助费用导致法律援助基金不足的，积木盒子将及时补足。</p>
+                <p className="word">积木盒子从公司自有资金中划拨300万元人民币作为法律援助基金，法律援助基金专户存储，专项用于为积木盒子平台上非自担风险融资项目提供法律支持，如非自担风险项目中的任一融资项目发生争议事项需提起诉讼或仲裁程序解决争议的，积木盒子将启用法律援助基金为投资人聘请专业律师代表投资人处理相关法律争议，协助投资人追讨违约债权，以保护相关投资人的权益。积木盒子承诺维持法律援助基金数额不低于300万元人民币，如因支付法律援助费用导致法律援助基金不足的，积木盒子将及时补足。</p>
               </div>
             </div> : null
           }
 
-          {/*页面4*/}
+          {/* 页面 4*/}
           {this.state.text === '信息安全' ?
-            <Information/> : null
+            <Information /> : null
+          }
+
+          {/* 充值界面 */}
+          {this.state.text === '合规运营' ?
+            <Recharge /> : null
           }
 
         </div>
-
-
     );
   }
 }
@@ -273,8 +272,8 @@ class Money extends React.Component {
 }
 
 class Information extends React.Component {
-  render(){
-    return(
+  render() {
+    return (
       <div className="information">
         <div className="title">
           <h1>信息安全</h1>
@@ -295,6 +294,27 @@ class Information extends React.Component {
           <p>信息系统安全等级保护备案证明</p>
           <div className="img"></div>
         </div>
+      </div>
+    );
+  }
+}
+
+
+
+class Recharge extends React.Component {
+  render() {
+    return (
+      <div className="recharge">
+        <div className="page">
+          <img src={require('../../assets/img/login/ic_close.png')} className="cancle" alt="" />
+          <div className="content">
+            <div className="check"><Icon type="check-circle" style={{ fontSize: '40px', color: 'orange' }} /></div>
+            <p className="prompt">请在新页面完成充值</p>
+            <Button>充值成功</Button>
+            <a href=""> 充值遇到的问题> </a>
+          </div>
+        </div>
+        <div className="line"></div>
       </div>
     );
   }
