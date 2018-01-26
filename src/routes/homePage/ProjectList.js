@@ -59,7 +59,7 @@ export default class ProjectList extends React.Component {
         } else {
           console.log(data.msg);
         }
-      })
+      });
   }
 
   jumpProjectDetail(fId) {
@@ -68,8 +68,7 @@ export default class ProjectList extends React.Component {
   }
 
   render() {
-    const {currentPage, maxPage, newProList} = this.state;
-    console.log(this.props);
+    const { currentPage, maxPage, newProList } = this.state;
     const pageData = pageShows(currentPage, maxPage);
     return (
       <div className="sec2" style={{paddingTop: '100px',backgroundColor:'#fff'}}>
@@ -86,7 +85,7 @@ export default class ProjectList extends React.Component {
                     <div className="circle" data-value={data.fPercent}/>
                     <i className="price">￥{data.fCreditMoney}</i>
                     <i className="city">{data.fCityName}</i>
-                    <div className="line"/>
+                    <div className="line" />
                     <i className="botic botic1">年化利率<em>{data.fRateLast}%</em></i>
                     <i className="botic botic2">剩余时间<em>{conversionTime(data.fRemainingSecond)}</em></i>
                     <i className="level">{data.fLeveName}</i>
