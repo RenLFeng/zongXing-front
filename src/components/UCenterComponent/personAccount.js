@@ -136,7 +136,7 @@ export default class PersonAccount extends React.Component {
         }]
       },
       // 是否已经开户的标识 TODO: 需要存在redux中获取
-    }
+    };
     this.jumpRecharge = this.jumpRecharge.bind(this);
   }
 

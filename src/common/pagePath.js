@@ -13,4 +13,5 @@ export default {
   ACCOUNT_WITHDRAWALS: '/index/uCenter/withdrawals',  // 提现  type: 0 个人, 1 企业
   PROJECT_LIST: '/index/projectLoan',  // 项目列表页面
   PROJECT_DETAIL: '/index/projectDetail',  // 项目列表页面
+  STATION_MESSAGE: '/index/uCenter/message',  // 站内消息页面
 }
