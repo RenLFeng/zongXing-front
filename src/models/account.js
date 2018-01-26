@@ -1,9 +1,13 @@
-import {getPersonAccount} from '../services/api';
+import {getPersonAccount, getPersonAccountNew} from '../services/api';
 
 export default {
   namespace: 'account',
   state: {
-    personal: null,
+    personal: {
+      accountDynamicVos: [],
+      plan: null,
+      totalAssets: null
+    },
     company: [],
     personalStatus: false,
     companyStatus: false,
@@ -13,22 +17,14 @@ export default {
     *getCompanyNum({payload}){
 
     },
-    *getAccount({payload}, {call, put}) {
+    *getPersonalAccount({payload}, {call, put}) {
       console.log(payload);
-      const response = yield call(getPersonAccount, payload);
+      const response = yield call(getPersonAccountNew, payload);
       if (response.code === 0) {
-        if (payload === '0') {
-          yield put({
-            type: 'savePersonal',
-            payload: response.data.accountInfo
-          });
-        }
-        if (payload === '1') {
-          yield put({
-            type: 'saveCompany',
-            payload: response.data.accountInfos
-          });
-        }
+        yield put({
+          type: 'savePersonal',
+          payload: response.data
+        });
       }
     },
   },

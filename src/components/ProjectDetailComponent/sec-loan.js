@@ -2,6 +2,19 @@ import React from 'react';
 import Images from './images';
 
 export default class SecLoan extends React.Component {
+
+  componentDidMount() {
+    const map = new AMap.Map('container',{
+      resizeEnable: true,
+      zoom: 16,
+      center: [108.938497,34.27123]
+    });
+    const marker = new AMap.Marker({
+      position: [108.938497, 34.27123]
+    });
+    marker.setMap(map);
+  }
+
   render() {
     return (
       <div>
@@ -70,9 +83,11 @@ export default class SecLoan extends React.Component {
           </div>
           <div className="textbox border">
             <i className="tit">我的位置</i>
-            <p>
-              <img src={require('../../assets/img/project-detail/map.png')} />
-            </p>
+            <div>
+              <div id="container">
+
+              </div>
+            </div>
           </div>
         </div>
 

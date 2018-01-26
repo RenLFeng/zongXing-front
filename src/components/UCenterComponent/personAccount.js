@@ -143,8 +143,8 @@ export default class PersonAccount extends React.Component {
   componentDidMount() {
     // 获取个人账户信息
     this.props.dispatch({
-      type: 'account/getAccount',
-      payload: '0'
+      type: 'account/getPersonalAccount',
+      payload: null
     });
   }
 
