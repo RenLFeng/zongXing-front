@@ -1,7 +1,88 @@
 import React from 'react';
+import { getProQuestion, addQuestion } from '../../services/api';
+import {message, Button} from 'antd';
+import {connect} from 'dva';
 
+
+@connect((state) => (({
+  loginStatus: state.login.status
+})))
 export default class SecTrack extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      projectId: '',
+      allQuestion: [], // 所有问题的集合
+      anonymous: false, // 匿名回复
+    };
+  }
+
+  componentDidMount() {
+    this.fetchQuestion();
+  }
+
+  async fetchQuestion() {
+    const response = await getProQuestion(this.props.projectId);
+    if (response.code === 0) {
+      this.setState({ allQuestion: response.data});
+    } else {
+      message.error(response.msg);
+    }
+  }
+
+  // 发布问题
+  async sendQuestion() {
+    const { topicText } = this.state;
+    if (!this.judgeLogin())
+      return;
+    if (!topicText) {
+      message.warning('问题内容不能为空');
+      return;
+    }
+    this.setState({sendLoading: true});
+
+    try {
+      // TODO: 问题对象生成
+
+      const response = await addQuestion();
+      this.setState({sendLoading: false});
+      if (response.code === 0) {
+        // 发布话题成功之后 清空话题框 刷新全部话题列表
+        this.setState({topicText: ''});
+        message.info(response.msg);
+        this.fetchQuestion();
+      } else {
+        message.error(response.msg);
+      }
+    } catch(e) {
+      message.error('网络异常，请重试');
+      this.setState({sendLoading: false});
+    }
+  }
+
+  // 判断是否登录
+  judgeLogin() {
+    if (this.props.loginStatus) {
+      return true;
+    } else {
+      message.warning('请先登录');
+      return false;
+    }
+  }
+
+  async getAnswerbyQaId(questionId) {
+    const response = await getAnswerbyQaId(questionId);
+    if (response.code === 0) {
+      this.setState({
+        [`answer${questionId}`]: response.data
+      });
+    } else {
+      message.error(response.msg);
+    }
+  }
+
   render() {
+    const { anonymous, topicText, sendLoading } = this.state;
     return (
       <div>
         <div className="lich-box1 border">
@@ -51,11 +132,11 @@ export default class SecTrack extends React.Component {
         </div>
         <div className="cmt-box1">
           <p className="f18">有什么疑问想告诉项目发起人的？</p>
-          <textarea className="put" rows="5" placeholder="输入您遇到的问题内容..." />
+          <textarea className="put" rows="5" placeholder="输入您遇到的问题内容..." value={topicText} onChange={(e)=>this.setState({topicText: e.target.value})}/>
           <p className="tright">
             <i className="fl c6">还可以输入<em>240</em>字</i>
-            <label><input type="checkbox" />匿名提问</label>
-            <a className="btn f18">发布问题</a>
+            <label><input type="checkbox" checked={anonymous} onChange={()=>this.setState({anonymous: !anonymous})}/>匿名提问</label>
+            <Button type="primary" loading={!!sendLoading} style={{marginLeft: 10, borderRadius: 3}} onClick={()=>this.sendQuestion()}>发布问题</Button>
           </p>
         </div>
 

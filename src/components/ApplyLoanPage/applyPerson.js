@@ -1,4 +1,12 @@
 import React from 'react';
+import ImgUpload from '../../components/UpLoad/imgUpload';
+
+const styles = {
+  imgDiv: {
+    display: 'flex',
+    width: 814
+  }
+};
 
 export default class ApplyPerson extends React.Component {
   render() {
@@ -152,16 +160,10 @@ export default class ApplyPerson extends React.Component {
           <div className="tit">
             <i>身份证上传</i>
           </div>
-          <div className="imgbox border">
-            <a className={`imgd ${idCardPositive.length > 0 ? 'up' : ''}`}>
-              {idCardPositive.length > 0 ? <img src={idCardPositive} />: null }
-              <i>上传身份证正面</i></a>
-            <a className={`imgd ${idCardOpposite.length > 0 ? 'up' : ''}`}>
-              {idCardOpposite.length > 0 ? <img src={idCardOpposite} />: null }
-              <i>上传身份证反面</i></a>
-            <a className={`imgd ${idCardHold.length > 0 ? 'up' : ''}`}>
-              {idCardHold.length > 0 ? <img src={idCardHold} />: null }
-              <i>上传手持身份证照片</i></a>
+          <div className="imgbox border" style={styles.imgDiv}>
+            <ImgUpload />
+            <ImgUpload />
+            <ImgUpload />
           </div>
         </div>
         <div className="row2 mt20 clearfix">
