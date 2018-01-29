@@ -112,7 +112,7 @@ export default class Risk extends React.Component {
               <div className="control_">
                 <div className="title">
                   <h1>风险控制</h1>
-                  <div className="hover"></div>
+                  <div className="hover" />
                 </div>
                 <p className="word1">积木盒子建立了完善的风险架构，同时针对不同类型的产品特点和风险特征分别建立了相对应的产品管理制度和项目贷前、贷中、贷后的管理制度和风险评估流程，防范欺诈风险和信用风险。</p>
                 <div className="part_1">

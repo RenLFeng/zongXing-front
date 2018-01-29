@@ -105,3 +105,18 @@ export async function regUser(params) {
 export async function rechargeTest() {
   return request(`http://zjb2.ngrok.xiaomiqiu.cn/loan/recharge`);
 }
+
+//获取消息列表
+export async function messageList(params) {
+  return request(`http://192.168.1.79:9002/notice/record/show/self`,{
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
+}
+//查看详情
+export async function isOrNot(params){
+  return request(`http://192.168.1.79:9002/notice/specify/read/${params}`);
+}
+
