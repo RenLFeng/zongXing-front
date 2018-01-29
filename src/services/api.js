@@ -130,3 +130,87 @@ export async function isOrNot(params){
   return request(`http://192.168.1.79:9002/notice/specify/read/${params}`);
 }
 
+// 获取一个问题下所有问题
+export async function getAnswerbyQaId(QaId) {
+  return request(`${BASE_URL}/zjb-website/answer/getOne/${QaId}`);
+}
+
+// 添加问题回复
+export async function addAnswer(params) {
+  return request(`${BASE_URL}/zjb-website/answer/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
+}
+
+// 获取一个项目下所有问题
+export async function getProQuestion(projectId) {
+  return request(`${BASE_URL}/zjb-website/projectQuestion/getOne/${projectId}`);
+}
+
+// 添加问题
+export async function addQuestion(params) {
+  return request(`${BASE_URL}/zjb-website/projectQuestion/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
+}
+
+// 一个项目下的所有话题
+export async function getProTopic(projectId) {
+  return request(`${BASE_URL}/zjb-website/projectTopic/getOne/${projectId}`);
+}
+
+// 添加话题问题
+export async function addQuestionTopic(params) {
+  return request(`${BASE_URL}/zjb-website/projectTopic/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
+}
+
+// 获取我的话题
+export async function getMyTopic(projectId) {
+  return request(`${BASE_URL}/zjb-website/projectTopic/myTopic/${projectId}`)
+}
+
+// 获取一个话题下的所有回复
+export async function getReplyByTopic(topicId) {
+  return request(`${BASE_URL}/zjb-website/projectTopicReply/getOne/${topicId}`)
+}
+
+// 添加回复
+export async function addReply(params) {
+  return request(`${BASE_URL}/zjb-website/projectTopicReply/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
+}
+
+// 查询项目历程
+export async function selectProJourney(projectId) {
+  return request(`${BASE_URL}/zjb-website/projectJourney/getOne/${projectId}`)
+}
+
+// 添加项目历程
+export async function addProJourney(params) {
+  return request(`${BASE_URL}/zjb-website/projectJourney/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
+}
+
+// 点赞
+export async function praise(journeyId) {
+  return request(`${BASE_URL}/zjb-website/projectJourney/praise/${journeyId}`)
+}
