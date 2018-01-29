@@ -40,6 +40,16 @@ export async function getPersonAccount(param) {
   return request(`${BASE_URL}/zjb-website/account/info?ftype=${param}`)
 }
 
+// 获取个人账户信息的接口
+export async function getPersonAccountNew(params) {
+  return request(`${BASE_URL}/zjb-website/account/show/info`,{
+    method: 'POST',
+    body: {
+      ...params
+    }
+  });
+}
+
 // 获取企业信息的接口
 export async function getCompany() {
   return request(`${BASE_URL}/zjb-website/company/self/show/num`)

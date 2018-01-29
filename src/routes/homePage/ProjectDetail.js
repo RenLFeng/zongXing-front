@@ -8,6 +8,7 @@ import SecCourse from '../../components/ProjectDetailComponent/sec-course';
 import Right from '../../components/ProjectDetailComponent/right';
 import {getProjectDetail} from '../../services/api';
 import { message } from 'antd'
+
 export default class ProjectDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,9 @@ export default class ProjectDetail extends React.Component {
     const {projectId} = this.props.match.params;
     const response = await getProjectDetail(projectId);
     if (response.code === 0) {
-
+      this.setState({
+        projectDetail: response.data
+      });
     } else {
       message.error(response.msg);
     }

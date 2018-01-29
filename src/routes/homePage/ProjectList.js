@@ -79,7 +79,7 @@ export default class ProjectList extends React.Component {
               newProList.map((data) => {
                 let dateCode = moment(data.fCreateDate).format('YYYY') + moment(data.fCreateDate).format('MM');
                 return (
-                  <div key={data.fId} onClick={()=>this.jumpProjectDetail(data.fId)}>
+                  <div style={{ cursor: 'pointer' }} key={data.fId} onClick={()=>this.jumpProjectDetail(data.fId)}>
                     <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${data.fProjectNo}/${data.fCardPicPath}`} />
                     <p className="name">{data.fName}</p>
                     <div className="circle" data-value={data.fPercent}/>

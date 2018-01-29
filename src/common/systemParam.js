@@ -55,6 +55,7 @@ export function conversionTime(initialTime) {
     return `${Math.floor(initialTime/MIN_SECONDS)}分钟`;
   }
   return `${initialTime}秒`;
+
 }
 
 //页数显示的转换 {}

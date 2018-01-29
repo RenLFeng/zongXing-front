@@ -1,6 +1,5 @@
 import React from 'react';
 import {Icon, message} from 'antd';
-import {Switch, Route, } from 'dva/router';
 import '../../../assets/MessageList/messageList.scss';
 import {messageList} from '../../../services/api.js';
 import moment from 'moment';
@@ -39,12 +38,12 @@ export default class MessageList extends React.Component {
         <ul>
           <li>
             <div className="list_title">
-              <div className="icon_">çŠ¶æ€</div>
-              <span className="title_I">ä¸»é¢˜</span>
-              <span className="title_time">å‘é€æ—¶é—´</span>
+              <div className="icon_">×´Ì¬</div>
+              <span className="title_I">Ö÷Ìâ</span>
+              <span className="title_time">·¢ËÍÊ±¼ä</span>
             </div>
           </li>
-          {/*éå†æ•°ç»„*/}
+          {/*±éÀúÊı×é*/}
           {this.state.arr.map((data, index) => {
             return (
               <li key={data.noticeId}>
@@ -58,7 +57,7 @@ export default class MessageList extends React.Component {
           })}
         </ul>
 
-        {/*åˆ†é¡µï¼šè·å–åˆ—è¡¨æ€»æ•°ï¼Œå¹¶ä¸”å’Œæ¯é¡µæ˜¾ç¤ºçš„æœ€å¤§æ¡æ•°å‘ä¸Šå–æ•´*/}
+        {/*·ÖÒ³£º»ñÈ¡ÁĞ±í×ÜÊı£¬²¢ÇÒºÍÃ¿Ò³ÏÔÊ¾µÄ×î´óÌõÊıÏòÉÏÈ¡Õû*/}
 
         <div className="pagination">
           <a className="num">&lt;</a>
