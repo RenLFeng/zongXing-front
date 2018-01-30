@@ -35,7 +35,7 @@ async getDate(x){
   render() {
     return (
       <div className="fr uc-rbody" >
-        <a onClick = {()=>this.props.history.push(STATION_MESSAGE)} className="back" style={{color:"#ff9900",fontWeight:"bold"}}> &lt; ·µ»ØÁÐ±í</a><hr/>
+        <a onClick = {()=>this.props.history.push(STATION_MESSAGE)} className="back" style={{color:"#ff9900",fontWeight:"bold"}}> &lt; è¿”å›žåˆ—è¡¨</a><hr/>
         <div className="message">
            <h2>{this.state.messageData.title}</h2>
            <h5>{moment(this.state.messageData.datetime).format('YYYY-MM-DD HH:mm:ss')}</h5>

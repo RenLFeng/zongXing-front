@@ -47,7 +47,7 @@ li{
 .pagination{
   height:37px;
   margin-left:600px;
-  .num{
+  a{
     width:35px;
     height:35px;
     text-align: center;
@@ -57,4 +57,10 @@ li{
     border:1px solid gray;
     margin-left: 3px;
   }
+}
+.hover_{
+  background: #3EE9C5;
+  border:1px solid #3EE9C5;
+  color: #fff;
+  font-weight: bold;
 }
