@@ -1,6 +1,38 @@
 import React from 'react';
+import {message} from 'antd';
+import {selectProJourney, praise} from '../../services/api';
+
 
 export default class SecCourse extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      courseArr: []
+    };
+  }
+
+  componentDidMount() {
+    this.fetchJourney();
+  }
+
+  async fetchJourney() {
+    const response = selectProJourney(this.props.projectId);
+    if (response.code === 0) {
+      this.setState({
+        courseArr: response.data
+      });
+    } else {
+      message.error(response.msg);
+    }
+  }
+
+  async clickHeard(id) {
+    this.setState({
+      [`heard${id}`]: true
+    });
+    praise(id);
+  }
+
   render() {
     return (
       <div>
@@ -22,7 +54,7 @@ export default class SecCourse extends React.Component {
                 <i className="y">2018</i><br /><i className="d">3-25</i>
               </p>
               <i className="cc"/>
-              <p className="text">50万借款审核通过，发布<em>232</em></p>
+              <p className="text">50万借款审核通过，发布<em style={{cursor:'pointer'}} onClick={()=>this.clickHeard()}>232</em></p>
             </div>
             <div className="item">
               <p className="date">

@@ -1,21 +1,160 @@
 import React from 'react';
+import {message, Button} from 'antd';
+import {getProTopic, getMyTopic, addQuestionTopic, addReply, getReplyByTopic} from '../../services/api';
+import {connect} from 'dva';
 
+
+@connect((state) => (({
+  loginStatus: state.login.status
+})))
 export default class SecConsultation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showTopic: 0, //0:全部话题 1:我的话题
+      allTopic: [], //全部话题数据
+      myTopic: [], //我的话题数据
+      projectId: '',
+      anonymous: false, // 是否匿名
+    }
+  }
+
+  componentDidMount() {
+    this.setState({projectId: this.props.projectId});
+    this.fetchAllTopic(this.props.projectId);
+    console.log(this.checkbox);
+  }
+
+  // 当话题类型切换时发生的请求
+  componentDidUpdate(nextProp, nextState) {
+    if (this.state.showTopic === 0 && nextState.showTopic === 1) {
+      this.fetchMyTopic();
+    }
+    if (this.state.showTopic === 1 && nextState.showTopic === 0) {
+      this.fetchAllTopic();
+    }
+  }
+
+  // 获取项目下所有话题的接口
+  async fetchAllTopic(projectId = this.state.projectId) {
+    const response = await getProTopic(projectId);
+    if (response.code === 0) {
+      this.setState({allTopic: response.data});
+    } else {
+      message.error(response.msg);
+    }
+  }
+
+  // 获取项目下我的话题接口
+  async fetchMyTopic(projectId = this.state.projectId) {
+    const response = await getMyTopic(projectId);
+    if (response.code === 0) {
+      this.setState({myTopic: response.data});
+    } else {
+      message.error(response.msg)
+    }
+  }
+
+  checkoutMyTopic() {
+    if (this.judgeLogin()) {
+      this.setState({showTopic: 1});
+    }
+  }
+
+  // 判断是否登录
+  judgeLogin() {
+    if (this.props.loginStatus) {
+      return true;
+    } else {
+      message.warning('请先登录');
+      return false;
+    }
+  }
+
+  // 发布话题
+  async sendTopic() {
+    const { topicText } = this.state;
+    if (!this.judgeLogin())
+      return;
+    if (!topicText) {
+      message.warning('话题内容不能为空');
+      return;
+    }
+    this.setState({sendLoading: true});
+
+    try {
+      // TODO: 话题对象生成
+
+      const response = await addQuestionTopic();
+      this.setState({sendLoading: false});
+      if (response.code === 0) {
+        // 发布话题成功之后 清空话题框 刷新全部话题列表
+        this.setState({topicText: ''});
+        message.info(response.msg);
+        this.fetchAllTopic();
+      } else {
+        message.error(response.msg);
+      }
+    } catch(e) {
+      message.error('网络异常，请重试');
+      this.setState({sendLoading: false});
+    }
+  }
+
+  // 添加话题回复
+  async saveTopic(topicId) {
+    if (!this.judgeLogin())
+      return;
+    if (!this.state[topicId]) {
+      message.warning('回复内容不能为空');
+      return;
+    }
+    try {
+      this.setState({[`loading${topicId}`]: true});
+      const response = await addReply();
+      this.setState({[`loading${topicId}`]: false});
+      if (response.code === 0) {
+        this.setState({topicText: ''});
+        message.info(response.msg);
+        this.getAllTopicReply(topicId);
+      } else {
+        message.error(response.msg);
+      }
+    } catch(e) {
+      message.error('网络异常，请重试');
+      this.setState({[`loading${topicId}`]: false});
+    }
+  }
+
+  // 获得一个话题下的所有回复
+  async getAllTopicReply(topicId) {
+    const response = await getReplyByTopic(topicId);
+    if (response.code === 0) {
+      this.setState({
+        [`reply${topicId}`]: response.data
+      });
+    } else {
+      message.error(response.msg);
+    }
+  }
+
   render() {
+
+    const { showTopic, anonymous, topicText, sendLoading } = this.state;
     return (
       <div>
         <div className="cmt-box1">
           <p className="f18">有什么想跟大家交流的？</p>
-          <textarea className="put" rows="5" placeholder="输入您想跟大家交流的内容"/>
-          <p className="tright">
-            <i className="fl c6">还可以输入<em>240</em>字</i>
-            <label><input type="checkbox" />匿名提问</label>
-            <a className="btn f18">发布话题</a>
-          </p>
+            <textarea className="put" rows="5" placeholder="输入您想跟大家交流的内容" value={topicText} onChange={(e)=>this.setState({topicText: e.target.value})}/>
+            <p className="tright">
+              <i className="fl c6">还可以输入<em>240</em>字</i>
+              <label><input checked={anonymous} type="checkbox" onChange={()=>this.setState({anonymous: !anonymous})} />匿名提问</label>
+              <Button type="primary" loading={!!sendLoading} style={{marginLeft: 10, borderRadius: 3}} onClick={()=>this.sendTopic()}>发布话题</Button>
+            </p>
         </div>
         <div className="cmt-tab">
-          <a className="hover">全部</a>
-          <a>我的话题</a>
+          <a onClick={()=>this.setState({showTopic: 0})} className={`${showTopic === 0 ? 'hover' : ''}`} >全部</a>
+          <a onClick={()=>this.checkoutMyTopic()} className={`${showTopic === 1 ? 'hover' : ''}`}>我的话题</a>
         </div>
         <div className="cmt-list">
           <div className="item">
@@ -87,10 +226,10 @@ export default class SecConsultation extends React.Component {
                 </div>
               </div>
               <div className="rebox">
-                <textarea className="put" rows="5"/>
+                <textarea className="put" rows="5" value={this.state[`123`]} onChange={(e)=>this.setState({[`123`]: e.target.value})}/>
                 <p className="tright">
                   <i className="fl c6">还可以输入<em>240</em>字</i>
-                  <a className="btn f14">回复</a>
+                  <Button type="primary" loading={this.state[`loading${123}`]} style={{borderRadius: 3}} onClick={()=>this.saveTopic()}>回复</Button>
                 </p>
               </div>
             </div>

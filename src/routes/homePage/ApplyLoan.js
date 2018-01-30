@@ -1,4 +1,6 @@
 import React from 'react';
+import ImgUpload from '../../components/UpLoad/imgUpload';
+
 import { initApply } from '../../assets/apply/index';
 import ApplyInfo from '../../components/ApplyLoanPage/applyInfo';
 import ApplyCompany from '../../components/ApplyLoanPage/applyCompany';

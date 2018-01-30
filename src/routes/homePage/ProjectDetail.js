@@ -13,8 +13,8 @@ export default class ProjectDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetail: null
-    }
+      projectDetail: {}
+    };
   }
   componentDidMount() {
     this.fetchProjectDetail();
@@ -53,13 +53,13 @@ export default class ProjectDetail extends React.Component {
               <SecLoan />
             </div>
             <div className="pd-con none">
-              <SecConsultation />
+              <SecConsultation {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
-              <SecTrack />
+              <SecTrack {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
-              <SecCourse />
+              <SecCourse {...this.props.match.params}/>
             </div>
           </div>
           <div className="fr rbody">

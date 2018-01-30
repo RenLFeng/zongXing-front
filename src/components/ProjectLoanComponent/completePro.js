@@ -23,7 +23,6 @@ export default class CompletePro extends React.Component {
 
   render() {
     const {projectList, history} = this.props;
-    console.log(this.props);
     return (
       <div className="section sec2" id="completeAnchor">
         <div className="w center">
