@@ -1,66 +1,67 @@
-
-li{
-  list-style: none;
+.fr uc-rbody {
+  li {
+    list-style: none;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    .list_title, .list_content1, .list_content2 {
+      .icon_ {
+        width: 100px;
+        display: inline-block;
+      }
+      .icon_1 {
+        width: 100px;
+        display: inline-block;
+        color: red;
+      }
+      .icon_2 {
+        width: 100px;
+        display: inline-block;
+        color: black;
+      }
+      .title_I {
+        width: 570px;
+        display: inline-block;
+      }
+      .title_time {
+        width: 162px;
+        display: inline-block;
+      }
+    }
+    .list_title {
+      font-size: 17px;
+      background: #f0f0f0;
+    }
+    .list_content1 {
+      background: white;
+      font-size: 15px;
+    }
+    .list_content2 {
+      background: #fafafa;
+      font-size: 15px;
+    }
+  }
 }
-li{
-  height:35px;
-  text-align: center;
-  line-height: 35px;
-  .list_title,.list_content1,.list_content2{
-    .icon_{
-      width:100px;
-      display: inline-block;
-    }
-    .icon_1{
-      width:100px;
-      display: inline-block;
-      color:red;
-    }
-    .icon_2{
-      width:100px;
-      display: inline-block;
-      color:black;
-    }
-    .title_I{
-      width:570px;
-      display: inline-block;
-    }
-    .title_time{
-      width:162px;
-      display: inline-block;
-    }
-  }
-  .list_title{
-    font-size: 17px;
-    background: #f0f0f0;
-  }
-  .list_content1{
-    background: white;
-    font-size: 15px;
-  }
-  .list_content2{
-    background: #fafafa;
-    font-size: 15px;
-  }
-}
 
-.pagination{
-  height:37px;
-  margin-left:600px;
-  a{
-    width:35px;
-    height:35px;
+.pagination {
+  width: 445px;
+  height: 37px;
+  margin-left: 485px;
+  a {
+    width: 35px;
+    height: 35px;
     text-align: center;
     line-height: 35px;
     display: inline-block;
     border-radius: 5px;
-    border:1px solid gray;
+    border: 1px solid gray;
     margin-left: 3px;
   }
 }
-.hover_{
+
+.hover_ {
   background: #3EE9C5;
-  border:1px solid #3EE9C5;
+  border: 1px solid #3EE9C5;
   color: #fff;
   font-weight: bold;
 }

@@ -16,6 +16,7 @@ export default class MessageDetail extends React.Component {
  }
 
   componentDidMount() {
+    console.log(this.props.match);
     const id = this.props.match.params.msgId;
     this.getDate(id);
   }
@@ -31,7 +32,6 @@ async getDate(x){
       message.error(res.msg);
     }
 }
-
   render() {
     return (
       <div className="fr uc-rbody" >
