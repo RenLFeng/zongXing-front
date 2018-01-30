@@ -7,7 +7,6 @@ export default function () {
 }
 
 function initPage() {
-    timeClock();
     knob();
 }
 

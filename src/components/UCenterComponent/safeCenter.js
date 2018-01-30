@@ -75,6 +75,7 @@ export default class SafeCenter extends React.Component {
       this.handleCancel();
     });
   };
+
   render() {
     const {match, safeData} = this.props;
     return (

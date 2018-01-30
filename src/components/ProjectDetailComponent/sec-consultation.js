@@ -157,17 +157,56 @@ export default class SecConsultation extends React.Component {
           <a onClick={()=>this.checkoutMyTopic()} className={`${showTopic === 1 ? 'hover' : ''}`}>我的话题</a>
         </div>
         <div className="cmt-list">
-          <div className="item">
-            <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
-            <p className="t1">
-              <i className="c6">胡哥：</i>
-              关于合伙工程的分钱机制如何做？
-            </p>
-            <p className="t2 c6">
-              <i>1分钟前</i>
-              <a>回复（0）</a>
-            </p>
-          </div>
+          {
+            this.state.allTopic.map((data, index) => {
+              return (
+                <div className="item" key={index}>
+                  <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
+                  <p className="t1">
+                    <i className="c6">胡哥：</i>
+                    关于合伙工程的分钱机制如何做？
+                  </p>
+                  <p className="t2 c6">
+                    <i>1分钟前</i>
+                    <a onClick={()=>this.getAllTopicReply()}>回复（0）</a>
+                  </p>
+                  {this.state[`replyStatus${123}`] ?
+                    <div className="rediv">
+                      <div className="list">
+                        {
+                          this.state[`reply${123}`].map((data, index)=>{
+                            return (
+                              <div className="item" key={index}>
+                                <img className="av" src={require('../../assets/img/project-detail/av3.png')}/>
+                                <p className="t1">
+                                  <i className="c6">贵***业 回复 自信哥：</i>
+                                  能投不限制地区
+                                </p>
+                                <p className="t2 c6">
+                                  <i>3分钟前</i>
+                                  <a>回复（0）</a>
+                                </p>
+                              </div>
+                            );
+                          })
+                        }
+                      </div>
+                      <div className="rebox">
+                        <textarea className="put" rows="5" value={this.state[`123`]}
+                                  onChange={(e) => this.setState({[`123`]: e.target.value})}/>
+                        <p className="tright">
+                          <i className="fl c6">还可以输入<em>240</em>字</i>
+                          <Button type="primary" loading={this.state[`loading${123}`]} style={{borderRadius: 3}}
+                                  onClick={() => this.saveTopic()}>回复</Button>
+                        </p>
+                      </div>
+                    </div> : null
+                  }
+               </div >
+              );
+            })
+          }
+
           <div className="item">
             <img className="av" src={require('../../assets/img/project-detail/av3.png')} />
             <p className="t1">

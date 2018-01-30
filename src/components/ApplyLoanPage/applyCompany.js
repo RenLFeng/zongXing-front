@@ -1,124 +1,85 @@
 import React from 'react';
+import ImgUpload from '../../components/UpLoad/imgUpload';
+import {Form, Select, Input, Button, Row, Col, Cascader, message } from 'antd';
+import { MONEY_REG } from '../../common/systemParam';
+import {city} from '../../common/cityData';
+import {getProjectType} from '../../services/api';
 
 export default class ApplyCompany extends React.Component {
   render() {
-    const {changeCompanyInfo} = this.props;
-    const {companyName, creditId, openBank, openBankAccount, businessAddress, tel, shareholdingRatio,
-      businessLicense, taxLicense, openingPermission, healthPermit, other1, other2, other3, finance, bankFlow, shareholder,
-      siteContract, joining1, joining2} = this.props.data;
+    const {pageNum} = this.props;
     return (
-      <div className="aform none" onChange={(e)=>changeCompanyInfo(e)}>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i className="high">公司名称</i>
-            </div>
-            <input type="text" className="put" name="companyName" value={companyName}/>
-          </div>
-          <div className="row">
-            <div className="tit">
-              <i className="high">统一社会信用代码</i>
-            </div>
-            <input type="text" className="put" name="creditId" value={creditId}/>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i className="high">企业开户行</i>
-            </div>
-            <input type="text" className="put" name="openBank" value={openBank}/>
-          </div>
-          <div className="row">
-            <div className="tit">
-              <i className="high">企业银行账户</i>
-            </div>
-            <input type="text" className="put" name="openBankAccount" value={openBankAccount}/>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i className="high">实际经营地址</i>
-            </div>
-            <input type="text" className="put" name="businessAddress" value={businessAddress}/>
-          </div>
-          <div className="row">
-            <div className="tit">
-              <i>经营行业</i>
-            </div>
-            <dl className="select">
-              <dt type="loanCompany" value="industry">餐饮美食</dt>
-              <dd>
-                <i value="1">餐饮美食</i>
-                <i value="2">服装鞋包</i>
-                <i value="3">美容保健</i>
-                <i value="4">家居用品</i>
-                <i value="5">母婴用品</i>
-                <i value="6">生活服务</i>
-                <i value="7">教育网络</i>
-                <i value="8">酒水饮料</i>
-                <i value="9">休闲娱乐</i>
-                <i value="0">其他</i>
-              </dd>
-            </dl>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>单位座机</i>
-            </div>
-            <input type="text" className="put" name="tel" value={tel}/>
-          </div>
-          <div className="row">
-            <div className="tit">
-              <i>股东持股比例</i>
-            </div>
-            <input type="text" className="put" name="shareholdingRatio" value={shareholdingRatio}/>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>营业执照</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${businessLicense.length > 0 ? 'up' : ''}`}>
-                {businessLicense.length > 0 ? <img src={businessLicense} />: null }
-                <i>上传营业执照</i></a>
+      <div className={`aform ${pageNum===3 ? '' : 'none'}`} style={{paddingTop: 30}}>
+        <CompanyForm />
+        <div style={{display: 'flex', paddingLeft: 105,paddingRight: 47, justifyContent: 'space-between'}}>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>营业执照</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传营业执照"/>
             </div>
           </div>
-          <div className="row">
-            <div className="tit">
-              <i>税务登记许可证</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${taxLicense.length > 0 ? 'up' : ''}`}>
-                {taxLicense.length > 0 ? <img src={taxLicense} />: null }
-                <i>上传税务登记许可证</i></a>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>税务登记许可证</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传税务登记许可证"/>
             </div>
           </div>
         </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>银行开户许可证</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${openingPermission.length > 0 ? 'up' : ''}`}>
-                {openingPermission.length > 0 ? <img src={openingPermission} />: null }
-                <i>上传银行开户许可证</i></a>
+        <div style={{display: 'flex', paddingLeft: 58,paddingRight: 47, justifyContent: 'space-between',marginTop: 25}}>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>银行开户许可证</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传营业执照"/>
             </div>
           </div>
-          <div className="row">
-            <div className="tit">
-              <i>卫生许可证</i>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>卫生许可证</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传税务登记许可证"/>
             </div>
-            <div className="imgbox border">
-              <a className={`imgd ${healthPermit.length > 0 ? 'up' : ''}`}>
-                {healthPermit.length > 0 ? <img src={healthPermit} />: null }
-                <i>上传卫生许可证</i></a>
+          </div>
+        </div>
+        <div style={{display: 'flex', paddingLeft: 44,paddingRight: 47, justifyContent: 'space-between',marginTop: 25}}>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>企业财务审计报告</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传企业财务审计报告"/>
+            </div>
+          </div>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>企业三个月银行流水</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传企业三个月银行流水"/>
+            </div>
+          </div>
+        </div>
+        <div style={{display: 'flex', paddingLeft: 44,paddingRight: 47, justifyContent: 'space-between',marginTop: 25}}>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>企业股东构成文件</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="企业股东构成文件"/>
+            </div>
+          </div>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>企业经营场地租赁合同</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传企业经营场地租赁合同"/>
             </div>
           </div>
         </div>
@@ -126,73 +87,21 @@ export default class ApplyCompany extends React.Component {
           <div className="tit">
             <i>其他资质文件</i>
           </div>
-          <div className="imgbox border">
-            <a className={`imgd ${other1.length > 0 ? 'up' : ''}`}>
-              {other1.length > 0 ? <img src={other1} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${other2.length > 0 ? 'up' : ''}`}>
-              {other2.length > 0 ? <img src={other2} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${other3.length > 0 ? 'up' : ''}`}>
-              {other3.length > 0 ? <img src={other3} />: null }
-              <i>上传图片</i></a>
+          <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
           </div>
         </div>
-        <div className="row2 mt20 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>企业财务审计报告</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${finance.length > 0 ? 'up' : ''}`}>
-                {finance.length > 0 ? <img src={finance} />: null }
-                <i>上传企业财务审计报告</i></a>
-            </div>
-          </div>
-          <div className="row">
-            <div className="tit">
-              <i>企业三个月银行流水</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${bankFlow.length > 0 ? 'up' : ''}`}>
-                {bankFlow.length > 0 ? <img src={bankFlow} />: null }
-                <i>上传企业三个月银行流水</i></a>
-            </div>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>企业股东构成文件</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${shareholder.length > 0 ? 'up' : ''}`}>
-                {shareholder.length > 0 ? <img src={shareholder} />: null }
-                <i>上传企业股东构成文件</i></a>
-            </div>
-          </div>
-          <div className="row">
-            <div className="tit">
-              <i>企业经营场地租赁合同</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${siteContract.length > 0 ? 'up' : ''}`}>
-                {siteContract.length > 0 ? <img src={siteContract} />: null }
-                <i>上传企业经营场地租赁合同</i></a>
-            </div>
-          </div>
-        </div>
+
         <div className="row2 mt20 clearfix">
           <div className="tit">
             <i>企业加盟合同</i>
           </div>
-          <div className="imgbox border">
-            <a className={`imgd ${joining1.length > 0 ? 'up' : ''}`}>
-              {joining1.length > 0 ? <img src={joining1} />: null }
-              <i>上传附件</i></a>
-            <a className={`imgd ${joining2.length > 0 ? 'up' : ''}`}>
-              {joining2.length > 0 ? <img src={joining2} />: null }
-              <i>上传附件</i></a>
+          <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传附件"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传附件"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传附件"/>
           </div>
         </div>
       </div>
@@ -200,3 +109,223 @@ export default class ApplyCompany extends React.Component {
     );
   }
 }
+
+const FormItem = Form.Item;
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 12 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 12 },
+    sm: { span: 14 },
+  },
+};
+const formItemLayoutTextArea = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 4 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 19 },
+  },
+};
+const formItemLayoutSmail = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 14 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 10 },
+  },
+};
+const btnLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
+const styles = {
+  label: {
+    fontSize: 16,
+  },
+  inputHeight: {
+    height: 40
+  }
+};
+class Forms extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      industryType: []
+    }
+  }
+
+  componentDidMount() {
+    this.fetchProjectType();
+  }
+
+  async fetchProjectType() {
+    const response = await getProjectType();
+    if (response.code === 0) {
+      this.setState({
+        industryType: response.data
+      });
+    } else {
+      message.error('获取行业类别失败')
+    }
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log('表单提交的数据');
+        this.fetchParam();
+      }
+    });
+  };
+
+  async fetchParam() {
+    // 调取接口返回数据
+    this.props.setData({1:1});
+  }
+
+  validateNumber = (rule, value, callback) => {
+    const { getFieldValue } = this.props.form;
+    if (MONEY_REG.test(value) && value * 1 <= 2 ) {
+      callback('金额不能小于2');
+
+    }
+    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    callback()
+  };
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        <Row gutter={4}>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>公司名称</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: [{
+                  required: true, message: '借款金额不能为空',
+                }]
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>统一社会信用代码</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: [{
+                  required: true, message: '借款金额不能为空',
+                }]
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={4}>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>企业开户行</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: [{
+                  required: true, message: '借款金额不能为空',
+                }]
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>企业银行账户</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: [{
+                  required: true, message: '借款金额不能为空',
+                }]
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={4}>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>实际经营地址</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: [{
+                  required: true, message: '借款金额不能为空',
+                }],
+                initialValue: '0'
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>经营行业</span>}
+            >
+              {getFieldDecorator('type', {
+                rules: [{
+                  required: true, message: '请选择城市',
+                }],
+                initialValue: this.state.industryType[0]?this.state.industryType[0].fTypeCode:''
+              })(
+                <Select size="large" style={styles.inputHeight}>
+                  {
+                    this.state.industryType.map((data)=>{
+                      return(
+                        <Select.Option key={data.fTypeCode} value={data.fTypeCode}>{data.fTypeName}</Select.Option>
+                      );
+                    })
+                  }
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={4}>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>单位座机</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: []
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>股东持股比例</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: []
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+        </Row>
+      </Form>
+    );
+  }
+}
+const CompanyForm = Form.create()(Forms);

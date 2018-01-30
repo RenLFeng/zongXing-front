@@ -214,3 +214,8 @@ export async function addProJourney(params) {
 export async function praise(journeyId) {
   return request(`${BASE_URL}/zjb-website/projectJourney/praise/${journeyId}`)
 }
+
+// 获取项目行业编码类别接口
+export async function getProjectType() {
+  return request(`${BASE_URL}/zjb-website/getProjectCode`)
+}

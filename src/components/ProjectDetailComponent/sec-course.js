@@ -16,7 +16,7 @@ export default class SecCourse extends React.Component {
   }
 
   async fetchJourney() {
-    const response = selectProJourney(this.props.projectId);
+    const response = await selectProJourney(this.props.projectId);
     if (response.code === 0) {
       this.setState({
         courseArr: response.data

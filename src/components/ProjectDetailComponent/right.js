@@ -1,33 +1,41 @@
 import React from 'react';
 import Data from './data';
 import FormProject from './form-project';
+import moment from 'moment';
 
 export default class Right extends React.Component {
+
+
+
   render() {
+    const project = this.props.projectDetail;
+    const allMoney = project.allMoney?project.allMoney:0;
+    const userCount = project.userCount ? project.userCount: 0;
+    const {countDay, countDown} = this.props.time;
     return (
       <div>
         <div className="box1 shadow">
-          <div className="trow clearfix" data-end="2018-2-5 12:0:0">
+          <div className="trow clearfix" data-end={moment(project.fcollet_over_time).format('YYYY-MM-DD HH:mm:ss')}>
             <i className="tit">还剩</i>
             <div className="day">
-              <p className="t1">0</p>
+              <p className="t1">{countDay}</p>
               <p className="t2">天</p>
             </div>
             <div className="time">
-              <p className="t1">00 : 00 : 00</p>
+              <p className="t1">{countDown}</p>
               <p className="t2">小时<i/>分<i/>秒</p>
             </div>
           </div>
           <div className="data clearfix">
-            <div className="circle" data-value="75"/>
+            <div className="circle" data-value={allMoney/project.fcredit_money}/>
             <i className="ctext">已筹款比例</i>
             <div className="fr">
               <p className="t1">已经筹款</p>
-              <p className="t2">253689<em>元</em></p>
+              <p className="t2">{allMoney}<em>元</em></p>
             </div>
           </div>
           <div className="bot">
-            <a className="btn"><i>已投资人数</i><b>58</b>人</a>
+            <a className="btn"><i>已投资人数</i><b>{userCount}</b>人</a>
           </div>
         </div>
         <div className="box2 shadow">

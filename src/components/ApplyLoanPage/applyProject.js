@@ -1,132 +1,233 @@
 import React from 'react';
+import ImgUpload from '../../components/UpLoad/imgUpload';
+import {Form, Select, Input, Button, Row, Col, Cascader, message } from 'antd';
+import { MONEY_REG } from '../../common/systemParam';
+import {city} from '../../common/cityData';
+import {getProjectType} from '../../services/api';
 
 export default class ApplyProject extends React.Component {
 
   render() {
-    const {changeProjectInfo} = this.props;
-    const {projectName, loanVideo, loanShowImg, addProjectImg, desc, myImg1, myImg2, myImg3, myImg4, myImg5,
-      myImg6, projectDesc, project1, project2, project3, project4, project5, project6, whyDesc, payment} = this.props.data;
+    const {pageNum} = this.props;
     return (
-      <div className="aform none" onChange={(e)=>changeProjectInfo(e)}>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>项目名称</i>
-            </div>
-            <input type="text" className="put" name="projectName" value={projectName}/>
-          </div>
-          <div className="row">
-            <div className="tit">
-              <i>借款视频</i>
-            </div>
-            <input type="text" className="put" name="loanVideo" value={loanVideo}/>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>借款项目展示图片</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${loanShowImg.length > 0 ? 'up' : ''}`}>
-                {loanShowImg.length > 0 ? <img src={loanShowImg} />: null }
-                <i>上传图片</i></a>
-            </div>
-          </div>
-          <div className="row">
-            <div className="tit">
-              <i>添加项目展示背景大图</i>
-            </div>
-            <div className="imgbox border">
-              <a className={`imgd ${addProjectImg.length > 0 ? 'up' : ''}`}>
-                {addProjectImg.length > 0 ? <img src={addProjectImg} />: null }
-                <i>上传图片</i></a>
-            </div>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>我的自述</i>
-            </div>
-            <textarea className="put put2" rows="6" name="desc" value={desc}/>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="tit">
-            <i></i>
-          </div>
-          <div className="imgbox border">
-            <a className={`imgd ${myImg1.length > 0 ? 'up' : ''}`}>
-              {myImg1.length > 0 ? <img src={myImg1} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${myImg2.length > 0 ? 'up' : ''}`}>
-              {myImg2.length > 0 ? <img src={myImg2} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${myImg3.length > 0 ? 'up' : ''}`}>
-              {myImg3.length > 0 ? <img src={myImg3} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${myImg4.length > 0 ? 'up' : ''}`}>
-              {myImg4.length > 0 ? <img src={myImg4} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${myImg5.length > 0 ? 'up' : ''}`}>
-              {myImg5.length > 0 ? <img src={myImg5} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${myImg6.length > 0 ? 'up' : ''}`}>
-              {myImg6.length > 0 ? <img src={myImg6} />: null }
-              <i>上传图片</i></a>
-          </div>
-        </div>
-        <div className="row2 mt20 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>我的项目</i>
-            </div>
-            <textarea className="put put2" rows="6" name="projectDesc" value={projectDesc}/>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="tit">
-            <i></i>
-          </div>
-          <div className="imgbox border">
-            <a className={`imgd ${project1.length > 0 ? 'up' : ''}`}>
-              {project1.length > 0 ? <img src={project1} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${project2.length > 0 ? 'up' : ''}`}>
-              {project2.length > 0 ? <img src={project2} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${project3.length > 0 ? 'up' : ''}`}>
-              {project3.length > 0 ? <img src={project3} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${project4.length > 0 ? 'up' : ''}`}>
-              {project4.length > 0 ? <img src={project4} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${project5.length > 0 ? 'up' : ''}`}>
-              {project5.length > 0 ? <img src={project5} />: null }
-              <i>上传图片</i></a>
-            <a className={`imgd ${project6.length > 0 ? 'up' : ''}`}>
-              {project6.length > 0 ? <img src={project6} />: null }
-              <i>上传图片</i></a>
-          </div>
-        </div>
-        <div className="row2 mt20 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>为何众借</i>
-            </div>
-            <textarea className="put put2" rows="6" name="whyDesc" value={whyDesc}/>
-          </div>
-        </div>
-        <div className="row2 clearfix">
-          <div className="row">
-            <div className="tit">
-              <i>还款来源</i>
-            </div>
-            <textarea className="put put2" rows="6" name="payment" value={payment} />
-          </div>
-        </div>
+      <div className={`aform ${pageNum===4 ? '' : 'none'}`}>
+        <ProjectForm />
+
+
       </div>
     );
   }
 }
+
+
+const FormItem = Form.Item;
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 12 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 12 },
+    sm: { span: 14 },
+  },
+};
+const formItemLayoutTextArea = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 4 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 19 },
+  },
+};
+const formItemLayoutSmail = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 14 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 10 },
+  },
+};
+const btnLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
+const styles = {
+  label: {
+    fontSize: 16,
+  },
+  inputHeight: {
+    height: 40
+  }
+};
+class Forms extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+  }
+
+  componentDidMount() {
+  }
+
+
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log('表单提交的数据');
+        this.fetchParam();
+      }
+    });
+  };
+
+  async fetchParam() {
+    // 调取接口返回数据
+    this.props.setData({1:1});
+  }
+
+  validateNumber = (rule, value, callback) => {
+    const { getFieldValue } = this.props.form;
+    if (MONEY_REG.test(value) && value * 1 <= 2 ) {
+      callback('金额不能小于2');
+
+    }
+    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    callback()
+  };
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        <Row gutter={4}>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>项目名称</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: [{
+                  required: true, message: '借款金额不能为空',
+                }]
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+          <Col span={12}>
+            <FormItem
+              {...formItemLayout}
+              label={<span style={styles.label}>借款视频</span>}
+            >
+              {getFieldDecorator('account', {
+                rules: [{
+                  required: true, message: '借款金额不能为空',
+                }]
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+            </FormItem>
+          </Col>
+        </Row>
+        <div style={{display: 'flex', paddingLeft: 44,paddingRight: 47, justifyContent: 'space-between',marginBottom: 25}}>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>借款项目展示图片</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传借款项目展示图片"/>
+            </div>
+          </div>
+          <div style={{display: 'flex'}}>
+            <span style={{fontSize:16, marginRight: 13}}>添加项目展示背景大图</span>
+            <div style={{width: 314,height: 172,border:'1px solid #ccc',display: 'flex',justifyContent:'center',
+              alignItems: 'center', borderRadius: 3
+            }}>
+              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传添加项目展示背景大图"/>
+            </div>
+          </div>
+        </div>
+        <FormItem
+          {...formItemLayoutTextArea}
+          label={<span style={styles.label}>我的自述</span>}
+        >
+          {getFieldDecorator('account', {
+            rules: [],
+            initialValue: '0'
+          })(
+            <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
+          )}
+        </FormItem>
+        <div className="row2 clearfix" style={{marginLeft: -18, marginBottom: 25}}>
+          <div className="tit">
+            <i></i>
+          </div>
+          <div className="imgbox border" style={{display: 'flex',flexWrap: 'wrap',padding: 25 }}>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+          </div>
+        </div>
+        <FormItem
+          {...formItemLayoutTextArea}
+          label={<span style={styles.label}>我的项目</span>}
+        >
+          {getFieldDecorator('account', {
+            rules: [],
+            initialValue: '0'
+          })(
+            <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
+          )}
+        </FormItem>
+        <div className="row2 clearfix" style={{marginLeft: -18, marginBottom: 25}}>
+          <div className="tit">
+            <i></i>
+          </div>
+          <div className="imgbox border" style={{display: 'flex',flexWrap: 'wrap',padding: 25 }}>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+          </div>
+        </div>
+        <FormItem
+          {...formItemLayoutTextArea}
+          label={<span style={styles.label}>为何众借</span>}
+        >
+          {getFieldDecorator('account', {
+            rules: [],
+            initialValue: '0'
+          })(
+            <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayoutTextArea}
+          label={<span style={styles.label}>还款来源</span>}
+        >
+          {getFieldDecorator('account', {
+            rules: [],
+            initialValue: '0'
+          })(
+            <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
+          )}
+        </FormItem>
+      </Form>
+    );
+  }
+}
+const ProjectForm = Form.create()(Forms);

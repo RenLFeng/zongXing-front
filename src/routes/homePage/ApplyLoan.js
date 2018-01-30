@@ -10,6 +10,7 @@ export default class ApplyLoan extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      pageNum: 1,
       loanInfo: { //借款信息字段
 
       },
@@ -187,7 +188,7 @@ export default class ApplyLoan extends React.Component {
     console.log('提交借款信息');
     console.log(this.state.loanInfo);
     //如果成功切换页面
-    //this.switchPage();
+    this.switchPage();
 
   }
 
@@ -196,7 +197,7 @@ export default class ApplyLoan extends React.Component {
     console.log('提交借款人信息');
     console.log(this.state.loanPerson);
     //如果成功切换页面
-    // this.switchPage();
+     this.switchPage();
   }
 
   //提交借款企业信息
@@ -258,13 +259,10 @@ export default class ApplyLoan extends React.Component {
 
   // 切换页面的方法
   switchPage() {
-    const a = $('.apply-menu a.hover');
-    $('.apply-menu a.hover').removeClass('hover');
-    a.addClass('hover');
-    $('.apply-form .aform').addClass('none').eq(a.index()).removeClass('none');
-    $('.apply-form>h2>i').html(a.html());
+    const {pageNum} = this.state;
     let btn = $('.apply-form .bot .btn');
-    if(a.index()===3){
+    this.setState({pageNum: pageNum+1});
+    if(pageNum === 3){
       btn.html('完成');
     }else{
       btn.html('下一步');
@@ -272,21 +270,22 @@ export default class ApplyLoan extends React.Component {
   }
 
   render() {
+    const {pageNum} = this.state;
     return (
       <div className="body1">
         <div className="w relative">
           <div className="apply-menu">
-            <a className="a1 hover">借款信息</a>
-            <a className="a2">借款人信息</a>
-            <a className="a3">借款企业信息</a>
-            <a className="a4">借款项目</a>
+            <a className={`a1 ${pageNum === 1 ? 'hover' : ''}`}>借款信息</a>
+            <a className={`a2 ${pageNum === 2 ? 'hover' : ''}`}>借款人信息</a>
+            <a className={`a3 ${pageNum === 3 ? 'hover' : ''}`}>借款企业信息</a>
+            <a className={`a4 ${pageNum === 4 ? 'hover' : ''}`}>借款项目</a>
           </div>
           <div className="apply-form shadow" style={{marginTop: '-80px'}}>
             <h2><i>借款信息</i></h2>
-            <ApplyInfo data={this.state.loanInfo} changeLoanInfo={(e)=>this.changeState(e)} changeCity={(e)=>this.changeCity(e)}/>
-            <ApplyPerson data={this.state.loanPerson} changePersonInfo={(e)=>this.changeState(e)}/>
-            <ApplyCompany data={this.state.loanCompany} changeCompanyInfo={(e)=>this.changeState(e)}/>
-            <ApplyProject data={this.state.loanProject} changeProjectInfo={(e)=>this.changeState(e)}/>
+            <ApplyInfo pageNum={this.state.pageNum}/>
+            <ApplyPerson pageNum={this.state.pageNum} data={this.state.loanPerson} changePersonInfo={(e)=>this.changeState(e)}/>
+            <ApplyCompany pageNum={this.state.pageNum} data={this.state.loanCompany} changeCompanyInfo={(e)=>this.changeState(e)}/>
+            <ApplyProject pageNum={this.state.pageNum} data={this.state.loanProject} changeProjectInfo={(e)=>this.changeState(e)}/>
             <div className="bot center">
               <i><a className="btn f16" onClick={this.submit}>下一步</a></i>
             </div>
