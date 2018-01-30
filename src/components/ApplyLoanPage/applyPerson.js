@@ -161,25 +161,19 @@ export default class ApplyPerson extends React.Component {
             <i>身份证上传</i>
           </div>
           <div className="imgbox border" style={styles.imgDiv}>
-            <ImgUpload />
-            <ImgUpload />
-            <ImgUpload />
+            <ImgUpload className="avatar-uploader" divClassName="upload-div" tipText="上传身份证正面"/>
+            <ImgUpload divClassName="upload-div" tipText="上传身份证反面"/>
+            <ImgUpload divClassName="upload-div" tipText="手持身份证"/>
           </div>
         </div>
         <div className="row2 mt20 clearfix">
           <div className="tit">
             <i>个人资产证明</i>
           </div>
-          <div className="imgbox border">
-            <a className={`imgd ${carProve.length > 0 ? 'up' : ''}`}>
-              {carProve.length > 0 ? <img src={carProve} />: null }
-              <i>本人手持车本</i></a>
-            <a className={`imgd ${houseProve.length > 0 ? 'up' : ''}`}>
-              {houseProve.length > 0 ? <img src={houseProve} />: null }
-              <i>本人手持房本</i></a>
-            <a className={`imgd ${sharesProve.length > 0 ? 'up' : ''}`}>
-              {sharesProve.length > 0 ? <img src={sharesProve} />: null }
-              <i>上传债券、股票等</i></a>
+          <div className="imgbox border" style={styles.imgDiv}>
+            <ImgUpload className="avatar-uploader" divClassName="upload-div" tipText="本人手持车本"/>
+            <ImgUpload divClassName="upload-div" tipText="本人手持房本"/>
+            <ImgUpload divClassName="upload-div" tipText="上传债券、股票等"/>
           </div>
         </div>
       </div>

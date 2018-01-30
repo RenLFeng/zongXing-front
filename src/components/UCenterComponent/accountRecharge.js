@@ -112,7 +112,6 @@ class Forms extends React.Component {
 
   async fetchParam() {
     // 调取接口返回数据
-
     this.props.setData({1:1});
   }
 
@@ -120,6 +119,7 @@ class Forms extends React.Component {
     const { getFieldValue } = this.props.form;
     if (MONEY_REG.test(value) && value * 1 <= 2 ) {
       callback('金额不能小于2');
+
     }
     // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
     callback()
@@ -141,10 +141,9 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('ftype', {
             rules:[],
-            initialValue: ''
+            initialValue: '0'
           })(<Select>
-            <Select.Option value="">网银充值</Select.Option>
-            <Select.Option value="1">代扣充值</Select.Option>
+            <Select.Option value="0">网银充值</Select.Option>
             <Select.Option value="2">快捷支付</Select.Option>
             <Select.Option value="3">汇款充值</Select.Option>
             <Select.Option value="4">企业网银</Select.Option>

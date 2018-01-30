@@ -9,7 +9,7 @@
         border-radius: 20px;
     }
 }
-.timetree .text>em {
+.timetree .text>.em1 {
     position: relative;
     border: 1px solid $f90;
     color: $f90;
@@ -18,6 +18,7 @@
     padding: 0 10px 0 30px;
     line-height: 24px;
     background: url(../img/project-detail/like.png) no-repeat 6px center;
+    cursor: pointer;
     &::before {
         content: "";
         position: absolute;
@@ -31,6 +32,31 @@
         transform: rotate(-45deg);
     }
 }
+
+.timetree .text>.em2 {
+  position: relative;
+  border: 1px solid $f90;
+  color: $f90;
+  border-radius: 5px;
+  margin-left: 20px;
+  padding: 0 10px 0 30px;
+  line-height: 24px;
+  cursor: pointer;
+  background: url(../img/project-detail/unlike.png) no-repeat 6px center;
+  &::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    left: -6px;
+    top: 7px;
+    background-color: #fff;
+    border-left: 1px solid $f90;
+    border-top: 1px solid $f90;
+    transform: rotate(-45deg);
+  }
+}
+
 .timetree .item .img {
     margin-left: 200px;
     padding-top: 20px;

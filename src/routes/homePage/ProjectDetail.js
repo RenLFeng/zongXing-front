@@ -13,7 +13,12 @@ export default class ProjectDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectDetail: {}
+      projectDetail: {
+        myProject: {},
+        projectInfo: {},
+        project: {},
+        readme: {}
+      }
     };
   }
   componentDidMount() {
@@ -38,9 +43,10 @@ export default class ProjectDetail extends React.Component {
   }
 
   render() {
+    const { projectDetail } = this.state;
     return (
       <div>
-        <Head />
+        <Head projectDetail={projectDetail}/>
         <div className="w clearfix pd-body">
           <div className="fl lbody shadow">
             <div className="tnav">

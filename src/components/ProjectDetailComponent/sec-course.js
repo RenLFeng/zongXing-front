@@ -54,14 +54,14 @@ export default class SecCourse extends React.Component {
                 <i className="y">2018</i><br /><i className="d">3-25</i>
               </p>
               <i className="cc"/>
-              <p className="text">50万借款审核通过，发布<em style={{cursor:'pointer'}} onClick={()=>this.clickHeard()}>232</em></p>
+              <p className="text">50万借款审核通过，发布<em className="em1" onClick={()=>this.clickHeard()}>232</em></p>
             </div>
             <div className="item">
               <p className="date">
                 <i className="y">2018</i><br /><i className="d">3-20</i>
               </p>
               <i className="cc"/>
-              <p className="text">筹款成功，给投资人发放5万元代金券的额外回报<em>2310</em></p>
+              <p className="text">筹款成功，给投资人发放5万元代金券的额外回报<em className="em2">2310</em></p>
             </div>
             <div className="item">
               <p className="date">

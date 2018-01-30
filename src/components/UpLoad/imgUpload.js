@@ -38,9 +38,9 @@ export default class ImgUpload extends React.Component {
   };
   render() {
     const uploadButton = (
-      <div>
+      <div className={this.props.divClassName} >
         <Icon type={this.state.loading ? 'loading' : 'plus-circle-o'} />
-        <div className="ant-upload-text">上传营业执照</div>
+        <div className="ant-upload-text">{this.props.tipText}</div>
       </div>
     );
     const imageUrl = this.state.imageUrl;
@@ -48,14 +48,13 @@ export default class ImgUpload extends React.Component {
       <Upload
         name="avatar"
         listType="picture-card"
-        className="avatar-uploader"
+        className={this.props.className}
         showUploadList={false}
         action="//jsonplaceholder.typicode.com/posts/"
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
-        style={{flex: 1, margin: 20}}
       >
-        {imageUrl ? <img src={imageUrl} alt="" /> : uploadButton}
+        {imageUrl ? <img className={this.props.divClassName} src={imageUrl} alt="" /> : uploadButton}
       </Upload>
     );
   }

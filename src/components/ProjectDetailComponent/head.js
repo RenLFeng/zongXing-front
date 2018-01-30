@@ -1,7 +1,9 @@
 import React from 'react';
+import moment from 'moment';
 
 export default class Head extends React.Component {
   render() {
+    const { project } = this.props.projectDetail;
     return (
       <div className="banner autosize pd-head">
         <img className="big" src={require('../../assets/img/project-detail/banner.png')} />
@@ -13,11 +15,11 @@ export default class Head extends React.Component {
             您的浏览器不支持视频播放，请升级浏览器
           </video>
           <div className="info">
-            <p className="tit">ELE-绘丽创意餐厅</p>
+            <p className="tit">{project.fName}</p>
             <div className="user">
               <img className="av" src={require("../../assets/img/project-detail/av1.png")} />
-              <p className="t1">诗和远方</p>
-              <p className="t2">2018年1月7日 南京</p>
+              <p className="t1">{project.fUserId}</p>
+              <p className="t2">{moment(project.fCreateTime).format('YYYY年MM月DD日')} 南京</p>
             </div>
             <div className="data clearfix">
               <div>
