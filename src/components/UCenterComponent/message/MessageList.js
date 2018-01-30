@@ -61,38 +61,39 @@ export default class MessageList extends React.Component {
             );
           })}
         </ul>
-
-        <div className="pagination">
-          {page_num.lastPage ?
-            <a className="num" onClick={() => this.fetchData(this.state.pageCurrent - 1)}>&lt;</a> :
-            <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
-          {page_num.firstPage ?
-            <a className={`${1 == this.state.pageCurrent ? 'hover_' : ''}`} onClick={() => this.fetchData(1)}>1</a> :
-            null}
-          {page_num.leftEllipsis ?
-            <a>...</a> :
-            null}
-          {page_num.page.map((pageNum) => {
-            return (
-              <a key={pageNum} className={`${pageNum * 1 == this.state.pageCurrent ? 'hover_' : ''}`}
-                 onClick={() => this.fetchData(pageNum)}>{pageNum}</a>
-            );
-          })}
-          {page_num.rightEllipsis ?
-            <a>...</a> :
-            null}
-          {page_num.finalPage ?
-            <a
-              className={`${this.state.maxPage == this.state.pageCurrent ? 'hover_' : ''}`}
-              onClick={() => this.fetchData(this.state.maxPage)}
-            >{this.state.maxPage}</a> :
-            null}
-          {page_num.nextPage ?
-            <a
-              className="num"
-              onClick={() => this.fetchData(this.state.pageCurrent + 1)}
-            >&gt;</a> :
-            <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>}
+        <div className="box_">
+          <div className="pagination">
+            {page_num.lastPage ?
+              <a className="num" onClick={() => this.fetchData(this.state.pageCurrent - 1)}>&lt;</a> :
+              <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
+            {page_num.firstPage ?
+              <a className={`${1 == this.state.pageCurrent ? 'hover_' : ''}`} onClick={() => this.fetchData(1)}>1</a> :
+              null}
+            {page_num.leftEllipsis ?
+              <a>...</a> :
+              null}
+            {page_num.page.map((pageNum) => {
+              return (
+                <a key={pageNum} className={`${pageNum * 1 == this.state.pageCurrent ? 'hover_' : ''}`}
+                   onClick={() => this.fetchData(pageNum)}>{pageNum}</a>
+              );
+            })}
+            {page_num.rightEllipsis ?
+              <a>...</a> :
+              null}
+            {page_num.finalPage ?
+              <a
+                className={`${this.state.maxPage == this.state.pageCurrent ? 'hover_' : ''}`}
+                onClick={() => this.fetchData(this.state.maxPage)}
+              >{this.state.maxPage}</a> :
+              null}
+            {page_num.nextPage ?
+              <a
+                className="num"
+                onClick={() => this.fetchData(this.state.pageCurrent + 1)}
+              >&gt;</a> :
+              <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>}
+          </div>
         </div>
       </div>
     );
