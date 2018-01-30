@@ -41,7 +41,7 @@ export default class MessageList extends React.Component {
     return (
       <div className="fr uc-rbody">
         <ul>
-          <li>
+          <li className="hang">
             <div className="list_title">
               <div className="icon_">状态</div>
               <span className="title_I">主题</span>
@@ -50,7 +50,7 @@ export default class MessageList extends React.Component {
           </li>
           {this.state.arr.map((data, index) => {
             return (
-              <li key={data.noticeId}>
+              <li key={data.noticeId} className="hang">
                 <div className={`${index % 2 == 1 ? 'list_content2' : 'list_content1'}`}>
                   <div className={`${data.isRead == 0 ? 'icon_1' : 'icon_2'}`}><Icon type="mail"/></div>
                   <a onClick={() => this.props.history.push(STATION_MESSAGE + `/${data.noticeId}`)}
