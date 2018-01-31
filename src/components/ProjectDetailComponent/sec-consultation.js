@@ -2,7 +2,7 @@ import React from 'react';
 import {message, Button} from 'antd';
 import {getProTopic, getMyTopic, addQuestionTopic, addReply, getReplyByTopic} from '../../services/api';
 import {connect} from 'dva';
-
+import moment from 'moment';
 
 @connect((state) => (({
   loginStatus: state.login.status
@@ -28,10 +28,11 @@ export default class SecConsultation extends React.Component {
   // 当话题类型切换时发生的请求
   componentDidUpdate(nextProp, nextState) {
     if (this.state.showTopic === 0 && nextState.showTopic === 1) {
-      this.fetchMyTopic();
+      this.fetchAllTopic();
     }
     if (this.state.showTopic === 1 && nextState.showTopic === 0) {
-      this.fetchAllTopic();
+
+      this.fetchMyTopic();
     }
   }
 
@@ -48,6 +49,7 @@ export default class SecConsultation extends React.Component {
   // 获取项目下我的话题接口
   async fetchMyTopic(projectId = this.state.projectId) {
     const response = await getMyTopic(projectId);
+    console.log(response);
     if (response.code === 0) {
       this.setState({myTopic: response.data});
     } else {
@@ -84,14 +86,19 @@ export default class SecConsultation extends React.Component {
 
     try {
       // TODO: 话题对象生成
-
-      const response = await addQuestionTopic();
+      const data = {
+        fIsAnonymity: this.state.anonymous,
+        fContent: topicText,
+        fProjectId: this.props.projectId
+      };
+      const response = await addQuestionTopic(data);
       this.setState({sendLoading: false});
       if (response.code === 0) {
         // 发布话题成功之后 清空话题框 刷新全部话题列表
         this.setState({topicText: ''});
         message.info(response.msg);
         this.fetchAllTopic();
+        this.fetchMyTopic()
       } else {
         message.error(response.msg);
       }
@@ -102,32 +109,68 @@ export default class SecConsultation extends React.Component {
   }
 
   // 添加话题回复
-  async saveTopic(topicId) {
+  async saveTopic(topicId, type) {
     if (!this.judgeLogin())
       return;
-    if (!this.state[topicId]) {
-      message.warning('回复内容不能为空');
-      return;
-    }
-    try {
-      this.setState({[`loading${topicId}`]: true});
-      const response = await addReply();
-      this.setState({[`loading${topicId}`]: false});
-      if (response.code === 0) {
-        this.setState({topicText: ''});
-        message.info(response.msg);
-        this.getAllTopicReply(topicId);
-      } else {
-        message.error(response.msg);
+    // type 0: 是全部话题的回复 1: 是我的话题的回复
+    if (type === 0) {
+      if (!this.state[`replayText${topicId}`]) {
+        message.warning('回复内容不能为空');
+        return;
       }
-    } catch(e) {
-      message.error('网络异常，请重试');
-      this.setState({[`loading${topicId}`]: false});
+      const data = {
+        fTopicId: topicId,
+        fContent: this.state[`replayText${topicId}`],
+        fIsAnonymity: false
+      };
+      try {
+        this.setState({[`loading${topicId}`]: true});
+        const response = await addReply(data);
+        this.setState({[`loading${topicId}`]: false});
+        if (response.code === 0) {
+          this.setState({[`replayText${topicId}`]: ''});
+          message.info(response.msg);
+          this.getAllTopicReply(topicId);
+        } else {
+          message.error(response.msg);
+        }
+      } catch(e) {
+        message.error('网络异常，请重试');
+        this.setState({[`loading${topicId}`]: false});
+      }
+    } else {
+      if (!this.state[`my${topicId}Text`]) {
+        message.warning('回复内容不能为空');
+        return;
+      }
+      const data = {
+        fTopicId: topicId,
+        fContent: this.state[`my${topicId}Text`],
+        fIsAnonymity: false
+      };
+      try {
+        this.setState({[`myLoading${topicId}`]: true});
+        const response = await addReply(data);
+        this.setState({[`myLoading${topicId}`]: false});
+        if (response.code === 0) {
+          this.setState({[`my${topicId}Text`]: ''});
+          message.info(response.msg);
+          this.getMyAllTopicReply(topicId);
+        } else {
+          message.error(response.msg);
+        }
+      } catch(e) {
+        message.error('网络异常，请重试');
+        this.setState({[`myLoading${topicId}`]: false});
+      }
     }
   }
 
   // 获得一个话题下的所有回复
   async getAllTopicReply(topicId) {
+    this.setState({
+      [`replyStatus${topicId}`]: true
+    });
     const response = await getReplyByTopic(topicId);
     if (response.code === 0) {
       this.setState({
@@ -138,9 +181,23 @@ export default class SecConsultation extends React.Component {
     }
   }
 
-  render() {
+  async getMyAllTopicReply(topicId) {
+    this.setState({
+      [`myReplyStatus${topicId}`]: true
+    });
+    const response = await getReplyByTopic(topicId);
+    if (response.code === 0) {
+      this.setState({
+        [`myReply${topicId}`]: response.data
+      });
+    } else {
+      message.error(response.msg);
+    }
+  }
 
+  render() {
     const { showTopic, anonymous, topicText, sendLoading } = this.state;
+    console.log(this.state.myTopic);
     return (
       <div>
         <div className="cmt-box1">
@@ -156,161 +213,107 @@ export default class SecConsultation extends React.Component {
           <a onClick={()=>this.setState({showTopic: 0})} className={`${showTopic === 0 ? 'hover' : ''}`} >全部</a>
           <a onClick={()=>this.checkoutMyTopic()} className={`${showTopic === 1 ? 'hover' : ''}`}>我的话题</a>
         </div>
-        <div className="cmt-list">
+        {this.state.showTopic === 0 ? <div className="cmt-list">
           {
             this.state.allTopic.map((data, index) => {
               return (
-                <div className="item" key={index}>
+                <div className="item" key={data.fid+'1'+index}>
                   <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
                   <p className="t1">
-                    <i className="c6">胡哥：</i>
-                    关于合伙工程的分钱机制如何做？
+                    <i className="c6">{data.fis_anonymity? '匿名用户': data.fnickname}：</i>
+                    {data.fcontent}
                   </p>
                   <p className="t2 c6">
-                    <i>1分钟前</i>
-                    <a onClick={()=>this.getAllTopicReply()}>回复（0）</a>
+                    <i>{moment(data.ftime).format('YYYY-MM-DD HH:mm')}</i>
+                    <a onClick={()=>this.getAllTopicReply(data.fid)}>回复（{data.count}）</a>
                   </p>
-                  {this.state[`replyStatus${123}`] ?
+                  {this.state[`replyStatus${data.fid}`] ?
                     <div className="rediv">
                       <div className="list">
                         {
-                          this.state[`reply${123}`].map((data, index)=>{
+                          this.state[`reply${data.fid}`] ? this.state[`reply${data.fid}`].map((value, index)=>{
                             return (
-                              <div className="item" key={index}>
+                              <div className="item" key={value.fid+index}>
                                 <img className="av" src={require('../../assets/img/project-detail/av3.png')}/>
                                 <p className="t1">
-                                  <i className="c6">贵***业 回复 自信哥：</i>
-                                  能投不限制地区
+                                  <i className="c6">{value.fis_anonymity? '匿名用户': value.fnickname} 回复 {data.fis_anonymity? '匿名用户': data.fnickname}：</i>
+                                  {value.fcontent}
                                 </p>
                                 <p className="t2 c6">
-                                  <i>3分钟前</i>
-                                  <a>回复（0）</a>
+                                  <i>{moment(value.ftime).format('YYYY-MM-DD HH:mm')}</i>
                                 </p>
                               </div>
                             );
-                          })
+                          }): null
                         }
                       </div>
                       <div className="rebox">
-                        <textarea className="put" rows="5" value={this.state[`123`]}
-                                  onChange={(e) => this.setState({[`123`]: e.target.value})}/>
+                        <textarea className="put" rows="5" value={this.state[`replayText${data.fid}`]}
+                                  onChange={(e) => this.setState({[`replayText${data.fid}`]: e.target.value})}/>
                         <p className="tright">
                           <i className="fl c6">还可以输入<em>240</em>字</i>
-                          <Button type="primary" loading={this.state[`loading${123}`]} style={{borderRadius: 3}}
-                                  onClick={() => this.saveTopic()}>回复</Button>
+                          <Button type="primary" loading={this.state[`loading${data.fid}`]} style={{borderRadius: 3}}
+                                  onClick={() => this.saveTopic(data.fid, 0)}>回复</Button>
                         </p>
                       </div>
                     </div> : null
                   }
-               </div >
+                </div >
+              );
+            })
+          }
+        </div> : null}
+        {this.state.showTopic === 1 ? <div className="cmt-list">
+          {
+            this.state.myTopic.map((data, index) => {
+              return (
+                <div className="item" key={data.fid+'111'}>
+                  <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
+                  <p className="t1">
+                    <i className="c6">{data.fis_anonymity? '匿名用户': data.fnickname}：</i>
+                    {data.fcontent}
+                  </p>
+                  <p className="t2 c6">
+                    <i>{moment(data.ftime).format('YYYY-MM-DD HH:mm')}</i>
+                    <a onClick={()=>this.getMyAllTopicReply(data.fid)}>回复（{data.count}）</a>
+                  </p>
+                  {this.state[`myReplyStatus${data.fid}`] ?
+                    <div className="rediv">
+                      <div className="list">
+                        {
+                          this.state[`myReply${data.fid}`] ? this.state[`myReply${data.fid}`].map((value, index)=>{
+                            return (
+                              <div className="item" key={value.fid+index+'1'}>
+                                <img className="av" src={require('../../assets/img/project-detail/av3.png')}/>
+                                <p className="t1">
+                                  <i className="c6">{value.fis_anonymity? '匿名用户': value.fnickname} 回复 {data.fis_anonymity? '匿名用户': data.fnickname}：</i>
+                                  {value.fcontent}
+                                </p>
+                                <p className="t2 c6">
+                                  <i>{moment(value.ftime).format('YYYY-MM-DD HH:mm')}</i>
+                                </p>
+                              </div>
+                            );
+                          }): null
+                        }
+                      </div>
+                      <div className="rebox">
+                        <textarea className="put" rows="5" value={this.state[`my${data.fid}Text`]}
+                                  onChange={(e) => this.setState({[`my${data.fid}Text`]: e.target.value})}/>
+                        <p className="tright">
+                          <i className="fl c6">还可以输入<em>240</em>字</i>
+                          <Button type="primary" loading={this.state[`myLoading${data.fid}`]} style={{borderRadius: 3}}
+                                  onClick={() => this.saveTopic(data.fid, 1)}>回复</Button>
+                        </p>
+                      </div>
+                    </div> : null
+                  }
+                </div >
               );
             })
           }
 
-          <div className="item">
-            <img className="av" src={require('../../assets/img/project-detail/av3.png')} />
-            <p className="t1">
-              <i className="c6">米祁连：</i>
-              在众借帮融资成功后，融得的资金是直接打入公司的账户还是由第三方进行托管？
-            </p>
-            <p className="t2 c6">
-              <i>3分钟前</i>
-              <a>回复（3）</a>
-            </p>
-          </div>
-          <div className="item">
-            <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
-            <p className="t1">
-              <i className="c6">自信哥：</i>
-              香港人能投嗎? 本人已在國內投了 P2P 一 年多。
-            </p>
-            <p className="t2 c6">
-              <i>4分钟前</i>
-              <a>回复（3）</a>
-            </p>
-            <div className="rediv">
-              <div className="list">
-                <div className="item">
-                  <img className="av" src={require('../../assets/img/project-detail/av3.png')} />
-                  <p className="t1">
-                    <i className="c6">贵***业 回复 自信哥：</i>
-                    能投不限制地区
-                  </p>
-                  <p className="t2 c6">
-                    <i>3分钟前</i>
-                    <a>回复（0）</a>
-                  </p>
-                </div>
-                <div className="item">
-                  <img className="av" src={require('../../assets/img/project-detail/av1.png')} />
-                  <p className="t1">
-                    <i className="c6">贵***业 回复 自信哥：</i>
-                    能投不限制地区
-                  </p>
-                  <p className="t2 c6">
-                    <i>3分钟前</i>
-                    <a>回复（0）</a>
-                  </p>
-                </div>
-                <div className="item">
-                  <img className="av" src={require('../../assets/img/project-detail/av3.png')} />
-                  <p className="t1">
-                    <i className="c6">贵***业 回复 自信哥：</i>
-                    能投不限制地区
-                  </p>
-                  <p className="t2 c6">
-                    <i>3分钟前</i>
-                    <a>回复（0）</a>
-                  </p>
-                </div>
-              </div>
-              <div className="rebox">
-                <textarea className="put" rows="5" value={this.state[`123`]} onChange={(e)=>this.setState({[`123`]: e.target.value})}/>
-                <p className="tright">
-                  <i className="fl c6">还可以输入<em>240</em>字</i>
-                  <Button type="primary" loading={this.state[`loading${123}`]} style={{borderRadius: 3}} onClick={()=>this.saveTopic()}>回复</Button>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="item">
-            <img className="av" src={require('../../assets/img/project-detail/av3.png')} />
-            <p className="t1">
-              <i className="c6">张月：</i>
-              股权众筹监管细则，重点监管的方向可能有哪些？
-            </p>
-            <p className="t2 c6">
-              <i>1小时前</i>
-              <a>回复（1）</a>
-            </p>
-            <div className="rediv">
-              <div className="list">
-                <div className="item">
-                  <img className="av" src={require('../../assets/img/project-detail/av3.png')} />
-                  <p className="t1">
-                    <i className="c6">罗斯 回复 张月：</i>
-                    会明确股权众筹的定义，对众筹平台进行规范，对投资可能存在限制，比如说大额投资要通过平台认证等。对众筹平台的信息披露做出要求，平台注册用户能得到详细的披露信息，同时，成为注册用户，必须实名认证等。
-                  </p>
-                  <p className="t2 c6">
-                    <i>3分钟前</i>
-                    <a>回复（0）</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="item">
-            <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
-            <p className="t1">
-              <i className="c6">陈明：</i>
-              如何甄别股权众投平台好坏？
-            </p>
-            <p className="t2 c6">
-              <i>2小时前</i>
-              <a>回复（0）</a>
-            </p>
-          </div>
-        </div>
+        </div> : null}
       </div>
     );
   }

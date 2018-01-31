@@ -1,7 +1,8 @@
 import React from 'react';
-import { getProQuestion, addQuestion } from '../../services/api';
+import { getProQuestion, addQuestion,getAnswerbyQaId, } from '../../services/api';
 import {message, Button} from 'antd';
 import {connect} from 'dva';
+import moment from 'moment';
 
 
 @connect((state) => (({
@@ -19,6 +20,11 @@ export default class SecTrack extends React.Component {
 
   componentDidMount() {
     this.fetchQuestion();
+    this.fetchBannerPic();
+  }
+
+  async fetchBannerPic() {
+    const response = await getAnswerbyQaId();
   }
 
   async fetchQuestion() {
@@ -32,7 +38,7 @@ export default class SecTrack extends React.Component {
 
   // 发布问题
   async sendQuestion() {
-    const { topicText } = this.state;
+    const { topicText, anonymous } = this.state;
     if (!this.judgeLogin())
       return;
     if (!topicText) {
@@ -43,8 +49,12 @@ export default class SecTrack extends React.Component {
 
     try {
       // TODO: 问题对象生成
-
-      const response = await addQuestion();
+      const data = {
+        fProjectId: this.props.projectId,
+        fQuestion: topicText,
+        fIsAnonymity: anonymous
+      };
+      const response = await addQuestion(data);
       this.setState({sendLoading: false});
       if (response.code === 0) {
         // 发布话题成功之后 清空话题框 刷新全部话题列表
@@ -70,11 +80,12 @@ export default class SecTrack extends React.Component {
     }
   }
 
-  async getAnswerbyQaId(questionId) {
+  async getAnswerbyQaIds(questionId) {
+    this.setState({[`status${questionId}`]: true});
     const response = await getAnswerbyQaId(questionId);
     if (response.code === 0) {
       this.setState({
-        [`answer${questionId}`]: response.data
+        [`question${questionId}`]: response.data
       });
     } else {
       message.error(response.msg);
@@ -82,7 +93,7 @@ export default class SecTrack extends React.Component {
   }
 
   render() {
-    const { anonymous, topicText, sendLoading } = this.state;
+    const { anonymous, topicText, sendLoading, allQuestion } = this.state;
     return (
       <div>
         <div className="lich-box1 border">
@@ -141,54 +152,38 @@ export default class SecTrack extends React.Component {
         </div>
 
         <div className="qa-list">
-          <div className="item">
-            <p className="q">
-              <em>问</em>
-              <b className="t1">参与众筹项目，如何才能更好地保护好投资者的权益？ </b>
-              <b className="fr">j***a 2017-09-27 07:41</b>
-            </p>
-            <p className="a">
-              <em>答</em>
-              <i className="t1">股权众筹监管细则，重点监管的方向可能有哪些？</i>
-              <i className="fr">于***奎 2017-09-28 17:24</i>
-            </p>
-            <div className="aa none">
-              <p className="a">
-                <i className="t1">股权众筹监管细则，重点监管的方向可能有哪些？</i>
-                <i className="fr">于***奎 2017-09-28 17:24</i>
-              </p>
-              <p className="a">
-                <i className="t1">股权众筹监管细则，重点监管的方向可能有哪些？</i>
-                <i className="fr">于***奎 2017-09-28 17:24</i>
-              </p>
-            </div>
-            <p className="more"><a>继续查看2条回答</a></p>
-          </div>
-          <div className="item">
-            <p className="q">
-              <em>问</em>
-              <b className="t1">实体店找投资方融资太困难，找投融资平台也很难成功，该怎么办？</b>
-              <b className="fr">j***a 2017-09-27 07:41</b>
-            </p>
-            <p className="a">
-              <em>答</em>
-              <i className="t1">实体店融资可以找合伙人或者加盟商，实体店有固定资产，因此也可以找银行去贷款。</i>
-              <i className="fr">于***奎 2017-09-28 17:24</i>
-            </p>
-            <div className="aa none">
-              <p className="a">
-                <i className="t1">股权众筹监管细则，重点监管的方向可能有哪些？</i>
-                <i className="fr">于***奎 2017-09-28 17:24</i>
-              </p>
-              <p className="a">
-                <i className="t1">股权众筹监管细则，重点监管的方向可能有哪些？</i>
-                <i className="fr">于***奎 2017-09-28 17:24</i>
-              </p>
-            </div>
-            <p className="more"><a>继续查看2条回答</a></p>
-          </div>
+          {
+            allQuestion.map((data, index) => (
+              <div className="item" key={index}>
+                <p className="q" >
+                  <em>问</em>
+                  <b className="t1">{data.fquestion}</b>
+                  <b className="fr">{data.fis_anonymity?'匿名用户':data.fnickname} {moment(data.ftime).format('YYYY-MM-DD HH:mm')}</b>
+                </p>
+                {this.state[`status${data.fid}`] ?
+                  <div className="aa">
+                  {this.state[`question${data.fid}`] ? this.state[`question${data.fid}`].map((value, index) => {
+                    return (
+                      <p className="a">
+                        <i className="t1">{value.fanswer}</i>
+                        <i className="fr">{value.fis_anonymity?'匿名用户':value.fnickname} {moment(value.ftime).format('YYYY-MM-DD HH:mm')}</i>
+                      </p>
+                    )
+                  }) : null}
+                  </div> : null
+                }
+                <p className="more">
+                  {data.count !== 0 ?
+                    this.state[`status${data.fid}`] ?
+                      <a onClick={()=>this.setState({[`status${data.fid}`]: false})}>收起回答</a> :
+                      <a onClick={()=>this.getAnswerbyQaIds(data.fid)}>查看{data.count}条回答</a>
+                    : <span>暂无回答</span>
+                  }
+                </p>
+              </div>
+            ))
+          }
         </div>
-
       </div>
     );
   }
