@@ -4,11 +4,13 @@ import PieReact from '../../components/Echarts/PieReact';
 import LineReact from '../../components/Echarts/LineReact'
 import Path from '../../common/pagePath';
 import {connect} from 'dva';
+import moment from 'moment';
 
 @connect((state)=>({
   personalStatus: state.account.personalStatus,
-  personal: state.account.personal
+  personal: state.account.personal,
 }))
+
 export default class PersonAccount extends React.Component {
   constructor(props) {
     super(props);
@@ -109,7 +111,7 @@ export default class PersonAccount extends React.Component {
           }
         ]
       },
-      // 个人账户 折线图
+    // 个人账户 折线图
       lineOption: {
         xAxis: {
           type: 'value',
@@ -144,7 +146,7 @@ export default class PersonAccount extends React.Component {
     // 获取个人账户信息
     this.props.dispatch({
       type: 'account/getPersonalAccount',
-      payload: null
+      payload:{showNumInfo:4}
     });
   }
 
@@ -153,6 +155,7 @@ export default class PersonAccount extends React.Component {
   };
 
   render() {
+    console.log(this.props.personal);
     if (!this.props.personal) {
       return (
         <div className="fr uc-rbody">
@@ -210,41 +213,21 @@ export default class PersonAccount extends React.Component {
           <div className="timetree">
             <div className="end"/>
             <div className="list">
-              <div className="item">
-                <p className="date">
-                  <i className="y">2018</i><br /><i className="d">4-10</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">还款完成</p>
-              </div>
-              <div className="item">
-                <p className="date">
-                  <i className="y">2018</i><br /><i className="d">3-15</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">50万借款审核通过，发布</p>
-              </div>
-              <div className="item">
-                <p className="date">
-                  <i className="y">2018</i><br /><i className="d">2-6</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">筹款成功，给投资人发放5万元代金券的额外回报</p>
-              </div>
-              <div className="item">
-                <p className="date">
-                  <i className="y">2018</i><br /><i className="d">1-16</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">第五期还款</p>
-              </div>
-              <div className="item hover">
-                <p className="date">
-                  <i className="y">2017</i><br /><i className="d">12-17</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">新店开业，给投资人发放免费体验券</p>
-              </div>
+              {
+                this.props.personal.accountDynamicVos.map((data,index) => {
+                  let year_ = moment(data.time).format('YYYY');
+                  let month = moment(data.time).format('MM-DD');
+                  return(
+                    <div className="item" key={index}>
+                      <p className="date">
+                        <i className="y">{year_}</i><br /><i className="d">{month}</i>
+                      </p>
+                      <i className="cc"/>
+                      <p className="text">{data.remark}</p>
+                    </div>
+                  );
+                })
+              }
             </div>
             <div className="start"/>
           </div>
