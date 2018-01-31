@@ -54,10 +54,8 @@ export default class PersonAccount extends React.Component {
               return `${name}  {b|2.01}`
             } else if (name === '待收金额') {
               return `${name}  {b|100,000.01}`
-            } else if (name === '待收收益') {
-              return `${name}  {b|10,000.01}`
             } else {
-              return `${name}  {b|100.01}`
+              return `${name}  {b|10,000.01}`
             }
           },
           left: '50%',
@@ -73,9 +71,6 @@ export default class PersonAccount extends React.Component {
             icon: 'circle'
           },{
             name: '待收收益',
-            icon: 'circle'
-          },{
-            name: '待还总额',
             icon: 'circle'
           }]
         },
@@ -105,8 +100,7 @@ export default class PersonAccount extends React.Component {
               {value:335, name:'可用余额'},
               {value:310, name:'冻结金额'},
               {value:234, name:'待收本金'},
-              {value:135, name:'待收收益'},
-              {value:1548, name:'待还总额'}
+              {value:135, name:'待收收益'}
             ]
           }
         ]
@@ -150,8 +144,107 @@ export default class PersonAccount extends React.Component {
     });
   }
 
-  jumpRecharge() {
-    this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {1:213}})
+  componentWillReceiveProps(nextProps) {
+    if (this.props.personal !== nextProps.personal) {
+
+      const money = nextProps.personal.totalAssets;
+      console.log(String(money.availableBalance).fm());
+      this.setState({
+        pieOption: {
+          tooltip: {
+            trigger: 'item',
+          },
+          color: ['#03B9CB', '#F84B23', '#8BC25B', '#FD9F09', '#C7C7C7'],
+          legend: {
+            orient: 'vertical',
+            x: 'right',
+            align: 'left',
+            itemGap: 20,
+            textStyle: {
+              fontFamily: 'Arial',
+              fontSize: 16,
+              rich:{
+                b:{
+                  fontSize:16,
+                  align:'right',
+                  padding:[0,10,0,0],
+                  width: 100,
+                  fontWeight: 'bold',
+                },
+                c:{
+                  fontSize:16,
+                  align:'right',
+                  padding:[0,10,0,0],
+                  width: 100,
+                  fontWeight: 'bold',
+                  color: '#FF6600'
+                }
+              }
+            },
+            formatter:  function(name){
+              if (name==='可用余额') {
+                return `${name}  {c|${(money.availableBalance+'').fm()}}`
+              } else if (name === '冻结金额') {
+                return `${name}  {b|${(money.freezingAmount+'').fm()}}`
+              } else if (name === '待收本金') {
+                return `${name}  {b|${(money.collectPrincipal+'').fm()}}`
+              } else {
+                return `${name}  {b|${(money.collectInterest+'').fm()}}`
+              }
+            },
+            left: '50%',
+            y: 'center',
+            data:[{
+              name: '可用余额',
+              icon: 'circle'
+            },{
+              name: '冻结金额',
+              icon: 'circle'
+            },{
+              name: '待收本金',
+              icon: 'circle'
+            },{
+              name: '待收收益',
+              icon: 'circle'
+            }]
+          },
+          grid: {
+            right: '70%'
+          },
+          series: [
+            {
+              name:'金额',
+              type:'pie',
+              radius: ['100%', '90%'],
+              center: ['20%', '50%'],
+              avoidLabelOverlap: false,
+              hoverAnimation: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:[
+                {value:money.availableBalance, name:'可用余额'},
+                {value:money.freezingAmount, name:'冻结金额'},
+                {value:money.collectPrincipal, name:'待收本金'},
+                {value:money.collectInterest, name:'待收收益'}
+              ]
+            }
+          ]
+        }
+      })
+    }
+  }
+
+  jumpRecharge(accoundId) {
+    this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {account:accoundId}})
   };
 
   render() {
@@ -167,33 +260,33 @@ export default class PersonAccount extends React.Component {
       <div className="fr uc-rbody">
         <div className="ptit">
           <i>账户总资产</i>
-          <b>20,986.04</b>
+          <b>{this.props.personal.totalAssets.totalAssets}</b>
           <em>单位：元</em>
         </div>
         <div className="tright hd1">
           <a className="fl">
             <i>累计充值</i>
-            <b className="f18">20,000.00</b>
+            <b className="f18">{this.props.personal.totalAssets.totalRecharge}</b>
           </a>
           <a className="fl">
             <i>累计提现</i>
-            <b className="f18">1,000.00</b>
+            <b className="f18">{this.props.personal.totalAssets.totalWithdrawals}</b>
           </a>
-          <a className="btn btn1" onClick={this.jumpRecharge}>充值</a>
+          <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.personal.totalAssets.accountId)}>充值</a>
           <a className="btn btn2">提现</a>
           <a className="btn btn3">好友转账</a>
         </div>
         <div className="border shadow box1">
           <div className="pieDiv">
             <div>
-              <span style={{fontSize: '22px'}}>20,948.00</span>
+              <span style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets}</span>
               <span style={{fontSize: '14px'}}>账户总资产</span>
             </div>
           </div>
           <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
           <div className="coupon">
             <i className="c6">代金券</i>
-            <i className="fr">30.00</i>
+            <i className="fr">{(this.props.personal.totalAssets.capitalCoupon+'').fm()}</i>
           </div>
         </div>
 

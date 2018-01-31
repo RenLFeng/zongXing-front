@@ -7,6 +7,7 @@ import Exception from './components/Exception'
 import NoMatch from './routes/404page/404Page';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+import './common/jquery-plugin';
 moment.locale('zh-cn');
 
 function RouterConfig({ history }) {

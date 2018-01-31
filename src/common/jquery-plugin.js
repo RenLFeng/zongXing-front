@@ -11,13 +11,15 @@ String.prototype.fm = function (n) {
     if (s == "" || s == null) return "";
     n = n > 0 && n <= 20 ? n : 2;
     s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
-    if (s * 1 == 0) return "";
+    if (s * 1 == 0) return "0.00";
     var l = s.split(".")[0].split("").reverse(),
     r = s.split(".")[1];
-    t = "";
-    for (i = 0; i < l.length; i++) {
+    var t = "";
+    for (var i = 0; i < l.length; i++) {
         t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
     }
+    console.log(t);
+    console.log(t.split("").reverse().join("").replace("-,", "-"));
     var val = t.split("").reverse().join("").replace("-,", "-") + "." + r;
     if(val=="NaN.undefined"){
       val ="";
@@ -26,6 +28,7 @@ String.prototype.fm = function (n) {
   }
   catch(err)
   {
+    console.log(err);
     return "";
   }
 }
@@ -153,11 +156,9 @@ function accDiv(arg1,arg2){
     var t1=0,t2=0,r1,r2;
     try{t1=arg1.toString().split(".")[1].length}catch(e){}
     try{t2=arg2.toString().split(".")[1].length}catch(e){}
-    with(Math){
         r1=Number(arg1.toString().replace(".",""));
         r2=Number(arg2.toString().replace(".",""));
         return parseFloat(((r1/r2)*pow(10,t2-t1)).toFixed(2));
-    }
 }
 
 //乘法函数，用来得到精确的乘法结果

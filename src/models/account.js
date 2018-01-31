@@ -1,12 +1,13 @@
 import {getPersonAccount, getPersonAccountNew} from '../services/api';
+import {message} from 'antd';
 
 export default {
   namespace: 'account',
   state: {
     personal: {
       accountDynamicVos: [],
-      plan: null,
-      totalAssets: null
+      plan: {},
+      totalAssets: {}
     },
     company: [],
     personalStatus: false,
@@ -25,6 +26,8 @@ export default {
           type: 'savePersonal',
           payload: response.data
         });
+      } else {
+        message.error(response.msg);
       }
     },
   },
