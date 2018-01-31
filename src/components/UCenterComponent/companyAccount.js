@@ -154,32 +154,92 @@ export default class CompanyAccount extends React.Component {
       type: 'account/getCompanyLists',
       payload: ''
     });
-    // 获取数据之后重新渲染
-    setTimeout(()=>{
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props.companyList);
+    if (this.props.companyList !== nextProps.companyList && nextProps.companyList.length > 0) {
+      this.setState({
+        companyId: nextProps.companyList[0].companyId
+      });
+      this.props.dispatch({
+        type: 'account/getCompanyAccount',
+        payload: {
+          showNumInfo: 4,
+          zjbNo: nextProps.companyList[0].companyId
+        }
+      })
+    }
+    if (this.props.company_page !== nextProps.company_page) {
+      const money = nextProps.company_page.totalAssets;
       this.setState({
         pieOption: {
-          ...this.state.pieOption,
+          tooltip: {
+            trigger: 'item',
+          },
+          color: ['#03B9CB', '#F84B23', '#8BC25B', '#FD9F09', '#C7C7C7'],
           legend: {
-            ...this.state.pieOption.legend,
+            orient: 'vertical',
+            x: 'right',
+            align: 'left',
+            itemGap: 20,
+            textStyle: {
+              fontFamily: 'Arial',
+              fontSize: 16,
+              rich:{
+                b:{
+                  fontSize:16,
+                  align:'right',
+                  padding:[0,10,0,0],
+                  width: 100,
+                  fontWeight: 'bold',
+                },
+                c:{
+                  fontSize:16,
+                  align:'right',
+                  padding:[0,10,0,0],
+                  width: 100,
+                  fontWeight: 'bold',
+                  color: '#FF6600'
+                }
+              }
+            },
             formatter:  function(name){
               if (name==='可用余额') {
-                return `${name}  {c|23,413.01}`
+                return `${name}  {c|${(money.availableBalance+'').fm()}}`
               } else if (name === '冻结金额') {
-                return `${name}  {b|2.01}`
-              } else if (name === '待收金额') {
-                return `${name}  {b|100,000.01}`
-              } else if (name === '待收收益') {
-                return `${name}  {b|10,000.01}`
+                return `${name}  {b|${(money.freezingAmount+'').fm()}}`
+              } else if (name === '待收本金') {
+                return `${name}  {b|${(money.collectPrincipal+'').fm()}}`
               } else {
-                return `${name}  {b|100.01}`
+                return `${name}  {b|${(money.collectInterest+'').fm()}}`
               }
-            }
+            },
+            left: '50%',
+            y: 'center',
+            data:[{
+              name: '可用余额',
+              icon: 'circle'
+            },{
+              name: '冻结金额',
+              icon: 'circle'
+            },{
+              name: '待收本金',
+              icon: 'circle'
+            },{
+              name: '待收收益',
+              icon: 'circle'
+            }]
+          },
+          grid: {
+            right: '70%'
           },
           series: [
             {
               name:'金额',
               type:'pie',
               radius: ['100%', '90%'],
+              center: ['20%', '50%'],
               avoidLabelOverlap: false,
               hoverAnimation: false,
               label: {
@@ -194,33 +254,23 @@ export default class CompanyAccount extends React.Component {
                 }
               },
               data:[
-                {value:23413.01, name:'可用余额'},
-                {value:2354.00, name:'冻结金额'},
-                {value:10000.01, name:'待收本金'},
-                {value:10000.01, name:'待收收益'},
-                {value:2354.00, name:'待还总额'}
+                {value:money.availableBalance, name:'可用余额'},
+                {value:money.freezingAmount, name:'冻结金额'},
+                {value:money.collectPrincipal, name:'待收本金'},
+                {value:money.collectInterest, name:'待收收益'}
               ]
             }
           ]
         }
-      });
-    }, 2000);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.companyList !== nextProps.companyList && nextProps.companyList.length > 0) {
-      this.setState({
-        companyId: nextProps.companyList[0].companyId
-      });
-      this.props.dispatch({
-        type: 'account/getCompanyAccount',
-        payload: {
-          showNumInfo: 4,
-          zjbNo: nextProps.companyList[0].companyId
-        }
       })
     }
+
   }
+
+
+  jumpRecharge(accoundId) {
+    this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {account:accoundId}})
+  };
 
 
 
@@ -256,7 +306,7 @@ export default class CompanyAccount extends React.Component {
             <i>累计提现</i>
             <b className="f18">{(this.props.company_page.totalAssets.totalRecharge+'').fm()}</b>
           </a>
-          <a className="btn btn1">充值</a>
+          <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.company_page.totalAssets.accountId)}>充值</a>
           <a className="btn btn2">提现</a>
           <a className="btn btn3">好友转账</a>
         </div>
@@ -270,7 +320,7 @@ export default class CompanyAccount extends React.Component {
           <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
           <div className="coupon">
             <i className="c6">代金券</i>
-            <i className="fr">30.00</i>
+            <i className="fr">{(this.props.company_page.totalAssets.capitalCoupon+'').fm()}</i>
           </div>
         </div>
 
