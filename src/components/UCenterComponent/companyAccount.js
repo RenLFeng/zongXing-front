@@ -6,11 +6,15 @@ import LineReact from '../../components/Echarts/LineReact'
 import Path from '../../common/pagePath';
 import {getPersonAccount} from '../../services/api';
 import {connect} from 'dva';
+import moment from "moment/moment";
 
 const FormItem = Form.Item;
 @connect((state) => ({
   company: state.account.company,
-  companyStatus: state.account.companyStatus
+  companyStatus: state.account.companyStatus,
+  companyList: state.account.companyList,
+  companyListStatus: state.account.companyListStatus,
+  company_page: state.account.company_page
 }))
 export default class CompanyAccount extends React.Component {
   constructor(props) {
@@ -139,16 +143,16 @@ export default class CompanyAccount extends React.Component {
         }]
       },
       // 显示的企业公司Id
-      companyId: this.props.company.length>0 ? this.props.company[0].companyId : '',
-      companyData: this.props.company.length>0 ? this.props.company[0] : null,
+      companyId: '',
+      companyData: {},
     }
   }
 
   componentDidMount() {
     // 获取公司账户数据
     this.props.dispatch({
-      type: 'account/getAccount',
-      payload: '0'
+      type: 'account/getCompanyLists',
+      payload: ''
     });
     // 获取数据之后重新渲染
     setTimeout(()=>{
@@ -203,43 +207,54 @@ export default class CompanyAccount extends React.Component {
     }, 2000);
   }
 
-  // 获取选择的公司账户信息
-  changeCompanyData(val) {
-    const companyArr = this.props.company;
-    for (let company of companyArr) {
-      if (company.id === val) {
-        this.setState({
-          companyId: val,
-          companyData: company
-        });
-      }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.companyList !== nextProps.companyList && nextProps.companyList.length > 0) {
+      this.setState({
+        companyId: nextProps.companyList[0].companyId
+      });
+      this.props.dispatch({
+        type: 'account/getCompanyAccount',
+        payload: {
+          showNumInfo: 4,
+          zjbNo: nextProps.companyList[0].companyId
+        }
+      })
     }
   }
 
-  companyRender() {
-    if (this.state.companyData) {
-      return (
-        <div>
-          <span>该企业账户开通失败，请重新尝试 <Link to={Path.OPEN_ACCOUNT+'/1'} style={{color: 'blue'}}>点击此处</Link></span>
-        </div>
-      );
-    }
 
+
+  // 获取选择的公司账户信息
+  changeCompanyData(val) {
+    this.setState({
+      companyId: val
+    });
+    this.props.dispatch({
+      type: 'account/getCompanyAccount',
+      payload: {
+        showNumInfo: 4,
+        zjbNo: val
+      }
+    })
+  }
+
+  companyRender() {
+    console.log(this.props.company_page);
     return (
       <div >
         <div className="ptit">
           <i>账户总资产</i>
-          <b>20,986.04</b>
+          <b>{(this.props.company_page.totalAssets.totalAssets+'').fm()}</b>
           <em>单位：元</em>
         </div>
         <div className="tright hd1">
           <a className="fl">
             <i>累计充值</i>
-            <b className="f18">20,000.00</b>
+            <b className="f18">{(this.props.company_page.totalAssets.totalRecharge+'').fm()}</b>
           </a>
           <a className="fl">
             <i>累计提现</i>
-            <b className="f18">1,000.00</b>
+            <b className="f18">{(this.props.company_page.totalAssets.totalRecharge+'').fm()}</b>
           </a>
           <a className="btn btn1">充值</a>
           <a className="btn btn2">提现</a>
@@ -248,7 +263,7 @@ export default class CompanyAccount extends React.Component {
         <div className="border shadow box1">
           <div className="pieDiv">
             <div>
-              <span style={{fontSize: '22px'}}>20,948.00</span>
+              <span style={{fontSize: '22px'}}>{(this.props.company_page.totalAssets.totalAssets+'').fm()}</span>
               <span style={{fontSize: '14px'}}>账户总资产</span>
             </div>
           </div>
@@ -275,41 +290,21 @@ export default class CompanyAccount extends React.Component {
           <div className="timetree">
             <div className="end"/>
             <div className="list">
-              <div className="item">
-                <p className="date">
-                  <i className="y">2018</i><br /><i className="d">4-10</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">还款完成</p>
-              </div>
-              <div className="item">
-                <p className="date">
-                  <i className="y">2018</i><br /><i className="d">3-15</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">50万借款审核通过，发布</p>
-              </div>
-              <div className="item">
-                <p className="date">
-                  <i className="y">2018</i><br /><i className="d">2-6</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">筹款成功，给投资人发放5万元代金券的额外回报</p>
-              </div>
-              <div className="item">
-                <p className="date">
-                  <i className="y">2018</i><br /><i className="d">1-16</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">第五期还款</p>
-              </div>
-              <div className="item hover">
-                <p className="date">
-                  <i className="y">2017</i><br /><i className="d">12-17</i>
-                </p>
-                <i className="cc"/>
-                <p className="text">新店开业，给投资人发放免费体验券</p>
-              </div>
+              {
+                this.props.company_page.accountDynamicVos.map((data,index) => {
+                  let year_ = moment(data.time).format('YYYY');
+                  let month = moment(data.time).format('MM-DD');
+                  return(
+                    <div className="item" key={index}>
+                      <p className="date">
+                        <i className="y">{year_}</i><br /><i className="d">{month}</i>
+                      </p>
+                      <i className="cc"/>
+                      <p className="text">{data.remark}</p>
+                    </div>
+                  );
+                })
+              }
             </div>
             <div className="start"/>
           </div>
@@ -322,18 +317,18 @@ export default class CompanyAccount extends React.Component {
     return (
       <div className="fr uc-rbody">
         <Select value={this.state.companyId} onChange={(val)=>this.changeCompanyData(val)} style={{width: 500, marginBottom: 30}}>
-          {this.props.company.map((data) => {
+          {this.props.companyList.map((data) => {
             return (
-              <Select.Option value={data.companyId}>data.companyName</Select.Option>
+              <Select.Option value={data.companyId} key={data.companyId}>{data.companyName}</Select.Option>
             );
           })}
         </Select>
-        { this.props.company.length === 0?
+        { this.props.companyList.length === 0?
           <div>
             <span>您还没有开通企业账户，开通 <Link to={Path.OPEN_ACCOUNT + '/1'} style={{color: 'blue'}}>点击此处</Link></span>
           </div> : null
         }
-        {this.state.companyData ? this.companyRender.call(this) : null}
+        {this.props.companyList.length !== 0 ? this.companyRender.call(this ) : null}
       </div>
     );
 

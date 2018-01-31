@@ -1,4 +1,4 @@
-import {getPersonAccount, getPersonAccountNew} from '../services/api';
+import {getPersonAccount, getPersonAccountNew,getCompanylist} from '../services/api';
 import {message} from 'antd';
 
 export default {
@@ -9,10 +9,17 @@ export default {
       plan: {},
       totalAssets: {}
     },
+    companyListStatus: false,
+    companyList: [],
     company: [],
     personalStatus: false,
     companyStatus: false,
-    num: 0
+    num: 0,
+    company_page : {
+      accountDynamicVos: [],
+      plan: {},
+      totalAssets: {}
+    }
   },
   effects: {
     *getCompanyNum({payload}){
@@ -30,6 +37,30 @@ export default {
         message.error(response.msg);
       }
     },
+    *getCompanyAccount({payload}, {call,put}) {
+      const res = yield call(getPersonAccountNew, payload );
+      console.log(res);
+      if (res.code === 0) {
+        yield put({
+          type: 'saveCompany',
+          payload: res.data
+        });
+      } else {
+        message.error(res.msg);
+      }
+    },
+    *getCompanyLists({payload}, {call,put}) {
+      const resp = yield call(getCompanylist, payload );
+      console.log(resp);
+      if(resp.code ===0) {
+        yield put({
+          type: 'saveCompanyList',
+          payload: resp.data
+        });
+      } else {
+        message.error(resp.msg);
+      }
+    }
   },
   reducers: {
     savePersonal(state, {payload}) {
@@ -46,5 +77,12 @@ export default {
         company: payload
       };
     },
+    saveCompanyList(state, {payload}) {
+      return {
+        ...state,
+        companyListStatus: true,
+        companyList: payload
+      };
+    }
   },
 };

@@ -40,7 +40,7 @@ export async function getPersonAccount(param) {
   return request(`${BASE_URL}/zjb-website/account/info?ftype=${param}`)
 }
 
-// 获取个人账户信息的接口
+// 获取个人账户.企业账户信息的接口
 export async function getPersonAccountNew(params) {
   return request(`${BASE_URL}/zjb-website/account/show/info`,{
     method: 'POST',
@@ -50,10 +50,11 @@ export async function getPersonAccountNew(params) {
   });
 }
 
-// 获取企业信息的接口
-export async function getCompany() {
-  return request(`${BASE_URL}/zjb-website/company/self/show/num`)
+//获取有账户的企业信息列表的接口
+export async function getCompanylist() {
+  return request(`${BASE_URL}/zjb-website/account/company/list`)
 }
+
 
 // 提交开户资料的接口
 export async function commitOpenAccount(params) {

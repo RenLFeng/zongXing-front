@@ -148,7 +148,6 @@ export default class PersonAccount extends React.Component {
     if (this.props.personal !== nextProps.personal) {
 
       const money = nextProps.personal.totalAssets;
-      console.log(String(money.availableBalance).fm());
       this.setState({
         pieOption: {
           tooltip: {
@@ -260,17 +259,17 @@ export default class PersonAccount extends React.Component {
       <div className="fr uc-rbody">
         <div className="ptit">
           <i>账户总资产</i>
-          <b>{this.props.personal.totalAssets.totalAssets}</b>
+          <b>{(this.props.personal.totalAssets.totalAssets+'').fm()}</b>
           <em>单位：元</em>
         </div>
         <div className="tright hd1">
           <a className="fl">
             <i>累计充值</i>
-            <b className="f18">{this.props.personal.totalAssets.totalRecharge}</b>
+            <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
           </a>
           <a className="fl">
             <i>累计提现</i>
-            <b className="f18">{this.props.personal.totalAssets.totalWithdrawals}</b>
+            <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
           </a>
           <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.personal.totalAssets.accountId)}>充值</a>
           <a className="btn btn2">提现</a>
@@ -279,7 +278,7 @@ export default class PersonAccount extends React.Component {
         <div className="border shadow box1">
           <div className="pieDiv">
             <div>
-              <span style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets}</span>
+              <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets+'').fm()}</span>
               <span style={{fontSize: '14px'}}>账户总资产</span>
             </div>
           </div>
