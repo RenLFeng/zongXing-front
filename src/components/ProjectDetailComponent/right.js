@@ -2,10 +2,29 @@ import React from 'react';
 import Data from './data';
 import FormProject from './form-project';
 import moment from 'moment';
+import { getPersonalMoney } from '../../services/api';
+import {message} from 'antd';
 
 export default class Right extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      personalMoney: '0',
+      accountId: ''
+    };
+  }
 
-
+  async getPersonalMoney() {
+    const response = await getPersonalMoney();
+    if (response.code === 0) {
+      this.setState({
+        personalMoney: response.data.personalMoney,
+        accountId: response.data.accountId
+      });
+    } else {
+      message.error('获取用户余额失败');
+    }
+  }
 
   render() {
     const project = this.props.projectDetail;
@@ -50,7 +69,7 @@ export default class Right extends React.Component {
             <p>本网站所载的各种信息和数据等仅供参考，并不构成销售要约，或买入项目或其它投资工具的建议。投资者应仔细审阅相关金融产品的合同文件等以了解其风险因素，或寻求专业的投资顾问的建议。不承诺保本和最低收益，具有一定的投资风险。投资者的本金可能会因市场变动而蒙受损失，请投资者充分认识投资风险，谨慎投资。</p>
           </div>
           <p className="center bot1">
-            <a className="btn">我要投资</a>
+            <a className="btn" onClick={()=>this.getPersonalMoney()}>我要投资</a>
           </p>
           <p className="center bot2">
             <a className="like">23</a>
@@ -65,7 +84,7 @@ export default class Right extends React.Component {
           </p>
         </div>
         <Data />
-        <FormProject />
+        <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney} accountId={this.state.accountId}/>
       </div>
     );
   }

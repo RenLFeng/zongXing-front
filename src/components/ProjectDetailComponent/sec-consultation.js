@@ -197,7 +197,6 @@ export default class SecConsultation extends React.Component {
 
   render() {
     const { showTopic, anonymous, topicText, sendLoading } = this.state;
-    console.log(this.state.myTopic);
     return (
       <div>
         <div className="cmt-box1">

@@ -1,9 +1,10 @@
 import React from 'react';
-import { getProQuestion, addQuestion,getAnswerbyQaId, } from '../../services/api';
+import { getProQuestion, addQuestion,getAnswerbyQaId, getProjectDetailNotice} from '../../services/api';
 import {message, Button} from 'antd';
 import {connect} from 'dva';
 import moment from 'moment';
-
+import { genzong } from '../../assets/project-detail/index';
+import {IMG_BASE_URL} from '../../common/systemParam';
 
 @connect((state) => (({
   loginStatus: state.login.status
@@ -15,6 +16,7 @@ export default class SecTrack extends React.Component {
       projectId: '',
       allQuestion: [], // 所有问题的集合
       anonymous: false, // 匿名回复
+      noticeImg: []
     };
   }
 
@@ -24,7 +26,38 @@ export default class SecTrack extends React.Component {
   }
 
   async fetchBannerPic() {
-    const response = await getAnswerbyQaId();
+    const response = await getProjectDetailNotice(this.props.projectId);
+    if (response.code === 0) {
+      this.setState({noticeImg: response.data});
+      setTimeout(()=>this.controlBanner(), 200);
+    } else {
+      message.error(response.msg);
+    }
+  }
+
+  controlBanner() {
+    let count = $('.lich-box1 .swiper-slide').length;
+    $('.lich-box1 .bot>i').html(count);
+    const swiper = new Swiper('.lich-box1 .swiper-container', {
+      speed: 1000,
+      loop: true,
+      onSlideChangeEnd: this.resetCon
+    });
+    $('.lich-box1 .prev').on('click', function () {
+      swiper.swipePrev();
+    });
+    $('.lich-box1 .next').on('click', function () {
+      swiper.swipeNext();
+    });
+  }
+
+  resetCon(swiper) {
+    let d = swiper.getSlide(swiper.activeIndex);
+    let tit = $(d).find('.t0').html();
+    $('.lich-box1 .hd .tit').html(tit);
+    let idx = swiper.activeIndex || count;
+    if (idx > count) idx = 1;
+    $('.lich-box1 .bot>b').html(idx);
   }
 
   async fetchQuestion() {
@@ -70,6 +103,8 @@ export default class SecTrack extends React.Component {
     }
   }
 
+
+
   // 判断是否登录
   judgeLogin() {
     if (this.props.loginStatus) {
@@ -94,49 +129,34 @@ export default class SecTrack extends React.Component {
 
   render() {
     const { anonymous, topicText, sendLoading, allQuestion } = this.state;
+    const {projectDetail} = this.props;
+    const dateCode = moment(projectDetail.fcreate_time).format('YYYY') + moment(projectDetail.fcreate_time).format('MM');
     return (
       <div>
         <div className="lich-box1 border">
           <div className="hd">
             <i className="tag">公告</i>
-            <i className="tit">未来十年这样投资才算中产</i>
+            <i className="tit">{this.state.noticeImg.length>0?this.state.noticeImg[0].fTitle:''}</i>
           </div>
           <div className="swiper-container">
             <div className="swiper-wrapper">
-              <div className="swiper-slide">
-                <img src={require('../../assets/img/project-detail/pic2.png')} />
-                <p className="t0 none">未来十年这样投资才算中产</p>
-                <p className="t1">2017-10-10 14:24 阅读数：2322</p>
-                <p className="t2">最近这段时间，有很多50后、60后的朋友都问我一个问题，为什么突然有一种不安全感，有一种陌生感。过去的两三年里，中国的很多产业在发展，互联网对制造业、服务业形成了冲击，中国金融市场出现一定波动。</p>
-              </div>
-              <div className="swiper-slide">
-                <img src={require('../../assets/img/project-detail/pic3.png')} />
-                <p className="t0 none">中国的很多产业在发展</p>
-                <p className="t1">2017-10-10 14:24 阅读数：2322</p>
-                <p className="t2">最近这段时间，有很多50后、60后的朋友都问我一个问题，为什么突然有一种不安全感，有一种陌生感。过去的两三年里，中国的很多产业在发展，互联网对制造业、服务业形成了冲击，中国金融市场出现一定波动。</p>
-              </div>
-              <div className="swiper-slide">
-                <img src={require('../../assets/img/project-detail/pic4.png')} />
-                <p className="t0 none">未来十年这样投资才算中产</p>
-                <p className="t1">2017-10-10 14:24 阅读数：2322</p>
-                <p className="t2">最近这段时间，有很多50后、60后的朋友都问我一个问题，为什么突然有一种不安全感，有一种陌生感。过去的两三年里，中国的很多产业在发展，互联网对制造业、服务业形成了冲击，中国金融市场出现一定波动。</p>
-              </div>
-              <div className="swiper-slide">
-                <img src={require('../../assets/img/project-detail/pic5.png')} />
-                <p className="t0 none">中国的很多产业在发展</p>
-                <p className="t1">2017-10-10 14:24 阅读数：2322</p>
-                <p className="t2">最近这段时间，有很多50后、60后的朋友都问我一个问题，为什么突然有一种不安全感，有一种陌生感。过去的两三年里，中国的很多产业在发展，互联网对制造业、服务业形成了冲击，中国金融市场出现一定波动。</p>
-              </div>
-              <div className="swiper-slide">
-                <img src={require('../../assets/img/project-detail/pic5.png')} />
-                <p className="t0 none">未来十年这样投资才算中产</p>
-                <p className="t1">2017-10-10 14:24 阅读数：2322</p>
-                <p className="t2">最近这段时间，有很多50后、60后的朋友都问我一个问题，为什么突然有一种不安全感，有一种陌生感。过去的两三年里，中国的很多产业在发展，互联网对制造业、服务业形成了冲击，中国金融市场出现一定波动。</p>
-              </div>
+              { this.state.noticeImg.map((data, index)=>{
+                  return(
+                    <div className="swiper-slide" key={index}>
+                      <img src={`${IMG_BASE_URL}project/${dateCode}/${projectDetail.fproject_no}/${data.fCardPic}`}/>
+                      <p className="t0 none">{data.fTitle}</p>
+                      <p className="t1">{moment(data.fTime).format('YYYY-MM-DD HH:mm')} 阅读数：{data.fReadCount}</p>
+                      <p className="t2">
+                        {data.fContent}
+                      </p>
+                    </div>
+                  );
+                })
+              }
             </div>
           </div>
           <div className="bot">
-            <b>1</b><em>/</em><i>5</i>
+            <b>1</b><em>/</em><i>1</i>
             <a className="btn prev">&lt;</a>
             <a className="btn next">&gt;</a>
           </div>

@@ -98,44 +98,12 @@ function comment() {
     });
 }
 
-function genzong() {
+export function genzong() {
     if (av.genzong) return;
     av.genzong = 1;
 
-    let count = $('.lich-box1 .swiper-slide').length;
-    $('.lich-box1 .bot>i').html(count);
-    var swiper = new Swiper('.lich-box1 .swiper-container', {
-        speed: 1000,
-        loop: true,
-        onSlideChangeEnd: resetCon
-    });
-    $('.lich-box1 .prev').on('click', function () {
-        swiper.swipePrev();
-    });
-    $('.lich-box1 .next').on('click', function () {
-        swiper.swipeNext();
-    });
 
-    function resetCon(swiper) {
-        let d = swiper.getSlide(swiper.activeIndex);
-        let tit = $(d).find('.t0').html();
-        $('.lich-box1 .hd .tit').html(tit);
-        let idx = swiper.activeIndex || count;
-        if (idx > count) idx = 1;
-        $('.lich-box1 .bot>b').html(idx);
-    }
 
-    $('.qa-list').on('click', '.more>a', function () {
-        let $t = $(this);
-        if ($t.hasClass('hover')) {
-            $t.removeClass('hover').html($t.data('old'));
-            $t.parent().prev().addClass('none');
-        } else {
-            $t.addClass('hover').data('old', $t.html()).html('收起回答');
-            $t.parent().prev().removeClass('none');
-        }
-    });
-    $('.qa-list .more>a').eq(1).trigger('click');
 }
 
 function rightEvent() {

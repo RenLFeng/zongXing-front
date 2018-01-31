@@ -18,8 +18,6 @@ String.prototype.fm = function (n) {
     for (var i = 0; i < l.length; i++) {
         t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
     }
-    console.log(t);
-    console.log(t.split("").reverse().join("").replace("-,", "-"));
     var val = t.split("").reverse().join("").replace("-,", "-") + "." + r;
     if(val=="NaN.undefined"){
       val ="";

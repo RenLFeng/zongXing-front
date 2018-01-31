@@ -221,7 +221,7 @@ export async function getProjectType() {
   return request(`${BASE_URL}/zjb-website/getProjectCode`)
 }
 
-//  提交充值信息 获取充值所需数据
+// 提交充值信息 获取充值所需数据
 export async function getRecharge(params) {
   return request(`http://192.168.1.4:8001/zjb-dc/account/getRechargeInfo`, {
     method: 'POST',
@@ -229,4 +229,14 @@ export async function getRecharge(params) {
       ...params,
     }
   })
+}
+
+// 获取项目详情公告接口
+export async function getProjectDetailNotice(param) {
+  return request(`${BASE_URL}/zjb-website/projectNotice/getOne/${param}`);
+}
+
+// 获取个人账户余额接口
+export async function getPersonalMoney() {
+  return request(`${BASE_URL}/zjb-website/projectNotice/getOne/`)
 }

@@ -114,8 +114,8 @@ export default class ProjectDetail extends React.Component {
           <div className="fl lbody shadow">
             <div className="tnav">
               <a className="hover">借款项目</a>
-              <a>投前咨询<em>3</em></a>
-              <a>投后跟踪<em>6</em></a>
+              <a>投前咨询<em>{this.state.projectDetail.topicCount}</em></a>
+              <a>投后跟踪<em>{this.state.projectDetail.questionCount}</em></a>
               <a>项目历程</a>
             </div>
             <div className="pd-con">
@@ -125,7 +125,7 @@ export default class ProjectDetail extends React.Component {
               <SecConsultation {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
-              <SecTrack {...this.props.match.params}/>
+              <SecTrack projectDetail={projectDetail} {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
               <SecCourse {...this.props.match.params}/>
