@@ -119,7 +119,7 @@ export default class ProjectDetail extends React.Component {
               <a>项目历程</a>
             </div>
             <div className="pd-con">
-              <SecLoan  projectDetail={projectDetail}/>
+              <SecLoan projectDetail={projectDetail}/>
             </div>
             <div className="pd-con none">
               <SecConsultation {...this.props.match.params}/>

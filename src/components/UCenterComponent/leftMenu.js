@@ -47,7 +47,7 @@ export default class LeftMenu extends React.Component {
               <li className="folder hover">
                 <a>个人账户</a>
                 <ul>
-                  <li><Link className={path.indexOf(Path.ACCOUNT_RECHARGE+'/0')===-1?'':'hover'} to={Path.ACCOUNT_RECHARGE + '/0'}>充值</Link></li>
+                  <li><Link className={path.indexOf(Path.ACCOUNT_RECHARGE+'/0')===-1?'':'hover'} to={{pathname:Path.ACCOUNT_RECHARGE, state:{account: '402881d4612645930161264a2c250000'}}}>充值</Link></li>
                   <li><Link className={path.indexOf(Path.ACCOUNT_WITHDRAWALS+'/0')===-1?'':'hover'} to={Path.ACCOUNT_WITHDRAWALS + '/0'}>提现</Link></li>
                   <li><a>收支明细</a></li>
                 </ul>

@@ -219,3 +219,13 @@ export async function praise(journeyId) {
 export async function getProjectType() {
   return request(`${BASE_URL}/zjb-website/getProjectCode`)
 }
+
+//  提交充值信息 获取充值所需数据
+export async function getRecharge(params) {
+  return request(`http://192.168.1.4:8001/zjb-dc/account/getRechargeInfo`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  })
+}

@@ -1,9 +1,9 @@
 import React from 'react';
 import Path from '../../common/pagePath';
 import {Link} from 'dva/router';
-import {Form, Input, Button, Select, Modal} from 'antd';
+import {Form, Input, Button, Select, Modal, message} from 'antd';
 import { MONEY_REG, MONEY_REG_} from '../../common/systemParam';
-
+import {getRecharge} from  '../../services/api';
 
 export default class AccountRecharge extends React.Component {
   constructor(props) {
@@ -19,17 +19,23 @@ export default class AccountRecharge extends React.Component {
 
   }
 
-  setRechargeData(data) {
+  async setRechargeData(data) {
     console.log(data);
-    this.setState({ recharge: data });
-    Modal.confirm({
-      title: '提示',
-      content: '确认充值吗?',
-      okText: '确认',
-      okType: 'danger',
-      cancelText: '取消',
-      onOk: () => this.submitMoney()
-    });
+    const response = await getRecharge(data);
+    console.log(response);
+    if (response.code === 0) {
+      this.setState({ recharge: response.data });
+      Modal.confirm({
+        title: '提示',
+        content: '确认充值吗?',
+        okText: '确认',
+        okType: 'danger',
+        cancelText: '取消',
+        onOk: () => this.submitMoney()
+      });
+    } else {
+      message.error(response.msg);
+    }
   }
 
   submitMoney() {
@@ -43,13 +49,12 @@ export default class AccountRecharge extends React.Component {
     });
   }
 
-
   render() {
     const { match } = this.props;
     const { recharge } = this.state;
     return (
       <div className="fr uc-rbody">
-        <Recharge setData={this.setRechargeData.bind(this)}/>
+        <Recharge setData={this.setRechargeData.bind(this)} param={this.props.location.state}/>
         <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
           <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
           <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
@@ -104,15 +109,17 @@ class Forms extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('表单提交的数据');
-        this.fetchParam();
+        values.rechargeType = values.rechargeType * 1;
+        values.amount = values.amount * 1.00;
+        console.log('表单提交的数据', values);
+        this.fetchParam(values);
       }
     });
   };
 
-  async fetchParam() {
+  async fetchParam(values) {
     // 调取接口返回数据
-    this.props.setData({1:1});
+    this.props.setData(values);
   }
 
   validateNumber = (rule, value, callback) => {
@@ -131,16 +138,18 @@ class Forms extends React.Component {
         <FormItem
           {...formItemLayout}
           label="账户"
+          style={{display:'none'}}
         >
-          {getFieldDecorator('account', {
-          })(<Input maxLength={'50'}/>)}
+          {getFieldDecorator('accountId', {
+            initialValue: this.props.param.account
+          })(<Input.TextArea maxLength={'200'} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
           label="充值类型"
         >
-          {getFieldDecorator('ftype', {
-            rules:[],
+          {getFieldDecorator('rechargeType', {
+            rules:[{ required: true, message: '请选择充值类型' }],
             initialValue: '0'
           })(<Select>
             <Select.Option value="0">网银充值</Select.Option>
@@ -154,7 +163,7 @@ class Forms extends React.Component {
           label="充值金额"
           extra="充值金额需大于2元"
         >
-          {getFieldDecorator('money', {
+          {getFieldDecorator('amount', {
             rules:[{ required: true, message: '充值金额不能为空' },
               {pattern: MONEY_REG, message: '金额格式不正确'},
               {validator: this.validateNumber}]
@@ -165,7 +174,8 @@ class Forms extends React.Component {
           label="备注"
         >
           {getFieldDecorator('remark', {
-            rules:[]
+            rules:[],
+            initialValue: ''
           })(<Input.TextArea maxLength={'200'}/>)}
         </FormItem>
 
