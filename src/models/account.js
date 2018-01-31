@@ -74,7 +74,7 @@ export default {
       return {
         ...state,
         companyStatus: true,
-        company: payload
+        company_page: payload
       };
     },
     saveCompanyList(state, {payload}) {
