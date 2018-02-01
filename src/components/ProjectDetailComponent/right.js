@@ -2,7 +2,7 @@ import React from 'react';
 import Data from './data';
 import FormProject from './form-project';
 import moment from 'moment';
-import { getPersonalMoney } from '../../services/api';
+import {getPersonalMoney, alreadyInvested, messageList} from '../../services/api';
 import {message} from 'antd';
 
 export default class Right extends React.Component {
@@ -10,9 +10,17 @@ export default class Right extends React.Component {
     super(props);
     this.state = {
       personalMoney: '0',
-      accountId: ''
+      accountId: '',
+      pageParam:{
+        pageCurrent: 1, //当前页，初始值为第一页
+        pageSize: 20,    //每页可显示的消息条数
+      },
+      projectId:'',
+      arr:[],
+      maxPage: 0,     //最大页
     };
   }
+
 
   async getPersonalMoney() {
     const response = await getPersonalMoney();
@@ -26,7 +34,27 @@ export default class Right extends React.Component {
     }
   }
 
-  render() {
+  async getData(page) {
+    const response = await alreadyInvested({pageParam:this.state.pageParam, projectId:this.props.projectDetail.fpeoject_id});
+    console.log(response);
+    //判断请求状态
+    if (response.code === 0) {
+      const maxPage = Math.ceil(response.data.totalNum / this.state.pageSize);
+      this.setState({
+        pageParam:{
+          pageCurrent:page, //当前页，初始值为第一页
+          pageSize: 20,    //每页可显示的消息条数
+        },
+        projectId: this.props.projectDetail.fpeoject_id,
+        arr: response.data,
+        maxPage: maxPage
+      });
+    } else {
+      message.error(response.msg);
+    }
+  }
+
+  render(){
     const project = this.props.projectDetail;
     const allMoney = project.allMoney?project.allMoney:0;
     const userCount = project.userCount ? project.userCount: 0;
@@ -54,7 +82,7 @@ export default class Right extends React.Component {
             </div>
           </div>
           <div className="bot">
-            <a className="btn"><i>已投资人数</i><b>{userCount}</b>人</a>
+            <a className="btn" onClick={() => this.getData(1)}><i>已投资人数</i><b>{userCount}</b>人</a>
           </div>
         </div>
         <div className="box2 shadow">
@@ -83,7 +111,7 @@ export default class Right extends React.Component {
             </i>
           </p>
         </div>
-        <Data />
+        <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageCurrent} />
         <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney} accountId={this.state.accountId}/>
       </div>
     );

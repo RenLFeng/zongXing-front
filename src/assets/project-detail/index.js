@@ -108,12 +108,12 @@ export function genzong() {
 
 function rightEvent() {
     let s0 = $('.pd-data .list .row').eq(1).html();
-    let i = 1,
-        ss = '';
-    while (i++ < 20) {
-        ss += '<div class="row">' + s0 + '</div>';
-    }
-    $('.pd-data .list').append(ss);
+    // let i = 1,
+    //     ss = '';
+    // while (i++ < 20) {
+    //     ss += '<div class="row">' + s0 + '</div>';
+    // }
+    // $('.pd-data .list').append(ss);
 
     $('.pd-body>.rbody .box1 .bot .btn').on('click', function () {
         $('.pd-data').before('<div class="_masker"></div>');
