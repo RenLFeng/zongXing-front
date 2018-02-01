@@ -30,8 +30,9 @@ export default class Right extends React.Component {
       this.setState({
         personalMoney: response.data.personalMoney+'',
         accountId: response.data.accountId,
-        showForm: true
       });
+      $('.pd-form').before('<div class="_masker"></div>');
+      $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
     } else {
       message.error('获取用户余额失败');
     }
@@ -118,10 +119,9 @@ export default class Right extends React.Component {
           </p>
         </div>
         <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} />
-        { this.state.showForm ?
-          <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney}
-                       accountId={this.state.accountId} close={()=>this.setState({showForm: false})}/> : null
-        }
+        <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney}
+                       accountId={this.state.accountId}/>
+
       </div>
     );
   }

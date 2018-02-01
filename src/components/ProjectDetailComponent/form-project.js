@@ -20,12 +20,17 @@ export default class FormProject extends React.Component {
     });
 
   }
+  closeDiv() {
+    $('._masker').remove();
+    $('.pd-form').addClass('none');
+  }
+
   render() {
     const {project} = this.props;
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
     return (
-      <div className="pd-form shadow">
-        <a className="close"/>
+      <div className="pd-form shadow none">
+        <a className="close" onClick={()=>this.closeDiv()}/>
         <div className="card">
           <i className="level">{project.fleve_name}</i>
           <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${project.fcard_pic_path}`} />

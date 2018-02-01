@@ -125,11 +125,9 @@ function rightEvent() {
     });
 
     $('.pd-body>.rbody .box2 .bot1 .btn').on('click', function () {
-        $('.pd-form').before('<div class="_masker"></div>');
-        $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
+
     });
     $('.pd-form .close,.pd-form .btn2').on('click', function () {
-        $('._masker').remove();
-        $('.pd-form').addClass('none');
+
     });
 }
