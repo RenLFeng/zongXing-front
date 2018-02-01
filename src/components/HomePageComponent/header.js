@@ -39,7 +39,7 @@ export default class Header extends React.Component {
             <Link className="a1" to={`${match.path}/howLoan`}>如何借款</Link>
             <Link className="a1" to={`${match.path}/howInvest`}>如何投资</Link>
             <Link className="a1" to={`${match.path}/businessDiscount`}>商家优惠</Link>
-            <a className="a1" href="">众借学院</a>
+            <Link className="a1" to={`${match.path}/loanCollege`}>众借学院</Link>
             <a className="btn btn1" href="">收藏项目<em>0</em></a>
             { !this.props.loginStatus ?
               <Link className="btn btn2" to={'/index/login'}>登录 / 注册</Link> :

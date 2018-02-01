@@ -1,9 +1,13 @@
 import React from 'react';
 import {message} from 'antd';
-import {selectProJourney, praise} from '../../services/api';
+import {selectProJourney, praise, clickPraise} from '../../services/api';
 import moment from 'moment';
-import {IMG_BASE_URL} from '../../common/systemParam';
+import {IMG_BASE_URL, COURSE_PROJECT_PIC} from '../../common/systemParam';
+import { connect } from 'dva';
 
+@connect((state)=>({
+  loginStatus: state.login.status
+}))
 export default class SecCourse extends React.Component {
   constructor(props) {
     super(props);
@@ -27,11 +31,33 @@ export default class SecCourse extends React.Component {
     }
   }
 
-  async clickHeard(id) {
+  // 判断是否登录
+  judgeLogin() {
+    if (this.props.loginStatus) {
+      return true;
+    } else {
+      message.warning('请先登录');
+      return false;
+    }
+  }
+
+  async clickHeard(id,state) {
+    if (!this.judgeLogin())
+      return;
+    if (state) {
+      return
+    }
+    for (let data of this.state.courseArr) {
+      if (data.fid === id) {
+        data.state = 1;
+        data.count = data.count + 1;
+      }
+    }
     this.setState({
-      [`heard${id}`]: true
+      courseArr: this.state.courseArr
     });
-    praise(id);
+   const response = await clickPraise(id);
+   console.log(response);
   }
 
   render() {
@@ -46,19 +72,18 @@ export default class SecCourse extends React.Component {
           <div className="end"/>
           <div className="list">
             {this.state.courseArr.map((data, index)=>{
-              const realData = data.projectJourney;
-              const imgArr = realData.fPicJson.split(',');
+              const imgArr = data.fpic_json.split(',');
               return (
-                <div className="item">
+                <div className="item" key={data.fid}>
                   <p className="date">
-                    <i className="y">{moment(realData.fTime).format('YYYY')}</i><br /><i className="d">{moment(realData.fTime).format('MM-DD')}</i>
+                    <i className="y">{moment(data.ftime).format('YYYY')}</i><br /><i className="d">{moment(data.ftime).format('MM-DD')}</i>
                   </p>
                   <i className="cc"/>
-                  <p className="text">{realData.fContent}<em className="em1" onClick={()=>this.clickHeard()}>{data.praiseCount}</em></p>
+                  <p className="text">{data.fcontent}<em className={`${data.state ? 'em1': 'em2'}`} onClick={()=>this.clickHeard(data.fid,data.state)}>{data.count}</em></p>
                   <p className="img">
-                    {imgArr.map((data) => {
+                    {imgArr.map((data, index) => {
                       return (
-                        <img src={`${IMG_BASE_URL}project/${dateCode}/${projectDetail.fproject_no}/${data}/procourse`} />
+                        <img key={index} src={`${IMG_BASE_URL}project/${dateCode}/${projectDetail.fproject_no}/${data}?${COURSE_PROJECT_PIC}`} />
                       );
                     })}
                   </p>

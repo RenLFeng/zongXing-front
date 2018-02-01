@@ -248,7 +248,7 @@ export default class PersonAccount extends React.Component {
 
   render() {
     console.log(this.props.personal);
-    if (!this.props.personal) {
+    if (!this.props.personal.totalAssets.accountId) {
       return (
         <div className="fr uc-rbody">
           <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>

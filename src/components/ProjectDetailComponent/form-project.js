@@ -24,7 +24,7 @@ export default class FormProject extends React.Component {
     const {project} = this.props;
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
     return (
-      <div className="pd-form shadow none">
+      <div className="pd-form shadow">
         <a className="close"/>
         <div className="card">
           <i className="level">{project.fleve_name}</i>
@@ -38,7 +38,7 @@ export default class FormProject extends React.Component {
           <div className="bar"><div style={{width: `${project.allMoney*1/project.fcredit_money}%`}} /></div>
           <p className="t2 f16 c9">
             <i className="fl">借款总额<em className="f24 cf60">{(project.fcredit_money+'').fm()}</em>元</i>
-            <i className="fr">剩余可投<em className="f24 cf60">{(project.fcredit_money-project.allMoney+'').fm()}</em>元</i>
+            <i className="fr">剩余可投<em className="f24 cf60">{((project.fcredit_money-project.allMoney)+'').fm()}</em>元</i>
           </p>
         </div>
         <div className="form">
