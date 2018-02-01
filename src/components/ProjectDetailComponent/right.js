@@ -13,7 +13,7 @@ export default class Right extends React.Component {
       accountId: '',
       pageParam:{
         pageCurrent: 1, //当前页，初始值为第一页
-        pageSize: 20,    //每页可显示的消息条数
+        pageSize: 1,    //每页可显示的消息条数
       },
       projectId:'',
       arr:[],
@@ -36,14 +36,13 @@ export default class Right extends React.Component {
 
   async getData(page) {
     const response = await alreadyInvested({pageParam:this.state.pageParam, projectId:this.props.projectDetail.fpeoject_id});
-    console.log(response);
     //判断请求状态
     if (response.code === 0) {
-      const maxPage = Math.ceil(response.data.totalNum / this.state.pageSize);
+      const maxPage = Math.ceil(this.props.projectDetail.userCount*1 / this.state.pageParam.pageSize *1 );
       this.setState({
         pageParam:{
           pageCurrent:page, //当前页，初始值为第一页
-          pageSize: 20,    //每页可显示的消息条数
+          pageSize: 1,    //每页可显示的消息条数
         },
         projectId: this.props.projectDetail.fpeoject_id,
         arr: response.data,
@@ -111,7 +110,7 @@ export default class Right extends React.Component {
             </i>
           </p>
         </div>
-        <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageCurrent} />
+        <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} />
         <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney} accountId={this.state.accountId}/>
       </div>
     );
