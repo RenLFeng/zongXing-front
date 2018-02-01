@@ -240,3 +240,13 @@ export async function getProjectDetailNotice(param) {
 export async function getPersonalMoney() {
   return request(`${BASE_URL}/zjb-website/projectNotice/getOne/`)
 }
+
+//获取已投资人数接口
+export async function alreadyInvested(params) {
+  return request(`http://192.168.1.4:8001/zjb-website/invRecord/getOne`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  })
+}
