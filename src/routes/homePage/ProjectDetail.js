@@ -128,7 +128,7 @@ export default class ProjectDetail extends React.Component {
               <SecTrack projectDetail={projectDetail} {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
-              <SecCourse {...this.props.match.params}/>
+              <SecCourse projectDetail={projectDetail} {...this.props.match.params}/>
             </div>
           </div>
           <div className="fr rbody">

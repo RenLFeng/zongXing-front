@@ -27,13 +27,13 @@ export default class FormProject extends React.Component {
       <div className="pd-form shadow none">
         <a className="close"/>
         <div className="card">
-          <i className="level">C+</i>
+          <i className="level">{project.fleve_name}</i>
           <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${project.fcard_pic_path}`} />
           <p className="tit">{project.fname}</p>
           <p className="city">{project.fcity_name}</p>
           <p className="t1">
             <i><em className="cf60">{project.frate_last}</em>年利率</i>
-            <i>期限<em className="cf60">30</em>天</i>
+            <i>期限<em className="cf60">{project.fcollect_day}</em>天</i>
           </p>
           <div className="bar"><div style={{width: `${project.allMoney*1/project.fcredit_money}%`}} /></div>
           <p className="t2 f16 c9">
