@@ -211,11 +211,6 @@ export async function addProJourney(params) {
   });
 }
 
-// 点赞
-export async function praise(journeyId) {
-  return request(`${BASE_URL}/zjb-website/projectJourney/praise/${journeyId}`)
-}
-
 // 获取项目行业编码类别接口
 export async function getProjectType() {
   return request(`${BASE_URL}/zjb-website/getProjectCode`)
@@ -238,15 +233,21 @@ export async function getProjectDetailNotice(param) {
 
 // 获取个人账户余额接口
 export async function getPersonalMoney() {
-  return request(`${BASE_URL}/zjb-website/projectNotice/getOne/`)
+  return request(`${BASE_URL}/zjb-website/account/getOne`)
 }
 
 //获取已投资人数接口
 export async function alreadyInvested(params) {
-  return request(`http://192.168.1.4:8001/zjb-website/invRecord/getOne`, {
+  return request(`${BASE_URL}/zjb-website/invRecord/getOne`, {
     method: 'POST',
     body: {
       ...params,
     }
   })
 }
+
+// 点赞接口
+export async function clickPraise(param) {
+  return request(`${BASE_URL}/zjb-website/projectJourney/praise/${param}`);
+}
+

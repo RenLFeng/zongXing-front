@@ -68,7 +68,7 @@ export default class AccountRecharge extends React.Component {
           <input id="Remark2" name="Remark2" value={recharge.remark2} type="hidden" />
           <input id="Remark3" name="Remark3" value={recharge.remark3} type="hidden" />
           <input id="ReturnURL" name="ReturnURL" value={recharge.returnURL} type="hidden" />
-          <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL} type="hidden" />
+          <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL}  />
           <input id="SignInfo" name="SignInfo" value={recharge.signInfo} type="hidden" />
         </form>
       </div>
@@ -141,8 +141,8 @@ class Forms extends React.Component {
           style={{display:'none'}}
         >
           {getFieldDecorator('accountId', {
-            initialValue: this.props.param.account
-          })(<Input.TextArea maxLength={'200'} disabled={!this.props.param.account}/>)}
+            initialValue: this.props.param? this.props.param.account : null
+          })(<Input.TextArea maxLength={'200'} disabled={!(!!this.props.param && this.props.param.account)}/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -151,7 +151,7 @@ class Forms extends React.Component {
           {getFieldDecorator('rechargeType', {
             rules:[{ required: true, message: '请选择充值类型' }],
             initialValue: '0'
-          })(<Select disabled={!this.props.param.account}>
+          })(<Select disabled={!(!!this.props.param && this.props.param.account)}>
             <Select.Option value="0">网银充值</Select.Option>
             <Select.Option value="2">快捷支付</Select.Option>
             <Select.Option value="3">汇款充值</Select.Option>
@@ -167,7 +167,7 @@ class Forms extends React.Component {
             rules:[{ required: true, message: '充值金额不能为空' },
               {pattern: MONEY_REG, message: '金额格式不正确'},
               {validator: this.validateNumber}]
-          })(<Input  maxLength={'50'} disabled={!this.props.param.account}/>)}
+          })(<Input  maxLength={'50'} disabled={!(!!this.props.param && this.props.param.account)}/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -176,13 +176,13 @@ class Forms extends React.Component {
           {getFieldDecorator('remark', {
             rules:[],
             initialValue: ''
-          })(<Input.TextArea maxLength={'200'} disabled={!this.props.param.account}/>)}
+          })(<Input.TextArea maxLength={'200'} disabled={!(!!this.props.param && this.props.param.account)}/>)}
         </FormItem>
 
         <FormItem {...btnLayout}>
           <Button
             style={{width: '200px'}}
-            type="primary" htmlType="submit" disabled={!this.props.param.account}>提交</Button>
+            type="primary" htmlType="submit" disabled={!(!!this.props.param && this.props.param.account)}>提交</Button>
         </FormItem>
       </Form>
     );

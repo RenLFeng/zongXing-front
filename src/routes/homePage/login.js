@@ -155,13 +155,19 @@ export default class Login extends React.Component {
       authcode: regAuthCode
     };
     // 调用注册接口
-    this.setState({regLoading: true});
-    const response = await regUser(reg);
-    this.setState({regLoading: false});
-    if (response.code === 0) {
-      this.setState({showReg: false});
-    } else {
-      message.warning(response.msg);
+    try {
+      this.setState({regLoading: true});
+      const response = await regUser(reg);
+      this.setState({regLoading: false});
+      if (response.code === 0) {
+        this.setState({showReg: false});
+      } else {
+        message.warning(response.msg);
+      }
+    } catch(e) {
+      console.log(e);
+      this.setState({regLoading: false});
+      message.error('网络异常，请重试');
     }
   }
 

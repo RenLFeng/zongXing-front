@@ -58,6 +58,9 @@ export function conversionTime(initialTime) {
 
 }
 
+// 项目历程图片后缀
+export const COURSE_PROJECT_PIC = 'imageMogr2/thumbnail/200x/interlace/1';
+
 //页数显示的转换 {}
 export function pageShow(currentPage, maxPage) {
   const data = {
