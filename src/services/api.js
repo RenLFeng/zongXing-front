@@ -5,6 +5,11 @@ const BASE_URL = 'http://192.168.1.4:8001';
 
 const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59';
 
+// 获取图片签名token
+export async function getAuth({method, pathname}) {
+  return request(`http://192.168.1.4:8001/zjb-base/cos/sign?method=${method}&pathname=${pathname}`);
+}
+
 export async function userLogin(param) {
   return request(`${BASE_URL}/zjb-website/login`, {
     method: 'POST',

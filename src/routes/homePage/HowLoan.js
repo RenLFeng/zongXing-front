@@ -10,6 +10,9 @@ export default class HowLoan extends React.Component {
   componentDidMount() {
     startAnimate();
   }
+  componentWillUnmount() {
+    $(window).off('scroll');
+  }
 	render() {
 		return(
       <div >

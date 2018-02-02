@@ -19,23 +19,71 @@ function beforeUpload(file) {
   return isJPG && isLt2M;
 }
 
+const Bucket = 'zjb01-1255741041';
+const Region = 'ap-shanghai';
+
 export default class ImgUpload extends React.Component {
+
   state = {
     loading: false,
   };
-  handleChange = (info) => {
-    if (info.file.status === 'uploading') {
-      this.setState({ loading: true });
-      return;
+
+  componentDidMount() {
+    $(".file").on('change', function() {
+      // this.setState({ loading: true });
+      console.log(this.files[0]);
+      const file = this.files[0];
+      global.cos.sliceUploadFile({
+        Bucket: Bucket,
+        Region: Region,
+        Key: '123/' + file.name,
+        Body: file,
+      },  (err, data) => {
+        // this.setState({ loading: false });
+        console.log(err, data);
+      });
+    })
+  }
+
+
+  uuid = () => {
+    var s = [];
+    var hexDigits = "0123456789abcdef";
+    for (var i = 0; i < 36; i++) {
+      s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
     }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl => this.setState({
-        imageUrl,
-        loading: false,
-      }));
-    }
+    s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = "-";
+
+    var uuid = s.join("");
+    return uuid;
   };
+
+  uploadRequest = (data) => {
+
+    // console.log(data);
+    // console.log(document.getElementById('file'));
+    // const file = document.getElementById('file').files[0]
+    // console.log(file)
+    // beforeUpload(data.file);
+    // console.log(data.file);
+
+    // console.log(typeof data.file)
+    // const fileName = data.file.name;
+    // const suffix = data.file.name.substring(fileName.lastIndexOf('.'), fileName.length);
+    // this.setState({ loading: true });
+    // global.cos.sliceUploadFile({
+    //   Bucket: Bucket,
+    //   Region: Region,
+    //   Key: this.props.prefix || '123/' + file.name,
+    //   Body: file,
+    // },  (err, data) => {
+    //   this.setState({ loading: false });
+    //   console.log(err, data);
+    // });
+  };
+
   render() {
     const uploadButton = (
       <div className={this.props.divClassName} >
@@ -45,17 +93,8 @@ export default class ImgUpload extends React.Component {
     );
     const imageUrl = this.state.imageUrl;
     return (
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        className={this.props.className}
-        showUploadList={false}
-        action="//jsonplaceholder.typicode.com/posts/"
-        beforeUpload={beforeUpload}
-        onChange={this.handleChange}
-      >
-        {imageUrl ? <img className={this.props.divClassName} src={imageUrl} alt="" /> : uploadButton}
-      </Upload>
+      <input type="file" className={this.props.classNames} onChange={this.uploadRequest}/>
+
     );
   }
 }

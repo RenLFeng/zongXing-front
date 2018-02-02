@@ -55,6 +55,8 @@ const styles = {
     height: 40
   }
 };
+const Bucket = 'zjb01-1255741041';
+const Region = 'ap-shanghai';
 class Forms extends React.Component {
   constructor(props) {
     super(props);
@@ -64,7 +66,20 @@ class Forms extends React.Component {
   }
 
   componentDidMount() {
-
+    $("#files").on('change', function() {
+      // this.setState({ loading: true });
+      console.log(this.files[0]);
+      const file = this.files[0];
+      global.cos.sliceUploadFile({
+        Bucket: Bucket,
+        Region: Region,
+        Key: '123/' + file.name,
+        Body: file,
+      },  (err, data) => {
+        // this.setState({ loading: false });
+        console.log(err, data);
+      });
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -427,7 +442,7 @@ class Forms extends React.Component {
             <i>身份证上传</i>
           </div>
           <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="身份证正面"/>
+            <input type="file" id="files"/>
             <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="身份证反面"/>
             <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="手持身份证"/>
           </div>
