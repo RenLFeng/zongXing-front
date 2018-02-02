@@ -1,0 +1,62 @@
+.bodys {
+  padding-top: 28px;
+}
+.topnav {
+  padding: 0;
+  .tright {
+    line-height: 28px;
+    height: 28px;
+    padding-right: 260px;
+  }
+  .rtopbtns {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    &>a {
+      float: left;
+      width: 80px;
+      height: 96px;
+      background: no-repeat center 18px $f60;
+      color: #fff;
+      font-size: 14px;
+      line-height: 130px;
+      text-align: center;
+      &.c1 {
+        background-image: url(../img/subSite/ic1.png);
+        &:hover {
+          background-color: $f90;
+        }
+      }
+      &.c2 {
+        background-image: url(../img/subSite/ic2.png);
+        &:hover {
+          background-color: $f90;
+        }
+      }
+      &.c3 {
+        background-image: url(../img/subSite/ic3.png);
+        background-color: #41E9C3;
+        &:hover {
+          background-color: rgb(115, 246, 216);
+        }
+      }
+    }
+  }
+  &>.w>.fr {
+    margin-right: 240px;
+  }
+  .logo {
+    padding-top: 4px;
+  }
+  a.a1 {
+    font-size: 16px;
+    border-left: 1px solid #fff;
+    line-height: 1em;
+    margin: 28px 0 0 0;
+    padding: 0 26px;
+    &:first-child {
+      border-left: none;
+    }
+  }
+}
