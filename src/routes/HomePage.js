@@ -18,7 +18,7 @@ import '../assets/common/index';
 import { getLocation } from '../services/api';
 import ApplyLoan from './homePage/ApplyLoan';
 import UCenter from './homePage/UCenter';
-import COS from 'cos-js-sdk-v5';
+import {getAuth} from '../services/api';
 
 @connect((state) => ({
 	login: state.login
@@ -33,15 +33,17 @@ export default class HomePage extends React.Component{
       })
     }
     if (!global.cos) {
-      global.cos = new COS({
+      global.cos = new window.COS({
         getAuthorization: function (options, callback) {
           // 异步获取签名
-          $.get('http://192.168.1.75:3000/auth', {
-            method: (options.Method || 'get').toLowerCase(),
-            pathname: '/' + (options.Key || '')
-          }, function (authorization) {
-            callback(authorization);
-          }, 'text');
+          getAuth({method: (options.Method || 'get').toLowerCase(),
+            pathname: '/' + (options.Key || '')})
+            .then((data) => {
+              console.log(data);
+              if (data.code === 0) {
+                callback(data.data);
+              }
+            });
         }
       });
     }

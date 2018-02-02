@@ -12,6 +12,10 @@ export default class HowInvest extends React.Component {
   componentDidMount() {
     startAnimate();
   }
+
+  componentWillUnmount() {
+    $(window).off('scroll');
+  }
 	render() {
 		return(
       <div >

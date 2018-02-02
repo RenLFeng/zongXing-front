@@ -8,7 +8,7 @@ export default class TabTop extends React.Component {
       <div className="section sec-tabs">
         <div className="tabs">
           <div className="w">
-            <a className="hover">小额分散理论</a>
+            <a>小额分散理论</a>
             <a>复利投资理论</a>
             <a>创造价值</a>
             <a>众投好处</a>
