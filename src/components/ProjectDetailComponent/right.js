@@ -29,7 +29,7 @@ export default class Right extends React.Component {
     if (response.code === 0) {
       this.setState({
         personalMoney: response.data.personalMoney+'',
-        accountId: response.data.accountId,
+        accountId: response.data.fid,
       });
       $('.pd-form').before('<div class="_masker"></div>');
       $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');

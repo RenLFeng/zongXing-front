@@ -4,37 +4,6 @@ import {Form, Select, Input, Button, Row, Col, Cascader, message } from 'antd';
 import { MONEY_REG } from '../../common/systemParam';
 import {city} from '../../common/cityData';
 
-export default class ApplyPerson extends React.Component {
-  render() {
-    const {changePersonInfo, pageNum} = this.props;
-    return (
-      <div className={`aform ${pageNum===2 ? '' : 'none'}`} style={{ paddingTop: 30 }}>
-        <PersonalForm />
-        <div className="row2 mt20 clearfix">
-          <div className="tit">
-            <i>身份证上传</i>
-          </div>
-          <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="身份证正面"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="身份证反面"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="手持身份证"/>
-          </div>
-        </div>
-        <div className="row2 mt20 clearfix">
-          <div className="tit">
-            <i>个人资产证明</i>
-          </div>
-          <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="本人手持车本"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="本人手持房本"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传债券,股票等"/>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -98,6 +67,18 @@ class Forms extends React.Component {
 
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.commit !== nextProps.commit) {
+      this.props.form.validateFieldsAndScroll((err, values) => {
+        this.props.switchPage(err);
+        if (!err) {
+          console.log('表单提交的数据');
+
+        }
+      });
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -124,46 +105,51 @@ class Forms extends React.Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { pageNum} = this.props;
     return (
+      <div className={`aform ${pageNum===2 ? '' : 'none'}`} style={{ paddingTop: 30 }}>
       <Form onSubmit={this.handleSubmit}>
         <Row gutter={4}>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label={<span style={styles.label}>姓名</span>}
-            >
-            {getFieldDecorator('account', {
-              rules: [{
-                required: true, message: '借款金额不能为空',
-              }]
-            })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+              <span style={{color: 'red',position:'absolute',left:124,top:7,fontSize:20}}>*</span>
+              <FormItem
+                {...formItemLayout}
+                label={<span style={styles.label}>姓名</span>}
+              >
+              {getFieldDecorator('account', {
+                rules: []
+              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label={<span style={styles.label}>身份证号</span>}
-            >
-              {getFieldDecorator('account', {
-                rules: [{
-                  required: true, message: '借款金额不能为空',
-                }]
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+              <span style={{color: 'red',position:'absolute',left:92,top:7,fontSize:20}}>*</span>
+              <FormItem
+                {...formItemLayout}
+                label={<span style={styles.label}>身份证号</span>}
+              >
+                {getFieldDecorator('account', {
+                  rules: []
+                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
         </Row>
         <Row gutter={4}>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label={<span style={styles.label}>手机</span>}
-            >
-              {getFieldDecorator('account', {
-                rules: [{
-                  required: true, message: '借款金额不能为空',
-                }]
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+            <span style={{color: 'red',position:'absolute',left:124,top:7,fontSize:20}}>*</span>
+              <FormItem
+                {...formItemLayout}
+                label={<span style={styles.label}>手机</span>}
+              >
+                {getFieldDecorator('account', {
+                  rules: []
+                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
           <Col span={12}>
             <FormItem
@@ -288,55 +274,59 @@ class Forms extends React.Component {
         </FormItem>
         <Row>
           <Col span={6} push={1}>
-            <FormItem
-              labelCol={{xs: { span: 24 }, sm: { span: 15 }}}
-              wrapperCol={{xs: { span: 24 }, sm: { span: 9 }}}
-              label={<span style={styles.label}>（第一联系人）姓名</span>}
-            >
-              {getFieldDecorator('account', {
-                rules: [{
-                  required: true, message: '借款金额不能为空',
-                }]
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+              <span style={{color: 'red',position:'absolute',left:5,top:7,fontSize:20}}>*</span>
+              <FormItem
+                labelCol={{xs: { span: 24 }, sm: { span: 15 }}}
+                wrapperCol={{xs: { span: 24 }, sm: { span: 9 }}}
+                label={<span style={styles.label}>（第一联系人）姓名</span>}
+              >
+                {getFieldDecorator('account', {
+                  rules: []
+                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
           <Col span={6} push={1}>
-            <FormItem
-              labelCol={{xs: { span: 24 }, sm: { span: 12 }}}
-              wrapperCol={{xs: { span: 24 }, sm: { span: 12 }}}
-              label={<span style={styles.label}>身份证号</span>}
-            >
-              {getFieldDecorator('account', {
-                rules: [{
-                  required: true, message: '借款金额不能为空',
-                }]
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+              <span style={{color: 'red',position:'absolute',left:50,top:7,fontSize:20}}>*</span>
+              <FormItem
+                labelCol={{xs: { span: 24 }, sm: { span: 12 }}}
+                wrapperCol={{xs: { span: 24 }, sm: { span: 12 }}}
+                label={<span style={styles.label}>身份证号</span>}
+              >
+                {getFieldDecorator('account', {
+                  rules: []
+                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
           <Col span={6}>
-            <FormItem
-              labelCol={{xs: { span: 24 }, sm: { span: 13 }}}
-              wrapperCol={{xs: { span: 24 }, sm: { span: 11 }}}
-              label={<span style={styles.label}>手机</span>}
-            >
-              {getFieldDecorator('account', {
-                rules: [{
-                  required: true, message: '借款金额不能为空',
-                }]
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+              <span style={{color: 'red',position:'absolute',left:92,top:7,fontSize:20}}>*</span>
+              <FormItem
+                labelCol={{xs: { span: 24 }, sm: { span: 13 }}}
+                wrapperCol={{xs: { span: 24 }, sm: { span: 11 }}}
+                label={<span style={styles.label}>手机</span>}
+              >
+                {getFieldDecorator('account', {
+                  rules: []
+                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
           <Col span={6} pull={1}>
-            <FormItem
-              {...formItemLayoutSmail}
-              label={<span style={styles.label}>社会关系</span>}
-            >
-              {getFieldDecorator('account', {
-                rules: [{
-                  required: true, message: '借款金额不能为空',
-                }]
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+              <span style={{color: 'red',position:'absolute',left:70,top:7,fontSize:20}}>*</span>
+              <FormItem
+                {...formItemLayoutSmail}
+                label={<span style={styles.label}>社会关系</span>}
+              >
+                {getFieldDecorator('account', {
+                  rules: []
+                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
         </Row>
         <Row>
@@ -432,7 +422,28 @@ class Forms extends React.Component {
 
 
       </Form>
+        <div className="row2 mt20 clearfix">
+          <div className="tit">
+            <i>身份证上传</i>
+          </div>
+          <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="身份证正面"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="身份证反面"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="手持身份证"/>
+          </div>
+        </div>
+        <div className="row2 mt20 clearfix">
+          <div className="tit">
+            <i>个人资产证明</i>
+          </div>
+          <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="本人手持车本"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="本人手持房本"/>
+            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传债券,股票等"/>
+          </div>
+        </div>
+      </div>
     );
   }
 }
-const PersonalForm = Form.create()(Forms);
+export default Form.create()(Forms);

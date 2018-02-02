@@ -5,21 +5,6 @@ import { MONEY_REG } from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import {getProjectType} from '../../services/api';
 
-export default class ApplyProject extends React.Component {
-
-  render() {
-    const {pageNum} = this.props;
-    return (
-      <div className={`aform ${pageNum===4 ? '' : 'none'}`}>
-        <ProjectForm />
-
-
-      </div>
-    );
-  }
-}
-
-
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -83,6 +68,17 @@ class Forms extends React.Component {
   }
 
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.commit !== nextProps.commit) {
+      this.props.form.validateFieldsAndScroll((err, values) => {
+        this.props.switchPage(err);
+        if (!err) {
+          console.log('表单提交的数据');
+
+        }
+      });
+    }
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -110,32 +106,36 @@ class Forms extends React.Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
+    const {pageNum} = this.props;
     return (
+      <div className={`aform ${pageNum===4 ? '' : 'none'}`}>
       <Form onSubmit={this.handleSubmit}>
         <Row gutter={4}>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label={<span style={styles.label}>项目名称</span>}
-            >
-              {getFieldDecorator('account', {
-                rules: [{
-                  required: true, message: '借款金额不能为空',
-                }]
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+              <span style={{color: 'red',position:'absolute',left:93,top:7,fontSize:20}}>*</span>
+              <FormItem
+                {...formItemLayout}
+                label={<span style={styles.label}>项目名称</span>}
+              >
+                {getFieldDecorator('account', {
+                  rules: []
+                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
           <Col span={12}>
-            <FormItem
-              {...formItemLayout}
-              label={<span style={styles.label}>借款视频</span>}
-            >
-              {getFieldDecorator('account', {
-                rules: [{
-                  required: true, message: '借款金额不能为空',
-                }]
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
-            </FormItem>
+            <div style={{position: 'relative'}}>
+              <span style={{color: 'red',position:'absolute',left:93,top:7,fontSize:20}}>*</span>
+              <FormItem
+                {...formItemLayout}
+                label={<span style={styles.label}>借款视频</span>}
+              >
+                {getFieldDecorator('account', {
+                  rules: []
+                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              </FormItem>
+            </div>
           </Col>
         </Row>
         <div style={{display: 'flex', paddingLeft: 44,paddingRight: 47, justifyContent: 'space-between',marginBottom: 25}}>
@@ -227,7 +227,8 @@ class Forms extends React.Component {
           )}
         </FormItem>
       </Form>
+      </div>
     );
   }
 }
-const ProjectForm = Form.create()(Forms);
+export default Form.create()(Forms);

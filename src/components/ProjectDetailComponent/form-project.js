@@ -3,6 +3,7 @@ import {Link} from 'dva/router';
 import { ACCOUNT_RECHARGE } from '../../common/pagePath';
 import { IMG_BASE_URL } from '../../common/systemParam';
 import moment from 'moment';
+import {Button, message} from 'antd';
 
 export default class FormProject extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ export default class FormProject extends React.Component {
     this.state = {
       money: '',
       agreement: false,
-      risk: false
+      risk: false,
+      loading: false
     };
   }
 
@@ -18,11 +20,33 @@ export default class FormProject extends React.Component {
     this.setState({
       money: e.target.value
     });
-
   }
+
   closeDiv() {
+    if (this.state.loading) {
+      message.warning('正在提交数据请稍后');
+      return;
+    }
     $('._masker').remove();
     $('.pd-form').addClass('none');
+    this.setState({
+      money: '',
+      agreement: false,
+      risk: false,
+      loading: false
+    });
+  }
+
+  submit() {
+    if (!this.state.risk) {
+      message.warning('请查看风险提示');
+      return;
+    }
+    if (!this.state.agreement) {
+      message.warning('请查看借入协议');
+      return;
+    }
+
   }
 
   render() {
@@ -35,7 +59,7 @@ export default class FormProject extends React.Component {
           <i className="level">{project.fleve_name}</i>
           <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${project.fcard_pic_path}`} />
           <p className="tit">{project.fname}</p>
-          <p className="city">{project.fcity_name}</p>
+          <p className="city">{project.fprovincial_name} - {project.fcity_name}</p>
           <p className="t1">
             <i><em className="cf60">{project.frate_last}</em>年利率</i>
             <i>期限<em className="cf60">{project.fcollect_day}</em>天</i>
@@ -88,7 +112,7 @@ export default class FormProject extends React.Component {
           </div>
         </div>
         <div className="center">
-          <a className="btn btn2">提交</a>
+          <Button type="primary" onClick={()=>this.submit()} loading={this.state.loading} style={{width: 200, height: 40}}>提交</Button>
         </div>
       </div>
     );

@@ -18,6 +18,7 @@ import '../assets/common/index';
 import { getLocation } from '../services/api';
 import ApplyLoan from './homePage/ApplyLoan';
 import UCenter from './homePage/UCenter';
+import COS from 'cos-js-sdk-v5';
 
 @connect((state) => ({
 	login: state.login
@@ -30,6 +31,19 @@ export default class HomePage extends React.Component{
       getLocation().then((data)=>{
         localStorage.setItem('addressCode', data.adcode);
       })
+    }
+    if (!global.cos) {
+      global.cos = new COS({
+        getAuthorization: function (options, callback) {
+          // 异步获取签名
+          $.get('http://192.168.1.75:3000/auth', {
+            method: (options.Method || 'get').toLowerCase(),
+            pathname: '/' + (options.Key || '')
+          }, function (authorization) {
+            callback(authorization);
+          }, 'text');
+        }
+      });
     }
   }
 

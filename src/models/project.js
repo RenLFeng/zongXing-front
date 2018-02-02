@@ -46,7 +46,9 @@ export default {
           payload: {...response.data, currentPage: payload.pageNow}
         });
         // 重置动画
-        startAnimate();
+        setTimeout(()=>{
+          startAnimate();
+        }, 200);
       } else {
         console.log(response.msg);
       }

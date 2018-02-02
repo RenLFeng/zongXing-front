@@ -12,6 +12,7 @@ export default class AccountRecharge extends React.Component {
       personAccount: null,
       companyAccount: [],
       recharge: {},
+      loading: false
     };
   }
 
@@ -21,21 +22,30 @@ export default class AccountRecharge extends React.Component {
 
   async setRechargeData(data) {
     console.log(data);
-    const response = await getRecharge(data);
-    console.log(response);
-    if (response.code === 0) {
-      this.setState({ recharge: response.data });
-      Modal.confirm({
-        title: '提示',
-        content: '确认充值吗?',
-        okText: '确认',
-        okType: 'danger',
-        cancelText: '取消',
-        onOk: () => this.submitMoney()
-      });
-    } else {
-      message.error(response.msg);
+    try {
+      this.setState({loading: true});
+      const response = await getRecharge(data);
+      console.log(response);
+      this.setState({loading: false});
+      if (response.code === 0) {
+        this.setState({ recharge: response.data });
+        Modal.confirm({
+          title: '提示',
+          content: '确认充值吗?',
+          okText: '确认',
+          okType: 'danger',
+          cancelText: '取消',
+          onOk: () => this.submitMoney()
+        });
+      } else {
+        message.error(response.msg);
+      }
+    } catch (e) {
+      this.setState({loading: false});
+      console.log(e);
+      message.error('请求失败,请稍后重试');
     }
+
   }
 
   submitMoney() {
@@ -54,7 +64,7 @@ export default class AccountRecharge extends React.Component {
     const { recharge } = this.state;
     return (
       <div className="fr uc-rbody">
-        <Recharge setData={this.setRechargeData.bind(this)} param={this.props.location.state}/>
+        <Recharge setData={this.setRechargeData.bind(this)} param={this.props.location.state} loading={this.state.loading}/>
         <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
           <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
           <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
@@ -182,7 +192,11 @@ class Forms extends React.Component {
         <FormItem {...btnLayout}>
           <Button
             style={{width: '200px'}}
-            type="primary" htmlType="submit" disabled={!(!!this.props.param && this.props.param.account)}>提交</Button>
+            type="primary" htmlType="submit"
+            loading={this.props.loading} disabled={!(!!this.props.param && this.props.param.account)}
+          >
+            提交
+          </Button>
         </FormItem>
       </Form>
     );

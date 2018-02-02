@@ -91,181 +91,64 @@ export default class ApplyLoan extends React.Component {
         project6: '', //项目相关照片
         whyDesc: '', //为何众借
         payment: '', //还款来源
-      }
+      },
+      loanInfoCommit: 0,
+      loanPersonCommit: 0,
+      loanCompanyCommit: 0,
+      loanProjectCommit: 0,
+      savePage: 0
     };
-    this.submit = this.submit.bind(this);
-    this.changeState = this.changeState.bind(this);
   }
   componentDidMount() {
-    setTimeout(()=>{
-      initApply();
-      this.operationSelect();
-    }, 500);
+    // setTimeout(()=>{
+    //   initApply();
+    // }, 500);
   }
 
-  operationSelect() {
-    const _this  = this;
-    $('body').on('click', 'dl.select>dt', function(){
-      let active = $(this).next().hasClass('show');
-      $('dl.select>dd.show').removeClass('show');
-      if(!active){
-        $(this).next().addClass('show');
-      }
-    });
-    $('body').on('click', 'dl.select>dd>i', function(){
-      let $t = $(this),
-        sel = $t.parent().parent();
-      _this.dlChange.call(sel, $t.index(), _this);
-    });
-    $('body').on('click touchend', function(event){
-      let el = event.target || window.event.srcElement;
-      if($(el).closest('dl.select').length==0){
-        $('dl.select>dd.show').removeClass('show');
-      }
-    });
+  componentWillReceiveProps() {
+
   }
 
-  // 修改城市
-  changeCity(cityCode) {
-    this.setState({
-      loanInfo: {
-        ...this.state.loanInfo,
-        city: cityCode
-      }
-    })
-  }
 
-  //修改选择框
-  dlChange(idx, _this) {
-    let sel = this;
-    let dt = sel.find('dt');
-    let op = sel.find('dd>i').eq(idx);
-    dt.next().removeClass('show');
-    if(sel.data('index')==idx){
-      return;
-    }
-    _this.changeSelect(dt.attr('value'), dt.attr('type'), op.attr('value'));
-    dt.html(op.html());
-    sel.data('value', op.data('value')||op.html());
-    sel.data('index', idx);
-    sel.trigger('change');
-  }
+  /*这个方法通过组件传值传递下去并且让子组件的值返回给父组件*/
+  getDataByChild = (childData) => {
+    console.log(childData);
+  };
 
-  //修改选择框内容
-  changeSelect(base, type, value) {
-    this.setState({
-      [base]: {
-        ...this.state[base],
-        [type]: value
-      }
-    })
-  }
 
-  submit() {
-    let a = $('.apply-menu a.hover');
-    const index = a.index();
-    console.log(index);
-    switch (index) {
-      case 0: //提交借款信息
-        this.commitLoanInFor();
-        break;
-      case 1: //提交借款人信息
-        this.commitLoanPersonal();
-        break;
-      case 2: //提交借款企业信息
-        this.commitLoanCompany();
-        break;
-      case 3: //提交借款项目信息
-        this.commitLoanProject();
-        break;
-      default:
-        console.log('未找到下一步的请求方法');
+
+  // 处理提交
+  handlePage(page) {
+    if (this.state.pageNum === 1) {
+      this.setState({
+        savePage: page,
+        loanInfoCommit: this.state.loanInfoCommit + 1
+      });
+    } else if (this.state.pageNum === 2) {
+      this.setState({
+        savePage: page,
+        loanPersonCommit: this.state.loanPersonCommit + 1
+      });
+    } else if (this.state.pageNum === 3) {
+      this.setState({
+        savePage: page,
+        loanCompanyCommit: this.state.loanCompanyCommit + 1
+      });
+    } else {
+      this.setState({
+        savePage: page,
+        loanProjectCommit: this.state.loanProjectCommit + 1
+      });
     }
   }
 
-  //提交借款信息
-  commitLoanInFor() {
-    console.log('提交借款信息');
-    console.log(this.state.loanInfo);
-    //如果成功切换页面
-    this.switchPage();
-
-  }
-
-  //提交借款人信息
-  commitLoanPersonal() {
-    console.log('提交借款人信息');
-    console.log(this.state.loanPerson);
-    //如果成功切换页面
-     this.switchPage();
-  }
-
-  //提交借款企业信息
-  commitLoanCompany() {
-    console.log('提交借款企业信息');
-    console.log(this.state.loanCompany);
-    //如果成功切换页面
-    // this.switchPage();
-  }
-
-  //提交借款项目信息
-  commitLoanProject() {
-    console.log('提交借款项目信息');
-    console.log(this.state.loanProject);
-    //如果成功就跳转页面
-  }
-
-
-  changeState(e) {
-    const a = $('.apply-menu a.hover');
-    const index = a.index();
-    switch (index) {
-      case 0: //提交借款信息
-        this.setState({
-          loanInfo: {
-            ...this.state.loanInfo,
-            [e.target.name]: e.target.value
-          }
-        });
-        break;
-      case 1: //提交借款人信息
-        this.setState({
-          loanPerson: {
-            ...this.state.loanPerson,
-            [e.target.name]: e.target.value
-          }
-        });
-        break;
-      case 2: //提交借款企业信息
-        this.setState({
-          loanCompany: {
-            ...this.state.loanCompany,
-            [e.target.name]: e.target.value
-          }
-        });
-        break;
-      case 3: //提交借款项目信息
-        this.setState({
-          loanProject: {
-            ...this.state.loanProject,
-            [e.target.name]: e.target.value
-          }
-        });
-        break;
-      default:
-        console.log('未找到下一步的请求方法');
-    }
-  }
-
-  // 切换页面的方法
-  switchPage() {
-    const {pageNum} = this.state;
-    let btn = $('.apply-form .bot .btn');
-    this.setState({pageNum: pageNum+1});
-    if(pageNum === 3){
-      btn.html('完成');
-    }else{
-      btn.html('下一步');
+  // 切换页面
+  switchPage(data, page) {
+    console.log(data);
+    if (!data) {
+      this.setState({
+        pageNum: this.state.savePage
+      })
     }
   }
 
@@ -275,19 +158,19 @@ export default class ApplyLoan extends React.Component {
       <div className="body1">
         <div className="w relative">
           <div className="apply-menu">
-            <a className={`a1 ${pageNum === 1 ? 'hover' : ''}`}>借款信息</a>
-            <a className={`a2 ${pageNum === 2 ? 'hover' : ''}`}>借款人信息</a>
-            <a className={`a3 ${pageNum === 3 ? 'hover' : ''}`}>借款企业信息</a>
-            <a className={`a4 ${pageNum === 4 ? 'hover' : ''}`}>借款项目</a>
+            <a className={`a1 ${pageNum === 1 ? 'hover' : ''}`} onClick={()=>this.handlePage(1)}>借款信息</a>
+            <a className={`a2 ${pageNum === 2 ? 'hover' : ''}`} onClick={()=>this.handlePage(2)}>借款人信息</a>
+            <a className={`a3 ${pageNum === 3 ? 'hover' : ''}`} onClick={()=>this.handlePage(3)}>借款企业信息</a>
+            <a className={`a4 ${pageNum === 4 ? 'hover' : ''}`} onClick={()=>this.handlePage(4)}>借款项目</a>
           </div>
           <div className="apply-form shadow" style={{marginTop: '-80px'}}>
             <h2><i>借款信息</i></h2>
-            <ApplyInfo pageNum={this.state.pageNum}/>
-            <ApplyPerson pageNum={this.state.pageNum} data={this.state.loanPerson} changePersonInfo={(e)=>this.changeState(e)}/>
-            <ApplyCompany pageNum={this.state.pageNum} data={this.state.loanCompany} changeCompanyInfo={(e)=>this.changeState(e)}/>
-            <ApplyProject pageNum={this.state.pageNum} data={this.state.loanProject} changeProjectInfo={(e)=>this.changeState(e)}/>
+            <ApplyInfo commit={this.state.loanInfoCommit} switchPage={(data)=>this.switchPage(data)} getData={this.getDataByChild} pageNum={this.state.pageNum}/>
+            <ApplyPerson commit={this.state.loanPersonCommit} getData={this.getDataByChild} switchPage={(data)=>this.switchPage(data)} pageNum={this.state.pageNum} data={this.state.loanPerson} />
+            <ApplyCompany commit={this.state.loanCompanyCommit} getData={this.getDataByChild} switchPage={(data)=>this.switchPage(data)} pageNum={this.state.pageNum} data={this.state.loanCompany} />
+            <ApplyProject commit={this.state.loanProjectCommit} getData={this.getDataByChild} switchPage={(data)=>this.switchPage(data)} pageNum={this.state.pageNum} data={this.state.loanProject} />
             <div className="bot center">
-              <i><a className="btn f16" onClick={this.submit}>下一步</a></i>
+              <i><a className="btn f16" onClick={this.submit}>{this.state.pageNum===4?'完成': '下一步'}</a></i>
             </div>
           </div>
         </div>
