@@ -4,12 +4,12 @@ import React from 'react';
 export default class Layout extends React.Component{
   render(){
     return(
-      <div>
+      <div className="page_important">
         <div className="subsite-banner autosize">
           <img className="big" src={require('../../assets/img/subSite/banner.png')} />
         </div>
 
-        <div className="w f14 subsite">
+        <div className="w f14 subsite ">
           <div className="sec sec-about">
             <h2 className="tit"></h2>
             <div className="bd clearfix">
@@ -27,7 +27,7 @@ export default class Layout extends React.Component{
           <div className="sec sec-product">
             <h2 className="tit"></h2>
             <div className="tabs center">
-              <i>产品分类</i>
+              <i className="product">产品分类</i>
               <a className="hover_" id="hover_">产品分类1</a>
               <a  id="hover_">产品分类2</a>
               <a  id="hover_">产品分类3</a>

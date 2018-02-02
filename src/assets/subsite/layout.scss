@@ -49,6 +49,7 @@
   }
   .logo {
     padding-top: 4px;
+
   }
   a.a1 {
     font-size: 16px;
@@ -61,4 +62,8 @@
       border-left: none;
     }
   }
+}
+.company_nav{
+  position: relative;
+  z-index: 10;
 }

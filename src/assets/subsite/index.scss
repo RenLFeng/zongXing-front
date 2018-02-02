@@ -2,7 +2,7 @@
 @import './layout.scss';
 @import './coupon.scss';
 
-body {
+.page_important {
   background-color: #fff;
 }
 .subsite .sec {
@@ -242,17 +242,17 @@ body {
   .big{
     position: relative;
     top:-55px;
-    z-index: -1;
+    z-index:1;
   }
 }
 
 .center{
-  i{
+  .product{
     width:100px;
     color:black;
     font-size: 14px;
   }
-  a{
+  #hover_{
     width:80px;
     height:36px;
     line-height: 36px;

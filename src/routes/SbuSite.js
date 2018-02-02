@@ -7,7 +7,7 @@ import '../assets/subsite/index.js';
 export default class subSite extends React.Component {
   render(){
     return(
-      <div>
+      <div >
         <div className="topnavs_">
           <div className="w relative">
             <p className="tright">欢迎您：<i className="cf90">dg***rt</i></p>
@@ -17,7 +17,7 @@ export default class subSite extends React.Component {
               <a className="c3">编辑模板</a>
             </div>
           </div>
-          <div className="w clearfix">
+          <div className="w clearfix company_nav">
             <a className="logo fl" href="/">
               <img src={require('../assets/img/subSite/logo.png')} />
             </a>

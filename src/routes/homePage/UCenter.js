@@ -73,7 +73,7 @@ export default class UCenter extends React.Component {
             <Route path={Path.SAFE_CENTER} component={SafeCenter} />
             <Route path={Path.BANK_CARD} exact component={BankCard} />
             <Route path={Path.ACCOUNT_RECHARGE} component={AccountRecharge} />
-            <Route path={Path.ACCOUNT_WITHDRAWALS + '/:type'} component={AccountWithdrawals} />
+            <Route path={Path.ACCOUNT_WITHDRAWALS} component={AccountWithdrawals} />
             <Route path={'/index/uCenter/test'} exact component={Test} />
             <Route path={Path.STATION_MESSAGE} component={Message} />
           </Switch>

@@ -245,6 +245,9 @@ export default class PersonAccount extends React.Component {
   jumpRecharge(accoundId) {
     this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {account:accoundId}})
   };
+  jumpRecharge_(accoundId) {
+    this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
+  };
 
   render() {
     console.log(this.props.personal);
@@ -272,7 +275,7 @@ export default class PersonAccount extends React.Component {
             <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
           </a>
           <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.personal.totalAssets.accountId)}>充值</a>
-          <a className="btn btn2">提现</a>
+          <a className="btn btn2" onClick={()=>this.jumpRecharge_(this.props.personal.totalAssets.accountId)}>提现</a>
           <a className="btn btn3">好友转账</a>
         </div>
         <div className="border shadow box1">
