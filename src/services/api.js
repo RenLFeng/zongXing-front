@@ -251,3 +251,7 @@ export async function clickPraise(param) {
   return request(`${BASE_URL}/zjb-website/projectJourney/praise/${param}`);
 }
 
+//获取提现的银行卡的接口
+export async function getBankCard(param) {
+  return request(`${BASE_URL}/zjb-website/userBankCard/account/info/${param}`);
+}
