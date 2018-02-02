@@ -28,10 +28,10 @@ export default class Layout extends React.Component{
             <h2 className="tit"></h2>
             <div className="tabs center">
               <i>产品分类</i>
-              <a className="hover">产品分类1</a>
-              <a>产品分类2</a>
-              <a>产品分类3</a>
-              <a>产品分类4</a>
+              <a className="hovers" id="hover_">产品分类1</a>
+              <a  id="hover_">产品分类2</a>
+              <a  id="hover_">产品分类3</a>
+              <a  id="hover_">产品分类4</a>
             </div>
             <div className="bd clearfix">
 

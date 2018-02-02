@@ -8,7 +8,7 @@ export default class subSite extends React.Component {
   render(){
     return(
       <div>
-        <div className="topnav">
+        <div className="topnavs_">
           <div className="w relative">
             <p className="tright">欢迎您：<i className="cf90">dg***rt</i></p>
             <div className="rtopbtns">
@@ -39,9 +39,6 @@ export default class subSite extends React.Component {
             <p>深圳众鑫互联网金融服务有限公司提供网络技术支持</p>
           </div>
         </div>
-        {/*{% block foot %}{% endblock %}*/}
-
-
       </div>
     )
   }

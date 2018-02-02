@@ -2,7 +2,7 @@
 @import './layout.scss';
 @import './coupon.scss';
 
-.body {
+body {
   background-color: #fff;
 }
 .subsite .sec {
@@ -238,3 +238,36 @@
     }
   }
 }
+.subsite-banner{
+  .big{
+    position: relative;
+    top:-55px;
+    z-index: -1;
+  }
+}
+
+.center{
+  i{
+    width:100px;
+    color:black;
+    font-size: 14px;
+  }
+  a{
+    width:80px;
+    height:36px;
+    line-height: 36px;
+    font-size: 14px;
+    background: white;
+    color:black;
+  }
+  .hovers {
+    border:1px solid black;
+  }
+}
+#hover_:hover{
+  background: white;
+  color:gray;
+  border:1px solid transparent;
+}
+
+

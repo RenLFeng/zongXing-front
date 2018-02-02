@@ -13,8 +13,8 @@ function bindEvent() {
   let div = $('.subsite .sec-product');
   div.find('.tabs').on('click', 'a', function(){
     let $t = $(this);
-    if($t.hasClass('hover')) return;
-    $t.addClass('hover').siblings().removeClass('hover');
+    if($t.hasClass('hovers')) return;
+    $t.addClass('hovers').siblings().removeClass('hovers');
     let idx = $t.index();
     let ss = div.find('.bd').addClass('load').html();
     ss = ss.replace(/产品名称\d+/g, '产品名称'+idx);
