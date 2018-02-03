@@ -45,7 +45,6 @@ export default class AccountRecharge extends React.Component {
       console.log(e);
       message.error('请求失败,请稍后重试');
     }
-
   }
 
   submitMoney() {
@@ -188,7 +187,6 @@ class Forms extends React.Component {
             initialValue: ''
           })(<Input.TextArea maxLength={'200'} disabled={!(!!this.props.param && this.props.param.account)}/>)}
         </FormItem>
-
         <FormItem {...btnLayout}>
           <Button
             style={{width: '200px'}}

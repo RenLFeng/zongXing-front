@@ -20,7 +20,10 @@ export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/';
 export const MONEY_REG = /^\d+(\.\d+)?$/;
 
 // 大于2 带小数
-export const MONEY_REG_ = /[2-9](\.\d*[1-9]){1}|[1-9]\d+(\.\d*[1-9])?$/;
+export const MONEY_REG_ = /[2-9](\.\d*[1-9]){1}|[1-9]\d+(\.\d*[1-9])?$/
+
+// 大于1 带小数
+export const MONEY1_REG_ = /[1-9](\.\d*[1-9]){1}|[1-9]\d+(\.\d*[1-9])?$/;
 
 //一天多少秒
 const DATE_SECONDS = 86400;
