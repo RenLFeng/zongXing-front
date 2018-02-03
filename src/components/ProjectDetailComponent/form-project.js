@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link} from 'dva/router';
 import { ACCOUNT_RECHARGE } from '../../common/pagePath';
-import { IMG_BASE_URL } from '../../common/systemParam';
+import { IMG_BASE_URL,MUN_INTEGER  } from '../../common/systemParam';
 import moment from 'moment';
 import {Button, message} from 'antd';
+import { Investment } from '../../services/api';
 
 export default class FormProject extends React.Component {
   constructor(props) {
@@ -12,14 +13,25 @@ export default class FormProject extends React.Component {
       money: '',
       agreement: false,
       risk: false,
-      loading: false
+      loading: false,
+      errMsg: ''
     };
   }
 
   checkFormat(e) {
+    if (!MUN_INTEGER.test(e.target.value)) {
+      this.setState({errMsg: '金额格式不正确'});
+    } else if (e.target.value * 1 % 100 !== 0) {
+      this.setState({errMsg: '金额需为100的整数倍'});
+    } else if (e.target.value.trim().length === 0){
+      this.setState({errMsg: '金额不能为空'});
+    } else {
+      this.setState({errMsg: ''});
+    }
     this.setState({
       money: e.target.value
     });
+
   }
 
   closeDiv() {
@@ -37,7 +49,15 @@ export default class FormProject extends React.Component {
     });
   }
 
-  submit() {
+  async submit() {
+    if (this.state.money.trim().length===0) {
+      message.warning('输入金额不能为空');
+      return;
+    }
+    if (this.state.errMsg) {
+      message.warning('输入金额有误');
+      return;
+    }
     if (!this.state.risk) {
       message.warning('请查看风险提示');
       return;
@@ -45,6 +65,32 @@ export default class FormProject extends React.Component {
     if (!this.state.agreement) {
       message.warning('请查看借入协议');
       return;
+    }
+    try {
+      const data = {
+        projectId: this.props.project.fpeoject_id,
+        amount: this.state.money * 1,
+        remark: ''
+      };
+      this.setState({loading: true});
+      const response = await Investment(data);
+      this.setState({loading: false});
+      if (response.code === 0) {
+        message.info('成功');
+        $('._masker').remove();
+        $('.pd-form').addClass('none');
+        this.setState({
+          money: '',
+          agreement: false,
+          risk: false,
+          loading: false
+        });
+      } else {
+        message.error(response.msg);
+      }
+    } catch(e) {
+      message.error('网络异常');
+      this.setState({loading: false})
     }
 
   }
@@ -90,6 +136,14 @@ export default class FormProject extends React.Component {
               <i className="f16 c9">元</i>
             </div>
           </div>
+          { this.state.errMsg ?
+            <div className="row clearfix" style={{marginTop: -20}}>
+              <div className="col1"/>
+              <div className="col2">
+                <p style={{fontSize: 16, color: 'red'}}>{this.state.errMsg}</p>
+              </div>
+            </div> : null
+          }
           <div className="row clearfix">
             <div className="col1"/>
             <div className="col2">

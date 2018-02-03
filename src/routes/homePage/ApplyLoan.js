@@ -1,11 +1,13 @@
 import React from 'react';
 import ImgUpload from '../../components/UpLoad/imgUpload';
 import {message, Spin} from 'antd';
+import moment from 'moment';
 import { initApply } from '../../assets/apply/index';
 import ApplyInfo from '../../components/ApplyLoanPage/applyInfo';
 import ApplyCompany from '../../components/ApplyLoanPage/applyCompany';
 import ApplyPerson from '../../components/ApplyLoanPage/applyPerson';
 import ApplyProject from '../../components/ApplyLoanPage/applyProject';
+import { applayCommit } from '../../services/api';
 export default class ApplyLoan extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,8 @@ export default class ApplyLoan extends React.Component {
       savePage: 0,
       loadingState: false,
       dateCode: 'error',
-      fProjectNo: 'error'
+      fProjectNo: 'error',
+      fid: ''
     };
   }
   componentDidMount() {
@@ -88,11 +91,40 @@ export default class ApplyLoan extends React.Component {
   }
 
   // 切换页面
-  switchPage(err, data, page) {
+  async switchPage(err, data, page) {
     console.log(err, data, page);
+    console.log(JSON.stringify(data));
     if (!err) {
+      // this.setState({
+      //   pageNum: this.state.savePage,
+      // });
+      if (page!==4) {
+        // 提交 1 2 3 页的数据接口
+        try {
+          this.setState({loadingState: true});
+          const response = await applayCommit(data);
+          this.setState({loadingState: false});
+          if (response.code === 0) {
+            if (page === 1) {
+              const dateCode = moment(response.data.project.fCreateTime).format('YYYY') + moment(data.fCreateTime).format('MM')
+              this.setState({
+                fProjectNo: response.data.project.fProjectNo,
+                fid: response.data.project.fId,
+                dateCode: dateCode
+              });
+            }
+            this.setState({
+              pageNum: this.state.savePage,
+            });
+          } else {
+            message.error(response.msg);
+          }
+        } catch (e) {
+          this.setState({loadingState: false});
+          message.error('网络异常');
+        }
+      }
 
-      this.setState({ pageNum: this.state.savePage })
     } else {
       message.error('请检查填写格式');
     }
@@ -163,7 +195,7 @@ export default class ApplyLoan extends React.Component {
   }
 
   render() {
-    const {pageNum,dateCode,fProjectNo } = this.state;
+    const {pageNum,dateCode,fProjectNo, fid } = this.state;
     return (
       <div className="body1">
 
@@ -177,10 +209,10 @@ export default class ApplyLoan extends React.Component {
             </div>
             <div className="apply-form shadow" >
               <h2><i>借款信息</i></h2>
-              <ApplyInfo dateCode={dateCode} fProjectNo={fProjectNo} commit={this.state.loanInfoCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyPerson dateCode={dateCode} fProjectNo={fProjectNo} commit={this.state.loanPersonCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyCompany dateCode={dateCode} fProjectNo={fProjectNo} commit={this.state.loanCompanyCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyProject dateCode={dateCode} fProjectNo={fProjectNo} commit={this.state.loanProjectCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyInfo dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanInfoCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyPerson dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanPersonCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyCompany dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanCompanyCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyProject dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanProjectCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
               <div className="bot center">
                 <i><a className="btn f16" onClick={() => this.submit()}>{this.state.pageNum===4?'完成': '下一步'}</a></i>
               </div>

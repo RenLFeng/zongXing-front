@@ -19,23 +19,32 @@ export default class Right extends React.Component {
       projectId:'',
       arr:[],
       maxPage: 0,     //最大页
-      showForm: false
+      showForm: false,
+      loading: false
     };
   }
 
 
   async getPersonalMoney() {
-    const response = await getPersonalMoney();
-    if (response.code === 0) {
-      this.setState({
-        personalMoney: response.data.personalMoney+'',
-        accountId: response.data.fid,
-      });
-      $('.pd-form').before('<div class="_masker"></div>');
-      $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
-    } else {
-      message.error('获取用户余额失败');
+    try {
+      this.setState({loading: true});
+      const response = await getPersonalMoney();
+      this.setState({loading: false});
+      if (response.code === 0) {
+        this.setState({
+          personalMoney: response.data.fcapital+'',
+          accountId: response.data.fid,
+        });
+        $('.pd-form').before('<div class="_masker"></div>');
+        $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
+      } else {
+        message.error('获取用户余额失败');
+      }
+    } catch(e) {
+      message.error('网络异常');
+      this.setState({loading: false});
     }
+
   }
 
   async getData(page) {
@@ -103,7 +112,7 @@ export default class Right extends React.Component {
           </div>
           <p className="center bot1">
             <p>
-              <Button type="primary" style={{width: 150, height: 40}}  onClick={()=>this.getPersonalMoney()}>我要投资</Button>
+              <Button loading={this.state.loading} type="primary" style={{width: 150, height: 40}}  onClick={()=>this.getPersonalMoney()}>我要投资</Button>
             </p>
           </p>
           <p className="center bot2">

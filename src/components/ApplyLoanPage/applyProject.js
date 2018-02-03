@@ -97,7 +97,8 @@ class Forms extends React.Component {
           console.log('表单提交的数据');
           const data = {
             project: {
-              fName: values.fName
+              fName: values.fName,
+              fId: this.props.fid
             },
             projectInfo: {
               fVideoPath: values.fVideoPath,
@@ -170,7 +171,7 @@ class Forms extends React.Component {
                 {...formItemLayout}
                 label={<span style={styles.label}>项目名称</span>}
               >
-                {getFieldDecorator('account', {
+                {getFieldDecorator('fName', {
                   rules: []
                 })(<Input id="projectName" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
@@ -181,7 +182,7 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>借款视频</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fVideoPath', {
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -211,7 +212,6 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('readmeDesc', {
             rules: [],
-            initialValue: '0'
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}
@@ -235,7 +235,6 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('myProjectDesc', {
             rules: [],
-            initialValue: '0'
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}
@@ -259,7 +258,6 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('fWhyLoan', {
             rules: [],
-            initialValue: '0'
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}
@@ -270,7 +268,6 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('fPayFrom', {
             rules: [],
-            initialValue: '0'
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}

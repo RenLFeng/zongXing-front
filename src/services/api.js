@@ -218,7 +218,7 @@ export async function addProJourney(params) {
 
 // 获取项目行业编码类别接口
 export async function getProjectType() {
-  return request(`${BASE_URL}/zjb-website/getProjectCode`)
+  return request(`${BASE_URL}/zjb-website/apply/getProjectCode`)
 }
 
 // 提交充值信息 获取充值所需数据
@@ -265,4 +265,26 @@ export async function getBankCard(param) {
 export async function getCity(param) {
   return request(`${BASE_URL}/zjb-website/common/cities/${param}`);
 }
+
+// 提交 借款信息接口
+export async function applayCommit(params) {
+  return request(`${BASE_URL}/zjb-website/apply/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  })
+}
+
+// 投资接口
+export async function Investment(params) {
+  return request(`${BASE_URL}/zjb-dc/investment/personal`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  })
+}
+
+
 

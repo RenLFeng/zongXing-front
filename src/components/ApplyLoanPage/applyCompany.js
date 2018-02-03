@@ -111,6 +111,9 @@ class Forms extends React.Component {
               fplaceLease: this.state.pic8 ? this.state.pic8 : '',
               fjoinInstructionBook: this.state.pic12 ? this.state.pic12 : '',
               fjoinFile: this.state.pic13 ? this.state.pic13 : ''
+            },
+            project: {
+              fId: this.props.fid
             }
           };
           this.props.switchPage(err, data, 3);

@@ -123,7 +123,10 @@ class Forms extends React.Component {
               fHousePic1: this.state.pic5 ? this.state.pic5 : '',
               fOtherPicJson: this.state.pic6 ? this.state.pic6: ''
             },
-            lenderOtherContactList: arr
+            lenderOtherContactList: arr,
+            project: {
+              fId: this.props.fid
+            }
           };
           this.props.switchPage(err, data, 2);
         } else {

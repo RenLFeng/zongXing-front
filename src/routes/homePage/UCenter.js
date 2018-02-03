@@ -59,7 +59,6 @@ export default class UCenter extends React.Component {
                 <i>地点：<b>北京</b></i>
                 <a style={{color: 'blue'}} onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a>
               </p>
-
             </div>
           </div>
         </div>

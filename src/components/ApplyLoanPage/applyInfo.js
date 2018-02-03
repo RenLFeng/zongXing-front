@@ -48,8 +48,14 @@ class Forms extends React.Component {
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           const data = {
-            ...values,
-            fCityCode: values.fCityCode.toString()
+            project : {
+              ...values,
+              fId: this.props.fid,
+              fCreditMoney: values.fCreditMoney ? values.fCreditMoney * 1 : null,
+              fCreditMonth: values.fCreditMonth ? values.fCreditMonth * 1 : null,
+              fRatePredict: values.fRatePredict ? values.fRatePredict * 1 : null,
+              fCityCode: values.fCityCode.toString()
+            }
           };
           this.props.switchPage(err, data, 1);
         } else {
