@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Select, Input, Button, Row, Col, Cascader, message } from 'antd';
-import { MONEY_REG } from '../../common/systemParam';
+import { MONEY_REG, MUN_INTEGER } from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import {getProjectType} from '../../services/api';
 
@@ -46,10 +46,14 @@ class Forms extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.commit !== nextProps.commit) {
       this.props.form.validateFieldsAndScroll((err, values) => {
-        this.props.switchPage(err);
         if (!err) {
-          console.log('表单提交的数据');
-
+          const data = {
+            ...values,
+            fCityCode: values.fCityCode.toString()
+          };
+          this.props.switchPage(err, data, 1);
+        } else {
+          this.props.switchPage(err);
         }
       });
     }
@@ -79,8 +83,11 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
               {getFieldDecorator('fCreditMoney', {
-                rules: []
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                initialValue: null,
+                rules: [
+                  {pattern: MONEY_REG, message: '请输入正确的金额格式'}
+                ]
+              })(<Input id="fCreditMoney" style={styles.inputHeight} maxLength={'50'}/>)}
                 </Col>
                 <Col span={2}>
                   <span style={styles.label}>万元</span>
@@ -88,7 +95,6 @@ class Forms extends React.Component {
               </Row>
             </FormItem>
           </div>
-
           <div style={{position: 'relative'}}>
             <span style={{color: 'red',position:'absolute',left:185,top:7,fontSize:20}}>*</span>
             <FormItem
@@ -98,8 +104,11 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
                   {getFieldDecorator('fCreditMonth', {
-                    rules: []
-                  })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                    initialValue: null,
+                    rules: [{
+                      pattern: MUN_INTEGER, message: '请输入正确的借款期数'
+                    }]
+                  })(<Input id="fCreditMonth" style={styles.inputHeight} maxLength={'50'}/>)}
                 </Col>
                 <Col span={2}>
                   <span style={styles.label}>个月</span>
@@ -137,8 +146,9 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
                   {getFieldDecorator('fCreditUse', {
+                    initialValue: '',
                     rules: []
-                  })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                  })(<Input id="fCreditUse" style={styles.inputHeight} maxLength={'50'}/>)}
                 </Col>
                 <Col span={2}>
                 </Col>
@@ -152,10 +162,14 @@ class Forms extends React.Component {
             <Row gutter={8}>
               <Col span={22}>
                 {getFieldDecorator('fRatePredict', {
-                  rules: []
+                  initialValue: '',
+                  rules: [{
+                    pattern: MONEY_REG, message: '请输入正确的预期年化利率'
+                  }]
                 })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
               </Col>
               <Col span={2}>
+                <span style={styles.label}>%</span>
               </Col>
             </Row>
           </FormItem>
@@ -168,9 +182,8 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
                   {getFieldDecorator('fCityCode', {
-                    initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-                    rules: []
-                  })(<Cascader size="large" options={city} />)}
+                    initialValue: ['zhejiang', 'hangzhou'],
+                  })(<Cascader size="large" options={city} allowClear={false}/>)}
                 </Col>
                 <Col span={2}>
                 </Col>
