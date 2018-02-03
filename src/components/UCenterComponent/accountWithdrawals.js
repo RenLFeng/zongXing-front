@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Input, Button, Select, Modal, message} from 'antd';
 import '../../assets/ucenter/withdrawals.scss';
-import {getBankCard, getCity} from  '../../services/api';
+import {getBankCard, getCity, putInformation} from  '../../services/api';
 import { MONEY_REG, MONEY1_REG_} from '../../common/systemParam';
 import Path from "../../common/pagePath";
 
@@ -41,7 +41,17 @@ class EnterprisePresentation extends React.Component{
       withdrawals:{},
       loading:false,
       id:'',
-      cardNo: ''
+      cardNo: '',
+      bankName:'',
+      cityName:'',
+      provinceName:'',
+      citys:[],
+    //  提交表单参数
+      amount: '',
+      cardType: 0,
+      province:'',
+      city:'',
+      remark:'',
     }
   }
 
@@ -51,7 +61,6 @@ class EnterprisePresentation extends React.Component{
     // 获取跳转类型 0：个人 1：企业
     // console.log(this.props.match.params.type)
     this.getCardInformation(this.state.accountId);
-    this.getCity_(this.state.provinces.fcode);
   }
 
   async getCardInformation(data){
@@ -62,7 +71,6 @@ class EnterprisePresentation extends React.Component{
       if(response.code === 0){
         this.setState ({
           withdrawals:response.data,
-          accountId:response.data.accountId,
           bankCodes:response.data.bankCodes,
           bankInfos:response.data.bankInfos,
           provinces:response.data.provinces
@@ -89,35 +97,78 @@ class EnterprisePresentation extends React.Component{
     const response = await getCity(data);
     if(response.code === 0){
       this.setState ({
-        id: response.id,
+        id: response.fcode,
+        citys:response.data,
+        cityName: (response.data)[0].fcode
       });
     } else {
       response.error(response.msg);
     }
   }
 
+  async getInformation(data){
+    const response = await putInformation(data);
+    if(response.code === 0){
+      this.setState({
+        amount:response.amount,
+        accountId:response.accountId,
+        cardNo:response.cardNo,
+        cardType: 0,
+        bankCode:response.bankCode,
+        province:response.province,
+        city:response.city,
+        remark:response.remark,
+        userBankId:response.userBankId
+
+      })
+    } else {
+      response.error(response.msg);
+    }
+  }
+
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      console.log(err);
+      if (!err) {
+        values.amount = values.amount * 1.00;
+        console.log('表单提交的数据', values);
+        this.getInformation(values);
+      }
+    });
+  };
 
   submit_() {
     this.formId.submit();
     Modal.confirm({
-      title:'',
-      content:'',
-      okText:'',
-      cancelText:'',
+      title:'提示',
+      content:'确认提现吗？',
+      okText:'提现成功',
+      cancelText:'取消',
       onOk: () => this.props.history.push(Path.PERSONAL_ACCOUNT)
     });
   }
+
   changeBank(val) {
-    console.log(val)
+    console.log(val);
     for (let data of this.state.bankInfos) {
       if (data.userBankId === val) {
         console.log(data);
         this.setState({
-          cardNo: data.cardNo
-        })
+          cardNo: data.cardNo,
+          bankName:data.bankCode,
+          provinceName:data.province,
+          cityName:data.city
+        });
+        this.changeCity(data.province);
         return;
       }
     }
+  }
+
+  changeCity(val) {
+    this.getCity_(val);
   }
   validateNumber = (rule, value, callback) => {
     const { getFieldValue } = this.props.form;
@@ -132,7 +183,9 @@ class EnterprisePresentation extends React.Component{
     const { getFieldDecorator } = this.props.form;
     return(
       <div className="fr uc-rbody">
-      <Form layout="inline">
+
+
+      <Form layout="inline" onSubmit={this.handleSubmit}>
         <FormItem label="指定银行卡" extra="请指定有效的银行卡" {...formItemLayout}>
           {getFieldDecorator('userBankId', {
             rules: [{ required: true, message: '请指定银行卡！' }],
@@ -153,9 +206,10 @@ class EnterprisePresentation extends React.Component{
               {validator:this.validateNumber}],
           })(<Input />)}
         </FormItem>
-        <FormItem label="账户ID" style={{display:'none'}} extra="请指定有效的账户ID" {...formItemLayout}>
+        <FormItem label="账户ID" style={{display: 'none'}}  extra="请指定有效的账户ID" {...formItemLayout}>
           {getFieldDecorator('accountId', {
             rules: [{ required: true, message: '' }],
+            initialValue: this.state.accountId,
           })(<Input />)}
         </FormItem>
         <FormItem label="银行卡号"  {...formItemLayout}>
@@ -164,8 +218,9 @@ class EnterprisePresentation extends React.Component{
             rules: [{ required: true, message: '' }],
           })(<Input />)}
         </FormItem>
-        <FormItem label="银行类型"  {...formItemLayout}>
+        <FormItem label="银行卡类型"  {...formItemLayout}>
           {getFieldDecorator('cardType', {
+            initialValue: '0',
             rules: [{ required: true, message: '' }],
           })(<Select >
             <Select.Option value="0">借记卡</Select.Option>
@@ -175,7 +230,8 @@ class EnterprisePresentation extends React.Component{
         <FormItem label="银行名称"  {...formItemLayout}>
           {getFieldDecorator('bankCode', {
             rules: [{ required: true, message: '' }],
-          })(<Select >
+            initialValue: this.state.bankName,
+          })(<Select>
             {
               this.state.bankCodes.map((data)=>{
                 return(
@@ -188,8 +244,8 @@ class EnterprisePresentation extends React.Component{
         <FormItem label="开户银行所在省份"  {...formItemLayout}>
           {getFieldDecorator('province', {
             rules: [{ required: true, message: '' }],
-            initialValue: this.state.bankCodes.fcode
-          })(<Select>
+            initialValue:this.state.provinceName,
+          })(<Select onChange={(e)=> this.changeCity(e)}>
             {
               this.state.provinces.map((data)=>{
                 return(
@@ -202,7 +258,16 @@ class EnterprisePresentation extends React.Component{
         <FormItem label="开户银行所在城市"  {...formItemLayout}>
           {getFieldDecorator('city', {
             rules: [{ required: true, message: '' }],
-          })(<Input />)}
+            initialValue:this.state.cityName,
+          })(<Select >
+            {
+              this.state.citys.map((data)=>{
+                return(
+                  <Select.Option value={data.fcode} key={data.fcode}>{data.fname}</Select.Option>
+                )
+              })
+            }
+          </Select>)}
         </FormItem>
         <FormItem  label="备注" {...formItemLayout}>
           {getFieldDecorator('remark', {
