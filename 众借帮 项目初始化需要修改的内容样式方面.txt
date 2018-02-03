@@ -2,7 +2,7 @@
 项目列表加一个项目周期的字段
 
 删除
-antd/es/style/index.css 25-30 
+antd/es/style/index.css 25-30
 *,
 *::before,
 *::after {
@@ -97,8 +97,11 @@ es/style/core/base.less 25
     /* box-sizing: border-box; */
 }
 
-es/radio/style/index.less 82 83 修改为14px 
+es/radio/style/index.less 82 83 修改为14px
 .ant-radio-inner {
   width: 14px;
   height: 14px
 }
+
+es/spin/style/index.less 28删除
+      max-height: 320px;

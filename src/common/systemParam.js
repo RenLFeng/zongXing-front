@@ -7,6 +7,9 @@ export const ID_CORD = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([
 // 用户名正则
 export const USER_REG = /^[a-zA-Z0-9_-]{2,16}$/;
 
+
+// 邮箱验证正则
+export const E_MAIL =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 // 座机电话正则
 export const TEL_PHONE = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
 
@@ -18,6 +21,9 @@ export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/';
 
 // 带小数点的正则验证
 export const MONEY_REG = /^\d+(\.\d+)?$/;
+
+// 正整数正则
+export const MUN_INTEGER = /^[0-9]*[1-9][0-9]*$/;
 
 // 大于2 带小数
 export const MONEY_REG_ = /[2-9](\.\d*[1-9]){1}|[1-9]\d+(\.\d*[1-9])?$/;

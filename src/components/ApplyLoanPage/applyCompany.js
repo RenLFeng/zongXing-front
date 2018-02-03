@@ -1,7 +1,7 @@
 import React from 'react';
 import ImgUpload from '../../components/UpLoad/imgUpload';
 import {Form, Select, Input, Button, Row, Col, Cascader, message} from 'antd';
-import {MONEY_REG} from '../../common/systemParam';
+import {MONEY_REG, BANK_CARD, TEL_PHONE, IMG_BASE_URL} from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import {getProjectType} from '../../services/api';
 
@@ -61,7 +61,15 @@ class Forms extends React.Component {
     super(props);
     this.state = {
       industryType: []
-    }
+    };
+    this.data = {
+      className:"ant-uploa",
+      type:"images/",
+      divClassName:"upload-div",
+      changeState: (name, src)=>this.changeState(name, src),
+      changeLoading: (name, status) => this.changeLoading(name, status),
+      baseUrl: IMG_BASE_URL
+    };
   }
 
   componentDidMount() {
@@ -71,10 +79,43 @@ class Forms extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.commit !== nextProps.commit) {
       this.props.form.validateFieldsAndScroll((err, values) => {
-        this.props.switchPage(err);
+        for (let i = 0; i < 14; i++) {
+          if (this.state[`pic${i}loading`]) {
+            message.warning('图片正在上传请稍后');
+            return;
+          }
+        }
         if (!err) {
-          console.log('表单提交的数据');
-
+          const data ={
+            company: {
+              fname: values.fname,
+              fsocialCreditCode: values.fsocialCreditCode
+            },
+            companyInfo: {
+              fbankName: values.fbankName,
+              fbankNo: values.fbankNo,
+              fbusAddress: values.fbusAddress,
+              fbusTrade: values.fbusTrade,
+              ftelephone: values.ftelephone,
+              ftopsh: values.ftopsh,
+              fbusLicense: this.state.pic1 ? this.state.pic1 : '',
+              ftaxPermit: this.state.pic2 ? this.state.pic2 : '',
+              fbankPermit: this.state.pic3 ? this.state.pic3 : '',
+              fhygienePermit: this.state.pic4 ? this.state.pic4 : '',
+              fotherFile1: this.state.pic9 ? this.state.pic9: '',
+              fotherFile2: this.state.pic10 ? this.state.pic10: '',
+              fotherFile3: this.state.pic11 ? this.state.pic11: '',
+              fauditFile: this.state.pic5 ? this.state.pic5 : '',
+              fstatementFile: this.state.pic6 ? this.state.pic6 : '',
+              fstockholderFile: this.state.pic7 ? this.state.pic7 : '',
+              fplaceLease: this.state.pic8 ? this.state.pic8 : '',
+              fjoinInstructionBook: this.state.pic12 ? this.state.pic12 : '',
+              fjoinFile: this.state.pic13 ? this.state.pic13 : ''
+            }
+          };
+          this.props.switchPage(err, data, 3);
+        } else {
+          this.props.switchPage(err);
         }
       });
     }
@@ -116,9 +157,23 @@ class Forms extends React.Component {
     callback()
   };
 
+  changeLoading(name, status) {
+    this.setState({
+      [`${name}loading`]: status
+    })
+  }
+  changeState(name, src) {
+    console.log('name', name);
+    console.log('src', src);
+    this.setState({
+      [name]: src
+    });
+  }
+
   render() {
     const {getFieldDecorator} = this.props.form;
-    const {pageNum} = this.props;
+    const { pageNum, dateCode, fProjectNo} = this.props;
+    const dataPath = `project/${dateCode}/${fProjectNo}/`;
     return (
       <div className={`aform ${pageNum === 3 ? '' : 'none'}`} style={{paddingTop: 30}}>
         <Form onSubmit={this.handleSubmit}>
@@ -130,9 +185,9 @@ class Forms extends React.Component {
                   {...formItemLayout}
                   label={<span style={styles.label}>公司名称</span>}
                 >
-                  {getFieldDecorator('account', {
+                  {getFieldDecorator('fname', {
                     rules: []
-                  })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                  })(<Input id="companyName" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>
             </Col>
@@ -143,9 +198,9 @@ class Forms extends React.Component {
                   {...formItemLayout}
                   label={<span style={styles.label}>统一社会信用代码</span>}
                 >
-                  {getFieldDecorator('account', {
+                  {getFieldDecorator('fsocialCreditCode', {
                     rules: []
-                  })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                  })(<Input id="fsocialCreditCode" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>
             </Col>
@@ -158,22 +213,24 @@ class Forms extends React.Component {
                   {...formItemLayout}
                   label={<span style={styles.label}>企业开户行</span>}
                 >
-                  {getFieldDecorator('account', {
+                  {getFieldDecorator('fbankName', {
                     rules: []
-                  })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                  })(<Input id="fbankName" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>
             </Col>
             <Col span={12}>
               <div style={{position: 'relative'}}>
-                <span style={{color: 'red',position:'absolute',left:60,top:7,fontSize:20}}>*</span>
+                <span style={{color: 'red',position:'absolute',left:47,top:7,fontSize:20}}>*</span>
                 <FormItem
                   {...formItemLayout}
-                  label={<span style={styles.label}>企业银行账户</span>}
+                  label={<span style={styles.label}>企业银行卡账号</span>}
                 >
-                  {getFieldDecorator('account', {
-                    rules: []
-                  })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                  {getFieldDecorator('fbankNo', {
+                    rules: [{
+                      pattern: BANK_CARD, message: '请输入正确的银行卡账号'
+                    }]
+                  })(<Input id="fbankNo" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>
             </Col>
@@ -186,10 +243,9 @@ class Forms extends React.Component {
                   {...formItemLayout}
                   label={<span style={styles.label}>实际经营地址</span>}
                 >
-                  {getFieldDecorator('account', {
+                  {getFieldDecorator('fbusAddress', {
                     rules: [],
-                    initialValue: '0'
-                  })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                  })(<Input id="fbusAddress" style={styles.inputHeight} maxLength={'100'}/>)}
                 </FormItem>
               </div>
             </Col>
@@ -200,7 +256,7 @@ class Forms extends React.Component {
                   {...formItemLayout}
                   label={<span style={styles.label}>经营行业</span>}
                 >
-                  {getFieldDecorator('type', {
+                  {getFieldDecorator('fbusTrade', {
                     rules: [],
                     initialValue: this.state.industryType[0] ? this.state.industryType[0].fTypeCode : ''
                   })(
@@ -224,8 +280,10 @@ class Forms extends React.Component {
                 {...formItemLayout}
                 label={<span style={styles.label}>单位座机</span>}
               >
-                {getFieldDecorator('account', {
-                  rules: []
+                {getFieldDecorator('ftelephone', {
+                  rules: [{
+                    pattern: TEL_PHONE, message: '请输入正确的单位座机'
+                  }]
                 })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </Col>
@@ -234,7 +292,7 @@ class Forms extends React.Component {
                 {...formItemLayout}
                 label={<span style={styles.label}>股东持股比例</span>}
               >
-                {getFieldDecorator('account', {
+                {getFieldDecorator('ftopsh', {
                   rules: []
                 })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
@@ -248,7 +306,7 @@ class Forms extends React.Component {
               width: 314, height: 172, border: '1px solid #ccc', display: 'flex', justifyContent: 'center',
               alignItems: 'center', borderRadius: 3
             }}>
-              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传营业执照"/>
+              <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic1} name="pic1" tipText="上传营业执照"/>
             </div>
           </div>
           <div style={{display: 'flex'}}>
@@ -257,7 +315,7 @@ class Forms extends React.Component {
               width: 314, height: 172, border: '1px solid #ccc', display: 'flex', justifyContent: 'center',
               alignItems: 'center', borderRadius: 3
             }}>
-              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传税务登记许可证"/>
+              <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic2} name="pic2" tipText="税务登记许可证"/>
             </div>
           </div>
         </div>
@@ -269,7 +327,7 @@ class Forms extends React.Component {
               width: 314, height: 172, border: '1px solid #ccc', display: 'flex', justifyContent: 'center',
               alignItems: 'center', borderRadius: 3
             }}>
-              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传营业执照"/>
+              <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic3} name="pic3" tipText="银行开户许可证"/>
             </div>
           </div>
           <div style={{display: 'flex'}}>
@@ -278,7 +336,7 @@ class Forms extends React.Component {
               width: 314, height: 172, border: '1px solid #ccc', display: 'flex', justifyContent: 'center',
               alignItems: 'center', borderRadius: 3
             }}>
-              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传税务登记许可证"/>
+              <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic4} name="pic4" tipText="卫生许可证"/>
             </div>
           </div>
         </div>
@@ -290,7 +348,7 @@ class Forms extends React.Component {
               width: 314, height: 172, border: '1px solid #ccc', display: 'flex', justifyContent: 'center',
               alignItems: 'center', borderRadius: 3
             }}>
-              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传企业财务审计报告"/>
+              <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic5} name="pic5" tipText="企业财务审计报告"/>
             </div>
           </div>
           <div style={{display: 'flex'}}>
@@ -299,7 +357,7 @@ class Forms extends React.Component {
               width: 314, height: 172, border: '1px solid #ccc', display: 'flex', justifyContent: 'center',
               alignItems: 'center', borderRadius: 3
             }}>
-              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传企业三个月银行流水"/>
+              <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic6} name="pic6" type="documents/" tipText="企业三个月银行流水"/>
             </div>
           </div>
         </div>
@@ -311,7 +369,7 @@ class Forms extends React.Component {
               width: 314, height: 172, border: '1px solid #ccc', display: 'flex', justifyContent: 'center',
               alignItems: 'center', borderRadius: 3
             }}>
-              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="企业股东构成文件"/>
+              <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic7} name="pic7" type="documents/" tipText="企业股东构成文件"/>
             </div>
           </div>
           <div style={{display: 'flex'}}>
@@ -320,7 +378,7 @@ class Forms extends React.Component {
               width: 314, height: 172, border: '1px solid #ccc', display: 'flex', justifyContent: 'center',
               alignItems: 'center', borderRadius: 3
             }}>
-              <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传企业经营场地租赁合同"/>
+              <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic8} name="pic8" type="documents/" tipText="企业经营场地租赁合同"/>
             </div>
           </div>
         </div>
@@ -329,20 +387,18 @@ class Forms extends React.Component {
             <i>其他资质文件</i>
           </div>
           <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传图片"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic9} name="pic9" tipText="其他资质文件照片"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic10} name="pic10" tipText="其他资质文件照片"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic11} name="pic11" tipText="其他资质文件照片"/>
           </div>
         </div>
-
         <div className="row2 mt20 clearfix">
           <div className="tit">
             <i>企业加盟合同</i>
           </div>
           <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传附件"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传附件"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传附件"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic12} name="pic12" tipText="企业加盟授权书-照片"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic13} name="pic13" type="documents/" tipText="企业加盟合同-附件"/>
           </div>
         </div>
       </div>

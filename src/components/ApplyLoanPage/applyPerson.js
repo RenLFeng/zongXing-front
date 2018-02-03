@@ -1,8 +1,9 @@
 import React from 'react';
 import ImgUpload from '../../components/UpLoad/imgUpload';
 import {Form, Select, Input, Button, Row, Col, Cascader, message } from 'antd';
-import { MONEY_REG } from '../../common/systemParam';
+import { MONEY_REG,IMG_BASE_URL,ID_CORD, VER_PHONE, TEL_PHONE, BANK_CARD, E_MAIL } from '../../common/systemParam';
 import {city} from '../../common/cityData';
+
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -61,34 +62,72 @@ class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      industryType: []
-    }
+      industryType: [],
+    };
+    this.data = {
+      className:"ant-uploa",
+      type:"images/",
+      divClassName:"upload-div",
+      changeState: (name, src)=>this.changeState(name, src),
+      changeLoading: (name, status) => this.changeLoading(name, status),
+      baseUrl: IMG_BASE_URL
+    };
   }
 
   componentDidMount() {
-    $("#files").on('change', function() {
-      // this.setState({ loading: true });
-      console.log(this.files[0]);
-      const file = this.files[0];
-      global.cos.sliceUploadFile({
-        Bucket: Bucket,
-        Region: Region,
-        Key: '123/' + file.name,
-        Body: file,
-      },  (err, data) => {
-        // this.setState({ loading: false });
-        console.log(err, data);
-      });
-    })
+
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.commit !== nextProps.commit) {
       this.props.form.validateFieldsAndScroll((err, values) => {
-        this.props.switchPage(err);
+        for (let i = 0; i < 7; i++) {
+          if (this.state[`pic${i}loading`]) {
+            message.warning('图片正在上传请稍后');
+            return;
+          }
+        }
         if (!err) {
           console.log('表单提交的数据');
-
+          const arr = [];
+          // 获取关系人社会信息
+          for (let i = 1; i < 4; i++) {
+            const personalData = {
+              fName: values[`fName${i}`] ? values[`fName${i}`] : '',
+              fIdcardNo: values[`fIdcardNo${i}`] ? values[`fIdcardNo${i}`] : '',
+              fPhone: values[`fPhone${i}`] ? values[`fPhone${i}`] : '',
+              fRelation: values[`fRelation${i}`] ? values[`fRelation${i}`] : '',
+              ftype: i
+            };
+            arr.push(personalData);
+          }
+          const data = {
+            lender: {
+              fName: values.fName,
+              fIDCardNo: values.fIDCardNo,
+              fMobile: values.fMobile,
+              fTelephone: values.fTelephone,
+              fMarriage: values.fMarriage,
+              fEducation: values.fEducation,
+              fQQ: values.fQQ,
+              fWeiChat: values.fWeiChat,
+              fBankNo: values.fBankNo,
+              fBankName: values.fBankName,
+              fCompanyEmail: values.fCompanyEmail,
+              fAddress: values.fAddress,
+              fProperty: values.fProperty,
+              fIDCardPic1: this.state.pic1 ? this.state.pic1 : '',
+              fIDCardPic2: this.state.pic2 ? this.state.pic2 :'',
+              fIDCardPic3: this.state.pic3 ? this.state.pic3 : '',
+              fCarPic: this.state.pic4 ? this.state.pic4 : '',
+              fHousePic1: this.state.pic5 ? this.state.pic5 : '',
+              fOtherPicJson: this.state.pic6 ? this.state.pic6: ''
+            },
+            lenderOtherContactList: arr
+          };
+          this.props.switchPage(err, data, 2);
+        } else {
+          this.props.switchPage(err);
         }
       });
     }
@@ -99,7 +138,28 @@ class Forms extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('表单提交的数据');
-        this.fetchParam();
+        const arr = [];
+        // 获取关系人社会信息
+        for (let i = 1; i < 4; i++) {
+          const personalData = {
+            fName: values[`fName${i}`] ? values[`fName${i}`] : '',
+            fIdcardNo: values[`fIdcardNo${i}`] ? values[`fIdcardNo${i}`] : '',
+            fPhone: values[`fPhone${i}`] ? values[`fPhone${i}`] : '',
+            fRelation: values[`fRelation${i}`] ? values[`fRelation${i}`] : '',
+            ftype: i
+          };
+          arr.push(personalData);
+        }
+        const data = {
+          lender: {
+
+          },
+          lenderOtherContactList: arr
+        };
+        console.log(data);
+        this.props.switchPage(err, data, 2);
+      } else {
+        this.props.switchPage(err);
       }
     });
   };
@@ -107,6 +167,18 @@ class Forms extends React.Component {
   async fetchParam() {
     // 调取接口返回数据
     this.props.setData({1:1});
+  }
+  changeLoading(name, status) {
+    this.setState({
+      [`${name}loading`]: status
+    })
+  }
+  changeState(name, src) {
+    console.log('name', name);
+    console.log('src', src);
+    this.setState({
+      [name]: src
+    });
   }
 
   validateNumber = (rule, value, callback) => {
@@ -120,7 +192,8 @@ class Forms extends React.Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { pageNum} = this.props;
+    const { pageNum, dateCode, fProjectNo} = this.props;
+    const dataPath = `project/${dateCode}/${fProjectNo}/`;
     return (
       <div className={`aform ${pageNum===2 ? '' : 'none'}`} style={{ paddingTop: 30 }}>
       <Form onSubmit={this.handleSubmit}>
@@ -132,9 +205,10 @@ class Forms extends React.Component {
                 {...formItemLayout}
                 label={<span style={styles.label}>姓名</span>}
               >
-              {getFieldDecorator('account', {
-                rules: []
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              {getFieldDecorator('fName', {
+                rules: [],
+                initialValue: ''
+              })(<Input id="personalName" style={styles.inputHeight} maxLength={'20'}/>)}
               </FormItem>
             </div>
           </Col>
@@ -145,9 +219,12 @@ class Forms extends React.Component {
                 {...formItemLayout}
                 label={<span style={styles.label}>身份证号</span>}
               >
-                {getFieldDecorator('account', {
-                  rules: []
-                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                {getFieldDecorator('fIDCardNo', {
+                  rules: [{
+                    pattern: ID_CORD, message: '请填写正确的身份号'
+                  }],
+                  initialValue: ''
+                })(<Input id="fIDCardNo" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
           </Col>
@@ -160,9 +237,12 @@ class Forms extends React.Component {
                 {...formItemLayout}
                 label={<span style={styles.label}>手机</span>}
               >
-                {getFieldDecorator('account', {
-                  rules: []
-                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                {getFieldDecorator('fMobile', {
+                  initialValue: '',
+                  rules: [{
+                    pattern: VER_PHONE, message: '请填写正确的手机号'
+                  }]
+                })(<Input id="fMobile" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
           </Col>
@@ -171,8 +251,11 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>座机</span>}
             >
-              {getFieldDecorator('account', {
-                rules: []
+              {getFieldDecorator('fTelephone', {
+                initialValue: '',
+                rules: [{
+                  pattern: TEL_PHONE, message: '请填写正确的座机号'
+                }]
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
           </Col>
@@ -183,8 +266,7 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>婚姻情况</span>}
             >
-              {getFieldDecorator('account', {
-                rules: [],
+              {getFieldDecorator('fMarriage', {
                 initialValue: '0'
               })(<Select size="large" style={styles.inputHeight}>
                 <Select.Option value="0">未婚</Select.Option>
@@ -198,8 +280,7 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>学历</span>}
             >
-              {getFieldDecorator('account', {
-                rules: [],
+              {getFieldDecorator('fEducation', {
                 initialValue: '0'
               })(<Select size="large" style={styles.inputHeight}>
                 <Select.Option value="0">大专及以下</Select.Option>
@@ -216,7 +297,8 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>QQ号</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fQQ', {
+                initialValue: '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -226,7 +308,8 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>微信号</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fWeiChat', {
+                initialValue: '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -238,8 +321,11 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>银行卡号</span>}
             >
-              {getFieldDecorator('account', {
-                rules: []
+              {getFieldDecorator('fBankNo', {
+                initialValue: '',
+                rules: [{
+                  pattern: BANK_CARD, message: '请输入正确的银行卡号'
+                }]
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
           </Col>
@@ -248,7 +334,8 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>开户银行</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fBankName', {
+                initialValue: '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -260,8 +347,11 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>企业邮箱</span>}
             >
-              {getFieldDecorator('account', {
-                rules: []
+              {getFieldDecorator('fCompanyEmail', {
+                initialValue: '',
+                rules: [{
+                  pattern:E_MAIL, message: '请输入正确的企业邮箱'
+                }]
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
           </Col>
@@ -270,7 +360,8 @@ class Forms extends React.Component {
               {...formItemLayout}
               label={<span style={styles.label}>家庭地址</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fAddress', {
+                initialValue: '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -280,9 +371,9 @@ class Forms extends React.Component {
           {...formItemLayoutTextArea}
           label={<span style={styles.label}>个人资产说明</span>}
         >
-          {getFieldDecorator('account', {
+          {getFieldDecorator('fProperty', {
+            initialValue: '',
             rules: [],
-            initialValue: '0'
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}
@@ -296,9 +387,10 @@ class Forms extends React.Component {
                 wrapperCol={{xs: { span: 24 }, sm: { span: 9 }}}
                 label={<span style={styles.label}>（第一联系人）姓名</span>}
               >
-                {getFieldDecorator('account', {
+                {getFieldDecorator('fName1', {
+                  initialValue: '',
                   rules: []
-                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                })(<Input id="fName1" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
           </Col>
@@ -310,9 +402,12 @@ class Forms extends React.Component {
                 wrapperCol={{xs: { span: 24 }, sm: { span: 12 }}}
                 label={<span style={styles.label}>身份证号</span>}
               >
-                {getFieldDecorator('account', {
-                  rules: []
-                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                {getFieldDecorator('fIdcardNo1', {
+                  initialValue: '',
+                  rules: [{
+                    pattern: ID_CORD, message: '请填写正确的身份号'
+                  }]
+                })(<Input id="fIdcardNo1" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
           </Col>
@@ -324,9 +419,12 @@ class Forms extends React.Component {
                 wrapperCol={{xs: { span: 24 }, sm: { span: 11 }}}
                 label={<span style={styles.label}>手机</span>}
               >
-                {getFieldDecorator('account', {
-                  rules: []
-                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                {getFieldDecorator('fPhone1', {
+                  initialValue: '',
+                  rules: [{
+                    pattern: VER_PHONE, message: '请填写正确的手机号'
+                  }]
+                })(<Input id="fPhone1" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
           </Col>
@@ -337,9 +435,9 @@ class Forms extends React.Component {
                 {...formItemLayoutSmail}
                 label={<span style={styles.label}>社会关系</span>}
               >
-                {getFieldDecorator('account', {
-                  rules: []
-                })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                {getFieldDecorator('fRelation1', {
+                  initialValue: '',
+                })(<Input id="fRelation1" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
           </Col>
@@ -351,7 +449,8 @@ class Forms extends React.Component {
               wrapperCol={{xs: { span: 24 }, sm: { span: 9 }}}
               label={<span style={styles.label}>（商业伙伴）姓名</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fName2', {
+                initialValue: '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -362,8 +461,11 @@ class Forms extends React.Component {
               wrapperCol={{xs: { span: 24 }, sm: { span: 12 }}}
               label={<span style={styles.label}>身份证号</span>}
             >
-              {getFieldDecorator('account', {
-                rules: []
+              {getFieldDecorator('fIdcardNo2', {
+                initialValue: '',
+                rules: [{
+                  pattern: ID_CORD, message: '请填写正确的身份号'
+                }]
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
           </Col>
@@ -373,8 +475,11 @@ class Forms extends React.Component {
               wrapperCol={{xs: { span: 24 }, sm: { span: 11 }}}
               label={<span style={styles.label}>手机</span>}
             >
-              {getFieldDecorator('account', {
-                rules: []
+              {getFieldDecorator('fPhone2', {
+                initialValue: '',
+                rules: [{
+                  pattern: VER_PHONE, message: '请填写正确的手机号'
+                }]
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
           </Col>
@@ -383,7 +488,8 @@ class Forms extends React.Component {
               {...formItemLayoutSmail}
               label={<span style={styles.label}>社会关系</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fRelation2', {
+                initialValue: '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -396,7 +502,8 @@ class Forms extends React.Component {
               wrapperCol={{xs: { span: 24 }, sm: { span: 9 }}}
               label={<span style={styles.label}>（朋友）姓名</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fName3', {
+                initialValue: '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -407,8 +514,11 @@ class Forms extends React.Component {
               wrapperCol={{xs: { span: 24 }, sm: { span: 12 }}}
               label={<span style={styles.label}>身份证号</span>}
             >
-              {getFieldDecorator('account', {
-                rules: []
+              {getFieldDecorator('fIdcardNo3', {
+                initialValue: '',
+                rules: [{
+                  pattern: ID_CORD, message: '请填写正确的身份号'
+                }]
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
           </Col>
@@ -418,8 +528,11 @@ class Forms extends React.Component {
               wrapperCol={{xs: { span: 24 }, sm: { span: 11 }}}
               label={<span style={styles.label}>手机</span>}
             >
-              {getFieldDecorator('account', {
-                rules: []
+              {getFieldDecorator('fPhone3', {
+                initialValue: '',
+                rules: [{
+                  pattern: VER_PHONE, message: '请填写正确的手机号'
+                }]
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
           </Col>
@@ -428,7 +541,8 @@ class Forms extends React.Component {
               {...formItemLayoutSmail}
               label={<span style={styles.label}>社会关系</span>}
             >
-              {getFieldDecorator('account', {
+              {getFieldDecorator('fRelation3', {
+                initialValue: '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -442,9 +556,9 @@ class Forms extends React.Component {
             <i>身份证上传</i>
           </div>
           <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
-            <input type="file" id="files"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="身份证反面"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="手持身份证"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic1} name="pic1" tipText="身份证正面"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic2} name="pic2" tipText="身份证反面"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic3} name="pic3" tipText="手持身份证"/>
           </div>
         </div>
         <div className="row2 mt20 clearfix">
@@ -452,9 +566,9 @@ class Forms extends React.Component {
             <i>个人资产证明</i>
           </div>
           <div className="imgbox border avatar-uploader" style={{display: 'flex', paddingLeft: 15}}>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="本人手持车本"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="本人手持房本"/>
-            <ImgUpload className="ant-uploa" divClassName="upload-div" tipText="上传债券,股票等"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic4} name="pic4" tipText="本人手持车本"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic5} name="pic5" tipText="本人手持房本"/>
+            <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic6} name="pic6" tipText="上传债券,股票等"/>
           </div>
         </div>
       </div>
