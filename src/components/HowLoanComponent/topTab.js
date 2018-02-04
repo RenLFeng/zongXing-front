@@ -8,7 +8,7 @@ export default class TopTab extends React.Component {
       <div className="section sec-tabs">
         <div className="tabs">
           <div className="w">
-            <a className="hover">客户需求</a>
+            <a>客户需求</a>
             <a>创造价值</a>
             <a>众借好处</a>
             <a>视频展示</a>

@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'dva/router';
 import Slider from '../../assets/finance/slider';
+import {connect} from 'dva';
+import {message} from 'antd';
 
+@connect((state)=>({
+  loginStatus: state.login.status
+}))
 export default class Calculator extends React.Component {
   constructor(props) {
     super(props);
@@ -62,6 +67,16 @@ export default class Calculator extends React.Component {
     });
   }
 
+  jumpApplyLoan() {
+    if (this.props.loginStatus) {
+      this.props.history.push(`/index/applyLoan`);
+      $("#fix").removeClass('fix');
+      $(window).scrollTop(0)
+    } else {
+      message.error('请先登录');
+    }
+  }
+
   render() {
     return (
       <div className="cal">
@@ -117,7 +132,7 @@ export default class Calculator extends React.Component {
           </p>
         </div>
         <div className="bot center">
-          <Link className="btn big" to={`/index/applyLoan`} onClick={()=>$(window).scrollTop(0)}><i>我要借款</i></Link>
+          <a className="btn big" onClick={()=>this.jumpApplyLoan()}><i>我要借款</i></a>
         </div>
       </div>
     );

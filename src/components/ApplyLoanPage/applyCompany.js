@@ -122,6 +122,23 @@ class Forms extends React.Component {
         }
       });
     }
+    if (this.props.data !== nextProps.data) {
+      this.setState({
+        pic1: nextProps.data.fbus_license,
+        pic2: nextProps.data.ftax_permit,
+        pic3: nextProps.data.fbank_permit,
+        pic4: nextProps.data.fhygiene_permit,
+        pic5: nextProps.data.faudit_file,
+        pic6: nextProps.data.fstatement_file,
+        pic7: nextProps.data.fstockholder_file,
+        pic8: nextProps.data.fplace_lease,
+        pic9: nextProps.data.fother_file1,
+        pic10: nextProps.data.fother_file2,
+        pic11: nextProps.data.fother_file3,
+        pic12: nextProps.data.fjoin_instruction_book,
+        pic13: nextProps.data.fjoin_file,
+      });
+    }
   }
 
   async fetchProjectType() {
@@ -175,7 +192,7 @@ class Forms extends React.Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-    const { pageNum, dateCode, fProjectNo} = this.props;
+    const { pageNum, dateCode, fProjectNo, data} = this.props;
     const dataPath = `project/${dateCode}/${fProjectNo}/`;
     return (
       <div className={`aform ${pageNum === 3 ? '' : 'none'}`} style={{paddingTop: 30}}>
@@ -189,6 +206,7 @@ class Forms extends React.Component {
                   label={<span style={styles.label}>公司名称</span>}
                 >
                   {getFieldDecorator('fname', {
+                    initialValue: data.companyName ? data.companyName : '',
                     rules: []
                   })(<Input id="companyName" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
@@ -202,6 +220,7 @@ class Forms extends React.Component {
                   label={<span style={styles.label}>统一社会信用代码</span>}
                 >
                   {getFieldDecorator('fsocialCreditCode', {
+                    initialValue: data.fsocial_credit_code ? data.fsocial_credit_code : '',
                     rules: []
                   })(<Input id="fsocialCreditCode" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
@@ -217,6 +236,7 @@ class Forms extends React.Component {
                   label={<span style={styles.label}>企业开户行</span>}
                 >
                   {getFieldDecorator('fbankName', {
+                    initialValue: data.fcbank_name ? data.fcbank_name : '',
                     rules: []
                   })(<Input id="fbankName" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
@@ -230,6 +250,7 @@ class Forms extends React.Component {
                   label={<span style={styles.label}>企业银行卡账号</span>}
                 >
                   {getFieldDecorator('fbankNo', {
+                    initialValue: data.fcbank_no ? data.fcbank_no : '',
                     rules: [{
                       pattern: BANK_CARD, message: '请输入正确的银行卡账号'
                     }]
@@ -247,6 +268,7 @@ class Forms extends React.Component {
                   label={<span style={styles.label}>实际经营地址</span>}
                 >
                   {getFieldDecorator('fbusAddress', {
+                    initialValue: data.fbus_address ? data.fbus_address : '',
                     rules: [],
                   })(<Input id="fbusAddress" style={styles.inputHeight} maxLength={'100'}/>)}
                 </FormItem>
@@ -261,7 +283,7 @@ class Forms extends React.Component {
                 >
                   {getFieldDecorator('fbusTrade', {
                     rules: [],
-                    initialValue: this.state.industryType[0] ? this.state.industryType[0].fTypeCode : ''
+                    initialValue: data.fbus_trade? data.fbus_trade: this.state.industryType[0] ? this.state.industryType[0].fTypeCode : ''
                   })(
                     <Select size="large" style={styles.inputHeight}>
                       {
@@ -284,6 +306,7 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>单位座机</span>}
               >
                 {getFieldDecorator('ftelephone', {
+                  initialValue: data.fctelephone ? data.fctelephone : '',
                   rules: [{
                     pattern: TEL_PHONE, message: '请输入正确的单位座机'
                   }]
@@ -296,6 +319,7 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>股东持股比例</span>}
               >
                 {getFieldDecorator('ftopsh', {
+                  initialValue: data.ftopsh ? data.ftopsh : '',
                   rules: []
                 })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>

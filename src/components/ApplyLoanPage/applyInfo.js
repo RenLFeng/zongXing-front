@@ -76,7 +76,8 @@ class Forms extends React.Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {pageNum} = this.props;
+    const { pageNum, data } = this.props;
+    console.log(data);
     return (
       <div className={`aform ${pageNum===1 ? '' : 'none'}`} style={{paddingTop: 30}}>
         <Form onSubmit={this.handleSubmit}>
@@ -89,7 +90,7 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
               {getFieldDecorator('fCreditMoney', {
-                initialValue: null,
+                initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
                 rules: [
                   {pattern: MONEY_REG, message: '请输入正确的金额格式'}
                 ]
@@ -110,7 +111,7 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
                   {getFieldDecorator('fCreditMonth', {
-                    initialValue: null,
+                    initialValue: data.fcredit_month ? data.fcredit_month + '': '',
                     rules: [{
                       pattern: MUN_INTEGER, message: '请输入正确的借款期数'
                     }]
@@ -130,7 +131,7 @@ class Forms extends React.Component {
               <Col span={22}>
                 {getFieldDecorator('fChannel', {
                   rules: [],
-                  initialValue: '0'
+                  initialValue: data.fchannel ? data.fchannel : '0'
                 })(
                 <Select size="large" style={styles.inputHeight}>
                   <Select.Option value="0">网络搜索</Select.Option>
@@ -152,7 +153,7 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
                   {getFieldDecorator('fCreditUse', {
-                    initialValue: '',
+                    initialValue: data.fcredit_use? data.fcredit_use :'',
                     rules: []
                   })(<Input id="fCreditUse" style={styles.inputHeight} maxLength={'50'}/>)}
                 </Col>
@@ -168,7 +169,7 @@ class Forms extends React.Component {
             <Row gutter={8}>
               <Col span={22}>
                 {getFieldDecorator('fRatePredict', {
-                  initialValue: '',
+                  initialValue: data.frate_predict ? data.frate_predict + '' : '',
                   rules: [{
                     pattern: MONEY_REG, message: '请输入正确的预期年化利率'
                   }]
@@ -188,7 +189,7 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
                   {getFieldDecorator('fCityCode', {
-                    initialValue: ['zhejiang', 'hangzhou'],
+                    initialValue: data.fcity_code ? data.frate_predict.split(',') : ['zhejiang', 'hangzhou']
                   })(<Cascader size="large" options={city} allowClear={false}/>)}
                 </Col>
                 <Col span={2}>

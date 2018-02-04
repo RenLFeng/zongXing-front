@@ -27,25 +27,56 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const {match, location} = this.props.param;
+    const {match, location, history} = this.props.param;
     const styleS = location.pathname.indexOf('/index/howLoan') !== -1 || location.pathname.indexOf('/index/howInvest') !== -1 ? {position:'fixed'}: {position:'absolute'};
     if (location.pathname.indexOf('/index/uCenter') === -1 && location.pathname.indexOf('/index/login') === -1) {
       return (
-      <div className="topnav" style={styleS}>
+      <div id="fix" className="topnav" style={styleS}>
         <div className="w clearfix">
-          <Link className="logo fl" to={`${match.path}/`}>
+          <a className="logo fl" onClick={()=>{
+            history.push(`${match.path}/`);
+            $("#fix").removeClass('fix');
+            $(window).scrollTop(0);
+          }}>
             <img src={require('../../assets/img/logo.png')} />
-          </Link>
+          </a>
           <span className="fr">
-            <Link className="a1" to={`${match.path}/projectLoan`}>项目借款</Link>
-            <Link className="a1" to={`${match.path}/howLoan`}>如何借款</Link>
-            <Link className="a1" to={`${match.path}/howInvest`}>如何投资</Link>
-            <Link className="a1" to={`${match.path}/businessDiscount`}>商家优惠</Link>
-            <Link className="a1" to={`${match.path}/loanCollege`}>众借学院</Link>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/projectLoan`);
+              $("#fix").removeClass('fix');
+              $(window).scrollTop(0);
+            }}>项目借款</a>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/howLoan`);
+              $(window).scrollTop(0);
+            }}>如何借款</a>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/howInvest`);
+              $(window).scrollTop(0);
+            }}>如何投资</a>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/businessDiscount`);
+              $("#fix").removeClass('fix');
+              $(window).scrollTop(0);
+            }}>商家优惠</a>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/loanCollege`);
+              $("#fix").removeClass('fix');
+              $(window).scrollTop(0);
+            }}>众借学院</a>
             <a className="btn btn1" href="">收藏项目<em>0</em></a>
             { !this.props.loginStatus ?
-              <Link className="btn btn2" to={'/index/login'}>登录 / 注册</Link> :
-              <Link className="btn btn2" to={'/index/uCenter'}>个人中心</Link>
+              <a className="btn btn2"
+                 onClick={()=>{
+                   history.push('/index/login');
+                   $("#fix").removeClass('fix');
+                   $(window).scrollTop(0);
+                }}>登录 / 注册</a> :
+              <a className="btn btn2" onClick={()=>{
+                  history.push('/index/uCenter');
+                  $("#fix").removeClass('fix');
+                  $(window).scrollTop(0);
+                }}>个人中心</a>
             }
           </span>
         </div>
@@ -54,21 +85,52 @@ export default class Header extends React.Component {
       );
     }
   	return (
-      <div className="topnav" style={{backgroundColor:'#333'}}>
+      <div id="fix" className="topnav" style={{backgroundColor:'#333'}}>
         <div className="w clearfix">
-          <Link className="logo fl" to={`${match.path}/`}>
+          <a className="logo fl" onClick={()=>{
+            history.push(`${match.path}/`);
+            $("#fix").removeClass('fix');
+            $(window).scrollTop(0);
+          }}>
             <img src={require('../../assets/img/logo.png')} />
-          </Link>
+          </a>
           <span className="fr">
-            <Link className="a1" to={`${match.path}/projectLoan`}>项目借款</Link>
-            <Link className="a1" to={`${match.path}/howLoan`}>如何借款</Link>
-            <Link className="a1" to={`${match.path}/howInvest`}>如何投资</Link>
-            <Link className="a1" to={`${match.path}/businessDiscount`}>商家优惠</Link>
-            <Link className="a1" to={`${match.path}/loanCollege`}>众借学院</Link>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/projectLoan`);
+              $("#fix").removeClass('fix');
+              $(window).scrollTop(0);
+            }}>项目借款</a>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/howLoan`);
+              $(window).scrollTop(0);
+            }}>如何借款</a>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/howInvest`);
+              $(window).scrollTop(0);
+            }}>如何投资</a>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/businessDiscount`);
+              $("#fix").removeClass('fix');
+              $(window).scrollTop(0);
+            }}>商家优惠</a>
+            <a className="a1" onClick={()=>{
+              history.push(`${match.path}/loanCollege`);
+              $("#fix").removeClass('fix');
+              $(window).scrollTop(0);
+            }}>众借学院</a>
             <a className="btn btn1" href="">收藏项目<em>0</em></a>
             { !this.props.loginStatus ?
-              <Link className="btn btn2" to={'/index/login'}>登录 / 注册</Link> :
-              <Link className="btn btn2" to={'/index/uCenter'}>个人中心</Link>
+              <a className="btn btn2"
+                 onClick={()=>{
+                   history.push('/index/login');
+                   $("#fix").removeClass('fix');
+                   $(window).scrollTop(0);
+                 }}>登录 / 注册</a> :
+              <a className="btn btn2" onClick={()=>{
+                history.push('/index/uCenter');
+                $("#fix").removeClass('fix');
+                $(window).scrollTop(0);
+              }}>个人中心</a>
             }
           </span>
         </div>

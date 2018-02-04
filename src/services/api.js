@@ -276,7 +276,7 @@ export async function putInformation(params) {
   })
 }
 // 提交 借款信息接口
-export async function applayCommit(params) {
+export async function applySave(params) {
   return request(`${BASE_URL}/zjb-website/apply/save`, {
     method: 'POST',
     body: {
@@ -293,4 +293,19 @@ export async function Investment(params) {
       ...params,
     }
   })
+}
+
+// 借款完成
+export async function applyCommit(params) {
+  return request(`${BASE_URL}/zjb-website/apply/submit`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  })
+}
+
+// 获取之前的 借款信息接口
+export async function getLoanInfo() {
+  return request(`${BASE_URL}/zjb-website/apply/getOne`);
 }

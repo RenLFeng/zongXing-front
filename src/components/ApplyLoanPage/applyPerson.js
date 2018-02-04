@@ -134,6 +134,16 @@ class Forms extends React.Component {
         }
       });
     }
+    if (this.props.data !== nextProps.data) {
+      this.setState({
+        pic1: nextProps.data.fidcard_pic1,
+        pic2: nextProps.data.fidcard_pic2,
+        pic3: nextProps.data.fidcard_pic3,
+        pic4: nextProps.data.fcar_pic,
+        pic5: nextProps.data.fhouse_pic1,
+        pic6: nextProps.data.fother_pic_json,
+      });
+    }
   }
 
   handleSubmit = (e) => {
@@ -195,7 +205,7 @@ class Forms extends React.Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { pageNum, dateCode, fProjectNo} = this.props;
+    const { pageNum, dateCode, fProjectNo, data} = this.props;
     const dataPath = `project/${dateCode}/${fProjectNo}/`;
     return (
       <div className={`aform ${pageNum===2 ? '' : 'none'}`} style={{ paddingTop: 30 }}>
@@ -210,7 +220,7 @@ class Forms extends React.Component {
               >
               {getFieldDecorator('fName', {
                 rules: [],
-                initialValue: ''
+                initialValue: data.lenderName ? data.lenderName : ''
               })(<Input id="personalName" style={styles.inputHeight} maxLength={'20'}/>)}
               </FormItem>
             </div>
@@ -226,7 +236,7 @@ class Forms extends React.Component {
                   rules: [{
                     pattern: ID_CORD, message: '请填写正确的身份号'
                   }],
-                  initialValue: ''
+                  initialValue: data.fidcard_no ? data.fidcard_no : ''
                 })(<Input id="fIDCardNo" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
@@ -241,7 +251,7 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>手机</span>}
               >
                 {getFieldDecorator('fMobile', {
-                  initialValue: '',
+                  initialValue: data.fmobile ? data.fmobile : '',
                   rules: [{
                     pattern: VER_PHONE, message: '请填写正确的手机号'
                   }]
@@ -255,7 +265,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>座机</span>}
             >
               {getFieldDecorator('fTelephone', {
-                initialValue: '',
+                initialValue: data.ftelephone ? data.ftelephone : '',
                 rules: [{
                   pattern: TEL_PHONE, message: '请填写正确的座机号'
                 }]
@@ -270,7 +280,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>婚姻情况</span>}
             >
               {getFieldDecorator('fMarriage', {
-                initialValue: '0'
+                initialValue: data.fmarriage ? data.fmarriage : '0',
               })(<Select size="large" style={styles.inputHeight}>
                 <Select.Option value="0">未婚</Select.Option>
                 <Select.Option value="1">已婚</Select.Option>
@@ -284,7 +294,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>学历</span>}
             >
               {getFieldDecorator('fEducation', {
-                initialValue: '0'
+                initialValue: data.feducation ? data.feducation : '0',
               })(<Select size="large" style={styles.inputHeight}>
                 <Select.Option value="0">大专及以下</Select.Option>
                 <Select.Option value="1">本科</Select.Option>
@@ -301,7 +311,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>QQ号</span>}
             >
               {getFieldDecorator('fQQ', {
-                initialValue: '',
+                initialValue: data.fqq ? data.fqq : '0',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -312,7 +322,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>微信号</span>}
             >
               {getFieldDecorator('fWeiChat', {
-                initialValue: '',
+                initialValue: data.fweichat ? data.fweichat : '0',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -325,7 +335,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>银行卡号</span>}
             >
               {getFieldDecorator('fBankNo', {
-                initialValue: '',
+                initialValue: data.fbank_no ? data.fbank_no : '',
                 rules: [{
                   pattern: BANK_CARD, message: '请输入正确的银行卡号'
                 }]
@@ -338,7 +348,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>开户银行</span>}
             >
               {getFieldDecorator('fBankName', {
-                initialValue: '',
+                initialValue: data.fbank_name ? data.fbank_name : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -351,7 +361,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>企业邮箱</span>}
             >
               {getFieldDecorator('fCompanyEmail', {
-                initialValue: '',
+                initialValue: data.fcompany_email ? data.fcompany_email : '',
                 rules: [{
                   pattern:E_MAIL, message: '请输入正确的企业邮箱'
                 }]
@@ -364,7 +374,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>家庭地址</span>}
             >
               {getFieldDecorator('fAddress', {
-                initialValue: '',
+                initialValue: data.faddress ? data.faddress : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -375,7 +385,7 @@ class Forms extends React.Component {
           label={<span style={styles.label}>个人资产说明</span>}
         >
           {getFieldDecorator('fProperty', {
-            initialValue: '',
+            initialValue: data.fproperty ? data.fproperty : '',
             rules: [],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />

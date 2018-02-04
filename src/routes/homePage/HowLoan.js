@@ -19,7 +19,7 @@ export default class HowLoan extends React.Component {
         <div className="banner1 autosize">
           <img className="big" src={require('../../assets/img/finance/bg0.png')} />
           <div className="w">
-            <Calculator />
+            <Calculator history={this.props.history}/>
           </div>
         </div>
         <TopTab />

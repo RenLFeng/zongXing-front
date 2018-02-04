@@ -7,7 +7,7 @@ import ApplyInfo from '../../components/ApplyLoanPage/applyInfo';
 import ApplyCompany from '../../components/ApplyLoanPage/applyCompany';
 import ApplyPerson from '../../components/ApplyLoanPage/applyPerson';
 import ApplyProject from '../../components/ApplyLoanPage/applyProject';
-import { applayCommit } from '../../services/api';
+import { applySave, getLoanInfo, applyCommit } from '../../services/api';
 export default class ApplyLoan extends React.Component {
   constructor(props) {
     super(props);
@@ -25,13 +25,37 @@ export default class ApplyLoan extends React.Component {
       loadingState: false,
       dateCode: 'error',
       fProjectNo: 'error',
-      fid: ''
+      fid: '',
+      beforeData: {}
     };
   }
   componentDidMount() {
-    // setTimeout(()=>{
-    //   initApply();
-    // }, 500);
+    // 进入页面获取信息
+    this.getBeforeData();
+  }
+
+  async getBeforeData() {
+    try {
+      this.setState({loadingState: true});
+      const response = await getLoanInfo();
+      this.setState({loadingState: false});
+      console.log(response);
+      if (response.code === 0) {
+        this.setState({
+          fid: response.data ? response.data.projectId : '',
+          beforeData: response.data ? response.data : {}
+        })
+      } else {
+        message.error(response.msg);
+      }
+    } catch(e) {
+      console.log(e);
+      message.error('网络异常');
+      this.setState({loadingState: false});
+    }
+
+
+
   }
 
   componentWillReceiveProps() {
@@ -102,7 +126,7 @@ export default class ApplyLoan extends React.Component {
         // 提交 1 2 3 页的数据接口
         try {
           this.setState({loadingState: true});
-          const response = await applayCommit(data);
+          const response = await applySave(data);
           this.setState({loadingState: false});
           if (response.code === 0) {
             if (page === 1) {
@@ -123,8 +147,25 @@ export default class ApplyLoan extends React.Component {
           this.setState({loadingState: false});
           message.error('网络异常');
         }
+      } else {
+        if (!this.judgeValue()) {
+          return;
+        }
+        try {
+          this.setState({loadingState: true});
+          const response = await applyCommit(data);
+          this.setState({loadingState: false});
+          if (response.code === 0) {
+            message.info('完成');
+            this.props.history.push('/index/projectLoan');
+          } else {
+            message.error(response.msg);
+          }
+        } catch(e) {
+          this.setState({loadingState: false});
+          message.error('网络异常');
+        }
       }
-
     } else {
       message.error('请检查填写格式');
     }
@@ -195,7 +236,8 @@ export default class ApplyLoan extends React.Component {
   }
 
   render() {
-    const {pageNum,dateCode,fProjectNo, fid } = this.state;
+    console.log(this.props);
+    const {pageNum,dateCode,fProjectNo, fid, beforeData } = this.state;
     return (
       <div className="body1">
 
@@ -209,10 +251,10 @@ export default class ApplyLoan extends React.Component {
             </div>
             <div className="apply-form shadow" >
               <h2><i>借款信息</i></h2>
-              <ApplyInfo dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanInfoCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyPerson dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanPersonCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyCompany dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanCompanyCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyProject dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanProjectCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyInfo data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanInfoCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyPerson data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanPersonCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyCompany data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanCompanyCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyProject data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanProjectCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
               <div className="bot center">
                 <i><a className="btn f16" onClick={() => this.submit()}>{this.state.pageNum===4?'完成': '下一步'}</a></i>
               </div>

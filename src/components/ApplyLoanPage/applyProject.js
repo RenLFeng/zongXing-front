@@ -118,6 +118,24 @@ class Forms extends React.Component {
         }
       });
     }
+    if (this.props.data !== nextProps.data) {
+      this.setState({
+        pic1: nextProps.data.fcard_pic_path ? nextProps.data.fcard_pic_path : '',
+        pic2: nextProps.data.fbanner_pic_path ? nextProps.data.fbanner_pic_path : '',
+        pic3: nextProps.data.fread_me_pic ? nextProps.data.fread_me_pic.split(',')[0] : '',
+        pic4: nextProps.data.fread_me_pic ? nextProps.data.fread_me_pic.split(',')[1] : '',
+        pic5: nextProps.data.fread_me_pic ? nextProps.data.fread_me_pic.split(',')[2] : '',
+        pic6: nextProps.data.fread_me_pic ? nextProps.data.fread_me_pic.split(',')[3] : '',
+        pic7: nextProps.data.fread_me_pic ? nextProps.data.fread_me_pic.split(',')[4] : '',
+        pic8: nextProps.data.fread_me_pic ? nextProps.data.fread_me_pic.split(',')[5] : '',
+        pic9: nextProps.data.fmy_project_pic ? nextProps.data.fmy_project_pic.split(',')[0] : '',
+        pic10: nextProps.data.fmy_project_pic ? nextProps.data.fmy_project_pic.split(',')[1] : '',
+        pic11: nextProps.data.fmy_project_pic ? nextProps.data.fmy_project_pic.split(',')[2] : '',
+        pic12: nextProps.data.fmy_project_pic ? nextProps.data.fmy_project_pic.split(',')[3] : '',
+        pic13: nextProps.data.fmy_project_pic ? nextProps.data.fmy_project_pic.split(',')[4] : '',
+        pic14: nextProps.data.fmy_project_pic ? nextProps.data.fmy_project_pic.split(',')[5] : '',
+      });
+    }
   }
   changeLoading(name, status) {
     this.setState({
@@ -158,7 +176,7 @@ class Forms extends React.Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { pageNum, dateCode, fProjectNo} = this.props;
+    const { pageNum, dateCode, fProjectNo, data} = this.props;
     const dataPath = `project/${dateCode}/${fProjectNo}/`;
     return (
       <div className={`aform ${pageNum===4 ? '' : 'none'}`}>
@@ -172,6 +190,7 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>项目名称</span>}
               >
                 {getFieldDecorator('fName', {
+                  initialValue: data.projectName ? data.projectName : '',
                   rules: []
                 })(<Input id="projectName" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
@@ -183,6 +202,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>借款视频</span>}
             >
               {getFieldDecorator('fVideoPath', {
+                initialValue: data.fvideo_path ? data.fvideo_path : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -211,6 +231,7 @@ class Forms extends React.Component {
           label={<span style={styles.label}>我的自述</span>}
         >
           {getFieldDecorator('readmeDesc', {
+            initialValue: data.readmedesc ? data.readmedesc : '',
             rules: [],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
@@ -234,6 +255,7 @@ class Forms extends React.Component {
           label={<span style={styles.label}>我的项目</span>}
         >
           {getFieldDecorator('myProjectDesc', {
+            initialValue: data.myprodesc ? data.myprodesc : '',
             rules: [],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
@@ -257,6 +279,7 @@ class Forms extends React.Component {
           label={<span style={styles.label}>为何众借</span>}
         >
           {getFieldDecorator('fWhyLoan', {
+            initialValue: data.fwhy_loan ? data.fwhy_loan : '',
             rules: [],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
@@ -267,6 +290,7 @@ class Forms extends React.Component {
           label={<span style={styles.label}>还款来源</span>}
         >
           {getFieldDecorator('fPayFrom', {
+            initialValue: data.fpay_from ? data.fpay_from : '',
             rules: [],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
