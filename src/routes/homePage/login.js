@@ -68,7 +68,7 @@ export default class Login extends React.Component {
       const response = await getAuthCode(regPhone);
       this.setState({authLoading: false});
       if (response.code === 0) {
-        message.info(response.msg);
+        message.info('发送成功');
       } else {
         message.error(response.msg);
         return;
@@ -89,7 +89,7 @@ export default class Login extends React.Component {
       } else {
         this.setState({ countDown: this.state.countDown - 1 });
       }
-    }, 1000)
+    }, 1000);
   }
 
   //修改所有input的state统一方法

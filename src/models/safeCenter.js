@@ -29,7 +29,10 @@ export default {
             }
           });
         }
-      } catch(e) {
+      } catch (e) {
+        if (typeof e === 'object' && e.name === 288) {
+          throw e;
+        }
         yield put({
           type: 'endSafeData',
           payload: {

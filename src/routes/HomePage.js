@@ -43,7 +43,10 @@ export default class HomePage extends React.Component{
               if (data.code === 0) {
                 callback(data.data);
               }
-            });
+            })
+            .catch((e) => {
+              callback('error');
+            })
         }
       });
     }

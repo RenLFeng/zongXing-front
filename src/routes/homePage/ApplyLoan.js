@@ -127,10 +127,12 @@ export default class ApplyLoan extends React.Component {
         try {
           this.setState({loadingState: true});
           const response = await applySave(data);
+          console.log('-------', response);
           this.setState({loadingState: false});
           if (response.code === 0) {
-            if (page === 1) {
-              const dateCode = moment(response.data.project.fCreateTime).format('YYYY') + moment(data.fCreateTime).format('MM')
+            if (page === 1 && this.state.dateCode === 'error') {
+              const dateCode = moment(response.data.project.fCreateTime).format('YYYY') + moment(response.data.project.fCreateTime).format('MM');
+              console.log(dateCode);
               this.setState({
                 fProjectNo: response.data.project.fProjectNo,
                 fid: response.data.project.fId,
