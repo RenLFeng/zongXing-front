@@ -61,6 +61,7 @@ export default class AccountRecharge extends React.Component {
   render() {
     const { match } = this.props;
     const { recharge } = this.state;
+    console.log(recharge);
     return (
       <div className="fr uc-rbody">
         <Recharge setData={this.setRechargeData.bind(this)} param={this.props.location.state} loading={this.state.loading}/>
