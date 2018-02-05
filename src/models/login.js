@@ -42,7 +42,8 @@ export default {
           message.error(response.msg);
         }
       } catch (e) {
-        message.error('请求失败');
+        console.log(e);
+        message.error('网络异常');
         yield put({
           type: 'changeLoginStatus',
           payload: {
@@ -62,6 +63,16 @@ export default {
       localStorage.removeItem('accessToken');
       yield put(routerRedux.replace('/'));
     },
+    *logoutData(_, { put }) {
+      yield put({
+        type: 'changeLoginStatus',
+        payload: {
+          code: false, //退出登录修改登录状态为false
+          nickName: ''
+        },
+      });
+      localStorage.removeItem('accessToken');
+    }
   },
   reducers: {
     // 改变是否正在提交的状态，比如用户按下按钮等待请求发送的时间使用 submitting

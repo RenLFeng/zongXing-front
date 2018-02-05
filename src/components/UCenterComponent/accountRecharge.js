@@ -77,7 +77,7 @@ export default class AccountRecharge extends React.Component {
           <input id="Remark2" name="Remark2" value={recharge.remark2} type="hidden" />
           <input id="Remark3" name="Remark3" value={recharge.remark3} type="hidden" />
           <input id="ReturnURL" name="ReturnURL" value={recharge.returnURL} type="hidden" />
-          <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL}  />
+          <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL} type="hidden"  />
           <input id="SignInfo" name="SignInfo" value={recharge.signInfo} type="hidden" />
         </form>
       </div>

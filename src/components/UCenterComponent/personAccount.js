@@ -49,13 +49,13 @@ export default class PersonAccount extends React.Component {
           },
           formatter:  function(name){
             if (name==='可用余额') {
-              return `${name}  {c|100,000.01}`
+              return `${name}  {c|0.00}`
             } else if (name === '冻结金额') {
-              return `${name}  {b|2.01}`
+              return `${name}  {b|0.00}`
             } else if (name === '待收金额') {
-              return `${name}  {b|100,000.01}`
+              return `${name}  {b|0.00}`
             } else {
-              return `${name}  {b|10,000.01}`
+              return `${name}  {b|0.00}`
             }
           },
           left: '50%',
@@ -97,10 +97,10 @@ export default class PersonAccount extends React.Component {
               }
             },
             data:[
-              {value:335, name:'可用余额'},
-              {value:310, name:'冻结金额'},
-              {value:234, name:'待收本金'},
-              {value:135, name:'待收收益'}
+              {value:0, name:'可用余额'},
+              {value:0, name:'冻结金额'},
+              {value:0, name:'待收本金'},
+              {value:0, name:'待收收益'}
             ]
           }
         ]

@@ -1,9 +1,10 @@
 import React from 'react';
 import '../../assets/personal/personal.scss';
-import { Icon, Form, Modal, Input } from 'antd';
+import { Icon, Form, Modal, Input, message } from 'antd';
 import { Link } from 'dva/router';
 import { ID_CORD, VER_PHONE } from '../../common/systemParam';
 import { connect } from 'dva';
+import { getEmailAuth } from '../../services/api';
 
 @connect((state)=>({
   safeData: state.safeCenter.safeData,
@@ -53,26 +54,37 @@ export default class SafeCenter extends React.Component {
   //提交 手机号绑定
   changePhoneAuth = () => {
     const form = this.phoneForm;
-    form.validateFields((err, values) => {
+    form.validateFields( async (err, values) => {
       if (err) {
         return;
       }
-      console.log('手机号认证数据: ', values);
-      form.resetFields();
-      this.handleCancel();
+      const response = await getEmailAuth();
+      if (response.code === 0) {
+        console.log('手机号认证数据: ', values);
+        form.resetFields();
+        this.handleCancel();
+      } else {
+        message.error(response.msg);
+      }
     });
   };
 
   //提交 邮箱绑定
   changeEmailAuth = () => {
-    const form = this.phoneForm;
+    const form = this.emailForm;
     form.validateFields((err, values) => {
       if (err) {
         return;
       }
       console.log('邮箱认证数据: ', values);
-      form.resetFields();
-      this.handleCancel();
+      const response = getEmailAuth(values.email);
+      if (response.code === 0) {
+        message.info('邮件发送成功');
+        form.resetFields();
+        this.handleCancel();
+      } else {
+        message.error(response.msg);
+      }
     });
   };
 
@@ -84,25 +96,25 @@ export default class SafeCenter extends React.Component {
           <div className="tab-row">
             <div><span>实名认证</span></div>
             <div>{!!safeData.securityCenter.fCertification?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fRealName} {safeData.fIdcardNo?`(${safeData.fIdcardNo})`: null}</span></div>
+            <div><span>{safeData.fRealName? safeData.fRealName: ''} {safeData.fIdcardNo?`(${safeData.fIdcardNo})`: null}</span></div>
             <div><a onClick={()=>this.setState({nameAuth: true})}>认证</a></div>
           </div>
           <div className="tab-row">
             <div><span>第三方开户</span></div>
             <div>{!!safeData.securityCenter.fThirdAccount?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fThirdAccountName}</span></div>
+            <div><span>{safeData.fThirdAccountName?safeData.fThirdAccountName: ''}</span></div>
             <div><Link to={`/personal`}>开通</Link></div>
           </div>
           <div className="tab-row">
             <div><span>手机绑定</span></div>
             <div>{!!safeData.securityCenter.fMobileBinding?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fMobile}</span></div>
+            <div><span>{safeData.fMobile? safeData.fMobile: ''}</span></div>
             <div><a onClick={()=>this.setState({phoneAuth: true})}>修改</a></div>
           </div>
           <div className="tab-row">
             <div><span>邮箱绑定</span></div>
             <div>{!!safeData.securityCenter.fEmailBinding?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fEmail}</span></div>
+            <div><span>{safeData.fEmail? safeData.fEmail: ''}</span></div>
             <div><a onClick={()=>this.setState({emailAuth: true})}>修改</a></div>
           </div>
           <div className="tab-row" style={{borderBottom:'1px solid #F5F5F5'}}>
@@ -219,9 +231,9 @@ const EmailAuth = Form.create()(
         onCancel={onCancel}
         onOk={onCreate}
       >
-        <Form layout="vertical">
+        <Form>
           <FormItem label="邮箱">
-            {getFieldDecorator('title', {
+            {getFieldDecorator('email', {
               rules: [{ type: 'email', message: '邮箱格式不正确', },
                 { required: true, message: '邮箱不能为空' }],
             })(<Input />)}

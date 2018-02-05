@@ -19,6 +19,11 @@ const codeMessage = {
   504: '网关超时',
 };
 function checkStatus(response) {
+  console.log(response.status === 288);
+  if (response.status === 288) {
+    throw {name: 288};
+    return response;
+  }
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
@@ -26,6 +31,8 @@ function checkStatus(response) {
   const error = new Error(errortext);
   error.name = response.status;
   error.response = response;
+  console.log(error);
+  global.error = error;
   throw error;
 }
 
@@ -41,10 +48,10 @@ export default function request(url, options) {
     credentials: 'include',
   };
   // 判断上一次请求的时间
-  let token = null;
+  let token = '';
   if (localStorage.getItem('accessToken')) {
     const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
-    token = webTokenObj.webToken;
+    token = webTokenObj.webToken ? webTokenObj.webToken : '';
   }
 
   const newOptions = { ...defaultOptions, ...options };
@@ -72,5 +79,5 @@ export default function request(url, options) {
         return response.text();
       }
       return response.json();
-    });
+    })
 }

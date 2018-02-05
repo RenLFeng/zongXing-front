@@ -189,7 +189,7 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
                   {getFieldDecorator('fCityCode', {
-                    initialValue: data.fcity_code ? data.frate_predict.split(',') : ['zhejiang', 'hangzhou']
+                    initialValue: data.fcity_code ? data.fcity_code.split(',') : ['zhejiang', 'hangzhou']
                   })(<Cascader size="large" options={city} allowClear={false}/>)}
                 </Col>
                 <Col span={2}>

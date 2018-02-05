@@ -97,7 +97,7 @@ class Forms extends React.Component {
               fIdcardNo: values[`fIdcardNo${i}`] ? values[`fIdcardNo${i}`] : '',
               fPhone: values[`fPhone${i}`] ? values[`fPhone${i}`] : '',
               fRelation: values[`fRelation${i}`] ? values[`fRelation${i}`] : '',
-              ftype: i
+              fType: i
             };
             arr.push(personalData);
           }

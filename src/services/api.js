@@ -95,6 +95,7 @@ export async function getUserBaseData() {
 // 获取安全中心 首页数据接口
 export async function getSafeData() {
   return request(`${BASE_URL}/zjb-website/securityCenter/findByuserId`)
+  // return request(`http://192.168.1.75:8001/zjb-website/securityCenter/findByuserId`)
 }
 
 // 校验手机号是否存在的接口
@@ -308,4 +309,9 @@ export async function applyCommit(params) {
 // 获取之前的 借款信息接口
 export async function getLoanInfo() {
   return request(`${BASE_URL}/zjb-website/apply/getOne`);
+}
+
+// 邮箱验证
+export async function getEmailAuth(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/sendEmailVerify?sendTo=${param}`)
 }
