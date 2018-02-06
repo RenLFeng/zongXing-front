@@ -2,7 +2,7 @@ import React from 'react';
 import {Form, Input, Button, Select, Modal, message} from 'antd';
 import '../../assets/ucenter/withdrawals.scss';
 import {getBankCard, getCity, putInformation} from '../../services/api';
-import {MONEY_REG, MONEY1_REG_} from '../../common/systemParam';
+import {MONEY_REG, MONEY1_REG_, BANK_CARD } from '../../common/systemParam';
 import Path from "../../common/pagePath";
 
 const FormItem = Form.Item;
@@ -55,14 +55,11 @@ class EnterprisePresentation extends React.Component {
     }
   }
 
-
   componentDidMount() {
     // 获取跳转类型 0：个人 1：企业
     // console.log(this.props.match.params.type)
     this.getCardInformation(this.state.accountId);
   }
-
-
 
   //获取银行卡
   async getCardInformation(data) {
@@ -184,6 +181,15 @@ class EnterprisePresentation extends React.Component {
     callback()
   };
 
+  validateBankCard = (rule, value, callback) => {
+    const {getFieldValue} = this.props.form;
+    if (BANK_CARD.test(value)) {
+      callback('请输入有效的银行卡号');
+    }
+    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    callback()
+  };
+
   handleChange(value) {
     console.log(`selected ${value}`);
   }
@@ -198,31 +204,31 @@ class EnterprisePresentation extends React.Component {
   render() {
     const {getFieldDecorator} = this.props.form;
     const {withdrawals} = this.state;
-
     const Option = Select.Option;
-
     return (
       <div className="fr uc-rbody">
-        <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank">
-          <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} type="hidden"/>
-          <input id="OrderNo" name="OrderNo" value={withdrawals.orderNo} type="hidden"/>
-          <input id="Amount" name="Amount" value={withdrawals.amount} type="hidden"/>
-          <input id="FeeQuota" name="FeeQuota" value={withdrawals.feeQuota} type="hidden"/>
-          <input id="CardNo" name="CardNo" value={withdrawals.cardNo} type="hidden"/>
-          <input id="CardType" name="CardType" value={withdrawals.cardType} type="hidden"/>
-          <input id="BankCode" name="BankCode" value={withdrawals.bankCode} type="hidden"/>
-          <input id="BranchBankName" name="BranchBankName" value={withdrawals.branchBankName} type="hidden"/>
-          <input id="Province" name="Province" value={withdrawals.province} type="hidden"/>
-          <input id="City" name="City" value={withdrawals.city} type="hidden"/>
-          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={withdrawals.platformMoneymoremore}
-                 type="hidden"/>
-          <input id="Remark1" name="Remark1" value={withdrawals.remark1} type="hidden"/>
-          <input id="Remark2" name="Remark2" value={withdrawals.remark2} type="hidden"/>
-          <input id="Remark3" name="Remark3" value={withdrawals.remark3} type="hidden"/>
+        <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
+          <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />
+          <input id="OrderNo" name="OrderNo" value={withdrawals.orderNo} />
+          <input id="Amount" name="Amount" value={withdrawals.amount} />
+          <input id="FeeQuota" name="FeeQuota" value={withdrawals.feeQuota} />
+          <input id="CardNo" name="CardNo" value={withdrawals.cardNo} />
+          <input id="CardType" name="CardType" value={withdrawals.cardType} />
+          <input id="BankCode" name="BankCode" value={withdrawals.bankCode} />
+          <input id="BranchBankName" name="BranchBankName" value={withdrawals.branchBankName} />
+          <input id="Province" name="Province" value={withdrawals.province} />
+          <input id="City" name="City" value={withdrawals.city} />
+          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={withdrawals.platformMoneymoremore} />
+          <input id="SignInfo" name="SignInfo" value={withdrawals.signInfo} />
+          <input id="ReturnURL" name="ReturnURL" value={withdrawals.returnURL} />
+          <input id="NotifyURL" name="NotifyURL" value={withdrawals.notifyURL} />
+          <input id="Remark1" name="Remark1" value={withdrawals.remark1} />
+          <input id="Remark2" name="Remark2" value={withdrawals.remark2}/>
+          <input id="Remark3" name="Remark3" value={withdrawals.remark3} />
         </form>
 
         <Form layout="inline" onSubmit={this.handleSubmit}>
-          <FormItem label="指定银行卡" extra="请指定有效的银行卡" {...formItemLayout}>
+          <FormItem label="指定银行卡" {...formItemLayout}>
             {getFieldDecorator('userBankId', {
               rules: [],
             })(<Select onChange={(e) => this.changeBank(e)}>
@@ -235,14 +241,14 @@ class EnterprisePresentation extends React.Component {
               }
             </Select>)}
           </FormItem>
-          <FormItem label="提现金额" extra="提现金额必须大于1元！" {...formItemLayout}>
+          <FormItem label="提现金额" {...formItemLayout}>
             {getFieldDecorator('amount', {
               rules: [{required: true, message: '提现金额不能为空'},
                 {patter: MONEY_REG, message: '输入格式不正确'},
                 {validator: this.validateNumber}],
-            })(<Input/>)}
+            })(<Input maxLength={'50'} />)}
           </FormItem>
-          <FormItem label="账户ID" style={{display: 'none'}} extra="请指定有效的账户ID" {...formItemLayout}>
+          <FormItem label="账户ID" style={{display: 'none'}} {...formItemLayout}>
             {getFieldDecorator('accountId', {
               rules: [{required: true, message: '账户ID不能为空'}],
               initialValue: this.state.accountId,
@@ -251,7 +257,8 @@ class EnterprisePresentation extends React.Component {
           <FormItem label="银行卡号"  {...formItemLayout}>
             {getFieldDecorator('cardNo', {
               initialValue: this.state.cardNo,
-              rules: [{required: true, message: '银行卡号不能为空'}],
+              rules: [{required: true, message: '银行卡号不能为空'},
+                       {validator: this.validateBankCard }],
             })(<Input/>)}
           </FormItem>
           <FormItem label="银行卡类型"  {...formItemLayout}>
@@ -267,7 +274,7 @@ class EnterprisePresentation extends React.Component {
             {getFieldDecorator('bankCode', {
               rules: [{required: true, message: '请选择银行！'}],
               initialValue: this.state.bankName,
-            })(<Select showSearch optionFilterProp="children" onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} filterOption={(input, option) => option.props.children.indexOf(input) >= 0}>
+            })(<Select showSearch  optionFilterProp="children" onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} filterOption={(input, option) => option.props.children.indexOf(input) >= 0}>
               {
                 this.state.bankCodes.map((data) => {
                   return (
@@ -312,8 +319,7 @@ class EnterprisePresentation extends React.Component {
             })(<Input.TextArea maxLength={'200'}/>)}
           </FormItem>
           <FormItem {...btnLayout}>
-            <Button style={{width: '200px', margin: 'auto'}} type="primary" htmlType="submit"
-                    loading={this.state.loading}>
+            <Button id="button_" style={{width: '200px', margin: 'auto'}} type="primary" htmlType="submit" loading={this.state.loading}>
               提交
             </Button>
           </FormItem>

@@ -189,10 +189,7 @@ class Forms extends React.Component {
           })(<Input.TextArea maxLength={'200'} disabled={!(!!this.props.param && this.props.param.account)}/>)}
         </FormItem>
         <FormItem {...btnLayout}>
-          <Button
-            style={{width: '200px'}}
-            type="primary" htmlType="submit"
-            loading={this.props.loading} disabled={!(!!this.props.param && this.props.param.account)}
+          <Button id="button_" style={{width: '200px'}} type="primary" htmlType="submit" loading={this.props.loading} disabled={!(!!this.props.param && this.props.param.account)}
           >
             提交
           </Button>

@@ -14,7 +14,7 @@ export const E_MAIL =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{
 export const TEL_PHONE = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
 
 // 银行卡号正则
-export const BANK_CARD = /^([1-9]{1})(\d{14}|\d{18})$/;
+export const BANK_CARD = /^([1-9]{1})(\d{16}|d{17}|\d{18}|d{19})$/;
 
 // 万象优图
 export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/';
