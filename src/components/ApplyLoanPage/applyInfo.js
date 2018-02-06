@@ -2,7 +2,7 @@ import React from 'react';
 import {Form, Select, Input, Button, Row, Col, Cascader, message } from 'antd';
 import { MONEY_REG, MUN_INTEGER } from '../../common/systemParam';
 import {city} from '../../common/cityData';
-import {getProjectType} from '../../services/api';
+import {getCityCode} from '../../services/api';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -39,7 +39,21 @@ class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      industryType: []
+      industryType: [],
+      cityList: []
+    }
+  }
+
+  componentDidMount() {
+    this.getCityList();
+  }
+
+  async getCityList() {
+    const response = await getCityCode();
+    if (response.code === 0 && response.data) {
+      this.setState({
+        cityList: response.data
+      });
     }
   }
 
@@ -77,6 +91,7 @@ class Forms extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { pageNum, data } = this.props;
+    const {cityList} = this.state;
     console.log(data);
     return (
       <div className={`aform ${pageNum===1 ? '' : 'none'}`} style={{paddingTop: 30}}>
@@ -189,8 +204,15 @@ class Forms extends React.Component {
               <Row gutter={8}>
                 <Col span={22}>
                   {getFieldDecorator('fCityCode', {
-                    initialValue: data.fcity_code ? data.fcity_code.split(',') : ['zhejiang', 'hangzhou']
-                  })(<Cascader size="large" options={city} allowClear={false}/>)}
+                    initialValue: data.fcity_code ? data.fcity_code : cityList.length > 0 ? cityList[0].fCode : ''
+                  })(
+                    <Select size="large" style={styles.inputHeight}>
+                      {cityList.map((data)=>{
+                        return (
+                          <Select.Option key={data.fCode} value={data.fCode}>{data.fCityName}</Select.Option>
+                        );
+                      })}
+                  </Select>)}
                 </Col>
                 <Col span={2}>
                 </Col>

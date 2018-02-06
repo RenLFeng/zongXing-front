@@ -2,12 +2,13 @@ import { stringify } from 'qs';
 import request from '../utils/request';
 
 const BASE_URL = 'http://192.168.1.4:8001';
+// const BASE_URL = 'http://139.199.14.60:8001'; // 远端
 
 const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59';
 
 // 获取图片签名token
 export async function getAuth({method, pathname}) {
-  return request(`http://192.168.1.4:8001/zjb-base/cos/sign?method=${method}&pathname=${pathname}`);
+  return request(`${BASE_URL}/zjb-base/cos/sign?method=${method}&pathname=${pathname}`);
 }
 
 export async function userLogin(param) {
@@ -125,7 +126,7 @@ export async function rechargeTest() {
 
 //获取消息列表
 export async function messageList(params) {
-  return request(`http://192.168.1.79:9002/notice/record/show/self`,{
+  return request(`${BASE_URL}/zjb-log/notice/record/show/self`,{
     method: 'POST',
     body: {
       ...params,
@@ -134,7 +135,7 @@ export async function messageList(params) {
 }
 //查看详情
 export async function isOrNot(params){
-  return request(`http://192.168.1.79:9002/notice/specify/read/${params}`);
+  return request(`${BASE_URL}/zjb-log/notice/specify/read/${params}`);
 }
 
 // 获取一个问题下所有问题
@@ -224,7 +225,7 @@ export async function getProjectType() {
 
 // 提交充值信息 获取充值所需数据
 export async function getRecharge(params) {
-  return request(`http://192.168.1.4:8001/zjb-dc/account/getRechargeInfo`, {
+  return request(`${BASE_URL}/zjb-dc/account/getRechargeInfo`, {
     method: 'POST',
     body: {
       ...params,
@@ -314,4 +315,9 @@ export async function getLoanInfo() {
 // 邮箱验证
 export async function getEmailAuth(param) {
   return request(`${BASE_URL}/zjb-website/userInfo/sendEmailVerify?sendTo=${param}`)
+}
+
+// 项目城市获取
+export async function getCityCode(param) {
+  return request(`${BASE_URL}/zjb-website/apply/getCity`)
 }

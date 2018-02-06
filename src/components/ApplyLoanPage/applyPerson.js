@@ -221,7 +221,7 @@ class Forms extends React.Component {
               {getFieldDecorator('fName', {
                 rules: [],
                 initialValue: data.lenderName ? data.lenderName : ''
-              })(<Input id="personalName" style={styles.inputHeight} maxLength={'20'}/>)}
+              })(<Input id="fName" style={styles.inputHeight} maxLength={'20'}/>)}
               </FormItem>
             </div>
           </Col>
@@ -284,7 +284,6 @@ class Forms extends React.Component {
               })(<Select size="large" style={styles.inputHeight}>
                 <Select.Option value="0">未婚</Select.Option>
                 <Select.Option value="1">已婚</Select.Option>
-                <Select.Option value="2">离异</Select.Option>
               </Select>)}
             </FormItem>
           </Col>
@@ -294,12 +293,12 @@ class Forms extends React.Component {
               label={<span style={styles.label}>学历</span>}
             >
               {getFieldDecorator('fEducation', {
-                initialValue: data.feducation ? data.feducation : '0',
+                initialValue: data.feducation ? data.feducation : '大专及以下',
               })(<Select size="large" style={styles.inputHeight}>
-                <Select.Option value="0">大专及以下</Select.Option>
-                <Select.Option value="1">本科</Select.Option>
-                <Select.Option value="2">硕士</Select.Option>
-                <Select.Option value="3">博士及以上</Select.Option>
+                <Select.Option value="大专及以下">大专及以下</Select.Option>
+                <Select.Option value="本科">本科</Select.Option>
+                <Select.Option value="硕士">硕士</Select.Option>
+                <Select.Option value="博士及以上">博士及以上</Select.Option>
               </Select>)}
             </FormItem>
           </Col>
@@ -311,7 +310,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>QQ号</span>}
             >
               {getFieldDecorator('fQQ', {
-                initialValue: data.fqq ? data.fqq : '0',
+                initialValue: data.fqq ? data.fqq : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -322,7 +321,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>微信号</span>}
             >
               {getFieldDecorator('fWeiChat', {
-                initialValue: data.fweichat ? data.fweichat : '0',
+                initialValue: data.fweichat ? data.fweichat : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -401,7 +400,7 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>（第一联系人）姓名</span>}
               >
                 {getFieldDecorator('fName1', {
-                  initialValue: '',
+                  initialValue: data.tlo1Name ? data.tlo1Name : '',
                   rules: []
                 })(<Input id="fName1" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
@@ -416,7 +415,7 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>身份证号</span>}
               >
                 {getFieldDecorator('fIdcardNo1', {
-                  initialValue: '',
+                  initialValue: data.tlo1Idcard ? data.tlo1Idcard : '',
                   rules: [{
                     pattern: ID_CORD, message: '请填写正确的身份号'
                   }]
@@ -433,7 +432,7 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>手机</span>}
               >
                 {getFieldDecorator('fPhone1', {
-                  initialValue: '',
+                  initialValue: data.tlo1phone ? data.tlo1phone : '',
                   rules: [{
                     pattern: VER_PHONE, message: '请填写正确的手机号'
                   }]
@@ -449,7 +448,7 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>社会关系</span>}
               >
                 {getFieldDecorator('fRelation1', {
-                  initialValue: '',
+                  initialValue: data.tlo1relation ? data.tlo1relation : '',
                 })(<Input id="fRelation1" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
@@ -463,7 +462,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>（商业伙伴）姓名</span>}
             >
               {getFieldDecorator('fName2', {
-                initialValue: '',
+                initialValue: data.tlo2Name ? data.tlo2Name : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -475,7 +474,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>身份证号</span>}
             >
               {getFieldDecorator('fIdcardNo2', {
-                initialValue: '',
+                initialValue: data.tlo2Idcard ? data.tlo2Idcard : '',
                 rules: [{
                   pattern: ID_CORD, message: '请填写正确的身份号'
                 }]
@@ -489,7 +488,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>手机</span>}
             >
               {getFieldDecorator('fPhone2', {
-                initialValue: '',
+                initialValue: data.tlo2phone ? data.tlo2phone : '',
                 rules: [{
                   pattern: VER_PHONE, message: '请填写正确的手机号'
                 }]
@@ -502,7 +501,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>社会关系</span>}
             >
               {getFieldDecorator('fRelation2', {
-                initialValue: '',
+                initialValue: data.tlo2relation ? data.tlo2relation : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -516,7 +515,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>（朋友）姓名</span>}
             >
               {getFieldDecorator('fName3', {
-                initialValue: '',
+                initialValue: data.tlo3Name ? data.tlo3Name : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
@@ -528,7 +527,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>身份证号</span>}
             >
               {getFieldDecorator('fIdcardNo3', {
-                initialValue: '',
+                initialValue: data.tlo3Idcard ? data.tlo3Idcard : '',
                 rules: [{
                   pattern: ID_CORD, message: '请填写正确的身份号'
                 }]
@@ -542,7 +541,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>手机</span>}
             >
               {getFieldDecorator('fPhone3', {
-                initialValue: '',
+                initialValue: data.tlo3phone ? data.tlo3phone : '',
                 rules: [{
                   pattern: VER_PHONE, message: '请填写正确的手机号'
                 }]
@@ -555,7 +554,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>社会关系</span>}
             >
               {getFieldDecorator('fRelation3', {
-                initialValue: '',
+                initialValue: data.tlo3relation ? data.tlo3relation : '',
                 rules: []
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>

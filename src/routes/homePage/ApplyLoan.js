@@ -26,7 +26,8 @@ export default class ApplyLoan extends React.Component {
       dateCode: 'error',
       fProjectNo: 'error',
       fid: '',
-      beforeData: {}
+      beforeData: {},
+      complete: false
     };
   }
   componentDidMount() {
@@ -40,8 +41,14 @@ export default class ApplyLoan extends React.Component {
       const response = await getLoanInfo();
       this.setState({loadingState: false});
       console.log(response);
+      let dateCode = 'error';
+      if (response.data) {
+        dateCode = moment(response.data.fcreate_time).format('YYYY') + moment(response.data.fcreate_time).format('MM');
+      }
       if (response.code === 0) {
         this.setState({
+          dateCode: dateCode,
+          fProjectNo: response.data ? response.data.fproject_no : 'error',
           fid: response.data ? response.data.projectId : '',
           beforeData: response.data ? response.data : {}
         })
@@ -53,9 +60,6 @@ export default class ApplyLoan extends React.Component {
       message.error('网络异常');
       this.setState({loadingState: false});
     }
-
-
-
   }
 
   componentWillReceiveProps() {
@@ -70,22 +74,26 @@ export default class ApplyLoan extends React.Component {
     if (this.state.pageNum === 1) {
       this.setState({
         savePage: page,
-        loanInfoCommit: this.state.loanInfoCommit + 1
+        loanInfoCommit: this.state.loanInfoCommit + 1,
+        complete: false
       });
     } else if (this.state.pageNum === 2) {
       this.setState({
         savePage: page,
-        loanPersonCommit: this.state.loanPersonCommit + 1
+        loanPersonCommit: this.state.loanPersonCommit + 1,
+        complete: false
       });
     } else if (this.state.pageNum === 3) {
       this.setState({
         savePage: page,
-        loanCompanyCommit: this.state.loanCompanyCommit + 1
+        loanCompanyCommit: this.state.loanCompanyCommit + 1,
+        complete: false
       });
     } else {
       this.setState({
         savePage: page,
-        loanProjectCommit: this.state.loanProjectCommit + 1
+        loanProjectCommit: this.state.loanProjectCommit + 1,
+        complete: false
       });
     }
   }
@@ -94,35 +102,39 @@ export default class ApplyLoan extends React.Component {
     if (this.state.pageNum === 1) {
       this.setState({
         savePage: 2,
-        loanInfoCommit: this.state.loanInfoCommit + 1
+        loanInfoCommit: this.state.loanInfoCommit + 1,
+        complete: false
       });
     } else if (this.state.pageNum === 2) {
       this.setState({
         savePage: 3,
-        loanPersonCommit: this.state.loanPersonCommit + 1
+        loanPersonCommit: this.state.loanPersonCommit + 1,
+        complete: false
       });
     } else if (this.state.pageNum === 3) {
       this.setState({
         savePage: 4,
-        loanCompanyCommit: this.state.loanCompanyCommit + 1
+        loanCompanyCommit: this.state.loanCompanyCommit + 1,
+        complete: false
       });
     } else {
       // 完成的处理
       this.setState({
-        loanProjectCommit: this.state.loanProjectCommit + 1
+        loanProjectCommit: this.state.loanProjectCommit + 1,
+        complete: true
       });
     }
   }
 
   // 切换页面
-  async switchPage(err, data, page) {
-    console.log(err, data, page);
+  async switchPage(err, data, page, type) {
+    console.log('-------------', err, data, page, type);
     console.log(JSON.stringify(data));
     if (!err) {
       // this.setState({
       //   pageNum: this.state.savePage,
       // });
-      if (page!==4) {
+      if (!type) {
         // 提交 1 2 3 页的数据接口
         try {
           this.setState({loadingState: true});
@@ -132,7 +144,6 @@ export default class ApplyLoan extends React.Component {
           if (response.code === 0) {
             if (page === 1 && this.state.dateCode === 'error') {
               const dateCode = moment(response.data.project.fCreateTime).format('YYYY') + moment(response.data.project.fCreateTime).format('MM');
-              console.log(dateCode);
               this.setState({
                 fProjectNo: response.data.project.fProjectNo,
                 fid: response.data.project.fId,
@@ -142,6 +153,7 @@ export default class ApplyLoan extends React.Component {
             this.setState({
               pageNum: this.state.savePage,
             });
+            $(window).scrollTop(100);
           } else {
             message.error(response.msg);
           }
@@ -149,7 +161,8 @@ export default class ApplyLoan extends React.Component {
           this.setState({loadingState: false});
           message.error('网络异常');
         }
-      } else {
+      }
+      if (type) {
         if (!this.judgeValue()) {
           return;
         }
@@ -160,6 +173,7 @@ export default class ApplyLoan extends React.Component {
           if (response.code === 0) {
             message.info('完成');
             this.props.history.push('/index/projectLoan');
+            $(window).scrollTop(0);
           } else {
             message.error(response.msg);
           }
@@ -186,7 +200,7 @@ export default class ApplyLoan extends React.Component {
       message.error('借款信息中借款期数不能为空');
       return false;
     }
-    if (!$("#personalName").val()) {
+    if (!$("#fName").val()) {
       message.error('借款人信息中姓名不能为空');
       return false;
     }
@@ -210,7 +224,7 @@ export default class ApplyLoan extends React.Component {
       message.error('借款人信息中第一联系人社会关系不能为空');
       return false;
     }
-    if (!$("#companyName").val()) {
+    if (!$("#fname").val()) {
       message.error('借款企业信息中公司名称不能为空');
       return false;
     }
@@ -230,7 +244,7 @@ export default class ApplyLoan extends React.Component {
       message.error('借款企业信息中实际经营地址不能为空');
       return false;
     }
-    if (!$("#projectName").val()) {
+    if (!$("#fNames").val()) {
       message.error('借款项目中项目名称不能为空');
       return false;
     }
@@ -239,7 +253,7 @@ export default class ApplyLoan extends React.Component {
 
   render() {
     console.log(this.props);
-    const {pageNum,dateCode,fProjectNo, fid, beforeData } = this.state;
+    const {pageNum,dateCode,fProjectNo, fid, beforeData, complete } = this.state;
     return (
       <div className="body1">
 
@@ -253,10 +267,10 @@ export default class ApplyLoan extends React.Component {
             </div>
             <div className="apply-form shadow" >
               <h2><i>借款信息</i></h2>
-              <ApplyInfo data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanInfoCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyPerson data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanPersonCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyCompany data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanCompanyCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
-              <ApplyProject data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanProjectCommit} switchPage={(err,data,page)=>this.switchPage(err,data,page)} pageNum={this.state.pageNum}/>
+              <ApplyInfo data={beforeData}  dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanInfoCommit} switchPage={(err,data,page,type)=>this.switchPage(err,data,page,type)} pageNum={this.state.pageNum}/>
+              <ApplyPerson data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanPersonCommit} switchPage={(err,data,page,type)=>this.switchPage(err,data,page,type)} pageNum={this.state.pageNum}/>
+              <ApplyCompany data={beforeData} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanCompanyCommit} switchPage={(err,data,page,type)=>this.switchPage(err,data,page,type)} pageNum={this.state.pageNum}/>
+              <ApplyProject data={beforeData} complete={complete} dateCode={dateCode} fProjectNo={fProjectNo} fid={fid} commit={this.state.loanProjectCommit} switchPage={(err,data,page,type)=>this.switchPage(err,data,page,type)} pageNum={this.state.pageNum}/>
               <div className="bot center">
                 <i><a className="btn f16" onClick={() => this.submit()}>{this.state.pageNum===4?'完成': '下一步'}</a></i>
               </div>

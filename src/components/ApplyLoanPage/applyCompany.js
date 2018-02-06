@@ -208,7 +208,7 @@ class Forms extends React.Component {
                   {getFieldDecorator('fname', {
                     initialValue: data.companyName ? data.companyName : '',
                     rules: []
-                  })(<Input id="companyName" style={styles.inputHeight} maxLength={'50'}/>)}
+                  })(<Input id="fname" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>
             </Col>

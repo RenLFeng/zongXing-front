@@ -97,7 +97,7 @@ class Forms extends React.Component {
           console.log('表单提交的数据');
           const data = {
             project: {
-              fName: values.fName,
+              fName: values.fNames,
               fId: this.props.fid
             },
             projectInfo: {
@@ -112,7 +112,7 @@ class Forms extends React.Component {
             myProjectDesc: values.myProjectDesc,
             readmeDesc: values.readmeDesc
           };
-          this.props.switchPage(err, data, 2);
+          this.props.switchPage(err, data, 2, nextProps.complete);
         } else {
           this.props.switchPage(err);
         }
@@ -189,10 +189,10 @@ class Forms extends React.Component {
                 {...formItemLayout}
                 label={<span style={styles.label}>项目名称</span>}
               >
-                {getFieldDecorator('fName', {
+                {getFieldDecorator('fNames', {
                   initialValue: data.projectName ? data.projectName : '',
                   rules: []
-                })(<Input id="projectName" style={styles.inputHeight} maxLength={'50'}/>)}
+                })(<Input id="fNames" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>
             </div>
           </Col>
