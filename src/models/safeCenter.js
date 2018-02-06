@@ -4,7 +4,7 @@ export default {
   namespace: 'safeCenter',
   state: {
     safeData: {
-      securityCenter: {}
+      userSecurityCenter: {}
     },
     safeDataLoading: false
   },
@@ -16,6 +16,7 @@ export default {
       });
       try {
         const response = yield call(getSafeData);
+        console.log(response);
         if (response.code === 0) {
           yield put({
             type: 'endSafeData',
@@ -25,7 +26,7 @@ export default {
           yield put({
             type: 'endSafeData',
             payload: {
-              securityCenter: {}
+              userSecurityCenter: {}
             }
           });
         }
@@ -36,7 +37,7 @@ export default {
         yield put({
           type: 'endSafeData',
           payload: {
-            securityCenter: {}
+            userSecurityCenter: {}
           }
         });
       }
