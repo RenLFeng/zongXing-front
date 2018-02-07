@@ -2,9 +2,9 @@ import React from 'react';
 import '../../assets/personal/personal.scss';
 import { Icon, Form, Modal, Input, message, Row, Col, Button} from 'antd';
 import { Link } from 'dva/router';
-import {AUTH_CODE_TIME, ID_CORD, VER_PHONE} from '../../common/systemParam';
+import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE} from '../../common/systemParam';
 import { connect } from 'dva';
-import { getEmailAuth, getOldPhoneCode } from '../../services/api';
+import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode} from '../../services/api';
 import Path from '../../common/pagePath';
 
 
@@ -29,16 +29,24 @@ export default class SafeCenter extends React.Component {
       nameAuth: false,
       phoneAuth: false,
       emailAuth: false,
-
+      loading:false,
+      showAuthCode: true,//显示获取验证码的接口
+      regPhone: '', //注册手机号
       token_:'',
-      countDown: AUTH_CODE_TIME,  //获取验证码倒计时
-      regPhone:'',
+      countDown: AUTH_CODE_TIME_,  //获取验证码倒计时
+      changePhoneAuth: false,
+
+      fmobile:'',
+      authcode:'',
     }
+    this.countDownFun = null;
   }
 
   componentDidMount() {
     this.initFetchSafeData();
-    this.getOldCode(this.token_);
+    if (this.countDownFun) {
+      clearInterval(this.countDownFun);
+    }
   }
 
   // 初始化安全中心首页数据
@@ -52,11 +60,13 @@ export default class SafeCenter extends React.Component {
     this.setState({
       nameAuth: false,
       phoneAuth: false,
-      emailAuth: false
+      emailAuth: false,
+      changePhoneAuthForm:false,
     });
     this.nameForm.resetFields();
     this.phoneForm.resetFields();
     this.emailForm.resetFields();
+    this.changePhoneAuthForm.resetFields();
   };
   //提交 实名认证
   changeNameAuth = () => {
@@ -78,7 +88,8 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      const response = await getEmailAuth();
+      console.log(values);
+      const response = await getOldCode(values.captcha);
       if (response.code === 0) {
         console.log('手机号认证数据: ', values);
         form.resetFields();
@@ -89,17 +100,78 @@ export default class SafeCenter extends React.Component {
     });
   };
 
-//旧手机号获取验证码
+//获取旧手机号验证码
   async getOldCode(data) {
-    const response = await getOldPhoneCode(data);
-    console.log(response);
-    if(response.code ===0) {
-      this.setState({
-        token_: response.token,
-      })
-    } else{
-      message.error(response.msg);
+    const { regPhone } = this.state;
+    this.setState({loading:true});
+    try{
+      const response = await getOldPhoneCode(data);
+      this.setState({loading:false});
+      console.log(response);
+      if(response.code ===0) {
+        this.setState({
+          token_: response.token,
+        })
+      } else{
+        // clearInterval(this.countDownFun);
+        // this.setState({
+        //   showAuthCode: false ,
+        //   countDown: AUTH_CODE_TIME_,
+        //   showAuthCode: true
+        // });
+        message.error(response.msg);
+      }
+    } catch(e){
+      this.setState({loading:false});
+      if (typeof e === 'object' && e.name === 288) {
+        throw e;
+      }
     }
+    const sendTime = localStorage.getItem(regPhone);
+    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
+      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
+      return;
+    }
+    localStorage.setItem(regPhone, new Date().getTime());
+    //发送请求 按钮变不可点状态
+    this.setState({ showAuthCode: false });
+    //成功之后倒计时开始启动
+    this.countDownFun = setInterval(() => {
+      if (this.state.countDown === 0) {
+        clearInterval(this.countDownFun);
+        this.setState({ countDown: AUTH_CODE_TIME_, showAuthCode: true });
+      } else {
+        this.setState({ countDown: this.state.countDown - 1 });
+      }
+    }, 1000);
+  }
+
+  //提交修改后的手机
+  changePhoneAuth_ = () => {
+    const form = this.changePhoneAuthForm;
+    form.validateFields( async (err, values) => {
+      if (err) {
+        return;
+      }
+      const response = await changePhoneNum(values);
+      console.log(response);
+      if (response.code === 0) {
+        this.setState({
+          fmobile:response.fmobile,
+          authcode:response.authcode
+        })
+        console.log('手机号认证数据: ', values);
+        form.resetFields();
+        this.handleCancel();
+      } else {
+        message.error(response.msg);
+      }
+    });
+  };
+
+  //获取新手机号验证码
+  async getNewCode_() {
+
   }
 
 
@@ -164,12 +236,28 @@ export default class SafeCenter extends React.Component {
             visible={this.state.phoneAuth}
             onCancel={this.handleCancel}
             onCreate={this.changePhoneAuth}
+            token_={this.state.token_}
+            getOldCode={()=> this.getOldCode(this.state.token_)}
+            loading={this.state.loading}
+            countDown={this.state.countDown}
+            showAuthCode={this.state.showAuthCode}
           />
           <EmailAuth
             ref={(ref)=>this.emailForm = ref}
             visible={this.state.emailAuth}
             onCancel={this.handleCancel}
             onCreate={this.changeEmailAuth}
+          />
+          <changePhoneAuth
+            ref={(ref)=>this.changePhoneAuthForm = ref}
+            visible={this.state.changePhoneAuth}
+            onCancel={this.handleCancel}
+            onCreate={this.changePhoneAuth_}
+            // token_={this.state.token_}
+            // getNewCode={()=> this.getNewCode_(moboile)}
+            // loading={this.state.loading}
+            // countDown={this.state.countDown}
+            // showAuthCode={this.state.showAuthCode}
           />
         </div>
       </div>
@@ -227,7 +315,6 @@ const PhoneAuth = Form.create()(
   (props) => {
     const { visible, onCancel, onCreate, form ,token_} = props;
     const { getFieldDecorator } = form;
-    // const {countDown} = this.state;
     return (
       <Modal
         visible={visible}
@@ -238,11 +325,63 @@ const PhoneAuth = Form.create()(
         onOk={onCreate}
       >
         <Form layout="vertical">
-          <FormItem {...formItemLayout} label="手机号">
-            {getFieldDecorator('title', {
-              rules: [{ required: true, message: '手机号不能为空' },
-                {pattern: VER_PHONE, message: '手机号格式不正确'}],
-            })(<Input />)}
+          {/*<FormItem {...formItemLayout} label="手机号">*/}
+            {/*{getFieldDecorator('title', {*/}
+              {/*rules: [{ required: true, message: '手机号不能为空' },*/}
+                {/*{pattern: VER_PHONE, message: '手机号格式不正确'}],*/}
+            {/*})(<Input />)}*/}
+          {/*</FormItem>*/}
+          <FormItem
+            {...formItemLayout}
+            label="验证码"
+          >
+            <Row gutter={8}>
+              <Col span={12}>
+                {getFieldDecorator('captcha', {
+                  rules: [{ required: true, message: '验证码不能为空' }],
+                })(
+                  <Input />
+                )}
+              </Col>
+              <Col span={12}>
+                  {
+                    props.showAuthCode ? <Button onClick={()=> props.getOldCode()}>获取验证码</Button> :
+                      <Button loading={props.loading}>
+                        {props.countDown}s获取验证码
+                    </Button>
+                  }
+                {
+                  props.showAuthCode ? null :
+                    <p>验证码已发送到手机,请注意查收!</p>
+                }
+              </Col>
+            </Row>
+          </FormItem>
+        </Form>
+      </Modal>
+    );
+  }
+);
+
+const changePhoneAuth = Form.create()(
+  (props) => {
+    const { visible, onCancel, onCreate, form ,token_} = props;
+    const { getFieldDecorator } = form;
+    return (
+      <Modal
+        visible={visible}
+        title="手机绑定"
+        okText="提交"
+        cancelText="取消"
+        onCancel={onCancel}
+        onOk={onCreate}
+      >
+        <Form layout="vertical">
+          <FormItem {...formItemLayout} label="新手机号">
+          {getFieldDecorator('title', {
+          rules: [{ required: true, message: '手机号不能为空' },
+          {pattern: VER_PHONE, message: '手机号格式不正确'}],
+          })(<Input />)}
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -257,7 +396,16 @@ const PhoneAuth = Form.create()(
                 )}
               </Col>
               <Col span={12}>
-                <Button >获取验证码</Button>
+                {
+                  props.showAuthCode ? <Button onClick={()=> props.getNewCode()}>获取验证码</Button> :
+                    <Button loading={props.loading}>
+                      {props.countDown}s获取验证码
+                    </Button>
+                }
+                {
+                  props.showAuthCode ? null :
+                    <p>验证码已发送到手机,请注意查收!</p>
+                }
               </Col>
             </Row>
           </FormItem>
@@ -265,7 +413,7 @@ const PhoneAuth = Form.create()(
       </Modal>
     );
   }
-);
+)
 // 邮箱绑定
 const EmailAuth = Form.create()(
   (props) => {
