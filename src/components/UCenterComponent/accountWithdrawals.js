@@ -34,7 +34,7 @@ class EnterprisePresentation extends React.Component {
     super(props);
     this.state = {
       // accountId:this.props.location.state ? this.props.location.state.account: '',
-      accountId: '402881d4612743710161276b8a3c0000',
+      accountId: '',
       bankCodes: [],   //银行列表
       bankInfos: [],   //银行信息
       provinces: [],   //省份列表
@@ -58,7 +58,12 @@ class EnterprisePresentation extends React.Component {
   componentDidMount() {
     // 获取跳转类型 0：个人 1：企业
     // console.log(this.props.match.params.type)
-    this.getCardInformation(this.state.accountId);
+    this.setState({
+      accountId: this.props.location.state ? this.props.location.state.account : ''
+    });
+    if (this.props.location.state) {
+      this.getCardInformation(this.props.location.state.account);
+    }
   }
 
   //获取银行卡
@@ -319,7 +324,8 @@ class EnterprisePresentation extends React.Component {
             })(<Input.TextArea maxLength={'200'}/>)}
           </FormItem>
           <FormItem {...btnLayout}>
-            <Button id="button_" style={{width: '200px', margin: 'auto'}} type="primary" htmlType="submit" loading={this.state.loading}>
+            <Button id="button_" style={{width: '200px', margin: 'auto'}} type="primary" htmlType="submit" loading={this.state.loading}
+                    disabled={this.state.accountId.length === 0}>
               提交
             </Button>
           </FormItem>

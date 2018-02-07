@@ -8,7 +8,7 @@ export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59';
 
 // 获取图片签名token
 export async function getAuth({method, pathname}) {
-  return request(`${BASE_URL}/zjb-base/cos/sign?method=${method}&pathname=${pathname}`);
+  return request(`${BASE_URL}/zjb-website/common/sign?method=${method}&pathname=${pathname}`);
 }
 
 export async function userLogin(param) {
@@ -349,3 +349,9 @@ export async function changePhoneNum(params) {
 export async function getNewCode(param) {
   return request(`${BASE_URL}/zjb-website/securityCenter/sendMessage/${param}`)
 }
+
+// 判断用户名是否重复
+export async function getJudgeUserName(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/checkLoginName/${param}`)
+}
+

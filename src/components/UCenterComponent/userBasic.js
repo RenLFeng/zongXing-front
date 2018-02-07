@@ -6,6 +6,7 @@ import moment from 'moment';
 import { connect } from 'dva';
 import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD} from '../../common/systemParam';
 import {city} from '../../common/cityData';
+import { getJudgeUserName } from '../../services/api';
 
 const formItemLayout = {
   labelCol: {
@@ -36,6 +37,7 @@ class UserBaseFormInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -51,6 +53,15 @@ class UserBaseFormInput extends React.Component {
       this.props.param.dispatch({
         type: 'userData/getUserBase'
       });
+    }
+  }
+
+  async judgeUserName(e) {
+    const response = await getJudgeUserName(e.target.value.trim());
+    if (response.code === 0 ) {
+      this.setState({error: false});
+    } else {
+      this.setState({error: true});
     }
   }
 
@@ -122,11 +133,12 @@ class UserBaseFormInput extends React.Component {
           {...formItemLayout}
           label="用户名"
           extra="用户名填写之后不可改!"
+          help={this.state.error ? <span style={{color: 'red'}}>用户名已存在</span> : null}
         >
           {getFieldDecorator('floginName', {
             rules:[{pattern: USER_REG, message: '用户名格式应为2到16位(可用字母，数字，下划线，减号)'}],
             initialValue: userBase.flogin_name?userBase.flogin_name: null
-          })(<Input maxLength={'20'} disabled={!!userBase.flogin_name}/>)}
+          })(<Input maxLength={'20'} disabled={!!userBase.flogin_name} onBlur={(e)=>this.judgeUserName(e)}/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}

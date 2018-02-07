@@ -246,11 +246,11 @@ export default class PersonAccount extends React.Component {
     this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {account:accoundId}})
   };
   jumpRecharge_(accoundId) {
+    console.log(accoundId);
     this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
   };
 
   render() {
-    console.log(this.props.personal);
     if (!this.props.personal.totalAssets.accountId) {
       return (
         <div className="fr uc-rbody">
