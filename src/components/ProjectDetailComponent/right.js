@@ -110,11 +110,11 @@ export default class Right extends React.Component {
             <p>投资具有一定风险，参与计划的人士应为风险识别、评估、承受能力较强的合格投资者。请确认您或您所代表的机构是一名“合格投资者”，并将遵守适用的有关法规。</p>
             <p>本网站所载的各种信息和数据等仅供参考，并不构成销售要约，或买入项目或其它投资工具的建议。投资者应仔细审阅相关金融产品的合同文件等以了解其风险因素，或寻求专业的投资顾问的建议。不承诺保本和最低收益，具有一定的投资风险。投资者的本金可能会因市场变动而蒙受损失，请投资者充分认识投资风险，谨慎投资。</p>
           </div>
-          <p className="center bot1">
+          <div className="center bot1">
             <p>
               <Button loading={this.state.loading} type="primary" style={{width: 150, height: 40}}  onClick={()=>this.getPersonalMoney()}>我要投资</Button>
             </p>
-          </p>
+          </div>
           <p className="center bot2">
             <a className="like">23</a>
             <i className="share">

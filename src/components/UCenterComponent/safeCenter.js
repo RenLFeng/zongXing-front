@@ -5,6 +5,7 @@ import { Link } from 'dva/router';
 import { ID_CORD, VER_PHONE } from '../../common/systemParam';
 import { connect } from 'dva';
 import { getEmailAuth } from '../../services/api';
+import Path from '../../common/pagePath';
 
 @connect((state)=>({
   safeData: state.safeCenter.safeData,
@@ -36,7 +37,10 @@ export default class SafeCenter extends React.Component {
       nameAuth: false,
       phoneAuth: false,
       emailAuth: false
-    })
+    });
+    this.nameForm.resetFields();
+    this.phoneForm.resetFields();
+    this.emailForm.resetFields();
   };
   //提交 实名认证
   changeNameAuth = () => {
@@ -95,33 +99,27 @@ export default class SafeCenter extends React.Component {
         <div className="safeCenter">
           <div className="tab-row">
             <div><span>实名认证</span></div>
-            <div>{!!safeData.securityCenter.fCertification?<SuccessAuth/>:<FailAuth/>}</div>
+            <div>{!!safeData.userSecurityCenter.fCertification?<SuccessAuth/>:<FailAuth/>}</div>
             <div><span>{safeData.fRealName? safeData.fRealName: ''} {safeData.fIdcardNo?`(${safeData.fIdcardNo})`: null}</span></div>
-            <div><a onClick={()=>this.setState({nameAuth: true})}>认证</a></div>
+            <div>{!!safeData.userSecurityCenter.fCertification?null:<Link to={Path.OPEN_ACCOUNT+'/0'}>认证</Link>}</div>
           </div>
           <div className="tab-row">
             <div><span>第三方开户</span></div>
-            <div>{!!safeData.securityCenter.fThirdAccount?<SuccessAuth/>:<FailAuth/>}</div>
+            <div>{!!safeData.userSecurityCenter.fThirdAccount?<SuccessAuth/>:<FailAuth/>}</div>
             <div><span>{safeData.fThirdAccountName?safeData.fThirdAccountName: ''}</span></div>
-            <div><Link to={`/personal`}>开通</Link></div>
+            <div>{!!safeData.userSecurityCenter.fThirdAccount?null:<Link to={Path.OPEN_ACCOUNT+'/0'}>开通</Link>}</div>
           </div>
           <div className="tab-row">
             <div><span>手机绑定</span></div>
-            <div>{!!safeData.securityCenter.fMobileBinding?<SuccessAuth/>:<FailAuth/>}</div>
+            <div>{!!safeData.userSecurityCenter.fMobileBinding?<SuccessAuth/>:<FailAuth/>}</div>
             <div><span>{safeData.fMobile? safeData.fMobile: ''}</span></div>
             <div><a onClick={()=>this.setState({phoneAuth: true})}>修改</a></div>
           </div>
           <div className="tab-row">
             <div><span>邮箱绑定</span></div>
-            <div>{!!safeData.securityCenter.fEmailBinding?<SuccessAuth/>:<FailAuth/>}</div>
+            <div>{!!safeData.userSecurityCenter.fEmailBinding?<SuccessAuth/>:<FailAuth/>}</div>
             <div><span>{safeData.fEmail? safeData.fEmail: ''}</span></div>
             <div><a onClick={()=>this.setState({emailAuth: true})}>修改</a></div>
-          </div>
-          <div className="tab-row" style={{borderBottom:'1px solid #F5F5F5'}}>
-            <div><span>银行卡绑定</span></div>
-            <div>{!!safeData.securityCenter.fBankCardBinding?<SuccessAuth/>:<FailAuth/>}</div>
-            <div/>
-            <div><Link to={'/personal/bankCard'}>银行卡管理</Link></div>
           </div>
           <NameAuth
             ref={(ref)=>this.nameForm = ref}

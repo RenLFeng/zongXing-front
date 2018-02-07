@@ -34,8 +34,7 @@ export default class SecLoan extends React.Component {
 
           <div className="textbox border">
             <i className="tit">我的自述</i>
-            <p>{project.readme}
-            </p>
+            <p>{project.readme}</p>
           </div>
           {project.fmy_project_pic ? project.fmy_project_pic.split(',').map((data, index)=>{
             return (
@@ -63,19 +62,16 @@ export default class SecLoan extends React.Component {
           </div>
           <div className="textbox border">
             <i className="tit">我的项目</i>
-            <p>{project.myproject}
-            </p>
+            <p>{project.myproject}</p>
           </div>
           <Images project={project}/>
           <div className="textbox border">
             <i className="tit">为何众借</i>
-            <p>{project.fwhy_loan}
-            </p>
+            <p>{project.fwhy_loan}</p>
           </div>
           <div className="textbox border">
             <i className="tit">还款计划</i>
-            <p>{project.fpay_from}
-            </p>
+            <p>{project.fpay_from}</p>
           </div>
           <div className="textbox border">
             <i className="tit">我的位置</i>
