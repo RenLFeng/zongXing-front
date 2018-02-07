@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Link,Switch,Route} from 'dva/router';
 export default class Footer extends React.Component {
   render() {
     return (
@@ -21,24 +21,36 @@ export default class Footer extends React.Component {
             <div className="fl col2">
               <p className="hd"/>
               <ul>
-                <li className="tit"><a href="">公司</a></li>
-                <li><a href="">公司介绍</a></li>
-                <li><a href="">合作伙伴</a></li>
-                <li><a href="">专业导师</a></li>
-                <li><a href="">其他</a></li>
+                <li className="tit"><Link  to={`/infor/organizationInformation`}>信息披露</Link></li>
+                <li><Link  to={`/infor/recordInformation`}>备案信息</Link></li>
+                <li><Link  to={`/infor/organizationInformation`}>组织信息</Link></li>
+                <li><Link  to={`/infor/auditInformation`}>审核信息</Link></li>
+                <li><Link  to={`/infor/businessInformation`}>经营信息</Link></li>
+                <li><Link  to={`/infor/projectInformation`}>项目信息</Link></li>
               </ul>
               <ul>
-                <li className="tit"><a href="">资源</a></li>
-                <li><a href="">常见问题</a></li>
-                <li><a href="">成功故事</a></li>
-                <li><a href="">统计</a></li>
-                <li><a href="">行业报道</a></li>
+                <li className="tit"><Link  to={`/infor/auditInformation`}>法律法务</Link></li>
+                <li><Link  to={`/infor/platformNotice`}>法律法规</Link></li>
+                <li><Link  to={`/infor/platformNotice`}>法务支持</Link></li>
+                <li><Link  to={`/infor/platformNotice`}>风险控制</Link></li>
+                <li><Link  to={`/infor/platformNotice`}>安全保障</Link></li>
+                <li><Link  to={`/infor/platformNotice`}>服务条款</Link></li>
               </ul>
               <ul>
-                <li className="tit"><a href="">法律</a></li>
-                <li><a href="">法律法规</a></li>
-                <li><a href="">服务条款</a></li>
-                <li><a href="">安全保障</a></li>
+                <li className="tit"><Link  to={`/infor/platformNotice`}>关于我们</Link></li>
+                <li><Link  to={`/infor/platformNotice`}>公司介绍</Link></li>
+                <li><Link  to={`/infor/newsReports`}>管理团队</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>企业愿景</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>服务理念</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>联系我们</Link></li>
+              </ul>
+              <ul>
+                <li className="tit"><Link  to={`/infor/platformNotice`}>关于我们</Link></li>
+                <li><Link  to={`/infor/platformNotice`}>公司介绍</Link></li>
+                <li><Link  to={`/infor/newsReports`}>管理团队</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>企业愿景</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>服务理念</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>联系我们</Link></li>
               </ul>
             </div>
             <div className="fr col3">
