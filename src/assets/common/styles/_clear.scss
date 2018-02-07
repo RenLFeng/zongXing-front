@@ -12,6 +12,14 @@ img {
     border: none;
 }
 
+.autosize{
+  img{
+    width:100%;
+    height:100%;
+  }
+}
+
+
 input,a {
     outline: 0;
     text-decoration: none;
