@@ -210,6 +210,7 @@ const PhoneAuth = Form.create()(
                 {pattern: VER_PHONE, message: '手机号格式不正确'}],
             })(<Input />)}
           </FormItem>
+
         </Form>
       </Modal>
     );

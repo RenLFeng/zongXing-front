@@ -211,11 +211,11 @@ class EnterprisePresentation extends React.Component {
           <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />
           <input id="OrderNo" name="OrderNo" value={withdrawals.orderNo} />
           <input id="Amount" name="Amount" value={withdrawals.amount} />
-          <input id="FeeQuota" name="FeeQuota" value={withdrawals.feeQuota} />
+          <input id="FeeQuota" name="FeeQuota" value={withdrawals.feeQuota?withdrawals.feeQuota: ''} />
           <input id="CardNo" name="CardNo" value={withdrawals.cardNo} />
           <input id="CardType" name="CardType" value={withdrawals.cardType} />
           <input id="BankCode" name="BankCode" value={withdrawals.bankCode} />
-          <input id="BranchBankName" name="BranchBankName" value={withdrawals.branchBankName} />
+          <input id="BranchBankName" name="BranchBankName" value={withdrawals.branchBankName ? withdrawals.branchBankName : ''} />
           <input id="Province" name="Province" value={withdrawals.province} />
           <input id="City" name="City" value={withdrawals.city} />
           <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={withdrawals.platformMoneymoremore} />
@@ -223,8 +223,8 @@ class EnterprisePresentation extends React.Component {
           <input id="ReturnURL" name="ReturnURL" value={withdrawals.returnURL} />
           <input id="NotifyURL" name="NotifyURL" value={withdrawals.notifyURL} />
           <input id="Remark1" name="Remark1" value={withdrawals.remark1} />
-          <input id="Remark2" name="Remark2" value={withdrawals.remark2}/>
-          <input id="Remark3" name="Remark3" value={withdrawals.remark3} />
+          <input id="Remark2" name="Remark2" value={withdrawals.remark2 ? withdrawals.remark2 : ''}/>
+          <input id="Remark3" name="Remark3" value={withdrawals.remark3 ? withdrawals.remark3 : ''} />
         </form>
 
         <Form layout="inline" onSubmit={this.handleSubmit}>
