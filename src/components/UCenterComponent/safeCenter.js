@@ -1,12 +1,23 @@
 import React from 'react';
 import '../../assets/personal/personal.scss';
-import { Icon, Form, Modal, Input, message } from 'antd';
+import { Icon, Form, Modal, Input, message, Row, Col, Button} from 'antd';
 import { Link } from 'dva/router';
-import { ID_CORD, VER_PHONE } from '../../common/systemParam';
+import {AUTH_CODE_TIME, ID_CORD, VER_PHONE} from '../../common/systemParam';
 import { connect } from 'dva';
 import { getEmailAuth } from '../../services/api';
 import Path from '../../common/pagePath';
 
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 4 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 14},
+  },
+};
 @connect((state)=>({
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading
@@ -17,7 +28,9 @@ export default class SafeCenter extends React.Component {
     this.state = {
       nameAuth: false,
       phoneAuth: false,
-      emailAuth: false
+      emailAuth: false,
+      countDown: AUTH_CODE_TIME,  //获取验证码倒计时
+      regPhone:'',
     }
   }
 
@@ -73,6 +86,11 @@ export default class SafeCenter extends React.Component {
     });
   };
 
+
+  async getCode() {
+    const { regPhone } = this.state;
+  }
+
   //提交 邮箱绑定
   changeEmailAuth = () => {
     const form = this.emailForm;
@@ -91,6 +109,8 @@ export default class SafeCenter extends React.Component {
       }
     });
   };
+
+
 
   render() {
     const {match, safeData} = this.props;
@@ -194,6 +214,7 @@ const PhoneAuth = Form.create()(
   (props) => {
     const { visible, onCancel, onCreate, form } = props;
     const { getFieldDecorator } = form;
+    const {countDown} = this.state;
     return (
       <Modal
         visible={visible}
@@ -204,13 +225,29 @@ const PhoneAuth = Form.create()(
         onOk={onCreate}
       >
         <Form layout="vertical">
-          <FormItem label="手机号">
+          <FormItem {...formItemLayout} label="手机号">
             {getFieldDecorator('title', {
               rules: [{ required: true, message: '手机号不能为空' },
                 {pattern: VER_PHONE, message: '手机号格式不正确'}],
             })(<Input />)}
           </FormItem>
-
+          <FormItem
+            {...formItemLayout}
+            label="验证码"
+          >
+            <Row gutter={8}>
+              <Col span={12}>
+                {getFieldDecorator('captcha', {
+                  rules: [{ required: true, message: '验证码不能为空' }],
+                })(
+                  <Input />
+                )}
+              </Col>
+              <Col span={12}>
+                <Button onClick={()=> this.getCode()}>{countDown}获取验证码</Button>
+              </Col>
+            </Row>
+          </FormItem>
         </Form>
       </Modal>
     );

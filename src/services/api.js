@@ -321,3 +321,6 @@ export async function getEmailAuth(param) {
 export async function getCityCode(param) {
   return request(`${BASE_URL}/zjb-website/apply/getCity`)
 }
+
+//安全中心 修改手机号接口
+export async function getPhone() 
