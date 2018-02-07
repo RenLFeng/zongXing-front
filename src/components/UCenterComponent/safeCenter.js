@@ -4,7 +4,7 @@ import { Icon, Form, Modal, Input, message, Row, Col, Button} from 'antd';
 import { Link } from 'dva/router';
 import {AUTH_CODE_TIME, ID_CORD, VER_PHONE} from '../../common/systemParam';
 import { connect } from 'dva';
-import { getEmailAuth } from '../../services/api';
+import { getEmailAuth, getOldPhoneCode } from '../../services/api';
 import Path from '../../common/pagePath';
 
 
@@ -29,6 +29,8 @@ export default class SafeCenter extends React.Component {
       nameAuth: false,
       phoneAuth: false,
       emailAuth: false,
+
+      token_:'',
       countDown: AUTH_CODE_TIME,  //获取验证码倒计时
       regPhone:'',
     }
@@ -36,6 +38,7 @@ export default class SafeCenter extends React.Component {
 
   componentDidMount() {
     this.initFetchSafeData();
+    this.getOldCode(this.token_);
   }
 
   // 初始化安全中心首页数据
@@ -86,10 +89,19 @@ export default class SafeCenter extends React.Component {
     });
   };
 
-
-  async getCode() {
-    const { regPhone } = this.state;
+//旧手机号获取验证码
+  async getOldCode(data) {
+    const response = await getOldPhoneCode(data);
+    console.log(response);
+    if(response.code ===0) {
+      this.setState({
+        token_: response.token,
+      })
+    } else{
+      message.error(response.msg);
+    }
   }
+
 
   //提交 邮箱绑定
   changeEmailAuth = () => {
@@ -209,12 +221,13 @@ const NameAuth = Form.create()(
     );
   }
 );
+
 // 手机绑定
 const PhoneAuth = Form.create()(
   (props) => {
-    const { visible, onCancel, onCreate, form } = props;
+    const { visible, onCancel, onCreate, form ,token_} = props;
     const { getFieldDecorator } = form;
-    const {countDown} = this.state;
+    // const {countDown} = this.state;
     return (
       <Modal
         visible={visible}
@@ -244,7 +257,7 @@ const PhoneAuth = Form.create()(
                 )}
               </Col>
               <Col span={12}>
-                <Button onClick={()=> this.getCode()}>{countDown}获取验证码</Button>
+                <Button >获取验证码</Button>
               </Col>
             </Row>
           </FormItem>
