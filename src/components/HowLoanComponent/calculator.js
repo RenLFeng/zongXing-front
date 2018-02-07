@@ -3,6 +3,7 @@ import { Link } from 'dva/router';
 import Slider from '../../assets/finance/slider';
 import {connect} from 'dva';
 import {message} from 'antd';
+import { MONEY_REG } from '../../common/systemParam';
 
 @connect((state)=>({
   loginStatus: state.login.status
@@ -46,8 +47,27 @@ export default class Calculator extends React.Component {
 
   //计算器 计算功能
   sum() {
+    const { calValue } = this.state;
+    if (!MONEY_REG.test(calValue)) {
+      message.warning('计算金额不合法');
+      return;
+    }
     let time = $('#time').text();
     let percent = $('#percent').text();
+    let money = calValue * 10000;
+    /*
+    * 每月还款 = 总金额/借款月数+年化利率/12*借款总金额
+    *
+    * */
+    time = time.substring(0, time.length-2) * 1;
+    percent = percent.substring(0, percent.length-1) * 1;
+    let interestRate = percent.mul(money).div(12).div(100);
+    let monthMoney = money.div(time).add(interestRate);
+    this.setState({
+      repayment: monthMoney ,  // 每月还款
+      interest: monthMoney.mul(time).sub(monthMoney),  // 总支付利息
+      theSum: monthMoney.mul(time), // 本息和
+    });
   }
 
   //计算器重置功能
@@ -63,7 +83,7 @@ export default class Calculator extends React.Component {
   // 修改计算金额
   calculationValue(e) {
     this.setState({
-      calValue: e.target.value * 1
+      calValue: e.target.value
     });
   }
 
