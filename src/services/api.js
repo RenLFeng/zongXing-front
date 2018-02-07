@@ -243,7 +243,7 @@ export async function getPersonalMoney() {
   return request(`${BASE_URL}/zjb-website/account/getOne`)
 }
 
-//获取已投资人数接口
+//获取已投资人信息接口
 export async function alreadyInvested(params) {
   return request(`${BASE_URL}/zjb-website/invRecord/getOne`, {
     method: 'POST',
@@ -268,7 +268,7 @@ export async function getCity(param) {
   return request(`${BASE_URL}/zjb-website/common/cities/${param}`);
 }
 
-//提交表单信息接口
+//提交提现表单信息接口
 export async function putInformation(params) {
   return request(`${BASE_URL}/zjb-dc/withdrawals/param`, {
     method: 'POST',
