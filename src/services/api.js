@@ -331,3 +331,21 @@ export async function getOldPhoneCode(param) {
 export async function getAddressCoordinate(params) {
   return request(`http://restapi.amap.com/v3/geocode/geo?key=${params.key}&address=${params.address}&batch=${params.batch}`);
 }
+//旧手机号获取验证码
+export async function getOldCode(param) {
+  return request(`${BASE_URL}/zjb-website/securityCenter/checkAuthcode/${param}`)
+}
+//更新手机号码
+export async function changePhoneNum(params) {
+  return request(`${BASE_URL}/zjb-website/securityCenter/updataMobile`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  })
+}
+
+//获取新手机号验证码
+export async function getNewCode(param) {
+  return request(`${BASE_URL}/zjb-website/securityCenter/sendMessage/${param}`)
+}
