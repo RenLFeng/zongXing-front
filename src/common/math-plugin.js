@@ -156,7 +156,7 @@ function accDiv(arg1,arg2){
     try{t2=arg2.toString().split(".")[1].length}catch(e){}
         r1=Number(arg1.toString().replace(".",""));
         r2=Number(arg2.toString().replace(".",""));
-        return parseFloat(((r1/r2)*pow(10,t2-t1)).toFixed(2));
+        return parseFloat(((r1/r2)*Math.pow(10,t2-t1)).toFixed(2));
 }
 
 //乘法函数，用来得到精确的乘法结果
@@ -206,8 +206,8 @@ Number.prototype.div = function (arg){
 ///减
 Number.prototype.sub = function (arg){
     return accSub(arg,this);
-}
+};
 //加
 Number.prototype.add = function (arg){
     return accAdd(arg,this);
-}
+};
