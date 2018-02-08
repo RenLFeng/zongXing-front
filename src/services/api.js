@@ -342,5 +342,5 @@ export async function changePhoneNum(params) {
 
 //获取新手机号验证码
 export async function getNewCode(param) {
-  return request(`${BASE_URL}/zjb-website/securityCenter/sendMessage/${param}`)
+  return request(`${BASE_URL}/zjb-website/sendMessage/${param}`)
 }
