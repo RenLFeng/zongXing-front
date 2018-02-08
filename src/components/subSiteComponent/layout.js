@@ -28,7 +28,7 @@ export default class Layout extends React.Component{
             <h2 className="tit"></h2>
             <div className="tabs center">
               <i className="product">产品分类</i>
-              <a className="hover_" id="hover_">产品分类1</a>
+              <a  id="hover_" className="hover_">产品分类1</a>
               <a  id="hover_">产品分类2</a>
               <a  id="hover_">产品分类3</a>
               <a  id="hover_">产品分类4</a>
