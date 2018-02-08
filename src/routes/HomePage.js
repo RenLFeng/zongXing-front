@@ -26,7 +26,7 @@ import ContactUs from "./information/contactUs";
 import AuditInformation from "./information/auditInformation";
 import BusinessInformation from "./information/businessInformation";
 import ProjectInformation from "./information/projectInformation";
-
+import { BASE_URL, getAuth } from '../services/api';
 import PlatformNotice from "./information/legalSupport";
 import NewsReports from "./information/newsReports";
 import LegalDeclaration from "./information/lawsRegulations";
@@ -46,12 +46,17 @@ export default class HomePage extends React.Component{
       global.cos = new COS({
         getAuthorization: function (options, callback) {
           // 异步获取签名
-          $.get('http://192.168.1.75:3000/auth', {
-            method: (options.Method || 'get').toLowerCase(),
-            pathname: '/' + (options.Key || '')
-          }, function (authorization) {
-            callback(authorization);
-          }, 'text');
+          getAuth({method: (options.Method || 'get').toLowerCase(),
+            pathname: '/' + (options.Key || '')})
+            .then((data) => {
+              console.log(data);
+              if (data.code === 0) {
+                callback(data.data);
+              }
+            })
+            .catch((e) => {
+              callback('error');
+            })
         }
       });
     }

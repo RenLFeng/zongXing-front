@@ -67,6 +67,7 @@ export default class ImgUpload extends React.Component {
       this.setState({ loading: false });
       this.props.changeLoading(this.props.name, false);
       if (err) {
+        console.log(err);
         message.error("图片上传失败");
       } else {
         this.setState({imageUrl: realName});

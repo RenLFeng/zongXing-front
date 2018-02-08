@@ -122,15 +122,6 @@ class EnterprisePresentation extends React.Component {
           onOk: () => this.submit_()
         });
         this.setState({
-          amount: response.amount,
-          accountId: response.accountId,
-          cardNo: response.cardNo,
-          cardType: 0,
-          bankCode: response.bankCode,
-          province: response.province,
-          city: response.city,
-          remark: response.remark,
-          userBankId: response.userBankId,
           withdrawals: response.data
         })
       } else {
@@ -210,6 +201,7 @@ class EnterprisePresentation extends React.Component {
     const {getFieldDecorator} = this.props.form;
     const {withdrawals} = this.state;
     const Option = Select.Option;
+    console.log(withdrawals.submitURL)
     return (
       <div className="fr uc-rbody">
         <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
