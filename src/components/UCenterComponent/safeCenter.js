@@ -230,16 +230,30 @@ export default class SafeCenter extends React.Component {
   //提交 邮箱绑定
   changeEmailAuth = () => {
     const form = this.emailForm;
-    form.validateFields((err, values) => {
+    form.validateFields(async (err, values) => {
       if (err) {
         return;
       }
       console.log('邮箱认证数据: ', values);
-      const response = getEmailAuth(values.email);
+      const response = await getEmailAuth(values.email);
+      console.log(response);
       if (response.code === 0) {
         message.info('邮件发送成功');
         form.resetFields();
         this.handleCancel();
+        this.setState({emailAuth:false});
+        Modal.confirm({
+          title: '提示',
+          content: '邮件已发送,请注意查看',
+          okText: '完成',
+          cancelText: '取消',
+          onOk: () => {
+            this.props.dispatch({
+              type: 'safeCenter/getSafe'
+            });
+
+          }
+        });
       } else {
         message.error(response.msg);
       }
@@ -471,7 +485,7 @@ const EmailAuth = Form.create()(
       <Modal
         visible={visible}
         title="邮箱绑定"
-        okText="提交"
+        okText="发送"
         cancelText="取消"
         onCancel={onCancel}
         onOk={onCreate}
