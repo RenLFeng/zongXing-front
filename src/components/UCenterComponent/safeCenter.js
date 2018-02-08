@@ -37,7 +37,7 @@ export default class SafeCenter extends React.Component {
       changePhoneAuth: false,   //更新手机号码表单
       fmobile:'',  //更新后的手机号码
       authcode:'', //新验证码
-      mobile:'',
+      // mobile:'',
       getCodeMobile: '',
       regPhoneErr: '',  //注册手机号提示
       regAuthErr: '', //验证码提示
@@ -104,16 +104,15 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      console.log(values);
-      // const response = await getOldCode(values.captcha);
-      // if (response.code === 0) {
+      const response = await getOldCode(values.captcha);
+      if (response.code === 0) {
         console.log('手机号认证数据: ', values);
         this.setState({changePhoneAuth:true});
         form.resetFields();
         this.handleCancel();
-      // } else {
-      //   message.error(response.msg);
-      // }
+      } else {
+        message.error(response.msg);
+      }
     });
   };
 
@@ -124,14 +123,13 @@ export default class SafeCenter extends React.Component {
     try{
       const response = await getOldPhoneCode(data);
       this.setState({loading:false});
-      console.log(response);
-      if(response.code ===0) {
-        this.setState({
-          token_: response.token,
-        })
-      } else{
-        message.error(response.msg);
-      }
+      // if(response.code ===0) {
+      //   this.setState({
+      //     token_: response.token,
+      //   })
+      // } else{
+      //   message.error(response.msg);
+      // }
     } catch(e){
       this.setState({loading:false});
       if (typeof e === 'object' && e.name === 288) {
@@ -168,15 +166,16 @@ export default class SafeCenter extends React.Component {
         fmobile: values.title,
         authcode: values.captcha,
       };
-      // const response = await changePhoneNum(data);
-      // if (response.code === 0) {
+      const response = await changePhoneNum(data);
+      if (response.code === 0) {
         this.setState({changePhoneAuth:false});
         form.resetFields();
         this.handleCancel_();
-      // } else {
-      //   message.error(response.msg);
-      // }
+      } else {
+        message.error(response.msg);
+      }
     });
+    location.reload(false);
   };
 
   //获取新手机号验证码
@@ -193,15 +192,14 @@ export default class SafeCenter extends React.Component {
     this.setState({loading:true});
     try{
       const response = await getNewCode(getCodeMobile);
-      console.log(response);
       this.setState({loading:false});
-      if(response.code ===0) {
-        this.setState({
-          mobile: response.mobile,
-        })
-      } else{
-        message.error(response.msg);
-      }
+      // if(response.code ===0) {
+      //   this.setState({
+      //     mobile: response.mobile,
+      //   })
+      // } else{
+      //   message.error(response.msg);
+      // }
 
     } catch(e){
       this.setState({loading:false});
