@@ -4,11 +4,11 @@ import request from '../utils/request';
 const BASE_URL = 'http://192.168.1.4:8001';
 // const BASE_URL = 'http://139.199.14.60:8001'; // 远端
 
-const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59';
+export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59';
 
 // 获取图片签名token
 export async function getAuth({method, pathname}) {
-  return request(`${BASE_URL}/zjb-base/cos/sign?method=${method}&pathname=${pathname}`);
+  return request(`${BASE_URL}/zjb-website/common/sign?method=${method}&pathname=${pathname}`);
 }
 
 export async function userLogin(param) {
@@ -304,7 +304,7 @@ export async function applyCommit(params) {
     body: {
       ...params,
     }
-  })
+  });
 }
 
 // 获取之前的 借款信息接口
@@ -314,17 +314,22 @@ export async function getLoanInfo() {
 
 // 邮箱验证
 export async function getEmailAuth(param) {
-  return request(`${BASE_URL}/zjb-website/userInfo/sendEmailVerify?sendTo=${param}`)
+  return request(`${BASE_URL}/zjb-website/userInfo/sendEmailVerify?sendTo=${param}`);
 }
 
 // 项目城市获取
 export async function getCityCode(param) {
-  return request(`${BASE_URL}/zjb-website/apply/getCity`)
+  return request(`${BASE_URL}/zjb-website/apply/getCity`);
 }
 
-//安全中心 发送旧手机号接口
+// 安全中心 发送旧手机号接口
 export async function getOldPhoneCode(param) {
-  return request(`${BASE_URL}/zjb-website/securityCenter/sendMsgOldMobile`)
+  return request(`${BASE_URL}/zjb-website/securityCenter/sendMsgOldMobile`);
+}
+
+// 通过地址获取 坐标接口
+export async function getAddressCoordinate(params) {
+  return request(`http://restapi.amap.com/v3/geocode/geo?key=${params.key}&address=${params.address}&batch=${params.batch}`);
 }
 //旧手机号获取验证码
 export async function getOldCode(param) {
@@ -344,3 +349,9 @@ export async function changePhoneNum(params) {
 export async function getNewCode(param) {
   return request(`${BASE_URL}/zjb-website/sendMessage/${param}`)
 }
+
+// 判断用户名是否重复
+export async function getJudgeUserName(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/checkLoginName/${param}`)
+}
+

@@ -18,8 +18,18 @@ import '../assets/common/index';
 import { getLocation } from '../services/api';
 import ApplyLoan from './homePage/ApplyLoan';
 import UCenter from './homePage/UCenter';
-import {getAuth} from '../services/api';
+import COS from 'cos-js-sdk-v5';
+import RecordInformation from "./information/recordInformation";
+import OrganizationInformation from "./information/organizationInformation";
+import ContactUs from "./information/contactUs";
 
+import AuditInformation from "./information/auditInformation";
+import BusinessInformation from "./information/businessInformation";
+import ProjectInformation from "./information/projectInformation";
+
+import PlatformNotice from "./information/legalSupport";
+import NewsReports from "./information/newsReports";
+import LegalDeclaration from "./information/lawsRegulations";
 @connect((state) => ({
 	login: state.login
 }))
@@ -33,20 +43,15 @@ export default class HomePage extends React.Component{
       })
     }
     if (!global.cos) {
-      global.cos = new window.COS({
+      global.cos = new COS({
         getAuthorization: function (options, callback) {
           // 异步获取签名
-          getAuth({method: (options.Method || 'get').toLowerCase(),
-            pathname: '/' + (options.Key || '')})
-            .then((data) => {
-              console.log(data);
-              if (data.code === 0) {
-                callback(data.data);
-              }
-            })
-            .catch((e) => {
-              callback('error');
-            })
+          $.get('http://192.168.1.75:3000/auth', {
+            method: (options.Method || 'get').toLowerCase(),
+            pathname: '/' + (options.Key || '')
+          }, function (authorization) {
+            callback(authorization);
+          }, 'text');
         }
       });
     }
@@ -69,6 +74,17 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/login`} component={Login} />
             <Route path={`${match.path}/risk`} component={Risk} />
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
+
+            <Route path={`/infor/recordInformation`} component={RecordInformation} />
+            <Route path={`/infor/organizationInformation`} component={OrganizationInformation} />
+            <Route path={`/infor/contactUs`} component={ContactUs} />
+            <Route path={`/infor/auditInformation`} component={AuditInformation} />
+            <Route path={`/infor/businessInformation`} component={BusinessInformation} />
+            <Route path={`/infor/projectInformation`} component={ProjectInformation} />
+            <Route path={`/infor/platformNotice`} component={PlatformNotice} />
+            <Route path={`/infor/newsReports`} component={NewsReports} />
+            <Route path={`/infor/legalDeclaration`} component={LegalDeclaration} />
+
           </Switch>
         <Footer/>
 			</div>

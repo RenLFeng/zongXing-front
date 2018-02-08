@@ -39,9 +39,10 @@ class UserBaseFormInput extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.param.dispatch({
-    //   type: 'userData/getUserBase'
-    // });
+    console.log(123);
+    this.props.param.dispatch({
+      type: 'userData/getUserBase'
+    });
   }
 
   handleSubmit(e) {

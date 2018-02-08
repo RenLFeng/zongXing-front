@@ -3,7 +3,7 @@ import ImgUpload from '../../components/UpLoad/imgUpload';
 import {Form, Select, Input, Button, Row, Col, Cascader, message} from 'antd';
 import {MONEY_REG, BANK_CARD, TEL_PHONE, IMG_BASE_URL} from '../../common/systemParam';
 import {city} from '../../common/cityData';
-import {getProjectType} from '../../services/api';
+import {getProjectType, getAddressCoordinate, POSITION_KEY} from '../../services/api';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -56,6 +56,9 @@ const styles = {
     height: 40
   }
 };
+
+
+
 class Forms extends React.Component {
   constructor(props) {
     super(props);
@@ -74,6 +77,15 @@ class Forms extends React.Component {
 
   componentDidMount() {
     this.fetchProjectType();
+  }
+
+  async getCoordinateByAddress(e) {
+    const response = await getAddressCoordinate({
+      key: POSITION_KEY,
+      address: e.target.value,
+      batch: true
+    });
+    console.log(response);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -270,7 +282,7 @@ class Forms extends React.Component {
                   {getFieldDecorator('fbusAddress', {
                     initialValue: data.fbus_address ? data.fbus_address : '',
                     rules: [],
-                  })(<Input id="fbusAddress" style={styles.inputHeight} maxLength={'100'}/>)}
+                  })(<Input id="fbusAddress" style={styles.inputHeight} maxLength={'100'} onChange={(e)=>this.getCoordinateByAddress(e)}/>)}
                 </FormItem>
               </div>
             </Col>

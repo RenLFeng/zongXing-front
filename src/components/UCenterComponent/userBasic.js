@@ -6,6 +6,7 @@ import moment from 'moment';
 import { connect } from 'dva';
 import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD} from '../../common/systemParam';
 import {city} from '../../common/cityData';
+import { getJudgeUserName } from '../../services/api';
 
 const formItemLayout = {
   labelCol: {
@@ -36,14 +37,32 @@ class UserBaseFormInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    // this.props.param.dispatch({
-    //   type: 'userData/getUserBase'
-    // });
+    this.props.param.dispatch({
+      type: 'userData/getUserBase'
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.param.successStatus && !nextProps.param.successStatus) {
+      this.props.param.dispatch({
+        type: 'userData/getUserBase'
+      });
+    }
+  }
+
+  async judgeUserName(e) {
+    const response = await getJudgeUserName(e.target.value.trim());
+    if (response.code === 0 ) {
+      this.setState({error: false});
+    } else {
+      this.setState({error: true});
+    }
   }
 
   handleSubmit(e) {
@@ -51,15 +70,32 @@ class UserBaseFormInput extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         // 数据格式转换 cityCode
-        let fCityCode = '';
-        if (values.fCityCode && values.fCityCode.length > 0) {
-          fCityCode = values.fCityCode[values.fCityCode.length - 1];
-        }
+        // let fCityCode = '';
+        // if (values.fCityCode && values.fCityCode.length > 0) {
+        //   fCityCode = values.fCityCode[values.fCityCode.length - 1];
+        // }
         // 获得后台需要的数据
         const userBase = {
-          ...values,
-          fCityCode: fCityCode,
-          fBirthday: values.fBirthday?values.fBirthday.format('YYYY/MM/DD'): null
+          user: !values.frealName && !values.fnickName && !values.floginName ? null :  {
+            frealName: values.frealName,
+            fnickName: values.fnickName,
+            floginName: values.floginName
+          },
+          userInfo: {
+            fIdcardNo: values.fIdcardNo,
+            fTelephone: values.fTelephone,
+            fMarital: values.fMarital * 1,
+            fDeucation: values.fDeucation,
+            fQQ: values.fQQ,
+            fWeichat: values.fWeichat,
+            fEmail: values.fEmail,
+            fAddress: values.fAddress,
+            fGender: values.fGender,
+            fBirthday: values.fBirthday ? new Date(values.fBirthday.format('YYYY/MM/DD')): null,
+            fCityCode: values.fCityCode ? values.fCityCode.toString() : null,
+            fJob: values.fJob,
+            fHobby: values.fHobby
+          }
         };
         console.log('数据接收后台需要的数据', userBase);
         this.props.param.dispatch({
@@ -81,7 +117,7 @@ class UserBaseFormInput extends React.Component {
         >
           {getFieldDecorator('frealName', {
             rules:[{whitespace: true, message: '真实姓名中不能出现空格'}],
-            initialValue: userBase.frealName?userBase.frealName: null
+            initialValue: userBase.freal_name?userBase.freal_name: null
           })(<Input maxLength={'20'}/>)}
         </FormItem>
         <FormItem
@@ -90,27 +126,19 @@ class UserBaseFormInput extends React.Component {
         >
           {getFieldDecorator('fnickName', {
             rules:[{whitespace: true, message: '昵称中不能出现空格'}],
-            initialValue: userBase.fnickName?userBase.fnickName: null
+            initialValue: userBase.fnickname?userBase.fnickname: null
           })(<Input maxLength={'20'}/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
           label="用户名"
           extra="用户名填写之后不可改!"
+          help={this.state.error ? <span style={{color: 'red'}}>用户名已存在</span> : null}
         >
           {getFieldDecorator('floginName', {
             rules:[{pattern: USER_REG, message: '用户名格式应为2到16位(可用字母，数字，下划线，减号)'}],
-            initialValue: userBase.floginName?userBase.floginName: null
-          })(<Input maxLength={'20'} disabled={!!userBase.floginName}/>)}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="手机号"
-        >
-          {getFieldDecorator('fmobile', {
-            rules:[{pattern: VER_PHONE, message: '手机号格式不正确'}],
-            initialValue: userBase.fmobile?userBase.fmobile: null
-          })(<Input maxLength={'20'} disabled/>)}
+            initialValue: userBase.flogin_name?userBase.flogin_name: null
+          })(<Input maxLength={'20'} disabled={!!userBase.flogin_name} onBlur={(e)=>this.judgeUserName(e)}/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -118,7 +146,7 @@ class UserBaseFormInput extends React.Component {
         >
           {getFieldDecorator('fIdcardNo', {
             rules:[{pattern: ID_CORD, message: '身份证号格式不正确'}],
-            initialValue: userBase.fIdcardNo?userBase.fIdcardNo: null
+            initialValue: userBase.fidcard_No?userBase.fidcard_No: null
           })(<Input maxLength={'50'} />)}
         </FormItem>
         <FormItem
@@ -127,7 +155,7 @@ class UserBaseFormInput extends React.Component {
         >
           {getFieldDecorator('fTelephone', {
             rules:[{pattern: TEL_PHONE, message: '座机格式不正确,应为 xxx-xxxxxxxx'}],
-            initialValue: userBase.fTelephone?userBase.fTelephone: null
+            initialValue: userBase.ftelephone?userBase.ftelephone: null
           })(<Input maxLength={'20'}/>)}
         </FormItem>
         <FormItem
@@ -136,11 +164,11 @@ class UserBaseFormInput extends React.Component {
         >
           {getFieldDecorator('fMarital', {
             rules:[],
-            initialValue: userBase.fMarital?userBase.fMarital:'1'
+            initialValue: userBase.fmarital?userBase.fmarital+'':'0'
           })(<Select>
+            <Select.Option value="0">未知</Select.Option>
             <Select.Option value="1">未婚</Select.Option>
             <Select.Option value="2">已婚</Select.Option>
-            <Select.Option value="3">离异</Select.Option>
           </Select>)}
         </FormItem>
         <FormItem
@@ -149,12 +177,12 @@ class UserBaseFormInput extends React.Component {
         >
           {getFieldDecorator('fDeucation', {
             rules:[],
-            initialValue: userBase.fDeucation?userBase.fDeucation:'1'
+            initialValue: userBase.fdeucation?userBase.fdeucation:'大专及以下'
           })(<Select>
-            <Select.Option value="1">大专及以下</Select.Option>
-            <Select.Option value="2">大学</Select.Option>
-            <Select.Option value="3">硕士</Select.Option>
-            <Select.Option value="4">博士</Select.Option>
+            <Select.Option value="大专及以下">大专及以下</Select.Option>
+            <Select.Option value="大学">大学</Select.Option>
+            <Select.Option value="硕士">硕士</Select.Option>
+            <Select.Option value="博士">博士</Select.Option>
           </Select>)}
         </FormItem>
         <FormItem
@@ -162,15 +190,15 @@ class UserBaseFormInput extends React.Component {
           label="QQ号"
         >
           {getFieldDecorator('fQQ', {
-            initialValue: userBase.fQQ?userBase.fQQ: null
+            initialValue: userBase.fqq?userBase.fqq: null
           })(<Input maxLength={'50'}/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
           label="微信号"
         >
-          {getFieldDecorator('fWeichat', {
-            initialValue: userBase.fWeichat ? userBase.fWeichat : null
+          {getFieldDecorator('fweichat', {
+            initialValue: userBase.fweichat ? userBase.fweichat : null
           })(<Input maxLength={'50'}/>)}
         </FormItem>
         <FormItem
@@ -179,7 +207,7 @@ class UserBaseFormInput extends React.Component {
         >
           {getFieldDecorator('fEmail', {
             rules: [{ type: 'email', message: '邮箱格式不正确' }],
-            initialValue: userBase.fEmail? userBase.fEmail : null
+            initialValue: userBase.femail? userBase.femail : null
           })(<Input maxLength={'50'}/>)}
         </FormItem>
         <FormItem
@@ -187,7 +215,7 @@ class UserBaseFormInput extends React.Component {
           label="家庭住址"
         >
           {getFieldDecorator('fAddress', {
-            initialValue: userBase.fAddress? userBase.fAddress: null
+            initialValue: userBase.faddress? userBase.faddress: null
           })(<Input.TextArea autosize={{ minRows: 2, maxRows: 3 }} maxLength={200}/>)}
         </FormItem>
         <FormItem
@@ -195,7 +223,7 @@ class UserBaseFormInput extends React.Component {
           label="性别"
         >
           {getFieldDecorator('fGender', {
-            initialValue: userBase.fGender?userBase.fGender: '1'
+            initialValue: userBase.fgender?userBase.fgender: '1'
           })(<Radio.Group >
             <Radio value='1'>男</Radio>
             <Radio value='2'>女</Radio>
@@ -206,7 +234,7 @@ class UserBaseFormInput extends React.Component {
           label="生日"
         >
           {getFieldDecorator('fBirthday', {
-            initialValue: userBase.fBirthday ? moment(userBase.fBirthday): null
+            initialValue: userBase.fbirthday ? moment(userBase.fbirthday): null
           })(
             <DatePicker />
           )}
@@ -217,7 +245,7 @@ class UserBaseFormInput extends React.Component {
           label="所在城市"
         >
           {getFieldDecorator('fCityCode', {
-            initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+            initialValue: userBase.fcity_code ? userBase.fcity_code.split(','): null,
           })(
             <Cascader options={city} />
           )}
@@ -226,8 +254,8 @@ class UserBaseFormInput extends React.Component {
           {...formItemLayout}
           label="工作"
         >
-          {getFieldDecorator('fJo', {
-            initialValue: userBase.fJo?userBase.fJo: null,
+          {getFieldDecorator('fJob', {
+            initialValue: userBase.fjob?userBase.fjob: null,
           })(<Input maxLength={'50'}/>)}
         </FormItem>
         <FormItem
@@ -235,7 +263,7 @@ class UserBaseFormInput extends React.Component {
           label="兴趣爱好"
         >
           {getFieldDecorator('fHobby', {
-            initialValue: userBase.fHobby?userBase.fHobby : null,
+            initialValue: userBase.fhobby?userBase.fhobby : null,
           })(<Input maxLength={'50'}/>)}
         </FormItem>
 
@@ -253,7 +281,8 @@ const UserBaseForm = Form.create()(UserBaseFormInput);
 
 @connect((state) => ({
   loading: state.userData.userBaseLoading,
-  userBase: state.userData.userBaseData
+  userBase: state.userData.userBaseData,
+  successStatus: state.userData.changeDataStatus
 }))
 export default class UserBasic extends React.Component {
   constructor(props) {
