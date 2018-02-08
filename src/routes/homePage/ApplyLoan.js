@@ -12,7 +12,7 @@ export default class ApplyLoan extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageNum: 3,
+      pageNum: 1,
       loanInfo: {},
       loanPerson: {},
       loanCompany: {},

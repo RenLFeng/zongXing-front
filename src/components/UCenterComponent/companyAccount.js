@@ -350,7 +350,7 @@ export default class CompanyAccount extends React.Component {
                         <i className="y">{year_}</i><br /><i className="d">{month}</i>
                       </p>
                       <i className="cc"/>
-                      <p className="text">{data.remark}</p>
+                      <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${data.inMoney.fm()}`} {data.outMoney === 0 ? null : `支出: ${data.outMoney.fm()}`}</p>
                     </div>
                   );
                 })

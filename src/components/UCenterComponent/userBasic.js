@@ -87,7 +87,7 @@ class UserBaseFormInput extends React.Component {
             fMarital: values.fMarital * 1,
             fDeucation: values.fDeucation,
             fQQ: values.fQQ,
-            fWeichat: values.fWeichat,
+            fWeichat: values.fweichat,
             fEmail: values.fEmail,
             fAddress: values.fAddress,
             fGender: values.fGender,
