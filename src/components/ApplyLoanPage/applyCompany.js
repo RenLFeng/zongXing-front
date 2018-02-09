@@ -1,7 +1,7 @@
 import React from 'react';
 import ImgUpload from '../../components/UpLoad/imgUpload';
 import {Form, Select, Input, Button, Row, Col, Cascader, message} from 'antd';
-import {MONEY_REG, BANK_CARD, TEL_PHONE, IMG_BASE_URL} from '../../common/systemParam';
+import {MONEY_REG, BANK_CARD, TEL_PHONE, IMG_BASE_URL, LICENSE} from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import {getProjectType, getAddressCoordinate, POSITION_KEY} from '../../services/api';
 
@@ -233,7 +233,7 @@ class Forms extends React.Component {
                 >
                   {getFieldDecorator('fsocialCreditCode', {
                     initialValue: data.fsocial_credit_code ? data.fsocial_credit_code : '',
-                    rules: []
+                    rules: [{pattern: LICENSE, message: '请输入正确的统一社会信用代码'}]
                   })(<Input id="fsocialCreditCode" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>

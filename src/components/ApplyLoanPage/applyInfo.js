@@ -40,7 +40,7 @@ class Forms extends React.Component {
     super(props);
     this.state = {
       industryType: [],
-      cityList: []
+      cityList: [],
     }
   }
 
@@ -81,9 +81,26 @@ class Forms extends React.Component {
 
   validateNumber = (rule, value, callback) => {
     const { getFieldValue } = this.props.form;
-    if (MONEY_REG.test(value) && value * 1 <= 2 ) {
-      callback('金额不能小于2');
+    if (MONEY_REG.test(value) && (value * 1 < 100000 || value * 1 >1000000) ) {
+      callback('金额应为10万到100万之间');
+    }
+    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    callback()
+  };
 
+  validateTime = (rule, value, callback) => {
+    const { getFieldValue } = this.props.form;
+    if (MONEY_REG.test(value) && value * 1 < 3 || value * 1 > 12 ) {
+      callback('期数应为3月到12月之间');
+    }
+    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    callback()
+  };
+
+  validateRate = (rule, value, callback) => {
+    const { getFieldValue } = this.props.form;
+    if (MONEY_REG.test(value) && value * 1 < 8 || value * 1 > 15 ) {
+      callback('年利率应为8%到15%之间');
     }
     // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
     callback()
@@ -107,7 +124,8 @@ class Forms extends React.Component {
               {getFieldDecorator('fCreditMoney', {
                 initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
                 rules: [
-                  {pattern: MONEY_REG, message: '请输入正确的金额格式'}
+                  {pattern: MONEY_REG, message: '请输入正确的金额格式'},
+                  {validator: this.validateNumber}
                 ]
               })(<Input id="fCreditMoney" style={styles.inputHeight} maxLength={'50'}/>)}
                 </Col>
@@ -127,9 +145,10 @@ class Forms extends React.Component {
                 <Col span={22}>
                   {getFieldDecorator('fCreditMonth', {
                     initialValue: data.fcredit_month ? data.fcredit_month + '': '',
-                    rules: [{
-                      pattern: MUN_INTEGER, message: '请输入正确的借款期数'
-                    }]
+                    rules: [
+                      {pattern: MUN_INTEGER, message: '请输入正确的借款期数'},
+                      {validator: this.validateTime}
+                      ]
                   })(<Input id="fCreditMonth" style={styles.inputHeight} maxLength={'50'}/>)}
                 </Col>
                 <Col span={2}>
@@ -185,9 +204,10 @@ class Forms extends React.Component {
               <Col span={22}>
                 {getFieldDecorator('fRatePredict', {
                   initialValue: data.frate_predict ? data.frate_predict + '' : '',
-                  rules: [{
-                    pattern: MONEY_REG, message: '请输入正确的预期年化利率'
-                  }]
+                  rules: [
+                    {pattern: MONEY_REG, message: '请输入正确的预期年化利率'},
+                    {validator: this.validateRate}
+                  ]
                 })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
               </Col>
               <Col span={2}>

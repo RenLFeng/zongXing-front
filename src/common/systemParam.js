@@ -7,6 +7,8 @@ export const ID_CORD = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([
 // 用户名正则
 export const USER_REG = /^[a-zA-Z0-9_-]{2,16}$/;
 
+// 营业执照号正则
+export const LICENSE = /^([0-9a-zA-Z]{18}$|\d{15})$/;
 
 // 邮箱验证正则
 export const E_MAIL =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

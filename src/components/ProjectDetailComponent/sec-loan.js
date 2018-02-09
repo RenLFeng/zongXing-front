@@ -69,7 +69,7 @@ export default class SecLoan extends React.Component {
             <i className="tit">我的项目</i>
             <p>{project.myproject}</p>
           </div>
-          <Images project={project}/>
+          {/*<Images project={project}/>*/}
           <div className="textbox border">
             <i className="tit">为何众借</i>
             <p>{project.fwhy_loan}</p>

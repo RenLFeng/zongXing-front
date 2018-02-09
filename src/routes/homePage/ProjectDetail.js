@@ -41,15 +41,17 @@ export default class ProjectDetail extends React.Component {
           this.countDownTime();
         }, 1000);
       });
-      let map = new AMap.Map('container',{
-        resizeEnable: true,
-        zoom: 16,
-        center: response.data.flocation.split(',')
-      });
-      let marker = new AMap.Marker({
-        position: response.data.flocation.split(',')
-      });
-      marker.setMap(map);
+      if (response.data.flocation) {
+        let map = new AMap.Map('container',{
+          resizeEnable: true,
+          zoom: 16,
+          center: response.data.flocation.split(',')
+        });
+        let marker = new AMap.Marker({
+          position: response.data.flocation.split(',')
+        });
+        marker.setMap(map);
+      }
     } else {
       message.error(response.msg);
     }

@@ -3,7 +3,7 @@ import {Link} from 'dva/router';
 import { ACCOUNT_RECHARGE } from '../../common/pagePath';
 import { IMG_BASE_URL,MUN_INTEGER  } from '../../common/systemParam';
 import moment from 'moment';
-import {Button, message} from 'antd';
+import {Button, message, Modal} from 'antd';
 import { Investment } from '../../services/api';
 
 export default class FormProject extends React.Component {
@@ -14,7 +14,8 @@ export default class FormProject extends React.Component {
       agreement: false,
       risk: false,
       loading: false,
-      errMsg: ''
+      errMsg: '',
+      data: {}
     };
   }
 
@@ -45,7 +46,8 @@ export default class FormProject extends React.Component {
       money: '',
       agreement: false,
       risk: false,
-      loading: false
+      loading: false,
+      data: {}
     });
   }
 
@@ -76,28 +78,48 @@ export default class FormProject extends React.Component {
       const response = await Investment(data);
       this.setState({loading: false});
       if (response.code === 0) {
-        message.info('成功');
+
         $('._masker').remove();
         $('.pd-form').addClass('none');
         this.setState({
-          money: '',
-          agreement: false,
-          risk: false,
+          data: response.data,
           loading: false
+        });
+        Modal.confirm({
+          title: '提示',
+          content: `确认投资${data.amount}吗?`,
+          okText: '确认',
+          okType: 'danger',
+          cancelText: '取消',
+          onOk: () => this.submitMoney()
         });
       } else {
         message.error(response.msg);
       }
     } catch(e) {
+      console.log(e);
       message.error('网络异常');
       this.setState({loading: false})
     }
+  }
 
+  submitMoney() {
+    this.formId.submit();
+    this.setState({
+      money: '',
+      agreement: false,
+      risk: false,
+      loading: false,
+      data: {},
+    });
+    $('._masker').remove();
+    $('.pd-form').addClass('none');
   }
 
   render() {
     const {project} = this.props;
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
+    const {data} = this.state;
     return (
       <div className="pd-form shadow none">
         <a className="close" onClick={()=>this.closeDiv()}/>
@@ -165,6 +187,23 @@ export default class FormProject extends React.Component {
             </div>
           </div>
         </div>
+        <form ref={ref => this.formId = ref} id="form1" name="form1" action={data.submitURL} method="post" target="_blank">
+          <input id="Action" name="Action" value={data.action?data.action: ''} type="hidden" />
+          <input id="ArrivalTime" name="ArrivalTime" value={data.arrivalTime?data.arrivalTime: ''} type="hidden" />
+          <input id="LoanJsonList" name="LoanJsonList" value={data.loanJsonList} type="hidden" />
+          <input id="NeedAudit" name="NeedAudit" value={data.needAudit} type="hidden" />
+          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={data.platformMoneymoremore} type="hidden" />
+          <input id="RandomTimeStamp" name="RandomTimeStamp" value={data.randomTimeStamp} type="hidden" />
+          <input id="TransferAction" name="TransferAction" value={data.transferAction} type="hidden" />
+          <input id="TransferType" name="TransferType" value={data.transferType} type="hidden" />
+          <input id="RandomTimeStamp" name="RandomTimeStamp" value={data.randomTimeStamp} type="hidden" />
+          <input id="Remark1" name="Remark1" value={data.remark1} type="hidden" />
+          <input id="Remark2" name="Remark2" value={data.remark2} type="hidden" />
+          <input id="Remark3" name="Remark3" value={data.remark3} type="hidden" />
+          <input id="ReturnURL" name="ReturnURL" value={data.returnURL} type="hidden" />
+          <input id="NotifyURL" name="NotifyURL" value={data.notifyURL} type="hidden"  />
+          <input id="SignInfo" name="SignInfo" value={data.signInfo} type="hidden" />
+        </form>
         <div className="center">
           <Button type="primary" onClick={()=>this.submit()} loading={this.state.loading} style={{width: 200, height: 40}}>提交</Button>
         </div>

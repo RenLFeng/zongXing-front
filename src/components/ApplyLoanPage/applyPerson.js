@@ -203,6 +203,24 @@ class Forms extends React.Component {
     // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
     callback()
   };
+
+  validateDesc = (rule, value, callback) => {
+    const { getFieldValue } = this.props.form;
+    if (value && value.length> 500) {
+      callback('个人资产说明字符限制500');
+    }
+    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    callback()
+  };
+
+  validateStr = (rule, value, callback) => {
+    const { getFieldValue } = this.props.form;
+    if (value && /^[0-9]*$/.test(value)) {
+      callback('家庭住址不能纯数字');
+    }
+    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    callback()
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { pageNum, dateCode, fProjectNo, data} = this.props;
@@ -374,7 +392,9 @@ class Forms extends React.Component {
             >
               {getFieldDecorator('fAddress', {
                 initialValue: data.faddress ? data.faddress : '',
-                rules: []
+                rules: [
+                  {validator: this.validateStr}
+                ]
               })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
             </FormItem>
           </Col>
@@ -385,9 +405,11 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('fProperty', {
             initialValue: data.fproperty ? data.fproperty : '',
-            rules: [],
+            rules: [
+              {validator: this.validateDesc}
+            ],
           })(
-            <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
+            <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} maxLength={500}/>
           )}
         </FormItem>
         <Row>
@@ -448,8 +470,12 @@ class Forms extends React.Component {
                 label={<span style={styles.label}>社会关系</span>}
               >
                 {getFieldDecorator('fRelation1', {
-                  initialValue: data.tlo1relation ? data.tlo1relation : '',
-                })(<Input id="fRelation1" style={styles.inputHeight} maxLength={'50'}/>)}
+                  initialValue: data.tlo1relation ? data.tlo1relation : '亲人',
+                })(<Select size="large" style={styles.inputHeight}>
+                  <Select.Option value="亲人">亲人</Select.Option>
+                  <Select.Option value="朋友">朋友</Select.Option>
+                  <Select.Option value="同事">同事</Select.Option>
+                </Select>)}
               </FormItem>
             </div>
           </Col>
@@ -503,7 +529,11 @@ class Forms extends React.Component {
               {getFieldDecorator('fRelation2', {
                 initialValue: data.tlo2relation ? data.tlo2relation : '',
                 rules: []
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              })(<Select size="large" style={styles.inputHeight}>
+                <Select.Option value="领导">领导</Select.Option>
+                <Select.Option value="同事">同事</Select.Option>
+                <Select.Option value="合伙人">合伙人</Select.Option>
+              </Select>)}
             </FormItem>
           </Col>
         </Row>
@@ -556,7 +586,10 @@ class Forms extends React.Component {
               {getFieldDecorator('fRelation3', {
                 initialValue: data.tlo3relation ? data.tlo3relation : '',
                 rules: []
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+              })(<Select size="large" style={styles.inputHeight}>
+                <Select.Option value="同事">同事</Select.Option>
+                <Select.Option value="好友">好友</Select.Option>
+              </Select>)}
             </FormItem>
           </Col>
         </Row>
