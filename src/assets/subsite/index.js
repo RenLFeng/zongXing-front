@@ -1,10 +1,11 @@
 import './index.scss'
 
-$(function () {
+
+export function startPage() {
   initPage();
   bindEvent();
   topNav();
-});
+}
 
 function initPage() {
 }

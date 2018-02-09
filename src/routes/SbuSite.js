@@ -3,8 +3,14 @@ import '../assets/common/index';
 import Coupon from '../components/subSiteComponent/coupon';
 import Layout from '../components/subSiteComponent/layout';
 import '../assets/subsite/index.js';
+import { startPage } from  '../assets/subsite/index';
 
 export default class subSite extends React.Component {
+
+  componentDidMount() {
+    startPage();
+  }
+
   render(){
     return(
       <div >

@@ -112,7 +112,7 @@ class Forms extends React.Component {
               })(<Input id="fCreditMoney" style={styles.inputHeight} maxLength={'50'}/>)}
                 </Col>
                 <Col span={2}>
-                  <span style={styles.label}>万元</span>
+                  <span style={styles.label}>元</span>
                 </Col>
               </Row>
             </FormItem>
