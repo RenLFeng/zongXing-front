@@ -355,3 +355,7 @@ export async function getJudgeUserName(param) {
   return request(`${BASE_URL}/zjb-website/userInfo/checkLoginName/${param}`)
 }
 
+// 用户没开户的公司列表
+export async function getNoAccountCompany() {
+  return request(`${BASE_URL}/zjb-website/company/self/noaccount`)
+}

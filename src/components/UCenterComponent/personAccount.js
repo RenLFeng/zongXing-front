@@ -272,7 +272,7 @@ export default class PersonAccount extends React.Component {
           </a>
           <a className="fl">
             <i>累计提现</i>
-            <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
+            <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
           </a>
           <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.personal.totalAssets.accountId)}>充值</a>
           <a className="btn btn2" onClick={()=>this.jumpRecharge_(this.props.personal.totalAssets.accountId)}>提现</a>
@@ -312,13 +312,14 @@ export default class PersonAccount extends React.Component {
                 this.props.personal.accountDynamicVos.map((data,index) => {
                   let year_ = moment(data.time).format('YYYY');
                   let month = moment(data.time).format('MM-DD');
+                  console.log(typeof data.inMoney);
                   return(
                     <div className="item" key={index}>
                       <p className="date">
                         <i className="y">{year_}</i><br /><i className="d">{month}</i>
                       </p>
                       <i className="cc"/>
-                      <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${data.inMoney}`} {data.outMoney === 0 ? null : `支出: ${data.outMoney}`}</p>
+                      <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
                     </div>
                   );
                 })

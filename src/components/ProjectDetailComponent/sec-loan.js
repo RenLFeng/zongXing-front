@@ -24,11 +24,13 @@ export default class SecLoan extends React.Component {
         </div>
         <div className="rbody">
           {project.fread_me_pic ? project.fread_me_pic.split(',').map((data, index)=>{
-            return (
-              <p key={data+index}>
-                <img src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${data}`}/>
-              </p>
-            );
+            if (data.length > 0) {
+              return (
+                <p key={data + index} style={{marginBottom: 10}}>
+                  <img src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${data}`}/>
+                </p>
+              );
+            }
           }): null}
 
 
@@ -37,11 +39,14 @@ export default class SecLoan extends React.Component {
             <p>{project.readme}</p>
           </div>
           {project.fmy_project_pic ? project.fmy_project_pic.split(',').map((data, index)=>{
-            return (
-              <p key={data+index}>
-                <img src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${data}`}/>
-              </p>
-            );
+            if (data.length > 0) {
+              return (
+                <p key={data+index} style={{marginBottom: 10}}>
+                  <img src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${data}`}/>
+                </p>
+              );
+            }
+
           }): null}
           <div className="tagbox">
             <i className="chk">实名认证</i>
@@ -73,7 +78,7 @@ export default class SecLoan extends React.Component {
             <i className="tit">还款计划</i>
             <p>{project.fpay_from}</p>
           </div>
-          <div className="textbox border">
+          <div className="textbox border" style={{display: 'none'}}>
             <i className="tit">我的位置</i>
             <div>
               <div id="container">

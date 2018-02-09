@@ -123,13 +123,7 @@ export default class SafeCenter extends React.Component {
     try{
       const response = await getOldPhoneCode(data);
       this.setState({loading:false});
-      // if(response.code ===0) {
-      //   this.setState({
-      //     token_: response.token,
-      //   })
-      // } else{
-      //   message.error(response.msg);
-      // }
+
     } catch(e){
       this.setState({loading:false});
       if (typeof e === 'object' && e.name === 288) {
