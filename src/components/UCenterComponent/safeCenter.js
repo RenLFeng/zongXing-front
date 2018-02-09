@@ -34,6 +34,9 @@ export default class SafeCenter extends React.Component {
       regPhone: '', //注册手机号
       token_:'',
       countDown: AUTH_CODE_TIME_,  //获取验证码倒计时
+
+      countDown_: AUTH_CODE_TIME_,
+      showAuthCode_: true,//显示获取验证码的接口
       changePhoneAuth: false,   //更新手机号码表单
       fmobile:'',  //更新后的手机号码
       authcode:'', //新验证码
@@ -43,6 +46,7 @@ export default class SafeCenter extends React.Component {
       regAuthErr: '', //验证码提示
     };
     this.countDownFun = null;
+    this.countDownFun_ = null;
   }
 
  getCodeNum(val) {
@@ -53,6 +57,10 @@ export default class SafeCenter extends React.Component {
     this.initFetchSafeData();
     if (this.countDownFun) {
       clearInterval(this.countDownFun);
+    }
+
+    if (this.countDownFun_) {
+      clearInterval(this.countDownFun_);
     }
   }
 
@@ -102,15 +110,15 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      // const response = await getOldCode(values.captcha);
-      // if (response.code === 0) {
+      const response = await getOldCode(values.captcha);
+      if (response.code === 0) {
         console.log('手机号认证数据: ', values);
         this.setState({changePhoneAuth:true});
         form.resetFields();
         this.handleCancel();
-      // } else {
-      //   message.error(response.msg);
-      // }
+      } else {
+        message.error(response.msg);
+      }
     });
   };
 
@@ -121,30 +129,33 @@ export default class SafeCenter extends React.Component {
     try{
       const response = await getOldPhoneCode(data);
       this.setState({loading:false});
-
+      if(response.code ===0){
+        const sendTime = localStorage.getItem(regPhone);
+        if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
+          alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
+          return;
+        }
+        localStorage.setItem(regPhone, new Date().getTime());
+        //发送请求 按钮变不可点状态
+        this.setState({ showAuthCode: false });
+        //成功之后倒计时开始启动
+        this.countDownFun = setInterval(() => {
+          if (this.state.countDown === 0) {
+            clearInterval(this.countDownFun);
+            this.setState({ countDown: AUTH_CODE_TIME_, showAuthCode: true });
+          } else {
+            this.setState({ countDown: this.state.countDown - 1 });
+          }
+        }, 1000);
+      }  else{
+        message.error(response.msg);
+      }
     } catch(e){
       this.setState({loading:false});
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
     }
-    const sendTime = localStorage.getItem(regPhone);
-    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
-      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
-      return;
-    }
-    localStorage.setItem(regPhone, new Date().getTime());
-    //发送请求 按钮变不可点状态
-    this.setState({ showAuthCode: false });
-    //成功之后倒计时开始启动
-    this.countDownFun = setInterval(() => {
-      if (this.state.countDown === 0) {
-        clearInterval(this.countDownFun);
-        this.setState({ countDown: AUTH_CODE_TIME_, showAuthCode: true });
-      } else {
-        this.setState({ countDown: this.state.countDown - 1 });
-      }
-    }, 1000);
   }
 
   //提交修改后的手机
@@ -161,6 +172,7 @@ export default class SafeCenter extends React.Component {
       const response = await changePhoneNum(data);
       if (response.code === 0) {
         this.setState({changePhoneAuth:false});
+        // clearInterval(this.countDownFun_);
         form.resetFields();
         this.handleCancel_();
       } else {
@@ -185,37 +197,33 @@ export default class SafeCenter extends React.Component {
     try{
       const response = await getNewCode(getCodeMobile);
       this.setState({loading:false});
-      // if(response.code ===0) {
-      //   this.setState({
-      //     mobile: response.mobile,
-      //   })
-      // } else{
-      //   message.error(response.msg);
-      // }
-
+      if(response.code ===0) {
+        const sendTime = localStorage.getItem(getCodeMobile);
+        if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
+          alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
+          return;
+        }
+        localStorage.setItem(getCodeMobile, new Date().getTime());
+        //发送请求 按钮变不可点状态
+        this.setState({ showAuthCode_: false });
+        //成功之后倒计时开始启动
+        this.countDownFun_ = setInterval(() => {
+          if (this.state.countDown_ === 0) {
+            clearInterval(this.countDownFun_);
+            this.setState({ countDown_: AUTH_CODE_TIME_, showAuthCode_: true });
+          } else {
+            this.setState({ countDown_: this.state.countDown_ - 1 });
+          }
+        }, 1000);
+      } else{
+        message.error(response.msg);
+      }
     } catch(e){
       this.setState({loading:false});
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
     }
-    const sendTime = localStorage.getItem(getCodeMobile);
-    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
-      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
-      return;
-    }
-    localStorage.setItem(getCodeMobile, new Date().getTime());
-    //发送请求 按钮变不可点状态
-    this.setState({ showAuthCode: false });
-    //成功之后倒计时开始启动
-    this.countDownFun = setInterval(() => {
-      if (this.state.countDown === 0) {
-        clearInterval(this.countDownFun);
-        this.setState({ countDown: AUTH_CODE_TIME_, showAuthCode: true });
-      } else {
-        this.setState({ countDown: this.state.countDown - 1 });
-      }
-    }, 1000);
   }
 
 
@@ -314,8 +322,8 @@ export default class SafeCenter extends React.Component {
             getNewCode={()=> this.getNewCode_()}
             loading={this.state.loading}
             getCodeNum={(val) => this.getCodeNum(val)}
-            countDown={this.state.countDown}
-            showAuthCode={this.state.showAuthCode}
+            countDown_={this.state.countDown_}
+            showAuthCode_={this.state.showAuthCode_}
             getCodeMobile={this.state.getCodeMobile}
           />
         </div>
@@ -450,13 +458,13 @@ const ChangePhoneAuth = Form.create()(
               </Col>
               <Col span={12}>
                 {
-                  props.showAuthCode ? <Button onClick={()=> props.getNewCode(props.getCodeMobile)}>获取验证码</Button> :
+                  props.showAuthCode_ ? <Button onClick={()=> props.getNewCode(props.getCodeMobile)}>获取验证码</Button> :
                     <Button loading={props.loading}>
-                      {props.countDown}s获取验证码
+                      {props.countDown_}s获取验证码
                     </Button>
                 }
                 {
-                  props.showAuthCode ? null :
+                  props.showAuthCode_ ? null :
                     <p>验证码已发送到手机,请注意查收!</p>
                 }
               </Col>
