@@ -54,13 +54,13 @@ export default class CompanyAccount extends React.Component {
           },
           formatter:  function(name){
             if (name==='可用余额') {
-              return `${name}  {c|100,000.01}`
+              return `${name}  {c|0.00}`
             } else if (name === '冻结金额') {
-              return `${name}  {b|2.01}`
+              return `${name}  {b|0.00}`
             } else if (name === '待收金额') {
-              return `${name}  {b|100,000.01}`
+              return `${name}  {b|0.00}`
             } else if (name === '待收收益') {
-              return `${name}  {b|10,000.01}`
+              return `${name}  {b|0.00}`
             } else {
               return `${name}  {b|100.01}`
             }
@@ -107,11 +107,11 @@ export default class CompanyAccount extends React.Component {
               }
             },
             data:[
-              {value:335, name:'可用余额'},
-              {value:310, name:'冻结金额'},
-              {value:234, name:'待收本金'},
-              {value:135, name:'待收收益'},
-              {value:1548, name:'待还总额'}
+              {value:0, name:'可用余额'},
+              {value:0, name:'冻结金额'},
+              {value:0, name:'待收本金'},
+              {value:0, name:'待收收益'},
+              {value:0, name:'待还总额'}
             ]
           }
         ]
@@ -304,7 +304,7 @@ export default class CompanyAccount extends React.Component {
           </a>
           <a className="fl">
             <i>累计提现</i>
-            <b className="f18">{(this.props.company_page.totalAssets.totalRecharge+'').fm()}</b>
+            <b className="f18">{(this.props.company_page.totalAssets.totalWithdrawals+'').fm()}</b>
           </a>
           <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.company_page.totalAssets.accountId)}>充值</a>
           <a className="btn btn2">提现</a>
@@ -350,7 +350,7 @@ export default class CompanyAccount extends React.Component {
                         <i className="y">{year_}</i><br /><i className="d">{month}</i>
                       </p>
                       <i className="cc"/>
-                      <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${data.inMoney.fm()}`} {data.outMoney === 0 ? null : `支出: ${data.outMoney.fm()}`}</p>
+                      <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
                     </div>
                   );
                 })

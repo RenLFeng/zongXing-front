@@ -234,7 +234,7 @@ class Forms extends React.Component {
               >
                 {getFieldDecorator('fIDCardNo', {
                   rules: [{
-                    pattern: ID_CORD, message: '请填写正确的身份号'
+                    pattern: ID_CORD, message: '请填写正确的身份证'
                   }],
                   initialValue: data.fidcard_no ? data.fidcard_no : ''
                 })(<Input id="fIDCardNo" style={styles.inputHeight} maxLength={'50'}/>)}
@@ -253,7 +253,7 @@ class Forms extends React.Component {
                 {getFieldDecorator('fMobile', {
                   initialValue: data.fmobile ? data.fmobile : '',
                   rules: [{
-                    pattern: VER_PHONE, message: '请填写正确的手机号'
+                    pattern: VER_PHONE, message: '请填写正确的手机'
                   }]
                 })(<Input id="fMobile" style={styles.inputHeight} maxLength={'50'}/>)}
               </FormItem>

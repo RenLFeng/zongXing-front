@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'dva/router';
 
-import {Form, Input, Button, Select, Modal, message } from 'antd';
+import {Form, Input, Button, Select, Modal, message, Row, Col } from 'antd';
 import { connect } from 'dva';
 
 import '../../assets/ucenter/modelCenter.scss';
 import { VER_PHONE, ID_CORD } from '../../common/systemParam';
 import Path from '../../common/pagePath';
 
-import {getPersonAccount, commitOpenAccount} from '../../services/api';
+import {getPersonAccount, commitOpenAccount, getNoAccountCompany} from '../../services/api';
 
 const FormItem = Form.Item;
 
@@ -20,11 +20,12 @@ export default class OpenAccount extends React.Component {
 
 
   render() {
-    const { match } = this.props;
+    const { match, history } = this.props;
     const type = match.params.type;
+
     return (
       <div className="fr uc-rbody" >
-        <FormOpenComponent type={type}/>
+        <FormOpenComponent type={type} history={history}/>
       </div>
     );
   }
@@ -61,11 +62,26 @@ class FormComponent extends React.Component {
       visible: false,
       countDownTime: TIME_OUT,
       companyNumber: '',
-      loading: false
+      loading: false,
+      regCompany: [],
+      companyName: '',
+      license: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.countDown = null;
     this.confirmRequest = null;
+  }
+
+  componentDidMount() {
+    this.getCompany();
+  }
+
+  async getCompany() {
+    const response = await getNoAccountCompany();
+    console.log(response);
+    if (response.code === 0) {
+      this.setState({regCompany: response.data});
+    }
   }
 
   handleSubmit(e) {
@@ -75,6 +91,7 @@ class FormComponent extends React.Component {
       if (!err) {
         console.log('表单获取的数据', values);
         // 提交表单接口
+
         this.setState({loading: true});
         try {
           const response = await commitOpenAccount(values);
@@ -91,6 +108,7 @@ class FormComponent extends React.Component {
             message.error(response.msg);
           }
         } catch (e) {
+          console.log(e);
           message.error('服务器异常');
         }
         this.setState({loading: false});
@@ -176,6 +194,29 @@ class FormComponent extends React.Component {
     });
   };
 
+  changeCompany(val) {
+    for (let data of this.state.regCompany) {
+      if (val === data.fid) {
+        this.setState({
+          companyName: data.fname,
+          license: data.fsocialCreditCode,
+        });
+        return;
+      }
+    }
+
+  }
+
+  changeType(val) {
+    this.setState({
+      openType: val,
+      companyName: '',
+      license: ''
+    });
+    this.props.form.resetFields();
+
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -188,7 +229,7 @@ class FormComponent extends React.Component {
             rules:[{ required: true, message: '请选择开户类型' }],
             initialValue: this.props.type === '1' ? '1' : '0'
           })(
-            <Select onChange={(val)=>this.setState({openType: val})}>
+            <Select onChange={(val)=>this.changeType(val)}>
               <Select.Option value="0">个人开户</Select.Option>
               <Select.Option value="1">企业开户</Select.Option>
             </Select>
@@ -216,14 +257,6 @@ class FormComponent extends React.Component {
           <div>
             <FormItem
               {...formItemLayout}
-              label="真实姓名"
-            >
-              {getFieldDecorator('realName', {
-                rules: [{ required: true, message: '请填写真实姓名' }],
-              })(<Input maxLength={'20'}/>)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
               label="身份证号"
             >
               {getFieldDecorator('identificationNo', {
@@ -236,21 +269,47 @@ class FormComponent extends React.Component {
           </div> : null }
         { this.state.openType === '1' ?
           <div>
+            <Row>
+              <Col span={15}>
+                <FormItem
+                  {...formItemLayout}
+                  label="注册企业"
+                  labelCol={{xs: { span: 24 },sm: { span: 8 }}}
+                  wrapperCol={{xs: { span: 24 },sm: { span: 15 }}}
+                >
+                  {getFieldDecorator('companyId', {
+                    rules: [{ required: true, message: '请选择注册企业' }],
+                  })(
+                    <Select onChange={(val)=>this.changeCompany(val)}>
+                      {this.state.regCompany.map((data) => {
+                        return <Select.Option key={data.fid} value={data.fid}>{data.fname}</Select.Option>
+                      })}
+                    </Select>)}
+                </FormItem>
+              </Col>
+              <Col span={9}>
+                <div style={{height: 30, lineHeight: 3}}>
+                  <Link style={{color: 'blue'}} to={'/index/applyLoan'}>去添加公司</Link>
+                </div>
+              </Col>
+            </Row>
             <FormItem
               {...formItemLayout}
               label="企业名称"
             >
               {getFieldDecorator('realName', {
                 rules: [{ required: true, message: '请填写企业名称' }],
-              })(<Input maxLength={'50'}/>)}
+                initialValue: this.state.companyName
+              })(<Input maxLength={'50'} disabled={true}/>)}
             </FormItem>
             <FormItem
               {...formItemLayout}
               label="营业执照号"
             >
               {getFieldDecorator('identificationNo', {
-                rules: [{ required: true, message: '请填写营业执照号' }],
-              })(<Input maxLength={'60'} onChange={(e)=>this.setState({companyNumber: e.target.value})}/>)}
+                rules: [{ required: true, message: '请填写营业执照号'}],
+                initialValue: this.state.license
+              })(<Input maxLength={'60'} disabled={true} onChange={(e)=>this.setState({companyNumber: e.target.value})}/>)}
             </FormItem>
           </div> : null
           }
