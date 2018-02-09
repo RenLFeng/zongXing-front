@@ -8,6 +8,7 @@ export function startPage() {
 }
 
 function initPage() {
+
 }
 
 function bindEvent() {

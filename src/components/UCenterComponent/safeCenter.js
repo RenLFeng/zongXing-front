@@ -37,7 +37,7 @@ export default class SafeCenter extends React.Component {
       changePhoneAuth: false,   //更新手机号码表单
       fmobile:'',  //更新后的手机号码
       authcode:'', //新验证码
-      // mobile:'',
+
       getCodeMobile: '',
       regPhoneErr: '',  //注册手机号提示
       regAuthErr: '', //验证码提示
@@ -55,8 +55,6 @@ export default class SafeCenter extends React.Component {
       clearInterval(this.countDownFun);
     }
   }
-
-
 
   // 初始化安全中心首页数据
   initFetchSafeData= () => {
@@ -104,15 +102,15 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      const response = await getOldCode(values.captcha);
-      if (response.code === 0) {
+      // const response = await getOldCode(values.captcha);
+      // if (response.code === 0) {
         console.log('手机号认证数据: ', values);
         this.setState({changePhoneAuth:true});
         form.resetFields();
         this.handleCancel();
-      } else {
-        message.error(response.msg);
-      }
+      // } else {
+      //   message.error(response.msg);
+      // }
     });
   };
 
