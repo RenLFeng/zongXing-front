@@ -7,6 +7,7 @@ import Path from '../../common/pagePath';
 import {getPersonAccount} from '../../services/api';
 import {connect} from 'dva';
 import moment from "moment/moment";
+import { AUTH_ADDRESS } from '../../common/systemParam';
 
 const FormItem = Form.Item;
 @connect((state) => ({
@@ -270,9 +271,12 @@ export default class CompanyAccount extends React.Component {
 
   jumpRecharge(accoundId) {
     this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {account:accoundId}})
-  };
+  }
 
-
+  jumpRecharge_(accoundId) {
+    console.log(accoundId);
+    this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
+  }
 
   // 获取选择的公司账户信息
   changeCompanyData(val) {
@@ -306,8 +310,9 @@ export default class CompanyAccount extends React.Component {
             <i>累计提现</i>
             <b className="f18">{(this.props.company_page.totalAssets.totalWithdrawals+'').fm()}</b>
           </a>
+          <a className="btn btn1" onClick={()=>window.open(AUTH_ADDRESS)}>实名认证</a>
           <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.company_page.totalAssets.accountId)}>充值</a>
-          <a className="btn btn2">提现</a>
+          <a className="btn btn2" onClick={()=>this.jumpRecharge_(this.props.company_page.totalAssets.accountId)}>提现</a>
           <a className="btn btn3">好友转账</a>
         </div>
         <div className="border shadow box1">

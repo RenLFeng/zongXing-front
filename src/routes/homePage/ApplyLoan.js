@@ -197,7 +197,7 @@ export default class ApplyLoan extends React.Component {
       return false;
     }
     if (!$("#fCreditUse").val()) {
-      message.error('借款信息中借款期数不能为空');
+      message.error('借款信息中借款用途不能为空');
       return false;
     }
     if (!$("#fName").val()) {

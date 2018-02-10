@@ -5,7 +5,7 @@ import {Form, Input, Button, Select, Modal, message, Row, Col } from 'antd';
 import { connect } from 'dva';
 
 import '../../assets/ucenter/modelCenter.scss';
-import { VER_PHONE, ID_CORD } from '../../common/systemParam';
+import { VER_PHONE, ID_CORD, AUTH_ADDRESS } from '../../common/systemParam';
 import Path from '../../common/pagePath';
 
 import {getPersonAccount, commitOpenAccount, getNoAccountCompany} from '../../services/api';
@@ -103,6 +103,15 @@ class FormComponent extends React.Component {
               this.props.history.push(Path.PERSONAL_ACCOUNT);
             } else if (values.accountType === '1') {
               this.props.history.push(Path.COMPANY_ACCOUNT);
+              Modal.confirm({
+                title: '提示',
+                content: '企业账户已开通，请完成实名认证',
+                okText: '前往',
+                cancelText: '取消',
+                onOk: () => {
+                  window.open(AUTH_ADDRESS);
+                }
+              });
             }
           } else {
             message.error(response.msg);

@@ -24,12 +24,11 @@ export default {
           const access = {webToken:response.data.webToken,nickName: response.data.nickName};
           localStorage.setItem('accessToken', JSON.stringify(access));
           yield put(routerRedux.push('/'));
-          console.log(response.data.nickName);
           yield put({
             type: 'changeLoginStatus',
             payload: {
               nickName: response.data.nickName,
-              code: true,
+              code: true
             },
           });
         } else {
