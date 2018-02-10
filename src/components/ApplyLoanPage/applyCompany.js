@@ -1,7 +1,7 @@
 import React from 'react';
 import ImgUpload from '../../components/UpLoad/imgUpload';
 import {Form, Select, Input, Button, Row, Col, Cascader, message} from 'antd';
-import {MONEY_REG, BANK_CARD, TEL_PHONE, IMG_BASE_URL, LICENSE} from '../../common/systemParam';
+import {MONEY_REG, BANK_CARD, TEL_PHONE, IMG_BASE_URL, LICENSE, reg_REG1, china_REG, ZHUZHI_REG} from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import {getProjectType, getAddressCoordinate, POSITION_KEY} from '../../services/api';
 
@@ -219,7 +219,7 @@ class Forms extends React.Component {
                 >
                   {getFieldDecorator('fname', {
                     initialValue: data.companyName ? data.companyName : '',
-                    rules: []
+                    rules: [{pattern:reg_REG1, message:'只能输入中文，英文'}]
                   })(<Input id="fname" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>
@@ -249,7 +249,7 @@ class Forms extends React.Component {
                 >
                   {getFieldDecorator('fbankName', {
                     initialValue: data.fcbank_name ? data.fcbank_name : '',
-                    rules: []
+                    rules: [{pattern: china_REG, message: '只能输入汉字'}]
                   })(<Input id="fbankName" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>
@@ -281,7 +281,7 @@ class Forms extends React.Component {
                 >
                   {getFieldDecorator('fbusAddress', {
                     initialValue: data.fbus_address ? data.fbus_address : '',
-                    rules: [],
+                    rules: [{pattern:ZHUZHI_REG, message:'请输入正确的经营地址（只能包含汉字，数字，字母，下划线）'}],
                   })(<Input id="fbusAddress" style={styles.inputHeight} maxLength={'100'} onChange={(e)=>this.getCoordinateByAddress(e)}/>)}
                 </FormItem>
               </div>

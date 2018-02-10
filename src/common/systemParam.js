@@ -19,6 +19,33 @@ export const VER_PHONE = /^1([38][0-9]|5[012356789]|4[579]|7[0135678]|9[89])[0-9
 // 身份证号正则
 export const ID_CORD = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
 
+//真实姓名验证正则
+export const NAME_REG_ = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/;
+
+//qq号验证正则
+export const QQ_REG = /[1-9][0-9]{4,14}/;
+
+//微信号验证正则
+export const WeChat_REG = /^[a-zA-Z\d_]{5,}$/;
+
+//家庭住址验证正则
+export const ZHUZHI_REG = /^[\u4E00-\u9FA5A-Za-z0-9_]+$/;
+
+//校验个人爱好正则
+export const HOBBY_REG = /[\u4e00-\u9fa5a-zA-Z]{2,}/;
+
+//链接正则
+export const URL_REG = /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?$/;
+
+//验证含数字，字母，中文的正则
+export const reg_REG = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
+
+//验证含中文，英文的正则
+export const reg_REG1 = /^[\u4E00-\u9FA5A-Za-z]+$/;
+
+//只包含汉字的正则
+export const china_REG = /^[\u4E00-\u9FA5]+$/;
+
 // 用户名正则
 export const USER_REG = /^[a-zA-Z0-9_-]{2,16}$/;
 

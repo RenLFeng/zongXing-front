@@ -4,7 +4,7 @@ import { Link } from 'dva/router';
 import { Form, Input, Button, Select, Radio, DatePicker, Cascader, Spin } from 'antd';
 import moment from 'moment';
 import { connect } from 'dva';
-import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD} from '../../common/systemParam';
+import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD, NAME_REG_, QQ_REG, WeChat_REG, ZHUZHI_REG, HOBBY_REG} from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import { getJudgeUserName } from '../../services/api';
 
@@ -116,7 +116,8 @@ class UserBaseFormInput extends React.Component {
           label="真实姓名"
         >
           {getFieldDecorator('frealName', {
-            rules:[{whitespace: true, message: '真实姓名中不能出现空格'}],
+            rules:[{pattern: NAME_REG_, message: '请输入合法的中文'},
+              {whitespace: true, message: '真实姓名中不能出现空格'}],
             initialValue: userBase.freal_name?userBase.freal_name: null
           })(<Input maxLength={'20'}/>)}
         </FormItem>
@@ -190,6 +191,7 @@ class UserBaseFormInput extends React.Component {
           label="QQ号"
         >
           {getFieldDecorator('fQQ', {
+            rules:[{pattern: QQ_REG, message: '请输入合法的QQ号'}],
             initialValue: userBase.fqq?userBase.fqq: null
           })(<Input maxLength={'50'}/>)}
         </FormItem>
@@ -198,6 +200,7 @@ class UserBaseFormInput extends React.Component {
           label="微信号"
         >
           {getFieldDecorator('fweichat', {
+            rules:[{pattern: WeChat_REG, message:'请输入合法的微信号'}],
             initialValue: userBase.fweichat ? userBase.fweichat : null
           })(<Input maxLength={'50'}/>)}
         </FormItem>
@@ -215,6 +218,7 @@ class UserBaseFormInput extends React.Component {
           label="家庭住址"
         >
           {getFieldDecorator('fAddress', {
+            rules:[{pattern: ZHUZHI_REG, message:'请输入合法的家庭住址信息' }],
             initialValue: userBase.faddress? userBase.faddress: null
           })(<Input.TextArea autosize={{ minRows: 2, maxRows: 3 }} maxLength={200}/>)}
         </FormItem>
@@ -255,6 +259,7 @@ class UserBaseFormInput extends React.Component {
           label="工作"
         >
           {getFieldDecorator('fJob', {
+            rules:[{pattern: HOBBY_REG, message: '请输入合法的内容'}],
             initialValue: userBase.fjob?userBase.fjob: null,
           })(<Input maxLength={'50'}/>)}
         </FormItem>
@@ -263,6 +268,7 @@ class UserBaseFormInput extends React.Component {
           label="兴趣爱好"
         >
           {getFieldDecorator('fHobby', {
+            rules:[{pattern: HOBBY_REG, message: '请输入合法的中文'}],
             initialValue: userBase.fhobby?userBase.fhobby : null,
           })(<Input maxLength={'50'}/>)}
         </FormItem>

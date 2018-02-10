@@ -1,7 +1,7 @@
 import React from 'react';
 import ImgUpload from '../../components/UpLoad/imgUpload';
 import {Form, Select, Input, Button, Row, Col, Cascader, message } from 'antd';
-import { MONEY_REG, IMG_BASE_URL } from '../../common/systemParam';
+import { MONEY_REG, IMG_BASE_URL, reg_REG, URL_REG } from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import {getProjectType} from '../../services/api';
 
@@ -203,8 +203,8 @@ class Forms extends React.Component {
             >
               {getFieldDecorator('fVideoPath', {
                 initialValue: data.fvideo_path ? data.fvideo_path : '',
-                rules: []
-              })(<Input style={styles.inputHeight} maxLength={'50'}/>)}
+                rules: [{pattern: URL_REG, message:'请输入正确的链接'}]
+              })(<Input style={styles.inputHeight} maxLength={'60'}/>)}
             </FormItem>
           </Col>
         </Row>
@@ -232,7 +232,7 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('readmeDesc', {
             initialValue: data.readmedesc ? data.readmedesc : '',
-            rules: [],
+            rules: [{pattern:reg_REG, message:'只能输入中文，英文，数字'}],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}
@@ -256,7 +256,7 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('myProjectDesc', {
             initialValue: data.myprodesc ? data.myprodesc : '',
-            rules: [],
+            rules: [{pattern:reg_REG, message:'只能输入中文，英文，数字'}],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}
@@ -280,7 +280,7 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('fWhyLoan', {
             initialValue: data.fwhy_loan ? data.fwhy_loan : '',
-            rules: [],
+            rules: [{pattern:reg_REG, message:'只能输入中文，英文，数字'}],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}
@@ -291,7 +291,7 @@ class Forms extends React.Component {
         >
           {getFieldDecorator('fPayFrom', {
             initialValue: data.fpay_from ? data.fpay_from : '',
-            rules: [],
+            rules: [{pattern:reg_REG, message:'只能输入中文，英文，数字'}],
           })(
             <Input.TextArea autosize={{ minRows: 6, maxRows: 7 }} />
           )}

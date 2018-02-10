@@ -234,6 +234,7 @@ class UserBaseFormInput extends React.Component {
           label="兴趣爱好"
         >
           {getFieldDecorator('fHobby', {
+
             initialValue: userBase.fHobby?userBase.fHobby : null,
           })(<Input maxLength={'50'}/>)}
         </FormItem>
