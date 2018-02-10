@@ -1,9 +1,9 @@
 import React from 'react';
 import ImgUpload from '../../components/UpLoad/imgUpload';
 import {Form, Select, Input, Button, Row, Col, Cascader, message} from 'antd';
-import {MONEY_REG, BANK_CARD, TEL_PHONE, IMG_BASE_URL, LICENSE, reg_REG1, china_REG, ZHUZHI_REG} from '../../common/systemParam';
+import {MONEY_REG, BANK_CARD, TEL_PHONE, IMG_BASE_URL, LICENSE, reg_REG1, china_REG, ZHUZHI_REG, reg_REG} from '../../common/systemParam';
 import {city} from '../../common/cityData';
-import {getProjectType, getAddressCoordinate, POSITION_KEY} from '../../services/api';
+import {getProjectType, getAddressCoordinate, POSITION_KEY, getCompanyByAccount} from '../../services/api';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -63,7 +63,9 @@ class Forms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      industryType: []
+      industryType: [],
+      companyArr: [],
+      companyName: ''
     };
     this.data = {
       className:"ant-uploa",
@@ -77,6 +79,17 @@ class Forms extends React.Component {
 
   componentDidMount() {
     this.fetchProjectType();
+    this.getCompany();
+  }
+
+  async getCompany() {
+    const response = await getCompanyByAccount();
+    console.log(response);
+    if (response.code === 0) {
+      this.setState({
+        companyArr: response.data
+      });
+    }
   }
 
   async getCoordinateByAddress(e) {
@@ -85,7 +98,6 @@ class Forms extends React.Component {
       address: e.target.value,
       batch: true
     });
-    console.log(response);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -188,6 +200,16 @@ class Forms extends React.Component {
     // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
     callback()
   };
+  handleChange(val) {
+    for (let data of this.state.companyArr) {
+      if (data.fname === val) {
+        this.props.form.setFieldsValue({
+          fsocialCreditCode: data.fsocialCreditCode
+        });
+        return;
+      }
+    }
+  }
 
   changeLoading(name, status) {
     this.setState({
@@ -202,6 +224,14 @@ class Forms extends React.Component {
     });
   }
 
+  validateName = (rule, value, callback) => {
+    const { getFieldValue } = this.props.form;
+    if (value && /^[0-9]*$/.test(value)) {
+      callback('不能为纯数字');
+    }
+    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    callback()
+  };
   render() {
     const {getFieldDecorator} = this.props.form;
     const { pageNum, dateCode, fProjectNo, data} = this.props;
@@ -219,8 +249,21 @@ class Forms extends React.Component {
                 >
                   {getFieldDecorator('fname', {
                     initialValue: data.companyName ? data.companyName : '',
-                    rules: [{pattern:reg_REG1, message:'只能输入中文，英文'}]
-                  })(<Input id="fname" style={styles.inputHeight} maxLength={'50'}/>)}
+                    rules: [{validator: this.validateName}]
+                  })(<Select
+                    mode="combobox"
+                    id="fname"
+                    defaultActiveFirstOption={false}
+                    showArrow={false}
+                    filterOption={false}
+                    onChange={(val)=>this.handleChange(val)}
+                  >
+                    {this.state.companyArr.map((data, index)=>{
+                      return (
+                        <Select.Option value={data.fname} key={index}>{data.fname}</Select.Option>
+                      );
+                    })}
+                  </Select>)}
                 </FormItem>
               </div>
             </Col>
@@ -249,7 +292,7 @@ class Forms extends React.Component {
                 >
                   {getFieldDecorator('fbankName', {
                     initialValue: data.fcbank_name ? data.fcbank_name : '',
-                    rules: [{pattern: china_REG, message: '只能输入汉字'}]
+                    rules: [ {validator: this.validateName}]
                   })(<Input id="fbankName" style={styles.inputHeight} maxLength={'50'}/>)}
                 </FormItem>
               </div>

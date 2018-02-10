@@ -1,8 +1,9 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
 
-export const BASE_URL = 'http://192.168.1.4:8001';
+// export const BASE_URL = 'http://192.168.1.4:8001';
 // const BASE_URL = 'http://139.199.14.60:8001'; // 远端
+const BASE_URL = 'http://zjbapi.ikingtech.club:8080'; // 远端
 
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59';
 
@@ -363,4 +364,9 @@ export async function getNoAccountCompany() {
 // 获取投弃前咨询投后跟踪数字
 export async function getInvestmentNum(param) {
   return request(`${BASE_URL}/zjb-website/projectInfo/getCount/${param}`);
+}
+
+// 获取个人账户下公司信息
+export async function getCompanyByAccount() {
+  return request(`${BASE_URL}/zjb-website/company/self/list`)
 }

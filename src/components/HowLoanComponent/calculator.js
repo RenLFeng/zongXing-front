@@ -61,11 +61,13 @@ export default class Calculator extends React.Component {
     * */
     time = time.substring(0, time.length-2) * 1;
     percent = percent.substring(0, percent.length-1) * 1;
+
     let interestRate = percent.mul(money).div(12).div(100);
     let monthMoney = money.div(time).add(interestRate);
+
     this.setState({
       repayment: monthMoney ,  // 每月还款
-      interest: monthMoney.mul(time).sub(monthMoney),  // 总支付利息
+      interest: (monthMoney.mul(time)).sub(calValue*10000),  // 总支付利息
       theSum: monthMoney.mul(time), // 本息和
     });
   }

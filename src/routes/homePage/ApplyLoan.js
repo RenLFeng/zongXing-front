@@ -1,6 +1,6 @@
 import React from 'react';
 import ImgUpload from '../../components/UpLoad/imgUpload';
-import {message, Spin} from 'antd';
+import {message, Spin, Modal} from 'antd';
 import moment from 'moment';
 import { initApply } from '../../assets/apply/index';
 import ApplyInfo from '../../components/ApplyLoanPage/applyInfo';
@@ -8,6 +8,9 @@ import ApplyCompany from '../../components/ApplyLoanPage/applyCompany';
 import ApplyPerson from '../../components/ApplyLoanPage/applyPerson';
 import ApplyProject from '../../components/ApplyLoanPage/applyProject';
 import { applySave, getLoanInfo, applyCommit } from '../../services/api';
+import Path from '../../common/pagePath';
+import { AUTH_ADDRESS } from '../../common/systemParam';
+
 export default class ApplyLoan extends React.Component {
   constructor(props) {
     super(props);
@@ -174,10 +177,32 @@ export default class ApplyLoan extends React.Component {
             message.info('完成');
             this.props.history.push('/index/projectLoan');
             $(window).scrollTop(0);
+          } else if (response.code === -2) {
+            Modal.confirm({
+              title: '提示',
+              content: '您的企业账户未开通，请前往开通',
+              okText: '前往',
+              cancelText: '取消',
+              onOk: () => {
+                $(window).scrollTop(0);
+                this.props.history.push(Path.OPEN_ACCOUNT + '/1');
+              }
+            });
+          } else if (response.code === -3) {
+            Modal.confirm({
+              title: '提示',
+              content: '您的企业账户未认证，请前往第三方网站使用钱多多账号认证',
+              okText: '前往',
+              cancelText: '取消',
+              onOk: () => {
+                window.open(AUTH_ADDRESS);
+              }
+            });
           } else {
             message.error(response.msg);
           }
         } catch(e) {
+          console.log(e);
           this.setState({loadingState: false});
           message.error('网络异常');
         }
@@ -219,9 +244,6 @@ export default class ApplyLoan extends React.Component {
       return false;
     }if (!$("#fPhone1").val()) {
       message.error('借款人信息中第一联系人手机不能为空');
-      return false;
-    }if (!$("#fRelation1").val()) {
-      message.error('借款人信息中第一联系人社会关系不能为空');
       return false;
     }
     if (!$("#fname").val()) {
