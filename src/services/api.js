@@ -359,3 +359,8 @@ export async function getJudgeUserName(param) {
 export async function getNoAccountCompany() {
   return request(`${BASE_URL}/zjb-website/company/self/noaccount`)
 }
+
+// 获取投弃前咨询投后跟踪数字
+export async function getInvestmentNum(param) {
+  return request(`${BASE_URL}/zjb-website/projectInfo/getCount/${param}`);
+}

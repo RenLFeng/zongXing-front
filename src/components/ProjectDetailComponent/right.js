@@ -22,6 +22,7 @@ export default class Right extends React.Component {
       showForm: false,
       loading: false
     };
+    this.rate = 1;
   }
 
 
@@ -69,10 +70,10 @@ export default class Right extends React.Component {
 
 
   render(){
+    const {countDay, countDown} = this.props.time;
     const project = this.props.projectDetail;
     const allMoney = project.allMoney?project.allMoney:0;
     const userCount = project.userCount ? project.userCount: 0;
-    const {countDay, countDown} = this.props.time;
     return (
       <div>
         <div className="box1 shadow">
@@ -88,7 +89,7 @@ export default class Right extends React.Component {
             </div>
           </div>
           <div className="data clearfix">
-            <div className="circle" data-value={allMoney/project.fcredit_money}/>
+            <div className="circle" data-value={allMoney/project.fcredit_money*100}/>
             <i className="ctext">已筹款比例</i>
             <div className="fr">
               <p className="t1">已经筹款</p>

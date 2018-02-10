@@ -6,7 +6,7 @@ import SecConsultation from '../../components/ProjectDetailComponent/sec-consult
 import SecTrack from '../../components/ProjectDetailComponent/sec-track';
 import SecCourse from '../../components/ProjectDetailComponent/sec-course';
 import Right from '../../components/ProjectDetailComponent/right';
-import {getProjectDetail} from '../../services/api';
+import {getProjectDetail, getInvestmentNum} from '../../services/api';
 import { message } from 'antd';
 import {IMG_BASE_URL} from '../../common/systemParam';
 
@@ -22,7 +22,7 @@ export default class ProjectDetail extends React.Component {
   }
   componentDidMount() {
     this.fetchProjectDetail();
-    initPage();
+    this.changeNum();
   }
 
   componentWillUnmount() {
@@ -33,6 +33,9 @@ export default class ProjectDetail extends React.Component {
   async fetchProjectDetail() {
     const {projectId} = this.props.match.params;
     const response = await getProjectDetail(projectId);
+    setTimeout(()=>{
+      initPage();
+    }, 500);
     if (response.code === 0) {
       this.setState({
         projectDetail: response.data
@@ -107,6 +110,22 @@ export default class ProjectDetail extends React.Component {
     }
   }
 
+
+  async changeNum() {
+    const {projectId} = this.props.match.params;
+    const response = await getInvestmentNum(projectId);
+    console.log(response);
+    if (response.code === 0) {
+      this.setState({
+        projectDetail: {
+          ...this.state.projectDetail,
+          topicCount: response.data.topicCount,
+          questionCount: response.data.questionCount
+        }
+      })
+    }
+  }
+
   render() {
     const { projectDetail } = this.state;
     return (
@@ -124,13 +143,13 @@ export default class ProjectDetail extends React.Component {
               <SecLoan projectDetail={projectDetail}/>
             </div>
             <div className="pd-con none">
-              <SecConsultation {...this.props.match.params}/>
+              <SecConsultation changeNum={()=>this.changeNum()} {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
-              <SecTrack projectDetail={projectDetail} {...this.props.match.params}/>
+              <SecTrack projectDetail={projectDetail} changeNum={()=>this.changeNum()} {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
-              <SecCourse projectDetail={projectDetail} {...this.props.match.params}/>
+              <SecCourse projectDetail={projectDetail}  {...this.props.match.params}/>
             </div>
           </div>
           <div className="fr rbody">

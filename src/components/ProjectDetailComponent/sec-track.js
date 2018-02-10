@@ -91,6 +91,7 @@ export default class SecTrack extends React.Component {
       this.setState({sendLoading: false});
       if (response.code === 0) {
         // 发布话题成功之后 清空话题框 刷新全部话题列表
+        this.props.changeNum();
         this.setState({topicText: ''});
         message.info(response.msg);
         this.fetchQuestion();
