@@ -173,7 +173,6 @@ export default class SafeCenter extends React.Component {
       const response = await changePhoneNum(data);
       if (response.code === 0) {
         this.setState({changePhoneAuth:false});
-        // clearInterval(this.countDownFun_);
         form.resetFields();
         this.handleCancel_();
       } else {
