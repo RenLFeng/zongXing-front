@@ -224,7 +224,6 @@ class FormComponent extends React.Component {
         return;
       }
     }
-
   }
 
   changeType(val) {
@@ -286,7 +285,18 @@ class FormComponent extends React.Component {
                 ],
               })(<Input maxLength={'20'}/>)}
             </FormItem>
-          </div> : null }
+            <FormItem
+              {...formItemLayout}
+              label="真实姓名"
+            >
+              {getFieldDecorator('realName', {
+                rules: [
+                 { required: true, message: '请填写真实姓名' },
+                ],
+              })(<Input maxLength={'20'}/>)}
+            </FormItem>
+          </div>
+          : null }
         { this.state.openType === '1' ?
           <div>
             <Row>
