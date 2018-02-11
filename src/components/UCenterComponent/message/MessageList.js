@@ -11,7 +11,7 @@ export default class MessageList extends React.Component {
     super(props);
     this.state = {
       pageCurrent: 1, //当前页，初始值为第一页
-      pageSize: 1,    //每页可显示的消息条数
+      pageSize: 15,    //每页可显示的消息条数
       maxPage: 0,     //最大页
       arr: []
     }

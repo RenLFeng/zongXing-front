@@ -21,7 +21,7 @@ export default class Head extends React.Component {
             <div className="user">
               <img className="av" src={require("../../assets/img/project-detail/av1.png")} />
               <p className="t1">{projectDetail.fnickname}</p>
-              <p className="t2">{moment(projectDetail.fpublish_time).format('YYYY年MM月DD日')} {projectDetail.fprovincial_name} - {projectDetail.fcity_name}</p>
+              <p className="t2">{moment(projectDetail.fpublish_time).format('YYYY年MM月DD日')} {projectDetail.fprovincial_name === projectDetail.fcity_name ? projectDetail.fprovincial_name : `${projectDetail.fprovincial_name} - ${projectDetail.fcity_name}`}</p>
             </div>
             <div className="data clearfix">
               <div>
@@ -34,7 +34,7 @@ export default class Head extends React.Component {
               </div>
               <div>
                 <p className="t1">借款金额</p>
-                <p className="t2">{(projectDetail.fcredit_money*1/10000).toFixed(2)}万</p>
+                <p className="t2">{isNaN(projectDetail.fcredit_money*1/10000)?null:(projectDetail.fcredit_money*1/10000).toFixed(2)}万</p>
               </div>
             </div>
           </div>

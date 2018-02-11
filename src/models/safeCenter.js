@@ -1,5 +1,5 @@
 import {getSafeData} from '../services/api';
-
+import { message } from 'antd';
 export default {
   namespace: 'safeCenter',
   state: {
@@ -31,15 +31,16 @@ export default {
           });
         }
       } catch (e) {
-        if (typeof e === 'object' && e.name === 288) {
-          throw e;
-        }
         yield put({
           type: 'endSafeData',
           payload: {
             userSecurityCenter: {}
           }
         });
+        if (typeof e === 'object' && e.name === 288) {
+          throw e;
+        }
+        message.error('网络异常')
       }
     },
   },

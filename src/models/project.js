@@ -48,7 +48,7 @@ export default {
         // 重置动画
         setTimeout(()=>{
           startAnimate();
-        }, 200);
+        }, 300);
       } else {
         console.log(response.msg);
       }

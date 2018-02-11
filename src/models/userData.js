@@ -27,13 +27,13 @@ export default {
           console.log(response.msg);
         }
       } catch(e) {
+        yield put({
+          type: 'endFetchUserBase',
+        });
         if (typeof e === 'object' && e.name === 288) {
           throw e;
         }
         message.error('网络异常');
-        yield put({
-          type: 'endFetchUserBase',
-        });
       }
 
     },
@@ -54,13 +54,14 @@ export default {
           console.log(response.msg);
         }
       } catch(e) {
+        yield put({
+          type: 'endFetchUserBase',
+        });
         if (typeof e === 'object' && e.name === 288) {
           throw e;
         }
         message.error('网络异常');
-        yield put({
-          type: 'endFetchUserBase',
-        });
+
       }
     },
   },

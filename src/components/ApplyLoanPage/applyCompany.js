@@ -110,12 +110,12 @@ class Forms extends React.Component {
           }
         }
         if (!err) {
-          const data ={
+          const data = {
             company: {
-              fname: values.fname,
               fsocialCreditCode: values.fsocialCreditCode
             },
             companyInfo: {
+              fname: values.fname,
               fbankName: values.fbankName,
               fbankNo: values.fbankNo,
               fbusAddress: values.fbusAddress,

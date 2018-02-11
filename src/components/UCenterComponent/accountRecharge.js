@@ -41,6 +41,7 @@ export default class AccountRecharge extends React.Component {
         message.error(response.msg);
       }
     } catch (e) {
+
       this.setState({loading: false});
       console.log(e);
       message.error('请求失败,请稍后重试');

@@ -132,6 +132,7 @@ class EnterprisePresentation extends React.Component {
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
+      message.error('网络异常');
     }
   }
 

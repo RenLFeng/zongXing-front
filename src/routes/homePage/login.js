@@ -215,6 +215,12 @@ export default class Login extends React.Component {
     }
   }
 
+  pressKey(e) {
+    if (e.keyCode === 13) {
+      this.submitLogin();
+    }
+  }
+
   render() {
     const { showReg, showAuthCode, countDown, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus } = this.state;
     return (
@@ -269,19 +275,19 @@ export default class Login extends React.Component {
             </div>
             <Spin tip="登录中..." spinning={this.props.submitting}>
               <div className="row">
-                <input className="put user" value={loginPhone} maxLength={20} name="loginPhone" type="tel" placeholder="请输入手机号码/用户名"/>
+                <input className="put user" onKeyUp={(e)=>this.pressKey(e)} value={loginPhone} maxLength={20} name="loginPhone" type="tel" placeholder="请输入手机号码/用户名"/>
                 <p>{this.state.loginNameErr}</p>
               </div>
 
               <div className="row">
-                <input className="put pwd" value={loginPwd} maxLength={16} name="loginPwd" type="password" placeholder="请输入登录密码"/>
+                <input className="put pwd" onKeyUp={(e)=>this.pressKey(e)} value={loginPwd} maxLength={16} name="loginPwd" type="password" placeholder="请输入登录密码"/>
                 <p>{this.state.loginPwdErr}</p>
               </div>
               <div>
                 <a className="btn" onClick={this.submitLogin}>登录</a>
               </div>
               <div>
-                <p className="tright"><a className="gray f14">忘记密码?</a></p>
+                {/*<p className="tright"><a className="gray f14">忘记密码?</a></p>*/}
               </div>
             </Spin>
             <div>

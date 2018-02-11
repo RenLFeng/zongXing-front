@@ -97,9 +97,12 @@ export default class FormProject extends React.Component {
         message.error(response.msg);
       }
     } catch(e) {
-      console.log(e);
-      message.error('网络异常');
       this.setState({loading: false})
+      if (typeof e === 'object' && e.name === 288) {
+        throw e;
+      }
+      message.error('网络异常');
+
     }
   }
 

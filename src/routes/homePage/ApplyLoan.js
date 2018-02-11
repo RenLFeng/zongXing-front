@@ -60,8 +60,12 @@ export default class ApplyLoan extends React.Component {
       }
     } catch(e) {
       console.log(e);
-      message.error('网络异常');
       this.setState({loadingState: false});
+      if (typeof e === 'object' && e.name === 288) {
+        throw e;
+      }
+      console.log(e);
+      message.error('网络异常');
     }
   }
 
@@ -162,6 +166,9 @@ export default class ApplyLoan extends React.Component {
           }
         } catch (e) {
           this.setState({loadingState: false});
+          if (typeof e === 'object' && e.name === 288) {
+            throw e;
+          }
           message.error('网络异常');
         }
       }
