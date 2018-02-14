@@ -16,6 +16,7 @@ export default class HowInvest extends React.Component {
 
   componentWillUnmount() {
     $(window).off('scroll');
+    $('body').off('click')
   }
 	render() {
 		return(

@@ -12,6 +12,7 @@ import './common/math-plugin';
 moment.locale('zh-cn');
 
 function RouterConfig({ history }) {
+  console.log(history);
   return (
     <Router history={history}>
       <Switch>

@@ -26,12 +26,15 @@ export default class InformationPage extends React.Component{
   }
 
   componentDidMount() {
-    startAnimate();
+    // startAnimate();
  // initPage() {
   //   $('.uc-lbody>.navbox').on('click', '.hd>a,.folder>a', function(){
   //     $(this).parent().toggleClass('hover');
   //   });
-  };
+  }
+
+
+
 	render() {
 		const {match} = this.props;
 		return (
