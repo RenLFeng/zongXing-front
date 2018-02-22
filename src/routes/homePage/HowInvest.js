@@ -7,6 +7,7 @@ import InCome from '../../components/HowInvestComponent/income';
 import Worth from '../../components/HowInvestComponent/worth';
 import Profit from '../../components/HowInvestComponent/profit';
 import Qa from '../../components/HowInvestComponent/qa';
+import Path from '../../common/pagePath';
 
 export default class HowInvest extends React.Component {
   componentDidMount() {
@@ -15,6 +16,7 @@ export default class HowInvest extends React.Component {
 
   componentWillUnmount() {
     $(window).off('scroll');
+    $('body').off('click')
   }
 	render() {
 		return(
@@ -22,7 +24,10 @@ export default class HowInvest extends React.Component {
         <div className="banner autosize">
           <img className="big" src={require('../../assets/img/invest/banner.png')} />
           <div className="w">
-            <a className="btn big"><i>我要投资</i></a>
+            <a className="btn big"
+               onClick={()=>{
+                 $(window).scrollTop(0);
+                 this.props.history.push(Path.PROJECT_LIST)}}><i>我要投资</i></a>
           </div>
         </div>
         <TabTop />

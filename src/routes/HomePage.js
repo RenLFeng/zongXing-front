@@ -62,6 +62,13 @@ export default class HomePage extends React.Component{
     }
   }
 
+  componentWillReceiveProps(props) {
+    console.log(this.props);
+    if (this.props.location.pathname !== props.location.pathname) {
+      $(window).scrollTop(0);
+    }
+  }
+
 	render() {
 		const { match, dispatch } = this.props;
 		return (

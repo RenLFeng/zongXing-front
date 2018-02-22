@@ -13,7 +13,7 @@ export async function getAuth({method, pathname}) {
 }
 
 export async function userLogin(param) {
-  return request(`${BASE_URL}/zjb-website/login`, {
+  return request(`${BASE_URL}/zjb-website/login/login`, {
     method: 'POST',
     body: {
       ...param
@@ -74,7 +74,7 @@ export async function commitOpenAccount(params) {
 }
 
 export async function getProjectDetail(param) {
-  return request(`${BASE_URL}/zjb-website/projectInfo/getOne/${param}`);
+  return request(`${BASE_URL}/zjb-website/projectInfo/getOne?projectId=${param}`);
 }
 
 // 存储用户基础信息的接口
@@ -102,17 +102,17 @@ export async function getSafeData() {
 
 // 校验手机号是否存在的接口
 export async function phoneExist(param) {
-  return request(`${BASE_URL}/zjb-website/check/${param}`)
+  return request(`${BASE_URL}/zjb-website/login/check?mobile=${param}`)
 }
 
 // 获取注册验证码的接口
 export async function getAuthCode(param) {
-  return request(`${BASE_URL}/zjb-website/sendMessage/${param}`)
+  return request(`${BASE_URL}/zjb-website/login/sendMessage?mobile=${param}`)
 }
 
 // 注册用户 接口
 export async function regUser(params) {
-  return request(`${BASE_URL}/zjb-website/register`, {
+  return request(`${BASE_URL}/zjb-website/login/register`, {
     method: 'POST',
     body: {
       ...params,
@@ -127,21 +127,22 @@ export async function rechargeTest() {
 
 //获取消息列表
 export async function messageList(params) {
-  return request(`${BASE_URL}/zjb-log/notice/record/show/self`,{
+  return request(`${BASE_URL}/zjb-website/notice/record/show/self`,{
     method: 'POST',
     body: {
       ...params,
     }
   });
 }
+
 //查看详情
 export async function isOrNot(params){
-  return request(`${BASE_URL}/zjb-log/notice/specify/read/${params}`);
+  return request(`${BASE_URL}/zjb-website/notice/specify/read?noticeId=${params}`);
 }
 
 // 获取一个问题下所有问题
 export async function getAnswerbyQaId(QaId) {
-  return request(`${BASE_URL}/zjb-website/answer/getOne/${QaId}`);
+  return request(`${BASE_URL}/zjb-website/answer/getOne?questionId=${QaId}`);
 }
 
 // 添加问题回复
@@ -156,7 +157,7 @@ export async function addAnswer(params) {
 
 // 获取一个项目下所有问题
 export async function getProQuestion(projectId) {
-  return request(`${BASE_URL}/zjb-website/projectQuestion/getOne/${projectId}`);
+  return request(`${BASE_URL}/zjb-website/projectQuestion/getOne?projectId=${projectId}`);
 }
 
 // 添加问题
@@ -171,7 +172,7 @@ export async function addQuestion(params) {
 
 // 一个项目下的所有话题
 export async function getProTopic(projectId) {
-  return request(`${BASE_URL}/zjb-website/projectTopic/getOne/${projectId}`);
+  return request(`${BASE_URL}/zjb-website/projectTopic/getOne?projectId=${projectId}`);
 }
 
 // 添加话题问题
@@ -186,12 +187,12 @@ export async function addQuestionTopic(params) {
 
 // 获取我的话题
 export async function getMyTopic(projectId) {
-  return request(`${BASE_URL}/zjb-website/projectTopic/myTopic/${projectId}`)
+  return request(`${BASE_URL}/zjb-website/projectTopic/myTopic?projectId=${projectId}`)
 }
 
 // 获取一个话题下的所有回复
 export async function getReplyByTopic(topicId) {
-  return request(`${BASE_URL}/zjb-website/projectTopicReply/getOne/${topicId}`)
+  return request(`${BASE_URL}/zjb-website/projectTopicReply/getOne?topicId=${topicId}`)
 }
 
 // 添加回复
@@ -206,7 +207,7 @@ export async function addReply(params) {
 
 // 查询项目历程
 export async function selectProJourney(projectId) {
-  return request(`${BASE_URL}/zjb-website/projectJourney/getOne/${projectId}`)
+  return request(`${BASE_URL}/zjb-website/projectJourney/getOne?projectId=${projectId}`)
 }
 
 // 添加项目历程
@@ -236,7 +237,7 @@ export async function getRecharge(params) {
 
 // 获取项目详情公告接口
 export async function getProjectDetailNotice(param) {
-  return request(`${BASE_URL}/zjb-website/projectNotice/getOne/${param}`);
+  return request(`${BASE_URL}/zjb-website/projectNotice/getOne?projectId=${param}`);
 }
 
 // 获取个人账户余额接口
@@ -256,17 +257,17 @@ export async function alreadyInvested(params) {
 
 // 点赞接口
 export async function clickPraise(param) {
-  return request(`${BASE_URL}/zjb-website/projectJourney/praise/${param}`);
+  return request(`${BASE_URL}/zjb-website/projectJourney/praise?journeyId=${param}`);
 }
 
 //获取提现的银行卡的接口
 export async function getBankCard(param) {
-  return request(`${BASE_URL}/zjb-website/userBankCard/account/info/${param}`);
+  return request(`${BASE_URL}/zjb-website/userBankCard/account/info?accountId=${param}`);
 }
 
 //获取省份对应的城市
 export async function getCity(param) {
-  return request(`${BASE_URL}/zjb-website/common/cities/${param}`);
+  return request(`${BASE_URL}/zjb-website/common/cities?provinceId=${param}`);
 }
 
 //提交提现表单信息接口
@@ -334,7 +335,7 @@ export async function getAddressCoordinate(params) {
 }
 //旧手机号获取验证码
 export async function getOldCode(param) {
-  return request(`${BASE_URL}/zjb-website/securityCenter/checkAuthcode/${param}`)
+  return request(`${BASE_URL}/zjb-website/securityCenter/checkAuthcode?authcode=${param}`)
 }
 //更新手机号码
 export async function changePhoneNum(params) {
@@ -348,25 +349,25 @@ export async function changePhoneNum(params) {
 
 //获取新手机号验证码
 export async function getNewCode(param) {
-  return request(`${BASE_URL}/zjb-website/sendMessage/${param}`)
+  return request(`${BASE_URL}/zjb-website/sendMessage/${param}`);
 }
 
 // 判断用户名是否重复
 export async function getJudgeUserName(param) {
-  return request(`${BASE_URL}/zjb-website/userInfo/checkLoginName/${param}`)
+  return request(`${BASE_URL}/zjb-website/userInfo/checkLoginName?loginName=${param}`);
 }
 
 // 用户没开户的公司列表
 export async function getNoAccountCompany() {
-  return request(`${BASE_URL}/zjb-website/company/self/noaccount`)
+  return request(`${BASE_URL}/zjb-website/company/self/noaccount`);
 }
 
 // 获取投弃前咨询投后跟踪数字
 export async function getInvestmentNum(param) {
-  return request(`${BASE_URL}/zjb-website/projectInfo/getCount/${param}`);
+  return request(`${BASE_URL}/zjb-website/projectInfo/getCount?projectId=${param}`);
 }
 
 // 获取个人账户下公司信息
 export async function getCompanyByAccount() {
-  return request(`${BASE_URL}/zjb-website/company/self/list`)
+  return request(`${BASE_URL}/zjb-website/company/self/list`);
 }

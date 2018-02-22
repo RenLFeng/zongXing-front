@@ -3,7 +3,8 @@ import Data from './data';
 import FormProject from './form-project';
 import moment from 'moment';
 import {getPersonalMoney, alreadyInvested, messageList} from '../../services/api';
-import {message, Button} from 'antd';
+import {message, Button, Modal} from 'antd';
+import Path from '../../common/pagePath';
 
 
 export default class Right extends React.Component {
@@ -25,7 +26,6 @@ export default class Right extends React.Component {
     this.rate = 1;
   }
 
-
   async getPersonalMoney() {
     try {
       this.setState({loading: true});
@@ -38,14 +38,27 @@ export default class Right extends React.Component {
         });
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
+      } else if (response.code === -2) {
+        Modal.confirm({
+          title: '提示',
+          content: '您的账号未开户，请前往开户',
+          okText: '前往',
+          cancelText: '取消',
+          onOk: () => {
+            $(window).scrollTop(0);
+            this.props.history.push(Path.OPEN_ACCOUNT+'/0');
+          }
+        });
       } else {
-        message.error('获取用户余额失败');
+        message.error(response.msg);
       }
     } catch(e) {
-      message.error('网络异常');
       this.setState({loading: false});
+      if (typeof e === 'object' && e.name === 288) {
+        throw e;
+      }
+      message.error('网络异常');
     }
-
   }
 
   async getData(page) {
@@ -56,7 +69,7 @@ export default class Right extends React.Component {
       this.setState({
         pageParam:{
           pageCurrent:page, //当前页，初始值为第一页
-          pageSize: 1,    //每页可显示的消息条数
+          pageSize: 20,    //每页可显示的消息条数
         },
         projectId: this.props.projectDetail.fpeoject_id,
         arr: response.data,

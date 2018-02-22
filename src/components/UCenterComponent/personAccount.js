@@ -293,8 +293,8 @@ export default class PersonAccount extends React.Component {
         </div>
 
         <div className="hd2 clearfix">
-          <a className="fl">回款计划</a>
-          {/*<a className="fl">回款计划</a><i className="fl">|</i><a className="fl hover">还款计划</a>*/}
+          <a className="fl hover">回款计划</a>
+          {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}
           <a className="fr">更多 &gt;&gt;</a>
         </div>
         <div>

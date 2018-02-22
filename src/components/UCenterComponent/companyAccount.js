@@ -161,13 +161,13 @@ export default class CompanyAccount extends React.Component {
     console.log(this.props.companyList);
     if (this.props.companyList !== nextProps.companyList && nextProps.companyList.length > 0) {
       this.setState({
-        companyId: nextProps.companyList[0].companyId
+        companyId: nextProps.companyList[0].companyNo
       });
       this.props.dispatch({
         type: 'account/getCompanyAccount',
         payload: {
           showNumInfo: 4,
-          zjbNo: nextProps.companyList[0].companyId
+          zjbNo: nextProps.companyList[0].companyNo
         }
       })
     }
@@ -313,7 +313,7 @@ export default class CompanyAccount extends React.Component {
           <a className="btn btn1" onClick={()=>window.open(AUTH_ADDRESS)}>实名认证</a>
           <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.company_page.totalAssets.accountId)}>充值</a>
           <a className="btn btn2" onClick={()=>this.jumpRecharge_(this.props.company_page.totalAssets.accountId)}>提现</a>
-          <a className="btn btn3">好友转账</a>
+          {/*<a className="btn btn3">好友转账</a>*/}
         </div>
         <div className="border shadow box1">
           <div className="pieDiv">
@@ -369,15 +369,17 @@ export default class CompanyAccount extends React.Component {
   }
 
   render() {
+    console.log(this.props.company_page.totalAssets);
     return (
       <div className="fr uc-rbody">
+        { this.props.companyList.length !== 0 ?
         <Select value={this.state.companyId} onChange={(val)=>this.changeCompanyData(val)} style={{width: 500, marginBottom: 30}}>
           {this.props.companyList.map((data) => {
             return (
-              <Select.Option value={data.companyId} key={data.companyId}>{data.companyName}</Select.Option>
+              <Select.Option value={data.companyNo} key={data.companyId}>{data.companyName}</Select.Option>
             );
           })}
-        </Select>
+        </Select> : null }
         { this.props.companyList.length === 0?
           <div>
             <span>您还没有开通企业账户，开通 <Link to={Path.OPEN_ACCOUNT + '/1'} style={{color: 'blue'}}>点击此处</Link></span>

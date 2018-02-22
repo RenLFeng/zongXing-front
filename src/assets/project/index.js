@@ -8,7 +8,6 @@ export function startAnimate() {
 }
 
 function initPage() {
-    $('.sec2 .circle').data('value', '100');
     knob({
         selector: '.sec1 .circle'
     });

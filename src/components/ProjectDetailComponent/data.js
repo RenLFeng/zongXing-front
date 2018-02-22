@@ -20,7 +20,7 @@ export default class Data extends React.Component {
     return (
       <div className="pd-data shadow none">
         <a className="close"/>
-        <p className="tit">投资人统计<i>（<em className="cf60">{this.props.userCount}</em>人）</i></p>
+        <p className="tit">投资人统计{this.props.userCount?<i>（<em className="cf60">{this.props.userCount}</em>人）</i>: null}</p>
         <div className="clearfix">
           <div className="fl">
             {/*列表数据*/}

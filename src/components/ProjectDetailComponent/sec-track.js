@@ -99,8 +99,12 @@ export default class SecTrack extends React.Component {
         message.error(response.msg);
       }
     } catch(e) {
-      message.error('网络异常，请重试');
       this.setState({sendLoading: false});
+      if (typeof e === 'object' && e.name === 288) {
+        throw e;
+      }
+      message.error('网络异常，请重试');
+
     }
   }
 
@@ -137,7 +141,7 @@ export default class SecTrack extends React.Component {
         <div className="lich-box1 border">
           <div className="hd">
             <i className="tag">公告</i>
-            <i className="tit">{this.state.noticeImg.length>0?this.state.noticeImg[0].fTitle:''}</i>
+            <i className="tit">{this.state.noticeImg.length>0?this.state.noticeImg[0].fTitle:'暂无公告'}</i>
           </div>
           <div className="swiper-container">
             <div className="swiper-wrapper">

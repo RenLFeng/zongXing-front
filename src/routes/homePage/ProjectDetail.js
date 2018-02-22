@@ -135,8 +135,8 @@ export default class ProjectDetail extends React.Component {
           <div className="fl lbody shadow">
             <div className="tnav">
               <a className="hover">借款项目</a>
-              <a>投前咨询<em>{this.state.projectDetail.topicCount}</em></a>
-              <a>投后跟踪<em>{this.state.projectDetail.questionCount}</em></a>
+              <a>投前咨询{this.state.projectDetail.topicCount? <em>{this.state.projectDetail.topicCount}</em> : null}</a>
+              <a>投后跟踪{this.state.projectDetail.questionCount? <em>{this.state.projectDetail.questionCount}</em> : null}</a>
               <a>项目历程</a>
             </div>
             <div className="pd-con">
@@ -153,7 +153,7 @@ export default class ProjectDetail extends React.Component {
             </div>
           </div>
           <div className="fr rbody">
-            <Right projectDetail={projectDetail} time={{countDay: this.state.countDay, countDown: this.state.countDown}}/>
+            <Right projectDetail={projectDetail} history={this.props.history} time={{countDay: this.state.countDay, countDown: this.state.countDown}}/>
           </div>
         </div>
       </div>

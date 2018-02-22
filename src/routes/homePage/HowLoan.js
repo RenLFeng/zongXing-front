@@ -12,6 +12,7 @@ export default class HowLoan extends React.Component {
   }
   componentWillUnmount() {
     $(window).off('scroll');
+    $('body').off('click');
   }
 	render() {
 		return(

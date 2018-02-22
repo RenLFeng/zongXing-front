@@ -53,13 +53,14 @@ export default function request(url, options) {
     const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
     token = webTokenObj.webToken ? webTokenObj.webToken : '';
   }
-
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
       'x-access-token': token,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD',
       ...newOptions.headers,
     };
     newOptions.body = JSON.stringify(newOptions.body);
@@ -67,8 +68,11 @@ export default function request(url, options) {
 
   }
   newOptions.headers = {
+    Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
     'x-access-token': token,
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD',
     ...newOptions.headers,
   };
   console.log(url);

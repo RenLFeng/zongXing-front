@@ -77,10 +77,17 @@ class FormComponent extends React.Component {
   }
 
   async getCompany() {
-    const response = await getNoAccountCompany();
-    console.log(response);
-    if (response.code === 0) {
-      this.setState({regCompany: response.data});
+    try {
+      const response = await getNoAccountCompany();
+      console.log(response);
+      if (response.code === 0) {
+        this.setState({regCompany: response.data});
+      }
+    } catch(e) {
+      if (typeof e === 'object' && e.name === 288) {
+        throw e;
+      }
+      message.error('网络异常');
     }
   }
 
@@ -95,6 +102,7 @@ class FormComponent extends React.Component {
         this.setState({loading: true});
         try {
           const response = await commitOpenAccount(values);
+          this.setState({loading: false});
           if (response.code === 0) {
             message.info(response.msg);
             // 提交表单接口回调成功使用
@@ -117,10 +125,13 @@ class FormComponent extends React.Component {
             message.error(response.msg);
           }
         } catch (e) {
+          this.setState({loading: false});
+          if (typeof e === 'object' && e.name === 288) {
+            throw e;
+          }
           console.log(e);
-          message.error('服务器异常');
+          message.error('网络异常');
         }
-        this.setState({loading: false});
       }
     });
   }
@@ -213,7 +224,6 @@ class FormComponent extends React.Component {
         return;
       }
     }
-
   }
 
   changeType(val) {
@@ -275,7 +285,18 @@ class FormComponent extends React.Component {
                 ],
               })(<Input maxLength={'20'}/>)}
             </FormItem>
-          </div> : null }
+            <FormItem
+              {...formItemLayout}
+              label="真实姓名"
+            >
+              {getFieldDecorator('realName', {
+                rules: [
+                 { required: true, message: '请填写真实姓名' },
+                ],
+              })(<Input maxLength={'20'}/>)}
+            </FormItem>
+          </div>
+          : null }
         { this.state.openType === '1' ?
           <div>
             <Row>
