@@ -16,11 +16,13 @@ export default class subSite extends React.Component {
       <div >
         <div className="topnavs_">
           <div className="w relative">
-            <p className="tright">欢迎您：<i className="cf90">dg***rt</i></p>
-            <div className="rtopbtns">
-              <a className="c1">领优惠券</a>
-              <a className="c2">借款项目</a>
-              <a className="c3">编辑模板</a>
+            <div className="w-m">
+              <p className="tright">欢迎您：<i className="cf90">dg***rt</i></p>
+              <div className="rtopbtns">
+                <a className="c1">领优惠券</a>
+                <a className="c2">借款项目</a>
+                <a className="c3">编辑模板</a>
+              </div>
             </div>
           </div>
           <div className="w clearfix company_nav">
@@ -35,14 +37,17 @@ export default class subSite extends React.Component {
             </span>
           </div>
         </div>
+
         <Layout />
-        <div className="bodys">
-          <Coupon />
-        </div>
+        <Coupon />
+
         <div className="footer">
-          <div className="w sec2 center f14 c6">
-            <p>版权所有&copy;深圳众鑫互联网金融服务有限公司 crowdlendingchina.com 保留所有权利。</p>
-            <p>深圳众鑫互联网金融服务有限公司提供网络技术支持</p>
+          <div className="w sec2">
+            <div className="ft f14 c9">
+              <i className="line"></i>
+              <p>版权所有&copy;深圳众鑫互联网金融服务有限公司 crowdlendingchina.com 保留所有权利。</p>
+              <p>深圳众鑫互联网金融服务有限公司提供网络技术支持</p>
+            </div>
           </div>
         </div>
       </div>

@@ -116,18 +116,27 @@ export default class BusinessDiscount extends React.Component {
             </div>
             <div className="box2">
               <p className="hd">
-                <i>常见问题</i>
+                <i>关于内站搭建</i>
                 <a className="fr">更多&gt;&gt;</a>
               </p>
               <div className="hb shadow">
-                <p><a>扫描没有识别怎么办</a></p>
-                <p><a>去哪下载对应的浏览器</a></p>
-                <p><a>扫描没有识别怎么办</a></p>
-                <p><a>去哪下载对应的浏览器</a></p>
-                <p><a>扫描没有识别怎么办</a></p>
-                <p><a>去哪下载对应的浏览器</a></p>
-                <p><a>扫描没有识别怎么办</a></p>
-                <p><a>去哪下载对应的浏览器</a></p>
+                <p className="tit">搭建内站的好处：</p>
+                <p className="ol">
+                  1、众借帮是您新的宣传渠道和营销渠道；<br />
+                  2、让投资人更了解并支持您的企业；<br />
+                  3、发布企业活动，让投资人参与体验；<br />
+                  4、发放优惠券，吸引客户。
+                </p>
+                <p className="tit">搭建内站的常见问题：</p>
+                <p className="ol">
+                  1、如何更好的描述“关于我们”？<br />
+                  2、如何更好的利用“产品展示”功能？<br />
+                  3、如何展现您公司的实力？<br />
+                  4、如何发布更有吸引力的活动？<br />
+                  5、如何发放优惠券？<br />
+                  6、如何运营您的内站？<br />
+                  7、如何统计您的优惠券使用情况？
+                </p>
               </div>
             </div>
           </div>

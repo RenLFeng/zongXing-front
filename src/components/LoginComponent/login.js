@@ -220,18 +220,18 @@ export default class Login extends React.Component {
               <a className="btn" onClick={this.submitLogin}>登录</a>
             </div>
             <div>
-              <p className="tright"><a className="gray f14">忘记密码?</a></p>
+              {/*<p className="tright"><a className="gray f14">忘记密码?</a></p>*/}
             </div>
           </Spin>
           <div>
-            {/*<p className="other">*/}
-        {/*<span>*/}
+            <p className="other">
+        <span>
             {/*<i className="fl c6">其他登录方式</i>*/}
             {/*<a className="qq"/>*/}
             {/*<a className="weixin"/>*/}
             {/*<a className="sina"/>*/}
-        {/*</span>*/}
-            {/*</p>*/}
+        </span>
+            </p>
           </div>
         </div> }
       </div>

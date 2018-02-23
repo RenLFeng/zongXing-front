@@ -45,6 +45,13 @@ export default class Login extends React.Component {
     }
   }
 
+  async close(){
+    this.setState({
+      showReg:false,
+    })
+    console.log(111)
+  }
+
   async getAuthCode(){
     const { regPhone } = this.state;
     if (regPhone.length === 0) {
@@ -224,84 +231,86 @@ export default class Login extends React.Component {
   render() {
     const { showReg, showAuthCode, countDown, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus } = this.state;
     return (
-      <div className="logindiv1 shadow">
-        { showReg ?
-          <div className="form regf" onChange={this.onChange}>
-            <div className="hd center">
-              <a className="hover" onClick={()=>this.setState({ showReg: true})}>注册</a>
-              <a onClick={()=>this.setState({ showReg: false})}>登录</a>
-            </div>
-            <Spin tip="请求中..." spinning={this.state.regLoading ||this.state.authLoading}>
-              <div className="row">
-                <input className="put mobile" value={regPhone} maxLength={11} name="regPhone" type="tel" placeholder="请输入手机号码" onBlur={this.checkPhoneNumber}/>
-                <p>{this.state.regNameErr}</p>
+        <div className="logindiv1 shadow">
+          { showReg ?
+            <div className="form regf" onChange={this.onChange}>
+              <div className="hd center">
+                <a className="hover" onClick={()=>this.setState({ showReg: true})}>注册</a>
+                <a onClick={()=>this.setState({ showReg: false})}>登录</a>
               </div>
-              <div className="row relative" style={{marginBottom: 0}}>
-                <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel" placeholder="输入验证码"/>
-                { // 根据倒计时时间显示是否可以点击获取验证码按钮
-                  showAuthCode ?
-                    <a className="getvc center" onClick={this.getAuthCode}>获取验证码</a> :
-                    <span className="getvc center" style={{ backgroundColor: '#D1D1D1' }}>{countDown}s后重新获取</span> }
+              <Spin tip="请求中..." spinning={this.state.regLoading ||this.state.authLoading}>
+                <div className="row">
+                  <input className="put mobile" value={regPhone} maxLength={11} name="regPhone" type="tel" placeholder="请输入手机号码" onBlur={this.checkPhoneNumber}/>
+                  <p>{this.state.regNameErr}</p>
+                </div>
+                <div className="row relative" style={{marginBottom: 0}}>
+                  <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel" placeholder="输入验证码"/>
+                  { // 根据倒计时时间显示是否可以点击获取验证码按钮
+                    showAuthCode ?
+                      <a className="getvc center" onClick={this.getAuthCode}>获取验证码</a> :
+                      <span className="getvc center" style={{ backgroundColor: '#D1D1D1' }}>{countDown}s后重新获取</span> }
+                </div>
+                <p style={{color: 'red', marginBottom: 20,marginTop: 5}}>{this.state.authErr}</p>
+                <div className="row">
+                  <input className="put pwd" value={regPwd} maxLength={16} name="regPwd" type="password" placeholder="设置登录密码"/>
+                </div>
+                <div>
+                  <a className="btn" onClick={this.submitReg}>注册</a>
+                </div>
+                <div className="bot">
+                  <p>
+                    <input
+                      className="fl"
+                      id="chk1"
+                      checked={readStatus}
+                      type="checkbox"
+                      onChange={() => this.setState({readStatus: !readStatus})}
+                    />
+                    <label className="fl">
+                      <i>已阅读并接受</i>
+                      <a className="blue">注册协议</a>
+                    </label>
+                  </p>
+                </div>
+                <br/><p style={{color: 'red'}}>{this.state.textErr}</p>
+              </Spin>
+            </div> :
+            <div className="form logf" onChange={this.onChange}>
+              <div className="hd center">
+                <a onClick={()=>this.setState({ showReg: true})}>注册</a>
+                <a className="hover" onClick={()=>this.setState({ showReg: false})}>登录</a>
               </div>
-              <p style={{color: 'red', marginBottom: 20,marginTop: 5}}>{this.state.authErr}</p>
-              <div className="row">
-                <input className="put pwd" value={regPwd} maxLength={16} name="regPwd" type="password" placeholder="设置登录密码"/>
-              </div>
+              <Spin tip="登录中..." spinning={this.props.submitting}>
+                <div className="row">
+                  <input className="put user" onKeyUp={(e)=>this.pressKey(e)} value={loginPhone} maxLength={20} name="loginPhone" type="tel" placeholder="请输入手机号码/用户名"/>
+                  <p>{this.state.loginNameErr}</p>
+                </div>
+
+                <div className="row">
+                  <input className="put pwd" onKeyUp={(e)=>this.pressKey(e)} value={loginPwd} maxLength={16} name="loginPwd" type="password" placeholder="请输入登录密码"/>
+                  <p>{this.state.loginPwdErr}</p>
+                </div>
+                <div>
+                  <a className="btn" onClick={this.submitLogin}>登录</a>
+                </div>
+                <div>
+                  <p className="tright"><a className="gray f14">忘记密码?</a></p>
+                </div>
+              </Spin>
               <div>
-                <a className="btn" onClick={this.submitReg}>注册</a>
-              </div>
-              <div className="bot">
-                <p>
-                  <input
-                    className="fl"
-                    id="chk1"
-                    checked={readStatus}
-                    type="checkbox"
-                    onChange={() => this.setState({readStatus: !readStatus})}
-                  />
-                  <label className="fl">
-                    <i>已阅读并接受</i>
-                    <a className="blue">注册协议</a>
-                  </label>
+                <p className="other">
+                <span>
+                <i className="fl c6">其他登录方式</i>
+                <a className="qq"/>
+                <a className="weixin"/>
+                <a className="sina"/>
+                </span>
                 </p>
               </div>
-              <br/><p style={{color: 'red'}}>{this.state.textErr}</p>
-            </Spin>
-          </div> :
-          <div className="form logf" onChange={this.onChange}>
-            <div className="hd center">
-              <a onClick={()=>this.setState({ showReg: true})}>注册</a>
-              <a className="hover" onClick={()=>this.setState({ showReg: false})}>登录</a>
-            </div>
-            <Spin tip="登录中..." spinning={this.props.submitting}>
-              <div className="row">
-                <input className="put user" onKeyUp={(e)=>this.pressKey(e)} value={loginPhone} maxLength={20} name="loginPhone" type="tel" placeholder="请输入手机号码/用户名"/>
-                <p>{this.state.loginNameErr}</p>
-              </div>
+            </div> }
+        </div>
 
-              <div className="row">
-                <input className="put pwd" onKeyUp={(e)=>this.pressKey(e)} value={loginPwd} maxLength={16} name="loginPwd" type="password" placeholder="请输入登录密码"/>
-                <p>{this.state.loginPwdErr}</p>
-              </div>
-              <div>
-                <a className="btn" onClick={this.submitLogin}>登录</a>
-              </div>
-              <div>
-                {/*<p className="tright"><a className="gray f14">忘记密码?</a></p>*/}
-              </div>
-            </Spin>
-            <div>
-              {/*<p className="other">*/}
-              {/*<span>*/}
-              {/*<i className="fl c6">其他登录方式</i>*/}
-              {/*<a className="qq"/>*/}
-              {/*<a className="weixin"/>*/}
-              {/*<a className="sina"/>*/}
-              {/*</span>*/}
-              {/*</p>*/}
-            </div>
-          </div> }
-      </div>
+
     );
   }
 }
