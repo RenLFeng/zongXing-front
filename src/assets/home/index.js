@@ -1,5 +1,6 @@
 import './index.scss';
 import {animate} from './animate';
+import './_invest';
 
 export function startAnimate() {
   animate();
