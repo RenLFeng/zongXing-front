@@ -22,9 +22,9 @@ export default class HowInvest extends React.Component {
 		return(
       <div >
         <div className="banner autosize">
-          <img className="big" src={require('../../assets/img/invest/banner.png')} />
+          <img className="big" src={require('../../assets/img/invest/banner.jpg')} />
           <div className="w">
-            <a className="btn big"
+            <a className="btn "
                onClick={()=>{
                  $(window).scrollTop(0);
                  this.props.history.push(Path.PROJECT_LIST)}}><i>我要投资</i></a>

@@ -26,9 +26,9 @@ export default class NewPro extends React.Component {
     return (
       <div className="section sec1">
         <div className="w center">
-          <h1>最新推荐众借项目</h1>
-          <p className="tit-line"><i>NEW PROJECTS</i></p>
-          <p className="f18 c6">完善您的项目信息，提高您的信用评级，将有机会进入推荐项目</p>
+          <h1>正在众借的项目</h1>
+          <p className="tit-line"><i>ON-GOING BUSINESS LOANS</i></p>
+          <p className="f18 c6">点击进入项目详情，可以收藏和分享</p>
         </div>
         <div className="w box6 clearfix">
           {

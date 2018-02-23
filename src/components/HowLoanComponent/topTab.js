@@ -19,10 +19,11 @@ export default class TopTab extends React.Component {
           <div className="sec1">
             <div className="w clearfix">
               <div className="fl tright">
-                <img className="pic" src={require('../../assets/img/finance/pic2.jpg')} />
+                <img className="pic" src={require('../../assets/img/finance/pic2.png')} />
               </div>
               <div className="fr">
-                <p>
+                <p className="t1">业务拓展的挑战</p>
+                <p className="t2">
                   我想在武汉加盟“咖啡之翼”，还有50万的资金缺口怎么办？<br />
                   我的餐厅需要购买新的设备，资金不足怎么办？<br />
                   我的花店运营的很好，想开分店，需要投资怎么办？<br />
@@ -36,7 +37,8 @@ export default class TopTab extends React.Component {
           <div className="sec2 bgw">
             <div className="w clearfix">
               <div className="fl tright">
-                <p>
+                <p className="t1">客户拓展的挑战</p>
+                <p className="t2">
                   新店开业，需要促销<br />
                   新产品、新服务推出，需要客户体验<br />
                   品牌举办营销活动，需要客户参与<br />

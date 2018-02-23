@@ -2,6 +2,20 @@
   padding-top: 28px;
   background: white;
 }
+
+.footer .ft {
+  background: url(../img/subSite/logo2.png) no-repeat 200px center;
+  padding-left: 480px;
+  text-align: left;
+  position: relative;
+  .line {
+    position: absolute;
+    left: 450px;
+    height: 40px;
+    border-left: 1px solid #ccc;
+  }
+}
+
 .topnavs_ {
   padding: 0;
   .tright {
@@ -57,7 +71,7 @@
     border-left: 1px solid #fff;
     line-height: 1em;
     margin: 28px 0 0 0;
-    padding: 0 26px;
+    padding: 0 27px;
     &:first-child {
       border-left: none;
     }

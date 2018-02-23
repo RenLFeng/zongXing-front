@@ -241,7 +241,7 @@
 .subsite-banner{
   .big{
     position: relative;
-    top:-55px;
+    top:-58px;
     z-index:1;
   }
 }
@@ -269,9 +269,22 @@
 #hover_:hover{
   background: white;
   color:gray;
+  //border:1px solid black;
   border:1px solid transparent;
+  //border:none;
 }
 
 .tabs{
   border-bottom: none;
+}
+
+.relative{
+  background: white;
+  width:100%;
+}
+
+.w-m{
+  width:1248px;
+  position: relative;
+  margin: 0 auto;
 }

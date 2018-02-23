@@ -57,12 +57,12 @@ export default class Footer extends React.Component {
                 <li><Link  to={`/infor/legalDeclaration`}>联系我们</Link></li>
               </ul>
               <ul>
-                <li className="tit"><Link  to={`/infor/platformNotice`}>关于我们</Link></li>
-                <li><Link  to={`/infor/platformNotice`}>公司介绍</Link></li>
-                <li><Link  to={`/infor/newsReports`}>管理团队</Link></li>
-                <li><Link  to={`/infor/legalDeclaration`}>企业愿景</Link></li>
-                <li><Link  to={`/infor/legalDeclaration`}>服务理念</Link></li>
-                <li><Link  to={`/infor/legalDeclaration`}>联系我们</Link></li>
+                <li className="tit"><Link  to={`/infor/platformNotice`}>合作伙伴</Link></li>
+                <li><Link  to={`/infor/platformNotice`}>技术合作</Link></li>
+                <li><Link  to={`/infor/newsReports`}>风控合作</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>法务合作</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>安全合作</Link></li>
+                <li><Link  to={`/infor/legalDeclaration`}>媒体合作</Link></li>
               </ul>
             </div>
             <div className="fr col3">

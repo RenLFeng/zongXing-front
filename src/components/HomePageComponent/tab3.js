@@ -16,7 +16,7 @@ export default class Tab3 extends React.Component {
     return (
       <div className="section sec-tab3">
         <div className="w">
-          <div className="tab3 center">
+          <div className="tab3_ center_">
             <i/>
             <a href="" className="hover">了解众借帮</a>
             <i/>

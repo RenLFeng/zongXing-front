@@ -1,5 +1,5 @@
 import React from 'react';
-import Banner from '../../components/HomePageComponent/banner';
+import Banner from '../../components/HomePageComponent/banner2';
 import Company from '../../components/HomePageComponent/company';
 import Project from '../../components/HomePageComponent/project';
 import Invest from '../../components/HomePageComponent/invest';

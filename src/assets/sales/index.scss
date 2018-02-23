@@ -118,17 +118,30 @@
     &>div {
         margin-bottom: 20px;
     }
-    .box2 {
-        .hd {
-            padding: 0 0 10px 20px;
-            i {
-                font-size: 20px;
-                color: #474E5D;
-            }
-        }
-        .hb {
-            border-top: 5px solid #474E5D;
-            padding: 30px 20px;
-        }
+  .box2 {
+    .hd {
+      padding: 0 0 10px 20px;
+      i {
+        font-size: 20px;
+        color: #474E5D;
+      }
     }
+    .hb {
+      border-top: 5px solid #474E5D;
+      padding: 0 1px 30px 1px;
+      color: #000;
+      .tit {
+        font-size: 18px;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 0 16px;
+        line-height: 48px;
+      }
+      .ol {
+        padding: 10px 0 10px 46px;
+        font-size: 14px;
+        line-height: 180%;
+      }
+    }
+  }
 }

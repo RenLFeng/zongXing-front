@@ -28,27 +28,34 @@
 }
 .tabcon1 {
     p {
-        font-size: 24px;
+        //font-size: 24px;
         color: #595757;
         line-height: 2em;
     }
+   .t1 {
+    font-size: 34px;
+   }
+   .t2 {
+     font-size: 24px;
+     padding-top: 20px;
+   }
     .sec1 {
         background-color: $f9;
         padding: 90px 0 80px 0;
-        p {
-            padding-top: 100px;
-        }
     }
     .sec2 {
         padding: 90px 0 130px 0;
-        p {
-            padding-top: 160px;
-        }
     }
     .fl {
         width: 470px;
+      img{
+        padding-top: 20px;
+      }
     }
     .fr {
         width: 700px;
+      img{
+        padding-top: 45px;
+      }
     }
 }
