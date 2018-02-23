@@ -54,6 +54,7 @@ export default class Right extends React.Component {
       }
     } catch(e) {
       this.setState({loading: false});
+      console.log(e);
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
