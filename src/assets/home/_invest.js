@@ -1,6 +1,7 @@
-$(function () {
-
-  canvas = document.getElementById("canvas-invest");
+export function init () {
+  console.log(321435435)
+  const canvas = document.getElementById("canvas-invest");
+  console.log(canvas)
   ctx = canvas.getContext("2d");
   cw = canvas.offsetWidth,
     cx = cw / 2;
@@ -18,8 +19,7 @@ $(function () {
   Init();
 
   window.addEventListener('resize', Init, false);
-
-});
+}
 var canvas,ctx,cw,cx,ch,cy;
 var linesNum = 16;
 var linesRy = [];

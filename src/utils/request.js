@@ -20,6 +20,7 @@ const codeMessage = {
 };
 function checkStatus(response) {
   console.log(response.status === 288);
+  console.log(response.status);
   if (response.status === 288) {
     throw {name: 288};
     return response;
