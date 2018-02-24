@@ -39,6 +39,7 @@ export default class HomePage extends React.Component{
     if (!localStorage.getItem('addressCode')) {
       //获取城市编码存入本地缓存
       getLocation().then((data)=>{
+        console.log(data);
         localStorage.setItem('addressCode', data.adcode);
       })
     }

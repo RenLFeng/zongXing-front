@@ -62,6 +62,7 @@ export default function request(url, options) {
       'x-access-token': token,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD',
+      Origin: '*',
       ...newOptions.headers,
     };
     newOptions.body = JSON.stringify(newOptions.body);
@@ -74,6 +75,7 @@ export default function request(url, options) {
     'x-access-token': token,
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD',
+    Origin: '*',
     ...newOptions.headers,
   };
   console.log(url);

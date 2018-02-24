@@ -1,9 +1,9 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
 
-// export const BASE_URL = 'http://192.168.1.4:8001';
+export const BASE_URL = 'http://192.168.1.4:8001';
 // const BASE_URL = 'http://139.199.14.60:8001'; // 远端
-const BASE_URL = 'http://zjbapi.ikingtech.club:8080'; // 远端
+// const BASE_URL = 'http://zjbapi.ikingtech.club:8080'; // 远端
 
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59';
 
