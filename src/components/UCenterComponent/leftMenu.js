@@ -56,7 +56,7 @@ export default class LeftMenu extends React.Component {
           </p>
           <div className="nav">
             <ul>
-              <li><Link className={path.indexOf(Path.USER_BASIC)===-1?'':'hover'} to={Path.USER_BASIC}>借款项目</Link></li>
+              <li><Link className={path.indexOf(Path.LOAN_LIST)===-1?'':'hover'} to={Path.LOAN_LIST}>借款项目</Link></li>
               <li><a>我的借款</a></li>
               <li><a>还款管理</a></li>
               <li><a>自动还款</a></li>

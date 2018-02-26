@@ -105,3 +105,10 @@ es/radio/style/index.less 82 83 修改为14px
 
 es/spin/style/index.less 28删除
       max-height: 320px;
+
+es/pagination/style/index.less 93删除
+  display: block;
+
+es/badge/style/index.less 74 75 修改为-1px
+ top: -1px;
+ left: -1px;

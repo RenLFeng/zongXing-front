@@ -371,3 +371,13 @@ export async function getInvestmentNum(param) {
 export async function getCompanyByAccount() {
   return request(`${BASE_URL}/zjb-website/company/self/list`);
 }
+
+// 获取个人借款项目列表
+export async function getPersonalProjectList(params) {
+  return request(`${BASE_URL}/zjb-website/project/myProject`,{
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  })
+}

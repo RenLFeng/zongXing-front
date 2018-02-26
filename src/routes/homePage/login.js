@@ -13,7 +13,7 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showReg: true, //是否显示注册表单
+      showReg: false, //是否显示注册表单
       countDown: AUTH_CODE_TIME,  //获取验证码倒计时
       showAuthCode: true, //显示获取验证码的接口
       regPhone: '', //注册手机号

@@ -12,7 +12,6 @@ export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
  * */
 
 
-
 // 手机号验证正则
 export const VER_PHONE = /^1([38][0-9]|5[012356789]|4[579]|7[0135678]|9[89])[0-9]{8}$/;
 

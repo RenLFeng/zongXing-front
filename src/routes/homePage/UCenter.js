@@ -15,6 +15,7 @@ import AccountRecharge from '../../components/UCenterComponent/accountRecharge';
 import AccountWithdrawals from '../../components/UCenterComponent/accountWithdrawals';
 import Message from '../../components/UCenterComponent/message';
 import Test from '../../components/UCenterComponent/test';
+import LoanList from '../../components/UCenterComponent/loanList';
 
 import Path from '../../common/pagePath';
 
@@ -75,6 +76,7 @@ export default class UCenter extends React.Component {
             <Route path={Path.ACCOUNT_WITHDRAWALS} component={AccountWithdrawals} />
             <Route path={'/index/uCenter/test'} exact component={Test} />
             <Route path={Path.STATION_MESSAGE} component={Message} />
+            <Route path={Path.LOAN_LIST} component={LoanList} />
           </Switch>
         </div>
       </div>
