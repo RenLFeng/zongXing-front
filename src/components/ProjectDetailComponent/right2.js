@@ -108,17 +108,7 @@ export default class Right extends React.Component {
               <p className="t2">小时<i/>分<i/>秒</p>
             </div>
           </div>
-          <div className="data clearfix">
-            <div className="circle" data-value={allMoney/project.fcredit_money*100}/>
-            <i className="ctext">已筹款比例</i>
-            <div className="fr">
-              <p className="t1">已经筹款</p>
-              <p className="t2">{allMoney}<em>元</em></p>
-            </div>
-          </div>
-          <div className="bot">
-            <a className="btn" onClick={() => this.getData(1)}><i>已投资人数</i><b>{userCount}</b>人</a>
-          </div>
+
         </div>
         <div className="box2 shadow">
           <p className="tit">投资提醒</p>
@@ -133,7 +123,7 @@ export default class Right extends React.Component {
           </div>
           <div className="center bot1">
             <p>
-              <Button loading={this.state.loading} type="primary" style={{width: 150, height: 40}}  onClick={()=>this.getPersonalMoney()}>我要投资</Button>
+              <Button loading={this.state.loading} type="primary" style={{width: 150, height: 40}}  onClick={()=>{}}>我要投资</Button>
             </p>
           </div>
           <p className="center bot2">
@@ -150,7 +140,7 @@ export default class Right extends React.Component {
         </div>
         <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} />
         <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney}
-                       accountId={this.state.accountId}/>
+                     accountId={this.state.accountId}/>
 
       </div>
     );

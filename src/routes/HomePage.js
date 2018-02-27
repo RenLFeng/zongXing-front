@@ -10,6 +10,7 @@ import BusinessDiscount from './homePage/BusinessDiscount';
 import LoanCollege from './homePage/LoanCollege';
 import ProjectList from './homePage/ProjectList';
 import ProjectDetail from './homePage/ProjectDetail';
+import Project from './homePage/Project';
 import Risk from './homePage/Risk';
 import Login from './homePage/login';
 import Header from '../components/HomePageComponent/header';
@@ -87,6 +88,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/login`} component={Login} />
             <Route path={`${match.path}/risk`} component={Risk} />
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
+            <Route path={`${match.path}/project/:projectId`} component={Project} />
 
             <Route path={`/infor/recordInformation`} component={RecordInformation} />
             <Route path={`/infor/organizationInformation`} component={OrganizationInformation} />
