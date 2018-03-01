@@ -167,11 +167,11 @@ class Forms extends React.Component {
                   rules: [],
                   initialValue: data.fchannel ? data.fchannel : '0'
                 })(
-                <Select size="large" style={styles.inputHeight}>
-                  <Select.Option value="0">网络搜索</Select.Option>
-                  <Select.Option value="1">熟人推荐分享</Select.Option>
-                  <Select.Option value="2">线下宣传</Select.Option>
-                </Select>
+                  <Select size="large" style={styles.inputHeight}>
+                    <Select.Option value="0">网络搜索</Select.Option>
+                    <Select.Option value="1">熟人推荐分享</Select.Option>
+                    <Select.Option value="2">线下宣传</Select.Option>
+                  </Select>
                 )}
               </Col>
               <Col span={2}>

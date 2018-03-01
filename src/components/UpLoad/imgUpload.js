@@ -76,8 +76,6 @@ export default class ImgUpload extends React.Component {
     });
   };
 
-
-
   render() {
     const uploadButton = (
       <div className={this.props.divClassName} >

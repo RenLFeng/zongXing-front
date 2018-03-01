@@ -40,7 +40,7 @@ export default class Project extends React.Component {
         <div className="w box6 clearfix">
           {
             this.props.homeProject.map((data) => {
-              let dateCode = moment(data.fCreateDate).format('YYYY') + moment(data.fCreateDate).format('MM');
+              let dateCode = moment(data.fCreateTime).format('YYYY') + moment(data.fCreateTime).format('MM');
               return (
                 <div style={{ cursor:'pointer' }} key={data.fId} onClick={()=>this.jumpProjectDetail(data.fId)}>
                   <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${data.fProjectNo}/${data.fCardPicPath}`} />

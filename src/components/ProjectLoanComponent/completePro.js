@@ -33,7 +33,7 @@ export default class CompletePro extends React.Component {
         <div className="w box6 clearfix">
           {
             projectList.map((data) => {
-              let dateCode = moment(data.fCreateDate).format('YYYY') + moment(data.fCreateDate).format('MM');
+              let dateCode = moment(data.fCreateTime).format('YYYY') + moment(data.fCreateTime).format('MM');
               return (
                 <div style={{ cursor:'pointer' }} key={data.fId} onClick={()=>this.jumpDetail(data.fId)}>
                   <img className="pic"
