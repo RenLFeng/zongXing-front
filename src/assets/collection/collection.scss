@@ -1,0 +1,119 @@
+.wrap {
+  width:100%;
+  margin-top: 130px;
+  .page{
+    width:80%;
+    background: white;
+    margin:30px auto;
+    padding-bottom: 20px;
+    .title{
+      margin: 10px;
+      border-bottom:1px solid black;
+      span{
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 10px 20px;
+      }
+    }
+
+    .project {
+      margin: 20px;
+      background: lightgray;
+      .tab {
+        height:50px;
+        span{
+          display: inline-block;
+          font-size: 16px;
+          padding: 13px 9px;
+          text-align: center;
+        }
+        .project_info{
+          width:53%;
+        }
+        .money{
+          width:10%;
+        }
+        .amount{
+          width:10%;
+        }
+        .add{
+          width:10%;
+        }
+        .delete{
+          width:10%;
+        }
+      }
+    }
+
+    .project_info{
+      width:53%;
+      position: relative;
+      left: 0;
+      top: 0;
+      .pic {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+      }
+      .level {
+        position: absolute;
+        z-index: 2;
+        top: 5px;
+        left: 181px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        background-color: rgba(0,0,0,0.4);
+        text-align: center;
+        line-height: 30px;
+        font-family: Arial Black,Arial;
+        font-style: black;
+        font-size: 20px;
+        color: #fc0;
+      }
+
+    }
+    .money{
+      width:10%;
+      text-align: center;
+    }
+    .amount{
+      width:10%;
+      text-align: center;
+    }
+    .add{
+      width:10%;
+      text-align: center;
+      .del{
+        display: inline-block;
+        cursor: pointer;
+      }
+      .add{
+        display: inline-block;
+        cursor: pointer;
+      }
+      span{
+        display: inline-block;
+        width:65px;
+      }
+    }
+    .delete{
+      cursor: pointer;
+      text-align: center;
+      width:10%;
+    }
+
+    .project_{
+      padding-top: 15px;
+      background: white;
+      height:120px;
+      border-bottom:1px solid gray;
+      div{
+        display: inline-block;
+        padding:0 9px;
+        vertical-align: middle;
+      }
+    }
+  }
+}
