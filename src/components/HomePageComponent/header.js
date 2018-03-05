@@ -29,7 +29,7 @@ export default class Header extends React.Component {
   render() {
     const {match, location, history} = this.props.param;
     const styleS = location.pathname.indexOf('/index/howLoan') !== -1 || location.pathname.indexOf('/index/howInvest') !== -1 ? {position:'fixed'}: {position:'absolute'};
-    if (location.pathname.indexOf('/index/uCenter') === -1 && location.pathname.indexOf('/index/login') === -1) {
+    if (location.pathname.indexOf('/index/uCenter') === -1 && location.pathname.indexOf('/index/login') === -1 && location.pathname.indexOf('index/collection') === -1) {
       return (
       <div id="fix" className="topnav" style={styleS}>
         <div className="w clearfix">
@@ -64,7 +64,11 @@ export default class Header extends React.Component {
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>众借学院</a>
-            <a className="btn btn1" href="">收藏项目<em>0</em></a>
+            <a className="btn btn1" onClick={()=>{
+              history.push(`${match.path}/collection`);
+              $("#fix").removeClass('fix');
+              $(window).scrollTop(0);
+            }}>收藏项目<em>0</em></a>
             { !this.props.loginStatus ?
               <a className="btn btn2"
                  onClick={()=>{
@@ -118,7 +122,11 @@ export default class Header extends React.Component {
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>众借学院</a>
-            <a className="btn btn1" href="">收藏项目<em>0</em></a>
+            <a className="btn btn1" onClick={()=>{
+              history.push(`${match.path}/collection`);
+              $("#fix").removeClass('fix');
+              $(window).scrollTop(0);
+            }}>收藏项目<em>0</em></a>
             { !this.props.loginStatus ?
               <a className="btn btn2"
                  onClick={()=>{

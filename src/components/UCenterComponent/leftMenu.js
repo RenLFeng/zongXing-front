@@ -52,6 +52,16 @@ export default class LeftMenu extends React.Component {
         </div>
         <div className="navbox">
           <p className="hd ic5 hover">
+            <a>我的企业</a>
+          </p>
+          <div className="nav">
+            <ul>
+              <li><Link className={path.indexOf(Path.COMPANY_LIST)===-1?'':'hover'} to={Path.COMPANY_LIST}>企业列表</Link></li>
+            </ul>
+          </div>
+        </div>
+        <div className="navbox">
+          <p className="hd ic5 hover">
             <a>我的借款</a>
           </p>
           <div className="nav">

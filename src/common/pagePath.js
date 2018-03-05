@@ -15,4 +15,5 @@ export default {
   PROJECT_DETAIL: '/index/projectDetail',  // 项目列表页面
   STATION_MESSAGE: '/index/uCenter/message',  // 站内消息页面
   LOAN_LIST: '/index/uCenter/loanList', //借款项目列表
+  COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
 }

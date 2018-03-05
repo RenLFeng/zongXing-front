@@ -19,6 +19,7 @@ import '../assets/common/index';
 import { getLocation } from '../services/api';
 import ApplyLoan from './homePage/ApplyLoan';
 import UCenter from './homePage/UCenter';
+import Collection from './homePage/Collection';
 import COS from 'cos-js-sdk-v5';
 import RecordInformation from "./information/recordInformation";
 import OrganizationInformation from "./information/organizationInformation";
@@ -89,6 +90,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/risk`} component={Risk} />
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
             <Route path={`${match.path}/project/:projectId`} component={Project} />
+            <Route path={`${match.path}/collection`} component={Collection} />
 
             <Route path={`/infor/recordInformation`} component={RecordInformation} />
             <Route path={`/infor/organizationInformation`} component={OrganizationInformation} />

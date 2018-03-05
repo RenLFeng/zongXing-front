@@ -58,8 +58,13 @@ export async function getPersonAccountNew(params) {
 }
 
 //获取有账户的企业信息列表的接口
-export async function getCompanylist() {
-  return request(`${BASE_URL}/zjb-website/account/company/list`)
+export async function getCompanylist(params) {
+  return request(`${BASE_URL}/zjb-website/account/company/list`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  })
 }
 
 
@@ -378,6 +383,16 @@ export async function getPersonalProjectList(params) {
     method: 'POST',
     body: {
       ...params,
+    }
+  })
+}
+
+// 新建企业
+export async function saveCompant(params) {
+  return request(`${BASE_URL}/zjb-website/`, {
+    method: 'POST',
+    body: {
+      ...params
     }
   })
 }
