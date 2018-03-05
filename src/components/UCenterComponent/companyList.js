@@ -7,7 +7,7 @@ import {messageList} from '../../services/api.js';
 import moment from 'moment';
 import Path from '../../common/pagePath';
 import {pageShows, LICENSE} from '../../common/systemParam';
-import { getCompanylist, saveCompant } from '../../services/api';
+import { getCompanylist, saveCompant, getCompanyByAccount } from '../../services/api';
 
 export default class LoanList extends React.Component {
   constructor(props) {
@@ -18,19 +18,19 @@ export default class LoanList extends React.Component {
       total: 0,
       pageSize: 20,
       dataSource: [],
-      visible: true,
+      visible: false,
       createLoading: false
     };
     this.colums = [
       {
         title: '企业名称',
-        dataIndex: 'companyName',
-        key: 'companyName'
+        dataIndex: 'fname',
+        key: 'fname'
       },
       {
         title: '营业执照号',
-        dataIndex: 'companyNo',
-        key: 'companyNo'
+        dataIndex: 'fsocialCreditCode',
+        key: 'fsocialCreditCode'
       },
       {
         title: '操作',
@@ -56,13 +56,13 @@ export default class LoanList extends React.Component {
       current: page
     });
     try {
-      const response = await getCompanylist({pageCurrent:page,pageSize: this.state.pageSize});
+      const response = await getCompanyByAccount({pageCurrent:page,pageSize: this.state.pageSize});
       this.setState({loading: false});
       console.log(response);
       if (response.code === 0) {
         this.setState({
-          total: response.data.count,
-          dataSource: response.data.list
+          total: response.data.totalNumber,
+          dataSource: response.data.infoList
         });
       } else {
         this.setState({dataSource: []});
@@ -102,7 +102,6 @@ export default class LoanList extends React.Component {
       <div className="fr uc-rbody">
         <Button type="primary" style={{marginBottom: 30}} onClick={()=>this.setState({visible: true})}>新建企业</Button>
         <Table
-          rowKey={record=>record.fid}
           columns={this.colums}
           dataSource={this.state.dataSource}
           pagination={{
