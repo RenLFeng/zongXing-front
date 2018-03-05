@@ -58,13 +58,8 @@ export async function getPersonAccountNew(params) {
 }
 
 //获取有账户的企业信息列表的接口
-export async function getCompanylist(params) {
-  return request(`${BASE_URL}/zjb-website/account/company/list`, {
-    method: 'POST',
-    body: {
-      ...params,
-    },
-  })
+export async function getCompanylist() {
+  return request(`${BASE_URL}/zjb-website/account/company/list`)
 }
 
 
@@ -373,8 +368,13 @@ export async function getInvestmentNum(param) {
 }
 
 // 获取个人账户下公司信息
-export async function getCompanyByAccount() {
-  return request(`${BASE_URL}/zjb-website/company/self/list`);
+export async function getCompanyByAccount(params) {
+  return request(`${BASE_URL}/zjb-website/company/self/list`, {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
 }
 
 // 获取个人借款项目列表

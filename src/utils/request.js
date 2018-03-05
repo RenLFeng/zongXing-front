@@ -59,7 +59,7 @@ export default function request(url, options) {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
-      'x-access-token': token,
+      'zjb-user-token': token,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD',
       Origin: '*',
@@ -72,7 +72,7 @@ export default function request(url, options) {
   newOptions.headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-    'x-access-token': token,
+    'zjb-user-token': token,
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD',
     Origin: '*',
