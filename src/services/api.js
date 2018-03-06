@@ -388,11 +388,17 @@ export async function getPersonalProjectList(params) {
 }
 
 // 新建企业
-export async function saveCompant(params) {
-  return request(`${BASE_URL}/zjb-website/`, {
+export async function saveCompany(params) {
+  return request(`${BASE_URL}/zjb-website/company/save`, {
     method: 'POST',
     body: {
       ...params
     }
   })
 }
+
+// 公司登陆接口
+export async function loginCompany(param) {
+  return request(`${BASE_URL}/zjb-website/company/login?companyId=${param}`)
+}
+
