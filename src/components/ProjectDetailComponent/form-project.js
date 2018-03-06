@@ -132,7 +132,7 @@ export default class FormProject extends React.Component {
           <p className="tit">{project.fname}</p>
           <p className="city">{project.fprovincial_name} - {project.fcity_name}</p>
           <p className="t1">
-            <i><em className="cf60">{project.frate_last}</em>年利率</i>
+            <i>年利率<em className="cf60">{project.frate_last}</em></i>
             <i>期限<em className="cf60">{project.fcollect_day}</em>天</i>
           </p>
           <div className="bar"><div style={{width: `${project.allMoney*1/project.fcredit_money}%`}} /></div>
