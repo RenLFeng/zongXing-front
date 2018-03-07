@@ -37,16 +37,15 @@ export default class LoanList extends React.Component {
         render: (val) => (
           <div>
               <a onClick={async () => {
-                const response = await loginCompany(val.fid);
-                console.log(response);
-                if (response.code === 0) {
-                  localStorage.setItem('companyToken', response.token);
-                  localStorage.setItem('companyName', response.companyName);
-
-                } else {
-                  message.error(response.msg)
-                }
-                {/*window.open('https://www.baidu.com');*/}
+                //const response = await loginCompany(val.fid);
+                //console.log(response);
+                //if (response.code === 0) {
+                //  localStorage.setItem('companyToken', response.data.token);
+                //  localStorage.setItem('companyName', response.data.companyName);
+                window.location.href = `http://192.168.1.192:8000?token=${localStorage.getItem('accessToken')}&id=${val.fid}`;
+                //} else {
+               //   message.error(response.msg)
+                //}
               }} style={{color: 'blue'}}>进入后台</a>
           </div>
         ),
