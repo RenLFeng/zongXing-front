@@ -584,7 +584,7 @@ class Forms extends React.Component {
               label={<span style={styles.label}>社会关系</span>}
             >
               {getFieldDecorator('fRelation3', {
-                initialValue: data.tlo3relation ? data.tlo3relation : '',
+                  initialValue: data.tlo3relation ? data.tlo3relation : '',
                 rules: []
               })(<Select size="large" style={styles.inputHeight}>
                 <Select.Option value="同事">同事</Select.Option>

@@ -7,7 +7,7 @@ import {messageList} from '../../services/api.js';
 import moment from 'moment';
 import Path from '../../common/pagePath';
 import {pageShows, LICENSE} from '../../common/systemParam';
-import { getCompanylist, saveCompant, getCompanyByAccount } from '../../services/api';
+import { getCompanylist,saveCompany, loginCompany, getCompanyByAccount } from '../../services/api';
 
 export default class LoanList extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ export default class LoanList extends React.Component {
         key: 'fname'
       },
       {
-        title: '营业执照号',
+        title: '统一社会信用代码',
         dataIndex: 'fsocialCreditCode',
         key: 'fsocialCreditCode'
       },
@@ -36,10 +36,17 @@ export default class LoanList extends React.Component {
         title: '操作',
         render: (val) => (
           <div>
-              <a onClick={() => {
-                console.log(val.companyId);
-                window.open('https://www.baidu.com');
-              }} style={{color: 'blue'}}>查看</a>
+              <a onClick={async () => {
+                //const response = await loginCompany(val.fid);
+                //console.log(response);
+                //if (response.code === 0) {
+                //  localStorage.setItem('companyToken', response.data.token);
+                //  localStorage.setItem('companyName', response.data.companyName);
+                window.location.href = `http://192.168.1.192:8000?token=${localStorage.getItem('accessToken')}&id=${val.fid}`;
+                //} else {
+               //   message.error(response.msg)
+                //}
+              }} style={{color: 'blue'}}>进入后台</a>
           </div>
         ),
       },
@@ -90,8 +97,29 @@ export default class LoanList extends React.Component {
       if (err) {
         return;
       }
-      const response = await saveCompant();
-      console.log(response);
+      try {
+        this.setState({createLoading: true});
+        const response = await saveCompany(values);
+        console.log(response);
+        this.setState({createLoading: false});
+        if (response.code === 0) {
+          this.fetchData(1);
+          localStorage.setItem('companyToken', response.token);
+          localStorage.setItem('companyName', response.companyName);
+        } else {
+          message.error(response.msg)
+        }
+      } catch (e) {
+        this.setState({createLoading: false});
+        if (typeof e === 'object' && e.name === 288) {
+          message.error('未登录或登录超时');
+          localStorage.removeItem('accessToken');
+          this.props.history.push('/index/login');
+          this.props.dispatch({
+            type: 'login/logoutData'
+          });
+        }
+      }
       form.resetFields();
       this.setState({ visible: false });
     });
@@ -102,6 +130,7 @@ export default class LoanList extends React.Component {
       <div className="fr uc-rbody">
         <Button type="primary" style={{marginBottom: 30}} onClick={()=>this.setState({visible: true})}>新建企业</Button>
         <Table
+          rowKey={record => record.fid}
           columns={this.colums}
           dataSource={this.state.dataSource}
           pagination={{
@@ -142,8 +171,12 @@ class CreateCompanyComponent extends React.Component {
 
   render() {
     const formItemLayout = {
-      labelCol: { span: 4 },
-      wrapperCol: { span: 20 },
+      labelCol: { span: 7 },
+      wrapperCol: { span: 17 },
+    };
+    const formItemsLayout = {
+      labelCol: { span: 7 },
+      wrapperCol: { span: 17 },
     };
     const { visible, onCancel, onCreate, form, loading } = this.props;
     const { getFieldDecorator } = form;
@@ -159,15 +192,15 @@ class CreateCompanyComponent extends React.Component {
       >
         <Form layout="horizontal" style={{width: '100%'}}>
           <FormItem label="企业名称" {...formItemLayout}>
-            {getFieldDecorator('title', {
+            {getFieldDecorator('companyName', {
               rules: [{ required: true, message: '企业名称不能为空' }
                 ,{validator: this.validateName}],
             })(
               <Input />
             )}
           </FormItem>
-          <FormItem label="营业执照" {...formItemLayout}>
-            {getFieldDecorator('description', {
+          <FormItem label="统一社会信用代码" {...formItemsLayout}>
+            {getFieldDecorator('fsocialCreditCode', {
               rules: [{ required: true, message: '营业执照不能为空' },
                 {pattern: LICENSE, message: '营业执照格式不正确'}],
             })(<Input />)}
