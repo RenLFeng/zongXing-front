@@ -4,9 +4,9 @@ import {message} from 'antd';
 export default {
   namespace: 'login',
   state: {
-    status: !!localStorage.getItem('accessToken'),
+    status: localStorage.getItem('accessToken')? true: false,
     submitting: false,
-    nickName: localStorage.getItem('accessToken') ? JSON.parse(localStorage.getItem('accessToken')).nickName: ''
+    nickName: ""
   },
   effects: {
     *login({ payload }, { call, put }) {
