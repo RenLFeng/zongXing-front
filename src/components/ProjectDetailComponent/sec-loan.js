@@ -115,16 +115,45 @@ export default class SecLoan extends React.Component {
             if (!item.ftitle) {
               return null;
             }
+            let pics = [];
+            if (item.fpictures) {
+              pics = JSON.parse(item.fpictures);
+            }
             return (
               <div key={item.fid} className="textbox border">
                 <i className="tit">{item.ftitle}</i>
                 <div>
                   <p>{item.fcontent?item.fcontent: `暂无${item.ftitle}`}</p>
-
+                  {pics.length > 2 ?
+                    <div className="imgsdiv clearfix" style={{position: 'relative'}}>
+                      <div className="fl">
+                        <div className="bigpic" style={{backgroundImage:`url(${IMG_BASE_URL}${pics[0].realUrl})`, position: 'absolute', top: 0}}/>
+                      </div>
+                      <div className="fr">
+                        <a className="btn prev">PREV</a>
+                        <div className="box">
+                          {pics.map((data, index)=>{
+                            return (
+                              <a key={index} data-big={`${IMG_BASE_URL}/${data.realUrl}`}>
+                                <img src={`${IMG_BASE_URL}/${data.realUrl}`} />
+                              </a>
+                            );
+                          })}
+                        </div>
+                        <a className="btn next">NEXT</a>
+                      </div>
+                    </div>
+                    :
+                    pics.map((item) => (
+                      <img style={{width: '90%', marginTop: 20}} key={item.uid} src={`${IMG_BASE_URL}/${item.realUrl}`}/>
+                    ))
+                  }
                 </div>
               </div>
             )
           }): null}
+
+
           {/*<div className="textbox border">*/}
             {/*<i className="tit">我的自述</i>*/}
             {/*<p>{item.fcontent?project.fcontent: '暂无我的自述'}</p>*/}

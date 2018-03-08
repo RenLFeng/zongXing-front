@@ -4,23 +4,22 @@ import {IMG_BASE_URL} from '../../common/systemParam';
 
 export default class Images extends React.Component {
   render() {
-    const {project} = this.props;
-    const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
+    const {pics} = this.props;
     return (
       <div className="imgsdiv clearfix">
         <div className="fl">
-          <div className="bigpic" style={{backgroundImage:`url(${project.fpicture_json ? project.fpicture_json.split(',')[0]: '1'})`}}/>
+          <div className="bigpic" style={{backgroundImage:`url(${IMG_BASE_URL}${pics[0].realUrl})`}}/>
         </div>
         <div className="fr">
           <a className="btn prev">PREV</a>
           <div className="box">
-            {project.fpicture_json ? project.fpicture_json.split(',').map((data, index)=>{
+            {pics.map((data, index)=>{
               return (
-                <a key={index} data-big={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${data}`}>
-                  <img src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${data}`} />
+                <a key={index} data-big={`${IMG_BASE_URL}/${data.realUrl}`}>
+                  <img src={`${IMG_BASE_URL}/${data.realUrl}`} />
                 </a>
               );
-            }): null}
+            })}
           </div>
           <a className="btn next">NEXT</a>
         </div>
