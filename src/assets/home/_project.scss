@@ -22,6 +22,8 @@
 }
 
 .box6>div {
+  overflow: hidden;
+  border:1px solid red;
     float: left;
     width: 394px;
     height: 582px;
@@ -29,7 +31,7 @@
     margin-top: 64px;
     background-color: #fff;
     position: relative;
-    border: 1px solid #ddd;
+    //border: 1px solid #ddd;
     box-shadow: 1px 1px 16px rgba(0,0,0,0.3);
     &:nth-child(3n-2) {
         margin-left: 0;
@@ -40,20 +42,20 @@
     &>* {
         position: absolute;
     }
-    span{
-      width: 396px;
-      height: 422px;
-      display: inline-block;
-      border:1px solid red;
+  .pic_box{
+    width: 396px;
+    height: 422px;
+    border:1px solid blue;
+    overflow: hidden;
+  }
       .pic {
         width: 396px;
         height: 422px;
         transition: all 0.6s;
       }
-    }
-
     .pic:hover{
-        overflow: hidden;
+        height: 422px;
+        //overflow: hidden;
         transform: scale(1.4);
     }
     .name {
