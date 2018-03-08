@@ -77,7 +77,7 @@
         padding: 30px 0 30px 50px;
         margin-top: 20px;
         &>i {
-            width: 205px;
+            width: 190px;
             background: url(../img/project-detail/chk1.png) no-repeat left center;
             text-indent: 26px;
             line-height: 38px;
@@ -85,5 +85,19 @@
                 background-image: url(../img/project-detail/chk2.png);
             }
         }
+    }
+    .border-div {
+      position: relative;
+      padding: 50px 30px 30px 30px;
+      margin: 40px 0;
+      &>.tit {
+        position: absolute;
+        left: 60px;
+        top: -15px;
+        line-height: 30px;
+        background-color: #fff;
+        padding: 0 10px;
+        font-size: 18px;
+      }
     }
 }

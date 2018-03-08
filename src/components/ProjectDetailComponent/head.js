@@ -4,16 +4,20 @@ import {IMG_BASE_URL} from '../../common/systemParam';
 
 export default class Head extends React.Component {
   render() {
+    let video_src = '';
     const { projectDetail } = this.props;
-    const dateCode = moment(projectDetail.fcreate_time).format('YYYY') + moment(projectDetail.fcreate_time).format('MM');
+    if (projectDetail.fvideo_path) {
+      const arr = JSON.parse(projectDetail.fvideo_path);
+      video_src = arr[0].url;
+    }
     return (
       <div className="banner autosize pd-head">
-        <img className="big" src={`${IMG_BASE_URL}project/${dateCode}/${projectDetail.fproject_no}/${projectDetail.fbanner_pic_path}`} />
+        <img className="big" src={`${IMG_BASE_URL}/${projectDetail.fbanner_pic_path}`} />
         <div className="w">
           <video className="video"
                  preload="metadata" controls="controls"
-                 poster={`${IMG_BASE_URL}project/${dateCode}/${projectDetail.fproject_no}/${projectDetail.fcard_pic_path}`}
-                 src={projectDetail.fvideo_path}>
+                 poster={`${IMG_BASE_URL}/${projectDetail.fcard_pic_path}`}
+                 src={video_src}>
             您的浏览器不支持视频播放，请升级浏览器
           </video>
           <div className="info">

@@ -33,6 +33,7 @@ export default class ProjectDetail extends React.Component {
   async fetchProjectDetail() {
     const {projectId} = this.props.match.params;
     const response = await getProjectDetail(projectId);
+    console.log('---------', response);
     setTimeout(()=>{
       initPage();
     }, 500);
@@ -47,7 +48,7 @@ export default class ProjectDetail extends React.Component {
       if (response.data.flocation) {
         let map = new AMap.Map('container',{
           resizeEnable: true,
-          zoom: 16,
+          zoom: 13,
           center: response.data.flocation.split(',')
         });
         let marker = new AMap.Marker({

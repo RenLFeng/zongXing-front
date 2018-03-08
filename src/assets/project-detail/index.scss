@@ -11,16 +11,19 @@
 .pd-head {
     .video {
         position: absolute;
-        left: 38px;
-        top: 200px;
-        width: 476px;
-        height: 270px;
+        left: 0;
+        top: 170px;
+        width: 550px;
+        height: 380px;
+        background-color: rgba(0,0,0,0.5);
     }
     .info {
         position: absolute;
-        right: 0;
-        top: 200px;
-        width: 666px;
+        right: 20px;
+        top: 160px;
+        width: 500px;
+        background-color: rgba(0,0,0,0.5);
+        padding: 40px;
         color: #fff;
         .tit {
             font-size: 30px;
@@ -30,7 +33,7 @@
         }
         .user {
             padding-left: 90px;
-            height: 136px;
+            height: 130px;
             position: relative;
             .av {
                 position: absolute;

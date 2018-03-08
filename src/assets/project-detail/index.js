@@ -11,7 +11,7 @@ function initPage() {
 }
 
 function bindEvent() {
-    leftNav();
+    // leftNav();
     picView();
     comment();
 

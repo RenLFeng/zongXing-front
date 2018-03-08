@@ -128,7 +128,7 @@ export default class FormProject extends React.Component {
         <a className="close" onClick={()=>this.closeDiv()}/>
         <div className="card">
           <i className="level">{project.fleve_name}</i>
-          <img className="pic" src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${project.fcard_pic_path}`} />
+          <img className="pic" src={`${IMG_BASE_URL}/${project.fcard_pic_path}`} />
           <p className="tit">{project.fname}</p>
           <p className="city">{project.fprovincial_name} - {project.fcity_name}</p>
           <p className="t1">
