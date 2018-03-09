@@ -106,7 +106,7 @@ export default class  Login extends React.Component {
   }
 
 
-   getAuthCode_ = async() => {
+  getAuthCode_ = async() => {
     const {loginName} = this.state;
      if (loginName.length === 0) {
        this.setState({loginNameErr:'手机号不能为空'});
