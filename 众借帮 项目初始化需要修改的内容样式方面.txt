@@ -112,3 +112,6 @@ es/pagination/style/index.less 93删除
 es/badge/style/index.less 74 75 修改为-1px
  top: -1px;
  left: -1px;
+
+ es/input-number/style/index.less 71  修改为90%
+  width: 90%;

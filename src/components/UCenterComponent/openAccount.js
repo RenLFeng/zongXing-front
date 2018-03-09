@@ -58,7 +58,7 @@ class FormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openType: this.props.type === '1' ? '1' : '0',
+      openType: '0',
       visible: false,
       countDownTime: TIME_OUT,
       companyNumber: '',
@@ -98,7 +98,7 @@ class FormComponent extends React.Component {
       if (!err) {
         console.log('表单获取的数据', values);
         // 提交表单接口
-
+        values.accountType = '0';
         this.setState({loading: true});
         try {
           const response = await commitOpenAccount(values);
@@ -240,20 +240,6 @@ class FormComponent extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <FormItem
-          {...formItemLayout}
-          label="开户类型"
-        >
-          {getFieldDecorator('accountType', {
-            rules:[{ required: true, message: '请选择开户类型' }],
-            initialValue: this.props.type === '1' ? '1' : '0'
-          })(
-            <Select onChange={(val)=>this.changeType(val)}>
-              <Select.Option value="0">个人开户</Select.Option>
-              <Select.Option value="1">企业开户</Select.Option>
-            </Select>
-          )}
-        </FormItem>
         <FormItem
           {...formItemLayout}
           label="手机"
