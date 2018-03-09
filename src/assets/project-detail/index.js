@@ -12,7 +12,7 @@ function initPage() {
 
 function bindEvent() {
     // leftNav();
-    picView();
+    // picView();
     comment();
 
     $('.pd-body .tnav>a').on('click', function () {

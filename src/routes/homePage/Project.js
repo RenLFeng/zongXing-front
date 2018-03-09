@@ -38,6 +38,17 @@ export default class ProjectDetail extends React.Component {
       this.setState({
         projectDetail: response.data
       });
+      if (response.data.flocation) {
+        let map = new AMap.Map('container',{
+          resizeEnable: true,
+          zoom: 13,
+          center: response.data.flocation.split(',')
+        });
+        let marker = new AMap.Marker({
+          position: response.data.flocation.split(',')
+        });
+        marker.setMap(map);
+      }
     } else {
       message.error(response.msg);
     }

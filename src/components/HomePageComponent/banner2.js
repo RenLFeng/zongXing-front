@@ -37,7 +37,7 @@ export default class Banner extends React.Component {
     const {systemData} = this.props;
     return (
       <div className="section home-banner">
-        <video autoPlay="autoplay" loop="loop" preload="metadata" controls="controls">
+        <video autoPlay="autoplay" loop="loop" preload="metadata" >
           <source src="https://n1video.hjfile.cn/zhuanti/2018/02/05/5b543a2fc89d1f464e152dc4015eea50.webm" type="video/webm"/>
           <source src="https://n1video.hjfile.cn/zhuanti/2018/02/05/5f381bab717a30c3c91f9dfae6d8334e.mp4" type="video/mp4"/>
         </video>

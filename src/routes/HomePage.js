@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, Route,Switch } from 'dva/router';
 import i18n from '../i18n/i18n'
 import { connect } from 'dva';
+
 import ProjectLoan from './homePage/ProjectLoan';
 import HowLoan from './homePage/HowLoan';
 import HowInvest from './homePage/HowInvest';

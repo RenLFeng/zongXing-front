@@ -153,7 +153,7 @@ export default class ProjectDetail extends React.Component {
               <SecCourse projectDetail={projectDetail}  {...this.props.match.params}/>
             </div>
           </div>
-          <div className="fr rbody">
+          <div className="fr rbody" style={{marginTop: -250}}>
             <Right projectDetail={projectDetail} history={this.props.history} time={{countDay: this.state.countDay, countDown: this.state.countDown}}/>
           </div>
         </div>
