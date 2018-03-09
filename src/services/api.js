@@ -402,3 +402,8 @@ export async function loginCompany(param) {
   return request(`${BASE_URL}/zjb-website/company/login?companyId=${param}`)
 }
 
+
+//修改密码
+export async function changePW(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/forgetPwd?loginName=${param}`)
+}
