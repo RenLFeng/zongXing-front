@@ -3,7 +3,7 @@ import '../../assets/login/index.scss';
 import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_ } from '../../common/systemParam';
 import { connect } from 'dva';
 import {Spin, message, Button} from 'antd';
-import { phoneExist, getAuthCode, regUser, changePW } from '../../services/api';
+import { phoneExist, getAuthCode, regUser, changePW, checkCode, changePassword} from '../../services/api';
 
 @connect((state) => ({
   login: state.login,
@@ -33,8 +33,20 @@ export default class  Login extends React.Component {
       authLoading: false, //验证码接口发送状态
 
       flag:1,  //显示登陆页面
-      loginName:'',  //验证身份时的手机号
-      loginNameErr:'',
+      loginName:'',  //验证身份时的手机号或用户名
+      mobile:'',
+      authCode:'',
+      codeNameErr1:'',   //验证手机号码提示
+      codeNameErr2:'',   //验证验证码提示语
+      newPass:'',  //
+      newPass_:'',
+      message1:'', //第一次输入密码时提示
+      message2:'',  //第二次输入密码时提示
+      password:'',
+      show:true,
+      code:'', //忘记密码时验证码
+
+
 
     };
     this.getAuthCode = this.getAuthCode.bind(this);
@@ -43,11 +55,16 @@ export default class  Login extends React.Component {
     this.submitLogin = this.submitLogin.bind(this);
     this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
     this.countDownFun = null;
+    this.countDownFun_ = null;
   }
 
   componentWillUnmount() {
     if (this.countDownFun) {
       clearInterval(this.countDownFun);
+    }
+
+    if (this.countDownFun_) {
+      clearInterval(this.countDownFun_);
     }
   }
 
@@ -105,36 +122,113 @@ export default class  Login extends React.Component {
     }, 1000);
   }
 
-
+// 身份验证——手机号
   getAuthCode_ = async() => {
-    const {loginName} = this.state;
-     if (loginName.length === 0) {
-       this.setState({loginNameErr:'手机号不能为空'});
+    const {loginName,mobile,authCode} = this.state;
+     if (loginName.length === 0 ) {
+       this.setState({codeNameErr1:'手机号/用户名不能为空'});
        return;
      }
      if (!VER_PHONE.test(loginName)) {
-       this.setState({loginNameErr:'请输入正确的手机号'});
+       this.setState({codeNameErr1:'请输入正确的手机号'});
        return;
      }
-     this.setState({loginNameErr: ''});
+     this.setState({codeNameErr1: ''});
      // 发送验证码的时间存在本地
      const sendTime = localStorage.getItem(loginName);
      if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
        alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
        return;
      }
-
     this.setState({authLoading: true});
     try{
       const response  = await changePW(loginName);
-      this.setState({authLoading: true});
-      console.log(response);
+      if(response.code === 0){
+        this.setState({
+          show:false,
+          mobile:response.data
+        });
+      }
     }catch(e) {
       this.setState({authLoading: false});
       message.error('请求失败');
       return;
     }
+    localStorage.setItem(loginName, new Date().getTime());
+    //发送请求 按钮变不可点状态
+    this.setState({ showAuthCode: false });
+    //成功之后倒计时开始启动
+    this.countDownFun_ = setInterval(() => {
+      if (this.state.countDown_ === 0) {
+        clearInterval(this.countDownFun_);
+        this.setState({ countDown_: AUTH_CODE_TIME_, showAuthCode: true });
+      } else {
+        this.setState({ countDown_: this.state.countDown_ - 1 });
+      }
+    }, 1000);
   };
+
+  //提交验证手机号码
+  async submitInformation() {
+    if (this.countDownFun_) {
+      clearInterval(this.countDownFun_);
+    }
+    const {mobile, authCode, codeNameErr1, codeNameErr2 } = this.state;
+    if(mobile.length ===0){
+      this.setState({codeNameErr1:'手机号码不能为空'});
+      return
+    }
+    if(authCode.length ===0){
+      this.setState({codeNameErr2:'验证码不能为空'});
+      return
+    }
+    try{
+      const response = await checkCode(mobile, authCode);
+      console.log(response);
+      if(response.code ===0){
+        this.setState({flag:this.state.flag +1});
+      }
+    } catch(e) {
+      console.log(e);
+      message.error('网络异常，请重试');
+    }
+  }
+
+  //验证两次输入的密码是否一致
+  same() {
+    const {newPass,newPass_} = this.state;
+    if(newPass.length === 0  ){
+      this.setState({
+        message1:'该内容不能为空'
+      })
+    }
+    if( newPass_.length === 0){
+      this.setState({
+        message2:'该内容不能为空'
+      })
+    }
+    if(newPass !== newPass_){
+      this.setState({
+        message2:'两次输入的密码不一致'
+      })
+    }
+  }
+
+  //修改密码
+  async changePassword(){
+    this.same();
+    const {loginName,password, newPass} = this.state;
+    const  respondse = await changePassword({loginName:this.state.loginName,
+      password:this.state.newPass});
+    console.log(respondse)
+    if(respondse.code === 0){
+      this.setState({
+        flag:1,
+      })
+    }
+    console.log('用户名为：',this.state.loginName);
+    console.log('修改后的密码为：',this.state.password);
+  }
 
   //修改所有input的state统一方法
   onChange(e) {
@@ -266,16 +360,8 @@ export default class  Login extends React.Component {
     }
   }
 
-  submitPwd() {
-    this.setState({
-      flag:1
-    })
-
-  }
-
   render() {
-    const { showReg, showAuthCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus , flag,loginName} = this.state;
-    console.log(loginName);
+    const { showReg, showAuthCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus , flag,loginName,codeNameErr,newPass, newPass_,check_,show,code} = this.state;
     return (
         <div className="logindiv1 shadow">
           { showReg ?
@@ -286,11 +372,11 @@ export default class  Login extends React.Component {
               </div>
               <Spin tip="请求中..." spinning={this.state.regLoading ||this.state.authLoading}>
                 <div className="row">
-                  <input className="put mobile" value={regPhone} maxLength={11} name="regPhone" type="tel" placeholder="请输入手机号码" onBlur={this.checkPhoneNumber}/>
+                  <input className="put mobile" value={regPhone} maxLength={11} name="regPhone" type="tel" placeholder="请输入手机号码" onChange={(e)=>this.setState({regPhone:e.target.value})}  onBlur={this.checkPhoneNumber}/>
                   <p>{this.state.regNameErr}</p>
                 </div>
                 <div className="row relative" style={{marginBottom: 0}}>
-                  <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel" placeholder="输入验证码"/>
+                  <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel" placeholder="输入验证码" onChange={(e)=>this.setState({regAuthCode:e.target.value})} />
                   { // 根据倒计时时间显示是否可以点击获取验证码按钮
                     showAuthCode ?
                       <a className="getvc center" onClick={this.getAuthCode}>获取验证码</a> :
@@ -298,7 +384,7 @@ export default class  Login extends React.Component {
                 </div>
                 <p style={{color: 'red', marginBottom: 20,marginTop: 5}}>{this.state.authErr}</p>
                 <div className="row">
-                  <input className="put pwd" value={regPwd} maxLength={16} name="regPwd" type="password" placeholder="设置登录密码"/>
+                  <input className="put pwd" value={regPwd} maxLength={16} name="regPwd" type="password" placeholder="设置登录密码" onChange={(e)=>this.setState({regPwd:e.target.value})} />
                 </div>
                 <div>
                   <a className="btn" onClick={this.submitReg}>注册</a>
@@ -329,12 +415,12 @@ export default class  Login extends React.Component {
               </div>
               <Spin tip="登录中..." spinning={this.props.submitting}>
                 <div className="row">
-                  <input className="put user" onKeyUp={(e)=>this.pressKey(e)} value={loginPhone} maxLength={20} name="loginPhone" type="tel" placeholder="请输入手机号码/用户名"/>
+                  <input className="put user" onKeyUp={(e)=>this.pressKey(e)} value={loginPhone} maxLength={20} onChange={(e)=>this.setState({loginPhone:e.target.value})}  name="loginPhone" type="tel" placeholder="请输入手机号码/用户名"/>
                   <p>{this.state.loginNameErr}</p>
                 </div>
 
                 <div className="row">
-                  <input className="put pwd" onKeyUp={(e)=>this.pressKey(e)} value={loginPwd} maxLength={16} name="loginPwd" type="password" placeholder="请输入登录密码"/>
+                  <input className="put pwd" onKeyUp={(e)=>this.pressKey(e)} value={loginPwd} maxLength={16} name="loginPwd" type="password" onChange={(e)=>this.setState({loginPwd:e.target.value})}  placeholder="请输入登录密码"/>
                   <p>{this.state.loginPwdErr}</p>
                 </div>
                 <div>
@@ -355,42 +441,48 @@ export default class  Login extends React.Component {
                 </p>
               </div>
             </div> :
-              ((flag === 2)?
-                <div className="form logf" onChange={this.onChange}>
+              ((flag === 2)? <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">
                     <a className="title">身份验证</a>
                   </div>
-                  <div className="row">
-                    <input className="put mobile"  type="tel"  value={loginName} name="loginName" placeholder="请输入手机号码" />
-                    <p>{this.state.loginNameErr}</p>
-                  </div>
-                  <div className="row relative" >
-                    <input className="put vcode" placeholder="输入验证码"/>
-                    { // 根据倒计时时间显示是否可以点击获取验证码按钮
-                      showAuthCode ?
-                        <a className="getvc center" onClick={this.getAuthCode_}>获取验证码</a> :
-                        <span className="getvc center" style={{ backgroundColor: '#D1D1D1' }}>{countDown_}s后重新获取</span> }
-                  </div>
+                  {show?
+                    <div className="row">
+                      <input className="put mobile"  type="tel"  value={loginName} name="loginName" placeholder="请输入手机号码/用户名" onChange={(e)=>this.setState({loginName:e.target.value})} />
+                      <p>{this.state.codeNameErr1}</p>
+                    </div>:
+                    <div className="row relative" >
+                      <input className="put vcode"   value={code} name="code" onChange={(e)=>this.setState({authCode:e.target.value})}  placeholder="输入6位验证码"/>
+                      <p>{this.state.codeNameErr2}</p>
+                    </div>
+                  }
 
-                <div>
-                  <Button className="btns" type="primary" onClick={()=> this.setState({flag:this.state.flag +1})}>提交</Button>
-                  <Button className="btns" type="primary" onClick={()=> this.setState({flag:this.state.flag -1})}>返回</Button>
+                  <div>
+                    {showAuthCode ?
+                    <Button className="btn_btn" type="primary" onClick={this.getAuthCode_}>获取验证码</Button> :
+                    <Button className="btn_btn" type="primary" style={{ backgroundColor: '#D1D1D1' }}>{countDown_}s后重新获取</Button>
+                    }
+                    <Button className="btn_r" type="primary" onClick={()=>this.submitInformation()}>提交</Button>
+
+                  </div>
                 </div>
-            </div> :
+                :
+
               <div className="form logf" >
               <div className="hd center">
                 <a className="title">重置密码</a>
               </div>
                 <div className="row">
-                  <input className="put pwd"  value={loginName} name="loginName"  placeholder="请输入新密码"/>
+                  <input className="put pwd"  value={newPass}  name="newPass"  type="password"  placeholder="请输入新密码" onChange={(e)=>this.setState({newPass:e.target.value})} />
+                  <p>{this.state.message1}</p>
                 </div>
 
                 <div className="row">
-                  <input className="put pwd"  placeholder="请再次确认新密码" />
+                  <input className="put pwd" value={newPass_}  name="newPass_" type="password" onBlur={()=>this.same()} placeholder="请再次确认新密码"  onChange={(e)=>this.setState({newPass_:e.target.value})} />
+                  <p>{this.state.message2}</p>
                 </div>
 
                 <div>
-                  <Button className="btns" type="primary" onClick={()=> this.submitPwd()}>完成</Button>
+                  <Button className="btns" type="primary" onClick={()=> this.changePassword()}>完成</Button>
                   <Button className="btns" type="primary" onClick={()=> this.setState({flag:this.state.flag -1})}>返回</Button>
                 </div>
             </div> ) )

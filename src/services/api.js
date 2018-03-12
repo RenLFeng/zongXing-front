@@ -403,7 +403,22 @@ export async function loginCompany(param) {
 }
 
 
-//修改密码
+//修改密码，获取手机号
 export async function changePW(param) {
   return request(`${BASE_URL}/zjb-website/userInfo/forgetPwd?loginName=${param}`)
+}
+
+//校验修改密码时的验证码
+export async function checkCode(param, params) {
+  return request(`${BASE_URL}/zjb-website/userInfo/checkAuthCode?mobile=${param}&authCode=${params}`)
+}
+
+//修改密码
+export async function changePassword(params){
+  return request(`${BASE_URL}/zjb-website/userInfo/updatePwd`,{
+    method:'POST',
+    body:{
+      ...params
+    }
+  })
 }
