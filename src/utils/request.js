@@ -19,8 +19,6 @@ const codeMessage = {
   504: '网关超时',
 };
 function checkStatus(response) {
-  console.log(response.status === 288);
-  console.log(response.status);
   if (response.status === 288) {
     throw {name: 288};
     return response;

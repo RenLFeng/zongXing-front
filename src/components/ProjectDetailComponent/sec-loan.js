@@ -62,7 +62,7 @@ export default class SecLoan extends React.Component {
       case '还款计划':
         return 'a4';
       default:
-        return '';
+        return 'a7';
     }
   }
 
@@ -73,7 +73,7 @@ export default class SecLoan extends React.Component {
     return (
       <div>
         <div className="lnav">
-          <a >平台认证</a>
+          <a className="a6">平台认证</a>
           {project.projectModules ? project.projectModules.map((item)=>{
             return (
               <a className={this.checkedName(item.ftitle)} key={item.fid}>{item.ftitle}</a>

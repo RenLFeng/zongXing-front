@@ -8,7 +8,9 @@ export default class Head extends React.Component {
     const { projectDetail } = this.props;
     if (projectDetail.fvideo_path) {
       const arr = JSON.parse(projectDetail.fvideo_path);
-      video_src = arr[0].url;
+      if (arr.length > 0) {
+        video_src = arr[0].url;
+      }
     }
     return (
       <div className="banner autosize pd-head">
@@ -21,11 +23,11 @@ export default class Head extends React.Component {
             您的浏览器不支持视频播放，请升级浏览器
           </video>
           <div className="info">
-            <p className="tit">{projectDetail.fname}</p>
+            <p className="tit" style={{textAlign: 'left'}}>{projectDetail.fname}</p>
             <div className="user">
               <img className="av" src={require("../../assets/img/project-detail/av1.png")} />
-              <p className="t1">{projectDetail.fnickname}</p>
-              <p className="t2">{moment(projectDetail.fpublish_time).format('YYYY年MM月DD日')} {projectDetail.fprovincial_name === projectDetail.fcity_name ? projectDetail.fprovincial_name : `${projectDetail.fprovincial_name} - ${projectDetail.fcity_name}`}</p>
+              <p className="t1" style={{textAlign: 'left'}}>{projectDetail.fnickname}</p>
+              <p className="t2" style={{textAlign: 'left'}}>{moment(projectDetail.fpublish_time).format('YYYY年MM月DD日')} {projectDetail.fprovincial_name === projectDetail.fcity_name ? projectDetail.fprovincial_name : `${projectDetail.fprovincial_name} - ${projectDetail.fcity_name}`}</p>
             </div>
             <div className="data clearfix">
               <div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'dva/router';
 import {Select,Form} from 'antd';
 import PieReact from '../../components/Echarts/PieReact';
-import LineReact from '../../components/Echarts/LineReact'
+import LineReact from '../../components/Echarts/LineReact';
 import Path from '../../common/pagePath';
 import {getPersonAccount} from '../../services/api';
 import {connect} from 'dva';
@@ -265,7 +265,6 @@ export default class CompanyAccount extends React.Component {
         }
       })
     }
-
   }
 
 
