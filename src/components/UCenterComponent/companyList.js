@@ -42,7 +42,7 @@ export default class LoanList extends React.Component {
                 //if (response.code === 0) {
                 //  localStorage.setItem('companyToken', response.data.token);
                 //  localStorage.setItem('companyName', response.data.companyName);
-                window.location.href = `http://192.168.1.192:8001?token=${localStorage.getItem('accessToken')}&id=${val.fid}`;
+                window.location.href = `http://192.168.1.193:8001?token=${localStorage.getItem('accessToken')}&id=${val.fid}`;
                 //} else {
                //   message.error(response.msg)
                 //}
