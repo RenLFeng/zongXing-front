@@ -20,6 +20,7 @@ export default class HomeIndex extends React.Component {
         <Company />
         <Project param={this.props.match} history={this.props.history}/>
         <div className="section sec-touzi">
+          {/*<canvas id="canvas-invest"></canvas>*/}
           <div className="w">
             <div className="center sec1">
               <h1>直接投资中国小微企业</h1>
