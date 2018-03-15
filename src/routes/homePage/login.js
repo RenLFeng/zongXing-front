@@ -184,7 +184,6 @@ export default class  Login extends React.Component {
     }
     try{
       const response = await checkCode(mobile, authCode);
-      console.log(response);
       if(response.code ===0){
         this.setState({flag:this.state.flag +1});
       }
@@ -220,14 +219,11 @@ export default class  Login extends React.Component {
     const {loginName,password, newPass} = this.state;
     const  respondse = await changePassword({loginName:this.state.loginName,
       password:this.state.newPass});
-    console.log(respondse)
     if(respondse.code === 0){
       this.setState({
         flag:1,
       })
     }
-    console.log('用户名为：',this.state.loginName);
-    console.log('修改后的密码为：',this.state.password);
   }
 
   //修改所有input的state统一方法
@@ -345,7 +341,6 @@ export default class  Login extends React.Component {
     const phoneNum = this.state.regPhone;
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await phoneExist(phoneNum);
-      console.log(response);
       if (response.code !== 0) {
         this.setState({regNameErr: response.msg});
       } else {
@@ -441,7 +436,8 @@ export default class  Login extends React.Component {
                 </p>
               </div>
             </div> :
-              ((flag === 2)? <div className="form logf" onChange={this.onChange}>
+              ((flag === 2)?
+                <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">
                     <a className="title">身份验证</a>
                   </div>
@@ -464,9 +460,7 @@ export default class  Login extends React.Component {
                     <Button className="btn_r" type="primary" onClick={()=>this.submitInformation()}>提交</Button>
 
                   </div>
-                </div>
-                :
-
+                </div> :
               <div className="form logf" >
               <div className="hd center">
                 <a className="title">重置密码</a>

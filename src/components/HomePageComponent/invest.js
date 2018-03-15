@@ -12,7 +12,7 @@ export default class Project extends React.Component {
   render() {
     return (
       <div className="section sec-touzi">
-        <canvas id="canvas-invest"></canvas>
+        {/*<canvas id="canvas-invest"></canvas>*/}
         <div className="w">
           <div className="center sec1">
             <h1>直接投资中国小微企业</h1>

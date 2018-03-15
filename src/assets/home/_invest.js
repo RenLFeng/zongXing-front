@@ -1,18 +1,18 @@
 export function init () {
-  console.log(321435435)
+  console.log(321435435);
   const canvas = document.getElementById("canvas-invest");
-  console.log(canvas)
+  console.log(canvas);
   ctx = canvas.getContext("2d");
-  cw = canvas.offsetWidth,
+  cw = canvas.offsetWidth;
     cx = cw / 2;
-  ch = canvas.offsetHeight,
+  ch = canvas.offsetHeight;
     cy = ch / 2;
 
   ctx.fillStyle = "#999";
 
-  for (var i = 0; i < linesNum; i++) {
-    var flag = i % 2 == 0 ? "h" : "v";
-    var l = new Line(flag);
+  for (let i = 0; i < linesNum; i++) {
+    let flag = i % 2 === 0 ? "h" : "v";
+    let l = new Line(flag);
     linesRy.push(l);
   }
 
@@ -20,21 +20,21 @@ export function init () {
 
   window.addEventListener('resize', Init, false);
 }
-var canvas,ctx,cw,cx,ch,cy;
-var linesNum = 16;
-var linesRy = [];
-var requestId = null;
+let canvas,ctx,cw,cx,ch,cy;
+let linesNum = 16;
+let linesRy = [];
+let requestId = null;
 
 function Line(flag) {
   this.flag = flag;
   this.a = {};
   this.b = {};
-  if (flag == "v") {
+  if (flag === "v") {
     this.a.y = 0;
     this.b.y = ch;
     this.a.x = randomIntFromInterval(0, ch);
     this.b.x = randomIntFromInterval(0, ch);
-  } else if (flag == "h") {
+  } else if (flag === "h") {
     this.a.x = 0;
     this.b.x = cw;
     this.a.y = randomIntFromInterval(0, cw);
@@ -49,29 +49,29 @@ function Line(flag) {
     ctx.moveTo(this.a.x, this.a.y);
     ctx.lineTo(this.b.x, this.b.y);
     ctx.stroke();
-  }
+  };
 
   this.update = function () {
-    if (this.flag == "v") {
+    if (this.flag === "v") {
       this.a.x += this.va;
       this.b.x += this.vb;
-    } else if (flag == "h") {
+    } else if (flag === "h") {
       this.a.y += this.va;
       this.b.y += this.vb;
     }
 
     this.edges();
-  }
+  };
 
   this.edges = function () {
-    if (this.flag == "v") {
+    if (this.flag === "v") {
       if (this.a.x < 0 || this.a.x > cw) {
         this.va *= -1;
       }
       if (this.b.x < 0 || this.b.x > cw) {
         this.vb *= -1;
       }
-    } else if (flag == "h") {
+    } else if (flag === "h") {
       if (this.a.y < 0 || this.a.y > ch) {
         this.va *= -1;
       }
@@ -88,15 +88,15 @@ function Draw() {
   requestId = window.requestAnimationFrame(Draw);
   ctx.clearRect(0, 0, cw, ch);
 
-  for (var i = 0; i < linesRy.length; i++) {
-    var l = linesRy[i];
+  for (let i = 0; i < linesRy.length; i++) {
+    let l = linesRy[i];
     l.draw();
     l.update();
   }
-  for (var i = 0; i < linesRy.length; i++) {
-    var l = linesRy[i];
-    for (var j = i + 1; j < linesRy.length; j++) {
-      var l1 = linesRy[j]
+  for (let i = 0; i < linesRy.length; i++) {
+    let l = linesRy[i];
+    for (let j = i + 1; j < linesRy.length; j++) {
+      let l1 = linesRy[j];
       Intersect2lines(l, l1);
     }
   }
@@ -104,9 +104,9 @@ function Draw() {
 
 function Init() {
   linesRy.length = 0;
-  for (var i = 0; i < linesNum; i++) {
-    var flag = i % 2 == 0 ? "h" : "v";
-    var l = new Line(flag);
+  for (let i = 0; i < linesNum; i++) {
+    let flag = i % 2 === 0 ? "h" : "v";
+    let l = new Line(flag);
     linesRy.push(l);
   }
 
@@ -114,24 +114,24 @@ function Init() {
     window.cancelAnimationFrame(requestId);
     requestId = null;
   }
-  cw = canvas.width = window.innerWidth,
+  cw = canvas.width = window.innerWidth;
     cx = cw / 2;
-  ch = canvas.height = window.innerHeight,
+  ch = canvas.height = window.innerHeight;
     cy = ch / 2;
 
   Draw();
-};
+}
 
 function Intersect2lines(l1, l2) {
-  var p1 = l1.a,
+  let p1 = l1.a,
     p2 = l1.b,
     p3 = l2.a,
     p4 = l2.b;
-  var denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
-  var ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
-  var ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
-  var x = p1.x + ua * (p2.x - p1.x);
-  var y = p1.y + ua * (p2.y - p1.y);
+  let denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
+  let ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
+  let ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
+  let x = p1.x + ua * (p2.x - p1.x);
+  let y = p1.y + ua * (p2.y - p1.y);
   if (ua > 0 && ub > 0) {
     markPoint({
       x: x,
