@@ -33,7 +33,6 @@ export default class ProjectDetail extends React.Component {
   async fetchProjectDetail() {
     const {projectId} = this.props.match.params;
     const response = await getProjectDetail(projectId);
-    console.log('---------', response);
     setTimeout(()=>{
       initPage();
     }, 500);
