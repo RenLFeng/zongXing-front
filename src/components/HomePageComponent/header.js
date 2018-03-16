@@ -77,7 +77,7 @@ export default class Header extends React.Component {
                    $(window).scrollTop(0);
                 }}>登录 / 注册</a> :
               <a className="btn btn2" onClick={()=>{
-                  history.push('/index/uCenter');
+                  history.push('/index/uCenter/personAccount');
                   $("#fix").removeClass('fix');
                   $(window).scrollTop(0);
                 }}>个人中心</a>
@@ -135,7 +135,7 @@ export default class Header extends React.Component {
                    $(window).scrollTop(0);
                  }}>登录 / 注册</a> :
               <a className="btn btn2" onClick={()=>{
-                history.push('/index/uCenter');
+                history.push('/index/uCenter/personAccount');
                 $("#fix").removeClass('fix');
                 $(window).scrollTop(0);
               }}>个人中心</a>

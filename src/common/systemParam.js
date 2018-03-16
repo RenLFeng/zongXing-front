@@ -10,6 +10,8 @@ export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
  * 部署需要替换
  *
  * */
+// 从大众网页跳到企业后台管理页面的地址
+export const TURN_BACK = 'http://192.168.1.193:8001';
 
 
 // 手机号验证正则
