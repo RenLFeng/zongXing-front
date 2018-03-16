@@ -6,7 +6,7 @@ export default {
   state: {
     status: localStorage.getItem('accessToken')? true: false,
     submitting: false,
-    nickName: ""
+    nickName: localStorage.getItem('accessToken')?JSON.parse(localStorage.getItem('accessToken')).nickName:""
   },
   effects: {
     *login({ payload }, { call, put }) {

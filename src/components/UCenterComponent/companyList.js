@@ -6,7 +6,7 @@ import '../../assets/MessageList/messageList.scss';
 import {messageList} from '../../services/api.js';
 import moment from 'moment';
 import Path from '../../common/pagePath';
-import {pageShows, LICENSE} from '../../common/systemParam';
+import {pageShows, LICENSE, TURN_BACK} from '../../common/systemParam';
 import { getCompanylist,saveCompany, loginCompany, getCompanyByAccount } from '../../services/api';
 
 export default class LoanList extends React.Component {
@@ -42,7 +42,7 @@ export default class LoanList extends React.Component {
                 //if (response.code === 0) {
                 //  localStorage.setItem('companyToken', response.data.token);
                 //  localStorage.setItem('companyName', response.data.companyName);
-                window.location.href = `http://192.168.1.192:8001?token=${localStorage.getItem('accessToken')}&id=${val.fid}`;
+                window.location.href = `${TURN_BACK}/?token=${localStorage.getItem('accessToken')}&id=${val.fid}`;
                 //} else {
                //   message.error(response.msg)
                 //}

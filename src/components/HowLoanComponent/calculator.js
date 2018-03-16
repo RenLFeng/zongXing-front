@@ -91,7 +91,7 @@ export default class Calculator extends React.Component {
 
   jumpApplyLoan() {
     if (this.props.loginStatus) {
-      this.props.history.push(`/index/applyLoan`);
+      this.props.history.push(`/index/uCenter/companyList`);
       $("#fix").removeClass('fix');
       $(window).scrollTop(0)
     } else {

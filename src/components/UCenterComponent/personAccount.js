@@ -146,7 +146,6 @@ export default class PersonAccount extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.personal !== nextProps.personal) {
-
       const money = nextProps.personal.totalAssets;
       this.setState({
         pieOption: {

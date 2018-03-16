@@ -21,7 +21,6 @@ export default class LeftMenu extends React.Component {
             <ul>
               <li><Link className={path.indexOf(Path.OPEN_ACCOUNT)===-1?'':'hover'} to={Path.OPEN_ACCOUNT+'/0'}>账户开户</Link></li>
               <li><Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'hover'} to={Path.PERSONAL_ACCOUNT}>个人账户</Link></li>
-              <li><Link className={path.indexOf(Path.COMPANY_ACCOUNT)===-1?'':'hover'} to={Path.COMPANY_ACCOUNT}>企业账户</Link></li>
             </ul>
           </div>
         </div>
@@ -33,7 +32,7 @@ export default class LeftMenu extends React.Component {
             <ul>
               <li><Link className={path.indexOf(Path.USER_BASIC)===-1?'':'hover'} to={Path.USER_BASIC}>基础资料</Link></li>
               <li><Link className={path.indexOf(Path.SAFE_CENTER)===-1?'':'hover'} to={Path.SAFE_CENTER}>安全中心</Link></li>
-              <li><Link className={path.indexOf(Path.BANK_CARD)===-1?'':'hover'} to={Path.BANK_CARD}>银行卡</Link></li>
+              {/*<li><Link className={path.indexOf(Path.BANK_CARD)===-1?'':'hover'} to={Path.BANK_CARD}>银行卡</Link></li>*/}
               <li><Link className={path.indexOf(Path.STATION_MESSAGE) ===-1?'':'hover'} to={Path.STATION_MESSAGE}>站内消息</Link></li>
               <li><Link className={path.indexOf(Path.NOTICE_LIST) ===-1?'':'hover'} to={Path.NOTICE_LIST}>站内公告</Link></li>
             </ul>
@@ -58,19 +57,6 @@ export default class LeftMenu extends React.Component {
           <div className="nav">
             <ul>
               <li><Link className={path.indexOf(Path.COMPANY_LIST)===-1?'':'hover'} to={Path.COMPANY_LIST}>企业列表</Link></li>
-            </ul>
-          </div>
-        </div>
-        <div className="navbox">
-          <p className="hd ic5 hover">
-            <a>我的借款</a>
-          </p>
-          <div className="nav">
-            <ul>
-              <li><Link className={path.indexOf(Path.LOAN_LIST)===-1?'':'hover'} to={Path.LOAN_LIST}>借款项目</Link></li>
-              <li><a>我的借款</a></li>
-              <li><a>还款管理</a></li>
-              <li><a>自动还款</a></li>
             </ul>
           </div>
         </div>
