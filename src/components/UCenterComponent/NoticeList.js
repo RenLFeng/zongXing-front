@@ -1,12 +1,12 @@
 import React from 'react';
 import {Icon, message, Table, Button, Checkbox} from 'antd';
-import '../../../assets/MessageList/messageList.scss';
-import {messageList} from '../../../services/api.js';
+import '../../assets/MessageList/messageList.scss';
+import {messageList} from '../../services/api.js';
 import moment from 'moment';
-import {STATION_MESSAGE} from '../../../common/pagePath';
-import {pageShows} from '../../../common/systemParam';
+import {STATION_MESSAGE} from '../../common/pagePath';
+import {pageShows} from '../../common/systemParam';
 
-export default class MessageList extends React.Component {
+export default class NoticeList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,13 +76,13 @@ export default class MessageList extends React.Component {
               <Button>标记为已读</Button>
               <Button>已读所有消息</Button>
             </div>
-           <div className="btn2">
-             <Button>全部</Button>
-             <Button>运营消息</Button>
-             <Button>运营消息</Button>
-             <Button>运营消息</Button>
-             <Button>运营消息</Button>
-           </div>
+            <div className="btn2">
+              <Button>全部</Button>
+              <Button>运营消息</Button>
+              <Button>运营消息</Button>
+              <Button>运营消息</Button>
+              <Button>运营消息</Button>
+            </div>
           </div>
           <div className="messageGroup">
             <ul>
