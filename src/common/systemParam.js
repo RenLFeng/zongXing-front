@@ -1,18 +1,29 @@
-/*
-* 部署需要替换
-*
-* */
+
 // 企业实名认证地址
 export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 
 
 /*
  * 部署需要替换
- *
+ * 开始
  * */
-// 从大众网页跳到企业后台管理页面的地址
-export const TURN_BACK = 'http://192.168.1.193:8001';
 
+/*测试配置*/
+export const PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
+export const REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
+export const IMG_BASE_URL = 'https://zjb-test-1255741041.cosgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
+//export const TURN_BACK = 'http://192.168.1.193:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
+
+/*开发配置*/
+// export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
+// export const REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
+// export const PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
+export const TURN_BACK = 'http://192.168.1.193:8001'; // 从大众网页跳到企业后台管理页面的地址 开发配置
+
+/*
+* 结束
+*
+* */
 
 // 手机号验证正则
 export const VER_PHONE = /^1([38][0-9]|5[012356789]|4[579]|7[0135678]|9[89])[0-9]{8}$/;
@@ -63,8 +74,7 @@ export const TEL_PHONE = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
 // 银行卡号正则
 export const BANK_CARD = /^([1-9]{1})(\d{16}|d{17}|\d{18}|d{19})$/;
 
-// 万象优图
-export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/';
+
 
 // 带小数点的正则验证
 export const MONEY_REG = /^\d+(\.\d+)?$/;

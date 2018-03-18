@@ -144,6 +144,7 @@ class Forms extends React.Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
+    console.log(this.props.param.account)
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem
