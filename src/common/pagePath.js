@@ -16,4 +16,5 @@ export default {
   STATION_MESSAGE: '/index/uCenter/message',  // 站内消息页面
   LOAN_LIST: '/index/uCenter/loanList', //借款项目列表
   COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
+  NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
 }

@@ -34,6 +34,7 @@ export default class LeftMenu extends React.Component {
               <li><Link className={path.indexOf(Path.SAFE_CENTER)===-1?'':'hover'} to={Path.SAFE_CENTER}>安全中心</Link></li>
               {/*<li><Link className={path.indexOf(Path.BANK_CARD)===-1?'':'hover'} to={Path.BANK_CARD}>银行卡</Link></li>*/}
               <li><Link className={path.indexOf(Path.STATION_MESSAGE) ===-1?'':'hover'} to={Path.STATION_MESSAGE}>站内消息</Link></li>
+              <li><Link className={path.indexOf(Path.NOTICE_LIST) ===-1?'':'hover'} to={Path.NOTICE_LIST}>站内公告</Link></li>
             </ul>
           </div>
         </div>
