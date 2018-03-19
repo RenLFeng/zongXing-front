@@ -13,7 +13,8 @@ export default class NoticeList extends React.Component {
       pageCurrent: 1, //当前页，初始值为第一页
       pageSize: 15,    //每页可显示的消息条数
       maxPage: 0,     //最大页
-      arr: []
+      arr: [],
+      showMask:false
     }
   }
 
@@ -37,8 +38,9 @@ export default class NoticeList extends React.Component {
     }
   }
 
+
   render() {
-    const { arr } = this.state;
+    const { arr,showMask } = this.state;
     const columns = [{
       title: '状态',
       dataIndex: 'isRead',
@@ -60,58 +62,46 @@ export default class NoticeList extends React.Component {
       render: text => (moment(text).format('YYYY-MM-DD HH:mm:ss')),
     }];
 
-
-
     const page_num = pageShows(this.state.pageCurrent, this.state.maxPage);
     return (
       <div className="fr uc-rbody" >
         <div className="title">
-          <span className="title1">站内消息</span>
-          <span className="title2">共<i>7</i>封，其中<i>3</i>封未读</span>
+          <span className="title1">站内公告</span>
         </div>
-        <div className="content">
-          <div className="btns">
-            <div className="btn1">
-              <Button>删除</Button>
-              <Button>标记为已读</Button>
-              <Button>已读所有消息</Button>
-            </div>
-            <div className="btn2">
-              <Button>全部</Button>
-              <Button>运营消息</Button>
-              <Button>运营消息</Button>
-              <Button>运营消息</Button>
-              <Button>运营消息</Button>
-            </div>
-          </div>
+        <div className="content_">
           <div className="messageGroup">
-            <ul>
+            <ul >
               <li className="massageList">
-                <Checkbox className="check" />
-                <span className="massageList_title">消息内容</span>
+                <span className="massageList_title"><p>公告标题</p></span>
                 <span className="massageList_time">发送时间</span>
               </li>
 
               <li className="massageList">
-                <Checkbox className="check" />
                 <span className="massageList_title">
-                  <Icon type="mail" className="icon1"/>
-                  <p>这是一个消息</p>
+                  <p onClick={()=> this.setState({showMask:true})}>这是一个消息</p>
                 </span>
                 <span className="massageList_time">2018/3/16 16:58</span>
               </li>
 
               <li className="massageList">
-                <Checkbox className="check" />
-                <span className="massageList_title1">
-                  <Icon type="mail" className="icon2"/>
-                  <p>这是一个消息</p>
+                <span className="massageList_title">
+                  <p onClick={()=> this.setState({showMask:true})}>这是一个消息</p>
+                  <Icon type="exclamation-circle-o" className="icon_"/>
+                </span>
+                <span className="massageList_time">2018/3/16 16:58</span>
+              </li>
+
+              <li className="massageList">
+                <span className="massageList_title">
+                  <p onClick={()=> this.setState({showMask:true})}>这是一个消息</p>
+                  <Icon type="exclamation-circle-o" className="icon_"/>
+                  <span className="change">更新</span>
                 </span>
                 <span className="massageList_time">2018/3/16 16:58</span>
               </li>
 
               <li className="footer_">
-                <span>已选<i>0</i>项，共<i>7</i>项</span>
+                <span>共<i>7</i>项</span>
                 <div className="box_">
                   <div className="pagination">
                     <a>&lt;</a>
@@ -123,7 +113,31 @@ export default class NoticeList extends React.Component {
 
             </ul>
           </div>
-        </div>
+      </div>
+
+        {
+          showMask?
+          <div className="mask" onClick={()=>{this.setState({showMask:false})}}>
+            <div className="mask_content">
+              <div className="mask_title">
+                <p className="p1">这是一个很重要的公告消息！！！<p className="p2">2018-03-19 10:08</p></p >
+              </div>
+              <div className="mask_word">
+                <p className="mask_word1">尊敬的众借帮客户，您好！</p>
+                <p className="mask_word2">这个消息很重要的，一定要阅读</p>
+              </div>
+              <div className="logo">
+                <div className="logo_img"><img src={require('../../assets/img/logo2.png')} alt=""/></div>
+                <div className="time">2018-03-19</div>
+              </div>
+            </div>
+          </div> : null
+        }
+
+
+
+
+
 
 
 
@@ -182,10 +196,8 @@ export default class NoticeList extends React.Component {
         {/*<a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>}*/}
         {/*</div>*/}
         {/*</div>*/}
+
       </div>
-
-
-
 
 
     );
