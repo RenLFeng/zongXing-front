@@ -1,6 +1,7 @@
 import React from 'react';
 import { Upload, Icon, message } from 'antd';
 
+import {PIC_BUCKET as Bucket, REGION as Region } from '../../common/systemParam';
 function getBase64(img, callback) {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result));
@@ -19,8 +20,6 @@ function beforeUpload(file) {
   return isJPG && isLt2M;
 }
 
-const Bucket = 'zjb01-1255741041';
-const Region = 'ap-shanghai';
 
 export default class ImgUpload extends React.Component {
 

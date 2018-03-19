@@ -1,6 +1,7 @@
 import { routerRedux } from 'dva/router';
-import {userLoYgin} from '../services/api';
+import {userLogin} from '../services/api';
 import {message} from 'antd';
+
 export default {
   namespace: 'login',
   state: {

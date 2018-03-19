@@ -180,7 +180,7 @@ class EnterprisePresentation extends React.Component {
 
   validateBankCard = (rule, value, callback) => {
     const {getFieldValue} = this.props.form;
-    if (BANK_CARD.test(value)) {
+    if (!BANK_CARD.test(value)) {
       callback('请输入有效的银行卡号');
     }
     // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
