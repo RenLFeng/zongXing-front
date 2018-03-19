@@ -44,7 +44,7 @@ export default class UCenter extends React.Component {
   };
 
   render() {
-    const { match, nickName } = this.props;
+    const { match, nickName, showMask } = this.props;
     return (
       <div className="body2">
         <div className="w">
