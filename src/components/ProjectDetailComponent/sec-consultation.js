@@ -110,7 +110,7 @@ export default class SecConsultation extends React.Component {
       }
     } catch(e) {
       console.log(e);
-      message.error('网络异常，请重试');
+      message.error('服务器繁忙，请稍后重试');
       this.setState({sendLoading: false});
     }
   }
@@ -142,7 +142,7 @@ export default class SecConsultation extends React.Component {
           message.error(response.msg);
         }
       } catch(e) {
-        message.error('网络异常，请重试');
+        message.error('服务器繁忙，请稍后重试');
         this.setState({[`loading${topicId}`]: false});
       }
     } else {
@@ -167,7 +167,7 @@ export default class SecConsultation extends React.Component {
           message.error(response.msg);
         }
       } catch(e) {
-        message.error('网络异常，请重试');
+        message.error('服务器繁忙，请稍后重试');
         this.setState({[`myLoading${topicId}`]: false});
       }
     }

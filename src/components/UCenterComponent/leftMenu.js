@@ -19,7 +19,6 @@ export default class LeftMenu extends React.Component {
           </p>
           <div className="nav">
             <ul>
-              <li><Link className={path.indexOf(Path.OPEN_ACCOUNT)===-1?'':'hover'} to={Path.OPEN_ACCOUNT+'/0'}>账户开户</Link></li>
               <li><Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'hover'} to={Path.PERSONAL_ACCOUNT}>个人账户</Link></li>
             </ul>
           </div>

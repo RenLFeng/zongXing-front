@@ -21,7 +21,12 @@ function bindEvent() {
     let $t = $(this);
     $t.addClass('hover').siblings().removeClass('hover');
     let d = secs[$t.index()];
-    av.top(d.offsetTop - 130);
+    console.log($t.index());
+    if ($t.index() === 0) {
+      av.top(812 - 130);
+    } else {
+      av.top(d.offsetTop - 130);
+    }
   });
   $('body').on('click', '.sec-qa .q', function () {
     $(this).toggleClass('close');

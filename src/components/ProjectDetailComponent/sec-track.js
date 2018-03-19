@@ -103,7 +103,7 @@ export default class SecTrack extends React.Component {
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
-      message.error('网络异常，请重试');
+      message.error('服务器繁忙，请稍后重试');
 
     }
   }

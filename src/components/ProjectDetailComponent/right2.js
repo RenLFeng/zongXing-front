@@ -64,7 +64,7 @@ export default class Right extends React.Component {
         this.props.history.push('/index/login');
         throw e;
       }
-      message.error('网络异常');
+      message.error('服务器繁忙，请稍后重试');
     }
   }
 

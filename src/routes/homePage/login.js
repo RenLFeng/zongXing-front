@@ -189,7 +189,7 @@ export default class  Login extends React.Component {
       }
     } catch(e) {
       console.log(e);
-      message.error('网络异常，请重试');
+      message.error('服务器繁忙，请稍后重试');
     }
   }
 
@@ -301,7 +301,7 @@ export default class  Login extends React.Component {
     } catch(e) {
       console.log(e);
       this.setState({regLoading: false});
-      message.error('网络异常，请重试');
+      message.error('服务器繁忙，请稍后重试');
     }
   }
 

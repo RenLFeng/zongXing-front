@@ -1,13 +1,16 @@
 
 .sec-tabs {
-
+  background-color: #fff;
+}
+#tabs {
+  border-bottom: 1px solid #ddd;
 }
 .tabs {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     text-align: center;
     padding-top: 4px;
-    font-size: 0px;
+    font-size: 0;
     a {
         font-size: 22px;
         width: 206px;
@@ -27,94 +30,165 @@
     }
 }
 .tabcon {
-    background-color: #fff;
-    margin-top: 548px;
-    position: relative;
-    padding-top: 230px;
-    .tit {
-        width: 700px;
-        height: 66px;
-        margin: 40px auto;
-        text-align: center;
-        border: 2px solid #333;
-        &>i {
-            font-size: 36px;
-            padding: 0 20px;
-            background-color: #fff;
-            position: relative;
-            line-height: 66px;
-            top: -36px;
-        }
-    }
-    .desc {
-        font-size: 18px;
-        color: #666;
-        text-align: center;
-        padding: 60px 0 46px 0;
-    }
-    .rule2 {
-        text-align: center;
-        width: 80%;
-        margin: 0 auto;
-        &>div {
-            float: left;
-            width: 50%;
-        }
-        .t1 {
-            color: $f60;
-            font-size: 60px;
-            line-height: 80px;
-            i {
-                background: url(../img/invest/lt.png) left center no-repeat;
-                padding-left: 40px;
-            }
-        }
-        .t2 {
-            font-size: 24px;
-        }
-    }
-}
-.card2 {
-    position: absolute;
-    top: -414px;
-    width: 100%;
+  background-color: #fff;
+  margin-top: 548px;
+  position: relative;
+  padding-top: 230px;
+  .tit {
+    width: 700px;
+    height: 66px;
+    margin: 40px auto;
     text-align: center;
-    .item {
-        float: left;
-        text-align: left;
-        width: 550px;
-        height: 568px;
-        background-color: #fff;
-        margin: 0 25px;
-        .hd {
-            height: 116px;
-            border-bottom: 1px solid #ddd;
-            background-position: 30px center;
-            background-repeat: no-repeat;
-            position: relative;
-            .pic {
-                width: 190px;
-                height: 145px;
-                position: absolute;
-                right: 4px;
-                top: -54px;
-                background: url(../img/invest/icbg.png) no-repeat center center;
-                text-align: center;
-                padding-top: 55px;
-            }
+    border: 2px solid #333;
+    &>i {
+      font-size: 36px;
+      padding: 0 20px;
+      background-color: #fff;
+      position: relative;
+      line-height: 66px;
+      top: -36px;
+    }
+  }
+  .desc {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    padding: 60px 0 46px 0;
+  }
+  .rule2 {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    &>div {
+      float: left;
+      width: 50%;
+    }
+    .t1 {
+      color: $f60;
+      font-size: 60px;
+      line-height: 80px;
+      i {
+        background: url(../img/invest/lt.png) left center no-repeat;
+        padding-left: 40px;
+      }
+    }
+    .t2 {
+      padding-top: 1em;
+      font-size: 24px;
+      height: 4em;
+    }
+    padding-bottom: 80px;
+  }
+}
+
+.card2 {
+  background-color: #fff;
+  position: absolute;
+  padding-top: 135px;
+  top: -546px;
+  width: 100%;
+  text-align: center;
+  .item {
+    float: left;
+    text-align: left;
+    width: 550px;
+    height: 568px;
+    background-color: #fff;
+    margin: 0 25px;
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      left: 62px;
+      top: 118px;
+      height: 448px;
+      border-left: 1px solid #ccc;
+    }
+    .hd {
+      height: 116px;
+      border-bottom: 1px solid #ddd;
+      background-position: 40px center;
+      background-repeat: no-repeat;
+      position: relative;
+      .pic {
+        width: 190px;
+        height: 145px;
+        position: absolute;
+        right: 4px;
+        top: -54px;
+        background: url(../img/invest/icbg.png) no-repeat center center;
+        text-align: center;
+        padding-top: 55px;
+      }
+    }
+    .bd {
+      padding: 70px 0 0 50px;
+      font-size: 16px;
+      .dot {
+        font-size: 24px;
+        text-indent: 60px;
+        line-height: 60px;
+        &::before {
+          content: "";
+          width: 24px;
+          height: 24px;
+          background-color: #ccc;
+          border: 2px solid #fff;
+          border-radius: 100%;
+          position: relative;
+          left: -62px;
+          top: 4px;
+          z-index: 2;
+          display: inline-block;
         }
-        .bd {
-            padding: 50px 40px;
-            font-size: 16px;
-            p {
-                text-indent: 2em;
-            }
+      }
+      position: relative;
+      .info {
+        display: none;
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        top: 310px;
+        background-color: #ffc;
+        border: 1px solid rgb(236, 154, 46);
+        padding: 20px;
+        z-index: 3;
+        border-radius: 5px;
+        font-size: 16px;
+        color: $f90;
+        &::before {
+          content: "";
+          position: absolute;
+          left: 48%;
+          top: -8px;
+          width: 12px;
+          height: 12px;
+          background-color: #ffc;
+          border: 1px solid rgb(236, 154, 46);
+          border-right: none;
+          border-bottom: none;
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
         }
+      }
+      .dot4>.i {
+        width: 22px;
+        height: 22px;
+        background: url(../img/info.png);
+        position: relative;
+        left: 20px;
+        top: 3px;
+      }
+      .dot4:hover+.info {
+        display: block;
+      }
     }
-    .item.fensan .hd {
-        background-image: url(../img/invest/fensan.png);
-    }
-    .item.xiaoe .hd {
-        background-image: url(../img/invest/xiaoe.png);
-    }
+  }
+  .item.fensan .hd {
+    background-image: url(../img/invest/fensan.png);
+  }
+  .item.xiaoe .hd {
+    background-image: url(../img/invest/xiaoe.png);
+  }
 }

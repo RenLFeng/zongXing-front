@@ -42,7 +42,7 @@ export default {
         }
       } catch (e) {
         console.log(e);
-        message.error('网络异常');
+        message.error('服务器繁忙，请稍后重试');
         yield put({
           type: 'changeLoginStatus',
           payload: {

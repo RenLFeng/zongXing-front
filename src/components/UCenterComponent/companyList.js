@@ -37,15 +37,9 @@ export default class LoanList extends React.Component {
         render: (val) => (
           <div>
               <a onClick={async () => {
-                //const response = await loginCompany(val.fid);
-                //console.log(response);
-                //if (response.code === 0) {
-                //  localStorage.setItem('companyToken', response.data.token);
-                //  localStorage.setItem('companyName', response.data.companyName);
-                window.location.href = `${TURN_BACK}/?token=${localStorage.getItem('accessToken')}&id=${val.fid}`;
-                //} else {
-               //   message.error(response.msg)
-                //}
+                {/*localStorage.setItem('companyId', val.fid);*/}
+                {/*window.location.href = `${TURN_BACK}`; // 测试使用*/}
+                window.location.href = `${TURN_BACK}?token=${JSON.parse(localStorage.getItem('accessToken')).webToken}&id=${val.fid}`; // 开发使用
               }} style={{color: 'blue'}}>进入后台</a>
           </div>
         ),

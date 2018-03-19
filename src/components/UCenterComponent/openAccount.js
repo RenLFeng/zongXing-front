@@ -87,7 +87,7 @@ class FormComponent extends React.Component {
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
-      message.error('网络异常');
+      message.error('服务器繁忙，请稍后重试');
     }
   }
 
@@ -130,7 +130,7 @@ class FormComponent extends React.Component {
             throw e;
           }
           console.log(e);
-          message.error('网络异常');
+          message.error('服务器繁忙，请稍后重试');
         }
       }
     });

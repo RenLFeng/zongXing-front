@@ -7,8 +7,9 @@ import {connect} from 'dva';
 import moment from 'moment';
 
 @connect((state)=>({
-  personalStatus: state.account.personalStatus,
   personal: state.account.personal,
+  openStatus: state.account.openStatus,
+  errorMessage: state.account.message
 }))
 
 export default class PersonAccount extends React.Component {
@@ -137,7 +138,10 @@ export default class PersonAccount extends React.Component {
   }
 
   componentDidMount() {
-    // 获取个人账户信息
+    this.getInitData();
+  }
+
+  getInitData() {
     this.props.dispatch({
       type: 'account/getPersonalAccount',
       payload:{showNumInfo:4}
@@ -250,10 +254,23 @@ export default class PersonAccount extends React.Component {
   };
 
   render() {
-    if (!this.props.personal.totalAssets.accountId) {
+    const { openStatus, errorMessage } = this.props;
+    if (openStatus === 0) {
       return (
         <div className="fr uc-rbody">
           <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+        </div>
+      );
+    } else if (openStatus === 1) {
+      return (
+        <div className="fr uc-rbody">
+          <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
+        </div>
+      );
+    } else if (openStatus === 2) {
+      return (
+        <div className="fr uc-rbody">
+          <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
         </div>
       );
     }

@@ -1,9 +1,18 @@
 import {getPersonAccount, getPersonAccountNew,getCompanylist} from '../services/api';
 import {message} from 'antd';
 
+// 开户状态 0: 未开户 1: 开户中 2: 开户失败 3: 开户成功
+
+const NO_OPEN = 0;
+const OPENING = 1;
+const OPEN_FAIL = 2;
+const OPEN_SUCCESS = 3;
+
 export default {
   namespace: 'account',
   state: {
+    message: '',
+    openStatus: 0,
     personal: {
       accountDynamicVos: [],
       plan: {},
@@ -26,13 +35,53 @@ export default {
 
     },
     *getPersonalAccount({payload}, {call, put}) {
-      console.log(payload);
       const response = yield call(getPersonAccountNew, payload);
+      console.log(response);
       if (response.code === 0) {
-        yield put({
-          type: 'savePersonal',
-          payload: response.data
-        });
+        if (!response.data) {
+          yield put({
+            type: 'savePersonal',
+            payload: {
+              openStatus: NO_OPEN,
+              data: response.data
+            }
+          });
+        } else {
+          if (response.data && response.data.fflag === 0) {
+            yield put({
+              type: 'savePersonal',
+              payload: {
+                openStatus: OPENING,
+                data: {
+                  accountDynamicVos: [],
+                  plan: {},
+                  totalAssets: {}
+                }
+              }
+            });
+          } else if (response.data && response.data.fflag === -1) {
+            yield put({
+              type: 'savePersonal',
+              payload: {
+                openStatus: OPEN_FAIL,
+                data: {
+                  accountDynamicVos: [],
+                  plan: {},
+                  totalAssets: {},
+                },
+                message: response.data.freturnMessage
+              }
+            });
+          } else {
+            yield put({
+              type: 'savePersonal',
+              payload: {
+                openStatus: OPEN_SUCCESS,
+                data: response.data
+              }
+            });
+          }
+        }
       } else {
         message.error(response.msg);
       }
@@ -66,8 +115,9 @@ export default {
     savePersonal(state, {payload}) {
       return {
         ...state,
-        personalStatus: true,
-        personal: payload
+        openStatus: payload.openStatus,
+        personal: payload.data,
+        message: payload.message
       }
     },
     saveCompany(state, {payload}) {
