@@ -1,124 +1,99 @@
 import React from 'react';
 import {Icon, message, Table, Button, Checkbox,Menu, Dropdown } from 'antd';
 import '../../../assets/MessageList/messageList.scss';
-import {messageList} from '../../../services/api.js';
+import {getButtonType,getMessageType,setRead, setAllRead} from '../../../services/api.js';
 import moment from 'moment';
 import {STATION_MESSAGE} from '../../../common/pagePath';
 import {pageShows} from '../../../common/systemParam';
-import {Modal} from "antd/lib/index";
+// import {Modal} from "antd/lib/index";
 
 export default class MessageList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageCurrent: 1, //当前页，初始值为第一页
-      pageSize: 1,    //每页可显示的消息条数
       maxPage: 0,     //最大页
-      arr: [
-        {
-          id:'1',
-          type:'运营消息',
-          title:'这是一个很搞笑的运营消息',
-          time:'2018-3-19 14:30',
-          content:'啦啦啦啦啦啦啦啦阿联啦啦啦啦啦法沙发拉拢腐蚀尖峰时刻的',
-          status:'0', //未读
-        },{
-          id:'2',
-          type:'合作消息',
-          title:'这是一个很搞笑的合作消息',
-          time:'2018-3-19 14:30',
-          content:'啦啦啦啦啦啦啦啦阿联啦啦啦啦啦法沙发拉拢腐蚀尖峰时刻的',
-          status:'1', //已读
-        },{
-          id:'3',
-          type:'产品消息',
-          title:'这是一个很搞笑的产品消息',
-          time:'2018-3-19 14:30',
-          content:'啦啦啦啦啦啦啦啦阿联啦啦啦啦啦法沙发拉拢腐蚀尖峰时刻的',
-          status:'0', //未读
-        },{
-          id:'4',
-          type:'产品消息',
-          title:'这是一个很搞笑的产品消息',
-          time:'2018-3-19 14:30',
-          content:'啦啦啦啦啦啦啦啦阿联啦啦啦啦啦法沙发拉拢腐蚀尖峰时刻的',
-          status:'0', //未读
-        }
-      ], //消息列表
-      arr1:[{
-        id:'1',
-        type:'运营消息',
-        title:'这是一个很搞笑的运营消息',
-        time:'2018-3-19 14:30',
-        content:'啦啦啦啦啦啦啦啦阿联啦啦啦啦啦法沙发拉拢腐蚀尖峰时刻的',
-        status:'0', //未读
-      },{
-        id:'2',
-        type:'合作消息',
-        title:'这是一个很搞笑的合作消息',
-        time:'2018-3-19 14:30',
-        content:'啦啦啦啦啦啦啦啦阿联啦啦啦啦啦法沙发拉拢腐蚀尖峰时刻的',
-        status:'1', //已读
-      },{
-        id:'3',
-        type:'产品消息',
-        title:'这是一个很搞笑的产品消息',
-        time:'2018-3-19 14:30',
-        content:'啦啦啦啦啦啦啦啦阿联啦啦啦啦啦法沙发拉拢腐蚀尖峰时刻的',
-        status:'0', //未读
-      },{
-        id:'4',
-        type:'产品消息',
-        title:'这是一个很搞笑的产品消息',
-        time:'2018-3-19 14:30',
-        content:'啦啦啦啦啦啦啦啦阿联啦啦啦啦啦法沙发拉拢腐蚀尖峰时刻的',
-        status:'0', //未读
-      }],
+
+      arr: [], //消息列表
+      arr1:[],  //暂存数据列表
       allCheck:false,
-      num:0,
+      num:0,  //已选数目
+      nums:0,   //项目总个数
+      not_num:0,  //未读个数
+      buttonArr:[],
+
+      pageIndex:0,  //当前页，初始值为第一页
+      pageSize: 5,    //每页可显示的消息条数
+      typeNo:''
     }
   }
 
   componentDidMount() {
-    // this.fetchData(1);  //调用请求
+    this.ButtonType();
+    // this.readNot();
   }
 
-  all(){
-    let {arr,arr1} = this.state;
-    let list = arr.filter((data)=>data.id !== null);
-    this.setState({
-      arr1:arr,
-    })
-  }
-  search(){
-    console.log('运营')
-    const {arr,arr1} = this.state;
-    const list = arr.filter((data)=> data.type == '运营消息');
-    this.setState({
-      arr1:list
-    },()=>{
-      console.log(this.state.arr1);
-    })
+  //获取按钮类型
+  async ButtonType(){
+    const response = await getButtonType();
+    console.log(response);
+    if(response.code === 0){
+      this.setState({
+        buttonArr:response.data,
+      },()=>{
+        this.setState({
+          typeNo:response.data[0].fno,
+        });
+        this.MessageType(response.data[0].fno, 0)
+      })
+    } else {
+      message.error(response.msg);
+    }
   }
 
-  search1 (){
-    const {arr,arr1} = this.state;
-    const list = arr.filter((data)=> data.type == '合作消息');
-    this.setState({
-      arr1:list
-    },()=>{
-      console.log(this.state.arr1);
-    })
+  //按类型获取消息列表
+  async MessageType(no,page) {
+    const response = await getMessageType({pageIndex:page,pageSize:this.state.pageSize,typeNo:no});
+    console.log(response);
+    if(response.code === 0){
+      const maxPage = Math.ceil(response.data.itemCount / this.state.pageSize);
+      this.setState({
+        maxPage: maxPage,
+        pageIndex: page,
+        typeNo: no,
+        arr: response.data.messages,
+        arr1: response.data.messages,
+        nums: response.data.messages.length,
+      });
+    } else {
+      message.error(response.msg);
+    }
   }
-  search2 (){
-    const {arr,arr1} = this.state;
-    const list = arr.filter((data)=> data.type === '产品消息');
-    this.setState({
-      arr1:list
-    },()=>{
-      console.log(this.state.arr1);
-    })
+
+  //设置已读
+  async setRead(){
+    let list = this.state.arr1;
+    const list1 = list.filter((item)=>(item.checkboxValue === true));
+    const id = list1.map((item)=>(item.fid)).toString();
+    const response = await setRead({fids:id});
+    if(response.code ===0){
+      this.MessageType(this.state.typeNo, this.state.pageIndex);
+    } else {
+      message.error(response.msg);
+    }
   }
+
+  //设置全部已读
+  async setAllRead() {
+    const response = await setAllRead();
+    if(response.code ===0){
+      this.MessageType(this.state.typeNo, this.state.pageIndex);
+      console.log(11111);
+
+    } else {
+      message.error(response.msg);
+    }
+  }
+
 
   // dele() {
   //   console.log(1111)
@@ -141,46 +116,33 @@ export default class MessageList extends React.Component {
   //   });
   // }
 
-  dele(id) {
-    let list = this.state.arr;
-    const arr_ = list.filter((item)=>item.id !==id );
-    const arr1 = arr_.filter((item)=>item.checkboxValue === true);
-    console.log(arr_);
+  del_shopping(id) {
+    let list = this.state.arr1;
+    const list1 = list.filter((item)=>(item.checkboxValue !== true));
+    console.log(list1);
+    const list2 = list1.filter((item)=>(item.fid !== id));
+    console.log(list2);
+    // const id = list1.map((item)=>(item.fid)).toString();
     this.setState({
-      arr: arr_,
-      num:arr1.length,
+      arr1: list2,
+      nums:list2.length,
     });
   }
 
+  // del_all() {
+  //   let list = this.state.arr1;
+  //   const arr_ = list.filter((item)=>item.checkboxValue !== true );
+  //   console.log(arr_);
+  //   this.setState({
+  //     arr: arr_,
+  //     allCheck:false,
+  //     num:arr_.length,
+  //   });
+  // }
 
-  read(){
-    let list = this.state.arr1;
-    const arr_ = list.filter((item)=>item.checkboxValue === true );
-    console.log(arr_);
 
-    // this.setState({
-    //   arr:arr_,
-    // },()=>{
-    //   const arr2 = this.state.arr1.filter((item)=>item.status )
-    // })
-  }
-  readAll(){
-
-  }
-
-  del_all() {
-    let list = this.state.arr1;
-    const arr_ = list.filter((item)=>item.checkboxValue !== true );
-    console.log(arr_);
-    this.setState({
-      arr: arr_,
-      allCheck:false,
-      num:arr_.length,
-    });
-  }
 
   onChange(e,data, index){
-    // this.dele();
     let list = this.state.arr1;
     list[index].checkboxValue =  e.target.checked;
     this.setState({
@@ -214,24 +176,8 @@ export default class MessageList extends React.Component {
     this.forceUpdate();
   }
 
-  async fetchData(page) {
-    const response = await messageList({pageCurrent: page, pageSize: this.state.pageSize});
-    console.log(response);
-    //判断请求状态
-    if (response.code === 0) {
-      const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
-      this.setState({
-        maxPage: maxPage,
-        pageCurrent: page,
-        arr: response.data.infoList
-      });
-    } else {
-      message.error(response.msg);
-    }
-  }
-
  handleButtonClick(e) {
-    message.info('Click on left button.');
+    message.info('Click on left button');
     console.log('click left button', e);
   }
 
@@ -241,8 +187,8 @@ export default class MessageList extends React.Component {
   }
 
   render() {
-    const { arr, arr1, allCheck } = this.state;
-    const page_num = pageShows(this.state.pageCurrent, this.state.maxPage);
+    const { arr, arr1, allCheck,buttonArr,pageSize,pageIndex } = this.state;
+    const page_num = pageShows(this.state.pageIndex, this.state.maxPage);
     const menu = (
       <Menu onClick={()=>this.handleMenuClick()}>
         <Menu.Item key="1">1st menu item</Menu.Item>
@@ -256,45 +202,55 @@ export default class MessageList extends React.Component {
       <div className="fr uc-rbody" >
         <div className="title">
           <span className="title1">站内消息</span>
-          <span className="title2">共<i>7</i>封，其中<i>3</i>封未读</span>
+          <span className="title2">共<i>{this.state.nums}</i>条，其中<i>{this.state.not_num}</i>条未读</span>
         </div>
         <div className="content">
           <div className="btns">
             <div className="btn1">
-              <Button onClick={(e)=>this.dele(e.target.id)}>删除</Button>
-              <Button onClick={()=>this.read()}>标记为已读</Button>
-              <Button>已读所有消息</Button>
+              <Button onClick={(e)=>this.del_shopping(e.target.fid)}>删除</Button>
+              <Button onClick={(e)=>this.setRead(e.target.fid)}>标记为已读</Button>
+              <Button onClick={()=>this.setAllRead()}>已读所有消息</Button>
             </div>
-           <div className="btn2">
-             <Button onClick={()=>this.all()}>全部</Button>
-             <Button onClick={()=>this.search()}>运营消息</Button>
-             <Button onClick={()=>this.search1()}>合作消息</Button>
-             <Dropdown.Button onClick={()=>this.handleButtonClick()} overlay={menu}>
-               产品消息
-             </Dropdown.Button>
+            <div className="btn2">
+             {
+               buttonArr.map((data,index)=>{
+                 return(
+                   // buttonArr.length > 3 ?
+                   //   <div className="btnBox">
+                   //     <Button onClick={()=>this.all()}>{data.fname}</Button>
+                   //     <Button onClick={()=>this.search()}>运营消息</Button>
+                   //     <Button onClick={()=>this.search1()}>合作消息</Button>
+                   //     <Dropdown.Button onClick={()=>this.handleButtonClick()} overlay={menu}>
+                   //       产品消息
+                   //     </Dropdown.Button>
+                   //   </div>
+                   //   :
+                       <Button onClick={()=>this.MessageType(data.fno, 0)} key={data.fno}>{data.fname}</Button>
+                 )
+               })
+             }
+          </div>
 
-             {/*<Button onClick={()=>this.search2()}></Button>*/}
-           </div>
           </div>
           <div className="messageGroup">
             <ul>
               <li className="massageList">
-                <span className="massageList_title" onClick={()=>this.del_all()}>
+                <span className="massageList_title" >
                   <Checkbox className="check" onChange={(val)=>this.handleCheckAll(val)} checked={this.state.allCheck}>消息内容</Checkbox>
                 </span>
-                <span className="massageList_time_">发送时间</span>
+                <span className="massageList_time_">时间</span>
               </li>
 
               {
                 this.state.arr1.map((data,index)=>{
                   return(
-                    <li className="massageList" key={data.id}>
+                    <li className="massageList" key={data.fid}>
                       <Checkbox className="check" onChange={(val,data)=>this.onChange(val,data, index)} checked={data.checkboxValue?data.checkboxValue: false}/>
-                      <span className={`${data.status == 0 ? 'massageList_title1': 'massageList_title'}`}>
-                        <Icon type="mail" className={`${data.status == 0 ? 'icon2': 'icon1'}`}/>
-                        <p onClick={() => this.props.history.push(STATION_MESSAGE + `/${data.id}`)}>{data.title}</p>
+                      <span className={`${data.fisRead == false ? 'massageList_title1': 'massageList_title'}`}>
+                        <Icon type="mail" className={`${data.fisRead == false ? 'icon2': 'icon1'}`}/>
+                        <p onClick={() => this.props.history.push(STATION_MESSAGE + `/${data.fid}`)}>{data.ftitle}</p>
                       </span>
-                      <span className="massageList_time">{data.time}</span>
+                      <span className="massageList_time">{moment(data.fsendTime).format('YYYY-MM-DD HH:mm:ss')}</span>
                     </li>
                     )
                 })
@@ -302,22 +258,22 @@ export default class MessageList extends React.Component {
 
 
               <li className="footer_">
-                <span>已选<i>{this.state.num}</i>项，共<i>7</i>项</span>
+                <span>已选<i>{this.state.num}</i>项，共<i>{this.state.nums}</i>项</span>
                 <div className="box_">
                   <div className="pagination">
                     {page_num.lastPage ?
-                      <a className="num" onClick={() => this.fetchData(this.state.pageCurrent - 1)}>&lt;</a> :
+                      <a className="num" onClick={() => this.MessageType(this.state.typeNo,this.state.pageIndex - 1)}>&lt;</a> :
                       <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
                     {page_num.firstPage ?
-                      <a className={`${1 == this.state.pageCurrent ? 'hover_' : ''}`} onClick={() => this.fetchData(1)}>1</a> :
+                      <a className={`${1 == this.state.pageIndex ? 'hover_' : ''}`} onClick={() => this.MessageType(this.state.typeNo,1)}>1</a> :
                       null}
                     {page_num.leftEllipsis ?
                       <a>...</a> :
                       null}
                     {page_num.page.map((pageNum) => {
                       return (
-                        <a key={pageNum} className={`${pageNum * 1 == this.state.pageCurrent ? 'hover_' : ''}`}
-                           onClick={() => this.fetchData(pageNum)}>{pageNum}</a>
+                        <a key={pageNum} className={`${pageNum * 1 == this.state.pageIndex ? 'hover_' : ''}`}
+                           onClick={() => this.MessageType(this.state.typeNo,pageNum)}>{pageNum}</a>
                       );
                     })}
                     {page_num.rightEllipsis ?
@@ -325,49 +281,21 @@ export default class MessageList extends React.Component {
                       null}
                     {page_num.finalPage ?
                       <a
-                        className={`${this.state.maxPage == this.state.pageCurrent ? 'hover_' : ''}`}
-                        onClick={() => this.fetchData(this.state.maxPage)}
+                        className={`${this.state.maxPage == this.state.pageIndex ? 'hover_' : ''}`}
+                        onClick={() => this.MessageType(this.state.typeNo,this.state.maxPage)}
                       >{this.state.maxPage}</a> :
                       null}
                     {page_num.nextPage ?
-                      <a
-                        className="num"
-                        onClick={() => this.fetchData(this.state.pageCurrent + 1)}
-                      >&gt;</a> :
-                      <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>}
+                      <a className="num" onClick={() => this.MessageType(this.state.typeNo,this.state.pageIndex + 1)}>&gt;</a> :
+                      <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>
+                    }
                   </div>
-                </div>>
+                </div>
               </li>
 
             </ul>
           </div>
         </div>
-
-
-
-        {/*<ul>*/}
-        {/*<li className="hang">*/}
-        {/*<div className="list_title">*/}
-        {/*<div className="icon_">状态</div>*/}
-        {/*<span className="title_I">主题</span>*/}
-        {/*<span className="title_time">时间</span>*/}
-        {/*</div>*/}
-        {/*</li>*/}
-        {/*{this.state.arr.map((data, index) => {*/}
-        {/*return (*/}
-        {/*<li key={data.noticeId} className="hang">*/}
-        {/*<div className={`${index % 2 == 1 ? 'list_content2' : 'list_content1'}`}>*/}
-        {/*<div className={`${data.isRead == 0 ? 'icon_1' : 'icon_2'}`}><Icon type="mail"/></div>*/}
-        {/*<a onClick={() => this.props.history.push(STATION_MESSAGE + `/${data.noticeId}`)}*/}
-        {/*className="title_I">{data.title}</a>*/}
-        {/*<span className="title_time">{moment(data.datetime).format('YYYY-MM-DD HH:mm:ss')}</span>*/}
-        {/*</div>*/}
-        {/*</li>*/}
-        {/*);*/}
-        {/*})}*/}
-        {/*</ul>*/}
-
-
       </div>
 
 

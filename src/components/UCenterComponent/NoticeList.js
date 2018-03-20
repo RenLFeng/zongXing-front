@@ -19,7 +19,7 @@ export default class NoticeList extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData(1);  //调用请求
+    // this.fetchData(1);  //调用请求
   }
 
   async fetchData(page) {

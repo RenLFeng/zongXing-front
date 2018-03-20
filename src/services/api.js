@@ -422,3 +422,32 @@ export async function changePassword(params){
     }
   })
 }
+
+//站内消息获取按钮类型
+export async function getButtonType() {
+  return request(`${BASE_URL}/zjb-website/msg/types`);
+}
+//根据按钮类型查数据
+export async function getMessageType(params){
+  return request(`${BASE_URL}/zjb-website/msg/getMsgByType`,{
+    method:'POST',
+    body: {...params}
+
+  })
+}
+//查询单个信息
+export async function getOneMessage(param) {
+  return request(`${BASE_URL}/zjb-website/msg/getOneMsg?fid=${param}`);
+}
+//设置已读消息
+export async function setRead(params){
+  return request(`${BASE_URL}/zjb-website/msg/setRead`,{
+    method:'POST',
+    body: {...params}
+
+  })
+}
+export async function setAllRead() {
+  return request(`${BASE_URL}/zjb-website//msg/setAllRead`);
+}
+
