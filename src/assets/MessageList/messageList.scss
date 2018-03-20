@@ -5,52 +5,7 @@
 li {
   list-style: none;
 }
-//
-//.hang {
-//  list-style: none;
-//  height: 35px;
-//  text-align: center;
-//  line-height: 35px;
-//  .list_title, .list_content1, .list_content2 {
-//    .icon_ {
-//      width: 100px;
-//      display: inline-block;
-//    }
-//    .icon_1 {
-//      width: 100px;
-//      display: inline-block;
-//      color: red;
-//    }
-//    .icon_2 {
-//      width: 100px;
-//      display: inline-block;
-//      color: black;
-//    }
-//    .title_I {
-//      width: 570px;
-//      display: inline-block;
-//    }
-//    .title_time {
-//      width: 162px;
-//      display: inline-block;
-//    }
-//  }
-//  .list_title {
-//    font-size: 17px;
-//    background: #f0f0f0;
-//  }
-//  .list_content1 {
-//    background: white;
-//    font-size: 15px;
-//  }
-//  .list_content2 {
-//    background: #fafafa;
-//    font-size: 15px;
-//  }
-//}
-//
 
-//
 .hover_ {
   //background: #FF7E10;
   color:gray;
@@ -109,7 +64,7 @@ li {
   }
   .btn2{
     display: inline-block;
-    margin-left: 230px;
+    margin-left: 100px;
     Button{
       margin: 15px 0 ;
     }
@@ -198,7 +153,7 @@ li {
       top:10px;
       .pagination {
         height: 35px;
-        margin-left: 480px;
+        margin-left: 400px;
         position: absolute;
         right: 10px;
         bottom: 0;

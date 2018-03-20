@@ -5,6 +5,7 @@ import {isOrNot} from '../../../services/api.js';
 import {STATION_MESSAGE} from '../../../common/pagePath';
 import {message} from "antd/lib/index";
 import moment from 'moment';
+import {getOneMessage} from "../../../services/api";
 
 
 export default class MessageDetail extends React.Component {
@@ -16,30 +17,30 @@ export default class MessageDetail extends React.Component {
  }
 
   componentDidMount() {
-    console.log(this.props.match);
     const id = this.props.match.params.msgId;
-    this.getDate(id);
+    this.getOneMessage(id);
   }
 
-async getDate(x){
-    const res = await isOrNot(x);
-    console.log(res);
-    if(res.code === 0){
+//查询单个信息
+  async getOneMessage(id){
+    const response = await getOneMessage(id);
+    console.log(response);
+    if(response.code === 0){
       this.setState({
-      messageData: res.data
+        messageData:response.data,
       })
-    }else{
-      message.error(res.msg);
     }
-}
+
+  }
   render() {
+   const {messageData}= this.state;
     return (
       <div className="fr uc-rbody" >
         <a onClick = {()=>this.props.history.push(STATION_MESSAGE)} className="back" style={{color:"#ff9900",fontWeight:"bold"}}> &lt; 返回列表</a><hr/>
         <div className="message">
-           <h2>{this.state.messageData.title}</h2>
-           <h5>{moment(this.state.messageData.datetime).format('YYYY-MM-DD HH:mm:ss')}</h5>
-           <p>{this.state.messageData.article}</p>
+           <h2>{messageData.ftitle}</h2>
+           <h5>{moment(messageData.fsendTime).format('YYYY-MM-DD HH:mm:ss')}</h5>
+           <p>{messageData.article ? messageData.article.fcontent:null}</p>
         </div>
       </div>
     );

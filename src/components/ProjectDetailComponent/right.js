@@ -2,7 +2,7 @@ import React from 'react';
 import Data from './data';
 import FormProject from './form-project';
 import moment from 'moment';
-import {getPersonalMoney, alreadyInvested, messageList} from '../../services/api';
+import {getPersonalMoney, alreadyInvested} from '../../services/api';
 import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
 

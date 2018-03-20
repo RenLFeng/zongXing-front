@@ -3,7 +3,6 @@ import {Icon, message, Table, Badge, Button, Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
 
 import '../../assets/MessageList/messageList.scss';
-import {messageList} from '../../services/api.js';
 import moment from 'moment';
 import Path from '../../common/pagePath';
 import {pageShows, LICENSE, TURN_BACK} from '../../common/systemParam';
