@@ -43,7 +43,11 @@ export default {
             type: 'savePersonal',
             payload: {
               openStatus: NO_OPEN,
-              data: response.data
+              data: {
+                accountDynamicVos: [],
+                plan: {},
+                totalAssets: {}
+              }
             }
           });
         } else {

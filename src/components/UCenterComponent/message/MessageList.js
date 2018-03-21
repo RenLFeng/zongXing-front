@@ -171,7 +171,9 @@ export default class MessageList extends React.Component {
       <Menu onClick={()=>this.handleMenuClick()}>
         {
           arr_3_.map((data)=>{
-            <Menu.Item key={data.fno} onClick={()=>this.MessageType(data.fno, 0)}>{data.fname}</Menu.Item>
+            return (
+              <Menu.Item key={data.fno} onClick={()=>this.MessageType(data.fno, 0)}>{data.fname}</Menu.Item>
+            );
           })
         }
       </Menu>
