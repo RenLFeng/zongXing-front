@@ -431,7 +431,9 @@ export async function getButtonType() {
 export async function getMessageType(params){
   return request(`${BASE_URL}/zjb-website/msg/getMsgByType`,{
     method:'POST',
-    body: {...params}
+    body: {
+      ...params
+    }
 
   })
 }
@@ -447,7 +449,15 @@ export async function setRead(params){
 
   })
 }
+//设置已读全部
 export async function setAllRead() {
   return request(`${BASE_URL}/zjb-website//msg/setAllRead`);
+}
+//删除消息
+export async function setDelete(params){
+  return request(`${BASE_URL}/zjb-website/msg/delete`,{
+    method:'POST',
+    body: params
+  })
 }
 
