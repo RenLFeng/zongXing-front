@@ -16,7 +16,7 @@ export default class HomeIndex extends React.Component {
   render() {
     return (
       <div className="body">
-        <Banner />
+        <Banner history={this.props.history}/>
         <Company />
         <Project param={this.props.match} history={this.props.history}/>
         <div className="section sec-touzi">

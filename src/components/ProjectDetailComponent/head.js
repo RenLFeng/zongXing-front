@@ -22,6 +22,7 @@ export default class Head extends React.Component {
                  src={video_src}>
             您的浏览器不支持视频播放，请升级浏览器
           </video>
+
           <div className="info">
             <p className="tit" style={{textAlign: 'left'}}>{projectDetail.fname}</p>
             <div className="user">
