@@ -191,7 +191,7 @@ export default class MessageList extends React.Component {
     const page_num = pageShows(this.state.pageIndex, this.state.maxPage);
     const menu = (
       <Menu onClick={()=>this.handleMenuClick()}>
-        <Menu.Item key="1">1st menu item</Menu.Item>
+        <Menu.Item key="1">{buttonArr.fname}</Menu.Item>
         <Menu.Item key="2">2nd menu item</Menu.Item>
         <Menu.Item key="3">3rd item</Menu.Item>
         <Menu.Item key="4">3rd item</Menu.Item>
