@@ -156,8 +156,8 @@ export default class MessageList extends React.Component {
   }
 
   handleMenuClick(e) {
-    message.info('Click on menu item.');
-    console.log('click', e);
+    this.MessageType(e.key, 1)
+    console.log('click', e.key);
   }
 
   render() {
@@ -168,12 +168,12 @@ export default class MessageList extends React.Component {
     const arr_3_ = buttonArr.slice(3);
     const page_num = pageShows(this.state.pageIndex, this.state.maxPage);
     const menu = (
-      <Menu onClick={()=>this.handleMenuClick()}>
+      <Menu onClick={(e)=>this.handleMenuClick(e)}>
         {
           arr_3_.map((data)=>{
-            return (
-              <Menu.Item key={data.fno} onClick={()=>this.MessageType(data.fno, 0)}>{data.fname}</Menu.Item>
-            );
+            return(
+              <Menu.Item key={data.fno}>{data.fname}</Menu.Item>
+              )
           })
         }
       </Menu>
@@ -199,7 +199,7 @@ export default class MessageList extends React.Component {
                     {
                       arr_3.map((item)=>{
                         return(
-                          <Button  key={item.fno} onClick={()=>this.MessageType(item.fno, 0)}>{item.fname}</Button>
+                          <Button  key={item.fno} onClick={()=>this.MessageType(item.fno, 1)}>{item.fname}</Button>
                         )
                       })
                     }
@@ -210,7 +210,7 @@ export default class MessageList extends React.Component {
                   :
                     buttonArr.map((data,index)=>{
                     return(
-                      <Button onClick={()=>this.MessageType(data.fno, 0)} key={data.fno}>{data.fname}</Button>
+                      <Button onClick={()=>this.MessageType(data.fno, 1)} key={data.fno}>{data.fname}</Button>
                     )
                   })
               }
