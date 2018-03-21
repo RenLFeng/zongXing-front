@@ -102,9 +102,9 @@ export const COMPLETE_PAGE_SIZE = 8;
 // 正在筹款项目一页显示个数
 export const ING_PAGE_SIZE = 6;
 // 已完成项目 flag3
-export const COMPLETE_PROJECT_FLAG = 12;
+export const COMPLETE_PROJECT_FLAG = 13;
 
-export const ING_PROJECT_FLAG = 9;
+export const ING_PROJECT_FLAG = 10;
 //搜索项目时的默认值 分别是 信用等级 年华收益率 借款周期 项目名称
 export const PROJECT_LEAVE_CODE = '';
 export const PROJECT_RATE = -1;

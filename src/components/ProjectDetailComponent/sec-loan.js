@@ -73,7 +73,9 @@ export default class SecLoan extends React.Component {
     return (
       <div>
         <div className="lnav">
-          <a className="a6">平台认证</a>
+          { project.riskItems?
+            <a className="a6">平台认证</a> : null
+          }
           {project.projectModules ? project.projectModules.map((item)=>{
             return (
               <a className={this.checkedName(item.ftitle)} key={item.fid}>{item.ftitle}</a>
@@ -91,26 +93,18 @@ export default class SecLoan extends React.Component {
               );
             }
           }): null}
-          <div className="textbox border">
-            <i className="tit">平台认证</i>
-            <div className="tagbox" style={{marginTop: -10}}>
-              <i className="chk">实名认证</i>
-              <i>婚姻认证</i>
-              <i className="chk">学历认证</i>
-              <i>住址认证</i>
-              <i className="chk">征信认证</i>
-              <i>职称认证</i>
-              <i>社保认证</i>
-              <i className="chk">车产认证</i>
-              <i>房产认证</i>
-              <i>现场认证</i>
-              <i>银行流水认证</i>
-              <i>营业执照认证</i>
-              <i>审计报告认证</i>
-              <i>税务认证</i>
-              <i>关联企业认证</i>
-            </div>
-          </div>
+          {project.riskItems?
+            <div className="textbox border">
+              <i className="tit">平台认证</i>
+              <div className="tagbox" style={{marginTop: -10}}>
+                {project.riskItems ? project.riskItems.map((item) => {
+                  return (
+                    <i className="chk" key={item}>{item}</i>
+                  );
+                }) : null}
+              </div>
+            </div> : null
+          }
           {project.projectModules ? project.projectModules.map((item)=>{
             if (!item.ftitle) {
               return null;

@@ -61,52 +61,56 @@ export default class ProjectDetail extends React.Component {
   }
 
   countDownTime() {
-    let overTime = this.state.projectDetail.fcollet_over_time - new Date().getTime();
-    if (overTime <= 0) {
-      this.setState({countDown: '00 : 00 : 00', countDay: 0});
-      clearInterval(this.countDown);
+    if (this.state.projectDetail.fcollet_over_time) {
+      let overTime = this.state.projectDetail.fcollet_over_time - new Date().getTime();
+      if (overTime <= 0) {
+        this.setState({countDown: '00 : 00 : 00', countDay: 0});
+        clearInterval(this.countDown);
+      } else {
+        if (Math.floor(overTime/86400000) !== 0) {
+          this.setState({
+            countDay: Math.floor(overTime/86400000)
+          });
+        } else {
+          this.setState({
+            countDay: 0
+          });
+        }
+        overTime = overTime - Math.floor(overTime/86400000) * 86400000;
+        let time = '';
+        if (Math.floor(overTime/3600000) !== 0) {
+          if (Math.floor(overTime/3600000) >= 10) {
+            time = `${Math.floor(overTime/3600000)} :`;
+          } else {
+            time = `0${Math.floor(overTime/3600000)} :`;
+          }
+        } else {
+          time = `00 :`;
+        }
+        overTime = overTime - Math.floor(overTime/3600000) * 3600000;
+        if (Math.floor(overTime/60000) !== 0) {
+          if (Math.floor(overTime/60000) >= 10) {
+            time = `${time} ${Math.floor(overTime/60000)} :`;
+          } else {
+            time = `${time} 0${Math.floor(overTime/60000)} :`;
+          }
+        } else {
+          time = `${time} 00 :`;
+        }
+        overTime = overTime - Math.floor(overTime/60000) * 60000;
+        if (overTime !== 0) {
+          if (overTime/1000 >= 10) {
+            time = `${time} ${Math.floor(overTime/1000)}`;
+          } else {
+            time = `${time} 0${Math.floor(overTime/1000)}`;
+          }
+        } else {
+          time = `${time} 00`;
+        }
+        this.setState({countDown: time});
+      }
     } else {
-      if (Math.floor(overTime/86400000) !== 0) {
-        this.setState({
-          countDay: Math.floor(overTime/86400000)
-        });
-      } else {
-        this.setState({
-          countDay: 0
-        });
-      }
-      overTime = overTime - Math.floor(overTime/86400000) * 86400000;
-      let time = '';
-      if (Math.floor(overTime/3600000) !== 0) {
-        if (Math.floor(overTime/3600000) >= 10) {
-          time = `${Math.floor(overTime/3600000)} :`;
-        } else {
-          time = `0${Math.floor(overTime/3600000)} :`;
-        }
-      } else {
-        time = `00 :`;
-      }
-      overTime = overTime - Math.floor(overTime/3600000) * 3600000;
-      if (Math.floor(overTime/60000) !== 0) {
-        if (Math.floor(overTime/60000) >= 10) {
-          time = `${time} ${Math.floor(overTime/60000)} :`;
-        } else {
-          time = `${time} 0${Math.floor(overTime/60000)} :`;
-        }
-      } else {
-        time = `${time} 00 :`;
-      }
-      overTime = overTime - Math.floor(overTime/60000) * 60000;
-      if (overTime !== 0) {
-        if (overTime/1000 >= 10) {
-          time = `${time} ${Math.floor(overTime/1000)}`;
-        } else {
-          time = `${time} 0${Math.floor(overTime/1000)}`;
-        }
-      } else {
-        time = `${time} 00`;
-      }
-      this.setState({countDown: time});
+      this.setState({countDown: '00 : 00 : 00', countDay: 0});
     }
   }
 

@@ -9,6 +9,7 @@ import NoMatch from './routes/404page/404Page';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import './common/math-plugin';
+import ScrollToTop from './common/ScrollToTop';
 
 moment.locale('zh-cn');
 
@@ -16,15 +17,17 @@ function RouterConfig({ history }) {
   console.log(history);
   return (
     <Router history={history}>
-      <Switch>
-     		<Route path="/" exact render={() => (<Redirect to="/index"/>)}></Route >
-        <Route path="/index" component={HomePage}/>
-        <Route path="/subsite" component={SubSite} />
-        <Route path="/infor" component={InformationPage} />
-        <Route path="/personal" component={PersonalPage} />
-        <Route path="/exception" component={Exception} />
-        <Route component={NoMatch}/>
-      </Switch>
+      <ScrollToTop>
+        <Switch>
+          <Route path="/" exact render={() => (<Redirect to="/index"/>)}></Route >
+          <Route path="/index" component={HomePage}/>
+          <Route path="/subsite" component={SubSite} />
+          <Route path="/infor" component={InformationPage} />
+          <Route path="/personal" component={PersonalPage} />
+          <Route path="/exception" component={Exception} />
+          <Route component={NoMatch}/>
+        </Switch>
+      </ScrollToTop>
     </Router>
   );
 }

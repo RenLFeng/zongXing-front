@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
+import { message } from 'antd';
 import { IMG_BASE_URL } from '../../common/systemParam';
 import { initPage } from '../../assets/home/index';
 import Path from '../../common/pagePath';
 
 @connect((state) => ({
-  systemData: state.systemData
+  systemData: state.systemData,
+  login: state.login.status
 }))
 export default class Banner extends React.Component {
   state = {
@@ -14,24 +16,20 @@ export default class Banner extends React.Component {
   };
 
   componentDidMount() {
-    // this.fetchHomeImg();
     setTimeout(()=>{
       this.setState({
         show: true
       });
     }, 100)
   }
-  fetchHomeImg() {
-    // const {systemData} = this.props;
-    // //如果图片是个数是0 则重新加载图片资源
-    // if (systemData.homeImg.length === 0) {
-    //   this.props.dispatch({
-    //     type: 'systemData/getHomeImg',
-    //     payload: 'home'
-    //   });
-    // } else {
-    //   initPage();
-    // }
+  jumpPage() {
+    if (this.props.login) {
+      this.props.history.push('/index/projectLoan')
+    } else {
+      message.info('请先登录');
+      this.props.history.push('/index/login')
+    }
+
   }
   render() {
     const {systemData} = this.props;
@@ -62,7 +60,7 @@ export default class Banner extends React.Component {
           <p className="t1 hid" style={{display: `${this.state.show?'block':'none'}`}}>
             <i>通过帮助小微企业成功，获得丰厚回报</i>
           </p>
-          <p className="t2"><a className="btn">我要投资</a></p>
+          <p className="t2"><a className="btn" onClick={()=>this.jumpPage()}>我要投资</a></p>
         </div>
       </div>
     );
