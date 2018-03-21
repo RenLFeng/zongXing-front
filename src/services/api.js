@@ -451,7 +451,7 @@ export async function setRead(params){
 }
 //设置已读全部
 export async function setAllRead() {
-  return request(`${BASE_URL}/zjb-website//msg/setAllRead`);
+  return request(`${BASE_URL}/zjb-website/msg/setAllRead`);
 }
 //删除消息
 export async function setDelete(params){
@@ -460,4 +460,14 @@ export async function setDelete(params){
     body: params
   })
 }
+
+//查询站内公告
+export async function getPlantNotice(param, params) {
+  return request(`${BASE_URL}/zjb-manage/notice/getSiteNotice?pageIndex=${param}&pageSize=${params}`);
+}
+//查询单个站内公告
+export async function getOPlantNotice(param) {
+  return request(`${BASE_URL}/zjb-manage/notice/getOneNotice?fid=${param}`);
+}
+
 
