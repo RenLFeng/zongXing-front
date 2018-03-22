@@ -125,6 +125,7 @@ export default class  Login extends React.Component {
 // 身份验证——手机号
   getAuthCode_ = async() => {
     const {loginName,mobile,authCode} = this.state;
+
      if (loginName.length === 0 ) {
        this.setState({codeNameErr1:'手机号/用户名不能为空'});
        return;
@@ -133,6 +134,7 @@ export default class  Login extends React.Component {
        this.setState({codeNameErr1:'请输入正确的手机号'});
        return;
      }
+
      this.setState({codeNameErr1: ''});
      // 发送验证码的时间存在本地
      const sendTime = localStorage.getItem(loginName);
@@ -148,6 +150,11 @@ export default class  Login extends React.Component {
           show:false,
           mobile:response.data
         });
+      }
+      else {
+        message.error(response.msg);
+        this.setState({codeNameErr1:'该用户名/手机号不存在'});
+        return;
       }
     }catch(e) {
       this.setState({authLoading: false});

@@ -465,9 +465,15 @@ export async function setDelete(params){
 export async function getPlantNotice(param, params) {
   return request(`${BASE_URL}/zjb-manage/notice/getSiteNotice?pageIndex=${param}&pageSize=${params}`);
 }
+
 //查询单个站内公告
 export async function getOPlantNotice(param) {
   return request(`${BASE_URL}/zjb-manage/notice/getOneNotice?fid=${param}`);
+}
+
+//查询平台公告
+export async function getSiteNotice(param, params) {
+  return request(`${BASE_URL}/zjb-manage/notice/getPlatNotice?pageIndex=${param}&pageSize=${params}`);
 }
 
 

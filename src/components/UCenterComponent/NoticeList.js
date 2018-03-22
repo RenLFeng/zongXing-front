@@ -17,6 +17,7 @@ export default class NoticeList extends React.Component {
       showMask:false,
       detail:'',
       num:0,  //总条数
+      pageIndex:1,
     }
   }
 
@@ -56,7 +57,7 @@ export default class NoticeList extends React.Component {
   }
   render() {
     const { arr,showMask,detail } = this.state;
-    const page_num = pageShows(this.state.pageCurrent, this.state.maxPage);
+    const page_num = pageShows(this.state.pageIndex, this.state.maxPage);
     return (
       <div className="fr uc-rbody" >
         <div className="title">
@@ -79,7 +80,6 @@ export default class NoticeList extends React.Component {
                         {
                          data.ftype === "WARN" ? <Icon type="exclamation-circle-o" className="icon_"/> :null
                         }
-                        {/*<span className="change">更新</span>*/}
                       </span>
                       <span className="massageList_time">{moment(data.fpublishTime).format('YYYY-MM-DD HH:mm:ss')}</span>
                     </li>
@@ -122,6 +122,7 @@ export default class NoticeList extends React.Component {
                   </div>
                 </div>
               </li>
+
             </ul>
           </div>
       </div>

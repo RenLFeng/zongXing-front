@@ -125,7 +125,6 @@ export default class OrganizationInformation extends React.Component {
             </table>
           </p>
          </div>
-
 		);
 	}
 }

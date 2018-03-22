@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { Link } from 'dva/router';
 import Path from '../../common/pagePath';
+
 export default class LeftMenu extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
   render() {

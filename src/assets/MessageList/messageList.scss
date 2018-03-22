@@ -77,7 +77,7 @@ li {
   background: white;
   .massageList {
     border-bottom: 1px solid lightgray;
-    width:98%;
+    width:94%;
     height:45px;
     margin: auto;
     .check {
@@ -133,46 +133,48 @@ li {
       margin-left: 6%;
     }
   }
-  .footer_ {
-    line-height: 60px;
-    span{
-      display: inline-block;
-      margin-left: 18px;
-      vertical-align: middle;
-      i{
-        color:#FF7E10;
-        margin: 0 5px;
-      }
+}
+
+.footer_ {
+  line-height: 60px;
+  span{
+    display: inline-block;
+    margin-left: 18px;
+    vertical-align: middle;
+    width:16%;
+    i{
+      color:#FF7E10;
+      margin: 0 5px;
     }
-    .box_ {
-      width: 80%;
-      display: inline-block;
+  }
+  .box_ {
+    width: 81%;
+    display: inline-block;
+    height: 35px;
+    position: relative;
+    top:10px;
+    .pagination {
       height: 35px;
-      position: relative;
-      right:-35px;
-      top:10px;
-      .pagination {
+      margin-left: 270px;
+      position: absolute;
+      right: 10px;
+      bottom: 0;
+      text-align: center;
+      a {
+        width: 35px;
         height: 35px;
-        margin-left: 400px;
-        position: absolute;
-        right: 10px;
-        bottom: 0;
-        a {
-          width: 35px;
-          height: 35px;
-          text-align: center;
-          line-height: 35px;
-          display: inline-block;
-          border-radius: 5px;
-          border: 1px solid gray;
-          margin-left: 3px;
-          margin-top: -15px;
-          vertical-align: middle;
-        }
-        a:hover{
-          color:#FF7E10;
-          border:1px solid #FF7E10;
-        }
+        text-align: center;
+        line-height: 35px;
+        display: inline-block;
+        border-radius: 5px;
+        border: 1px solid gray;
+        margin-left: 3px;
+        margin-top: -15px;
+        vertical-align: middle;
+      }
+      a:hover{
+        color:#FF7E10;
+        border:1px solid #FF7E10;
       }
     }
   }

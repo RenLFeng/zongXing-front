@@ -20,7 +20,7 @@ export default class MessageList extends React.Component {
       not_num:0,  //未读个数
       buttonArr:[],
       pageIndex:1,  //当前页，初始值为第一页
-      pageSize: 5,    //每页可显示的消息条数
+      pageSize: 1,    //每页可显示的消息条数
       typeNo:''
     }
   }
@@ -156,17 +156,17 @@ export default class MessageList extends React.Component {
   }
 
   handleMenuClick(e) {
-    this.MessageType(e.key, 1)
-    console.log('click', e.key);
+    this.MessageType(e.key, 1);
   }
 
   render() {
-    const { arr, arr1, allCheck,buttonArr,pageSize,pageIndex } = this.state;
+    const { arr, arr1, allCheck,buttonArr,pageSize } = this.state;
     //按钮数组前三位
     const arr_3 = buttonArr.slice(0,3);
     //按钮数组第三位以后
     const arr_3_ = buttonArr.slice(3);
     const page_num = pageShows(this.state.pageIndex, this.state.maxPage);
+
     const menu = (
       <Menu onClick={(e)=>this.handleMenuClick(e)}>
         {

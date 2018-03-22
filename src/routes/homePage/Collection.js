@@ -286,13 +286,13 @@ constructor(props){
   }
 }
 
-
-class Mask extends React.Component{
-  render() {
-    return(
-      <div className="mask">
-
-      </div>
-    )
-  }
-}
+//
+// class Mask extends React.Component{
+//   render() {
+//     return(
+//       <div className="mask">
+//
+//       </div>
+//     )
+//   }
+// }
