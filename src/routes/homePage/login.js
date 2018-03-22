@@ -177,9 +177,6 @@ export default class  Login extends React.Component {
 
   //提交验证手机号码
   async submitInformation() {
-    if (this.countDownFun_) {
-      clearInterval(this.countDownFun_);
-    }
     const {mobile, authCode, codeNameErr1, codeNameErr2 } = this.state;
     if(mobile.length ===0){
       this.setState({codeNameErr1:'手机号码不能为空'});
@@ -192,7 +189,13 @@ export default class  Login extends React.Component {
     try{
       const response = await checkCode(mobile, authCode);
       if(response.code ===0){
-        this.setState({flag:this.state.flag +1});
+        if (this.countDownFun_) {
+          clearInterval(this.countDownFun_);
+        }
+        this.setState({
+          flag:this.state.flag +1,
+          countDown_:this.state.countDown_
+        });
       }
     } catch(e) {
       console.log(e);
