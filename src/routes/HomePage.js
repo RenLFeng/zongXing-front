@@ -33,6 +33,7 @@ import { BASE_URL, getAuth } from '../services/api';
 import PlatformNotice from "./information/legalSupport";
 import NewsReports from "./information/newsReports";
 import LegalDeclaration from "./information/lawsRegulations";
+
 @connect((state) => ({
 	login: state.login
 }))
@@ -93,16 +94,16 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/project/:projectId`} component={Project} />
             <Route path={`${match.path}/collection`} component={Collection} />
 
-            <Route path={`/infor/recordInformation`} component={RecordInformation} />
-            <Route path={`/infor/organizationInformation`} component={OrganizationInformation} />
-            <Route path={`/infor/contactUs`} component={ContactUs} />
-            <Route path={`/infor/auditInformation`} component={AuditInformation} />
-            <Route path={`/infor/businessInformation`} component={BusinessInformation} />
-            <Route path={`/infor/projectInformation`} component={ProjectInformation} />
-            <Route path={`/infor/platformNotice`} component={PlatformNotice} />
-            <Route path={`/infor/newsReports`} component={NewsReports} />
-            <Route path={`/infor/legalDeclaration`} component={LegalDeclaration} />
-
+            {/*<Route path={`/infor/recordInformation`} component={RecordInformation} />*/}
+            {/*<Route path={`/infor/organizationInformation`} component={OrganizationInformation} />*/}
+            {/*<Route path={`/infor/contactUs`} component={ContactUs} />*/}
+            {/*<Route path={`/infor/auditInformation`} component={AuditInformation} />*/}
+            {/*<Route path={`/infor/businessInformation`} component={BusinessInformation} />*/}
+            {/*<Route path={`/infor/projectInformation`} component={ProjectInformation} />*/}
+            {/*<Route path={`/infor/platformNotice`} component={PlatformNotice} />*/}
+            {/*<Route path={`/infor/newsReports`} component={NewsReports} />*/}
+            {/*<Route path={`/infor/legalDeclaration`} component={LegalDeclaration} />*/}
+            {/*<Route path={`/infor/plantNotice`} component={Plant} />*/}
           </Switch>
         <Footer/>
 			</div>
