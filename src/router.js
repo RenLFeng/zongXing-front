@@ -14,7 +14,6 @@ import ScrollToTop from './common/ScrollToTop';
 moment.locale('zh-cn');
 
 function RouterConfig({ history }) {
-  console.log(history);
   return (
     <Router history={history}>
       <ScrollToTop>

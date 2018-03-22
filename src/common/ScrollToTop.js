@@ -3,7 +3,6 @@ import React from 'react';
 
 class ScrollToTop extends React.Component {
   componentDidUpdate(prevProps) {
-    console.log(this.props); // no location prop
     if (this.props.location !== prevProps.location) {
       // never triggered
       window.scrollTo(0, 0);
