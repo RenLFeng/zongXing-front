@@ -4,7 +4,7 @@ import '../../assets/MessageList/messageList.scss';
 import {getPlantNotice, getOPlantNotice} from '../../services/api.js';
 import moment from 'moment';
 import {STATION_MESSAGE} from '../../common/pagePath';
-import {pageShows} from '../../common/systemParam';
+import {pageShows} from '../../common/systemParam';  //分页组件
 
 export default class NoticeList extends React.Component {
   constructor(props) {

@@ -4,6 +4,7 @@ import {message} from "antd/lib/index";
 import moment from 'moment';
 import '../../assets/MessageList/messageList.scss';
 import {pageShows} from "../../common/systemParam";
+import {NOTICE_DETAIL} from "../../common/pagePath";
 
 export default class Plant extends React.Component {
   constructor(props){
@@ -11,7 +12,7 @@ export default class Plant extends React.Component {
     this.state = {
       pageCurrent: 1, //当前页，初始值为第一页
       arr:[], //平台消息列表,
-      pageSize: 5,    //每页可显示的消息条数
+      pageSize: 10,    //每页可显示的消息条数
       maxPage: 0,     //最大页
       pageIndex:1,
     }
@@ -36,8 +37,6 @@ export default class Plant extends React.Component {
 
   render() {
     const page_num = pageShows(this.state.pageIndex, this.state.maxPage);
-    console.log(page_num);
-    console.log(1111);
     return (
       <div className="fr shadow page">
         {
@@ -45,20 +44,17 @@ export default class Plant extends React.Component {
             return(
               <div className="list"  key={data.fid}>
                 {data.ftype === "WARN" ? <p className="titleP">{data.ftitle}<span className="hot">HOT</span></p>:
-                  <p className="titleP">{data.ftitle}</p>
+                  <p className="titleP" onClick={() => this.props.history.push(NOTICE_DETAIL + `/${data.fid}`)}>{data.ftitle}</p>
                 }
-
-
                 <p className="timeP">{moment(data.fpublishTime).format('YYYY-HH-DD HH:mm:ss')}</p>
               </div>
               )
           })
         }
 
-        <li className="footer_">
-          <span></span>
-          <div className="box_">
-            <div className="pagination">
+        <li className="footers">
+          <div className="box_1">
+            <div className="paginations">
               {page_num.lastPage ?
                 <a className="num" onClick={() => this.getPlantNotice(this.state.pageIndex - 1)}>&lt;</a> :
                 <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}

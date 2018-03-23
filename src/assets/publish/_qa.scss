@@ -1,34 +1,43 @@
 .sec-qa {
   padding: 100px 0;
 &>.w>.fl {
-   width: 180px;
+   width: 150px;
    padding: 0 26px;
    min-height: 570px;
+
 .t1 {
   font-size: 16px;
   font-weight: bold;
   line-height: 45px;
   padding-top: 6px;
+  border-bottom: 1px solid lightgray;
+  text-align: left;
 }
 .t2 {
   font-size: 14px;
-  line-height: 45px;
-  border-top: 1px solid #ccc;
+  line-height: 36px;
+  border:none !important;
+
 a {
   display: block;
   text-decoration: none;
-}
+ }
   a:hover{
-    color:white;
-    background:#FF7E10;;
+    color:#FF7E10;
   }
+  .hover{
+    color:#FF7E10;
+  }
+  //&:hover {
+  //  color: $f60;
+  //}
 }
 }
   i{
     margin-right: 5px;
   }
 &>.w>.fr {
-   width: 980px;
+   width: 1010px;
    font-size: 14px;
    background-color: #f5f5f5;;
    padding-bottom: 240px;

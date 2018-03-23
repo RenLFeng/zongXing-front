@@ -46,6 +46,8 @@ export default class  Login extends React.Component {
       show:true,
       code:'', //忘记密码时验证码
 
+      flagShow:false, //验证码发送之后提示语
+
 
 
     };
@@ -96,8 +98,8 @@ export default class  Login extends React.Component {
     this.setState({authLoading: true});
     try {
       const response = await getAuthCode(regPhone);
-      this.setState({authLoading: false});
       if (response.code === 0) {
+        this.setState({authLoading: false});
         message.info('发送成功');
       } else {
         message.error(response.msg);
@@ -147,11 +149,12 @@ export default class  Login extends React.Component {
       const response  = await changePW(loginName);
       if(response.code === 0){
         this.setState({
+          authLoading: false,
           show:false,
-          mobile:response.data
+          mobile:response.data,
+          flagShow:true,
         });
-      }
-      else {
+      } else {
         message.error(response.msg);
         this.setState({codeNameErr1:'该用户名/手机号不存在'});
         return;
@@ -168,7 +171,7 @@ export default class  Login extends React.Component {
     this.countDownFun_ = setInterval(() => {
       if (this.state.countDown_ === 0) {
         clearInterval(this.countDownFun_);
-        this.setState({ countDown_: AUTH_CODE_TIME_, showAuthCode: true });
+        this.setState({ countDown_: AUTH_CODE_TIME_, showAuthCode: true, flagShow:false, });
       } else {
         this.setState({ countDown_: this.state.countDown_ - 1 });
       }
@@ -182,57 +185,88 @@ export default class  Login extends React.Component {
       this.setState({codeNameErr1:'手机号码不能为空'});
       return
     }
+    if (!VER_PHONE.test(mobile)) {
+      this.setState({codeNameErr1:'请输入正确的手机号'});
+      return;
+    }
     if(authCode.length ===0){
       this.setState({codeNameErr2:'验证码不能为空'});
       return
     }
+    this.setState({authLoading: true});
     try{
       const response = await checkCode(mobile, authCode);
       if(response.code ===0){
+        this.setState({authLoading: false});
         if (this.countDownFun_) {
           clearInterval(this.countDownFun_);
         }
         this.setState({
           flag:this.state.flag +1,
-          countDown_:this.state.countDown_
+          countDown_:AUTH_CODE_TIME_,
+          showAuthCode:true,
+          flagShow:false,
+          authCode:'',
+          codeNameErr2:'',
         });
       }
     } catch(e) {
       console.log(e);
       message.error('服务器繁忙，请稍后重试');
+      this.setState({authLoading: false});
     }
   }
 
   //验证两次输入的密码是否一致
   same() {
+
+  }
+
+  //修改密码
+  async changePassword(){
     const {newPass,newPass_} = this.state;
     if(newPass.length === 0  ){
       this.setState({
         message1:'该内容不能为空'
-      })
+      });
+      return;
+    }
+    if(newPass.length < 6  ){
+      this.setState({
+        message1:'密码长度不能小于6位'
+      });
+      return;
     }
     if( newPass_.length === 0){
       this.setState({
         message2:'该内容不能为空'
-      })
+      });
+      return;
     }
     if(newPass !== newPass_){
       this.setState({
         message2:'两次输入的密码不一致'
       })
+      return;
     }
-  }
-
-  //修改密码
-  async changePassword(){
-    this.same();
-    const {loginName,password, newPass} = this.state;
+    this.setState({authLoading: true});
+    const {loginName,password} = this.state;
     const  respondse = await changePassword({loginName:this.state.loginName,
       password:this.state.newPass});
     if(respondse.code === 0){
       this.setState({
         flag:1,
+        authLoading: false,
+        newPass:'',
+        newPass_:'',
+        message1:'',
+        message2:'',
+        show:true,
+        mobile:'',
       })
+      alert("密码修改成功！");
+    } else {
+      message.error(response.msg);
     }
   }
 
@@ -366,7 +400,7 @@ export default class  Login extends React.Component {
   }
 
   render() {
-    const { showReg, showAuthCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus , flag,loginName,codeNameErr,newPass, newPass_,check_,show,code} = this.state;
+    const { showReg, showAuthCode,authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus , flag,loginName,codeNameErr,newPass, newPass_,check_,show,code} = this.state;
     return (
         <div className="logindiv1 shadow">
           { showReg ?
@@ -449,19 +483,24 @@ export default class  Login extends React.Component {
               ((flag === 2)?
                 <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">
-                    <a className="title">身份验证</a>
+                    <a className="PwdTitle">忘记密码—身份验证</a>
                   </div>
                   {show?
                     <div className="row">
                       <input className="put mobile"  type="tel"  value={loginName} name="loginName" placeholder="请输入手机号码/用户名" onChange={(e)=>this.setState({loginName:e.target.value})} />
                       <p>{this.state.codeNameErr1}</p>
                     </div>:
+                    (this.state.flagShow ) ?
                     <div className="row relative" >
-                      <input className="put vcode"   value={code} name="code" onChange={(e)=>this.setState({authCode:e.target.value})}  placeholder="输入6位验证码"/>
+                      <p className="Prompt">短信已发至{this.state.mobile.substr(0,3)+"****"+this.state.mobile.substr(7)}该手机号，请注意查收！</p>
+                      <input className="put vcode"   value={authCode} name="code" onChange={(e)=>this.setState({authCode:e.target.value})}  placeholder="输入6位验证码"/>
                       <p>{this.state.codeNameErr2}</p>
-                    </div>
+                    </div>:
+                      <div className="row relative" >
+                         <input className="put vcode"   value={authCode} name="code" onChange={(e)=>this.setState({authCode:e.target.value})}  placeholder="输入6位验证码"/>
+                         <p>{this.state.codeNameErr2}</p>
+                      </div>
                   }
-
                   <div>
                     {showAuthCode ?
                     <Button className="btn_btn" type="primary" onClick={this.getAuthCode_}>获取验证码</Button> :
@@ -487,7 +526,7 @@ export default class  Login extends React.Component {
 
                 <div>
                   <Button className="btns" type="primary" onClick={()=> this.changePassword()}>完成</Button>
-                  <Button className="btns" type="primary" onClick={()=> this.setState({flag:this.state.flag -1})}>返回</Button>
+                  <Button className="btns" type="primary" onClick={()=> this.setState({flag:this.state.flag -1,newPass: '',newPass_: ''  })}>返回</Button>
                 </div>
             </div> ) )
              }

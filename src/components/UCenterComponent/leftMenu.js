@@ -9,6 +9,7 @@ export default class LeftMenu extends React.Component {
 
   render() {
     const {param} = this.props;
+    console.log(param);
     const path = param.location.pathname;
     return (
       <div className="fl uc-lbody">

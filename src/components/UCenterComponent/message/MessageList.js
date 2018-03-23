@@ -94,8 +94,6 @@ export default class MessageList extends React.Component {
     const response = await setAllRead();
     if(response.code ===0){
       this.MessageType(this.state.typeNo, this.state.pageIndex);
-      console.log(11111);
-
     } else {
       message.error(response.msg);
     }
