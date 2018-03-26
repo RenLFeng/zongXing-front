@@ -5,7 +5,6 @@ import {getButtonType, getMessageType, setRead, setAllRead, setDelete} from '../
 import moment from 'moment';
 import {STATION_MESSAGE} from '../../../common/pagePath';
 import {pageShows} from '../../../common/systemParam';
-// import {Modal} from "antd/lib/index";
 
 export default class MessageList extends React.Component {
   constructor(props) {
@@ -180,7 +179,7 @@ export default class MessageList extends React.Component {
       <div className="fr uc-rbody" >
         <div className="title">
           <span className="title1">站内消息</span>
-          <span className="title2">共<i>{this.state.nums}</i>条，其中<i>{this.state.not_num}</i>条未读</span>
+          <span className="title2_">共<i>{this.state.nums}</i>条，其中<i>{this.state.not_num}</i>条未读</span>
         </div>
         <div className="content">
           <div className="btns">
