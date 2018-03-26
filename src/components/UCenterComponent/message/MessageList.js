@@ -211,10 +211,9 @@ export default class MessageList extends React.Component {
                     )
                   })
               }
-
+            </div>
           </div>
 
-          </div>
           <div className="messageGroup">
             <ul>
               <li className="massageList">
