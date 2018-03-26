@@ -17,4 +17,29 @@ export default {
   LOAN_LIST: '/index/uCenter/loanList', //借款项目列表
   COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
   NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
+
+
+  NOTICE_DETAIL: '/infor/plantNotice', //平台公告页面
+  RECORD_INFORMATION: '/infor/recordinformation',     //备案信息页面
+  ORGANIZATIONAL_INFORMATION: '/infor/organizationInformation',  //组织信息页面
+  AUDIT_INFORMATION: '/infor/auditInformation',   //审核信息
+  BUSINESS_INFORMATION: '/infor/businessInformation',   //运营信息
+  PROJECT_INFORMATION: '/infor/projectInformation',   //项目信息
+  LAWS_REGULATION: '/infor/lawsRegulations', //法律法规
+  LEGAL_SUPPORT: '/infor/legalSupport',//法务支持
+  RISK_MANAGEMENT: '/infor/riskManagement',//风险控制
+  SAFE_GUARANTEE: '/infor/safeGuarantee',//安全保障
+  TERM_SERVICE: '/infor/termService',//服务条款
+  COMPANY_INTRODUCTION: '/infor/companyIntroduction',  //公司介绍
+  MANAGEMENT_TEAM: '/infor/managementTeam', //管理团队
+  ENTERPRISE_WILL: '/infor/enterpriseWill', //企业意愿
+  SERVICE_IDEA:'/infor/serviceIdea', //服务理念
+  CONTACT_US: '/infor/contactUs', //联系我们
+  TECHNICAL_COOPERATION: '/infor/technicalCooperation',//技术合作
+  WIND_COOPERATION: '/infor/windCooperation', //风控合作
+  LEGAL_COOPERATION: '/infor/legalCooperation', //法务合作
+  SECURITY_COOPERATION: '/infor/securityCooperation', //安全合作
+  MEDIA_COOPERATION: '/infor/mediaCooperation', //媒体合作
+  ICON_TEST: '/infor/iconTest' //图标测试
+
 }

@@ -14,7 +14,7 @@ table {
   line-height: 20px;
   text-align: left;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
+  border: 1px solid #dddddd;
 }
 
 .table th {
@@ -223,3 +223,28 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 .table-hover tbody tr.info:hover>td {
   background-color: #c4e3f3;
 }
+
+
+//--------------------
+.title {
+  width:40%;
+  font-weight: bold;
+  font-size: 16px;
+}
+.title-content{
+  width:60%;
+  font-size: 16px;
+}
+
+//
+  .title2 {
+    font-weight: bold;
+    font-size: 16px;
+    width:155px;
+    vertical-align: middle !important;
+  }
+  .title-content2{
+    font-size: 16px;
+    vertical-align: middle !important;
+  }
+

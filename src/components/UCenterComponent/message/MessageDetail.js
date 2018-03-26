@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'dva/router';
 import '../../../assets/MessageDetail/messageDetail.scss';
-import {isOrNot} from '../../../services/api.js';
 import {STATION_MESSAGE} from '../../../common/pagePath';
 import {message} from "antd/lib/index";
 import moment from 'moment';
@@ -29,6 +28,8 @@ export default class MessageDetail extends React.Component {
       this.setState({
         messageData:response.data,
       })
+    }else {
+      message.error(response.msg);
     }
 
   }

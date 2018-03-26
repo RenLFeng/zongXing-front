@@ -4,7 +4,7 @@ import '../../assets/MessageList/messageList.scss';
 import {getPlantNotice, getOPlantNotice} from '../../services/api.js';
 import moment from 'moment';
 import {STATION_MESSAGE} from '../../common/pagePath';
-import {pageShows} from '../../common/systemParam';
+import {pageShows} from '../../common/systemParam';  //分页组件
 
 export default class NoticeList extends React.Component {
   constructor(props) {
@@ -132,7 +132,7 @@ export default class NoticeList extends React.Component {
           <div className="mask" onClick={()=>{this.setState({showMask:false})}}>
             <div className="mask_content">
               <div className="mask_title">
-                <p className="p1">{detail.ftitle}<p className="p2">{moment(detail.fpublishTime).format('YYYY-MM-DD HH-mm-ss')}</p></p >
+                <p className="p1">{detail.ftitle}<p className="p2">{moment(detail.fpublishTime).format('YYYY-MM-DD HH:mm:ss')}</p></p >
               </div>
               <div className="mask_word">
                 <p className="mask_word1">尊敬的众借帮客户，您好！</p>
