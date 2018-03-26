@@ -132,7 +132,6 @@ export default class PersonAccount extends React.Component {
           }
         }]
       },
-      // 是否已经开户的标识 TODO: 需要存在redux中获取
     };
     this.jumpRecharge = this.jumpRecharge.bind(this);
   }
@@ -329,7 +328,6 @@ export default class PersonAccount extends React.Component {
                 this.props.personal.accountDynamicVos.map((data,index) => {
                   let year_ = moment(data.time).format('YYYY');
                   let month = moment(data.time).format('MM-DD');
-                  console.log(typeof data.inMoney);
                   return(
                     <div className="item" key={index}>
                       <p className="date">
