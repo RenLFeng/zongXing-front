@@ -1,7 +1,7 @@
 //保留小数位并且千分位
 String.prototype.fm = function (n) {
   try{
-    if(!n){
+    if(!n && n!==0){
        n=2;
     }
     var s = this;
@@ -29,6 +29,17 @@ String.prototype.fm = function (n) {
     console.log(err);
     return "";
   }
+}
+// 千分位不保留，小数
+Number.prototype.fmm = function(num) {
+  var result = [ ], counter = 0;
+  num = (this || 0).toString().split('');
+  for (var i = num.length - 1; i >= 0; i--) {
+    counter++;
+    result.unshift(num[i]);
+    if (!(counter % 3) && i != 0) { result.unshift(','); }
+  }
+  return result.join('');
 }
 
 String.prototype.trim = function () {

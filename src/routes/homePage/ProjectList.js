@@ -83,7 +83,7 @@ export default class ProjectList extends React.Component {
                     <div className="pic_box"><img className="pic" src={`${IMG_BASE_URL}/${data.fCardPicPath}`} /></div>
                     <p className="name">{data.fName}</p>
                     <div className="circle" data-value={data.fPercent}/>
-                    <i className="price">￥{data.fCreditMoney}</i>
+                    <i className="price">￥{data.fCreditMoney.fmm()}</i>
                     <i className="city">{data.fCityName}</i>
                     <div className="line" />
                     <i className="botic botic1">年化利率<em>{data.fRateLast}%</em></i>

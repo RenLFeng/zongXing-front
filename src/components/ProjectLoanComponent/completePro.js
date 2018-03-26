@@ -39,7 +39,7 @@ export default class CompletePro extends React.Component {
                   <div className="pic_box"><img className="pic" src={`${IMG_BASE_URL}/${data.fCardPicPath}`}/></div>
                   <p className="name">{data.fName}</p>
                   <div className="circle" data-value="100"/>
-                  <i className="price">￥{data.fCreditMoney}</i>
+                  <i className="price">￥{data.fCreditMoney.fmm()}</i>
                   <i className="city"><span className="high">{data.fcreditMonth}<i>借款期限</i></span>个月 | {data.fCityName}</i>
                   <div className="line"/>
                   <i className="botic botic1">年化利率<em>{data.fRateLast}%</em></i>

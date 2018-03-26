@@ -26,7 +26,7 @@ export default class HowInvest extends React.Component {
           <div className="w">
             <a className="btn "
                onClick={()=>{
-                 $(window).scrollTop(0);
+                 $("#fix").removeClass('fix');
                  this.props.history.push(Path.PROJECT_LIST)}}><i>我要投资</i></a>
           </div>
         </div>

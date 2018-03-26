@@ -23,7 +23,6 @@ export default class PieReact extends React.Component {
   }
 
   componentDidMount() {
-    console.log(1232213)
     this.initPie()
   }
 
