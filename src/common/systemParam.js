@@ -96,7 +96,7 @@ const HOURS_SECONDS = 3600;
 const MIN_SECONDS = 60;
 //验证码冷却时间
 export const AUTH_CODE_TIME = 120;
-export const AUTH_CODE_TIME_ = 10;
+export const AUTH_CODE_TIME_ = 60;
 //已完成项目的一页显示个数
 export const COMPLETE_PAGE_SIZE = 8;
 // 正在筹款项目一页显示个数
