@@ -476,4 +476,12 @@ export async function getSiteNotice(param, params) {
   return request(`${BASE_URL}/zjb-manage/notice/getPlatNotice?pageIndex=${param}&pageSize=${params}`);
 }
 
+//查询我的投资列表
+export async function getMyInvestment(params) {
+  return request(`${BASE_URL}/zjb-website/invRecord/MyInvRecord`, {
+    method:'POST',
+    body: {...params}
+  });
+}
+
 

@@ -82,8 +82,6 @@ export default class FormProject extends React.Component {
       const response = await Investment(data);
       this.setState({loading: false});
       if (response.code === 0) {
-
-
         this.setState({
           data: response.data,
           loading: false

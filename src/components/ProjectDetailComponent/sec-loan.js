@@ -93,7 +93,7 @@ export default class SecLoan extends React.Component {
               );
             }
           }): null}
-          {project.riskItems?
+          {project.riskItems && project.riskItems.length > 0?
             <div className="textbox border">
               <i className="tit">平台认证</i>
               <div className="tagbox" style={{marginTop: -10}}>

@@ -74,7 +74,14 @@ export const TEL_PHONE = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
 // 银行卡号正则
 export const BANK_CARD = /^([1-9]{1})(\d{16}|d{17}|\d{18}|d{19})$/;
 
-
+//  我的投资状态列表
+export const MY_INCOME_STATUS = {
+  '10': '投标中',
+  '12': '还款中',
+  '-4': '还款异常',
+  '13': '已结清',
+  '-1': '已流标',
+};
 
 // 带小数点的正则验证
 export const MONEY_REG = /^\d+(\.\d+)?$/;

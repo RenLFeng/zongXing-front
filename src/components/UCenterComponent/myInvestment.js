@@ -1,9 +1,10 @@
 import React from 'react';
 import {Icon, message, Table, Button, Checkbox, Dropdown, Menu} from 'antd';
 import '../../assets/myInvest/myInvest.scss';
-import {getPlantNotice, getOPlantNotice} from '../../services/api.js';
+import {getPlantNotice, getOPlantNotice, getMyInvestment} from '../../services/api.js';
 import moment from 'moment';
-import {pageShows} from '../../common/systemParam';  //分页组件
+import {pageShows, MY_INCOME_STATUS} from '../../common/systemParam';  //分页组件
+import Path from '../../common/pagePath';
 
 export default class MyInvestment extends React.Component {
   constructor(props) {
@@ -13,28 +14,32 @@ export default class MyInvestment extends React.Component {
       pageSize: 5,    //每页可显示的消息条数
       maxPage: 0,     //最大页
       arr: [],
-      showMask:false,
-      detail:'',
-      num:0,  //总条数
-      pageIndex:1,
+      flag: null, // 我的投资状态查询列表
+      showText: '更多状态'
     }
   }
 
   componentDidMount() {
-    // this.getPlantNotice(1);  //调用请求
+    this.getMyinvestAjax(1);  //调用请求
   }
 
-  //获取公告列表
-  async getPlantNotice(page) {
-    const response = await getPlantNotice(page,this.state.pageSize);
+  //获取我的投资列表
+  async getMyinvestAjax(page) {
+    const response = await getMyInvestment({
+      pageParam: {
+        pageSize: this.state.pageSize,
+        pageCurrent: page
+      },
+      flag: this.state.flag
+    });
     console.log(response);
     if(response.code ===0){
-      const maxPage = Math.ceil(response.data.itemCount / this.state.pageSize);
+      const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
       this.setState({
         maxPage: maxPage,
-        pageIndex: page,
-        arr:response.data.notices,
-        num:response.data.notices.length,
+        pageCurrent: page,
+        arr:response.data.infoList,
+        num:response.data.totalNumber,
       })
     }  else {
       message.error(response.msg);
@@ -55,15 +60,35 @@ export default class MyInvestment extends React.Component {
     }
   }
 
+  // 根据选择的状态切换数据
+  changeStatus(key) {
+    this.setState({
+      showText: MY_INCOME_STATUS[key],
+      flag: key
+    }, ()=>{
+      this.getMyinvestAjax(1);
+    })
+  }
+
+  // 搜索所有状态的我的投资
+  searchAll() {
+    this.setState({
+      showText: '更多状态',
+      flag: null
+    }, ()=>{
+      this.getMyinvestAjax(1);
+    })
+  }
+
   render() {
     const { arr,showMask,detail } = this.state;
-    const page_num = pageShows(this.state.pageIndex, this.state.maxPage);
-    const menu = (<Menu onClick={()=>{}}>
-      <Menu.Item key="1">投标中</Menu.Item>
-      <Menu.Item key="2">还款中</Menu.Item>
-      <Menu.Item key="3">还款异常</Menu.Item>
-      <Menu.Item key="4">已结清</Menu.Item>
-      <Menu.Item key="5">已流标</Menu.Item>
+    const page_num = pageShows(this.state.pageCurrent, this.state.maxPage);
+    const menu = (<Menu onClick={(e)=>{this.changeStatus(e.key)}}>
+      {Object.keys(MY_INCOME_STATUS).map((data)=> {
+        return (
+          <Menu.Item key={data}>{MY_INCOME_STATUS[data]}</Menu.Item>
+        );
+      })}
     </Menu>);
     return (
       <div className="fr uc-rbody" >
@@ -72,10 +97,10 @@ export default class MyInvestment extends React.Component {
         </div>
         <div className="content_">
           <div className="btns_myInvest">
-            <Button>所有</Button>
+            <Button onClick={()=>this.searchAll()}>所有</Button>
             <Dropdown overlay={menu}>
               <Button>
-                选择状态 <Icon type="down" />
+                {this.state.showText}<Icon type="down" />
               </Button>
             </Dropdown>
           </div>
@@ -89,16 +114,21 @@ export default class MyInvestment extends React.Component {
                 <span className="investList_time">时间</span>
                 <span className="investList_operation">操作</span>
               </li>
-              <li className="investList">
-                <span className="investList_no">no4531545646</span>
-                <span className="investList_title">这是一个很好的项的项目的目的撒点撒大师</span>
-                <span className="investList_money" style={{textAlign: 'right'}}>{'123'.fm()}</span>
-                <span className="investList_status">流标</span>
-                <span className="investList_time">2018-01-10 15：00</span>
-                <span className="investList_operation"><a style={{color: 'blue'}}>查看</a></span>
-              </li>
-
-
+              { this.state.arr.map((data)=> {
+                  return (
+                    <li className="investList">
+                      <span className="investList_no">{data.finv_no}</span>
+                      <span className="investList_title">{data.fname}</span>
+                      <span className="investList_money" style={{textAlign: 'right'}}>{`${data.fmoney}`.fm()}</span>
+                      <span className="investList_status">{MY_INCOME_STATUS[`${data.fflag}`]}</span>
+                      <span className="investList_time">{moment(data.ftime).format('YYYY-MM-DD HH:mm')}</span>
+                      <span className="investList_operation"><a style={{color: 'blue'}} onClick={() => {
+                        this.props.history.push(Path.INCOME_PLAN)
+                      }}>查看</a></span>
+                    </li>
+                  );
+                })
+              }
               <li className="footer_">
                 <span>共<i>{this.state.num}</i>项</span>
                 <div className="box_">

@@ -18,6 +18,7 @@ export default {
   COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
   NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
   MY_INVEST: '/index/uCenter/myInvest', //站内公告列表
+  INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //站内公告列表
 
 
   NOTICE_DETAIL: '/infor/plantNotice', //平台公告页面
