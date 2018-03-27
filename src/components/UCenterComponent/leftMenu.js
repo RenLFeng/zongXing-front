@@ -43,7 +43,7 @@ export default class LeftMenu extends React.Component {
           </p>
           <div className="nav">
             <ul>
-              <li><a>我的投资</a></li>
+              <li><Link className={path.indexOf(Path.MY_INVEST) ===-1?'':'hover'} to={Path.MY_INVEST}>我的投资</Link></li>
               <li><a>投资统计</a></li>
               <li><a>投资总览</a></li>
             </ul>
