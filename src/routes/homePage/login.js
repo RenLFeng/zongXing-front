@@ -132,10 +132,6 @@ export default class Login extends React.Component {
       this.setState({codeNameErr1: '手机号/用户名不能为空'});
       return;
     }
-    if (!VER_PHONE.test(loginName)) {
-      this.setState({codeNameErr1: '请输入正确的手机号'});
-      return;
-    }
 
     this.setState({codeNameErr1: ''});
     // 发送验证码的时间存在本地
@@ -153,10 +149,8 @@ export default class Login extends React.Component {
           mobile: response.data,
           flagShow: true,
         });
-        console.log(this.state.mobile);
       } else {
         message.error(response.msg);
-        // this.setState({codeNameErr1:'该用户名/手机号不存在'});
         return;
       }
     } catch (e) {
