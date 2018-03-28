@@ -4,7 +4,7 @@ import { Icon, Form, Modal, Input, message, Row, Col, Button} from 'antd';
 import { Link } from 'dva/router';
 import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE} from '../../common/systemParam';
 import { connect } from 'dva';
-import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode} from '../../services/api';
+import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState,closeAuthorization} from '../../services/api';
 import Path from '../../common/pagePath';
 
 
@@ -44,6 +44,14 @@ export default class SafeCenter extends React.Component {
       getCodeMobile: '',
       regPhoneErr: '',  //注册手机号提示
       regAuthErr: '', //验证码提示
+
+      distribution:{},  //授权表单数据
+      url:'',     //提交表单乾多多链接
+      status:'',  //投标状态
+      loading:false,
+
+      // data:{},  //取消授权
+      // closeUrl:'',
     };
     this.countDownFun = null;
     this.countDownFun_ = null;
@@ -62,6 +70,8 @@ export default class SafeCenter extends React.Component {
     if (this.countDownFun_) {
       clearInterval(this.countDownFun_);
     }
+
+    this.getAuthorizationState();
   }
 
   // 初始化安全中心首页数据
@@ -260,74 +270,240 @@ export default class SafeCenter extends React.Component {
     });
   };
 
+//授权
+  async getDistribution(type) {
+    this.setState({loading:true});
+    const response = await distribution(type,'');
+    this.setState({loading:false});
+    if(response.code === 0){
+      this.setState({
+        distribution:response.data.param,
+        url:response.data,
+      },()=>{
+        this.formId.submit();
+      });
+    }else {
+      response.msg && message.error(response.msg);
+    }
+  }
 
+
+  //查询授权状态  1:自动投标，2：自动还款，3：二次分配自动通过
+  async getAuthorizationState(){
+    const response = await authorizationState('');
+    console.log(response);
+    if(response.code === 0){
+      this.setState({
+        state:response.data,
+      })
+    }
+
+  }
+
+  //关闭授权
+  async CloseAuthorization(type){
+    const response = await closeAuthorization(type,'');
+    console.log(response);
+    if(response.code === 0){
+      this.setState({
+        distribution:response.data.param,
+        url:response.data,
+      },()=>{
+        this.formId.submit();
+      });
+    }
+
+  }
 
   render() {
-    const {match, safeData} = this.props;
+    const {distribution,url,status} = this.state;
+    const { safeData} = this.props;
     return (
-      <div className="fr uc-rbody">
-        <div className="safeCenter">
-          <div className="tab-row">
-            <div><span>实名认证</span></div>
-            <div>{!!safeData.userSecurityCenter.fCertification?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fRealName? safeData.fRealName: ''} {safeData.fIdcardNo?`(${safeData.fIdcardNo})`: null}</span></div>
-            <div>{!!safeData.userSecurityCenter.fCertification?null:<Link to={Path.OPEN_ACCOUNT+'/0'}>认证</Link>}</div>
+      <div>
+        <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{display:'none'}}>
+          <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId?distribution.moneymoremoreId:''}/>
+          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore?distribution.platformMoneymoremore:''}/>
+          <input id="AuthorizeTypeOpen" name="AuthorizeTypeOpen" value={distribution.authorizeTypeOpen?distribution.authorizeTypeOpen:''}/>
+          <input id="AuthorizeTypeClose" name="AuthorizeTypeClose" value={distribution.authorizeTypeClose?distribution.authorizeTypeClose:''}/>
+          <input id="RandomTimeStamp" name="RandomTimeStamp" value={distribution.randomTimeStamp?distribution.randomTimeStamp:''}/>
+          <input id="Remark1" name="Remark1" value={distribution.remark1?distribution.remark1:''}/>
+          <input id="Remark2" name="Remark2" value={distribution.remark2?distribution.remark2:''}/>
+          <input id="Remark3" name="Remark3" value={distribution.remark3?distribution.remark3:''}/>
+          <input id="ReturnURL" name="ReturnURL" value={distribution.returnURL?distribution.returnURL:''} />
+          <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
+          <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
+        </form>
+
+        <div className="fr uc-rbody">
+          <div className="safeCenter">
+            <p>安全中心</p>
+            <div className="line">
+              <div className="block1">
+                {
+                  !!safeData.userSecurityCenter.fCertification?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                }
+
+                <span className="word">实名认证</span>
+                {
+                  !!safeData.userSecurityCenter.fCertification?<span className="icon">V</span>:<span className="icon1">V</span>
+                }
+              </div>
+              <div className="block2">{!!safeData.userSecurityCenter.fCertification?`您认证的实名信息：${safeData.fRealName}`:'您还未实名认证，请尽快去认证'}</div>
+              <div className="block3">{!!safeData.userSecurityCenter.fCertification?'已认证':<Link to={Path.OPEN_ACCOUNT+'/0'}>认证</Link>}</div>
+            </div>
+
+            <div className="line">
+              <div className="block1">
+                {
+                  !!safeData.userSecurityCenter.fThirdAccount?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                }
+                <span className="word">第三方开户</span>
+                {
+                  !!safeData.userSecurityCenter.fThirdAccount?<span className="icon">V</span>:<span className="icon1">V</span>
+                }
+              </div>
+              <div className="block2">{!!safeData.userSecurityCenter.fThirdAccount?'您已开通第三方开户，此信息不可更改':'您还未验证第三方开户，建议您尽快去开通'}</div>
+              <div className="block3">{!!safeData.userSecurityCenter.fThirdAccount?'已开通':<Link to={Path.OPEN_ACCOUNT+'/0'}>开通</Link>}</div>
+            </div>
+
+            <div className="line">
+              <div className="block1">
+                {
+                  !!safeData.userSecurityCenter.fMobileBinding?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                }
+
+                <span className="word">手机绑定</span>
+                {
+                  !!safeData.userSecurityCenter.fMobileBinding?<span className="icon">V</span>:<span className="icon1">V</span>
+                }
+              </div>
+              <div className="block2">{!!safeData.userSecurityCenter.fMobileBinding?`您验证的手机：${safeData.fMobile}   若已丢失或停用，请立即更换`:'您还未手机绑定，为了您的账户安全，建议您尽快完成手机绑定'}</div>
+              <div className="block3">{!!safeData.userSecurityCenter.fMobileBinding?<a onClick={()=>this.setState({phoneAuth: true})}>修改</a>:'认证'}</div>
+            </div>
+
+            <div className="line">
+              <div className="block1">
+                {
+                  !!safeData.userSecurityCenter.fEmailBinding?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                }
+                <span className="word">邮箱绑定</span>
+                {
+                  !!safeData.userSecurityCenter.fEmailBinding?<span className="icon">V</span>:<span className="icon1">V</span>
+                }
+              </div>
+              <div className="block2">{!!safeData.userSecurityCenter.fEmailBinding?`您验证的邮箱：${safeData.fEmail}`:'您还未邮箱绑定，为了您的账户安全，建议您尽快完成邮箱绑定'}</div>
+              <div className="block3">{!!safeData.userSecurityCenter.fEmailBinding?'修改':<a onClick={()=>this.setState({emailAuth: true})}>认证</a>}</div>
+            </div>
+
+            <NameAuth
+              ref={(ref)=>this.nameForm = ref}
+              visible={this.state.nameAuth}
+              onCancel={this.handleCancel}
+              onCreate={this.changeNameAuth}
+            />
+            <PhoneAuth
+              ref={(ref)=>this.phoneForm = ref}
+              visible={this.state.phoneAuth}
+              onCancel={this.handleCancel}
+              onCreate={this.changePhoneAuth}
+              token_={this.state.token_}
+              getOldCode={()=> this.getOldCode(this.state.token_)}
+              loading={this.state.loading}
+              countDown={this.state.countDown}
+              showAuthCode={this.state.showAuthCode}
+            />
+            <EmailAuth
+              ref={(ref)=>this.emailForm = ref}
+              visible={this.state.emailAuth}
+              onCancel={this.handleCancel}
+              onCreate={this.changeEmailAuth}
+            />
+            <ChangePhoneAuth
+              ref={(ref)=>this.changePhoneAuthForm = ref}
+              visible={this.state.changePhoneAuth}
+              onCancel={this.handleCancel_}
+              onCreate={this.changePhoneAuth_}
+              getNewCode={()=> this.getNewCode_()}
+              loading={this.state.loading}
+              getCodeNum={(val) => this.getCodeNum(val)}
+              countDown_={this.state.countDown_}
+              showAuthCode_={this.state.showAuthCode_}
+              getCodeMobile={this.state.getCodeMobile}
+            />
           </div>
-          <div className="tab-row">
-            <div><span>第三方开户</span></div>
-            <div>{!!safeData.userSecurityCenter.fThirdAccount?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fThirdAccountName?safeData.fThirdAccountName: ''}</span></div>
-            <div>{!!safeData.userSecurityCenter.fThirdAccount?null:<Link to={Path.OPEN_ACCOUNT+'/0'}>开通</Link>}</div>
+
+        </div>
+
+        <div className="fr uc-rbody" style={{marginTop:28}} >
+          <div className="safeCenter">
+            <p>乾多多授权</p>
+            <div className="line">
+              <div className="block1">
+                {
+                  status.indexOf('3') !== -1 ? <Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                }
+                <span className="word">二次分配授权</span>
+                {
+                  status.indexOf('3') !== -1 ? <span className="icon">V</span>:<span className="icon1">V</span>
+                }
+              </div>
+              <div className="block2">{status.indexOf('3') !== -1?'您已授权二次分配':'您还未授权二次分配，建议您尽快授权'}</div>
+              <div className="block3">{status.indexOf('3') !== -1?<Button onClick={()=>this.CloseAuthorization(3)}>取消授权</Button>:<Button onClick={()=>this.getDistribution(3)}>立即启用</Button>}</div>
+            </div>
+
+            <div className="line">
+              <div className="block1">
+                {
+                  status.indexOf('2') !== -1?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                }
+                <span className="word">自动还款授权</span>
+                {
+                  status.indexOf('2') !== -1?<span className="icon">V</span>:<span className="icon1">V</span>
+                }
+              </div>
+              <div className="block2">{status.indexOf('2') !== -1?'您已授权自动还款':'您还未授权自动还款，建议您尽快授权'}</div>
+              <div className="block3">{status.indexOf('2') !== -1?<Button onClick={()=>this.getDistribution(2)}>立即启用</Button>:<Button onClick={()=>this.CloseAuthorization(2)}>取消授权</Button>}</div>
+            </div>
+
+            <NameAuth
+              ref={(ref)=>this.nameForm = ref}
+              visible={this.state.nameAuth}
+              onCancel={this.handleCancel}
+              onCreate={this.changeNameAuth}
+            />
+            <PhoneAuth
+              ref={(ref)=>this.phoneForm = ref}
+              visible={this.state.phoneAuth}
+              onCancel={this.handleCancel}
+              onCreate={this.changePhoneAuth}
+              token_={this.state.token_}
+              getOldCode={()=> this.getOldCode(this.state.token_)}
+              loading={this.state.loading}
+              countDown={this.state.countDown}
+              showAuthCode={this.state.showAuthCode}
+            />
+            <EmailAuth
+              ref={(ref)=>this.emailForm = ref}
+              visible={this.state.emailAuth}
+              onCancel={this.handleCancel}
+              onCreate={this.changeEmailAuth}
+            />
+            <ChangePhoneAuth
+              ref={(ref)=>this.changePhoneAuthForm = ref}
+              visible={this.state.changePhoneAuth}
+              onCancel={this.handleCancel_}
+              onCreate={this.changePhoneAuth_}
+              getNewCode={()=> this.getNewCode_()}
+              loading={this.state.loading}
+              getCodeNum={(val) => this.getCodeNum(val)}
+              countDown_={this.state.countDown_}
+              showAuthCode_={this.state.showAuthCode_}
+              getCodeMobile={this.state.getCodeMobile}
+            />
           </div>
-          <div className="tab-row">
-            <div><span>手机绑定</span></div>
-            <div>{!!safeData.userSecurityCenter.fMobileBinding?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fMobile? safeData.fMobile: ''}</span></div>
-            <div><a onClick={()=>this.setState({phoneAuth: true})}>修改</a></div>
-          </div>
-          <div className="tab-row">
-            <div><span>邮箱绑定</span></div>
-            <div>{!!safeData.userSecurityCenter.fEmailBinding?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fEmail? safeData.fEmail: ''}</span></div>
-            <div><a onClick={()=>this.setState({emailAuth: true})}>修改</a></div>
-          </div>
-          <NameAuth
-            ref={(ref)=>this.nameForm = ref}
-            visible={this.state.nameAuth}
-            onCancel={this.handleCancel}
-            onCreate={this.changeNameAuth}
-          />
-          <PhoneAuth
-            ref={(ref)=>this.phoneForm = ref}
-            visible={this.state.phoneAuth}
-            onCancel={this.handleCancel}
-            onCreate={this.changePhoneAuth}
-            token_={this.state.token_}
-            getOldCode={()=> this.getOldCode(this.state.token_)}
-            loading={this.state.loading}
-            countDown={this.state.countDown}
-            showAuthCode={this.state.showAuthCode}
-          />
-          <EmailAuth
-            ref={(ref)=>this.emailForm = ref}
-            visible={this.state.emailAuth}
-            onCancel={this.handleCancel}
-            onCreate={this.changeEmailAuth}
-          />
-          <ChangePhoneAuth
-            ref={(ref)=>this.changePhoneAuthForm = ref}
-            visible={this.state.changePhoneAuth}
-            onCancel={this.handleCancel_}
-            onCreate={this.changePhoneAuth_}
-            getNewCode={()=> this.getNewCode_()}
-            loading={this.state.loading}
-            getCodeNum={(val) => this.getCodeNum(val)}
-            countDown_={this.state.countDown_}
-            showAuthCode_={this.state.showAuthCode_}
-            getCodeMobile={this.state.getCodeMobile}
-          />
         </div>
       </div>
+
     );
   }
 }

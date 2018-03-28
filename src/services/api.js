@@ -484,4 +484,19 @@ export async function getMyInvestment(params) {
   });
 }
 
+//二次分配接口
+export async function distribution(param, params) {
+  return request(`${BASE_URL}/zjb-dc/author/open?willStr=${param}&companyNo=${params}`);
+}
+
+//查询授权状态
+export async function authorizationState(param) {
+  return request(`${BASE_URL}/zjb-dc/author/authorized?companyNo=${param}`);
+}
+
+//取消授权
+export async function closeAuthorization(num, companyNo) {
+  return request(`${BASE_URL}/zjb-dc/author/close?willStr=${num}&companyNo=${companyNo}`)
+}
+
 
