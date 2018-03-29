@@ -502,5 +502,14 @@ export async function closeAuthorization(num, companyNo) {
 // 通过金额和项目ID收益计划
 export async function getIncomePlan(projectId, money) {
   return request(`${BASE_URL}/zjb-website/invRecord/getEarPlan?projectId=${projectId}&money=${money}`)
+}//资金动态
+export async function capitalDynamics(params) {
+  return request(`${BASE_URL}/zjb-dc/capital/dynamic`,{
+      method:'POST',
+      body: {
+        ...params
+      }
+    })
 }
+
 
