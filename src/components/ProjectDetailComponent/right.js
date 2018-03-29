@@ -15,7 +15,7 @@ export default class Right extends React.Component {
       accountId: '',
       pageParam:{
         pageCurrent: 1, //当前页，初始值为第一页
-        pageSize: 1,    //每页可显示的消息条数
+        pageSize: 10,    //每页可显示的消息条数
       },
       projectId:'',
       arr:[],
@@ -151,7 +151,6 @@ export default class Right extends React.Component {
         <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} />
         <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney}
                        accountId={this.state.accountId}/>
-
       </div>
     );
   }

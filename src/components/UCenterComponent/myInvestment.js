@@ -116,7 +116,7 @@ export default class MyInvestment extends React.Component {
               </li>
               { this.state.arr.map((data)=> {
                   return (
-                    <li className="investList">
+                    <li className="investList" key={data.finv_no}>
                       <span className="investList_no">{data.finv_no}</span>
                       <span className="investList_title">{data.fname}</span>
                       <span className="investList_money" style={{textAlign: 'right'}}>{`${data.fmoney}`.fm()}</span>
