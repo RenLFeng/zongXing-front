@@ -294,7 +294,7 @@ export default class SafeCenter extends React.Component {
     console.log(response);
     if(response.code === 0){
       this.setState({
-        state:response.data,
+        status:response.data,
       })
     }
 
@@ -462,7 +462,7 @@ export default class SafeCenter extends React.Component {
                 }
               </div>
               <div className="block2">{status.indexOf('2') !== -1?'您已授权自动还款':'您还未授权自动还款，建议您尽快授权'}</div>
-              <div className="block3">{status.indexOf('2') !== -1?<Button onClick={()=>this.getDistribution(2)}>立即启用</Button>:<Button onClick={()=>this.CloseAuthorization(2)}>取消授权</Button>}</div>
+              <div className="block3">{status.indexOf('2') !== -1?<Button onClick={()=>this.CloseAuthorization(2)}>取消授权</Button>:<Button onClick={()=>this.getDistribution(2)}>立即启用</Button>}</div>
             </div>
 
             <NameAuth

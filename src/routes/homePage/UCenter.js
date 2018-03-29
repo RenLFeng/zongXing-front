@@ -60,9 +60,9 @@ export default class UCenter extends React.Component {
             </div>
             <div className="fr">
               <p>
-                <i>上次登录时间：<b>2018-01-12</b></i>
-                <i>IP：<b>140.22.33.101</b></i>
-                <i>地点：<b>北京</b></i>
+                {/*<i>上次登录时间：<b>2018-01-12</b></i>*/}
+                {/*<i>IP：<b>140.22.33.101</b></i>*/}
+                {/*<i>地点：<b>北京</b></i>*/}
                 <a style={{color: 'blue'}} onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a>
               </p>
             </div>

@@ -1,9 +1,9 @@
 import React from 'react';
 import {Icon, message, Row, Col} from 'antd';
 import '../../assets/myInvest/income.scss';
-import { getPlantNotice, getOPlantNotice, getMyInvestment } from '../../services/api.js';
+import { getIncomePlan } from '../../services/api.js';
 import moment from 'moment';
-import {pageShows} from '../../common/systemParam';  //分页组件
+
 
 
 
@@ -11,51 +11,54 @@ export default class IncomePlan extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageCurrent: 1, //当前页，初始值为第一页
-      pageSize: 5,    //每页可显示的消息条数
-      maxPage: 0,     //最大页
-      arr: [],
-      showMask:false,
-      detail:'',
-      num:0,  //总条数
-      pageIndex:1,
+      incomeList: [],
+      principal: 0, //本金
+      total_money: 0, //本金加利息
+      earnings: 0, //利息
     }
   }
 
   componentDidMount() {
-    this.getMyinvestAjax(this.state.pageCurrent);
-  }
-
-  //获取我的投资列表
-  async getMyinvestAjax(page) {
-    const response = await getMyInvestment(page,this.state.pageSize);
-    console.log(response);
-    if(response.code ===0){
-      const maxPage = Math.ceil(response.data.itemCount / this.state.pageSize);
-      this.setState({
-        maxPage: maxPage,
-        pageIndex: page,
-        arr:response.data.notices,
-        num:response.data.notices.length,
-      })
-    }  else {
-      message.error(response.msg);
+    try {
+      // 从上个页面获取 projectId 和要计算的金额
+      let projectId = this.props.history.location.query.projectId;
+      let money = this.props.history.location.query.money;
+      // 调取接口
+      this.getIncomeAjax({projectId, money});
+    } catch(e) {
+      // 刷新页面会拿不到projectId， money所以需要跳转页面回去
+      this.props.history.push('/index/uCenter/myInvest');
     }
   }
 
-//获取单个公告
-  async getOPlantNotice(id) {
-    this.setState({
-      showMask:true
-    });
-    const response = await getOPlantNotice(id);
-    console.log(response);
-    if(response.code ===0){
-      this.setState({
-        detail:response.data,
-      })
+  // 获取收益计划接口
+  async getIncomeAjax({projectId, money}) {
+    const response = await getIncomePlan(projectId, money);
+    if (response.code === 0) {
+      if (response.data && Array.isArray(response.data)) {
+        let principal= 0; //总本金
+        let earnings= 0;// 利息
+        let total_money= 0; //收益总金额
+        // 计算总值
+        for (let obj of response.data) {
+          principal = principal.add(obj.principal);
+          earnings = earnings.add(obj.earnings);
+          total_money = total_money.add(obj.total_money);
+        }
+        this.setState({
+          principal,
+          earnings,
+          total_money,
+          incomeList: response.data
+        })
+      }
+      console.log(response);
+    } else {
+      response.msg && message.error(response.msg);
     }
   }
+
+
 
   render() {
     const { arr,showMask,detail } = this.state;
@@ -70,13 +73,13 @@ export default class IncomePlan extends React.Component {
         <div className="content_">
           <Row style={{marginBottom: 20}}>
             <Col span={8} style={{textAlign: 'center'}}>
-              <b style={{fontSize: 16}}>总本金&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>10.00</b></b>
+              <b style={{fontSize: 16}}>总本金&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.principal}`.fm()}</b></b>
             </Col>
             <Col span={8} style={{textAlign: 'center'}}>
-              <b style={{fontSize: 16}}>总收益&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>10.00</b></b>
+              <b style={{fontSize: 16}}>总收益&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.total_money}`.fm()}</b></b>
             </Col>
             <Col span={8} style={{textAlign: 'center'}}>
-              <b style={{fontSize: 16}}>总利息&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>10.00</b></b>
+              <b style={{fontSize: 16}}>总利息&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.earnings}`.fm()}</b></b>
             </Col>
           </Row>
           <div className="investGroup">
@@ -87,12 +90,17 @@ export default class IncomePlan extends React.Component {
                 <span className="income_capital">本金</span>
                 <span className="income_Interest">利息</span>
               </li>
-              <li className="investList">
-                <span className="income_num">第<b style={{color: '#FF9900'}}>1</b>期</span>
-                <span className="income_get"><b style={{color: '#FF9900'}}>10.00</b></span>
-                <span className="income_capital"><b style={{color: '#FF9900'}}>10.00</b></span>
-                <span className="income_Interest"><b style={{color: '#FF9900'}}>10.00</b></span>
-              </li>
+              {
+                this.state.incomeList.map((data,index)=> (
+                  <li className="investList" key={index}>
+                    <span className="income_num">{data.earningsDate}</span>
+                    <span className="income_get"><b style={{color: '#FF9900'}}>{`${data.total_money}`.fm()}</b></span>
+                    <span className="income_capital"><b style={{color: '#FF9900'}}>{`${data.principal}`.fm()}</b></span>
+                    <span className="income_Interest"><b style={{color: '#FF9900'}}>{`${data.earnings}`.fm()}</b></span>
+                  </li>
+                ))
+              }
+
             </ul>
           </div>
         </div>

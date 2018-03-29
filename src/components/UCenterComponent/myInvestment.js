@@ -122,9 +122,13 @@ export default class MyInvestment extends React.Component {
                       <span className="investList_money" style={{textAlign: 'right'}}>{`${data.fmoney}`.fm()}</span>
                       <span className="investList_status">{MY_INCOME_STATUS[`${data.fflag}`]}</span>
                       <span className="investList_time">{moment(data.ftime).format('YYYY-MM-DD HH:mm')}</span>
-                      <span className="investList_operation"><a style={{color: 'blue'}} onClick={() => {
-                        this.props.history.push(Path.INCOME_PLAN)
-                      }}>查看</a></span>
+                      <span className="investList_operation">
+                        <a style={{color: 'blue'}}
+                           onClick={() => {
+                             this.props.history.push({pathname: Path.INCOME_PLAN,  query:{projectId: data.fproject_id, money: data.fmoney}})}}
+                        >
+                          查看</a>
+                      </span>
                     </li>
                   );
                 })
