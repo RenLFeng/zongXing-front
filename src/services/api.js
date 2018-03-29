@@ -499,4 +499,14 @@ export async function closeAuthorization(num, companyNo) {
   return request(`${BASE_URL}/zjb-dc/author/close?willStr=${num}&companyNo=${companyNo}`)
 }
 
+//资金动态
+export async function capitalDynamics(params) {
+  return request(`${BASE_URL}/zjb-dc/capital/dynamic`,{
+      method:'POST',
+      body: {
+        ...params
+      }
+    })
+}
+
 

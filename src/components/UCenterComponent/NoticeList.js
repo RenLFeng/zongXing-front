@@ -63,6 +63,7 @@ export default class NoticeList extends React.Component {
         <div className="title">
           <span className="title1">站内公告</span>
         </div>
+
         <div className="content_">
           <div className="messageGroup">
             <ul >

@@ -23,6 +23,7 @@ import LoanList from '../../components/UCenterComponent/loanList';
 import CompanyList from '../../components/UCenterComponent/companyList';
 
 import Path from '../../common/pagePath';
+import MoreInfo from "../../components/UCenterComponent/moreInfo";
 
 @connect((state) => ({
   nickName: state.login.nickName
@@ -71,7 +72,7 @@ export default class UCenter extends React.Component {
         <div className="w clearfix">
           <LeftMenu param={this.props}/>
           <Switch>
-            <Route path={Path.PERSONAL_ACCOUNT} component={PersonAccount} />
+            <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
             <Route path={Path.USER_BASIC} component={UserBasic} />
             <Route path={Path.OPEN_ACCOUNT+'/:type'} component={OpenAccount} />
             <Route path={Path.COMPANY_ACCOUNT} component={CompanyAccount} />
@@ -86,6 +87,7 @@ export default class UCenter extends React.Component {
             <Route path={Path.NOTICE_LIST} component={NoticeList} />
             <Route path={Path.MY_INVEST} exact component={MyInvestList} />
             <Route path={Path.INCOME_PLAN} component={IncomePlan} />
+            <Route path={Path.MORE_INFO}  component={MoreInfo} />
           </Switch>
         </div>
       </div>

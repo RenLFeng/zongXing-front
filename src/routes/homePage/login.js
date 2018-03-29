@@ -259,7 +259,7 @@ export default class Login extends React.Component {
         message2: '',
         loginName: '',
       });
-      alert("密码修改成功！");
+      message.info("密码修改成功！");
     } else {
       message.error(response.msg);
     }

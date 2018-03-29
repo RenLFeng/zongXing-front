@@ -20,6 +20,8 @@ export default {
   MY_INVEST: '/index/uCenter/myInvest', //站内公告列表
   INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //站内公告列表
 
+  MORE_INFO:'/index/uCenter/personAccount/moreInfo',  //资金动态
+
 
   NOTICE_DETAIL: '/infor/plantNotice', //平台公告页面
   RECORD_INFORMATION: '/infor/recordinformation',     //备案信息页面

@@ -6,13 +6,14 @@ import '../../assets/MessageList/messageList.scss';
 import moment from 'moment';
 import Path from '../../common/pagePath';
 import {pageShows, LICENSE, TURN_BACK} from '../../common/systemParam';
-import { getCompanylist,saveCompany, loginCompany, getCompanyByAccount } from '../../services/api';
+import {getCompanylist, saveCompany, loginCompany, getCompanyByAccount, getPlantNotice} from '../../services/api';
 
 export default class LoanList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
+      maxPage:0,
       current: 1,
       total: 0,
       pageSize: 20,
@@ -20,30 +21,6 @@ export default class LoanList extends React.Component {
       visible: false,
       createLoading: false
     };
-    this.colums = [
-      {
-        title: '企业名称',
-        dataIndex: 'fname',
-        key: 'fname'
-      },
-      {
-        title: '统一社会信用代码',
-        dataIndex: 'fsocialCreditCode',
-        key: 'fsocialCreditCode'
-      },
-      {
-        title: '操作',
-        render: (val) => (
-          <div>
-              <a onClick={async () => {
-                {/*localStorage.setItem('companyId', val.fid);*/}
-                {/*window.location.href = `${TURN_BACK}`; // 测试使用*/}
-                window.location.href = `${TURN_BACK}?token=${JSON.parse(localStorage.getItem('accessToken')).webToken}&id=${val.fid}`; // 开发使用
-              }} style={{color: 'blue'}}>进入后台</a>
-          </div>
-        ),
-      },
-    ];
   }
 
   componentDidMount() {
@@ -60,9 +37,12 @@ export default class LoanList extends React.Component {
       this.setState({loading: false});
       console.log(response);
       if (response.code === 0) {
+        const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
         this.setState({
           total: response.data.totalNumber,
-          dataSource: response.data.infoList
+          dataSource: response.data.infoList,
+          maxPage:maxPage,
+          current:page
         });
       } else {
         this.setState({dataSource: []});
@@ -119,26 +99,75 @@ export default class LoanList extends React.Component {
   };
 
   render() {
+    const {dataSource} = this.state;
+    const page_num = pageShows(this.state.current, this.state.maxPage);
     return (
       <div className="fr uc-rbody">
         <Button type="primary" style={{marginBottom: 30}} onClick={()=>this.setState({visible: true})}>新建企业</Button>
-        <Table
-          rowKey={record => record.fid}
-          columns={this.colums}
-          dataSource={this.state.dataSource}
-          pagination={{
-            current: this.state.current,
-            pageSize: this.state.pageSize,
-            total: this.state.total,
-            onChange: (page)=>this.fetchData(page)
-          }}
-          locale={{
-            filterConfirm: '确定',
-            filterReset: '重置',
-            emptyText: '暂无数据'
-          }}
-          loading={this.state.loading}
-        />
+
+        <div className="content_">
+          <div className="messageGroup">
+            <ul >
+              <li className="massageList">
+                <span className="massageListtime">企业名称</span>
+                <span className="massageListtime1">统一社会信用代码</span>
+                <span className="massageListtime2">操作</span>
+              </li>
+
+              {
+                dataSource.map((data)=>{
+                  return(
+                    <li className="massageList" key={data.fid}>
+                      <span className="massageListtime">{data.fname}</span>
+                      <span className="massageListtime1">{data.fsocialCreditCode}</span>
+                      <span className="massageListtime2"><a onClick={async () => {
+                        window.location.href = `${TURN_BACK}?token=${JSON.parse(localStorage.getItem('accessToken')).webToken}&id=${data.fid}`; // 开发使用
+                      }} style={{color: 'blue'}}>进入后台</a></span>
+                    </li>
+                  )
+                })
+              }
+
+              <li className="footer_">
+                <span>共<i>{this.state.total}</i>项</span>
+                <div className="box_">
+                  <div className="pagination">
+                    {page_num.lastPage ?
+                      <a className="num" onClick={() => this.fetchData(this.state.current - 1)}>&lt;</a> :
+                      <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
+                    {page_num.firstPage ?
+                      <a className={`${1 == this.state.current ? 'hover_' : ''}`} onClick={() => this.fetchData(1)}>1</a> :
+                      null}
+                    {page_num.leftEllipsis ?
+                      <a>...</a> :
+                      null}
+                    {page_num.page.map((pageNum) => {
+                      return (
+                        <a key={pageNum} className={`${pageNum * 1 == this.state.current ? 'hover_' : ''}`}
+                           onClick={() => this.fetchData(pageNum)}>{pageNum}</a>
+                      );
+                    })}
+                    {page_num.rightEllipsis ?
+                      <a>...</a> :
+                      null}
+                    {page_num.finalPage ?
+                      <a
+                        className={`${this.state.maxPage == this.state.current ? 'hover_' : ''}`}
+                        onClick={() => this.fetchData(this.state.maxPage)}
+                      >{this.state.maxPage}</a> :
+                      null}
+                    {page_num.nextPage ?
+                      <a className="num" onClick={() => this.fetchData(this.state.current + 1)}>&gt;</a> :
+                      <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>
+                    }
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
         <CreateCompany
           ref={(ref)=>this.createCompany = ref}
           visible={this.state.visible}

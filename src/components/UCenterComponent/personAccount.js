@@ -318,7 +318,7 @@ export default class PersonAccount extends React.Component {
 
         <div className="hd3">
           <a className="fl">资金动态</a>
-          <a className="fr">查看更多 &gt;&gt;</a>
+          <Link className="fr" to={Path.MORE_INFO}>查看更多 &gt;&gt;</Link>
         </div>
         <div>
           <div className="timetree">
