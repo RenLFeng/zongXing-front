@@ -71,6 +71,12 @@ export default {
         },
       });
       localStorage.removeItem('accessToken');
+    },
+    *changeNickName({payload}, { put }) {
+      yield put({
+        type: 'nickName',
+        payload: payload.nickName
+      })
     }
   },
   reducers: {
@@ -91,5 +97,12 @@ export default {
         submitting: false
       };
     },
+    // 修改昵称名称
+    nickName(state, {payload}) {
+      return {
+        ...state,
+        nickName: payload
+      }
+    }
   },
 };

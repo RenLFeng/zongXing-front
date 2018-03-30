@@ -82,28 +82,36 @@ li {
   .massageList {
     border-bottom: 1px solid lightgray;
     width: 94%;
-    height: 45px;
+    min-height: 37px;
+    padding: 9px 0 0;
     margin: auto;
     .massageListTitle {
+      vertical-align: middle;
       width: 14%;
     }
     .massageListTitle1 {
+      vertical-align: middle;
       width: 7%;
     }
     .massageListTitle2 {
+      vertical-align: middle;
       width: 18%;
     }
     .massageListTitle3 {
+      vertical-align: middle;
       width: 17%;
     }
 
     .massageListtime {
+      vertical-align: middle;
       width: 32%;
     }
     .massageListtime1 {
+      vertical-align: middle;
       width: 50%;
     }
     .massageListtime2 {
+      vertical-align: middle;
       width: 17%;
     }
 
@@ -112,7 +120,6 @@ li {
     }
     span {
       display: inline-block;
-      line-height: 45px;
     }
     .massageList_title {
       width: 69%;
