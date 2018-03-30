@@ -105,6 +105,10 @@ li {
     }
     .massageListtime2 {
       width: 17%;
+      a{
+        color:blue;
+        margin-right: 8px;
+      }
     }
 
     .check {
@@ -333,5 +337,24 @@ li {
     .time {
       float: right;
     }
+  }
+}
+
+//修改企业信息input框
+.inp{
+  width:25%;
+  margin-right: 6%;
+}
+.inp1{
+  width:25%;
+  margin-right: 26%;
+}
+.box{
+  border:1px solid red;
+  Input{
+    border:1px solid red;
+  }
+  p{
+    border:1px solid red;
   }
 }

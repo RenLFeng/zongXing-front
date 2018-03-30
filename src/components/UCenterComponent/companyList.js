@@ -3,10 +3,8 @@ import {Icon, message, Table, Badge, Button, Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
 
 import '../../assets/MessageList/messageList.scss';
-import moment from 'moment';
-import Path from '../../common/pagePath';
 import {pageShows, LICENSE, TURN_BACK} from '../../common/systemParam';
-import {getCompanylist, saveCompany, loginCompany, getCompanyByAccount, getPlantNotice} from '../../services/api';
+import {saveCompany, getCompanyByAccount,UpdataOrDele} from '../../services/api';
 
 export default class LoanList extends React.Component {
   constructor(props) {
@@ -19,12 +17,16 @@ export default class LoanList extends React.Component {
       pageSize: 20,
       dataSource: [],
       visible: false,
-      createLoading: false
+      createLoading: false,
+      companyN:'',   //企业名称
+      sCode:'',   //社会代码
+      messages:''  //修改内容时的提示语
     };
   }
 
   componentDidMount() {
     this.fetchData(1);
+
   }
 
   async fetchData(page) {
@@ -98,13 +100,61 @@ export default class LoanList extends React.Component {
     });
   };
 
+  //修改或删除企业列表
+  async UpdataOrDele(id,name,flag,code) {
+    if(name.length === 0){
+      message.error('公司名不能为空');
+      return
+    }
+    if(code.length === 0){
+      message.error('统一社会信用代码不能为空');
+      return
+    }
+    const response = await UpdataOrDele({companyId:id, companyName:name, flag:flag, fsocialCreditCode:code});
+    console.log(response);
+    if(response.code === 0){
+      this.setState({
+        companyN:'',
+        sCode:'',
+      },()=>{
+        this.fetchData(1);
+      })
+      message.info(response.msg);
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
+  change(data) {
+    console.log(data);
+    data.inputStatus = true;
+    this.setState({
+      companyN:data.fname,
+      sCode:data.fsocialCreditCode,
+    })
+    this.forceUpdate();
+
+  }
+
+  changeValue(val){
+    console.log(val);
+   this.setState({
+     companyN:val
+   })
+  }
+
+  changeValue1(val){
+    console.log(val);
+    this.setState({
+      sCode:val
+    })
+  }
   render() {
-    const {dataSource} = this.state;
+    const {dataSource,messages} = this.state;
     const page_num = pageShows(this.state.current, this.state.maxPage);
     return (
       <div className="fr uc-rbody">
         <Button type="primary" style={{marginBottom: 30}} onClick={()=>this.setState({visible: true})}>新建企业</Button>
-
         <div className="content_">
           <div className="messageGroup">
             <ul >
@@ -118,11 +168,26 @@ export default class LoanList extends React.Component {
                 dataSource.map((data)=>{
                   return(
                     <li className="massageList" key={data.fid}>
-                      <span className="massageListtime">{data.fname}</span>
-                      <span className="massageListtime1">{data.fsocialCreditCode}</span>
-                      <span className="massageListtime2"><a onClick={async () => {
+                      {
+                        data.inputStatus? <Input className="inp" defaultValue={data.fname} onChange={(e)=>this.changeValue(e.target.value)}/> :<span className="massageListtime">{data.fname}</span>
+                      }
+                      {
+                        data.inputStatus? <Input className="inp1" defaultValue={data.fsocialCreditCode} onChange={(e)=>this.changeValue1(e.target.value)}/> :  <span className="massageListtime1">{data.fsocialCreditCode}</span>
+                      }
+
+                      <span className="massageListtime2">
+                        <a onClick={async () => {
                         window.location.href = `${TURN_BACK}?token=${JSON.parse(localStorage.getItem('accessToken')).webToken}&id=${data.fid}`; // 开发使用
-                      }} style={{color: 'blue'}}>进入后台</a></span>
+                      }}>进入后台</a>
+                        {
+                          data.fisCertified === "0" ?
+                            <i>
+                              {data.inputStatus ? <a onClick={()=>this.UpdataOrDele(data.fid, this.state.companyN,1, this.state.sCode)}>保存</a>:<a onClick={()=>this.change(data)}>修改</a>}
+
+                            <a onClick={()=>this.UpdataOrDele(data.fid, this.state.companyN,0, this.state.sCode)}>删除</a>
+                           </i> : null
+                        }
+                      </span>
                     </li>
                   )
                 })
@@ -163,7 +228,6 @@ export default class LoanList extends React.Component {
                   </div>
                 </div>
               </li>
-
             </ul>
           </div>
         </div>
