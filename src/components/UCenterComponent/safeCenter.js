@@ -281,7 +281,16 @@ export default class SafeCenter extends React.Component {
         url:response.data,
       },()=>{
         this.formId.submit();
+        Modal.info({
+          title: '提示',
+          content: '请在新页面完成操作,可刷新页面查看结果',
+          okText: '确定',
+          onOk: ()=> {
+            this.getAuthorizationState();
+          },
+        });
       });
+      message.info(response.msg);
     }else {
       response.msg && message.error(response.msg);
     }
@@ -290,12 +299,16 @@ export default class SafeCenter extends React.Component {
 
   //查询授权状态  1:自动投标，2：自动还款，3：二次分配自动通过
   async getAuthorizationState(){
+    this.setState({loading:true});
     const response = await authorizationState('');
+    this.setState({loading:true});
     console.log(response);
     if(response.code === 0){
       this.setState({
         status:response.data,
       })
+    }else {
+      response.msg && message.error(response.msg);
     }
 
   }
@@ -310,7 +323,18 @@ export default class SafeCenter extends React.Component {
         url:response.data,
       },()=>{
         this.formId.submit();
+        Modal.info({
+          title: '提示',
+          content: '请在新页面完成操作,可刷新页面查看结果',
+          okText: '确定',
+          onOk: ()=> {
+            this.getAuthorizationState();
+          },
+        });
       });
+       message.info(response.msg);
+    } else {
+      response.msg && message.error(response.msg);
     }
 
   }
@@ -440,15 +464,15 @@ export default class SafeCenter extends React.Component {
             <div className="line">
               <div className="block1">
                 {
-                  status.indexOf('3') !== -1 ? <Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                  status.indexOf('3') !== -1  ? <Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
                 }
                 <span className="word">二次分配授权</span>
                 {
-                  status.indexOf('3') !== -1 ? <span className="icon">V</span>:<span className="icon1">V</span>
+                  status.indexOf('3') !== -1  ? <span className="icon">V</span>:<span className="icon1">V</span>
                 }
               </div>
-              <div className="block2">{status.indexOf('3') !== -1?'您已授权二次分配':'您还未授权二次分配，建议您尽快授权'}</div>
-              <div className="block3">{status.indexOf('3') !== -1?<Button onClick={()=>this.CloseAuthorization(3)}>取消授权</Button>:<Button onClick={()=>this.getDistribution(3)}>立即启用</Button>}</div>
+              <div className="block2">{status.indexOf('3') !== -1 ?'您已授权二次分配':'您还未授权二次分配，建议您尽快授权'}</div>
+              <div className="block3">{status.indexOf('3') !== -1 ?<Button onClick={()=>this.CloseAuthorization(3)}>取消授权</Button>:<Button onClick={()=>this.getDistribution(3)}>立即启用</Button>}</div>
             </div>
 
             <div className="line">
@@ -465,41 +489,6 @@ export default class SafeCenter extends React.Component {
               <div className="block3">{status.indexOf('2') !== -1?<Button onClick={()=>this.CloseAuthorization(2)}>取消授权</Button>:<Button onClick={()=>this.getDistribution(2)}>立即启用</Button>}</div>
             </div>
 
-            <NameAuth
-              ref={(ref)=>this.nameForm = ref}
-              visible={this.state.nameAuth}
-              onCancel={this.handleCancel}
-              onCreate={this.changeNameAuth}
-            />
-            <PhoneAuth
-              ref={(ref)=>this.phoneForm = ref}
-              visible={this.state.phoneAuth}
-              onCancel={this.handleCancel}
-              onCreate={this.changePhoneAuth}
-              token_={this.state.token_}
-              getOldCode={()=> this.getOldCode(this.state.token_)}
-              loading={this.state.loading}
-              countDown={this.state.countDown}
-              showAuthCode={this.state.showAuthCode}
-            />
-            <EmailAuth
-              ref={(ref)=>this.emailForm = ref}
-              visible={this.state.emailAuth}
-              onCancel={this.handleCancel}
-              onCreate={this.changeEmailAuth}
-            />
-            <ChangePhoneAuth
-              ref={(ref)=>this.changePhoneAuthForm = ref}
-              visible={this.state.changePhoneAuth}
-              onCancel={this.handleCancel_}
-              onCreate={this.changePhoneAuth_}
-              getNewCode={()=> this.getNewCode_()}
-              loading={this.state.loading}
-              getCodeNum={(val) => this.getCodeNum(val)}
-              countDown_={this.state.countDown_}
-              showAuthCode_={this.state.showAuthCode_}
-              getCodeMobile={this.state.getCodeMobile}
-            />
           </div>
         </div>
       </div>
@@ -508,18 +497,6 @@ export default class SafeCenter extends React.Component {
   }
 }
 
-const SuccessAuth = () => (
-  <div>
-    <Icon type="check-circle" style={{color: '#4BCC60'}}/>
-    <span style={{color: '#4BCC60'}}>已验证</span>
-  </div>
-);
-const FailAuth = () => (
-  <div>
-    <Icon type="close-circle" style={{color: '#DE5347'}}/>
-    <span style={{color: '#DE5347'}}>未验证</span>
-  </div>
-);
 const FormItem = Form.Item;
 // 实名认证
 const NameAuth = Form.create()(
