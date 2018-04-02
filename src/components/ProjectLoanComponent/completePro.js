@@ -33,17 +33,16 @@ export default class CompletePro extends React.Component {
         <div className="w box6 clearfix">
           {
             projectList.map((data) => {
-              let dateCode = moment(data.fCreateTime).format('YYYY') + moment(data.fCreateTime).format('MM');
               return (
                 <div style={{ cursor:'pointer' }} key={data.fId} onClick={()=>this.jumpDetail(data.fId)}>
-                  <div className="pic_box"><img className="pic" src={`${IMG_BASE_URL}/${data.fCardPicPath}`}/></div>
+                  <i className="pic_box1"><img className="pic" src={`${IMG_BASE_URL}/${data.fCardPicPath}`}/></i>
                   <p className="name">{data.fName}</p>
-                  <div className="circle" data-value="100"/>
-                  <i className="price">￥{data.fCreditMoney.fmm()}</i>
-                  <i className="city"><span className="high">{data.fcreditMonth}<i>借款期限</i></span>个月 | {data.fCityName}</i>
-                  <div className="line"/>
+                  <div className="done"></div>
+                  <i className="price">￥{`${data.fCreditMoney}`.fm()}</i>
+                  <i className="city">{data.fCityName}</i>
+                  <div className="line"></div>
                   <i className="botic botic1">年化利率<em>{data.fRateLast}%</em></i>
-                  <i className="botic botic2">筹款用时<em>{conversionTime(data.fRemainingSecond)}</em></i>
+                  <i className="botic botic2">筹款时间<em>{conversionTime(data.fRemainingSecond)}</em></i>
                   <i className="level">{data.fLeveName}</i>
                 </div>
               );

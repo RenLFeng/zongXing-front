@@ -103,6 +103,7 @@
     .pic {
         width: 292px;
         height: 314px;
+      overflow: hidden;
     }
     .circle {
         width: 86px;
@@ -146,3 +147,12 @@
         bottom: 43px;
     }
 }
+
+.box6>div .done {
+  left: 8px;
+  top: 282px;
+  width: 111px;
+  height: 91px;
+  background: url(../img/project/done.png) no-repeat;
+}
+

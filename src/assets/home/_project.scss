@@ -52,6 +52,17 @@
   .pic:hover{
     transform: scale(1.4);
   }
+  .pic_box1{
+    width: 292px;
+    height: 314px;
+    overflow: hidden;
+    .pic {
+      width: 292px;
+      height: 314px;
+      transition: all 0.6s;
+    }
+  }
+
 
     .name {
         left: 0;
