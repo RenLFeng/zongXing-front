@@ -3,7 +3,7 @@ import {Icon, message, Table, Badge, Button, Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
 
 import '../../assets/MessageList/messageList.scss';
-import {pageShows, LICENSE, TURN_BACK} from '../../common/systemParam';
+import {pageShows, LICENSE, TURN_BACK, VER_PHONE} from '../../common/systemParam';
 import {saveCompany, getCompanyByAccount,UpdataOrDele} from '../../services/api';
 
 export default class LoanList extends React.Component {
@@ -102,40 +102,65 @@ export default class LoanList extends React.Component {
 
   //修改或删除企业列表
   async UpdataOrDele(id,name,flag,code) {
-    if(name.length === 0){
-      message.error('公司名不能为空');
-      return
-    }
-    if(code.length === 0){
-      message.error('统一社会信用代码不能为空');
-      return
-    }
-    const response = await UpdataOrDele({companyId:id, companyName:name, flag:flag, fsocialCreditCode:code});
-    console.log(response);
-    if(response.code === 0){
-      this.setState({
-        companyN:'',
-        sCode:'',
-      },()=>{
-        this.fetchData(1);
-      })
-      message.info(response.msg);
-    } else {
-      response.msg && message.error(response.msg);
+    if(flag === 1){       //修改操作
+      if(name.length === 0 && code.length === 0){
+        message.error('公司名,统一社会信用代码不能为空');
+        return
+      }
+      if(name.length === 0){
+        message.error('公司名不能为空');
+        return
+      }
+      if(code.length === 0){
+        message.error('统一社会信用代码不能为空');
+        return
+      }
+      if (!LICENSE.test(code)) {
+        message.error('请输入正确的统一社会信用代码');
+        return;
+      }
+      const response = await UpdataOrDele({companyId:id, companyName:name, flag:flag, fsocialCreditCode:code});
+      console.log(response);
+      if(response.code === 0){
+        this.setState({
+          companyN:'',
+          sCode:'',
+        },()=>{
+          this.fetchData(1);
+        })
+        message.info(response.msg);
+      } else {
+        response.msg && message.error(response.msg);
+      }
+    } else {  //删除操作
+      const response = await UpdataOrDele({companyId:id, companyName:name, flag:flag, fsocialCreditCode:code});
+      console.log(response);
+      if(response.code === 0){
+        this.setState({
+          companyN:'',
+          sCode:'',
+        },()=>{
+          this.fetchData(1);
+        })
+        message.info(response.msg);
+      } else {
+        response.msg && message.error(response.msg);
+      }
     }
   }
 
+  //修改列表内容
   change(data) {
     console.log(data);
     data.inputStatus = true;
     this.setState({
       companyN:data.fname,
       sCode:data.fsocialCreditCode,
-    })
+    });
     this.forceUpdate();
-
   }
 
+  //获取修改后的企业名称
   changeValue(val){
     console.log(val);
    this.setState({
@@ -143,12 +168,14 @@ export default class LoanList extends React.Component {
    })
   }
 
+//获取修改后的社会统一信用代码
   changeValue1(val){
     console.log(val);
     this.setState({
       sCode:val
     })
   }
+
   render() {
     const {dataSource,messages} = this.state;
     const page_num = pageShows(this.state.current, this.state.maxPage);
