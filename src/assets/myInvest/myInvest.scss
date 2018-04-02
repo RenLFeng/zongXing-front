@@ -83,12 +83,12 @@ li {
 
 
 .investGroup {
-  width:96%;
+  width:100%;
   margin: 0 auto 15px auto;
   background: white;
   .investList {
     border-bottom: 1px solid lightgray;
-    width:94%;
+    width:100%;
     min-height:45px;
     margin: auto;
     .check {
@@ -164,6 +164,39 @@ li {
     }
   }
 }
+
+
+.investListChild {
+  border-bottom: 1px solid lightgray;
+  width:90%;
+  min-height:45px;
+  margin: auto;
+  background-color: #FAFAFA;
+  span{
+    padding: 10px;
+    display: inline-block;
+    word-wrap: break-word;
+    word-break: break-all;
+    vertical-align: middle;
+  }
+  .investListChild_money {
+    width: 20%;
+    text-align: right;
+  }
+  .investListChild_status {
+    width: 25%;
+    text-align: center;
+  }
+  .investListChild_time {
+    width: 25%;
+    text-align: center;
+  }
+  .investListChild_op {
+    width: 15%;
+    text-align: center;
+  }
+}
+
 
 .footer_{
   line-height: 60px;

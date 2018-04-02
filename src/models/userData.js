@@ -19,6 +19,16 @@ export default {
             type: 'endSuccess'
           });
           message.info('保存成功');
+          yield put({
+            type: 'login/changeNickName',
+            payload: {
+              nickName: payload.user.fnickName
+            }
+          });
+          // 将数据存在本地缓存中
+          const data = JSON.parse(localStorage.getItem('accessToken'));
+          data.nickName = payload.user.fnickName;
+          localStorage.setItem('accessToken',JSON.stringify(data))
         } else {
           yield put({
             type: 'endFetchUserBase',

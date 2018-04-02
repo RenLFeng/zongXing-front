@@ -80,6 +80,15 @@ export default class MyInvestment extends React.Component {
     })
   }
 
+  // 展开子菜单
+  showChild(data) {
+    if (data.isShow) {
+      data.isShow = false;
+    } else {
+      data.isShow = true;
+    }
+    this.forceUpdate()
+  }
   render() {
     const { arr,showMask,detail } = this.state;
     const page_num = pageShows(this.state.pageCurrent, this.state.maxPage);
@@ -109,27 +118,54 @@ export default class MyInvestment extends React.Component {
               <li className="investList">
                 <span className="investList_no"><p style={{cursor: 'auto'}}>编号</p></span>
                 <span className="investList_title">项目名称</span>
-                <span className="investList_money" style={{textAlign: 'right'}}>金额</span>
-                <span className="investList_status">状态</span>
-                <span className="investList_time">时间</span>
+                <span className="investList_money" style={{textAlign: 'right'}}>投资金额</span>
+                <span className="investList_status" style={{textAlign: 'right'}}>待付款金额</span>
+                <span className="investList_time">状态</span>
                 <span className="investList_operation">操作</span>
               </li>
-              { this.state.arr.map((data)=> {
+              { this.state.arr.map((data, index)=> {
                   return (
-                    <li className="investList" key={data.finv_no}>
-                      <span className="investList_no">{data.finv_no}</span>
-                      <span className="investList_title">{data.fname}</span>
-                      <span className="investList_money" style={{textAlign: 'right'}}>{`${data.fmoney}`.fm()}</span>
-                      <span className="investList_status">{MY_INCOME_STATUS[`${data.fflag}`]}</span>
-                      <span className="investList_time">{moment(data.ftime).format('YYYY-MM-DD HH:mm')}</span>
-                      <span className="investList_operation">
-                        <a style={{color: 'blue'}}
-                           onClick={() => {
-                             this.props.history.push({pathname: Path.INCOME_PLAN,  query:{projectId: data.fproject_id, money: data.fmoney}})}}
-                        >
-                          查看</a>
-                      </span>
-                    </li>
+                    <div key={data.finv_no}>
+                      <li className="investList" >
+                        <span className="investList_no">{data.finv_no}</span>
+                        <span className="investList_title">{data.fname}</span>
+                        <span className="investList_money" style={{textAlign: 'right',color: 'blue', cursor: 'pointer'}} onClick={()=>this.showChild(data)}>{`${data.fmoney}`.fm()}</span>
+                        <span className="investList_status" style={{textAlign: 'right',color: 'blue', cursor: 'pointer'}} onClick={()=>this.showChild(data)}></span>
+                        <span className="investList_time">{MY_INCOME_STATUS[`${data.fflag}`]}</span>
+                        <span className="investList_operation">
+                          <a style={{color: 'blue'}}
+                             onClick={() => {
+                               this.props.history.push({pathname: Path.INCOME_PLAN,  query:{projectId: data.fproject_id, money: data.fmoney}})}}
+                          >
+                            查看</a>
+                        </span>
+                      </li>
+                      { data.isShow?
+                        <div>
+                          <li className="investListChild">
+                            <span className="investListChild_money"><p style={{cursor: 'auto'}}>金额</p></span>
+                            <span className="investListChild_status">状态</span>
+                            <span className="investListChild_time">时间</span>
+                            <span className="investListChild_op">操作</span>
+                          </li>
+                          <li className="investListChild">
+                            <span className="investListChild_money" style={{textAlign: 'right'}}>{'133'.fm()}</span>
+                            <span className="investListChild_status">未付款</span>
+                            <span
+                              className="investListChild_time">{moment(new Date()).format('YYYY-MM-DD HH:mm')}</span>
+                            <span className="investListChild_op">
+                            <a style={{
+                              borderRight: '2px solid #c9c9c9',
+                              paddingRight: 5,
+                              marginRight: 5,
+                              color: 'blue'
+                            }}>付款</a>
+                            <a style={{color: 'blue'}}>撤销</a>
+                          </span>
+                          </li>
+                        </div>: null
+                      }
+                    </div>
                   );
                 })
               }

@@ -3,7 +3,7 @@ import {Link} from 'dva/router';
 import { ACCOUNT_RECHARGE } from '../../common/pagePath';
 import { IMG_BASE_URL,MUN_INTEGER  } from '../../common/systemParam';
 import moment from 'moment';
-import {Button, message, Modal, InputNumber} from 'antd';
+import {Button, message, Modal, InputNumber, Alert} from 'antd';
 import { Investment } from '../../services/api';
 
 export default class FormProject extends React.Component {
@@ -147,75 +147,78 @@ export default class FormProject extends React.Component {
           </p>
         </div>
         <div className="form">
-          <div className="row clearfix">
-            <div className="col1">
-              <i className="f16 c9">我可用的余额</i>
-            </div>
-            <div className="col2">
-              <i className="f24 cf60">{this.props.personalMoney.fm()}</i>
-              <i className="f18">元</i>
-            </div>
-          </div>
-          <div className="row clearfix">
-            <div className="col1">
-              <i className="f16 c9">我要投</i>
-            </div>
-            <div className="col2">
-              <InputNumber
-                style={{padding: 0, fontSize: 18}}
-                className="put"
-                type="text"
-                value={this.state.money}
-                min={100}
-                placeholder="投资金额为100的整数倍"
-                onChange={(e)=>this.checkFormat(e)}
-                step={100}
-                size={'large'}
-
-              />
-              <i className="f16 c9">元</i>
-            </div>
-          </div>
-          { this.state.errMsg ?
-            <div className="row clearfix" style={{marginTop: -20}}>
-              <div className="col2">
-                <p style={{fontSize: 16, color: 'red',marginLeft: -345}}>{this.state.errMsg}</p>
-              </div>
-            </div> : null
-          }
-          <div className="row clearfix">
-            <div className="col1"/>
-            <div className="col2">
-              <input className="put chk" type="checkbox" id="pdfchk1" checked={this.state.risk} onChange={()=>this.setState({risk: !this.state.risk})}/>
-              <label htmlFor="pdfchk1">我接受风险提示</label>
-            </div>
-          </div>
-          <div className="row clearfix">
-            <div className="col1"/>
-            <div className="col2">
-              <textarea className="put" rows="8" value={`1.我司发行QQ卡号为9位数字，密码为12位数字，没有英文字母，若您购买的QQ卡含有英文字母或位数不够，请联系第三方卖家处理；
-
-                2.购买QQ卡可在附近的网吧或报刊亭、电脑城等地购买，请在购买时留意QQ卡位数；
-
-                3.QQ卡支持分多次充值，但请在有效期内使用，如：30元面值QQ卡，可先充值10元，再充20元；
-
-                4.请在QQ卡有效期内使用，若超过有效期则无法使用，请勿刮坏QQ卡，若刮坏可联系卖家处理；
-
-                5.通过电信积分兑换的Q币卡请登录电信对应的入口进行操作；
-
-                6.QQ卡充值是立即到帐，若未到帐请点击这里查看充值情况；
-
-                7.更多信息了解，请点击链接。`} readOnly/>
-            </div>
-          </div>
-          <div className="row clearfix">
-            <div className="col1"/>
-            <div className="col2">
-              <input className="put chk" type="checkbox" id="pdfchk2" checked={this.state.agreement} onChange={()=>this.setState({agreement: !this.state.agreement})}/>
-              <label htmlFor="pdfchk2">我同意<a>《借入协议》</a></label>
-            </div>
-          </div>
+          <Alert message={'您有一笔待付款的投资，请先前往处理'} type="warning" showIcon/>
         </div>
+        {/*<div className="form">*/}
+          {/*<div className="row clearfix">*/}
+            {/*<div className="col1">*/}
+              {/*<i className="f16 c9">我可用的余额</i>*/}
+            {/*</div>*/}
+            {/*<div className="col2">*/}
+              {/*<i className="f24 cf60">{this.props.personalMoney.fm()}</i>*/}
+              {/*<i className="f18">元</i>*/}
+            {/*</div>*/}
+          {/*</div>*/}
+          {/*<div className="row clearfix">*/}
+            {/*<div className="col1">*/}
+              {/*<i className="f16 c9">我要投</i>*/}
+            {/*</div>*/}
+            {/*<div className="col2">*/}
+              {/*<InputNumber*/}
+                {/*style={{padding: 0, fontSize: 18}}*/}
+                {/*className="put"*/}
+                {/*type="text"*/}
+                {/*value={this.state.money}*/}
+                {/*min={100}*/}
+                {/*placeholder="投资金额为100的整数倍"*/}
+                {/*onChange={(e)=>this.checkFormat(e)}*/}
+                {/*step={100}*/}
+                {/*size={'large'}*/}
+
+              {/*/>*/}
+              {/*<i className="f16 c9">元</i>*/}
+            {/*</div>*/}
+          {/*</div>*/}
+          {/*{ this.state.errMsg ?*/}
+            {/*<div className="row clearfix" style={{marginTop: -20}}>*/}
+              {/*<div className="col2">*/}
+                {/*<p style={{fontSize: 16, color: 'red',marginLeft: -345}}>{this.state.errMsg}</p>*/}
+              {/*</div>*/}
+            {/*</div> : null*/}
+          {/*}*/}
+          {/*<div className="row clearfix">*/}
+            {/*<div className="col1"/>*/}
+            {/*<div className="col2">*/}
+              {/*<input className="put chk" type="checkbox" id="pdfchk1" checked={this.state.risk} onChange={()=>this.setState({risk: !this.state.risk})}/>*/}
+              {/*<label htmlFor="pdfchk1">我接受风险提示</label>*/}
+            {/*</div>*/}
+          {/*</div>*/}
+          {/*<div className="row clearfix">*/}
+            {/*<div className="col1"/>*/}
+            {/*<div className="col2">*/}
+              {/*<textarea className="put" rows="8" value={`1.我司发行QQ卡号为9位数字，密码为12位数字，没有英文字母，若您购买的QQ卡含有英文字母或位数不够，请联系第三方卖家处理；*/}
+
+                {/*2.购买QQ卡可在附近的网吧或报刊亭、电脑城等地购买，请在购买时留意QQ卡位数；*/}
+
+                {/*3.QQ卡支持分多次充值，但请在有效期内使用，如：30元面值QQ卡，可先充值10元，再充20元；*/}
+
+                {/*4.请在QQ卡有效期内使用，若超过有效期则无法使用，请勿刮坏QQ卡，若刮坏可联系卖家处理；*/}
+
+                {/*5.通过电信积分兑换的Q币卡请登录电信对应的入口进行操作；*/}
+
+                {/*6.QQ卡充值是立即到帐，若未到帐请点击这里查看充值情况；*/}
+
+                {/*7.更多信息了解，请点击链接。`} readOnly/>*/}
+            {/*</div>*/}
+          {/*</div>*/}
+          {/*<div className="row clearfix">*/}
+            {/*<div className="col1"/>*/}
+            {/*<div className="col2">*/}
+              {/*<input className="put chk" type="checkbox" id="pdfchk2" checked={this.state.agreement} onChange={()=>this.setState({agreement: !this.state.agreement})}/>*/}
+              {/*<label htmlFor="pdfchk2">我同意<a>《借入协议》</a></label>*/}
+            {/*</div>*/}
+          {/*</div>*/}
+        {/*</div>*/}
         <form ref={ref => this.formId = ref} id="form1" name="form1" action={data.submitURL} method="post" target="_blank">
           <input id="Action" name="Action" value={data.action?data.action: ''} type="hidden" />
           <input id="ArrivalTime" name="ArrivalTime" value={data.arrivalTime?data.arrivalTime: ''} type="hidden" />
@@ -234,7 +237,8 @@ export default class FormProject extends React.Component {
           <input id="SignInfo" name="SignInfo" value={data.signInfo} type="hidden" />
         </form>
         <div className="center">
-          <Button type="primary" onClick={()=>this.submit()} loading={this.state.loading} style={{width: 200, height: 40}}>提交</Button>
+          {/*<Button type="primary" onClick={()=>this.submit()} loading={this.state.loading} style={{width: 200, height: 40}}>提交</Button>*/}
+          <Button type="primary" onClick={()=>{}} loading={this.state.loading} style={{width: 200, height: 40}}>去处理</Button>
         </div>
       </div>
     );
