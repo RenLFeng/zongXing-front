@@ -18,7 +18,7 @@ export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
 export const REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
 export const PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
-export const TURN_BACK = 'http://192.168.1.192:8001'; // 从大众网页跳到企业后台管理页面的地址 开发配置
+export const TURN_BACK = 'http://192.168.1.201:8001'; // 从大众网页跳到企业后台管理页面的地址 开发配置
 
 /*
 * 结束
@@ -73,6 +73,16 @@ export const TEL_PHONE = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
 
 // 银行卡号正则
 export const BANK_CARD = /^([1-9]{1})(\d{16}|d{17}|\d{18}|d{19})$/;
+
+// 我的投资订单状态
+export const ORDER_STATUS = {
+  '-1': '失败',
+  '0': '待付款',
+  '1': '成功',
+  '2': '成功',
+  '3': '已退款',
+  '4': '处理中'
+};
 
 //  我的投资状态列表
 export const MY_INCOME_STATUS = {

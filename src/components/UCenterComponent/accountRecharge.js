@@ -21,7 +21,6 @@ export default class AccountRecharge extends React.Component {
   }
 
   async setRechargeData(data) {
-    console.log(data);
     try {
       this.setState({loading: true});
       const response = await getRecharge(data);
@@ -144,7 +143,6 @@ class Forms extends React.Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props.param.account)
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem

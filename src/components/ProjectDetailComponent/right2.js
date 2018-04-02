@@ -27,7 +27,6 @@ export default class Right extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
   }
 
   async getPersonalMoney() {

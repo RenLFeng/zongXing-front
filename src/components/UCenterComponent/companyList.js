@@ -56,7 +56,9 @@ export default class LoanList extends React.Component {
         dataSource: []
       });
       if (typeof e === 'object' && e.name === 288) {
-        throw e;
+        message.error('未登录或登录超时');
+        localStorage.removeItem('accessToken');
+        this.props.history.push('/index/login');
       }
       console.log(e);
     }
@@ -127,8 +129,7 @@ export default class LoanList extends React.Component {
           sCode:'',
         },()=>{
           this.fetchData(1);
-        })
-        message.info(response.msg);
+        });
       } else {
         response.msg && message.error(response.msg);
       }
@@ -142,7 +143,6 @@ export default class LoanList extends React.Component {
         },()=>{
           this.fetchData(1);
         })
-        message.info(response.msg);
       } else {
         response.msg && message.error(response.msg);
       }

@@ -290,7 +290,6 @@ export default class SafeCenter extends React.Component {
           },
         });
       });
-      message.info(response.msg);
     }else {
       response.msg && message.error(response.msg);
     }
@@ -302,7 +301,6 @@ export default class SafeCenter extends React.Component {
     this.setState({loading:true});
     const response = await authorizationState('');
     this.setState({loading:true});
-    console.log(response);
     if(response.code === 0){
       this.setState({
         status:response.data,
@@ -332,7 +330,6 @@ export default class SafeCenter extends React.Component {
           },
         });
       });
-       message.info(response.msg);
     } else {
       response.msg && message.error(response.msg);
     }
@@ -455,7 +452,6 @@ export default class SafeCenter extends React.Component {
               getCodeMobile={this.state.getCodeMobile}
             />
           </div>
-
         </div>
 
         <div className="fr uc-rbody" style={{marginTop:28}} >
@@ -472,7 +468,7 @@ export default class SafeCenter extends React.Component {
                 }
               </div>
               <div className="block2">{status.indexOf('3') !== -1 ?'您已授权二次分配':'您还未授权二次分配，建议您尽快授权'}</div>
-              <div className="block3">{status.indexOf('3') !== -1 ?<Button onClick={()=>this.CloseAuthorization(3)}>取消授权</Button>:<Button onClick={()=>this.getDistribution(3)}>立即启用</Button>}</div>
+              <div className="block3">{status.indexOf('3') !== -1 ?null:<Button onClick={()=>this.getDistribution(3)}>立即启用</Button>}</div>
             </div>
 
             <div className="line">
