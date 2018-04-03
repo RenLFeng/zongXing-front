@@ -19,7 +19,7 @@ export default class MessageList extends React.Component {
       not_num:0,  //未读个数
       buttonArr:[],
       pageIndex:1,  //当前页，初始值为第一页
-      pageSize: 1,    //每页可显示的消息条数
+      pageSize: 15,    //每页可显示的消息条数
       typeNo:''
     }
   }
