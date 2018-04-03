@@ -537,4 +537,10 @@ export async function delOrder(param) {
   return request(`${BASE_URL}/zjb-website/invRecord/delInvRecord?invId=${param}`)
 }
 
+// 投资总览年度
+export async function selectYearInvest(param) {
+  return request(`${BASE_URL}/zjb-website/invRecord/getInvReview?year=${param}`)
+}
+
+
 

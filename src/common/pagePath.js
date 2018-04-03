@@ -21,6 +21,7 @@ export default {
   INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //站内公告列表
 
   MORE_INFO:'/index/uCenter/personAccount/moreInfo',  //资金动态
+  ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
 
 
   NOTICE_DETAIL: '/infor/plantNotice', //平台公告页面
