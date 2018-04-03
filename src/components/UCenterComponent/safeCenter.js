@@ -48,7 +48,7 @@ export default class SafeCenter extends React.Component {
       distribution:{},  //授权表单数据
       url:'',     //提交表单乾多多链接
       status:'',  //投标状态
-      loading:false,
+      showAuth: false , //判断开户展示授权
 
       // data:{},  //取消授权
       // closeUrl:'',
@@ -305,7 +305,11 @@ export default class SafeCenter extends React.Component {
       this.setState({
         status:response.data,
       })
-    }else {
+    } else if (response.code === -3) {
+      this.setState({
+        showAuth: true
+      })
+    } else {
       response.msg && message.error(response.msg);
     }
 
@@ -453,40 +457,42 @@ export default class SafeCenter extends React.Component {
             />
           </div>
         </div>
-
-        <div className="fr uc-rbody" style={{marginTop:28}} >
-          <div className="safeCenter">
-            <p>乾多多授权</p>
-            <div className="line">
-              <div className="block1">
-                {
-                  status.indexOf('3') !== -1  ? <Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
-                }
-                <span className="word">二次分配授权</span>
-                {
-                  status.indexOf('3') !== -1  ? <span className="icon">V</span>:<span className="icon1">V</span>
-                }
+        {!this.state.showAuth ?
+          <div className="fr uc-rbody" style={{marginTop:28}} >
+            <div className="safeCenter">
+              <p>乾多多授权</p>
+              <div className="line">
+                <div className="block1">
+                  {
+                    status.indexOf('3') !== -1  ? <Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                  }
+                  <span className="word">二次分配授权</span>
+                  {
+                    status.indexOf('3') !== -1  ? <span className="icon">V</span>:<span className="icon1">V</span>
+                  }
+                </div>
+                <div className="block2">{status.indexOf('3') !== -1 ?'您已授权二次分配':'您还未授权二次分配，建议您尽快授权'}</div>
+                <div className="block3">{status.indexOf('3') !== -1 ?null:<Button onClick={()=>this.getDistribution(3)}>立即启用</Button>}</div>
               </div>
-              <div className="block2">{status.indexOf('3') !== -1 ?'您已授权二次分配':'您还未授权二次分配，建议您尽快授权'}</div>
-              <div className="block3">{status.indexOf('3') !== -1 ?null:<Button onClick={()=>this.getDistribution(3)}>立即启用</Button>}</div>
-            </div>
 
-            <div className="line">
-              <div className="block1">
-                {
-                  status.indexOf('2') !== -1?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
-                }
-                <span className="word">自动还款授权</span>
-                {
-                  status.indexOf('2') !== -1?<span className="icon">V</span>:<span className="icon1">V</span>
-                }
+              <div className="line">
+                <div className="block1">
+                  {
+                    status.indexOf('2') !== -1?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                  }
+                  <span className="word">自动还款授权</span>
+                  {
+                    status.indexOf('2') !== -1?<span className="icon">V</span>:<span className="icon1">V</span>
+                  }
+                </div>
+                <div className="block2">{status.indexOf('2') !== -1?'您已授权自动还款':'您还未授权自动还款，建议您尽快授权'}</div>
+                <div className="block3">{status.indexOf('2') !== -1?<Button onClick={()=>this.CloseAuthorization(2)}>取消授权</Button>:<Button onClick={()=>this.getDistribution(2)}>立即启用</Button>}</div>
               </div>
-              <div className="block2">{status.indexOf('2') !== -1?'您已授权自动还款':'您还未授权自动还款，建议您尽快授权'}</div>
-              <div className="block3">{status.indexOf('2') !== -1?<Button onClick={()=>this.CloseAuthorization(2)}>取消授权</Button>:<Button onClick={()=>this.getDistribution(2)}>立即启用</Button>}</div>
-            </div>
 
-          </div>
-        </div>
+            </div>
+          </div> : null
+        }
+
       </div>
 
     );
