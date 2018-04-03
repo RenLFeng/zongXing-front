@@ -220,7 +220,7 @@ constructor(props){
     return (
       <div className="wrap">
         <div className="page">
-           <div className="title">
+           <div className="title_1">
              <span>全部项目</span>
            </div>
 
