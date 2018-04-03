@@ -241,8 +241,11 @@ export async function getProjectDetailNotice(param) {
 }
 
 // 获取个人账户余额接口
-export async function getPersonalMoney() {
-  return request(`${BASE_URL}/zjb-website/account/getOne`)
+export async function getPersonalMoney(params) {
+  return request(`${BASE_URL}/zjb-website/account/getOne`, {
+    method: 'POST',
+    body: params,
+  })
 }
 
 //获取已投资人信息接口
@@ -522,7 +525,22 @@ export async function UpdataOrDele(params) {
         ...params
       }
     })
-
 }
+
+// 订单去付款接口
+export async function toPayment(param) {
+  return request(`${BASE_URL}/zjb-dc/investment/payment?invRecordId=${param}`)
+}
+
+// 删除订单
+export async function delOrder(param) {
+  return request(`${BASE_URL}/zjb-website/invRecord/delInvRecord?invId=${param}`)
+}
+
+// 投资总览年度
+export async function selectYearInvest(param) {
+  return request(`${BASE_URL}/zjb-website/invRecord/getInvReview?year=${param}`)
+}
+
 
 

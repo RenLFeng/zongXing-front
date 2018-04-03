@@ -1,9 +1,9 @@
 import React from 'react';
-import {Icon, message, Table, Button, Checkbox, Dropdown, Menu} from 'antd';
+import {Icon, message, Table, Button, Checkbox, Dropdown, Menu, Modal} from 'antd';
 import '../../assets/myInvest/myInvest.scss';
-import {getPlantNotice, getOPlantNotice, getMyInvestment} from '../../services/api.js';
+import {getPlantNotice, getMyInvestment, toPayment, delOrder} from '../../services/api.js';
 import moment from 'moment';
-import {pageShows, MY_INCOME_STATUS} from '../../common/systemParam';  //分页组件
+import {pageShows, MY_INCOME_STATUS, ORDER_STATUS} from '../../common/systemParam';  //分页组件
 import Path from '../../common/pagePath';
 
 export default class MyInvestment extends React.Component {
@@ -15,49 +15,64 @@ export default class MyInvestment extends React.Component {
       maxPage: 0,     //最大页
       arr: [],
       flag: null, // 我的投资状态查询列表
-      showText: '更多状态'
+      showText: '更多状态',
+      dataSource: {}, //获取参数
+      projectId: null
     }
   }
 
   componentDidMount() {
+    // 判断有没有传过来projectId
+    let projectId = null;
+    if (this.props.location.state && this.props.location.state.projectId) {
+      this.setState({
+        projectId: this.props.location.state.projectId
+      }, () => {
+        // true 代表列表默认展开子列表
+        this.getMyinvestAjax(1, 0);
+      });
+      return;
+    }
     this.getMyinvestAjax(1);  //调用请求
   }
 
   //获取我的投资列表
-  async getMyinvestAjax(page) {
-    const response = await getMyInvestment({
-      pageParam: {
-        pageSize: this.state.pageSize,
-        pageCurrent: page
-      },
-      flag: this.state.flag
-    });
-    console.log(response);
-    if(response.code ===0){
-      const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
-      this.setState({
-        maxPage: maxPage,
-        pageCurrent: page,
-        arr:response.data.infoList,
-        num:response.data.totalNumber,
-      })
-    }  else {
-      message.error(response.msg);
+  async getMyinvestAjax(page, flag) {
+    try {
+      const response = await getMyInvestment({
+        pageParam: {
+          pageSize: this.state.pageSize,
+          pageCurrent: page
+        },
+        flag: this.state.flag,
+        projectId: this.state.projectId
+      });
+      console.log(response);
+      if(response.code ===0){
+        const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
+        this.setState({
+          maxPage: maxPage,
+          pageCurrent: page,
+          arr: response.data.infoList.map((item, index)=>{
+            if (index === flag) {
+              item.isShow = true;
+            }
+            return item;
+          }),
+          num:response.data.totalNumber,
+        })
+      }  else {
+        message.error(response.msg);
+      }
+    } catch(e) {
+      if (typeof e === 'object' && e.name === 288) {
+        message.error('未登录或登录超时');
+        localStorage.removeItem('accessToken');
+        this.props.history.push('/index/login');
+      }
+      console.log(e);
     }
-  }
 
-//获取单个公告
-  async getOPlantNotice(id) {
-    this.setState({
-      showMask:true
-    });
-    const response = await getOPlantNotice(id);
-    console.log(response);
-    if(response.code ===0){
-      this.setState({
-        detail:response.data,
-      })
-    }
   }
 
   // 根据选择的状态切换数据
@@ -74,10 +89,41 @@ export default class MyInvestment extends React.Component {
   searchAll() {
     this.setState({
       showText: '更多状态',
-      flag: null
+      flag: null,
+      projectId: null
     }, ()=>{
       this.getMyinvestAjax(1);
     })
+  }
+
+  // 订单去付款接口
+  async toPaymentAjax(payId, index) {
+    // 防止重复提交
+    if (this.state.loading) {
+      return;
+    }
+    this.setState({loading: true});
+    const response = await toPayment(payId);
+    this.setState({loading: false});
+    console.log(response);
+    if (response.code === 0) {
+      this.setState({
+        dataSource: response.data
+      }, ()=> {
+        this.formId.submit();
+        Modal.info({
+          title: '提示',
+          content: '请在新页面完成操作,可刷新页面查看结果',
+          okText: '确定',
+          onOk: ()=> {
+            // 刷新页面
+            this.getMyinvestAjax(1, index);
+          },
+        });
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
   }
 
   // 展开子菜单
@@ -89,8 +135,22 @@ export default class MyInvestment extends React.Component {
     }
     this.forceUpdate()
   }
+  // 删除订单
+  async deleteOrderAjax(fid, index) {
+    if (this.state.loading) {
+      return;
+    }
+    this.setState({loading: true});
+    const response = await delOrder(fid);
+    this.setState({loading: false});
+    if (response.code === 0) {
+      this.getMyinvestAjax(1, index);
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
   render() {
-    const { arr,showMask,detail } = this.state;
+    const { arr,showMask,detail, dataSource } = this.state;
     const page_num = pageShows(this.state.pageCurrent, this.state.maxPage);
     const menu = (<Menu onClick={(e)=>{this.changeStatus(e.key)}}>
       {Object.keys(MY_INCOME_STATUS).map((data)=> {
@@ -116,9 +176,9 @@ export default class MyInvestment extends React.Component {
           <div className="investGroup">
             <ul >
               <li className="investList">
-                <span className="investList_no"><p style={{cursor: 'auto'}}>编号</p></span>
+                <span className="investList_no"><p style={{cursor: 'auto'}}>项目编号</p></span>
                 <span className="investList_title">项目名称</span>
-                <span className="investList_money" style={{textAlign: 'right'}}>投资金额</span>
+                <span className="investList_money" style={{textAlign: 'right'}}>已投资金额</span>
                 <span className="investList_status" style={{textAlign: 'right'}}>待付款金额</span>
                 <span className="investList_time">状态</span>
                 <span className="investList_operation">操作</span>
@@ -127,42 +187,54 @@ export default class MyInvestment extends React.Component {
                   return (
                     <div key={data.finv_no}>
                       <li className="investList" >
-                        <span className="investList_no">{data.finv_no}</span>
-                        <span className="investList_title">{data.fname}</span>
-                        <span className="investList_money" style={{textAlign: 'right',color: 'blue', cursor: 'pointer'}} onClick={()=>this.showChild(data)}>{`${data.fmoney}`.fm()}</span>
-                        <span className="investList_status" style={{textAlign: 'right',color: 'blue', cursor: 'pointer'}} onClick={()=>this.showChild(data)}></span>
-                        <span className="investList_time">{MY_INCOME_STATUS[`${data.fflag}`]}</span>
+                        <span className="investList_no">{data.projectNo}</span>
+                        <span className="investList_title">{data.projectName}</span>
+                        <span className="investList_money" style={{textAlign: 'right',color: 'blue', cursor: 'pointer'}} onClick={()=>this.showChild(data)}>{`${data.invMoney}`.fm()}</span>
+                        <span className="investList_status" style={{textAlign: 'right',color: 'blue', cursor: 'pointer'}} onClick={()=>this.showChild(data)}>{`${data.waitPayMoney}`.fm()}</span>
+                        <span className="investList_time">{MY_INCOME_STATUS[`${data.projectFlag}`]}</span>
                         <span className="investList_operation">
-                          <a style={{color: 'blue'}}
-                             onClick={() => {
-                               this.props.history.push({pathname: Path.INCOME_PLAN,  query:{projectId: data.fproject_id, money: data.fmoney}})}}
-                          >
-                            查看</a>
+                          {/*<a style={{color: 'blue'}}*/}
+                             {/*onClick={() => {*/}
+                               {/*this.props.history.push({pathname: Path.INCOME_PLAN,  query:{projectId: data.fproject_id, money: data.fmoney}})}}*/}
+                          {/*>*/}
+                            {/*查看</a>*/}
                         </span>
                       </li>
                       { data.isShow?
                         <div>
                           <li className="investListChild">
+                            <span className="investListChild_no">订单编号</span>
                             <span className="investListChild_money"><p style={{cursor: 'auto'}}>金额</p></span>
                             <span className="investListChild_status">状态</span>
                             <span className="investListChild_time">时间</span>
                             <span className="investListChild_op">操作</span>
                           </li>
-                          <li className="investListChild">
-                            <span className="investListChild_money" style={{textAlign: 'right'}}>{'133'.fm()}</span>
-                            <span className="investListChild_status">未付款</span>
-                            <span
-                              className="investListChild_time">{moment(new Date()).format('YYYY-MM-DD HH:mm')}</span>
-                            <span className="investListChild_op">
-                            <a style={{
-                              borderRight: '2px solid #c9c9c9',
-                              paddingRight: 5,
-                              marginRight: 5,
-                              color: 'blue'
-                            }}>付款</a>
-                            <a style={{color: 'blue'}}>撤销</a>
-                          </span>
-                          </li>
+                          { data.invRecordChildVos.map((item)=> {
+                            return (
+                              <li key={item.invId} className="investListChild">
+                                <span className="investListChild_no">{item.invNo}</span>
+                                <span className="investListChild_money" style={{textAlign: 'right'}}>{`${item.money}`.fm()}</span>
+                                <span className="investListChild_status">{ORDER_STATUS[item.invFlag]}</span>
+                                <span
+                                  className="investListChild_time">{moment(item.invTime).format('YYYY-MM-DD HH:mm')}</span>
+                                {item.invFlag==0?
+                                  <span className="investListChild_op">
+                                    <a style={{
+                                      borderRight: '2px solid #c9c9c9',
+                                      paddingRight: 5,
+                                      marginRight: 5,
+                                      color: 'blue'
+                                     }}
+                                     onClick={()=>this.toPaymentAjax(item.invId, index)}
+                                    >付款</a>
+                                    <a style={{color: 'blue'}}
+                                       onClick={()=>{this.deleteOrderAjax(item.invId, index)}}
+                                    >删除订单</a>
+                                   </span> : null }
+                              </li>
+                            );
+                           })
+                          }
                         </div>: null
                       }
                     </div>
@@ -227,6 +299,23 @@ export default class MyInvestment extends React.Component {
               </div>
             </div> : null
         }
+        <form ref={ref => this.formId = ref} id="form1" name="form1" action={dataSource.submitURL} method="post" target="_blank">
+          <input id="Action" name="Action" value={dataSource.action?dataSource.action: ''} type="hidden" />
+          <input id="ArrivalTime" name="ArrivalTime" value={dataSource.arrivalTime?dataSource.arrivalTime: ''} type="hidden" />
+          <input id="LoanJsonList" name="LoanJsonList" value={dataSource.loanJsonList} type="hidden" />
+          <input id="NeedAudit" name="NeedAudit" value={dataSource.needAudit} type="hidden" />
+          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={dataSource.platformMoneymoremore} type="hidden" />
+          <input id="RandomTimeStamp" name="RandomTimeStamp" value={dataSource.randomTimeStamp} type="hidden" />
+          <input id="TransferAction" name="TransferAction" value={dataSource.transferAction} type="hidden" />
+          <input id="TransferType" name="TransferType" value={dataSource.transferType} type="hidden" />
+          <input id="RandomTimeStamp" name="RandomTimeStamp" value={dataSource.randomTimeStamp} type="hidden" />
+          <input id="Remark1" name="Remark1" value={dataSource.remark1} type="hidden" />
+          <input id="Remark2" name="Remark2" value={dataSource.remark2} type="hidden" />
+          <input id="Remark3" name="Remark3" value={dataSource.remark3} type="hidden" />
+          <input id="ReturnURL" name="ReturnURL" value={dataSource.returnURL} type="hidden" />
+          <input id="NotifyURL" name="NotifyURL" value={dataSource.notifyURL} type="hidden"  />
+          <input id="SignInfo" name="SignInfo" value={dataSource.signInfo} type="hidden" />
+        </form>
       </div>
     );
   }

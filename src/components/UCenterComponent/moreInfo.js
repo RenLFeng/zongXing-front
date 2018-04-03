@@ -14,63 +14,6 @@ export default class MoreInfo extends React.Component{
       pageCurrent: 1,
       pageIndex: 1,
       pageSize:10,
-      data:[
-        {
-          faccount_id:111,
-          ftime:2018/3/29,
-          fremark:'转账',
-          fin_money:1000,
-          fout_money:100,
-          freal_name:'啦啦啦啦',
-          fbegin_money:1000,
-          fend_name:100
-        },{
-          faccount_id:222,
-          ftime:2018/3/29,
-          fremark:'转账',
-          fin_money:1000,
-          fout_money:100,
-          freal_name:'啦啦啦啦',
-          fbegin_money:1000,
-          fend_name:100
-        },{
-          faccount_id:333,
-          ftime:2018/3/29,
-          fremark:'转账',
-          fin_money:1000,
-          fout_money:100,
-          freal_name:'啦啦啦啦',
-          fbegin_money:1000,
-          fend_name:100
-        },{
-          faccount_id:444,
-          ftime:2018/3/29,
-          fremark:'转账',
-          fin_money:1000,
-          fout_money:100,
-          freal_name:'啦啦啦啦',
-          fbegin_money:1000,
-          fend_name:100
-        },{
-          faccount_id:555,
-          ftime:2018/3/29,
-          fremark:'转账',
-          fin_money:1000,
-          fout_money:100,
-          freal_name:'啦啦啦啦',
-          fbegin_money:1000,
-          fend_name:100
-        },{
-          faccount_id:666,
-          ftime:2018/3/29,
-          fremark:'转账',
-          fin_money:1000,
-          fout_money:100,
-          freal_name:'啦啦啦啦',
-          fbegin_money:1000,
-          fend_name:100
-        }
-      ],
       infoList:[],   //资金动态列表
       num:'',
       maxPage: 0,     //最大页
@@ -82,19 +25,28 @@ export default class MoreInfo extends React.Component{
   }
 
   async getCapitalDynamics(page){
-    const response = await capitalDynamics({companyNo: "", pageCurrent: page, pageIndex: this.state.pageIndex, pageSize: this.state.pageSize});
-    console.log(response);
-    if(response.code === 0){
-      const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
-      this.setState({
-        maxPage:maxPage,
-        infoList:response.data.infoList,
-        pageCurrent: page,
-        num:response.data.totalNumber
-      });
+    try {
+      const response = await capitalDynamics({companyNo: "", pageCurrent: page, pageIndex: this.state.pageIndex, pageSize: this.state.pageSize});
+      console.log(response);
+      if(response.code === 0){
+        const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
+        this.setState({
+          maxPage:maxPage,
+          infoList:response.data.infoList,
+          pageCurrent: page,
+          num:response.data.totalNumber
+        });
 
-    } else {
-      response.msg && message.error(response.msg);
+      } else {
+        response.msg && message.error(response.msg);
+      }
+    } catch(e) {
+      if (typeof e === 'object' && e.name === 288) {
+        message.error('未登录或登录超时');
+        localStorage.removeItem('accessToken');
+        this.props.history.push('/index/login');
+      }
+      console.log(e);
     }
   }
 

@@ -21,24 +21,26 @@ export default class Right extends React.Component {
       arr:[],
       maxPage: 0,     //最大页
       showForm: false,
-      loading: false
+      loading: false,
+      canPay: false
     };
     this.rate = 1;
   }
 
   componentDidMount() {
-    console.log(this.props);
+    console.log(123);
   }
 
-  async getPersonalMoney() {
+  async getPersonalMoney(fid) {
     try {
       this.setState({loading: true});
-      const response = await getPersonalMoney();
+      const response = await getPersonalMoney([fid]);
       this.setState({loading: false});
       if (response.code === 0) {
         this.setState({
-          personalMoney: response.data.fcapital+'',
-          accountId: response.data.fid,
+          personalMoney: response.data.accountInfo.fcapital+'',
+          accountId: response.data.accountInfo.fid,
+          canPay: response.data.hasWaitPayInv
         });
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
@@ -109,7 +111,7 @@ export default class Right extends React.Component {
             </div>
           </div>
           <div className="data clearfix">
-            <div className="circle" data-value={allMoney/project.fcredit_money*100}/>
+            <div className="circle" data-value={Math.floor(allMoney/project.fcredit_money*100)}/>
             <i className="ctext">已筹款比例</i>
             <div className="fr">
               <p className="t1">已经筹款</p>
@@ -132,9 +134,12 @@ export default class Right extends React.Component {
             <p>本网站所载的各种信息和数据等仅供参考，并不构成销售要约，或买入项目或其它投资工具的建议。投资者应仔细审阅相关金融产品的合同文件等以了解其风险因素，或寻求专业的投资顾问的建议。不承诺保本和最低收益，具有一定的投资风险。投资者的本金可能会因市场变动而蒙受损失，请投资者充分认识投资风险，谨慎投资。</p>
           </div>
           <div className="center bot1">
-            <p>
-              <Button loading={this.state.loading} type="primary" style={{width: 150, height: 40}}  onClick={()=>this.getPersonalMoney()}>我要投资</Button>
-            </p>
+            {this.props.projectDetail.fflag == 10 ?
+              <p>
+                <Button loading={this.state.loading} type="primary" style={{width: 150, height: 40}}
+                        onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)}>我要投资</Button>
+              </p> : null
+            }
           </div>
           <p className="center bot2">
             <a className="like">23</a>
@@ -149,8 +154,13 @@ export default class Right extends React.Component {
           </p>
         </div>
         <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} />
-        <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney}
-                       accountId={this.state.accountId}/>
+        <FormProject
+          project={this.props.projectDetail}
+          personalMoney={this.state.personalMoney}
+          accountId={this.state.accountId}
+          canPay={this.state.canPay}
+          history={this.props.history}
+        />
       </div>
     );
   }
