@@ -71,7 +71,7 @@ export default class PersonAccount extends React.Component {
             name: '待收本金',
             icon: 'circle'
           },{
-            name: '待收收益',
+            name: '待收利息',
             icon: 'circle'
           }]
         },
@@ -101,7 +101,7 @@ export default class PersonAccount extends React.Component {
               {value:0, name:'可用余额'},
               {value:0, name:'冻结金额'},
               {value:0, name:'待收本金'},
-              {value:0, name:'待收收益'}
+              {value:0, name:'待收利息'}
             ]
           }
         ]
@@ -150,6 +150,7 @@ export default class PersonAccount extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.personal !== nextProps.personal) {
       const money = nextProps.personal.totalAssets;
+      const data = nextProps.personal;
       this.setState({
         pieOption: {
           tooltip: {
@@ -188,9 +189,9 @@ export default class PersonAccount extends React.Component {
               } else if (name === '冻结金额') {
                 return `${name}  {b|${(money.freezingAmount+'').fm()}}`
               } else if (name === '待收本金') {
-                return `${name}  {b|${(money.collectPrincipal+'').fm()}}`
+                return `${name}  {b|${`${data.surplusMoney?data.surplusMoney:0}`.fm()}}`
               } else {
-                return `${name}  {b|${(money.collectInterest+'').fm()}}`
+                return `${name}  {b|${`${data.surplusInterest?data.surplusInterest:0}`.fm()}}`
               }
             },
             left: '50%',
@@ -205,7 +206,7 @@ export default class PersonAccount extends React.Component {
               name: '待收本金',
               icon: 'circle'
             },{
-              name: '待收收益',
+              name: '待收利息',
               icon: 'circle'
             }]
           },
@@ -234,8 +235,8 @@ export default class PersonAccount extends React.Component {
               data:[
                 {value:money.availableBalance, name:'可用余额'},
                 {value:money.freezingAmount, name:'冻结金额'},
-                {value:money.collectPrincipal, name:'待收本金'},
-                {value:money.collectInterest, name:'待收收益'}
+                {value:data.surplusMoney?data.surplusMoney:0, name:'待收本金'},
+                {value:data.surplusInterest?data.surplusInterest:0, name:'待收利息'}
               ]
             }
           ]

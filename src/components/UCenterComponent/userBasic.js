@@ -240,7 +240,7 @@ class UserBaseFormInput extends React.Component {
           {getFieldDecorator('fBirthday', {
             initialValue: userBase.fbirthday ? moment(userBase.fbirthday): null
           })(
-            <DatePicker />
+            <DatePicker placeholder={'请选择'}/>
           )}
         </FormItem>
 
@@ -251,7 +251,7 @@ class UserBaseFormInput extends React.Component {
           {getFieldDecorator('fCityCode', {
             initialValue: userBase.fcity_code ? userBase.fcity_code.split(','): null,
           })(
-            <Cascader options={city} />
+            <Cascader options={city} placeholder={'请选择'}/>
           )}
         </FormItem>
         <FormItem

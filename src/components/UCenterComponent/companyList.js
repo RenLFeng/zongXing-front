@@ -207,7 +207,7 @@ export default class LoanList extends React.Component {
                         window.location.href = `${TURN_BACK}?token=${JSON.parse(localStorage.getItem('accessToken')).webToken}&id=${data.fid}`; // 开发使用
                       }}>进入后台</a>
                         {
-                          data.fisCertified === "0" ?
+                          !data.accountId ?
                             <i>
                               {data.inputStatus ? <a onClick={()=>this.UpdataOrDele(data.fid, this.state.companyN,1, this.state.sCode)}>保存</a>:<a onClick={()=>this.change(data)}>修改</a>}
 
