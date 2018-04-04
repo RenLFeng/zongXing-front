@@ -314,8 +314,8 @@ class CreateCompanyComponent extends React.Component {
           </FormItem>
           <FormItem label="统一社会信用代码" {...formItemsLayout}>
             {getFieldDecorator('fsocialCreditCode', {
-              rules: [{ required: true, message: '营业执照不能为空' },
-                {pattern: LICENSE, message: '营业执照格式不正确'}],
+              rules: [{ required: true, message: '统一社会信用代码不能为空' },
+                {pattern: LICENSE, message: '统一社会信用代码格式不正确'}],
             })(<Input />)}
           </FormItem>
         </Form>
