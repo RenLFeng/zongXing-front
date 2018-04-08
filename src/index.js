@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import dva from 'dva';
 import './index.css';
 import onError from './error';
@@ -5,11 +6,6 @@ import onError from './error';
 const app = dva({
 	onError
 });
-
-String.prototype.startWith = function(str) {
-	var reg = new RegExp("^" + str);
-	return reg.test(this);
-}
 
 // 2. Plugins
 // app.use({});
