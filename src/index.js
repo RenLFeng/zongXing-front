@@ -6,6 +6,11 @@ const app = dva({
 	onError
 });
 
+String.prototype.startWith = function(str) {
+	var reg = new RegExp("^" + str);
+	return reg.test(this);
+}
+
 // 2. Plugins
 // app.use({});
 

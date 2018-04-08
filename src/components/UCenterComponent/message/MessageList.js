@@ -223,7 +223,8 @@ export default class MessageList extends React.Component {
                 <span className="massageList_time_">时间</span>
               </li>
 
-              {
+              { this.state.arr1.length <= 0 ?
+              <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无数据</p>:
                 this.state.arr1.map((data,index)=>{
                   return(
                     <li className="massageList" key={data.fid}>

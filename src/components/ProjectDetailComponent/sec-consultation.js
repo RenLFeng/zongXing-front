@@ -102,7 +102,6 @@ export default class SecConsultation extends React.Component {
         // 发布话题成功之后 清空话题框 刷新全部话题列表
         this.props.changeNum();
         this.setState({topicText: ''});
-        message.info(response.msg);
         this.fetchAllTopic();
         this.fetchMyTopic()
       } else {
@@ -136,7 +135,6 @@ export default class SecConsultation extends React.Component {
         this.setState({[`loading${topicId}`]: false});
         if (response.code === 0) {
           this.setState({[`replayText${topicId}`]: ''});
-          message.info(response.msg);
           this.getAllTopicReply(topicId);
         } else {
           message.error(response.msg);
@@ -161,7 +159,6 @@ export default class SecConsultation extends React.Component {
         this.setState({[`myLoading${topicId}`]: false});
         if (response.code === 0) {
           this.setState({[`my${topicId}Text`]: ''});
-          message.info(response.msg);
           this.getMyAllTopicReply(topicId);
         } else {
           message.error(response.msg);
