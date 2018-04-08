@@ -282,11 +282,11 @@ export default class PersonAccount extends React.Component {
           <em>单位：元</em>
         </div>
         <div className="tright hd1">
-          <a className="fl">
+          <a className="fl" style={{cursor: 'default'}}>
             <i>累计充值</i>
             <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
           </a>
-          <a className="fl">
+          <a className="fl" style={{cursor: 'default'}}>
             <i>累计提现</i>
             <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
           </a>

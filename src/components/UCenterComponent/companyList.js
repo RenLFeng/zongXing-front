@@ -191,7 +191,8 @@ export default class LoanList extends React.Component {
                 <span className="massageListtime2">操作</span>
               </li>
 
-              {
+              { dataSource.length <= 0 ?
+                <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无数据</p>:
                 dataSource.map((data)=>{
                   return(
                     <li className="massageList" key={data.fid}>

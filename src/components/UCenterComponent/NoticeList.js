@@ -72,7 +72,8 @@ export default class NoticeList extends React.Component {
                 <span className="massageList_time">时间</span>
               </li>
 
-              {
+              { arr.length <= 0?
+                <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无数据</p>:
                 arr.map((data)=>{
                   return(
                     <li className="massageList" key={data.fid}>

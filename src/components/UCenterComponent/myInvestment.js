@@ -183,7 +183,9 @@ export default class MyInvestment extends React.Component {
                 <span className="investList_time">状态</span>
                 <span className="investList_operation">操作</span>
               </li>
-              { this.state.arr.map((data, index)=> {
+              {  this.state.arr.length <= 0 ?
+                 <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无数据</p> :
+                this.state.arr.map((data, index)=> {
                   return (
                     <div key={data.finv_no}>
                       <li className="investList" >
@@ -209,7 +211,9 @@ export default class MyInvestment extends React.Component {
                             <span className="investListChild_time">时间</span>
                             <span className="investListChild_op">操作</span>
                           </li>
-                          { data.invRecordChildVos.map((item)=> {
+                          { data.invRecordChildVos.length <= 0 ?
+                             <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无订单数据</p>:
+                            data.invRecordChildVos.map((item)=> {
                             return (
                               <li key={item.invId} className="investListChild">
                                 <span className="investListChild_no">{item.invNo}</span>
