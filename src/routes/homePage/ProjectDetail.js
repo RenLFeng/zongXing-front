@@ -118,7 +118,6 @@ export default class ProjectDetail extends React.Component {
   async changeNum() {
     const {projectId} = this.props.match.params;
     const response = await getInvestmentNum(projectId);
-    console.log(response);
     if (response.code === 0) {
       this.setState({
         projectDetail: {

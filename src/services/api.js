@@ -542,5 +542,20 @@ export async function selectYearInvest(param) {
   return request(`${BASE_URL}/zjb-website/invRecord/getInvReview?year=${param}`)
 }
 
+//所在城市结构
+export async function getCityInvest(param) {
+  return request(`${BASE_URL}/zjb-website/invRecord/getCityNum?projectId=${param}`)
+}
+
+//男女所占比例
+export async function getGender(param) {
+  return request(`${BASE_URL}/zjb-website/invRecord/getGenderNum?projectId=${param}`)
+}
+
+//获取年龄
+export async function getAge(param) {
+  return request(`${BASE_URL}/zjb-website/invRecord/getAgeNum?projectId=${param}`)
+}
+
 
 

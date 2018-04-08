@@ -71,6 +71,11 @@ export default class Right extends React.Component {
   }
 
   async getData(page) {
+    //调用子级方法
+    this.dataModal.getCityInvest(this.props.projectDetail.fpeoject_id);
+    this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
+    this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
+    
     const response = await alreadyInvested({pageParam:this.state.pageParam, projectId:this.props.projectDetail.fpeoject_id});
     //判断请求状态
     if (response.code === 0) {
@@ -119,7 +124,12 @@ export default class Right extends React.Component {
             </div>
           </div>
           <div className="bot">
-            <a className="btn" onClick={() => this.getData(1)}><i>已投资人数</i><b>{userCount}</b>人</a>
+          {
+            userCount ? 
+            <a className="btn" onClick={() => this.getData(1)}><i>已投资人数</i><b>{userCount}</b>人</a> :
+            <a style={{backgroundColor: '#ccc', width: '200',lineHeight: '50px',textAlign: 'center',position: 'absolute',top:'26',left: '50%',marginLeft: '-100',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>已投资人数</i><b>{userCount}</b>人</a>
+          }
+            
           </div>
         </div>
         <div className="box2 shadow">
@@ -153,7 +163,7 @@ export default class Right extends React.Component {
             </i>
           </p>
         </div>
-        <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} />
+        <Data ref={ref => this.dataModal = ref} arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} projectId={this.props.projectDetail.fpeoject_id}/>
         <FormProject
           project={this.props.projectDetail}
           personalMoney={this.state.personalMoney}
