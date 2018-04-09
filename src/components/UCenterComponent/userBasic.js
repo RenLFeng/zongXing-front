@@ -70,10 +70,10 @@ class UserBaseFormInput extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         // 数据格式转换 cityCode
-        // let fCityCode = '';
-        // if (values.fCityCode && values.fCityCode.length > 0) {
-        //   fCityCode = values.fCityCode[values.fCityCode.length - 1];
-        // }
+        let fCityCode = '';
+        if (values.fCityCode && values.fCityCode.length > 0) {
+          fCityCode = values.fCityCode[values.fCityCode.length - 1];
+        }
         // 获得后台需要的数据
         const userBase = {
           user: !values.frealName && !values.fnickName && !values.floginName ? null :  {
@@ -92,7 +92,7 @@ class UserBaseFormInput extends React.Component {
             fAddress: values.fAddress,
             fGender: values.fGender,
             fBirthday: values.fBirthday ? new Date(values.fBirthday.format('YYYY/MM/DD')): null,
-            fCityCode: values.fCityCode ? values.fCityCode.toString() : null,
+            fCityCode,
             fJob: values.fJob,
             fHobby: values.fHobby
           }
@@ -134,13 +134,19 @@ class UserBaseFormInput extends React.Component {
           {...formItemLayout}
           label="用户名"
           extra="用户名填写之后不可改!"
-          help={this.state.error ? <span style={{color: 'red'}}>用户名已存在</span> : null}
         >
           {getFieldDecorator('floginName', {
             rules:[{pattern: USER_REG, message: '用户名格式应为2到16位(可用字母，数字，下划线，减号)'}],
             initialValue: userBase.flogin_name?userBase.flogin_name: null
-          })(<Input maxLength={'20'} disabled={!!userBase.flogin_name} onBlur={(e)=>this.judgeUserName(e)}/>)}
+          })(<Input
+           maxLength={'20'}
+            disabled={!!userBase.flogin_name}
+             onBlur={(e)=>this.judgeUserName(e)}
+             
+             />)}
         </FormItem>
+        {this.state.error ? 
+        <p style={{color: 'red',marginLeft: 195,marginTop: '-20px'}}>用户名已存在</p>: null}
         <FormItem
           {...formItemLayout}
           label="身份证号"
@@ -249,7 +255,7 @@ class UserBaseFormInput extends React.Component {
           label="所在城市"
         >
           {getFieldDecorator('fCityCode', {
-            initialValue: userBase.fcity_code ? userBase.fcity_code.split(','): null,
+            initialValue: userBase.fcity_code ? userBase.fcity_code[0]==='0'&& userBase.fcity_code[1]===','?userBase.fcity_code.substring(2, userBase.fcity_code.length).split(','):userBase.fcity_code.split(','): null,
           })(
             <Cascader options={city} placeholder={'请选择'}/>
           )}
