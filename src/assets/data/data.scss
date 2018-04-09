@@ -22,7 +22,7 @@
 }
 
 .hover_1 {
-  background: #3EE9C5;
+  background: rgb(107, 192, 174);
   border: 1px solid #3EE9C5;
   color: #fff;
   font-weight: bold;
@@ -34,4 +34,10 @@
   border-bottom: 1px solid #ccc;
   line-height: 52px;
   text-align: center;
+}
+
+.proportion{
+  // position: absolute;
+  top:-250px;
+  border:1px solid red;
 }
