@@ -557,5 +557,10 @@ export async function getAge(param) {
   return request(`${BASE_URL}/zjb-website/invRecord/getAgeNum?projectId=${param}`)
 }
 
+//获取投资额度
+export async function getInvest(param) {
+  return request(`${BASE_URL}/zjb-website/invRecord/getInvNum?projectId=${param}`)
+}
+
 
 

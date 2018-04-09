@@ -75,6 +75,7 @@ export default class Right extends React.Component {
     this.dataModal.getCityInvest(this.props.projectDetail.fpeoject_id);
     this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
     this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
+    this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
     
     const response = await alreadyInvested({pageParam:this.state.pageParam, projectId:this.props.projectDetail.fpeoject_id});
     //判断请求状态
