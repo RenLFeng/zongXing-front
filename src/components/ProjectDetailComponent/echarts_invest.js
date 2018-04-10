@@ -42,11 +42,9 @@ export default class Invest extends React.Component{
         if(this.props.invest !== nextProps.invest){
             let arr = [];
             for (let i of nextProps.invest.list) {
-              arr.push([i.days-1,i.money]); 
+              arr.push([`${i.days}`,i.money]); 
             }
-            console.log(arr)
-
-            
+          
             this.setState({
                 option: {
                     grid: {
@@ -86,7 +84,7 @@ export default class Invest extends React.Component{
     loopDay(day) {
        let arr = [];
        for(let i = 1; i <= day ; i++) {
-          arr.push(i);      
+          arr.push(`${i}`);      
        }
        return arr;
     }

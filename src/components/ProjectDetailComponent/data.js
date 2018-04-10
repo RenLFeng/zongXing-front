@@ -211,7 +211,7 @@ export default class Data extends React.Component {
 
             {
               this.state.investShow ? 
-              <div style={{width:'350px'}}>
+              <div>
                 <p className="pictit">投资额度结构</p>
                 <Invest invest={this.state.invest} />
               </div> : null
