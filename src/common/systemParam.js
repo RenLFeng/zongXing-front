@@ -11,7 +11,7 @@ export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 /*测试配置*/
 // export const PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 // export const REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
-// export const IMG_BASE_URL = 'https://zjb-test-1255741041.cosgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
+// export const IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
 // export const TURN_BACK = 'http://testmanage.5izjb.com'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
 
 /*开发配置*/
