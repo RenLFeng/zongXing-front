@@ -73,7 +73,7 @@ export default class SecLoan extends React.Component {
     return (
       <div>
         <div className="lnav">
-          { project.riskItems?
+          { project.riskItems && project.riskItems.length > 0?
             <a className="a6">平台认证</a> : null
           }
           {project.projectModules ? project.projectModules.map((item)=>{
