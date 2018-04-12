@@ -377,7 +377,7 @@ export default class SafeCenter extends React.Component {
                 }
               </div>
               <div className="block2">{!!safeData.userSecurityCenter.fCertification?`您认证的实名信息：${safeData.fRealName}`:'您还未实名认证，请尽快去认证'}</div>
-              <div className="block3">{!!safeData.userSecurityCenter.fCertification?'已认证':<Link to={Path.OPEN_ACCOUNT+'/0'}>认证</Link>}</div>
+              <div className="block3">{!!safeData.userSecurityCenter.fCertification?'已认证':<span>认证</span>}</div>
             </div>
 
             <div className="line">

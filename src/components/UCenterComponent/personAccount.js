@@ -122,7 +122,7 @@ export default class PersonAccount extends React.Component {
           name: '元'
         },
         series: [{
-          data: [[1, 20], [2, 400], [3, 5000]],
+          data: [],
           type: 'line',
           lineStyle: {
             color: '#FEA063'
@@ -151,6 +151,12 @@ export default class PersonAccount extends React.Component {
     if (this.props.personal !== nextProps.personal) {
       const money = nextProps.personal.totalAssets;
       const data = nextProps.personal;
+      // 回款计划
+      const plan = nextProps.personal.plan?nextProps.personal.plan: [];
+      let planArr = [];
+      for (let obj of plan) {
+        planArr.push([obj.month, obj.money])
+      }
       this.setState({
         pieOption: {
           tooltip: {
@@ -189,9 +195,9 @@ export default class PersonAccount extends React.Component {
               } else if (name === '冻结金额') {
                 return `${name}  {b|${(money.freezingAmount+'').fm()}}`
               } else if (name === '待收本金') {
-                return `${name}  {b|${`${data.surplusMoney?data.surplusMoney:0}`.fm()}}`
+                return `${name}  {b|${`${money.collectPrincipal}`.fm()}}`
               } else {
-                return `${name}  {b|${`${data.surplusInterest?data.surplusInterest:0}`.fm()}}`
+                return `${name}  {b|${`${money.collectInterest}`.fm()}}`
               }
             },
             left: '50%',
@@ -235,12 +241,45 @@ export default class PersonAccount extends React.Component {
               data:[
                 {value:money.availableBalance, name:'可用余额'},
                 {value:money.freezingAmount, name:'冻结金额'},
-                {value:data.surplusMoney?data.surplusMoney:0, name:'待收本金'},
-                {value:data.surplusInterest?data.surplusInterest:0, name:'待收利息'}
+                {value:money.collectPrincipal, name:'待收本金'},
+                {value:money.collectInterest, name:'待收利息'}
               ]
             }
           ]
-        }
+        },
+        lineOption: {
+          tooltip : {
+            trigger: 'axis',
+            formatter: function (params) {
+              params = params[0];
+              return `${params.axisValue}月
+              回款${params.data[1]}元`
+            },
+          },
+          xAxis: {
+            type: 'value',
+            nameLocation: 'end',
+            minInterval: 1,
+            min: 1,
+            max: 12,
+            scale: true,
+            interval: 1,
+            name: '月'
+          },
+          yAxis: {
+            name: '元'
+          },
+          series: [{
+            data: planArr,
+            type: 'line',
+            lineStyle: {
+              color: '#FEA063'
+            },
+            itemStyle: {
+              color: '#28F3AD'
+            }
+          }]
+        },
       })
     }
   }

@@ -21,6 +21,7 @@ import AllInvest from '../../components/UCenterComponent/AllInvest';
 
 import Test from '../../components/UCenterComponent/test';
 import CompanyList from '../../components/UCenterComponent/companyList';
+import receivePlan from '../../components/UCenterComponent/receivePlan'
 
 import Path from '../../common/pagePath';
 import MoreInfo from "../../components/UCenterComponent/moreInfo";
@@ -88,6 +89,7 @@ export default class UCenter extends React.Component {
             <Route path={Path.INCOME_PLAN} component={IncomePlan} />
             <Route path={Path.MORE_INFO}  component={MoreInfo} />
             <Route path={Path.ALL_INVEST}  component={AllInvest} />
+            <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
           </Switch>
         </div>
       </div>
