@@ -50,6 +50,8 @@ export default class Login extends React.Component {
 
       flagShow: false, //验证码发送之后提示语
 
+      registerShow:true,  //校验手机号是否存在时，发送验证码按钮的状态
+
 
     };
     this.getAuthCode = this.getAuthCode.bind(this);
@@ -78,6 +80,35 @@ export default class Login extends React.Component {
     console.log(111)
   }
 
+  check(){
+    const {regPhone} = this.state;
+
+  }
+
+  //检验手机号是否存在
+  async checkPhoneNumber(type) {
+    const phoneNum = this.state.regPhone;
+    if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
+      const response = await phoneExist(phoneNum);
+      if (response.code !== 0) {
+        this.setState({
+          regNameErr: response.msg,
+          registerShow: false,
+        });
+      } else {
+        this.setState({
+          registerShow: true,
+        },()=>{
+        if(type === false){
+          this.getAuthCode();
+        }
+          this.setState({regNameErr: ''});
+        })  
+      }
+    }
+  }
+
+  //获取验证码
   async getAuthCode() {
     const {regPhone} = this.state;
     if (regPhone.length === 0) {
@@ -125,7 +156,7 @@ export default class Login extends React.Component {
     }, 1000);
   }
 
-// 身份验证——手机号
+  // 身份验证——手机号
   getAuthCode_ = async () => {
     const {loginName, mobile, authCode} = this.state;
     if (loginName.length === 0) {
@@ -376,17 +407,7 @@ export default class Login extends React.Component {
     });
   }
 
-  async checkPhoneNumber() {
-    const phoneNum = this.state.regPhone;
-    if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
-      const response = await phoneExist(phoneNum);
-      if (response.code !== 0) {
-        this.setState({regNameErr: response.msg});
-      } else {
-        this.setState({regNameErr: ''});
-      }
-    }
-  }
+  
 
   pressKey(e) {
     if (e.keyCode === 13) {
@@ -408,16 +429,20 @@ export default class Login extends React.Component {
               <div className="row">
                 <input className="put mobile" value={regPhone} maxLength={11} name="regPhone" type="tel"
                        placeholder="请输入手机号码" onChange={(e) => this.setState({regPhone: e.target.value})}
-                       onBlur={this.checkPhoneNumber}/>
+                       onBlur={()=>this.checkPhoneNumber(true)} />
                 <p>{this.state.regNameErr}</p>
               </div>
               <div className="row relative" style={{marginBottom: 0}}>
                 <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
                        placeholder="输入验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})}/>
-                { // 根据倒计时时间显示是否可以点击获取验证码按钮
-                  showAuthCode ?
-                    <a className="getvc center" onClick={this.getAuthCode}>获取验证码</a> :
-                    <span className="getvc center" style={{backgroundColor: '#D1D1D1'}}>{countDown}s后重新获取</span>}
+
+                {// 根据倒计时时间显示是否可以点击获取验证码按钮
+                  this.state.registerShow ?
+                    ((showAuthCode) ?
+                    <a className="getvc center" onClick={()=>this.checkPhoneNumber(false)}>获取验证码</a> :
+                    <span className="getvc center" style={{backgroundColor: '#D1D1D1'}}>{countDown}s后重新获取</span>) :
+                    <span className="getvc center" style={{backgroundColor: '#D1D1D1'}}>获取验证码</span>
+                }
               </div>
               <p style={{color: 'red', marginBottom: 20, marginTop: 5}}>{this.state.authErr}</p>
               <div className="row">
