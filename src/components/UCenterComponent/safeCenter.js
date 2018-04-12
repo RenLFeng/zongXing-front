@@ -274,6 +274,7 @@ export default class SafeCenter extends React.Component {
   async getDistribution(type) {
     this.setState({loading:true});
     const response = await distribution(type,'');
+    console.log('123', response);
     this.setState({loading:false});
     if(response.code === 0){
       this.setState({
@@ -300,10 +301,11 @@ export default class SafeCenter extends React.Component {
   async getAuthorizationState(){
     this.setState({loading:true});
     const response = await authorizationState('');
+    console.log('1234', response);
     this.setState({loading:true});
     if(response.code === 0){
       this.setState({
-        status:response.data,
+        status:response.data?response.data: '',
       })
     } else if (response.code === -3) {
       this.setState({
@@ -342,6 +344,7 @@ export default class SafeCenter extends React.Component {
 
   render() {
     const {distribution,url,status} = this.state;
+    console.log(status);
     const { safeData} = this.props;
     return (
       <div>
