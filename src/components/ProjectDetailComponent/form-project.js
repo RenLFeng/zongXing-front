@@ -102,7 +102,6 @@ export default class FormProject extends React.Component {
           $('._masker').remove();
           $('.pd-form').addClass('none');
         });
-
       } else if (response.code === -3) {
         // 处理未授权二次分配
         this.setState({
