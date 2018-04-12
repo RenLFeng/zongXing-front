@@ -91,7 +91,7 @@ constructor(props){
   }
   del_shopping(id) {
    let list = this.state.list;
-   const arr = list.filter((item)=>item.id !==id );
+   const arr = list.filter((item)=>item.id !== id );
    const arr1 = arr.filter((item)=>item.checkboxValue === true);
     console.log(arr);
     this.setState({
@@ -152,6 +152,7 @@ constructor(props){
 }
 
   onChange(e,data, index){
+    console.log(data);
     let list = this.state.list;
     list[index].checkboxValue =  e.target.checked;
     this.setState({
