@@ -562,5 +562,13 @@ export async function getInvest(param) {
   return request(`${BASE_URL}/zjb-website/invRecord/getInvNum?projectId=${param}`)
 }
 
-
+//回款计划
+export async function repayPlan(params) {
+  return request(`${BASE_URL}/zjb-website/account/getRepayPlan`,{
+      method:'POST',
+      body: {
+        ...params
+      }
+    })
+}
 

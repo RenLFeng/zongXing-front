@@ -357,4 +357,25 @@ li {
   margin-right: 26%;
 }
 
-
+//回款计划
+.planList{
+  border-bottom: 1px solid lightgray;
+  width: 94%;
+  min-height: 37px;
+  padding: 9px 0 0;
+  margin: auto;
+  span{
+    display: inline-block;
+    width:20%;
+  }
+  .Interest,.money{
+    width:15%;
+  }
+  .projectName{
+    width:30%;
+  }
+}
+.center{
+  text-align: center;
+  color: gray;
+}

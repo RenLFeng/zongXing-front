@@ -78,6 +78,7 @@ constructor(props){
     });
     this.sum(data);
 }
+
 //删除
   dele(id){
     Modal.confirm({
