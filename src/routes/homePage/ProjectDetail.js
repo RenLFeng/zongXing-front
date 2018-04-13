@@ -156,7 +156,11 @@ export default class ProjectDetail extends React.Component {
             </div>
           </div>
           <div className="fr rbody">
-            <Right projectDetail={projectDetail} history={this.props.history} time={{countDay: this.state.countDay, countDown: this.state.countDown}}/>
+            <Right 
+              projectDetail={projectDetail} 
+              history={this.props.history}
+              time={{countDay: this.state.countDay, countDown: this.state.countDown}}
+            />
           </div>
         </div>
       </div>

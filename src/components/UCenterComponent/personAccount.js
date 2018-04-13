@@ -294,6 +294,7 @@ export default class PersonAccount extends React.Component {
 
   render() {
     const { openStatus, errorMessage } = this.props;
+    console.log(this.props.personal)
     if (openStatus === 0) {
       return (
         <div className="fr uc-rbody">
@@ -317,7 +318,7 @@ export default class PersonAccount extends React.Component {
       <div className="fr uc-rbody">
         <div className="ptit">
           <i>账户总资产</i>
-          <b>{(this.props.personal.totalAssets.totalAssets+'').fm()}</b>
+          <b>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</b>
           <em>单位：元</em>
         </div>
         <div className="tright hd1">
