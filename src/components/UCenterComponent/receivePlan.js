@@ -1,9 +1,8 @@
 import React from 'react';
-import {Icon, message, Table, Button, Checkbox} from 'antd';
+import {message} from 'antd';
 import '../../assets/MessageList/messageList.scss';
 import {repayPlan} from '../../services/api.js';
 import moment from 'moment';
-import {STATION_MESSAGE} from '../../common/pagePath';
 import {pageShows} from '../../common/systemParam';  //分页组件
 
 export default class ReceivePlan extends React.Component {

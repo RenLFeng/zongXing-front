@@ -18,7 +18,7 @@ export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
 export const REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
 export const PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
-export const TURN_BACK = 'http://192.168.1.202:8001'; // 从大众网页跳到企业后台管理页面的地址 开发配置
+export const TURN_BACK = 'http://192.168.1.250:8001'; // 从大众网页跳到企业后台管理页面的地址 开发配置
 /*
 * 结束
 *
