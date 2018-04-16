@@ -15,7 +15,7 @@ export default {
     openStatus: 0,
     personal: {
       accountDynamicVos: [],
-      plan: {},
+      plan: [],
       totalAssets: {}
     },
     companyListStatus: false,
@@ -45,7 +45,7 @@ export default {
               openStatus: NO_OPEN,
               data: {
                 accountDynamicVos: [],
-                plan: {},
+                plan: [],
                 totalAssets: {}
               }
             }
@@ -58,7 +58,7 @@ export default {
                 openStatus: OPENING,
                 data: {
                   accountDynamicVos: [],
-                  plan: {},
+                  plan: [],
                   totalAssets: {}
                 }
               }
@@ -70,7 +70,7 @@ export default {
                 openStatus: OPEN_FAIL,
                 data: {
                   accountDynamicVos: [],
-                  plan: {},
+                  plan: [],
                   totalAssets: {},
                 },
                 message: response.data.freturnMessage
