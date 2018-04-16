@@ -35,7 +35,7 @@ export default class CompletePro extends React.Component {
             projectList.map((data) => {
               return (
                 <div style={{ cursor:'pointer' }} key={data.fId} onClick={()=>this.jumpDetail(data.fId)}>
-                  <i className="pic_box1"><img className="pic" src={`${IMG_BASE_URL}/${data.fCardPicPath}`}/></i>
+                  <i className="pic_box1"><img className="pic" src={`${IMG_BASE_URL}${data.fCardPicPath}`}/></i>
                   <p className="name">{data.fName}</p>
                   <div className="done"></div>
                   <i className="price">￥{data.fCreditMoney.fmm()}</i>
