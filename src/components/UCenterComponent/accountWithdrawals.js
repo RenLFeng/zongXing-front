@@ -86,7 +86,7 @@ class EnterprisePresentation extends React.Component {
     this.formId.submit();
     Modal.confirm({
       title: '提示',
-      content: '提现成功',
+      content: '请在新页面完成操作',
       okText: '确定',
       cancelText: '取消',
       onOk: () => this.props.history.push(Path.PERSONAL_ACCOUNT)
@@ -125,9 +125,10 @@ class EnterprisePresentation extends React.Component {
           withdrawals: response.data
         })
       } else {
-        response.error(response.msg);
+        message.error(response.msg);
       }
     } catch (e) {
+      console.log(e);
       this.setState({loading: false});
       if (typeof e === 'object' && e.name === 288) {
         throw e;

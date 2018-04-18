@@ -114,7 +114,7 @@ export default class Data extends React.Component {
   render() {
     const page_num = pageShows(this.props.pageCurrent, this.props.maxPage);
     return (
-      <div className="pd-data shadow none">
+      <div className="pd-data shadow none" style={{zIndex: 170}}>
         <a className="close"/>
         <p className="tit">投资人统计{this.props.userCount?<i>（<em className="cf60">{this.props.userCount}</em>人）</i>: null}</p>
         <div className="clearfix">
@@ -126,7 +126,6 @@ export default class Data extends React.Component {
                 <i className="col2">投资资金</i>
                 <i className="col3">投资时间</i>
               </div>
-              
                { this.props.arr.length>0  ?
                   this.props.arr.map((data, index)=>{
                     return(

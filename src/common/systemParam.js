@@ -18,7 +18,7 @@ export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 export const IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
 export const REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
 export const PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
-
+export const TURN_BACK = 'http://192.168.1.192:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
 /*
 * 结束
 *
@@ -79,7 +79,7 @@ export const ORDER_STATUS = {
   '0': '待付款',
   '1': '成功',
   '2': '成功',
-  '3': '已退款',
+  '-2': '已退款',
   '4': '处理中'
 };
 
@@ -131,7 +131,8 @@ export const PROJECT_NAME = '';
 //秒换算倒计时 天/小时/分钟/秒
 export function conversionTime(initialTime) {
   if (Math.floor(initialTime/DATE_SECONDS) !== 0) {
-    return `${Math.floor(initialTime/DATE_SECONDS)}天`;
+    console.log(initialTime/DATE_SECONDS);
+    return `${Math.floor(initialTime/DATE_SECONDS)}天`; 
   }
   if (Math.floor(initialTime/HOURS_SECONDS) !== 0) {
     return `${Math.floor(initialTime/HOURS_SECONDS)}小时`;

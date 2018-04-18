@@ -40,9 +40,11 @@ export default class ProjectDetail extends React.Component {
       this.setState({
         projectDetail: response.data
       }, () => {
-        this.countDown = setInterval(()=>{
-          this.countDownTime();
-        }, 1000);
+        if (response.data && response.data.fflag === 10) {
+          this.countDown = setInterval(()=>{
+            this.countDownTime();
+          }, 1000);
+        }
       });
       if (response.data.flocation) {
         let map = new AMap.Map('container',{

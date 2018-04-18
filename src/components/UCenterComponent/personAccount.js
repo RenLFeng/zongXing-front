@@ -351,7 +351,7 @@ export default class PersonAccount extends React.Component {
         <div className="hd2 clearfix">
           <a className="fl hover">回款计划</a>
           {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}
-          <a className="fr">更多 &gt;&gt;</a>
+          <Link className="fr" to={Path.RECEIVE_PLAN}>更多 &gt;&gt;</Link>
         </div>
         <div>
           <LineReact height="450px" width="900px" option={this.state.lineOption}/>

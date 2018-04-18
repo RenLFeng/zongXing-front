@@ -150,7 +150,7 @@ export default class FormProject extends React.Component {
             <i>年利率<em className="cf60">{project.frate_last}%</em></i>
             <i>期限<em className="cf60">{project.fcollect_day}</em>天</i>
           </p>
-          <div className="bar"><div style={{width: `${project.allMoney*1/project.fcredit_money}%`}} /></div>
+          <div className="bar"><div style={{width: `${project.allMoney*100/project.fcredit_money}%`}} /></div>
           <p className="t2 f16 c9">
             <i className="fl">借款总额<em className="f24 cf60">{(project.fcredit_money+'').fm()}</em>元</i>
             <i className="fr">剩余可投<em className="f24 cf60">{((project.fcredit_money-project.allMoney)+'').fm()}</em>元</i>

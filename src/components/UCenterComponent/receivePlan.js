@@ -41,7 +41,7 @@ export default class ReceivePlan extends React.Component {
   render() {
     const { arr,showMask,detail } = this.state;
     const page_num = pageShows(this.state.pageCurrent, this.state.maxPage);
-    console.log(page_num);
+    console.log(arr);
     return (
       <div className="fr uc-rbody" >
         <div className="title">
@@ -59,7 +59,7 @@ export default class ReceivePlan extends React.Component {
                 <span className="time">回款时间</span>
               </li>
 
-              { arr.length <= 0?
+              { !arr || arr && arr.length <= 0?
                 <p className="planList center">暂无数据</p>:
                 arr.map((data,index)=>{
                   return(

@@ -1,7 +1,8 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
 
-const BASE_URL = 'http://192.168.1.4:8001'; // 开发服务器
+// const BASE_URL = 'http://192.168.1.4:8001'; // 开发服务器
+const BASE_URL = 'http://192.168.1.3:8001'; // 开发服务器
 // const BASE_URL = 'http://192.168.1.12:8001'; // 开发服务器
 // const BASE_URL = 'http://test.5izjb.com:8001'; // 测试服务器
 

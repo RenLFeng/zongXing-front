@@ -66,8 +66,8 @@ export default class MoreInfo extends React.Component{
               <li className="massageList">
                 <span className="massageListTitle3">往来单位</span>
                 <span className="massageListTitle1">类型</span>
-                <span className="massageListTitle">收入</span>
-                <span className="massageListTitle">支出</span>
+                <span className="massageListTitle">入账</span>
+                <span className="massageListTitle">出账</span>
                 <span className="massageListTitle">账户初始金额</span>
                 <span className="massageListTitle">账户剩余金额</span>
                 <span className="massageListTitle2">时间</span>
