@@ -135,7 +135,7 @@ export default class SecConsultation extends React.Component {
         this.setState({[`loading${topicId}`]: false});
         if (response.code === 0) {
           this.setState({[`replayText${topicId}`]: ''});
-          this.getAllTopicReply(topicId);
+          this.getAllTopicReply(topicId, true);
         } else {
           message.error(response.msg);
         }
@@ -159,7 +159,7 @@ export default class SecConsultation extends React.Component {
         this.setState({[`myLoading${topicId}`]: false});
         if (response.code === 0) {
           this.setState({[`my${topicId}Text`]: ''});
-          this.getMyAllTopicReply(topicId);
+          this.getMyAllTopicReply(topicId, true);
         } else {
           message.error(response.msg);
         }
@@ -171,28 +171,51 @@ export default class SecConsultation extends React.Component {
   }
 
   // 获得一个话题下的所有回复
-  async getAllTopicReply(topicId) {
+  async getAllTopicReply(topicId, type) {
+    if (!type) {
+      this.setState({
+        [`replyStatus${topicId}`]: !this.state[`replyStatus${topicId}`],
+        [`replayText${topicId}`]: '',
+        [`${topicId}length`]: 0
+      });
+      console.log(this.state[`replyStatus${topicId}`]);
+      if (this.state[`replyStatus${topicId}`]) {
+        return;
+      }
+    }
     this.setState({
       [`replyStatus${topicId}`]: true
     });
     const response = await getReplyByTopic(topicId);
     if (response.code === 0) {
       this.setState({
-        [`reply${topicId}`]: response.data
+        [`reply${topicId}`]: response.data,
+        [`${topicId}length`]: 0
       });
     } else {
       message.error(response.msg);
     }
   }
 
-  async getMyAllTopicReply(topicId) {
+  async getMyAllTopicReply(topicId, type) {
+    if (!type) {
+      this.setState({
+        [`myReplyStatus${topicId}`]: !this.state[`myReplyStatus${topicId}`],
+        [`${topicId}TextLength`]: 0,
+        [`my${topicId}Text`]: ''
+      });
+      if (this.state[`replyStatus${topicId}`]) {
+        return;
+      }
+    }
     this.setState({
-      [`myReplyStatus${topicId}`]: true
+      [`replyStatus${topicId}`]: true
     });
     const response = await getReplyByTopic(topicId);
     if (response.code === 0) {
       this.setState({
-        [`myReply${topicId}`]: response.data
+        [`myReply${topicId}`]: response.data,
+        [`${topicId}TextLength`]: 0
       });
     } else {
       message.error(response.msg);
@@ -252,9 +275,15 @@ export default class SecConsultation extends React.Component {
                       </div>
                       <div className="rebox">
                         <textarea className="put" rows="5" value={this.state[`replayText${data.fid}`]}
-                                  onChange={(e) => this.setState({[`replayText${data.fid}`]: e.target.value})}/>
+                                  onChange={(e) => {
+                                    console.log(e.target.value.length);
+                                    this.setState({
+                                      [`replayText${data.fid}`]: e.target.value,
+                                      [`${data.fid}length`]:e.target.value.length
+                                    })}}
+                                  />
                         <p className="tright">
-                          <i className="fl c6">还可以输入<em>240</em>字</i>
+                          <i className="fl c6">还可以输入<em>{this.state[`${data.fid}length`]?`${240-this.state[`${data.fid}length`]}`:'240'}</em>字</i>
                           <Button type="primary" loading={this.state[`loading${data.fid}`]} style={{borderRadius: 3}}
                                   onClick={() => this.saveTopic(data.fid, 0)}>回复</Button>
                         </p>
@@ -302,9 +331,9 @@ export default class SecConsultation extends React.Component {
                       </div>
                       <div className="rebox">
                         <textarea className="put" rows="5" value={this.state[`my${data.fid}Text`]}
-                                  onChange={(e) => this.setState({[`my${data.fid}Text`]: e.target.value})}/>
+                                  onChange={(e) => this.setState({[`my${data.fid}Text`]: e.target.value, [`${data.fid}TextLength`]: e.target.value.length})}/>
                         <p className="tright">
-                          <i className="fl c6">还可以输入<em>240</em>字</i>
+                          <i className="fl c6">还可以输入<em>{this.state[`${data.fid}TextLength`]?`${240-this.state[`${data.fid}TextLength`]}`:'240'}</em>字</i>
                           <Button type="primary" loading={this.state[`myLoading${data.fid}`]} style={{borderRadius: 3}}
                                   onClick={() => this.saveTopic(data.fid, 1)}>回复</Button>
                         </p>

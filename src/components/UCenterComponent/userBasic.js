@@ -106,6 +106,10 @@ class UserBaseFormInput extends React.Component {
     });
   }
 
+  filter = (inputValue, path) => {
+    return (path.some(city => (city.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1));
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { userBase } = this.props.param;
@@ -119,7 +123,7 @@ class UserBaseFormInput extends React.Component {
             rules:[{pattern: NAME_REG_, message: '请输入合法的中文'},
               {whitespace: true, message: '真实姓名中不能出现空格'}],
             initialValue: userBase.freal_name?userBase.freal_name: null
-          })(<Input maxLength={'20'}/>)}
+          })(<Input maxLength={'20'} autocomplete="new-password"/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -257,7 +261,7 @@ class UserBaseFormInput extends React.Component {
           {getFieldDecorator('fCityCode', {
             initialValue: userBase.fcity_code ? userBase.fcity_code[0]==='0'&& userBase.fcity_code[1]===','?userBase.fcity_code.substring(2, userBase.fcity_code.length).split(','):userBase.fcity_code.split(','): null,
           })(
-            <Cascader options={city} placeholder={'请选择'}/>
+            <Cascader options={city} placeholder={'请选择'} showSearch={this.filter} notFoundContent={'无匹配项'}/>
           )}
         </FormItem>
         <FormItem

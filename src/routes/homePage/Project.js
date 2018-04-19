@@ -9,6 +9,7 @@ import Right from '../../components/ProjectDetailComponent/right2';
 import {getProjectDetail, getInvestmentNum} from '../../services/api';
 import { message } from 'antd';
 import {IMG_BASE_URL} from '../../common/systemParam';
+import Editor from '../../components/editor';
 
 export default class ProjectDetail extends React.Component {
   constructor(props) {

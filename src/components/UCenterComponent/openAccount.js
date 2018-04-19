@@ -247,7 +247,7 @@ class FormComponent extends React.Component {
           {getFieldDecorator('mobile', {
             rules: [{ pattern: VER_PHONE, message: '手机格式不正确' },
               { required: true, message: '请填写手机' }],
-          })(<Input maxLength={'20'}/>)}
+          })(<Input maxLength={'20'} autocomplete="off"/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -256,7 +256,7 @@ class FormComponent extends React.Component {
           {getFieldDecorator('email', {
             rules: [{ type: 'email', message: '邮箱格式不正确', },
               { required: true, message: '请填写邮箱' }],
-          })(<Input maxLength={'40'}/>)}
+          })(<Input maxLength={'40'} autocomplete="off"/>)}
         </FormItem>
         { this.state.openType === '0' ?
           <div>
@@ -269,7 +269,7 @@ class FormComponent extends React.Component {
                   { pattern: ID_CORD, message: '身份证格式不正确' },
                   { required: true, message: '请填写身份证号' },
                 ],
-              })(<Input maxLength={'20'}/>)}
+              })(<Input maxLength={'20'} autocomplete="off"/>)}
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -279,7 +279,7 @@ class FormComponent extends React.Component {
                 rules: [
                  { required: true, message: '请填写真实姓名' },
                 ],
-              })(<Input maxLength={'20'}/>)}
+              })(<Input maxLength={'20'} autocomplete="off"/>)}
             </FormItem>
           </div>
           : null }

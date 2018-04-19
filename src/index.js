@@ -2,6 +2,7 @@ import "babel-polyfill";
 import dva from 'dva';
 import './index.css';
 import onError from './error';
+import system from './common/systemParam';
 // 1. Initialize 初始化dva
 const app = dva({
 	onError

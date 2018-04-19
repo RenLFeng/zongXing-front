@@ -2,6 +2,7 @@ import React from 'react';
 import Images from './images';
 import {IMG_BASE_URL} from '../../common/systemParam';
 import moment from 'moment';
+import Editor from '../../components/editor';
 
 export default class SecLoan extends React.Component {
   state = {
@@ -117,7 +118,7 @@ export default class SecLoan extends React.Component {
               <div key={item.fid} className="textbox border">
                 <i className="tit">{item.ftitle}</i>
                 <div>
-                  <p>{item.fcontent?item.fcontent: `暂无${item.ftitle}`}</p>
+                  <Editor value={item.fcontent}/>
                   {pics.length > 2 ?
                     <Images pics={pics} id={item.fid}/>
                     :
@@ -129,36 +130,6 @@ export default class SecLoan extends React.Component {
               </div>
             )
           }): null}
-
-
-          {/*<div className="textbox border">*/}
-            {/*<i className="tit">我的自述</i>*/}
-            {/*<p>{item.fcontent?project.fcontent: '暂无我的自述'}</p>*/}
-          {/*</div>*/}
-          {/*{project.fmy_project_pic ? project.fmy_project_pic.split(',').map((data, index)=>{*/}
-            {/*if (data.length > 0) {*/}
-              {/*return (*/}
-                {/*<p key={data+index} style={{marginBottom: 10}}>*/}
-                  {/*<img src={`${IMG_BASE_URL}project/${dateCode}/${project.fproject_no}/${data}`}/>*/}
-                {/*</p>*/}
-              {/*);*/}
-            {/*}*/}
-
-          {/*}): null}*/}
-
-          {/*<div className="textbox border">*/}
-            {/*<i className="tit">我的项目</i>*/}
-            {/*<p>{project.myproject?project.myproject: '暂无我的项目'}</p>*/}
-          {/*</div>*/}
-          {/*/!*<Images project={project}/>*!/*/}
-          {/*<div className="textbox border">*/}
-            {/*<i className="tit">为何众借</i>*/}
-            {/*<p>{project.fwhy_loan?project.fwhy_loan: '暂无为何众借'}</p>*/}
-          {/*</div>*/}
-          {/*<div className="textbox border">*/}
-            {/*<i className="tit">还款计划</i>*/}
-            {/*<p>{project.fpay_from?project.fpay_from: '暂无还款计划'}</p>*/}
-          {/*</div>*/}
           <div className="textbox border">
             <i className="tit">我的位置</i>
             <div>

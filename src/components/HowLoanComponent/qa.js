@@ -1,5 +1,5 @@
 import React from 'react';
-import {investQa} from '../../common/InvestQa';
+import {loanQa} from '../../common/LoanQa';
 const styles = {
   allTitle: {
     fontSize: '30px',
@@ -33,11 +33,11 @@ const styles = {
 
 export default class Qa extends React.Component {
   state = {
-    answerArr: investQa[0].data
+    answerArr: loanQa[0].data
   }
 
   chooseType (data) {
-    for (let obj of investQa) {
+    for (let obj of loanQa) {
       if (obj.type === data) {
         this.setState({
           answerArr: obj.data
@@ -53,7 +53,7 @@ export default class Qa extends React.Component {
         <div className="w clearfix">
           <div className="fl shadow center" style={styles.center}>
             <p className="t1" style={styles.allTitle}>全部问题</p>
-            {investQa.map((data, index)=>{
+            {loanQa.map((data, index)=>{
               return (
                 <p className={"t2"} style={styles.t2}>
                   <a style={{cursor: 'pointer'}} onClick={()=>this.chooseType(data.type)}>{data.type}</a>
@@ -62,7 +62,7 @@ export default class Qa extends React.Component {
             })}
           </div>
           <div className="fr shadow" style={styles.fr}>
-            <p className="c6">很高兴您来到众借帮投资人手册，我们希望它能帮助你开始你的投资，任何新的生活，都来源于你的想象力。</p>
+            <p className="c6">很高兴您来到众借帮借款人手册，我们希望它能帮助你开始你的借款项目，任何新的生活，都来源于你的想象力。</p>
             {
               this.state.answerArr.map((data,index)=>{
                 return (

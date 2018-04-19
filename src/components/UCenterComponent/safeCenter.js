@@ -171,6 +171,7 @@ export default class SafeCenter extends React.Component {
 
   //提交修改后的手机
   changePhoneAuth_ = () => {
+    console.log(12312312);
     const form = this.changePhoneAuthForm;
     form.validateFields( async (err, values) => {
       if (err) {
@@ -189,7 +190,6 @@ export default class SafeCenter extends React.Component {
         message.error(response.msg);
       }
     });
-    location.reload(false);
   };
 
   //获取新手机号验证码

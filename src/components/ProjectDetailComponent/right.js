@@ -15,7 +15,7 @@ export default class Right extends React.Component {
       accountId: '',
       pageParam:{
         pageCurrent: 1, //当前页，初始值为第一页
-        pageSize: 10,    //每页可显示的消息条数
+        pageSize: 20,    //每页可显示的消息条数
       },
       projectId:'',
       arr:[],
@@ -76,8 +76,8 @@ export default class Right extends React.Component {
     this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
     this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
     this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
-    
-    const response = await alreadyInvested({pageParam:this.state.pageParam, projectId:this.props.projectDetail.fpeoject_id});
+    console.log(page);
+    const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectDetail.fpeoject_id});
     //判断请求状态
     if (response.code === 0) {
       const maxPage = Math.ceil(this.props.projectDetail.userCount*1 / this.state.pageParam.pageSize *1 );

@@ -4,7 +4,8 @@ import { startAnimate } from '../../assets/finance/index';
 import Calculator from '../../components/HowLoanComponent/calculator';
 import TopTab from '../../components/HowLoanComponent/topTab';
 import BottomTab from '../../components/HowLoanComponent/bottomTab';
-import Qa from '../../components/HowInvestComponent/qa';
+import Qa from '../../components/HowLoanComponent/qa';
+
 
 export default class HowLoan extends React.Component {
   componentDidMount() {

@@ -1,10 +1,18 @@
 import { stringify } from 'qs';
 import request from '../utils/request';
+import { build } from '../common/systemParam';
 
-// const BASE_URL = 'http://192.168.1.4:8001'; // 开发服务器
-const BASE_URL = 'http://192.168.1.3:8001'; // 开发服务器
-// const BASE_URL = 'http://192.168.1.12:8001'; // 开发服务器
-// const BASE_URL = 'http://test.5izjb.com:8001'; // 测试服务器
+let BASE_URL = 'http://test.5izjb.com:8001'; // 测试服务器
+if (build === 'production') {
+  // 远端
+  BASE_URL = 'http://test.5izjb.com:8001';
+} else if (build === 'test') { 
+  //  测试
+  BASE_URL = 'http://dev3api.zjb188.com';
+} else if (build === 'local') {
+  /*开发配置*/
+  BASE_URL = 'http://192.168.1.4:8001';
+}
 
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图key
 

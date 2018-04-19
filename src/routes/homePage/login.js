@@ -206,15 +206,15 @@ export default class Login extends React.Component {
   //提交验证手机号码
   async submitInformation() {
     const {mobile, authCode, codeNameErr1, codeNameErr2} = this.state;
-    if (mobile.length === 0) {
+    if (mobile.trim().length === 0) {
       this.setState({codeNameErr1: '手机号码不能为空'});
       return
     }
-    if (!VER_PHONE.test(mobile)) {
+    if (!VER_PHONE.test(mobile.trim())) {
       this.setState({codeNameErr1: '请输入正确的手机号'});
       return;
     }
-    if (authCode.length === 0) {
+    if (authCode.trim().length === 0) {
       this.setState({codeNameErr2: '验证码不能为空'});
       return
     }
@@ -250,25 +250,25 @@ export default class Login extends React.Component {
   //修改密码
   async changePassword() {
     const {newPass, newPass_} = this.state;
-    if (newPass.length === 0) {
+    if (newPass.trim().length === 0) {
       this.setState({
         message1: '该内容不能为空'
       });
       return;
     }
-    if (newPass.length < 6) {
+    if (newPass.trim().length < 6) {
       this.setState({
         message1: '密码长度不能小于6位'
       });
       return;
     }
-    if (newPass_.length === 0) {
+    if (newPass_.trim().length === 0) {
       this.setState({
         message2: '该内容不能为空'
       });
       return;
     }
-    if (newPass !== newPass_) {
+    if (newPass.trim() !== newPass_.trim()) {
       this.setState({
         message2: '两次输入的密码不一致'
       })
@@ -308,21 +308,38 @@ export default class Login extends React.Component {
   async submitReg() {
     const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
     let flag = true;
-    if (regPhone.length === 0) {
-      this.setState({regNameErr: '手机号码不能为空'});
+    if (regPhone.trim().length === 0) {
+      this.setState({regNameErr: '请输入手机号'});
       flag = false;
+    } else if (!VER_PHONE.test(regPhone.trim())) {
+      this.setState({regNameErr: '手机号格式不正确'});
+      flag = false
+    } else {
+      this.setState({regNameErr: ''});
     }
-    if (regAuthCode.length === 0) {
-      this.setState({regAuthErr: '验证码不能为空'});
+    if (regAuthCode.trim().length === 0) {
+      this.setState({regAuthErr: '请输入验证码'});
       flag = false;
+    } else if (regAuthCode.trim().length !== 6) {
+      this.setState({regAuthErr: '验证码应为6位数'});
+      flag = false;
+    } else {
+      this.setState({regAuthErr: ''});
     }
-    if (regPwd.length === 0) {
-      this.setState({regPwdErr: '密码不能为空'});
+    if (regPwd.trim().length === 0) {
+      this.setState({regPwdErr: '请输入密码'});
       flag = false;
+    } else if (regPwd.trim().length < 6) {
+      this.setState({regPwdErr: '密码不小于6位'});
+      flag = false;
+    } else {
+      this.setState({regPwdErr: ''});
     }
     if (!readStatus) {
       this.setState({textErr: '请先阅读注册协议'});
       flag = false;
+    } else {
+      this.setState({textErr: ''});
     }
     if (!flag) {
       return;
@@ -332,31 +349,10 @@ export default class Login extends React.Component {
       regAuthErr: '',
       regPwdErr: ''
     });
-    let formatFlag = true;
-    if (!VER_PHONE.test(regPhone)) {
-      this.setState({regNameErr: '请输入正确的手机号'});
-      formatFlag = false;
-    }
-    if (regAuthCode.length !== 6) {
-      this.setState({regAuthErr: '验证码应为6位数'});
-      formatFlag = false;
-    }
-    if (regPwd.length < 6) {
-      this.setState({regPwdErr: '密码不小于6位'});
-      formatFlag = false;
-    }
-    if (!formatFlag) {
-      return;
-    }
-    this.setState({
-      regPwdErr: '',
-      regAuthErr: '',
-      regNameErr: ''
-    });
     const reg = {
-      fmobile: regPhone,
-      fpwd: regPwd,
-      authcode: regAuthCode
+      fmobile: regPhone.trim(),
+      fpwd: regPwd.trim(),
+      authcode: regAuthCode.trim()
     };
     // 调用注册接口
     try {
@@ -378,19 +374,20 @@ export default class Login extends React.Component {
   //登录提交方法
   submitLogin() {
     const {loginPhone, loginPwd} = this.state;
-    if (loginPhone.length === 0 && loginPwd.length === 0) {
+    console.log(loginPhone);
+    if (loginPhone.trim().length === 0 && loginPwd.trim().length === 0) {
       this.setState({
-        loginNameErr: '登录用户名不能为空',
-        loginPwdErr: '登录密码不能为空'
+        loginNameErr: '请输入登录名',
+        loginPwdErr: '请输入密码'
       });
       return;
     }
-    if (loginPhone.length === 0) {
-      this.setState({loginNameErr: '登录用户名不能为空'});
+    if (loginPhone.trim().length === 0) {
+      this.setState({loginNameErr: '请输入登录名'});
       return;
     }
-    if (loginPwd.length === 0) {
-      this.setState({loginPwdErr: '登录密码不能为空'});
+    if (loginPwd.trim().length === 0) {
+      this.setState({loginPwdErr: '请输入密码'});
       return;
     }
     const login = {
@@ -435,7 +432,7 @@ export default class Login extends React.Component {
               <div className="row relative" style={{marginBottom: 0}}>
                 <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
                        placeholder="输入验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})}/>
-
+                <p>{this.state.regAuthErr}</p>
                 {// 根据倒计时时间显示是否可以点击获取验证码按钮
                   this.state.registerShow ?
                     ((showAuthCode) ?
@@ -446,8 +443,10 @@ export default class Login extends React.Component {
               </div>
               <p style={{color: 'red', marginBottom: 20, marginTop: 5}}>{this.state.authErr}</p>
               <div className="row">
-                <input className="put pwd" value={regPwd} maxLength={16} name="regPwd" type="password"
-                       placeholder="设置登录密码" onChange={(e) => this.setState({regPwd: e.target.value})}/>
+                <input 
+                  className="put pwd" value={regPwd} maxLength={16} name="regPwd" type="password"
+                  placeholder="设置登录密码" onChange={(e) => this.setState({regPwd: e.target.value})}/>
+                <p>{this.state.regPwdErr}</p>
               </div>
               <div>
                 <a className="btn" onClick={this.submitReg}>注册</a>
@@ -479,7 +478,7 @@ export default class Login extends React.Component {
                 <Spin tip="登录中..." spinning={this.props.submitting}>
                   <div className="row">
                     <input className="put user" onKeyUp={(e) => this.pressKey(e)} value={loginPhone} maxLength={20}
-                           onChange={(e) => this.setState({loginPhone: e.target.value})} name="loginPhone" type="tel"
+                           onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
                            placeholder="请输入手机号码/用户名"/>
                     <p>{this.state.loginNameErr}</p>
                   </div>
