@@ -18,7 +18,15 @@ export default class Search extends React.Component {
   }
 
   componentDidMount() {
-    this.operationSelect();
+    setTimeout(()=>{
+      this.operationSelect();
+    })
+  }
+
+  componentWillUnmount() {
+    $('body').off('click', 'dl.select>dt');
+    $('body').off('click', 'dl.select>dd>i');
+    $('body').off('click touchend');
   }
 
   operationSelect() {
@@ -104,9 +112,8 @@ export default class Search extends React.Component {
   }
 
   searchProject(){
-    const {leaveCode, rate, period, projectName} = this.state;
-    this.props.fetchProject(leaveCode, rate, period, projectName);
-
+    let {leaveCode, rate, period, projectName} = this.state;
+    this.props.fetchProject(leaveCode, rate, period, projectName.trim());
   }
 
   render() {

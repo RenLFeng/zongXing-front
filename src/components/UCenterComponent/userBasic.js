@@ -109,6 +109,10 @@ class UserBaseFormInput extends React.Component {
   filter = (inputValue, path) => {
     return (path.some(city => (city.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1));
   };
+  disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current > moment().endOf('day');
+  }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -250,7 +254,7 @@ class UserBaseFormInput extends React.Component {
           {getFieldDecorator('fBirthday', {
             initialValue: userBase.fbirthday ? moment(userBase.fbirthday): null
           })(
-            <DatePicker placeholder={'请选择'}/>
+            <DatePicker placeholder={'请选择'} disabledDate={this.disabledDate}/>
           )}
         </FormItem>
 

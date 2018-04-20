@@ -361,7 +361,7 @@ export async function changePhoneNum(params) {
 
 //获取新手机号验证码
 export async function getNewCode(param) {
-  return request(`${BASE_URL}/zjb-website/sendMessage/${param}`);
+  return request(`${BASE_URL}/zjb-website/login/sendMessage?mobile=${param}`);
 }
 
 // 判断用户名是否重复

@@ -45,7 +45,7 @@ export default class Header extends React.Component {
               history.push(`${match.path}/projectLoan`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
-            }}>项目借款</a>
+            }}>借款项目</a>
             <a className="a1" onClick={()=>{
               history.push(`${match.path}/howLoan`);
               $(window).scrollTop(0);
@@ -103,7 +103,7 @@ export default class Header extends React.Component {
               history.push(`${match.path}/projectLoan`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
-            }}>项目借款</a>
+            }}>借款项目</a>
             <a className="a1" onClick={()=>{
               history.push(`${match.path}/howLoan`);
               $(window).scrollTop(0);

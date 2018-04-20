@@ -454,8 +454,8 @@ export default class AllInvest extends React.Component {
         <div style={{width: '100%'}}>
           <div style={{margin: '0 auto',width: '70%', position: 'relative'}}>
             <div style={{float: 'left'}}>
-              <span style={{display: 'block', borderLeft: '2px solid #FF9900', paddingLeft: 8,fontSize: 16}}>年度投资次数</span>
-              <b style={{marginLeft: 8,fontSize: 16}}>{this.state.investData.all?this.state.investData.all.projectCount: 0}次</b>
+              <span style={{display: 'block', borderLeft: '2px solid #FF9900', paddingLeft: 8,fontSize: 16}}>年度投资项目数</span>
+              <b style={{marginLeft: 8,fontSize: 16}}>{this.state.investData.all?this.state.investData.all.projectCount: 0}个</b>
             </div>
             <div style={{float: 'right'}}>
               <span style={{display: 'block', borderLeft: '2px solid #FF9900', paddingLeft: 8,fontSize: 16}}>年度投资金额</span>
