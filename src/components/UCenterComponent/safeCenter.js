@@ -4,7 +4,7 @@ import { Icon, Form, Modal, Input, message, Row, Col, Button} from 'antd';
 import { Link } from 'dva/router';
 import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE} from '../../common/systemParam';
 import { connect } from 'dva';
-import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState,closeAuthorization} from '../../services/api';
+import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState,closeAuthorization, phoneExist} from '../../services/api';
 import Path from '../../common/pagePath';
 
 
@@ -15,7 +15,7 @@ const formItemLayout = {
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 14},
+    sm: { span: 20},
   },
 };
 @connect((state)=>({
@@ -86,10 +86,15 @@ export default class SafeCenter extends React.Component {
       nameAuth: false,
       phoneAuth: false,
       emailAuth: false,
+      countDown_: AUTH_CODE_TIME_,
+      showAuthCode: true
     });
     this.nameForm.resetFields();
     this.phoneForm.resetFields();
     this.emailForm.resetFields();
+    if (this.countDownFun){
+      clearInterval(this.countDownFun);
+    }
   };
 
   //提交新表单
@@ -98,6 +103,9 @@ export default class SafeCenter extends React.Component {
       changePhoneAuth:false
     });
     this.changePhoneAuthForm.resetFields();
+    if (this.countDownFun_){
+      clearInterval(this.countDownFun_);
+    }
   }
 
   //提交 实名认证
@@ -136,15 +144,16 @@ export default class SafeCenter extends React.Component {
   async getOldCode(data) {
     const { regPhone } = this.state;
     this.setState({loading:true});
+    const sendTime = localStorage.getItem(regPhone);
+    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
+      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
+      return;
+    }
     try{
       const response = await getOldPhoneCode(data);
       this.setState({loading:false});
       if(response.code ===0){
-        const sendTime = localStorage.getItem(regPhone);
-        if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
-          alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
-          return;
-        }
+        
         localStorage.setItem(regPhone, new Date().getTime());
         //发送请求 按钮变不可点状态
         this.setState({ showAuthCode: false });
@@ -171,7 +180,6 @@ export default class SafeCenter extends React.Component {
 
   //提交修改后的手机
   changePhoneAuth_ = () => {
-    console.log(12312312);
     const form = this.changePhoneAuthForm;
     form.validateFields( async (err, values) => {
       if (err) {
@@ -183,6 +191,7 @@ export default class SafeCenter extends React.Component {
       };
       const response = await changePhoneNum(data);
       if (response.code === 0) {
+        this.initFetchSafeData();
         this.setState({changePhoneAuth:false});
         form.resetFields();
         this.handleCancel_();
@@ -195,8 +204,8 @@ export default class SafeCenter extends React.Component {
   //获取新手机号验证码
   async getNewCode_() {
     const {getCodeMobile} = this.state;
-    if(getCodeMobile ===0){
-      this.setState({regPhoneErr:'手机号码不能为空'});
+    if(getCodeMobile.trim().length ===0){
+      message.error('手机号不能为空')
       return;
     }
     if (!VER_PHONE.test(getCodeMobile)) {
@@ -204,17 +213,20 @@ export default class SafeCenter extends React.Component {
       return;
     }
     this.setState({loading:true});
+    const res = await phoneExist(getCodeMobile);
+    if (res.code !== 0) {
+      this.setState({loading:false});
+      if (res.msg === '该手机号已注册，请直接登录！') {
+        message.error('手机号已注册');
+        return;
+      } 
+      message.error(res.msg);
+      return;
+    }
     try{
       const response = await getNewCode(getCodeMobile);
       this.setState({loading:false});
       if(response.code ===0) {
-        const sendTime = localStorage.getItem(getCodeMobile);
-        if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
-          alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
-          return;
-        }
-        localStorage.setItem(getCodeMobile, new Date().getTime());
-        //发送请求 按钮变不可点状态
         this.setState({ showAuthCode_: false });
         //成功之后倒计时开始启动
         this.countDownFun_ = setInterval(() => {
@@ -562,16 +574,18 @@ const PhoneAuth = Form.create()(
                   <Input />
                 )}
               </Col>
-              <Col span={12}>
+              <Col span={6}>
                   {
                     props.showAuthCode ? <Button onClick={()=> props.getOldCode()}>获取验证码</Button> :
                       <Button loading={props.loading}>
                         {props.countDown}s获取验证码
                     </Button>
                   }
+              </Col>
+              <Col span={5} push={2}>
                 {
                   props.showAuthCode ? null :
-                    <p>验证码已发送到手机,请注意查收!</p>
+                    <span style={{lineHeight: '30px'}}>已发送</span>
                 }
               </Col>
             </Row>
@@ -614,16 +628,18 @@ const ChangePhoneAuth = Form.create()(
                   <Input />
                 )}
               </Col>
-              <Col span={12}>
+              <Col span={6}>
                 {
                   props.showAuthCode_ ? <Button onClick={()=> props.getNewCode(props.getCodeMobile)}>获取验证码</Button> :
                     <Button loading={props.loading}>
                       {props.countDown_}s获取验证码
                     </Button>
                 }
+              </Col>
+              <Col span={6} push={2}>
                 {
                   props.showAuthCode_ ? null :
-                    <p>验证码已发送到手机,请注意查收!</p>
+                    <span style={{lineHeight: '30px'}}>已发送</span>
                 }
               </Col>
             </Row>

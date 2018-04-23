@@ -78,8 +78,14 @@ export default class SecLoan extends React.Component {
             <a className="a6">平台认证</a> : null
           }
           {project.projectModules ? project.projectModules.map((item)=>{
+            let title = '';
+            if (item.ftitle && item.ftitle.length > 4) {
+              title = item.ftitle.substring(0,4);
+            } else {
+              title = item.ftitle;
+            }
             return (
-              <a className={this.checkedName(item.ftitle)} key={item.fid}>{item.ftitle}</a>
+              <a className={this.checkedName(item.ftitle)} key={item.fid}>{title}</a>
             )
           }): null}
           <a className="a5">我的位置</a>

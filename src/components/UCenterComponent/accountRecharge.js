@@ -119,6 +119,10 @@ class Forms extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        if (values.amount * 1.00 > 100000000) {
+          message.error('金额超过最大限制');
+          return;
+        }
         values.rechargeType = values.rechargeType * 1;
         values.amount = values.amount * 1.00;
         console.log('表单提交的数据', values);

@@ -74,6 +74,13 @@ export default class LoanList extends React.Component {
       if (err) {
         return;
       }
+      if (values.companyName.trim().length === 0) {
+        message.error('企业名称不能为空');
+        return;
+      } else if (values.fsocialCreditCode.trim().length === 0) {
+        message.error('统一社会信用代码不能为空');
+        return;
+      }
       try {
         this.setState({createLoading: true});
         const response = await saveCompany(values);
@@ -105,15 +112,15 @@ export default class LoanList extends React.Component {
   //修改或删除企业列表
   async UpdataOrDele(id,name,flag,code) {
     if(flag === 1){       //修改操作
-      if(name.length === 0 && code.length === 0){
+      if(name.trim().length === 0 && code.trim().length === 0){
         message.error('公司名,统一社会信用代码不能为空');
         return
       }
-      if(name.length === 0){
+      if(name.trim().length === 0){
         message.error('公司名不能为空');
         return
       }
-      if(code.length === 0){
+      if(code.trim().length === 0){
         message.error('统一社会信用代码不能为空');
         return
       }
@@ -305,10 +312,11 @@ class CreateCompanyComponent extends React.Component {
         onOk={onCreate}
       >
         <Form layout="horizontal" style={{width: '100%'}}>
-          <FormItem label="企业名称" {...formItemLayout}>
+          <FormItem label="企业名称" {...formItemLayout} whitespace>
             {getFieldDecorator('companyName', {
               rules: [{ required: true, message: '企业名称不能为空' }
-                ,{validator: this.validateName}],
+                ,{validator: this.validateName},
+              ],
             })(
               <Input />
             )}
@@ -316,7 +324,8 @@ class CreateCompanyComponent extends React.Component {
           <FormItem label="统一社会信用代码" {...formItemsLayout}>
             {getFieldDecorator('fsocialCreditCode', {
               rules: [{ required: true, message: '统一社会信用代码不能为空' },
-                {pattern: LICENSE, message: '统一社会信用代码格式不正确'}],
+                {pattern: LICENSE, message: '统一社会信用代码格式不正确'},
+                ],
             })(<Input />)}
           </FormItem>
         </Form>

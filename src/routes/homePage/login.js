@@ -20,6 +20,7 @@ export default class Login extends React.Component {
       countDown: AUTH_CODE_TIME,  //获取验证码倒计时
       countDown_: AUTH_CODE_TIME_,
       showAuthCode: true, //显示获取验证码的接口
+      showAuthCodeFor: true, // 显示忘记密码获取验证码的状态
       regPhone: '', //注册手机号
       regPwd: '', //注册密码
       regAuthCode: '', //注册验证码
@@ -191,12 +192,12 @@ export default class Login extends React.Component {
     }
     localStorage.setItem(loginName, new Date().getTime());
     //发送请求 按钮变不可点状态
-    this.setState({showAuthCode: false});
+    this.setState({showAuthCodeFor: false});
     //成功之后倒计时开始启动
     this.countDownFun_ = setInterval(() => {
       if (this.state.countDown_ === 0) {
         clearInterval(this.countDownFun_);
-        this.setState({countDown_: AUTH_CODE_TIME_, showAuthCode: true, flagShow: false,});
+        this.setState({countDown_: AUTH_CODE_TIME_, showAuthCodeFor: true, flagShow: false,});
       } else {
         this.setState({countDown_: this.state.countDown_ - 1});
       }
@@ -207,13 +208,13 @@ export default class Login extends React.Component {
   async submitInformation() {
     const {mobile, authCode, codeNameErr1, codeNameErr2} = this.state;
     if (mobile.trim().length === 0) {
-      this.setState({codeNameErr1: '手机号码不能为空'});
+      this.setState({codeNameErr1: '请获取验证码'});
       return
     }
-    if (!VER_PHONE.test(mobile.trim())) {
-      this.setState({codeNameErr1: '请输入正确的手机号'});
-      return;
-    }
+    // if (!VER_PHONE.test(mobile.trim())) {
+    //   this.setState({codeNameErr1: '请输入正确的手机号'});
+    //   return;
+    // }
     if (authCode.trim().length === 0) {
       this.setState({codeNameErr2: '验证码不能为空'});
       return
@@ -229,7 +230,7 @@ export default class Login extends React.Component {
         this.setState({
           flag: this.state.flag + 1,
           countDown_: AUTH_CODE_TIME_,
-          showAuthCode: true,
+          showAuthCodeFor: true,
           flagShow: false,
           authCode: '',
           codeNameErr1: '',
@@ -361,6 +362,12 @@ export default class Login extends React.Component {
       this.setState({regLoading: false});
       if (response.code === 0) {
         this.setState({showReg: false});
+        this.setState({
+          regPhone: '',
+          regPwd: '',
+          regAuthCode: '',
+          showAuthCode: true,
+        });
       } else {
         message.warning(response.msg);
       }
@@ -410,6 +417,20 @@ export default class Login extends React.Component {
     if (e.keyCode === 13) {
       this.submitLogin();
     }
+  }
+  returnLogin() {
+    this.setState({
+      flag: 1,
+      codeNameErr2: '',
+      codeNameErr1: '',
+      flagShow: false,
+      authCode: '',
+      loginName: '',
+      newPass: '',
+      newPass_: '',
+      message1: '',
+      message2:''
+    })
   }
 
   render() {
@@ -529,18 +550,17 @@ export default class Login extends React.Component {
                       }
 
                       { // 根据倒计时时间显示是否可以点击获取验证码按钮
-                        showAuthCode ?
+                        this.state.showAuthCodeFor ?
                           <a className="getvc center" onClick={this.getAuthCode_}>获取验证码</a> :
                           <span className="getvc center"
                                 style={{backgroundColor: '#D1D1D1', border: '#D1D1D1'}}>{countDown_}s后重新获取</span>}
                     </div>
-                    <div>
-                      <a className="btn" onClick={() => this.submitInformation()}>下一步</a>
+                    <div style={{display:'flex', justifyContent: 'space-between'}}>
+                      <a className="btn" style={{display: 'inline-block',width: '45%'}} onClick={() => this.returnLogin()}>返回登录</a>
+                      <a className="btn" style={{display: 'inline-block',width: '45%'}} onClick={() => this.submitInformation()}>下一步</a>
                     </div>
                   </div>
-
                 </div> :
-
                 <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">
                     <a className="PwdTitle"><Icon type="lock"/>重置密码</a>
@@ -556,8 +576,9 @@ export default class Login extends React.Component {
                            onChange={(e) => this.setState({newPass_: e.target.value})}/>
                     <p>{this.state.message2}</p>
                   </div>
-                  <div>
-                    <a className="btn" type="primary" onClick={() => this.changePassword()}>完成</a>
+                  <div style={{display:'flex', justifyContent: 'space-between'}}>
+                    <a className="btn" style={{display: 'inline-block',width: '45%'}} onClick={() => this.returnLogin()}>返回登录</a>
+                    <a className="btn" style={{display: 'inline-block',width: '45%'}}  type="primary" onClick={() => this.changePassword()}>完成</a>
                   </div>
                 </div>
           )

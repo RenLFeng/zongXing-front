@@ -77,6 +77,10 @@ export default class FormProject extends React.Component {
       message.warning('请查看借入协议');
       return;
     }
+    if (this.state.money > this.props.project.fcredit_money.sub(this.props.project.allMoney)) {
+      message.warning('所投金额不能超过剩余可投金额');
+      return;
+    }
     try {
       const data = {
         projectId: this.props.project.fpeoject_id,
