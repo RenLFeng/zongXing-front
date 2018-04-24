@@ -182,7 +182,7 @@ export default class SecTrack extends React.Component {
               <div className="item" key={index}>
                 <p className="q" >
                   <em>问</em>
-                  <b className="t1">{data.fquestion}</b>
+                  <b className="t1" style={{wordBreak: 'break-all'}}>{data.fquestion}</b>
                   <b className="fr">{data.fis_anonymity?'匿名用户':data.fnickname} {moment(data.ftime).format('YYYY-MM-DD HH:mm')}</b>
                 </p>
                 {this.state[`status${data.fid}`] ?

@@ -3,7 +3,8 @@ import {Icon, message, Table, Button, Checkbox, Dropdown, Menu, Modal} from 'ant
 import '../../assets/myInvest/myInvest.scss';
 import {getPlantNotice, getMyInvestment, toPayment, delOrder} from '../../services/api.js';
 import moment from 'moment';
-import {pageShows, MY_INCOME_STATUS, ORDER_STATUS} from '../../common/systemParam';  //分页组件
+import {pageShows, MY_INCOME_STATUS, ORDER_STATUS, MY_INVEST_URL} from '../../common/systemParam';  //分页组件
+
 import Path from '../../common/pagePath';
 
 export default class MyInvestment extends React.Component {
@@ -103,7 +104,8 @@ export default class MyInvestment extends React.Component {
       return;
     }
     this.setState({loading: true});
-    const response = await toPayment(payId);
+    console.log(window.location.href);
+    const response = await toPayment(payId, encodeURIComponent(window.location.href));
     this.setState({loading: false});
     console.log(response);
     if (response.code === 0) {

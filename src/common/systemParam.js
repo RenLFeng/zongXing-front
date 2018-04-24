@@ -22,17 +22,23 @@ if (build === 'production') {
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
   REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
   PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
-  TURN_BACK = 'http://dev3manage.zjb188.com'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
+  TURN_BACK = 'http://dev3manage.zjb188.com:7956'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
 } else if (build === 'local') {
   /*开发配置*/
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
   REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
   PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
-  TURN_BACK = 'http://192.168.1.192:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
+  TURN_BACK = 'http://192.168.1.198:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
 }
 
 // 导出环境变量配置
 export {PIC_BUCKET,REGION,IMG_BASE_URL,TURN_BACK,build};
+
+// 个人账户页面
+export const PERSONAL_PAGE = `http://${window.location.host}/#/index/uCenter/personAccount`;
+
+// 授权页面地址
+export const AUTH_PAGE_URL = `http://${window.location.host}/#/index/uCenter/safeCenter`;
 
 // 手机号验证正则
 export const VER_PHONE = /^1([38][0-9]|5[012356789]|4[579]|7[0135678]|9[89])[0-9]{8}$/;
@@ -76,12 +82,12 @@ export const LICENSE = /^([0-9a-zA-Z]{18}$|\d{15}$)/;
 // 邮箱验证正则
 export const E_MAIL =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 // 座机电话正则
-export const TEL_PHONE = /^0\d{2,3}-\d{7,8}(-\d{1,6})?$/;
+export const TEL_PHONE = /^[\d\-]*$/;;
 
 
 
 // 银行卡号正则
-export const BANK_CARD = /^([1-9]{1})(\d{16}|d{17}|\d{18}|d{19})$/;
+export const BANK_CARD = /^(\d{16}|\d{19})$/;
 
 // 我的投资订单状态
 export const ORDER_STATUS = {

@@ -134,7 +134,16 @@ export default class SecConsultation extends React.Component {
         const response = await addReply(data);
         this.setState({[`loading${topicId}`]: false});
         if (response.code === 0) {
-          this.setState({[`replayText${topicId}`]: ''});
+          for (let obj of this.state.allTopic) {
+            if (obj.fid === topicId) {
+              obj.count++;
+              break;
+            }
+          }
+          this.setState({
+            [`replayText${topicId}`]: '',
+            allTopic: this.state.allTopic
+          });
           this.getAllTopicReply(topicId, true);
         } else {
           message.error(response.msg);
@@ -158,7 +167,16 @@ export default class SecConsultation extends React.Component {
         const response = await addReply(data);
         this.setState({[`myLoading${topicId}`]: false});
         if (response.code === 0) {
-          this.setState({[`my${topicId}Text`]: ''});
+          for (let obj of this.state.myTopic) {
+            if (obj.fid === topicId) {
+              obj.count++;
+              break;
+            }
+          }
+          this.setState({
+            [`my${topicId}Text`]: '',
+            myTopic: this.state.myTopic
+          });
           this.getMyAllTopicReply(topicId, true);
         } else {
           message.error(response.msg);
@@ -228,7 +246,13 @@ export default class SecConsultation extends React.Component {
       <div>
         <div className="cmt-box1">
           <p className="f18">有什么想跟大家交流的？</p>
-            <textarea className="put" rows="5" placeholder="输入您想跟大家交流的内容" value={topicText} onChange={(e)=>this.setState({topicText: e.target.value})}/>
+            <textarea 
+              className="put" 
+              rows="5" 
+              placeholder="输入您想跟大家交流的内容"
+              value={topicText} 
+              onChange={(e)=>this.setState({topicText: e.target.value})}
+              />
             <p className="tright">
               <i className="fl c6">还可以输入<em>240</em>字</i>
               <label><input checked={anonymous} type="checkbox" onChange={()=>this.setState({anonymous: !anonymous})} />匿名提问</label>
@@ -245,7 +269,7 @@ export default class SecConsultation extends React.Component {
               return (
                 <div className="item" key={data.fid+'1'+index}>
                   <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
-                  <p className="t1">
+                  <p className="t1" style={{wordBreak: 'break-all'}}>
                     <i className="c6">{data.fis_anonymity? '匿名用户': data.fnickname}：</i>
                     {data.fcontent}
                   </p>
@@ -261,7 +285,7 @@ export default class SecConsultation extends React.Component {
                             return (
                               <div className="item" key={value.fid+index}>
                                 <img className="av" src={require('../../assets/img/project-detail/av3.png')}/>
-                                <p className="t1">
+                                <p className="t1" style={{wordBreak: 'break-all'}}>
                                   <i className="c6">{value.fis_anonymity? '匿名用户': value.fnickname} 回复 {data.fis_anonymity? '匿名用户': data.fnickname}：</i>
                                   {value.fcontent}
                                 </p>
@@ -301,7 +325,7 @@ export default class SecConsultation extends React.Component {
               return (
                 <div className="item" key={data.fid+'111'}>
                   <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
-                  <p className="t1">
+                  <p className="t1" style={{wordBreak: 'break-all'}}>
                     <i className="c6">{data.fis_anonymity? '匿名用户': data.fnickname}：</i>
                     {data.fcontent}
                   </p>
@@ -317,7 +341,7 @@ export default class SecConsultation extends React.Component {
                             return (
                               <div className="item" key={value.fid+index+'1'}>
                                 <img className="av" src={require('../../assets/img/project-detail/av3.png')}/>
-                                <p className="t1">
+                                <p className="t1" style={{wordBreak: 'break-all'}}>
                                   <i className="c6">{value.fis_anonymity? '匿名用户': value.fnickname} 回复 {data.fis_anonymity? '匿名用户': data.fnickname}：</i>
                                   {value.fcontent}
                                 </p>

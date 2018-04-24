@@ -2,7 +2,7 @@ import React from 'react';
 import {Form, Input, Button, Select, Modal, message} from 'antd';
 import '../../assets/ucenter/withdrawals.scss';
 import {getBankCard, getCity, putInformation} from '../../services/api';
-import {MONEY_REG, MONEY1_REG_, BANK_CARD } from '../../common/systemParam';
+import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE } from '../../common/systemParam';
 import Path from "../../common/pagePath";
 
 const FormItem = Form.Item;
@@ -109,6 +109,7 @@ class EnterprisePresentation extends React.Component {
 
   async getInformation(data) {
     try {
+      data.notifyPageUrl = PERSONAL_PAGE;
       this.setState({loading: true});
       const response = await putInformation(data);
       this.setState({loading: false});

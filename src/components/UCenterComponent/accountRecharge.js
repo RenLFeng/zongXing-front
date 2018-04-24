@@ -2,7 +2,7 @@ import React from 'react';
 import Path from '../../common/pagePath';
 import {Link} from 'dva/router';
 import {Form, Input, Button, Select, Modal, message} from 'antd';
-import { MONEY_REG, MONEY_REG_} from '../../common/systemParam';
+import { MONEY_REG, MONEY_REG_, PERSONAL_PAGE} from '../../common/systemParam';
 import {getRecharge} from  '../../services/api';
 
 export default class AccountRecharge extends React.Component {
@@ -22,6 +22,7 @@ export default class AccountRecharge extends React.Component {
 
   async setRechargeData(data) {
     try {
+      data.notifyPageUrl = PERSONAL_PAGE;
       this.setState({loading: true});
       const response = await getRecharge(data);
       console.log(response);

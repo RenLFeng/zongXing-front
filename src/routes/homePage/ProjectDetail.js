@@ -22,7 +22,6 @@ export default class ProjectDetail extends React.Component {
   }
   componentDidMount() {
     this.fetchProjectDetail();
-    this.changeNum();
   }
 
   componentWillUnmount() {
@@ -40,6 +39,7 @@ export default class ProjectDetail extends React.Component {
       this.setState({
         projectDetail: response.data
       }, () => {
+        this.changeNum();
         if (response.data && response.data.fflag === 10) {
           this.countDown = setInterval(()=>{
             this.countDownTime();

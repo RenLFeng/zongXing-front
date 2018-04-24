@@ -83,7 +83,10 @@ export default class LoanList extends React.Component {
       }
       try {
         this.setState({createLoading: true});
-        const response = await saveCompany(values);
+        const response = await saveCompany({
+          companyName: values.companyName.trim(),
+          fsocialCreditCode: values.fsocialCreditCode.trim()
+        });
         console.log(response);
         this.setState({createLoading: false});
         if (response.code === 0) {
@@ -128,7 +131,7 @@ export default class LoanList extends React.Component {
         message.error('请输入正确的统一社会信用代码');
         return;
       }
-      const response = await UpdataOrDele({companyId:id, companyName:name, flag:flag, fsocialCreditCode:code});
+      const response = await UpdataOrDele({companyId:id, companyName:name.trim(), flag:flag, fsocialCreditCode:code.trim()});
       console.log(response);
       if(response.code === 0){
         this.setState({

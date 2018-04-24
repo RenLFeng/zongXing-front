@@ -127,7 +127,7 @@ class UserBaseFormInput extends React.Component {
             rules:[{pattern: NAME_REG_, message: '请输入合法的中文'},
               {whitespace: true, message: '真实姓名中不能出现空格'}],
             initialValue: userBase.freal_name?userBase.freal_name: null
-          })(<Input maxLength={'20'} autocomplete="new-password"/>)}
+          })(<Input maxLength={'15'} autocomplete="new-password"/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -136,7 +136,7 @@ class UserBaseFormInput extends React.Component {
           {getFieldDecorator('fnickName', {
             rules:[{whitespace: true, message: '昵称中不能出现空格'}],
             initialValue: userBase.fnickname?userBase.fnickname: null
-          })(<Input maxLength={'20'}/>)}
+          })(<Input maxLength={'15'}/>)}
         </FormItem>
         <FormItem
           {...formItemLayout}

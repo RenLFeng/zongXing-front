@@ -2,7 +2,7 @@ import React from 'react';
 import '../../assets/personal/personal.scss';
 import { Icon, Form, Modal, Input, message, Row, Col, Button} from 'antd';
 import { Link } from 'dva/router';
-import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE} from '../../common/systemParam';
+import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL} from '../../common/systemParam';
 import { connect } from 'dva';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState,closeAuthorization, phoneExist} from '../../services/api';
 import Path from '../../common/pagePath';
@@ -285,8 +285,7 @@ export default class SafeCenter extends React.Component {
 //授权
   async getDistribution(type) {
     this.setState({loading:true});
-    const response = await distribution(type,'');
-    console.log('123', response);
+    const response = await distribution(type,'',encodeURIComponent(window.location.href));
     this.setState({loading:false});
     if(response.code === 0){
       this.setState({
@@ -331,7 +330,7 @@ export default class SafeCenter extends React.Component {
 
   //关闭授权
   async CloseAuthorization(type){
-    const response = await closeAuthorization(type,'');
+    const response = await closeAuthorization(type,'', encodeURIComponent(window.location.href));
     console.log(response);
     if(response.code === 0){
       this.setState({

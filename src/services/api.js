@@ -8,7 +8,7 @@ if (build === 'production') {
   BASE_URL = 'http://test.5izjb.com:8001';
 } else if (build === 'test') { 
   //  测试
-  BASE_URL = 'http://dev3api.zjb188.com';
+  BASE_URL = 'http://dev3api.zjb188.com:7956';
 } else if (build === 'local') {
   /*开发配置*/
   BASE_URL = 'http://192.168.1.4:8001';
@@ -497,8 +497,8 @@ export async function getMyInvestment(params) {
 }
 
 //二次分配接口
-export async function distribution(param, params) {
-  return request(`${BASE_URL}/zjb-dc/author/open?willStr=${param}&companyNo=${params}`);
+export async function distribution(param, params, returnUrl) {
+  return request(`${BASE_URL}/zjb-dc/author/open?willStr=${param}&companyNo=${params}&notifyPageUrl=${returnUrl}`);
 }
 
 //查询授权状态
@@ -507,8 +507,8 @@ export async function authorizationState(param) {
 }
 
 //取消授权
-export async function closeAuthorization(num, companyNo) {
-  return request(`${BASE_URL}/zjb-dc/author/close?willStr=${num}&companyNo=${companyNo}`)
+export async function closeAuthorization(num, companyNo, returnUrl) {
+  return request(`${BASE_URL}/zjb-dc/author/close?willStr=${num}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`);
 }
 
 // 通过金额和项目ID收益计划
@@ -537,8 +537,8 @@ export async function UpdataOrDele(params) {
 }
 
 // 订单去付款接口
-export async function toPayment(param) {
-  return request(`${BASE_URL}/zjb-dc/investment/payment?invRecordId=${param}`)
+export async function toPayment(param, returnUrl) {
+  return request(`${BASE_URL}/zjb-dc/investment/payment?invRecordId=${param}&notifyPageUrl=${returnUrl}`)
 }
 
 // 删除订单
