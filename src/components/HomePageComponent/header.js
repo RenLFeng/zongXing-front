@@ -68,7 +68,7 @@ export default class Header extends React.Component {
               history.push(`${match.path}/collection`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
-            }}>收藏项目<em>0</em></a>
+            }}>收藏项目</a>
             { !this.props.loginStatus ?
               <a className="btn btn2"
                  onClick={()=>{
@@ -126,7 +126,7 @@ export default class Header extends React.Component {
               history.push(`${match.path}/collection`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
-            }}>收藏项目<em>0</em></a>
+            }}>收藏项目</a>
             { !this.props.loginStatus ?
               <a className="btn btn2"
                  onClick={()=>{

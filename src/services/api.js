@@ -574,10 +574,24 @@ export async function getInvest(param) {
 //回款计划
 export async function repayPlan(params) {
   return request(`${BASE_URL}/zjb-website/account/getRepayPlan`,{
-      method:'POST',
-      body: {
-        ...params
-      }
-    })
+    method:'POST',
+    body: {
+      ...params
+    }
+  })
 }
 
+// 项目收藏接口
+export async function setProjectCollection(params) {
+  return request(`${BASE_URL}/zjb-website/projectCollection/save`,{
+    method:'POST',
+    body: {
+      ...params
+    }
+  })
+}
+
+// 项目收藏列表
+export async function getCollectionProject() {
+  return request(`${BASE_URL}/zjb-website/projectCollection/list`)
+}

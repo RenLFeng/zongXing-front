@@ -1,12 +1,15 @@
 import React from 'react';
 import Data from './data';
 import FormProject from './form-project';
+import { connect } from 'dva';
 import moment from 'moment';
-import {getPersonalMoney, alreadyInvested} from '../../services/api';
+import {getPersonalMoney, alreadyInvested, setProjectCollection} from '../../services/api';
 import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
 
+@connect(()=>{
 
+})
 export default class Right extends React.Component {
   constructor(props){
     super(props);
@@ -66,7 +69,6 @@ export default class Right extends React.Component {
         this.props.history.push('/index/login');
         throw e;
       }
-      message.error('服务器繁忙，请稍后重试');
     }
   }
 
@@ -95,7 +97,27 @@ export default class Right extends React.Component {
     }
   }
 
-
+  // 收藏项目
+  async projectCollection() {
+    if (this.props.projectDetail.isCollected) {
+      return;
+    }
+    const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
+    console.log(response);
+    if (response.code === 0) {
+      this.props.projectDetail.collectionNumber += 1;
+      this.props.projectDetail.isCollected = true;
+      this.forceUpdate();
+    } else {
+      if (response.msg === '用户未做权限验证') {
+        localStorage.removeItem('accessToken');
+        this.props.history.push('/index/login');
+        this.props.dispatch({
+          type: 'login/logoutData'
+        });
+      }
+    }
+  }
 
   render(){
     const {countDay, countDown} = this.props.time;
@@ -153,7 +175,7 @@ export default class Right extends React.Component {
             }
           </div>
           <p className="center bot2">
-            <a className="like">23</a>
+            <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber}</a>
             <i className="share">
               <span>32</span>
               <span className="border shadow">

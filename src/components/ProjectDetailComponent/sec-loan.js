@@ -112,10 +112,7 @@ export default class SecLoan extends React.Component {
               </div>
             </div> : null
           }
-          {project.projectModules ? project.projectModules.map((item)=>{
-            if (!item.ftitle) {
-              return null;
-            }
+          {project.projectModules ? project.projectModules.map((item, index)=>{
             let pics = [];
             if (item.fpictures) {
               pics = JSON.parse(item.fpictures);

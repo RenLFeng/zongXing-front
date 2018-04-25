@@ -4,7 +4,7 @@ export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 
 
 // 部署替换
-
+let build = 'local';  // production 是远端 test 是测试端 local 是本地端
 
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
@@ -148,7 +148,6 @@ export const PROJECT_NAME = '';
 //秒换算倒计时 天/小时/分钟/秒
 export function conversionTime(initialTime) {
   if (Math.floor(initialTime/DATE_SECONDS) !== 0) {
-    console.log(initialTime/DATE_SECONDS);
     return `${Math.floor(initialTime/DATE_SECONDS)}天`; 
   }
   if (Math.floor(initialTime/HOURS_SECONDS) !== 0) {

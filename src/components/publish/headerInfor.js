@@ -40,7 +40,7 @@ export default class HeaderInfor extends React.Component {
             <Link className="a1" to={`/index/howInvest`}>如何投资</Link>
             <Link className="a1" to={`/index/businessDiscount`}>商家优惠</Link>
             <Link className="a1" to={`/index/loanCollege`}>众借学院</Link>
-            <a className="btn btn1" href="">收藏项目<em>0</em></a>
+            <a className="btn btn1" href="">收藏项目</a>
             { !this.props.loginStatus ?
               <Link className="btn btn2" to={'/index/login'}>登录 / 注册</Link> :
               <Link className="btn btn2" to={'/index/uCenter'}>个人中心</Link>

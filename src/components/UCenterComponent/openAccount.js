@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'dva/router';
 
-import {Form, Input, Button, Select, Modal, message, Row, Col } from 'antd';
+import {Form, Input, Button, Select, Modal, message, Row, Col, Icon,Tooltip } from 'antd';
 import { connect } from 'dva';
 
 import '../../assets/ucenter/modelCenter.scss';
 import { VER_PHONE, ID_CORD, AUTH_ADDRESS } from '../../common/systemParam';
 import Path from '../../common/pagePath';
 
-import {getPersonAccount, commitOpenAccount, getNoAccountCompany} from '../../services/api';
+import {getPersonAccount, commitOpenAccount, getNoAccountCompany, getUserBaseData} from '../../services/api';
+import { relative } from 'path';
 
 const FormItem = Form.Item;
 
@@ -16,8 +17,27 @@ const TIME_OUT = 10;
 export default class OpenAccount extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      phone: ''
+    }
   }
 
+  componentDidMount() {
+    this.getUserPhone()
+  }
+
+  // 获取用户手机号
+  async getUserPhone() {
+    const response = await getUserBaseData();
+    console.log(response);
+    if (response.code === 0) {
+      if (response.data) {
+        this.setState({
+          phone: response.data.fmobile
+        });
+      }
+    }
+  }
 
   render() {
     const { match, history } = this.props;
@@ -25,7 +45,7 @@ export default class OpenAccount extends React.Component {
 
     return (
       <div className="fr uc-rbody" >
-        <FormOpenComponent type={type} history={history}/>
+        <FormOpenComponent type={type} history={history} phone={this.state.phone}/>
       </div>
     );
   }
@@ -240,15 +260,21 @@ class FormComponent extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <FormItem
-          {...formItemLayout}
-          label="手机"
-        >
-          {getFieldDecorator('mobile', {
-            rules: [{ pattern: VER_PHONE, message: '手机格式不正确' },
-              { required: true, message: '请填写手机' }],
-          })(<Input maxLength={'20'} autocomplete="off"/>)}
-        </FormItem>
+        <Row style={{postion: 'relative'}}>
+          <FormItem
+            {...formItemLayout}
+            label="手机"
+          >
+            {getFieldDecorator('mobile', {
+              initialValue: this.props.phone,
+              rules: [{ pattern: VER_PHONE, message: '手机格式不正确' },
+                { required: true, message: '请填写手机' }],
+            })(<Input maxLength={'20'} autocomplete="off" readOnly/>)}
+          </FormItem>
+          <Tooltip title="如需修改请去安全中心更换手机号" style={{position: 'absolute', top: 10, right: 250}}>
+            <Icon type="question-circle-o" style={{position: 'absolute', top: 10, right: 250}}/>
+          </Tooltip>
+        </Row>
         <FormItem
           {...formItemLayout}
           label="邮箱"
