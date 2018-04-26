@@ -25,6 +25,7 @@ import COS from 'cos-js-sdk-v5';
 import RecordInformation from "./information/recordInformation";
 import OrganizationInformation from "./information/organizationInformation";
 import ContactUs from "./information/contactUs";
+import CollectionOrder from './homePage/CollectionOrder';
 
 import AuditInformation from "./information/auditInformation";
 import BusinessInformation from "./information/businessInformation";
@@ -86,6 +87,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
             <Route path={`${match.path}/project/:projectId`} component={Project} />
             <Route path={`${match.path}/collection`} component={Collection} />
+            <Route path={`${match.path}/collectionOrder`} component={CollectionOrder} />
           </Switch>
         <Footer/>
 			</div>

@@ -305,9 +305,7 @@ export async function applySave(params) {
 export async function Investment(params) {
   return request(`${BASE_URL}/zjb-dc/investment/personal`, {
     method: 'POST',
-    body: {
-      ...params,
-    }
+    body: params
   })
 }
 
@@ -594,4 +592,19 @@ export async function setProjectCollection(params) {
 // 项目收藏列表
 export async function getCollectionProject() {
   return request(`${BASE_URL}/zjb-website/projectCollection/list`)
+}
+
+// 项目收藏改变金额
+export async function setCollectionMoney(params) {
+  return request(`${BASE_URL}/zjb-website/projectCollection/update`, {
+    method:'POST',
+    body: {
+      ...params
+    }
+  })
+}
+
+// 删除收藏项目中的项目
+export async function delCollectionProject(param) {
+  return request(`${BASE_URL}/zjb-website/projectCollection/delete?collectionIds=${param}`);
 }

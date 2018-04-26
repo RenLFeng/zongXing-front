@@ -82,12 +82,12 @@ export default class FormProject extends React.Component {
       return;
     }
     try {
-      const data = {
+      const data = [{
         projectId: this.props.project.fpeoject_id,
         amount: this.state.money * 1,
         remark: '',
         notifyPageUrl: `http://${window.location.host}/#/index/projectDetail/${this.props.project.fpeoject_id}`,
-      };
+      }];
       this.setState({loading: true});
       const response = await Investment(data);
       this.setState({loading: false});

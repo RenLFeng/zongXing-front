@@ -251,8 +251,8 @@ export default class SecConsultation extends React.Component {
               rows="5" 
               placeholder="输入您想跟大家交流的内容"
               value={topicText} 
-              onChange={(e)=>this.setState({topicText: e.target.value})}
-              />
+              onChange={(e)=>this.setState({topicText: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value})}
+            />
             <p className="tright">
               <i className="fl c6">还可以输入<em>240</em>字</i>
               <label><input checked={anonymous} type="checkbox" onChange={()=>this.setState({anonymous: !anonymous})} />匿名提问</label>
@@ -302,8 +302,8 @@ export default class SecConsultation extends React.Component {
                                   onChange={(e) => {
                                     console.log(e.target.value.length);
                                     this.setState({
-                                      [`replayText${data.fid}`]: e.target.value,
-                                      [`${data.fid}length`]:e.target.value.length
+                                      [`replayText${data.fid}`]: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value,
+                                      [`${data.fid}length`]: e.target.value.length>240?e.target.value.substring(0, 240).length:e.target.value.length
                                     })}}
                                   />
                         <p className="tright">
@@ -355,7 +355,10 @@ export default class SecConsultation extends React.Component {
                       </div>
                       <div className="rebox">
                         <textarea className="put" rows="5" value={this.state[`my${data.fid}Text`]}
-                                  onChange={(e) => this.setState({[`my${data.fid}Text`]: e.target.value, [`${data.fid}TextLength`]: e.target.value.length})}/>
+                                  onChange={(e) => this.setState({
+                                    [`my${data.fid}Text`]:e.target.value.length>240?e.target.value.substring(0, 240):e.target.value,
+                                     [`${data.fid}TextLength`]:  e.target.value.length>240?e.target.value.substring(0, 240).length:e.target.value.length
+                                     })}/>
                         <p className="tright">
                           <i className="fl c6">还可以输入<em>{this.state[`${data.fid}TextLength`]?`${240-this.state[`${data.fid}TextLength`]}`:'240'}</em>字</i>
                           <Button type="primary" loading={this.state[`myLoading${data.fid}`]} style={{borderRadius: 3}}
