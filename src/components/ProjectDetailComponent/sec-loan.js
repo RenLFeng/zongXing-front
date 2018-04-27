@@ -79,9 +79,6 @@ export default class SecLoan extends React.Component {
           }
           {project.projectModules ? project.projectModules.map((item)=>{
             let title = '';
-            if (!item.title) {
-              return;
-            }
             if (item.ftitle && item.ftitle.length > 4) {
               title = item.ftitle.substring(0,4);
             } else {
