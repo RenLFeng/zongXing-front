@@ -28,11 +28,80 @@ export default class Right extends React.Component {
       canPay: false
     };
     this.rate = 1;
+    this.countDown = null;
   }
 
   componentDidMount() {
     console.log(123);
   }
+
+  componentWillReceiveProps(props) {
+    if (this.props.projectDetail !== props.projectDetail) {
+      if (!this.countDown && this.props.projectDetail.fcollet_over_time) {
+        this.countDown = setInterval(()=>this.countDownTime(), 1000);
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    console.log(123);
+    clearInterval(this.countDown);
+  }
+
+  countDownTime() {
+    if (this.props.projectDetail.fcollet_over_time) {
+      let overTime = this.props.projectDetail.fcollet_over_time - new Date().getTime();
+      if (overTime <= 0) {
+        this.setState({countDown: '00 : 00 : 00', countDay: 0});
+        clearInterval(this.countDown);
+      } else {
+        if (Math.floor(overTime/86400000) !== 0) {
+          this.setState({
+            countDay: Math.floor(overTime/86400000)
+          });
+        } else {
+          this.setState({
+            countDay: 0
+          });
+        }
+        overTime = overTime - Math.floor(overTime/86400000) * 86400000;
+        let time = '';
+        if (Math.floor(overTime/3600000) !== 0) {
+          if (Math.floor(overTime/3600000) >= 10) {
+            time = `${Math.floor(overTime/3600000)} :`;
+          } else {
+            time = `0${Math.floor(overTime/3600000)} :`;
+          }
+        } else {
+          time = `00 :`;
+        }
+        overTime = overTime - Math.floor(overTime/3600000) * 3600000;
+        if (Math.floor(overTime/60000) !== 0) {
+          if (Math.floor(overTime/60000) >= 10) {
+            time = `${time} ${Math.floor(overTime/60000)} :`;
+          } else {
+            time = `${time} 0${Math.floor(overTime/60000)} :`;
+          }
+        } else {
+          time = `${time} 00 :`;
+        }
+        overTime = overTime - Math.floor(overTime/60000) * 60000;
+        if (overTime !== 0) {
+          if (overTime/1000 >= 10) {
+            time = `${time} ${Math.floor(overTime/1000)}`;
+          } else {
+            time = `${time} 0${Math.floor(overTime/1000)}`;
+          }
+        } else {
+          time = `${time} 00`;
+        }
+        this.setState({countDown: time});
+      }
+    } else {
+      this.setState({countDown: '00 : 00 : 00', countDay: 0});
+    }
+  }
+
 
   async getPersonalMoney(fid) {
     try {
@@ -120,7 +189,6 @@ export default class Right extends React.Component {
   }
 
   render(){
-    const {countDay, countDown} = this.props.time;
     const project = this.props.projectDetail;
     const allMoney = project.allMoney?project.allMoney:0;
     const userCount = project.userCount ? project.userCount: 0;
@@ -130,11 +198,11 @@ export default class Right extends React.Component {
           <div className="trow clearfix" data-end={moment(project.fcollet_over_time).format('YYYY-MM-DD HH:mm:ss')}>
             <i className="tit">还剩</i>
             <div className="day">
-              <p className="t1">{countDay}</p>
+              <p className="t1">{this.state.countDay?this.state.countDay:0}</p>
               <p className="t2">天</p>
             </div>
             <div className="time">
-              <p className="t1">{countDown}</p>
+              <p className="t1">{this.state.countDown?this.state.countDown:'00 : 00 : 00'}</p>
               <p className="t2">小时<i/>分<i/>秒</p>
             </div>
           </div>

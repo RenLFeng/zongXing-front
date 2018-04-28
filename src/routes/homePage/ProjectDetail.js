@@ -26,7 +26,6 @@ export default class ProjectDetail extends React.Component {
 
   componentWillUnmount() {
     $(window).off('scroll');
-    clearInterval(this.countDown);
   }
 
   async fetchProjectDetail() {
@@ -40,11 +39,6 @@ export default class ProjectDetail extends React.Component {
         projectDetail: response.data
       }, () => {
         this.changeNum();
-        if (response.data && response.data.fflag === 10) {
-          this.countDown = setInterval(()=>{
-            this.countDownTime();
-          }, 1000);
-        }
       });
       if (response.data.flocation) {
         let map = new AMap.Map('container',{
@@ -61,61 +55,6 @@ export default class ProjectDetail extends React.Component {
       message.error(response.msg);
     }
   }
-
-  countDownTime() {
-    if (this.state.projectDetail.fcollet_over_time) {
-      let overTime = this.state.projectDetail.fcollet_over_time - new Date().getTime();
-      if (overTime <= 0) {
-        this.setState({countDown: '00 : 00 : 00', countDay: 0});
-        clearInterval(this.countDown);
-      } else {
-        if (Math.floor(overTime/86400000) !== 0) {
-          this.setState({
-            countDay: Math.floor(overTime/86400000)
-          });
-        } else {
-          this.setState({
-            countDay: 0
-          });
-        }
-        overTime = overTime - Math.floor(overTime/86400000) * 86400000;
-        let time = '';
-        if (Math.floor(overTime/3600000) !== 0) {
-          if (Math.floor(overTime/3600000) >= 10) {
-            time = `${Math.floor(overTime/3600000)} :`;
-          } else {
-            time = `0${Math.floor(overTime/3600000)} :`;
-          }
-        } else {
-          time = `00 :`;
-        }
-        overTime = overTime - Math.floor(overTime/3600000) * 3600000;
-        if (Math.floor(overTime/60000) !== 0) {
-          if (Math.floor(overTime/60000) >= 10) {
-            time = `${time} ${Math.floor(overTime/60000)} :`;
-          } else {
-            time = `${time} 0${Math.floor(overTime/60000)} :`;
-          }
-        } else {
-          time = `${time} 00 :`;
-        }
-        overTime = overTime - Math.floor(overTime/60000) * 60000;
-        if (overTime !== 0) {
-          if (overTime/1000 >= 10) {
-            time = `${time} ${Math.floor(overTime/1000)}`;
-          } else {
-            time = `${time} 0${Math.floor(overTime/1000)}`;
-          }
-        } else {
-          time = `${time} 00`;
-        }
-        this.setState({countDown: time});
-      }
-    } else {
-      this.setState({countDown: '00 : 00 : 00', countDay: 0});
-    }
-  }
-
 
   async changeNum() {
     const {projectId} = this.props.match.params;

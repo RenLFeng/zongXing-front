@@ -28,8 +28,9 @@ export default class SecTrack extends React.Component {
   async fetchBannerPic() {
     const response = await getProjectDetailNotice(this.props.projectId);
     if (response.code === 0) {
-      this.setState({noticeImg: response.data});
-      setTimeout(()=>this.controlBanner(), 200);
+      this.setState({noticeImg: response.data},()=>{
+        setTimeout(()=>this.controlBanner(), 2000);
+      });
     } else {
       message.error(response.msg);
     }
@@ -41,7 +42,7 @@ export default class SecTrack extends React.Component {
     const swiper = new Swiper('.lich-box1 .swiper-container', {
       speed: 1000,
       loop: true,
-      onSlideChangeEnd: this.resetCon
+      onSlideChangeEnd: (swiper)=>this.resetCon(swiper)
     });
     $('.lich-box1 .prev').on('click', function () {
       swiper.swipePrev();
@@ -52,6 +53,8 @@ export default class SecTrack extends React.Component {
   }
 
   resetCon(swiper) {
+    let count = this.state.noticeImg.length;
+    console.log(count)
     let d = swiper.getSlide(swiper.activeIndex);
     let tit = $(d).find('.t0').html();
     $('.lich-box1 .hd .tit').html(tit);
@@ -146,11 +149,12 @@ export default class SecTrack extends React.Component {
           <div className="swiper-container">
             <div className="swiper-wrapper">
               { this.state.noticeImg.map((data, index)=>{
+                  console.log(index);
                   return(
-                    <div className="swiper-slide" key={index}>
-                      <img src={`${IMG_BASE_URL}project/${dateCode}/${projectDetail.fproject_no}/${data.fCardPic}`}/>
+                    <div className="swiper-slide"  key={index}>
+                      <img src={`${IMG_BASE_URL}/${data.fCardPic}`}/>
                       <p className="t0 none">{data.fTitle}</p>
-                      <p className="t1">{moment(data.fTime).format('YYYY-MM-DD HH:mm')} 阅读数：{data.fReadCount}</p>
+                      <p className="t1">{moment(data.fTime).format('YYYY-MM-DD HH:mm')}</p>
                       <p className="t2">
                         {data.fContent}
                       </p>
