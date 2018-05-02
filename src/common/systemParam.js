@@ -29,7 +29,7 @@ if (build === 'production') {
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
   REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
   PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
-  TURN_BACK = 'http://192.168.1.198:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
+  TURN_BACK = 'http://192.168.1.199:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
 }
 
 // 导出环境变量配置

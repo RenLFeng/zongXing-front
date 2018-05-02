@@ -66,6 +66,7 @@ export default class LoanList extends React.Component {
 
   handleCancel = () => {
     this.setState({visible: false});
+    this.createCompany.resetFields();
   };
 
   handleCreate =  () => {

@@ -254,7 +254,7 @@ export default class SecConsultation extends React.Component {
               onChange={(e)=>this.setState({topicText: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value})}
             />
             <p className="tright">
-              <i className="fl c6">还可以输入<em>240</em>字</i>
+              <i className="fl c6">还可以输入<em>{this.state.topicText?`${240-this.state.topicText.length}`:'240'}</em>字</i>
               <label><input checked={anonymous} type="checkbox" onChange={()=>this.setState({anonymous: !anonymous})} />匿名提问</label>
               <Button type="primary" loading={!!sendLoading} style={{marginLeft: 10, borderRadius: 3}} onClick={()=>this.sendTopic()}>发布话题</Button>
             </p>
