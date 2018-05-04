@@ -72,23 +72,59 @@ export default class SecCourse extends React.Component {
           <div className="end"/>
           <div className="list">
             {this.state.courseArr.map((data, index)=>{
-              const imgArr = data.fpic_json.split(',');
-              return (
-                <div className="item" key={data.fid}>
-                  <p className="date">
+              const imgArr = data.fpic_json?JSON.parse(data.fpic_json): [];
+              console.log(imgArr);
+              if (data.ftype === 1) {
+                return (
+                  <div className="item" key={data.fid}>
+                    <p className="date">
+                      <i className="y">{moment(data.ftime).format('YYYY')}</i><br /><i className="d">{moment(data.ftime).format('MM-DD')}</i>
+                    </p>
+                    <i className="cc"/>
+                    <p className="text">{data.fcontent}<em className={`${data.state ? 'em1': 'em2'}`} onClick={()=>this.clickHeard(data.fid,data.state)}>{data.count}</em></p>
+                    <p className="img">
+                      {imgArr.map((data, index) => {
+                        return (
+                          <img style={{width: 120, height: 96}} key={index} src={`${IMG_BASE_URL}${data.realUrl}`} />
+                        );
+                      })}
+                    </p>
+                  </div>
+                );
+              } else if (data.ftype === 2) {
+                return (
+                  <div key={data.fid} className="item hover done">
+                    <p className="date">
+                        <i className="y">{moment(data.ftime).format('YYYY')}</i><br /><i className="d">{moment(data.ftime).format('MM-DD')}</i>
+                    </p>
+                    <i className="cc"></i>
+                    <p className="text">{data.fcontent}}</p>
+                  </div>
+                );
+              } else if (data.ftype === 3) {
+                return (
+                  <div key={data.fid} className="item">
+                    <p className="date">
                     <i className="y">{moment(data.ftime).format('YYYY')}</i><br /><i className="d">{moment(data.ftime).format('MM-DD')}</i>
-                  </p>
-                  <i className="cc"/>
-                  <p className="text">{data.fcontent}<em className={`${data.state ? 'em1': 'em2'}`} onClick={()=>this.clickHeard(data.fid,data.state)}>{data.count}</em></p>
-                  <p className="img">
-                    {imgArr.map((data, index) => {
-                      return (
-                        <img key={index} src={`${IMG_BASE_URL}project/${dateCode}/${projectDetail.fproject_no}/${data}?${COURSE_PROJECT_PIC}`} />
-                      );
-                    })}
-                  </p>
+                    </p>
+                    <i className="cc"></i>
+                    <p className="text">{data.fcontent}<em className={`${data.state ? 'em1': 'em2'}`} onClick={()=>this.clickHeard(data.fid,data.state)}>{data.count}</em></p>
+                    <p className="img img1">
+                      <img src={require('../../assets/img/subSite/cp1.png')} style={{width: 160, height: 86}}/>
+                      <img src={require('../../assets/img/subSite/cp2.png')} style={{width: 160, height: 86}}/>
+                      <img src={require('../../assets/img/subSite/cp3.png')} style={{width: 160, height: 86}}/>
+                    </p>
                 </div>
-              );
+                )
+              } else if (data.ftype === 4) {
+                <div className="item">
+                    <p className="date">
+                    <i className="y">{moment(data.ftime).format('YYYY')}</i><br /><i className="d">{moment(data.ftime).format('MM-DD')}</i>
+                    </p>
+                    <i className="cc"></i>
+                    <p className="text">{data.fcontent}<em className={`${data.state ? 'em1': 'em2'}`} onClick={()=>this.clickHeard(data.fid,data.state)}>{data.count}</em></p>
+                </div>
+              }
             })}
           </div>
           <div className="start"/>

@@ -608,3 +608,8 @@ export async function setCollectionMoney(params) {
 export async function delCollectionProject(param) {
   return request(`${BASE_URL}/zjb-website/projectCollection/delete?collectionIds=${param}`);
 }
+
+// 解锁锁定用户的接口
+export async function relieveAccountAjax(mobile, authcode) {
+  return request(`${BASE_URL}/zjb-website/login/relieve?mobile=${mobile}&authcode=${authcode}`)
+}

@@ -88,10 +88,18 @@ li {
     .massageListTitle {
       vertical-align: middle;
       width: 14%;
+      padding-right: 5px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
     .massageListTitle1 {
       vertical-align: middle;
       width: 7%;
+      padding-right: 5px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
     .massageListTitle2 {
       vertical-align: middle;
@@ -101,6 +109,9 @@ li {
       vertical-align: middle;
       width: 14%;
       padding-right: 17px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
     .massageListtime {

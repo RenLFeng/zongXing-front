@@ -10,7 +10,7 @@ export default {
     nickName: localStorage.getItem('accessToken')?JSON.parse(localStorage.getItem('accessToken')).nickName:""
   },
   effects: {
-    *login({ payload }, { call, put }) {
+    *login({ payload, passwordError }, { call, put }) {
       //开始请求之前，请求状态修改为正在请求
       yield put({
         type: 'changeSubmitting'
@@ -29,6 +29,16 @@ export default {
             payload: {
               nickName: response.data.nickName,
               code: true
+            },
+          });
+        } else if (response.code === -2) {
+          // 用户输入密码错5次
+          message.error(response.msg);
+          passwordError(response.data);
+          yield put({
+            type: 'changeLoginStatus',
+            payload: {
+              code: false,
             },
           });
         } else {

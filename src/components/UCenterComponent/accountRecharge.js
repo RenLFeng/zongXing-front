@@ -41,7 +41,6 @@ export default class AccountRecharge extends React.Component {
         message.error(response.msg);
       }
     } catch (e) {
-
       this.setState({loading: false});
       console.log(e);
       message.error('请求失败,请稍后重试');
@@ -121,7 +120,7 @@ class Forms extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         if (values.amount * 1.00 > 100000000) {
-          message.error('金额超过最大限制');
+          message.error('金额超过最大限制,不能超过100000000');
           return;
         }
         values.rechargeType = values.rechargeType * 1;

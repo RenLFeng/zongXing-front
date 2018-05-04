@@ -5,6 +5,7 @@ import {STATION_MESSAGE} from '../../../common/pagePath';
 import {message} from "antd/lib/index";
 import moment from 'moment';
 import {getOneMessage} from "../../../services/api";
+import Editor from '../../editor'; 
 
 
 export default class MessageDetail extends React.Component {
@@ -41,7 +42,7 @@ export default class MessageDetail extends React.Component {
         <div className="message">
            <h2>{messageData.ftitle}</h2>
            <h5>{moment(messageData.fsendTime).format('YYYY-MM-DD HH:mm:ss')}</h5>
-           <p>{messageData.article ? messageData.article.fcontent:null}</p>
+           <Editor value={messageData.article ? messageData.article.fcontent:''}/>
         </div>
       </div>
     );

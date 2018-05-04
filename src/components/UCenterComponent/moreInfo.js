@@ -77,8 +77,8 @@ export default class MoreInfo extends React.Component{
                 infoList.map((data)=>{
                   return(
                     <li className="massageList" key={data.fid}>
-                      <span className="massageListTitle3">{data.fotherName}</span>
-                      <span className="massageListTitle1">{data.busType}</span>
+                      <span className="massageListTitle3" title={data.fotherName}>{data.fotherName}</span>
+                      <span className="massageListTitle1" title={data.busType}>{data.busType}</span>
                       <span className="massageListTitle">{(data.finMoney+'').fm()}元</span>
                       <span className="massageListTitle">{(data.foutMoney+'').fm()}元</span>
                       <span className="massageListTitle">{(data.fbeginMoney+'').fm()}元</span>

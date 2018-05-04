@@ -192,6 +192,11 @@ export default class Right extends React.Component {
     const project = this.props.projectDetail;
     const allMoney = project.allMoney?project.allMoney:0;
     const userCount = project.userCount ? project.userCount: 0;
+    let rate = Math.floor(allMoney/project.fcredit_money*100);
+    if (allMoney/project.fcredit_money !== 0 && allMoney/project.fcredit_money<0.01) {
+      rate = 1;
+    }
+
     return (
       <div>
         <div className="box1 shadow">
@@ -207,7 +212,7 @@ export default class Right extends React.Component {
             </div>
           </div>
           <div className="data clearfix">
-            <div className="circle" data-value={Math.floor(allMoney/project.fcredit_money*100)}/>
+            <div className="circle" data-value={rate}/>
             <i className="ctext">已筹款比例</i>
             <div className="fr">
               <p className="t1">已经筹款</p>

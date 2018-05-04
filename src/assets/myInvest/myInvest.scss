@@ -128,9 +128,15 @@ li {
     }
     .investList_no {
       width: 18%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .investList_title {
-      width: 18%
+      width: 18%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .investList_money {
       width: 10%
@@ -181,6 +187,9 @@ li {
   }
   .investListChild_no {
     width: 15%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .investListChild_money {
     width: 15%;

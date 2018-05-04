@@ -2,8 +2,8 @@ import React from 'react';
 import '../../assets/login/index.scss';
 import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_} from '../../common/systemParam';
 import {connect} from 'dva';
-import {Spin, message, Button, Icon, Steps} from 'antd';
-import {phoneExist, getAuthCode, regUser, changePW, checkCode, changePassword} from '../../services/api';
+import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input} from 'antd';
+import {phoneExist, getAuthCode, regUser, changePW, checkCode, changePassword, relieveAccountAjax} from '../../services/api';
 
 
 const Step = Steps.Step;
@@ -12,6 +12,7 @@ const Step = Steps.Step;
   login: state.login,
   submitting: state.login.submitting
 }))
+@Form.create()
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +36,7 @@ export default class Login extends React.Component {
       regPwdErr: '', //注册密码提示
       textErr: '',  //阅读注册协议提示
       authLoading: false, //验证码接口发送状态
-
+      errorTime: 60,
       flag: 1,  //显示登陆页面
       loginName: '',  //验证身份时的手机号或用户名
       mobile: '',
@@ -62,6 +63,7 @@ export default class Login extends React.Component {
     this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
     this.countDownFun = null;
     this.countDownFun_ = null;
+    this.countDownErrorCode = null;
   }
 
   componentWillUnmount() {
@@ -72,6 +74,10 @@ export default class Login extends React.Component {
     if (this.countDownFun_) {
       clearInterval(this.countDownFun_);
     }
+
+    if (this.countDownErrorCode) {
+      clearInterval(this.countDownErrorCode);
+    }
   }
 
   async close() {
@@ -81,7 +87,7 @@ export default class Login extends React.Component {
     console.log(111)
   }
 
-  check(){
+  check() {
     const {regPhone} = this.state;
 
   }
@@ -89,6 +95,14 @@ export default class Login extends React.Component {
   //检验手机号是否存在
   async checkPhoneNumber(type) {
     const phoneNum = this.state.regPhone;
+    if (phoneNum.length === 0) {
+      this.setState({regNameErr: '请输入手机号'});
+      return;
+    }
+    if (!VER_PHONE.test(phoneNum)) {
+      this.setState({regNameErr: '请输入正确的手机号'});
+      return;
+    }
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await phoneExist(phoneNum);
       if (response.code !== 0) {
@@ -381,7 +395,6 @@ export default class Login extends React.Component {
   //登录提交方法
   submitLogin() {
     const {loginPhone, loginPwd} = this.state;
-    console.log(loginPhone);
     if (loginPhone.trim().length === 0 && loginPwd.trim().length === 0) {
       this.setState({
         loginNameErr: '请输入登录名',
@@ -407,11 +420,19 @@ export default class Login extends React.Component {
     });
     this.props.dispatch({
       type: 'login/login',
-      payload: login
+      payload: login,
+      passwordError: (phoneNumber) => this.passwordError(phoneNumber)
     });
   }
 
-  
+  passwordError(phoneNumber) {
+    console.log(phoneNumber);
+    this.setState({
+      phoneNumber,
+      authPhone: true,
+      errorAuthCode: ''
+    });
+  }
 
   pressKey(e) {
     if (e.keyCode === 13) {
@@ -433,10 +454,98 @@ export default class Login extends React.Component {
     })
   }
 
+  // 用户5次错误之后 发送验证码的接口
+  async sendErrorCodeAuth() {
+    if (this.state.sendErrorCodeLoading) {
+      return;
+    }
+    const sendTime = localStorage.getItem(`${this.state.phoneNumber}errorCode`);
+    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000) {
+      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
+      return;
+    }
+    this.setState({sendErrorCodeLoading: true});
+    const response = await getAuthCode(this.state.phoneNumber);
+    this.setState({sendErrorCodeLoading: false});
+    if (response.code === 0) {
+      localStorage.setItem(`${this.state.phoneNumber}errorCode`, new Date().getTime());
+      this.setState({
+        errorTime: 59
+      }, ()=> {
+        this.countDownErrorCode = setInterval(()=>{
+          if (this.state.errorTime !== 0) {
+            this.setState({ errorTime: this.state.errorTime - 1});
+          } else {
+            this.setState({ errorTime: 60 });
+            clearInterval(this.countDownErrorCode);
+          }
+        }, 1000);
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
+  // 解锁用户
+  async relieveAccountLock() {
+    if (this.state.relieveLoading) {
+      return;
+    }
+    if (!this.state.errorAuthCode || (this.state.errorAuthCode && this.state.errorAuthCode.trim().length === 0)) {
+      message.error('请输入验证码')
+      return;
+    }
+    this.setState({relieveLoading: true});
+    const response = await relieveAccountAjax(this.state.phoneNumber, this.state.errorAuthCode.trim());
+    this.setState({relieveLoading: false});
+    if (response.code === 0) {
+      message.info('用户已解锁，请重新登录');
+      this.setState({authPhone: false});
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
   render() {
     const {showReg, showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="logindiv1 shadow">
+        <Modal
+          visible={this.state.authPhone}
+          title="解除账号锁定"
+          okText="提交"
+          cancelText="取消"
+          confirmLoading={this.state.relieveLoading}
+          onOk={() => this.relieveAccountLock()}
+          onCancel={() => {
+            if (this.state.relieveLoading) {
+              message.warning('请求处理中请稍后');
+              return;
+            }
+            this.setState({authPhone: false});
+          }}
+        >
+          <Row>
+            <Col span={3}>手机号</Col>
+            <Col span={15}>
+              <Input value={this.state.phoneNumber} disabled/>
+            </Col>
+            <Col span={6} style={{textAlign: 'right'}}>
+              <Button type="primary" loading={this.state.sendErrorCodeLoading} onClick={()=>this.sendErrorCodeAuth()} disabled={this.state.errorTime !== 60}>
+                {this.state.errorTime === 60 ? '发送验证码' : `${this.state.errorTime}s后重试`}
+              </Button>
+            </Col>
+          </Row>
+          <Row style={{marginTop: 20}}>
+            <Col span={3}>
+              验证码
+            </Col>
+            <Col span={21}>
+              <Input type="password" value={this.state.errorAuthCode} placeholder="请输入" onChange={(e)=>this.setState({errorAuthCode: e.target.value})} maxLength={10}/>
+            </Col>
+          </Row>
+        </Modal>
         {showReg ?
           <div className="form regf" onChange={this.onChange}>
             <div className="hd center">

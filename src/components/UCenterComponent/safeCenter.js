@@ -431,7 +431,7 @@ export default class SafeCenter extends React.Component {
                 }
               </div>
               <div className="block2">{!!safeData.userSecurityCenter.fEmailBinding?`您验证的邮箱：${safeData.fEmail}`:'您还未邮箱绑定，为了您的账户安全，建议您尽快完成邮箱绑定'}</div>
-              <div className="block3">{!!safeData.userSecurityCenter.fEmailBinding?'修改':<a onClick={()=>this.setState({emailAuth: true})}>认证</a>}</div>
+              <div className="block3">{!!safeData.userSecurityCenter.fEmailBinding?<a onClick={()=>this.setState({emailAuth: true})}>修改</a>:<a onClick={()=>this.setState({emailAuth: true})}>认证</a>}</div>
             </div>
 
             <NameAuth

@@ -16,10 +16,23 @@ export default class FormProject extends React.Component {
       risk: false,
       loading: false,
       errMsg: '',
-      data: {}
+      data: {},
+      browser: false
     };
   }
 
+  componentDidMount() {
+    // document.Browser.Name.value=navigator.appName; 
+    // document.Browser.Version.value=navigator.appVersion; 
+    // document.Browser.Code.value=navigator.appCodeName; 
+    // document.Browser.Agent.value=navigator.userAgent; 
+    // -2
+    if (window.navigator.userAgent.indexOf('AppleWebKit') != -1) {
+      console.log('------------------', true);
+      this.setState({browser: true});
+    }
+  }
+  
   checkFormat(value) {
     if (!MUN_INTEGER.test(value+'')) {
       this.setState({errMsg: '金额格式不正确'});
@@ -203,8 +216,8 @@ export default class FormProject extends React.Component {
 
           { this.state.errMsg ?
             <div className="row clearfix" style={{marginTop: -20}}>
-              <div className="col2">
-                <p style={{fontSize: 16, color: 'red',marginLeft: -345}}>{this.state.errMsg}</p>
+              <div className="col2" style={{float: 'none'}}>
+                <p style={{fontSize: 16, color: 'red',marginLeft: `${this.state.browser? '-2px' : '-345px'}`}}>{this.state.errMsg}</p>
               </div>
             </div> : null
           }

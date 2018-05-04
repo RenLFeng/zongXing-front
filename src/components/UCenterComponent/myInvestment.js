@@ -191,8 +191,8 @@ export default class MyInvestment extends React.Component {
                   return (
                     <div key={data.finv_no}>
                       <li className="investList" >
-                        <span className="investList_no">{data.projectNo}</span>
-                        <span className="investList_title">{data.projectName}</span>
+                        <span className="investList_no" title={data.projectNo}>{data.projectNo}</span>
+                        <span className="investList_title" title={data.projectName}>{data.projectName}</span>
                         <span className="investList_money" style={{textAlign: 'right',color: 'blue', cursor: 'pointer'}} onClick={()=>this.showChild(data)}>{`${data.invMoney}`.fm()}</span>
                         <span className="investList_status" style={{textAlign: 'right',color: 'blue', cursor: 'pointer'}} onClick={()=>this.showChild(data)}>{`${data.waitPayMoney}`.fm()}</span>
                         <span className="investList_time">{MY_INCOME_STATUS[`${data.projectFlag}`]}</span>
@@ -218,7 +218,7 @@ export default class MyInvestment extends React.Component {
                             data.invRecordChildVos.map((item)=> {
                             return (
                               <li key={item.invId} className="investListChild">
-                                <span className="investListChild_no">{item.invNo}</span>
+                                <span className="investListChild_no" title={item.invNo}>{item.invNo}</span>
                                 <span className="investListChild_money" style={{textAlign: 'right'}}>{`${item.money}`.fm()}</span>
                                 <span className="investListChild_status">{ORDER_STATUS[item.invFlag]}</span>
                                 <span
@@ -252,18 +252,18 @@ export default class MyInvestment extends React.Component {
                 <div className="box_">
                   <div className="pagination">
                     {page_num.lastPage ?
-                      <a className="num" onClick={() => this.getPlantNotice(this.state.pageIndex - 1)}>&lt;</a> :
+                      <a className="num" onClick={() => this.getMyinvestAjax(this.state.pageCurrent - 1)}>&lt;</a> :
                       <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
                     {page_num.firstPage ?
-                      <a className={`${1 == this.state.pageIndex ? 'hover_' : ''}`} onClick={() => this.getPlantNotice(1)}>1</a> :
+                      <a className={`${1 == this.state.pageCurrent ? 'hover_' : ''}`} onClick={() => this.getMyinvestAjax(1)}>1</a> :
                       null}
                     {page_num.leftEllipsis ?
                       <a>...</a> :
                       null}
                     {page_num.page.map((pageNum) => {
                       return (
-                        <a key={pageNum} className={`${pageNum * 1 == this.state.pageIndex ? 'hover_' : ''}`}
-                           onClick={() => this.getPlantNotice(pageNum)}>{pageNum}</a>
+                        <a key={pageNum} className={`${pageNum * 1 == this.state.pageCurrent ? 'hover_' : ''}`}
+                           onClick={() => this.getMyinvestAjax(pageNum)}>{pageNum}</a>
                       );
                     })}
                     {page_num.rightEllipsis ?
@@ -271,12 +271,12 @@ export default class MyInvestment extends React.Component {
                       null}
                     {page_num.finalPage ?
                       <a
-                        className={`${this.state.maxPage == this.state.pageIndex ? 'hover_' : ''}`}
-                        onClick={() => this.getPlantNotice(this.state.maxPage)}
+                        className={`${this.state.maxPage == this.state.pageCurrent ? 'hover_' : ''}`}
+                        onClick={() => this.getMyinvestAjax(this.state.maxPage)}
                       >{this.state.maxPage}</a> :
                       null}
                     {page_num.nextPage ?
-                      <a className="num" onClick={() => this.getPlantNotice(this.state.pageIndex + 1)}>&gt;</a> :
+                      <a className="num" onClick={() => this.getMyinvestAjax(this.state.pageCurrent + 1)}>&gt;</a> :
                       <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>
                     }
                   </div>
