@@ -613,3 +613,13 @@ export async function delCollectionProject(param) {
 export async function relieveAccountAjax(mobile, authcode) {
   return request(`${BASE_URL}/zjb-website/login/relieve?mobile=${mobile}&authcode=${authcode}`)
 }
+
+// 查询平台报告
+export async function selectPlatformReport() {
+  return request(`${BASE_URL}/zjb-manage/report/show/platform`)
+}
+
+// 查询财务报表
+export async function selectFinancialStatements() {
+  return request(`${BASE_URL}/zjb-manage/report/show/financial`)
+}

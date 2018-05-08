@@ -62,6 +62,7 @@ export default class SecCourse extends React.Component {
 
   render() {
     const {projectDetail} = this.props;
+    console.log(this.state.courseArr);
     const dateCode = moment(projectDetail.fcreate_time).format('YYYY') + moment(projectDetail.fcreate_time).format('MM');
     return (
       <div>
@@ -72,9 +73,8 @@ export default class SecCourse extends React.Component {
           <div className="end"/>
           <div className="list">
             {this.state.courseArr.map((data, index)=>{
-              const imgArr = data.fpic_json?JSON.parse(data.fpic_json): [];
-              console.log(imgArr);
               if (data.ftype === 1) {
+                const imgArr = data.fpic_json?JSON.parse(data.fpic_json): [];
                 return (
                   <div className="item" key={data.fid}>
                     <p className="date">
@@ -117,13 +117,15 @@ export default class SecCourse extends React.Component {
                 </div>
                 )
               } else if (data.ftype === 4) {
-                <div className="item">
+                return (
+                  <div className="item">
                     <p className="date">
-                    <i className="y">{moment(data.ftime).format('YYYY')}</i><br /><i className="d">{moment(data.ftime).format('MM-DD')}</i>
+                      <i className="y">{moment(data.ftime).format('YYYY')}</i><br /><i className="d">{moment(data.ftime).format('MM-DD')}</i>
                     </p>
                     <i className="cc"></i>
                     <p className="text">{data.fcontent}<em className={`${data.state ? 'em1': 'em2'}`} onClick={()=>this.clickHeard(data.fid,data.state)}>{data.count}</em></p>
-                </div>
+                 </div>
+                )
               }
             })}
           </div>

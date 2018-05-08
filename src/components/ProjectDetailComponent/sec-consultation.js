@@ -246,18 +246,18 @@ export default class SecConsultation extends React.Component {
       <div>
         <div className="cmt-box1">
           <p className="f18">有什么想跟大家交流的？</p>
-            <textarea 
-              className="put" 
-              rows="5" 
-              placeholder="输入您想跟大家交流的内容"
-              value={topicText} 
-              onChange={(e)=>this.setState({topicText: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value})}
-            />
-            <p className="tright">
-              <i className="fl c6">还可以输入<em>{this.state.topicText?`${240-this.state.topicText.length}`:'240'}</em>字</i>
-              <label><input checked={anonymous} type="checkbox" onChange={()=>this.setState({anonymous: !anonymous})} />匿名提问</label>
-              <Button type="primary" loading={!!sendLoading} style={{marginLeft: 10, borderRadius: 3}} onClick={()=>this.sendTopic()}>发布话题</Button>
-            </p>
+          <textarea 
+            className="put" 
+            rows="5" 
+            placeholder="输入您想跟大家交流的内容"
+            value={topicText} 
+            onChange={(e)=>this.setState({topicText: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value})}
+          />
+          <p className="tright">
+            <i className="fl c6">还可以输入<em>{this.state.topicText?`${240-this.state.topicText.length}`:'240'}</em>字</i>
+            <label><input checked={anonymous} type="checkbox" onChange={()=>this.setState({anonymous: !anonymous})} />匿名提问</label>
+            <Button type="primary" loading={!!sendLoading} style={{marginLeft: 10, borderRadius: 3}} onClick={()=>this.sendTopic()}>发布话题</Button>
+          </p>
         </div>
         <div className="cmt-tab">
           <a onClick={()=>this.setState({showTopic: 0})} className={`${showTopic === 0 ? 'hover' : ''}`} >全部</a>

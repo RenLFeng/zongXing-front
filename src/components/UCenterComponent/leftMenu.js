@@ -59,11 +59,6 @@ export default class LeftMenu extends React.Component {
           </div>
         </div>
         <div className="navbox">
-          <p className="hd ic6">
-            <a>我的收藏</a>
-          </p>
-        </div>
-        <div className="navbox">
           <p className="hd ic7">
             <a>我的优惠券</a>
           </p>

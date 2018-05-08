@@ -45,6 +45,10 @@ export default {
   LEGAL_COOPERATION: '/infor/legalCooperation', //法务合作
   SECURITY_COOPERATION: '/infor/securityCooperation', //安全合作
   MEDIA_COOPERATION: '/infor/mediaCooperation', //媒体合作
-  ICON_TEST: '/infor/iconTest' //图标测试
+  ICON_TEST: '/infor/iconTest', //图标测试
+
+  OPEATE_DATA: '/infor/operateData', //运营数据
+  PLATFORM_REPORT: '/infor/platformReport', //平台报告
+  FINANCIAL_STATEMENTS: '/infor/financialStatements', //财务报表
 
 }

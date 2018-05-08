@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'dva/router';
 
-import {Form, Input, Button, Select, Modal, message, Row, Col, Icon,Tooltip } from 'antd';
+import { Form, Input, Button, Select, Modal, message, Row, Col, Icon,Tooltip, Cascader } from 'antd';
 import { connect } from 'dva';
 
 import '../../assets/ucenter/modelCenter.scss';
 import { VER_PHONE, ID_CORD, AUTH_ADDRESS } from '../../common/systemParam';
 import Path from '../../common/pagePath';
+import { city } from '../../common/cityData';
 
 import {getPersonAccount, commitOpenAccount, getNoAccountCompany, getUserBaseData} from '../../services/api';
 import { relative } from 'path';
 
 const FormItem = Form.Item;
-
 const TIME_OUT = 10;
 export default class OpenAccount extends React.Component {
   constructor(props) {
@@ -119,6 +119,7 @@ class FormComponent extends React.Component {
         console.log('表单获取的数据', values);
         // 提交表单接口
         values.accountType = '0';
+        values.cityCode = values.city[values.city.length-1];
         this.setState({loading: true});
         try {
           const response = await commitOpenAccount(values);
@@ -307,54 +308,18 @@ class FormComponent extends React.Component {
                 ],
               })(<Input maxLength={'20'} autocomplete="off"/>)}
             </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="所在城市"
+            >
+              {getFieldDecorator('city', {
+                rules: [
+                 { required: true, message: '请选择所在城市' },
+                ],
+              })(<Cascader options={city} placeholder="请选择" />)}
+            </FormItem>
           </div>
           : null }
-        { this.state.openType === '1' ?
-          <div>
-            <Row>
-              <Col span={15}>
-                <FormItem
-                  {...formItemLayout}
-                  label="注册企业"
-                  labelCol={{xs: { span: 24 },sm: { span: 8 }}}
-                  wrapperCol={{xs: { span: 24 },sm: { span: 15 }}}
-                >
-                  {getFieldDecorator('companyId', {
-                    rules: [{ required: true, message: '请选择注册企业' }],
-                  })(
-                    <Select onChange={(val)=>this.changeCompany(val)}>
-                      {this.state.regCompany.map((data) => {
-                        return <Select.Option key={data.fid} value={data.fid}>{data.fname}</Select.Option>
-                      })}
-                    </Select>)}
-                </FormItem>
-              </Col>
-              <Col span={9}>
-                <div style={{height: 30, lineHeight: 3}}>
-                  <Link style={{color: 'blue'}} to={'/index/applyLoan'}>去添加公司</Link>
-                </div>
-              </Col>
-            </Row>
-            <FormItem
-              {...formItemLayout}
-              label="企业名称"
-            >
-              {getFieldDecorator('realName', {
-                rules: [{ required: true, message: '请填写企业名称' }],
-                initialValue: this.state.companyName
-              })(<Input maxLength={'50'} disabled={true}/>)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="营业执照号"
-            >
-              {getFieldDecorator('identificationNo', {
-                rules: [{ required: true, message: '请填写营业执照号'}],
-                initialValue: this.state.license
-              })(<Input maxLength={'60'} disabled={true} onChange={(e)=>this.setState({companyNumber: e.target.value})}/>)}
-            </FormItem>
-          </div> : null
-          }
         <FormItem {...btnLayout}>
           <Button type="primary"  htmlType="submit" loading={this.state.loading} style={{width: '200px'}}>提交</Button>
         </FormItem>
