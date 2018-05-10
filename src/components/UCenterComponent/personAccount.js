@@ -59,7 +59,7 @@ export default class PersonAccount extends React.Component {
               return `${name}  {b|0.00}`
             }
           },
-          left: '50%',
+          left: '60%',
           y: 'center',
           data:[{
             name: '可用余额',
@@ -191,13 +191,13 @@ export default class PersonAccount extends React.Component {
             },
             formatter:  function(name){
               if (name==='可用余额') {
-                return `${name}  {c|${(money.availableBalance+'').fm()}}`
+                return `${name}       {c|${(money.availableBalance+'').fm()}}`
               } else if (name === '冻结金额') {
-                return `${name}  {b|${(money.freezingAmount+'').fm()}}`
+                return `${name}       {b|${(money.freezingAmount+'').fm()}}`
               } else if (name === '待收本金') {
-                return `${name}  {b|${`${money.collectPrincipal}`.fm()}}`
+                return `${name}       {b|${`${money.collectPrincipal}`.fm()}}`
               } else {
-                return `${name}  {b|${`${money.collectInterest}`.fm()}}`
+                return `${name}       {b|${`${money.collectInterest}`.fm()}}`
               }
             },
             left: '50%',
@@ -337,7 +337,7 @@ export default class PersonAccount extends React.Component {
         <div className="border shadow box1">
           <div className="pieDiv">
             <div>
-              <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets+'').fm()}</span>
+              <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</span>
               <span style={{fontSize: '14px'}}>账户总资产</span>
             </div>
           </div>

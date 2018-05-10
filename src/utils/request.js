@@ -1,5 +1,6 @@
 import fetch from 'dva/fetch';
 import { routerRedux } from 'dva/router';
+import store from '../index';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据',
@@ -19,9 +20,12 @@ const codeMessage = {
   504: '网关超时',
 };
 function checkStatus(response) {
+  console.log(store);
+  const { dispatch } = store;
   if (response.status === 288) {
+    dispatch({ type: 'login/logout' });
+    dispatch(routerRedux.push('/index/login'));
     throw {name: 288};
-    return response;
   }
   if (response.status >= 200 && response.status < 300) {
     return response;

@@ -211,6 +211,9 @@ export default class Collection extends React.Component {
   // 单个项目点击选中
   changeValue(e, collectionId) {
     let status = e.target.checked;
+    if (!status) {
+      this.setState({checkAll: false});
+    }
     for (let obj of this.state.list) {
       if (obj.collectionId === collectionId) {
         obj.checkValue = status;

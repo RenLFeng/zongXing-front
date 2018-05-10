@@ -109,6 +109,9 @@ export default class SecConsultation extends React.Component {
       }
     } catch(e) {
       console.log(e);
+      if (e.name==288) {
+        return;
+      }
       message.error('服务器繁忙，请稍后重试');
       this.setState({sendLoading: false});
     }

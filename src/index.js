@@ -25,3 +25,5 @@ app.router(require('./router'));
 
 // 5. Start
 app.start('#root');
+
+export default app._store;
