@@ -255,10 +255,10 @@ export default class Collection extends React.Component {
     let num = 0;
     let arr = [];
     for (let obj of chooseArr) {
-      if (obj.amount > obj.fcreditMoney * 0.01) {
-        message.warning('投资金额不能超过项目所需金额的1%');
-        return;
-      }
+      // if (obj.amount > obj.fcreditMoney * 0.01) {
+      //   message.warning('投资金额不能超过项目所需金额的1%');
+      //   return;
+      // }
       if (this.state[`${obj.collectionId}num`]) {
         if (!/^[+]{0,1}(\d+)$/.test(this.state[`${obj.collectionId}num`])) {
           message.warning('请输入合法的数量');

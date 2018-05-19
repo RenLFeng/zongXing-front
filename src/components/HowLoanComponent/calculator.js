@@ -142,15 +142,15 @@ export default class Calculator extends React.Component {
         <div className="row result">
           <p className="clearfix">
             <i className="col1">每月还款</i>
-            <i className="col2"><em>{this.state.repayment}</em>元</i>
+            <i className="col2"><em>{`${this.state.repayment}`.fm()}</em>元</i>
           </p>
           <p className="clearfix">
             <i className="col1">总支付利息</i>
-            <i className="col2"><em>{this.state.interest}</em>元</i>
+            <i className="col2"><em>{`${this.state.interest}`.fm()}</em>元</i>
           </p>
           <p className="clearfix">
             <i className="col1">本息合计</i>
-            <i className="col2"><em>{this.state.theSum}</em>元</i>
+            <i className="col2"><em>{`${this.state.theSum}`.fm()}</em>元</i>
           </p>
         </div>
         <div className="bot center">
