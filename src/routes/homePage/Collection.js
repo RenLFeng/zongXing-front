@@ -367,11 +367,11 @@ export default class Collection extends React.Component {
                       <span style={{fontSize: 16}}>{data.fname}</span>
                       <div style={{width: 400,display: 'flex',flexDirection: 'column',alignItems:'flex-start'}}>
                         <span style={{fontSize: 14, marginRight: 20}}>￥<span style={{fontSize: 16,padding: '0 6px',color: '#f60'}}>{`${data.fcreditMoney}`.fm()}</span></span>
-                        <Progress percent={Math.floor((data.fpracticalLoanMoney?data.fpracticalLoanMoney:0)/data.fcreditMoney*100)} showInfo={false} style={{width: '80%'}}/>
+                        <Progress percent={Math.floor((data.borrowedAmount?data.borrowedAmount:0)/data.fcreditMoney*100)} showInfo={false} style={{width: '80%'}}/>
                         <div style={{marginTop: 10}}>
                           <span style={{fontSize: 14, marginRight: 20}}>年化率<span style={{fontSize: 16,padding: '0 6px',color: '#f60'}}>{data.frateLast}%</span></span>
-                          <span style={{fontSize: 14, marginRight: 20}}>期限<span style={{fontSize: 16,padding: '0 6px',color: '#f60'}}>{data.deadline}</span>天</span>
-                          <span style={{fontSize: 14}}>剩余可投<span style={{fontSize: 16,padding: '0 6px',color: '#f60'}}>{`${data.fcreditMoney.sub(data.fpracticalLoanMoney?data.fpracticalLoanMoney:0)}`.fm()}</span>元</span>
+                          <span style={{fontSize: 14, marginRight: 20}}>期限<span style={{fontSize: 16,padding: '0 6px',color: '#f60'}}>{data.deadline>0?data.deadline:0}</span>天</span>
+                          <span style={{fontSize: 14}}>剩余可投<span style={{fontSize: 16,padding: '0 6px',color: '#f60'}}>{`${data.fcreditMoney.sub(data.borrowedAmount?data.borrowedAmount:0)}`.fm()}</span>元</span>
                         </div>
                       </div>
                     </div>

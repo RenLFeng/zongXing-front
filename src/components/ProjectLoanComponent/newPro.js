@@ -43,7 +43,7 @@ export default class NewPro extends React.Component {
                   <i className="city"><span className="high">{data.fcreditMonth}<i>借款期限</i></span>个月 | {data.fCityName}</i>
                   <div className="line"/>
                   <i className="botic botic1">年化利率<em>{data.fRateLast}%</em></i>
-                  <i className="botic botic2">剩余时间<em>{conversionTime(data.fRemainingSecond)}</em></i>
+                  <i className="botic botic2">剩余时间<em>{data.fRemainingSecond<0?'0天':conversionTime(data.fRemainingSecond)}</em></i>
                   <i className="level">{data.fLeveName}</i>
                 </div>
               );

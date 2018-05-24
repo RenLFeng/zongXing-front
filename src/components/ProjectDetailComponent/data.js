@@ -131,7 +131,7 @@ export default class Data extends React.Component {
                     return(
                       <div className="row" key={index}>
                         <i className="col1">{data.userName}</i>
-                        <i className="col2">{data.money}</i>
+                        <i className="col2">{`${data.money}`.fm()}</i>
                         <i className="col3">{moment(data.fTime).format("YYYY-MM-DD HH:mm:ss")}</i>
                       </div>
                       )
@@ -178,7 +178,7 @@ export default class Data extends React.Component {
             </div>
             <div className="bot">
               <i>累计已投金额</i>
-              <i className="cf90">{this.props.allMoney}</i>
+              <i className="cf90">{`${this.props.allMoney}`.fm()}</i>
             </div>
           </div>
           <div className="fr">

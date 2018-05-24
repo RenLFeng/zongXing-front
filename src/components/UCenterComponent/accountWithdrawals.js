@@ -52,6 +52,7 @@ class EnterprisePresentation extends React.Component {
       province: '',
       city: '',
       remark: '',
+      num: 0
     }
   }
 
@@ -94,13 +95,13 @@ class EnterprisePresentation extends React.Component {
   }
 
   async getCity_(data) {
-    console.log(response);
+    console.log(this.state.num);
     const response = await getCity(data);
     if (response.code === 0) {
       this.setState({
         id: response.fcode,
         citys: response.data,
-        cityName: (response.data)[0].fcode
+        cityName: this.state.num < 2 ? this.state.cityName : (response.data)[0].fcode
       });
     } else {
       response.error(response.msg);
@@ -154,21 +155,30 @@ class EnterprisePresentation extends React.Component {
     console.log(val);
     for (let data of this.state.bankInfos) {
       if (data.userBankId === val) {
-        console.log(data);
+        console.log('data.province', data.province);
+        this.props.form.resetFields();
         this.setState({
           cardNo: data.cardNo,
           bankName: data.bankCode,
           provinceName: data.province,
-          cityName: data.city
+          cityName: data.city,
+          num: 0
+        }, ()=>{
+          this.changeCity(data.province);
         });
-        this.changeCity(data.province);
+        
         return;
       }
     }
   }
 
   changeCity(val) {
-    this.getCity_(val);
+    console.log(12312321321)
+    this.setState({
+      num: this.state.num+1,
+    }, ()=> {
+      this.getCity_(val);
+    })
   }
 
   validateNumber = (rule, value, callback) => {
@@ -204,7 +214,7 @@ class EnterprisePresentation extends React.Component {
     const {getFieldDecorator} = this.props.form;
     const {withdrawals} = this.state;
     const Option = Select.Option;
-    console.log(withdrawals.submitURL)
+    console.log('this.state.provinces', this.state.provinces)
     return (
       <div className="fr uc-rbody">
         <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
@@ -292,7 +302,7 @@ class EnterprisePresentation extends React.Component {
               {
                 this.state.provinces.map((data) => {
                   return (
-                    <Select.Option value={data.fcode} key={data.fcode}>{data.fname}</Select.Option>
+                    <Select.Option value={data.fcode} >{data.fname}</Select.Option>
                   )
                 })
               }

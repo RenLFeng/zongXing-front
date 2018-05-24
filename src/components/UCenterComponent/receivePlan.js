@@ -68,7 +68,7 @@ export default class ReceivePlan extends React.Component {
                     <span className="sumMoney">{data.allmoney ? (data.allmoney+'').fm() +'元': null}</span>
                     <span className="money">{data.allprincipal ? (data.allprincipal+'').fm() +'元': null}</span>
                     <span className="Interest">{data.allinterest ? (data.allinterest+'').fm() +'元': null}</span>
-                    <span className="time">{moment(data.time).format('YYYY-MM-DD HH:mm')}</span>
+                    <span className="time">{moment(data.time).format('YYYY-MM-DD')}</span>
                   </li>
                   )
                 })

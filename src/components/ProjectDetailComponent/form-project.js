@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'dva/router';
 import { ACCOUNT_RECHARGE } from '../../common/pagePath';
-import { IMG_BASE_URL,MUN_INTEGER  } from '../../common/systemParam';
+import { IMG_BASE_URL, MUN_INTEGER, LIMIT_MOENY  } from '../../common/systemParam';
 import moment from 'moment';
 import {Button, message, Modal, InputNumber, Alert} from 'antd';
 import { Investment } from '../../services/api';
@@ -36,7 +36,7 @@ export default class FormProject extends React.Component {
   checkFormat(value) {
     if (!MUN_INTEGER.test(value+'')) {
       this.setState({errMsg: '金额格式不正确'});
-    } else if (value * 1 % 100 !== 0) {
+    } else if (!LIMIT_MOENY && value * 1 % 100 !== 0) {
       this.setState({errMsg: '金额需为100的整数倍'});
     } else if (value === 0){
       this.setState({errMsg: '金额不能为0'});
@@ -203,12 +203,11 @@ export default class FormProject extends React.Component {
                 className="put"
                 type="text"
                 value={this.state.money}
-                min={100}
-                placeholder="投资金额为100的整数倍"
+                min={LIMIT_MOENY?0:100}
+                placeholder={LIMIT_MOENY?'请注意金额格式':'投资金额为100的整数倍'}
                 onChange={(e)=>this.checkFormat(e)}
-                step={100}
+                step={LIMIT_MOENY?1:100}
                 size={'large'}
-
               />
               <i className="f16 c9">元</i>
             </div>

@@ -78,10 +78,10 @@ export default class ProjectDetail extends React.Component {
         <div className="w clearfix pd-body">
           <div className="fl lbody shadow">
             <div className="tnav">
-              <a className="hover">借款项目</a>
-              <a>投前咨询{this.state.projectDetail.topicCount? <em>{this.state.projectDetail.topicCount}</em> : null}</a>
-              <a>投后跟踪{this.state.projectDetail.questionCount? <em>{this.state.projectDetail.questionCount}</em> : null}</a>
-              <a>项目历程</a>
+              <a onClick={()=>this.setState({titleFlag: false})} className="hover">借款项目</a>
+              <a onClick={()=>this.setState({titleFlag: false})}>投前咨询{this.state.projectDetail.topicCount? <em>{this.state.projectDetail.topicCount}</em> : null}</a>
+              <a onClick={()=>this.setState({titleFlag: true})}>投后跟踪{this.state.projectDetail.questionCount? <em>{this.state.projectDetail.questionCount}</em> : null}</a>
+              <a onClick={()=>this.setState({titleFlag: false})}>项目历程</a>
             </div>
             <div className="pd-con">
               <SecLoan projectDetail={projectDetail}/>
@@ -90,7 +90,7 @@ export default class ProjectDetail extends React.Component {
               <SecConsultation changeNum={()=>this.changeNum()} {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
-              <SecTrack projectDetail={projectDetail} changeNum={()=>this.changeNum()} {...this.props.match.params}/>
+              <SecTrack titleFlag={this.state.titleFlag} projectDetail={projectDetail} changeNum={()=>this.changeNum()} {...this.props.match.params}/>
             </div>
             <div className="pd-con none">
               <SecCourse projectDetail={projectDetail}  {...this.props.match.params}/>

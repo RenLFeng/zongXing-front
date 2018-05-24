@@ -16,7 +16,8 @@ export default class SecTrack extends React.Component {
       projectId: '',
       allQuestion: [], // 所有问题的集合
       anonymous: false, // 匿名回复
-      noticeImg: []
+      noticeImg: [],
+      num: 0
     };
   }
 
@@ -25,11 +26,19 @@ export default class SecTrack extends React.Component {
     this.fetchBannerPic();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.titleFlag && (this.props.titleFlag !== nextProps.titleFlag) && this.state.num===0) {
+      this.setState({num: this.state.num + 1 });
+      this.controlBanner()
+    }
+  }
+
   async fetchBannerPic() {
     const response = await getProjectDetailNotice(this.props.projectId);
     if (response.code === 0) {
       this.setState({noticeImg: response.data},()=>{
-        setTimeout(()=>this.controlBanner(), 2000);
+        // console.log(123123);
+        // setTimeout(()=>this.controlBanner(), 3000);
       });
     } else {
       message.error(response.msg);
@@ -37,6 +46,7 @@ export default class SecTrack extends React.Component {
   }
 
   controlBanner() {
+    console.log($('.lich-box1 .swiper-slide'));
     let count = $('.lich-box1 .swiper-slide').length;
     $('.lich-box1 .bot>i').html(count);
     const swiper = new Swiper('.lich-box1 .swiper-container', {
@@ -193,8 +203,8 @@ export default class SecTrack extends React.Component {
                   <div className="aa">
                   {this.state[`question${data.fid}`] ? this.state[`question${data.fid}`].map((value, index) => {
                     return (
-                      <p className="a">
-                        <i className="t1">{value.fanswer}</i>
+                      <p className="a" style={{paddingBottom: `${value.fanswer.length > 60 ? '40px': '20px'}`  }}>
+                        <i className="t1" style={{wordBreak: 'break-all'}}>{value.fanswer}</i>
                         <i className="fr">{value.fis_anonymity?'匿名用户':value.fnickname} {moment(value.ftime).format('YYYY-MM-DD HH:mm')}</i>
                       </p>
                     )
