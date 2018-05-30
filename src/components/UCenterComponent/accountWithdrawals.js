@@ -79,7 +79,7 @@ class EnterprisePresentation extends React.Component {
         provinces: response.data.provinces
       });
     } else {
-      response.error(response.msg);
+      message.error(response.msg);
     }
   }
 
@@ -104,7 +104,7 @@ class EnterprisePresentation extends React.Component {
         cityName: this.state.num < 2 ? this.state.cityName : (response.data)[0].fcode
       });
     } else {
-      response.error(response.msg);
+      message.error(response.msg);
     }
   }
 

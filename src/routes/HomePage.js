@@ -3,6 +3,7 @@ import {Link, Route,Switch } from 'dva/router';
 import i18n from '../i18n/i18n'
 import { connect } from 'dva';
 
+import Test from './homePage/Test';
 import ProjectLoan from './homePage/ProjectLoan';
 import HowLoan from './homePage/HowLoan';
 import HowInvest from './homePage/HowInvest';
@@ -88,6 +89,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/project/:projectId`} component={Project} />
             <Route path={`${match.path}/collection`} component={Collection} />
             <Route path={`${match.path}/collectionOrder`} component={CollectionOrder} />
+            <Route path={`${match.path}/test`} component={Test} />
           </Switch>
         <Footer/>
 			</div>

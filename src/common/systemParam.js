@@ -91,7 +91,7 @@ export const TEL_PHONE = /^[\d\-]*$/;;
 
 
 // 银行卡号正则
-export const BANK_CARD = /^\d{15,25}$/;
+export const BANK_CARD = /^\d{11,25}$/;
 
 // 我的投资订单状态
 export const ORDER_STATUS = {
