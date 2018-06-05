@@ -510,7 +510,7 @@ export default class Login extends React.Component {
     const {showReg, showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
-      <div className="logindiv1 shadow">
+      <div className="logindiv1 shadow back">
         <Modal
           visible={this.state.authPhone}
           title="解除账号锁定"

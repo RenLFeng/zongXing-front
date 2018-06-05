@@ -1,6 +1,7 @@
 @import '../common/_var.scss';
 
 .logindiv1 {
+    // position: relative;
     margin: 0 auto 300px auto;
     width: 948px;
     height: 470px;
@@ -180,4 +181,12 @@
 .box{
   //border:1px solid red;
   padding-top:20px;
+}
+
+.back{
+    // background:  no-repeat right center #fff !important;
+    // width:474px;
+    height:470px;
+    border:1px solid red;
+    // position: absolute;
 }

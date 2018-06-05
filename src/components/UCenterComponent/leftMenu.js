@@ -23,6 +23,16 @@ export default class LeftMenu extends React.Component {
           </div>
         </div>
         <div className="navbox">
+          <p className="hd ic1 hover">
+            <a>安全中心</a>
+          </p>
+          <div className="nav">
+            <ul>
+              <li><Link className={path.indexOf(Path.REALNAME_AUTHENTICATION)===-1?'':'hover'} to={Path.REALNAME_AUTHENTICATION}>实名认证</Link></li>
+            </ul>
+          </div>
+        </div>
+        <div className="navbox">
           <p className="hd ic2 hover">
             <a>个人中心</a>
           </p>
