@@ -7,6 +7,7 @@ import { connect } from 'dva';
 import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD, NAME_REG_, QQ_REG, WeChat_REG, ZHUZHI_REG, HOBBY_REG} from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import { getJudgeUserName } from '../../services/api';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const formItemLayout = {
   labelCol: {
@@ -118,7 +119,7 @@ class UserBaseFormInput extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { userBase } = this.props.param;
     return (
-      <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
         <FormItem
           {...formItemLayout}
           label="真实姓名"
@@ -311,11 +312,15 @@ export default class UserBasic extends React.Component {
 
   render() {
     return (
-      <div className="fr uc-rbody">
-        <Spin spinning={this.props.loading} tip="请稍后" size="large">
-          <UserBaseForm param={this.props}/>
-        </Spin>
+      <div>
+        <LeftMenu param={this.props}/>
+        <div className="fr uc-rbody">
+          <Spin spinning={this.props.loading} tip="请稍后" size="large">
+            <UserBaseForm param={this.props}/>
+          </Spin>
+        </div>
       </div>
+     
     );
   }
 }

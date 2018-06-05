@@ -73,7 +73,7 @@ export default class UCenter extends React.Component {
           </div>
         </div>
         <div className="w clearfix">
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <Switch>
             <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
             <Route path={Path.USER_BASIC} component={UserBasic} />

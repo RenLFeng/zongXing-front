@@ -71,11 +71,12 @@
     color: #ff9900 !important;
 }
 
-.page {
+.pages {
    background: white;
    width: 1248px;
-   margin: 0 auto;
-   border:1px solid red; 
+   height:678px !important;
+   margin: auto; 
+   padding-top: 5px;
 }
 .real_title_{
     border-bottom: 1px dashed lightgrey;
@@ -93,7 +94,7 @@
     width:700px;
     height:100px;
     border:1px solid lightgray;
-    margin:  20px auto;
+    margin:  40px auto 0 auto;
     position: relative;
     .id_card{
         margin-top: 28px;
@@ -143,12 +144,77 @@
     background-color: rgba(242, 242, 242, 1);
     position: relative;
     img{
-        border:1px solid red;
         position: absolute;
         left: 338px;
         top: 94px;
         width: 105px;
-        height: 30px;
-        
+        height: 30px;   
+        transition:transform 0.2s ease-out;
+        transform: rotateZ(180deg);  
     }
+    p{
+        color:black;
+        font-size: 14px;
+        text-align: center;   
+        // line-height: 40px;
+    }
+    .p1{
+        padding-top: 20px;
+    }
+    .p2{
+        padding-top: 10px;
+    }
+}
+
+.info{
+  margin: auto;
+  width:100%;
+  padding-top: 10px;
+  .inp{
+    position: relative;
+    Input{
+        width:300px;
+        height:40px;
+        padding-left:30px;
+        margin: 30px auto 0 auto; 
+        margin-left: 465px;
+    }
+    img{
+        position: absolute;
+        top:40px;
+        left:470px;
+        z-index: 1;
+    }
+  }
+  Button{
+      margin-left: 465px;
+      margin-top: 30px;
+      width:300px;
+      height:40px;
+      background:#169BD5;
+      color:white;
+      font-size: 16px;
+  }
+
+  p{
+      text-align: center;
+      font-size: 14px;
+      color: #999999;
+      margin-top: 20px;
+  }
+  h1{
+    text-align: center;
+    font-size: 28px;
+    margin:  40px 0;
+  }
+  a{
+    text-align: center;
+    color:blue;
+    display: block;
+    text-decoration-line: underline;
+  }
+}
+
+.top{
+    margin-top: 20px;
 }

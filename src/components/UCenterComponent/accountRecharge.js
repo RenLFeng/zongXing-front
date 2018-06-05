@@ -4,6 +4,7 @@ import {Link} from 'dva/router';
 import {Form, Input, Button, Select, Modal, message} from 'antd';
 import { MONEY_REG, MONEY_REG_, PERSONAL_PAGE} from '../../common/systemParam';
 import {getRecharge} from  '../../services/api';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 export default class AccountRecharge extends React.Component {
   constructor(props) {
@@ -63,25 +64,29 @@ export default class AccountRecharge extends React.Component {
     const { recharge } = this.state;
     console.log(recharge);
     return (
-      <div className="fr uc-rbody">
-        <Recharge setData={this.setRechargeData.bind(this)} param={this.props.location.state} loading={this.state.loading}/>
-        <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
-          <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
-          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
-          <input id="OrderNo" name="OrderNo" value={recharge.orderNo} type="hidden" />
-          <input id="Amount" name="Amount" value={recharge.amount} type="hidden" />
-          <input id="RechargeType" name="RechargeType" value={recharge.rechargeType} type="hidden" />
-          <input id="FeeType" name="FeeType" value={recharge.feeType} type="hidden" />
-          <input id="CardNo" name="CardNo" value={recharge.cardNo} type="hidden" />
-          <input id="RandomTimeStamp" name="RandomTimeStamp" value={recharge.randomTimeStamp} type="hidden" />
-          <input id="Remark1" name="Remark1" value={recharge.remark1} type="hidden" />
-          <input id="Remark2" name="Remark2" value={recharge.remark2} type="hidden" />
-          <input id="Remark3" name="Remark3" value={recharge.remark3} type="hidden" />
-          <input id="ReturnURL" name="ReturnURL" value={recharge.returnURL} type="hidden" />
-          <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL} type="hidden"  />
-          <input id="SignInfo" name="SignInfo" value={recharge.signInfo} type="hidden" />
-        </form>
+      <div>
+        <LeftMenu param={this.props}/>
+        <div className="fr uc-rbody">
+          <Recharge setData={this.setRechargeData.bind(this)} param={this.props.location.state} loading={this.state.loading}/>
+          <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
+            <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
+            <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
+            <input id="OrderNo" name="OrderNo" value={recharge.orderNo} type="hidden" />
+            <input id="Amount" name="Amount" value={recharge.amount} type="hidden" />
+            <input id="RechargeType" name="RechargeType" value={recharge.rechargeType} type="hidden" />
+            <input id="FeeType" name="FeeType" value={recharge.feeType} type="hidden" />
+            <input id="CardNo" name="CardNo" value={recharge.cardNo} type="hidden" />
+            <input id="RandomTimeStamp" name="RandomTimeStamp" value={recharge.randomTimeStamp} type="hidden" />
+            <input id="Remark1" name="Remark1" value={recharge.remark1} type="hidden" />
+            <input id="Remark2" name="Remark2" value={recharge.remark2} type="hidden" />
+            <input id="Remark3" name="Remark3" value={recharge.remark3} type="hidden" />
+            <input id="ReturnURL" name="ReturnURL" value={recharge.returnURL} type="hidden" />
+            <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL} type="hidden"  />
+            <input id="SignInfo" name="SignInfo" value={recharge.signInfo} type="hidden" />
+          </form>
+        </div>
       </div>
+     
     );
   }
 }

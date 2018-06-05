@@ -6,6 +6,7 @@ import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL} from
 import { connect } from 'dva';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState,closeAuthorization, phoneExist} from '../../services/api';
 import Path from '../../common/pagePath';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 
 const formItemLayout = {
@@ -358,7 +359,8 @@ export default class SafeCenter extends React.Component {
     console.log(status);
     const { safeData} = this.props;
     return (
-      <div>
+      <div >
+        <LeftMenu param={this.props}/>
         <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{display:'none'}}>
           <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId?distribution.moneymoremoreId:''}/>
           <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore?distribution.platformMoneymoremore:''}/>

@@ -11,6 +11,7 @@ import { city } from '../../common/cityData';
 
 import {getPersonAccount, commitOpenAccount, getNoAccountCompany, getUserBaseData} from '../../services/api';
 import { relative } from 'path';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const FormItem = Form.Item;
 const TIME_OUT = 10;
@@ -44,9 +45,13 @@ export default class OpenAccount extends React.Component {
     const type = match.params.type;
 
     return (
-      <div className="fr uc-rbody" >
-        <FormOpenComponent type={type} history={history} phone={this.state.phone}/>
+      <div>
+        <LeftMenu param={this.props}/>
+        <div className="fr uc-rbody" >
+          <FormOpenComponent type={type} history={history} phone={this.state.phone}/>
+        </div>
       </div>
+      
     );
   }
 }

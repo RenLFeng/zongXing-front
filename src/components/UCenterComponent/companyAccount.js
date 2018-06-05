@@ -8,6 +8,7 @@ import {getPersonAccount} from '../../services/api';
 import {connect} from 'dva';
 import moment from "moment/moment";
 import { AUTH_ADDRESS } from '../../common/systemParam';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const FormItem = Form.Item;
 @connect((state) => ({
@@ -295,6 +296,7 @@ export default class CompanyAccount extends React.Component {
     console.log(this.props.company_page);
     return (
       <div >
+        <LeftMenu param={this.props}/>
         <div className="ptit">
           <i>账户总资产</i>
           <b>{(this.props.company_page.totalAssets.totalAssets+'').fm()}</b>

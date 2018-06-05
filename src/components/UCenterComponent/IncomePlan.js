@@ -3,7 +3,7 @@ import {Icon, message, Row, Col} from 'antd';
 import '../../assets/myInvest/income.scss';
 import { getIncomePlan } from '../../services/api.js';
 import moment from 'moment';
-
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 
 
@@ -63,48 +63,52 @@ export default class IncomePlan extends React.Component {
   render() {
     const { arr,showMask,detail } = this.state;
     return (
-      <div className="fr uc-rbody" >
-        <div className="title33" style={{position: 'relative'}}>
-          <span className="title1">收益计划</span>
-          <div className="unit-yuan">
-            <span style={{fontSize: 14, margin: '0 auto'}}>单位：元</span>
+      <div>
+        <LeftMenu param={this.props}/>
+        <div className="fr uc-rbody" >
+          <div className="title33" style={{position: 'relative'}}>
+            <span className="title1">收益计划</span>
+            <div className="unit-yuan">
+              <span style={{fontSize: 14, margin: '0 auto'}}>单位：元</span>
+            </div>
           </div>
-        </div>
-        <div className="content_">
-          <Row style={{marginBottom: 20}}>
-            <Col span={8} style={{textAlign: 'center'}}>
-              <b style={{fontSize: 16}}>总本金&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.principal}`.fm()}</b></b>
-            </Col>
-            <Col span={8} style={{textAlign: 'center'}}>
-              <b style={{fontSize: 16}}>总收益&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.total_money}`.fm()}</b></b>
-            </Col>
-            <Col span={8} style={{textAlign: 'center'}}>
-              <b style={{fontSize: 16}}>总利息&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.earnings}`.fm()}</b></b>
-            </Col>
-          </Row>
-          <div className="investGroup">
-            <ul >
-              <li className="investList">
-                <span className="income_num"><p style={{cursor: 'auto'}}>期数</p></span>
-                <span className="income_get">收益</span>
-                <span className="income_capital">本金</span>
-                <span className="income_Interest">利息</span>
-              </li>
-              {
-                this.state.incomeList.map((data,index)=> (
-                  <li className="investList" key={index}>
-                    <span className="income_num">{data.earningsDate}</span>
-                    <span className="income_get"><b style={{color: '#FF9900'}}>{`${data.total_money}`.fm()}</b></span>
-                    <span className="income_capital"><b style={{color: '#FF9900'}}>{`${data.principal}`.fm()}</b></span>
-                    <span className="income_Interest"><b style={{color: '#FF9900'}}>{`${data.earnings}`.fm()}</b></span>
-                  </li>
-                ))
-              }
+          <div className="content_">
+            <Row style={{marginBottom: 20}}>
+              <Col span={8} style={{textAlign: 'center'}}>
+                <b style={{fontSize: 16}}>总本金&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.principal}`.fm()}</b></b>
+              </Col>
+              <Col span={8} style={{textAlign: 'center'}}>
+                <b style={{fontSize: 16}}>总收益&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.total_money}`.fm()}</b></b>
+              </Col>
+              <Col span={8} style={{textAlign: 'center'}}>
+                <b style={{fontSize: 16}}>总利息&nbsp;<b style={{fontSize: 20,color: '#FF9900'}}>{`${this.state.earnings}`.fm()}</b></b>
+              </Col>
+            </Row>
+            <div className="investGroup">
+              <ul >
+                <li className="investList">
+                  <span className="income_num"><p style={{cursor: 'auto'}}>期数</p></span>
+                  <span className="income_get">收益</span>
+                  <span className="income_capital">本金</span>
+                  <span className="income_Interest">利息</span>
+                </li>
+                {
+                  this.state.incomeList.map((data,index)=> (
+                    <li className="investList" key={index}>
+                      <span className="income_num">{data.earningsDate}</span>
+                      <span className="income_get"><b style={{color: '#FF9900'}}>{`${data.total_money}`.fm()}</b></span>
+                      <span className="income_capital"><b style={{color: '#FF9900'}}>{`${data.principal}`.fm()}</b></span>
+                      <span className="income_Interest"><b style={{color: '#FF9900'}}>{`${data.earnings}`.fm()}</b></span>
+                    </li>
+                  ))
+                }
 
-            </ul>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
+      
     );
   }
 }

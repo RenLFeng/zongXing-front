@@ -5,6 +5,7 @@ import {getPlantNotice, getOPlantNotice} from '../../services/api.js';
 import moment from 'moment';
 import {STATION_MESSAGE} from '../../common/pagePath';
 import {pageShows} from '../../common/systemParam';  //分页组件
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 export default class NoticeList extends React.Component {
   constructor(props) {
@@ -59,75 +60,79 @@ export default class NoticeList extends React.Component {
     const { arr,showMask,detail } = this.state;
     const page_num = pageShows(this.state.pageIndex, this.state.maxPage);
     return (
-      <div className="fr uc-rbody" >
-        <div className="title">
-          <span className="title1">站内公告</span>
-        </div>
-
-        <div className="content_">
-          <div className="messageGroup">
-            <ul >
-              <li className="massageList">
-                <span className="massageList_title"><p>公告标题</p></span>
-                <span className="massageList_time">时间</span>
-              </li>
-
-              { arr.length <= 0?
-                <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无数据</p>:
-                arr.map((data)=>{
-                  return(
-                    <li className="massageList" key={data.fid}>
-                      <span className="massageList_title">
-                        <p onClick={()=> this.getOPlantNotice(data.fid)}>{data.ftitle}</p>
-                        {
-                         data.ftype === "WARN" ? <Icon type="exclamation-circle-o" className="icon_"/> :null
-                        }
-                      </span>
-                      <span className="massageList_time">{moment(data.fpublishTime).format('YYYY-MM-DD HH:mm:ss')}</span>
-                    </li>
-                  )
-                })
-              }
-
-              <li className="footer_">
-                <span>共<i>{this.state.num}</i>项</span>
-                <div className="box_">
-                  <div className="pagination">
-                    {page_num.lastPage ?
-                      <a className="num" onClick={() => this.getPlantNotice(this.state.pageIndex - 1)}>&lt;</a> :
-                      <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
-                    {page_num.firstPage ?
-                      <a className={`${1 == this.state.pageIndex ? 'hover_' : ''}`} onClick={() => this.getPlantNotice(1)}>1</a> :
-                      null}
-                    {page_num.leftEllipsis ?
-                      <a>...</a> :
-                      null}
-                    {page_num.page.map((pageNum) => {
-                      return (
-                        <a key={pageNum} className={`${pageNum * 1 == this.state.pageIndex ? 'hover_' : ''}`}
-                           onClick={() => this.getPlantNotice(pageNum)}>{pageNum}</a>
-                      );
-                    })}
-                    {page_num.rightEllipsis ?
-                      <a>...</a> :
-                      null}
-                    {page_num.finalPage ?
-                      <a
-                        className={`${this.state.maxPage == this.state.pageIndex ? 'hover_' : ''}`}
-                        onClick={() => this.getPlantNotice(this.state.maxPage)}
-                      >{this.state.maxPage}</a> :
-                      null}
-                    {page_num.nextPage ?
-                      <a className="num" onClick={() => this.getPlantNotice(this.state.pageIndex + 1)}>&gt;</a> :
-                      <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>
-                    }
-                  </div>
-                </div>
-              </li>
-
-            </ul>
+      <div>
+        <LeftMenu param={this.props}/>
+        <div className="fr uc-rbody" >
+          <div className="title">
+            <span className="title1">站内公告</span>
           </div>
+
+          <div className="content_">
+            <div className="messageGroup">
+              <ul >
+                <li className="massageList">
+                  <span className="massageList_title"><p>公告标题</p></span>
+                  <span className="massageList_time">时间</span>
+                </li>
+
+                { arr.length <= 0?
+                  <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无数据</p>:
+                  arr.map((data)=>{
+                    return(
+                      <li className="massageList" key={data.fid}>
+                        <span className="massageList_title">
+                          <p onClick={()=> this.getOPlantNotice(data.fid)}>{data.ftitle}</p>
+                          {
+                          data.ftype === "WARN" ? <Icon type="exclamation-circle-o" className="icon_"/> :null
+                          }
+                        </span>
+                        <span className="massageList_time">{moment(data.fpublishTime).format('YYYY-MM-DD HH:mm:ss')}</span>
+                      </li>
+                    )
+                  })
+                }
+
+                <li className="footer_">
+                  <span>共<i>{this.state.num}</i>项</span>
+                  <div className="box_">
+                    <div className="pagination">
+                      {page_num.lastPage ?
+                        <a className="num" onClick={() => this.getPlantNotice(this.state.pageIndex - 1)}>&lt;</a> :
+                        <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
+                      {page_num.firstPage ?
+                        <a className={`${1 == this.state.pageIndex ? 'hover_' : ''}`} onClick={() => this.getPlantNotice(1)}>1</a> :
+                        null}
+                      {page_num.leftEllipsis ?
+                        <a>...</a> :
+                        null}
+                      {page_num.page.map((pageNum) => {
+                        return (
+                          <a key={pageNum} className={`${pageNum * 1 == this.state.pageIndex ? 'hover_' : ''}`}
+                            onClick={() => this.getPlantNotice(pageNum)}>{pageNum}</a>
+                        );
+                      })}
+                      {page_num.rightEllipsis ?
+                        <a>...</a> :
+                        null}
+                      {page_num.finalPage ?
+                        <a
+                          className={`${this.state.maxPage == this.state.pageIndex ? 'hover_' : ''}`}
+                          onClick={() => this.getPlantNotice(this.state.maxPage)}
+                        >{this.state.maxPage}</a> :
+                        null}
+                      {page_num.nextPage ?
+                        <a className="num" onClick={() => this.getPlantNotice(this.state.pageIndex + 1)}>&gt;</a> :
+                        <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>
+                      }
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+        </div>
       </div>
+      
 
         {
           showMask?

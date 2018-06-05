@@ -5,6 +5,7 @@ import LineReact from '../../components/Echarts/LineReact'
 import Path from '../../common/pagePath';
 import {connect} from 'dva';
 import moment from 'moment';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 @connect((state)=>({
   personal: state.account.personal,
@@ -315,6 +316,8 @@ export default class PersonAccount extends React.Component {
       );
     }
     return (
+      <div>
+      <LeftMenu param={this.props}/>
       <div className="fr uc-rbody">
         <div className="ptit">
           <i>账户总资产</i>
@@ -385,6 +388,8 @@ export default class PersonAccount extends React.Component {
           </div>
         </div>
       </div>
+      </div>
+     
     );
   }
 }

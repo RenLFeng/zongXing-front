@@ -8,6 +8,7 @@ import { Select, message } from 'antd';
 import moment from 'moment';
 import BarReact from '../../components/Echarts/BarReact';
 import { selectYearInvest } from '../../services/api';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Option = Select.Option;
 @connect((state)=>({
@@ -409,67 +410,71 @@ export default class AllInvest extends React.Component {
       );
     }
     return (
-      <div className="fr uc-rbody">
-        <div className="ptit">
-          <i>账户总资产</i>
-          <b>{(this.props.personal.totalAssets.totalAssets+'').fm()}</b>
-          <em>单位：元</em>
-        </div>
-        <div className="tright hd1" style={{margin: '20px 0 100px 0'}}>
-          <a className="fl">
-            <i>累计充值</i>
-            <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
-          </a>
-          <a className="fl">
-            <i>累计提现</i>
-            <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
-          </a>
-        </div>
-        <div className="border shadow box1">
-          <div className="pieDiv">
-            <div>
-              <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets+'').fm()}</span>
-              <span style={{fontSize: '14px'}}>账户总资产</span>
+      <div>
+        <LeftMenu param={this.props}/>
+        <div className="fr uc-rbody">
+          <div className="ptit">
+            <i>账户总资产</i>
+            <b>{(this.props.personal.totalAssets.totalAssets+'').fm()}</b>
+            <em>单位：元</em>
+          </div>
+          <div className="tright hd1" style={{margin: '20px 0 100px 0'}}>
+            <a className="fl">
+              <i>累计充值</i>
+              <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
+            </a>
+            <a className="fl">
+              <i>累计提现</i>
+              <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
+            </a>
+          </div>
+          <div className="border shadow box1">
+            <div className="pieDiv">
+              <div>
+                <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets+'').fm()}</span>
+                <span style={{fontSize: '14px'}}>账户总资产</span>
+              </div>
+            </div>
+            <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
+            <div className="coupon">
+              <i className="c6">优惠券</i>
+              <i className="fr">{(this.props.personal.totalAssets.capitalCoupon+'').fm()}</i>
             </div>
           </div>
-          <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
-          <div className="coupon">
-            <i className="c6">优惠券</i>
-            <i className="fr">{(this.props.personal.totalAssets.capitalCoupon+'').fm()}</i>
+          <div className="hd2 clearfix" style={{position: 'relative'}}>
+            <a className="fl hover">投资统计</a>
+            {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}
+            <Select style={{width: 200, float: 'right',top: 10}} value={this.state.yearValue} onChange={(val)=>this.changeSelect(val)}>
+              {
+                this.state.selectYear.map((data, index)=>{
+                  return (
+                    <Option value={data} key={index}>{`${data}至${data+1}年度投资总览`}</Option>
+                  )
+                })
+              }
+            </Select>
           </div>
-        </div>
-        <div className="hd2 clearfix" style={{position: 'relative'}}>
-          <a className="fl hover">投资统计</a>
-          {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}
-          <Select style={{width: 200, float: 'right',top: 10}} value={this.state.yearValue} onChange={(val)=>this.changeSelect(val)}>
-            {
-              this.state.selectYear.map((data, index)=>{
-                return (
-                  <Option value={data} key={index}>{`${data}至${data+1}年度投资总览`}</Option>
-                )
-              })
-            }
-          </Select>
-        </div>
-        <div style={{width: '100%'}}>
-          <div style={{margin: '0 auto',width: '70%', position: 'relative'}}>
-            <div style={{float: 'left'}}>
-              <span style={{display: 'block', borderLeft: '2px solid #FF9900', paddingLeft: 8,fontSize: 16}}>年度投资项目数</span>
-              <b style={{marginLeft: 8,fontSize: 16}}>{this.state.investData.all?this.state.investData.all.projectCount: 0}个</b>
-            </div>
-            <div style={{float: 'right'}}>
-              <span style={{display: 'block', borderLeft: '2px solid #FF9900', paddingLeft: 8,fontSize: 16}}>年度投资金额</span>
-              <b style={{marginLeft: 8,fontSize: 16}}>{`${this.state.investData.all?this.state.investData.all.money: '0'}`.fm()}</b>
+          <div style={{width: '100%'}}>
+            <div style={{margin: '0 auto',width: '70%', position: 'relative'}}>
+              <div style={{float: 'left'}}>
+                <span style={{display: 'block', borderLeft: '2px solid #FF9900', paddingLeft: 8,fontSize: 16}}>年度投资项目数</span>
+                <b style={{marginLeft: 8,fontSize: 16}}>{this.state.investData.all?this.state.investData.all.projectCount: 0}个</b>
+              </div>
+              <div style={{float: 'right'}}>
+                <span style={{display: 'block', borderLeft: '2px solid #FF9900', paddingLeft: 8,fontSize: 16}}>年度投资金额</span>
+                <b style={{marginLeft: 8,fontSize: 16}}>{`${this.state.investData.all?this.state.investData.all.money: '0'}`.fm()}</b>
+              </div>
             </div>
           </div>
+          <BarReact
+            height="500px"
+            width="1100px"
+            margin="0 0 0 -80px"
+            option={this.state.barOption}
+          />
         </div>
-        <BarReact
-          height="500px"
-          width="1100px"
-          margin="0 0 0 -80px"
-          option={this.state.barOption}
-        />
       </div>
+     
     );
   }
 }

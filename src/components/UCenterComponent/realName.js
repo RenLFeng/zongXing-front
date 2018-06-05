@@ -6,6 +6,7 @@ import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL} from
 import { connect } from 'dva';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState,closeAuthorization, phoneExist} from '../../services/api';
 import {AUTHENTICATION} from '../../common/pagePath';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
 
@@ -373,7 +374,7 @@ export default class RealName extends React.Component {
           <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
           <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
         </form> */}
-
+        <LeftMenu param={this.props}/>
         <div className="fr uc-rbody">
           <div className="real_title">
              <span className="safeCenter_">安全中心</span>

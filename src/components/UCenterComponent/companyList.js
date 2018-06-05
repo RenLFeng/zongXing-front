@@ -5,6 +5,7 @@ const FormItem = Form.Item;
 import '../../assets/MessageList/messageList.scss';
 import {pageShows, LICENSE, TURN_BACK, VER_PHONE} from '../../common/systemParam';
 import {saveCompany, getCompanyByAccount,UpdataOrDele} from '../../services/api';
+import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 export default class LoanList extends React.Component {
   constructor(props) {
@@ -191,94 +192,98 @@ export default class LoanList extends React.Component {
     const {dataSource,messages} = this.state;
     const page_num = pageShows(this.state.current, this.state.maxPage);
     return (
-      <div className="fr uc-rbody">
-        <Button type="primary" style={{marginBottom: 30}} onClick={()=>this.setState({visible: true})}>新建企业</Button>
-        <div className="content_">
-          <div className="messageGroup">
-            <ul >
-              <li className="massageList">
-                <span className="massageListtime">企业名称</span>
-                <span className="massageListtime1">统一社会信用代码</span>
-                <span className="massageListtime2">操作</span>
-              </li>
+      <div>
+        <LeftMenu param={this.props}/>
+        <div className="fr uc-rbody">
+          <Button type="primary" style={{marginBottom: 30}} onClick={()=>this.setState({visible: true})}>新建企业</Button>
+          <div className="content_">
+            <div className="messageGroup">
+              <ul >
+                <li className="massageList">
+                  <span className="massageListtime">企业名称</span>
+                  <span className="massageListtime1">统一社会信用代码</span>
+                  <span className="massageListtime2">操作</span>
+                </li>
 
-              { dataSource.length <= 0 ?
-                <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无数据</p>:
-                dataSource.map((data)=>{
-                  return(
-                    <li className="massageList" key={data.fid}>
-                      {
-                        data.inputStatus? <Input className="inp" defaultValue={data.fname} onChange={(e)=>this.changeValue(e.target.value)}/> :<span className="massageListtime">{data.fname}</span>
-                      }
-                      {
-                        data.inputStatus? <Input className="inp1" defaultValue={data.fsocialCreditCode} onChange={(e)=>this.changeValue1(e.target.value)}/> :  <span className="massageListtime1">{data.fsocialCreditCode}</span>
-                      }
-
-                      <span className="massageListtime2">
-                        <a onClick={async () => {
-                        window.location.href = `${TURN_BACK}?token=${JSON.parse(localStorage.getItem('accessToken')).webToken}&id=${data.fid}`; // 开发使用
-                      }}>进入后台</a>
+                { dataSource.length <= 0 ?
+                  <p style={{textAlign: 'center',paddingTop:15,color: '#B9B9B9'}}>暂无数据</p>:
+                  dataSource.map((data)=>{
+                    return(
+                      <li className="massageList" key={data.fid}>
                         {
-                          !data.accountId ?
-                            <i>
-                              {data.inputStatus ? <a onClick={()=>this.UpdataOrDele(data.fid, this.state.companyN,1, this.state.sCode)}>保存</a>:<a onClick={()=>this.change(data)}>修改</a>}
-
-                            <a onClick={()=>this.UpdataOrDele(data.fid, this.state.companyN,0, this.state.sCode)}>删除</a>
-                           </i> : null
+                          data.inputStatus? <Input className="inp" defaultValue={data.fname} onChange={(e)=>this.changeValue(e.target.value)}/> :<span className="massageListtime">{data.fname}</span>
                         }
-                      </span>
-                    </li>
-                  )
-                })
-              }
+                        {
+                          data.inputStatus? <Input className="inp1" defaultValue={data.fsocialCreditCode} onChange={(e)=>this.changeValue1(e.target.value)}/> :  <span className="massageListtime1">{data.fsocialCreditCode}</span>
+                        }
 
-              <li className="footer_">
-                <span>共<i>{this.state.total}</i>项</span>
-                <div className="box_">
-                  <div className="pagination">
-                    {page_num.lastPage ?
-                      <a className="num" onClick={() => this.fetchData(this.state.current - 1)}>&lt;</a> :
-                      <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
-                    {page_num.firstPage ?
-                      <a className={`${1 == this.state.current ? 'hover_' : ''}`} onClick={() => this.fetchData(1)}>1</a> :
-                      null}
-                    {page_num.leftEllipsis ?
-                      <a>...</a> :
-                      null}
-                    {page_num.page.map((pageNum) => {
-                      return (
-                        <a key={pageNum} className={`${pageNum * 1 == this.state.current ? 'hover_' : ''}`}
-                           onClick={() => this.fetchData(pageNum)}>{pageNum}</a>
-                      );
-                    })}
-                    {page_num.rightEllipsis ?
-                      <a>...</a> :
-                      null}
-                    {page_num.finalPage ?
-                      <a
-                        className={`${this.state.maxPage == this.state.current ? 'hover_' : ''}`}
-                        onClick={() => this.fetchData(this.state.maxPage)}
-                      >{this.state.maxPage}</a> :
-                      null}
-                    {page_num.nextPage ?
-                      <a className="num" onClick={() => this.fetchData(this.state.current + 1)}>&gt;</a> :
-                      <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>
-                    }
+                        <span className="massageListtime2">
+                          <a onClick={async () => {
+                          window.location.href = `${TURN_BACK}?token=${JSON.parse(localStorage.getItem('accessToken')).webToken}&id=${data.fid}`; // 开发使用
+                        }}>进入后台</a>
+                          {
+                            !data.accountId ?
+                              <i>
+                                {data.inputStatus ? <a onClick={()=>this.UpdataOrDele(data.fid, this.state.companyN,1, this.state.sCode)}>保存</a>:<a onClick={()=>this.change(data)}>修改</a>}
+
+                              <a onClick={()=>this.UpdataOrDele(data.fid, this.state.companyN,0, this.state.sCode)}>删除</a>
+                            </i> : null
+                          }
+                        </span>
+                      </li>
+                    )
+                  })
+                }
+
+                <li className="footer_">
+                  <span>共<i>{this.state.total}</i>项</span>
+                  <div className="box_">
+                    <div className="pagination">
+                      {page_num.lastPage ?
+                        <a className="num" onClick={() => this.fetchData(this.state.current - 1)}>&lt;</a> :
+                        <a className="num" style={{backgroundColor: '#eee'}}>&lt;</a>}
+                      {page_num.firstPage ?
+                        <a className={`${1 == this.state.current ? 'hover_' : ''}`} onClick={() => this.fetchData(1)}>1</a> :
+                        null}
+                      {page_num.leftEllipsis ?
+                        <a>...</a> :
+                        null}
+                      {page_num.page.map((pageNum) => {
+                        return (
+                          <a key={pageNum} className={`${pageNum * 1 == this.state.current ? 'hover_' : ''}`}
+                            onClick={() => this.fetchData(pageNum)}>{pageNum}</a>
+                        );
+                      })}
+                      {page_num.rightEllipsis ?
+                        <a>...</a> :
+                        null}
+                      {page_num.finalPage ?
+                        <a
+                          className={`${this.state.maxPage == this.state.current ? 'hover_' : ''}`}
+                          onClick={() => this.fetchData(this.state.maxPage)}
+                        >{this.state.maxPage}</a> :
+                        null}
+                      {page_num.nextPage ?
+                        <a className="num" onClick={() => this.fetchData(this.state.current + 1)}>&gt;</a> :
+                        <a className="num" style={{backgroundColor: '#eee'}}>&gt;</a>
+                      }
+                    </div>
                   </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <CreateCompany
-          ref={(ref)=>this.createCompany = ref}
-          visible={this.state.visible}
-          onCancel={this.handleCancel}
-          onCreate={this.handleCreate}
-          loading={this.state.createLoading}
-        />
+          <CreateCompany
+            ref={(ref)=>this.createCompany = ref}
+            visible={this.state.visible}
+            onCancel={this.handleCancel}
+            onCreate={this.handleCreate}
+            loading={this.state.createLoading}
+          />
+        </div>
       </div>
+     
     );
   }
 }
