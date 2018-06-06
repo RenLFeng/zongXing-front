@@ -30,7 +30,7 @@
 .uc-tbody {
     background-color: #fff;
     padding: 18px 28px;
-    margin-bottom: 35px;
+    margin-bottom: 5px;
     .av {
         width: 54px;
         height: 54px;
@@ -42,6 +42,14 @@
             line-height: 30px;
             font-size: 16px;
         }
+        .split{
+            color: #999;
+            margin: 0 10px;
+        }
+        .uinfo{
+            margin-top: 10px;
+            
+        }
         .t2 {
             b {
                 font-size: 18px;
@@ -52,19 +60,44 @@
         }
     }
     &>div.fr {
-        padding-top: 20px;
-        p {
-            background: url(../img/ucenter/addr.png) no-repeat left center;
-            padding-left: 30px;
-            color: #999;
-            b {
-                color: #333;
-                font-weight: normal;
+        //padding-top: 20px;
+        // p {
+        //     background: url(../img/ucenter/addr.png) no-repeat left center;
+        //     padding-left: 30px;
+        //     color: #999;
+        //     b {
+        //         color: #333;
+        //         font-weight: normal;
+        //     }
+        // }
+        div.account-content{
+            width: 160px; 
+            display: inline-block; 
+            border-right: 1px solid #f2f2f2;
+            text-align: center;
+            height: 60px;
+            .account-money{
+                color:#f90;
+                font-size: 30px;
+                font-weight: 600;
             }
-        }
+        } 
     }
     i {
         padding-right: 1em;
+    }
+}
+.uc-message{
+    margin-bottom: 35px;
+    .text1{
+        color: #f90;
+    }
+    .text2{
+        color: #999;
+    }
+    .buttonl{
+        float: right;
+        margin-left: 10px;
     }
 }
 .uc-lbody {
@@ -184,7 +217,7 @@
         .fl {
             background-color: #fff;
             padding-right: 20px;
-            font-size: 20px;
+            font-size: 20px; 
         }
         .fr {
             background-color: #fafafa;

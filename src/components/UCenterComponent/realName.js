@@ -394,11 +394,13 @@ export default class RealName extends React.Component {
                 <span className="id">610425198803202829</span>
                 <span className="result" >认证通过</span>
               </div>
-            </div>
-            
-            
-        } />
-            <Step title="第二步" description="This is a description." />
+            </div> 
+          } />
+            <Step title="第二步" description={
+              <div className="second-step">
+                
+              </div>
+            } />
             <Step title="第三步" description="This is a description." />
           </Steps>
         </div>

@@ -6,12 +6,16 @@ let BASE_URL = 'http://test.5izjb.com:8001'; // 测试服务器
 if (build === 'production') {
   // 远端
   BASE_URL = 'http://test.5izjb.com:8001';
+  document.title ="众借帮--客户测试环境";
 } else if (build === 'test') { 
   //  测试
   BASE_URL = 'http://dev3api.zjb188.com:7956';
+  document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
   BASE_URL = 'http://192.168.1.4:8001';
+  document.title ="众借帮--开发环境";
+
 }
 
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图key
