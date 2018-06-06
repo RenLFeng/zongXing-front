@@ -170,6 +170,7 @@
   margin: auto;
   width:100%;
   padding-top: 10px;
+  position: relative;
   .inp{
     position: relative;
     Input{
@@ -187,15 +188,15 @@
     }
   }
   Button{
-      margin-left: 465px;
-      margin-top: 30px;
+      position: absolute;
+      top:180px;
+      left:465px;
       width:300px;
       height:40px;
       background:#169BD5;
       color:white;
       font-size: 16px;
   }
-
   p{
       text-align: center;
       font-size: 14px;
