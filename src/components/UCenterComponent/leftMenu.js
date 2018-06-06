@@ -24,7 +24,7 @@ export default class LeftMenu extends React.Component {
                   <li>投资记录</li>
                   <li><Link className={path.indexOf(Path.RECEIVE_PLAN) ===-1?'':'active'} to={Path.RECEIVE_PLAN}>回款计划</Link></li>
                   <li>资金流水</li>
-                  <li>我的优惠券</li>
+                  <li><Link className={path.indexOf(Path.MY_COUPON) ===-1?'':'active'} to={Path.MY_COUPON}>我的优惠券</Link>   </li>
                   <li>券额明细</li>
                   <li>项目收藏</li>
                   <li>我的邀请码</li>

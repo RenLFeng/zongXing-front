@@ -24,7 +24,9 @@ import AllInvest from '../../components/UCenterComponent/AllInvest';
 
 import Test from '../../components/UCenterComponent/test';
 import CompanyList from '../../components/UCenterComponent/companyList';
-import receivePlan from '../../components/UCenterComponent/receivePlan'
+import receivePlan from '../../components/UCenterComponent/receivePlan';
+ 
+import myCoupon from '../../components/UCenterComponent/mycoupon';
 
 import Path from '../../common/pagePath';
 import MoreInfo from "../../components/UCenterComponent/moreInfo";
@@ -140,6 +142,9 @@ export default class UCenter extends React.Component {
             <Route path={Path.ALL_INVEST}  component={AllInvest} />
             {/* 回款计划 */}
             <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
+            {/* 我的优惠券 */}
+            <Route path={Path.MY_COUPON}  component={myCoupon} />
+ 
           </Switch>
         </div>
       </div>

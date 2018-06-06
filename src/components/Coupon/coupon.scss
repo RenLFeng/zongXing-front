@@ -1,0 +1,109 @@
+.coupon{
+    display: inline-block;
+    width: 375px;
+    height: 205px;
+    position: relative;
+    .coupon-left{
+        float: left;
+        width: 115px; 
+        .logo{
+            height: 95px;
+            width: 95px;
+            margin:55px 20px; 
+            border-radius: 50%;
+            border:4px solid #d8d8d8;
+            box-shadow: 0px 0px 5px 0px rgba(38, 142, 225, 0.5);
+        }
+    }
+    .coupon-center{
+        width: 185px;
+        padding: 24px 5px 0 14px;
+        float: left; 
+        color: #fff;
+        font-family: MicrosoftYaHeiUI;
+        .name{ 
+            font-size: 12px;
+            line-height: 12px;
+           
+        }
+        .money{
+            margin-top: 25px;
+            .face-money{
+                font-size: 35px;
+                line-height: 35px;
+            }
+        }
+        ul{
+            margin-top: 10px;
+            li{
+                list-style: disc;
+                margin-left: 14px;
+                font-size: 12px;
+                line-height: 21px;
+           }
+        }
+        
+    }
+    .coupon-right{
+        float: right;
+        width: 75px;
+        padding: 15px 15px;
+        .staus-btn{
+            width: 32px;
+            margin: 25px 0;
+            cursor: pointer; 
+            font-size: 32px;
+            line-height: 35px;
+            color: #fff; 
+            &:hover{
+                opacity: .8;
+            }
+        }
+        &>span{
+            font-size: 14px;
+            color: #fff; 
+            position: absolute;
+            top: 175px;
+            right:20px ;
+        }
+    }
+
+    
+}
+.xcy-line-img{
+    background:  url(../../assets/img/coupon/xcy-line.png) no-repeat;
+}
+.xfw-line-img{
+    background:  url(../../assets/img/coupon/xfw-line.png) no-repeat;
+}
+.xls-line-img{
+    background:  url(../../assets/img/coupon/xls-line.png) no-repeat;
+}
+.xny-line-img{
+    background:  url(../../assets/img/coupon/xny-line.png) no-repeat;
+}
+.xyl-line-img{
+    background:  url(../../assets/img/coupon/xyl-line.png) no-repeat;
+}
+.other-line-img{
+    background:  url(../../assets/img/coupon/other-line.png) no-repeat;
+}
+
+.xcy-img{
+    background:  url(../../assets/img/coupon/xcy.png) no-repeat;
+}
+.xfw-img{
+    background:  url(../../assets/img/coupon/xfw.png) no-repeat;
+}
+.xls-img{
+    background:  url(../../assets/img/coupon/xls.png) no-repeat;
+}
+.xny-img{
+    background:  url(../../assets/img/coupon/xny.png) no-repeat;
+}
+.xyl-img{
+    background:  url(../../assets/img/coupon/xyl.png) no-repeat;
+}
+.other-img{
+    background:  url(../../assets/img/coupon/other.png) no-repeat;
+}
