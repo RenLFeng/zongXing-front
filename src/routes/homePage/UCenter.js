@@ -25,7 +25,9 @@ import AllInvest from '../../components/UCenterComponent/AllInvest';
 
 import Test from '../../components/UCenterComponent/test';
 import CompanyList from '../../components/UCenterComponent/companyList';
-import receivePlan from '../../components/UCenterComponent/receivePlan'
+import receivePlan from '../../components/UCenterComponent/receivePlan';
+ 
+import myCoupon from '../../components/UCenterComponent/mycoupon';
 
 import Path from '../../common/pagePath';
 import MoreInfo from "../../components/UCenterComponent/moreInfo";
@@ -108,25 +110,42 @@ export default class UCenter extends React.Component {
             <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
             {/* 用户基本信息 */}
             <Route path={Path.USER_BASIC} component={UserBasic} />
-            
+            {/* 开户 */}
             <Route path={Path.OPEN_ACCOUNT+'/:type'} component={OpenAccount} />
+            {/* 企业账户 */}
             <Route path={Path.COMPANY_ACCOUNT} component={CompanyAccount} />
+            {/* 安全中心 */}
             <Route path={Path.SAFE_CENTER} component={SafeCenter} />
+            {/* 实名认证 类型调整页面地址 */}
             <Route path={Path.REALNAME_AUTHENTICATION} component={RealName} />
+            {/* 实名认证 */}
             <Route path={Path.AUTHENTICATION} component={Authentication} />
             <Route path={Path.OPENQACCOUNT} component={OpenQAccount} />
             <Route path={Path.BANK_CARD} exact component={BankCard} />
+            {/* 充值 */}
             <Route path={Path.ACCOUNT_RECHARGE} component={AccountRecharge} />
+            {/* 提现 */}
             <Route path={Path.ACCOUNT_WITHDRAWALS} component={AccountWithdrawals} />
             <Route path={'/index/uCenter/test'} exact component={Test} />
+            {/* 站内消息 */}
             <Route path={Path.STATION_MESSAGE} component={Message} />
+            {/* 企业列表 */}
             <Route path={Path.COMPANY_LIST} component={CompanyList} />
+            {/* 站内公告列表 */}
             <Route path={Path.NOTICE_LIST} component={NoticeList} />
+            {/* 我的投资列表 */}
             <Route path={Path.MY_INVEST} exact component={MyInvestList} />
+            {/* 平台公告列表 */}
             <Route path={Path.INCOME_PLAN} component={IncomePlan} />
+            {/* 资金动态 */}
             <Route path={Path.MORE_INFO}  component={MoreInfo} />
+            {/* 投资总览 */}
             <Route path={Path.ALL_INVEST}  component={AllInvest} />
+            {/* 回款计划 */}
             <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
+            {/* 我的优惠券 */}
+            <Route path={Path.MY_COUPON}  component={myCoupon} />
+ 
           </Switch>
         </div>
       </div>

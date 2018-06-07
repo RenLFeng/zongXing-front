@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'dva/router';
 import Path from '../../common/pagePath';
+import '../../assets/ucenter/leftmenu.scss'
+import { Divider } from 'antd';
 
 export default class LeftMenu extends React.Component {
   constructor(props) {
@@ -11,69 +13,97 @@ export default class LeftMenu extends React.Component {
     const {param} = this.props;
     const path = param.location.pathname;
     return (
-      <div className="fl uc-lbody">
-        <div className="navbox">
-          <p className="hd ic1 hover">
-            <a>帐户总览</a>
-          </p>
-          <div className="nav">
-            <ul>
-              <li><Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'hover'} to={Path.PERSONAL_ACCOUNT}>个人账户</Link></li>
-            </ul>
-          </div>
+        <div className="uc-left-menu">
+          <ul className="">
+             <li>
+                <span>
+                    <i className="zjb zjb-shouji" ></i> 我的账户
+                </span>
+                <ul>
+                  <li> <Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'active'} to={Path.PERSONAL_ACCOUNT}>账户总览</Link></li>
+                  <li>投资记录</li>
+                  <li><Link className={path.indexOf(Path.RECEIVE_PLAN) ===-1?'':'active'} to={Path.RECEIVE_PLAN}>回款计划</Link></li>
+                  <li>资金流水</li>
+                  <li><Link className={path.indexOf(Path.MY_COUPON) ===-1?'':'active'} to={Path.MY_COUPON}>我的优惠券</Link>   </li>
+                  <li>券额明细</li>
+                  <li>项目收藏</li>
+                  <li>我的邀请码</li>
+                </ul> 
+             </li>
+             <li>
+                <span>
+                     <i className="zjb zjb-shouji" ></i> 
+                     安全中心
+                </span>
+                <ul>
+                    <li><Link className={path.indexOf(Path.SAFE_CENTER)===-1?'':'active'} to={Path.SAFE_CENTER}>实名认证</Link></li>
+                    <li>IP记录</li>
+                </ul>
+             </li>
+             <li>
+                <span>
+                     <i className="zjb zjb-shouji" ></i> 
+                     通知中心
+                </span>
+                 <ul>
+                     <li>平台登录</li>
+                 </ul>
+             </li>
+          </ul> 
         </div>
-        <div className="navbox">
-          <p className="hd ic1 hover">
-            <a>安全中心</a>
-          </p>
-          <div className="nav">
-            <ul>
-              <li><Link className={path.indexOf(Path.REALNAME_AUTHENTICATION)===-1?'':'hover'} to={Path.REALNAME_AUTHENTICATION}>实名认证</Link></li>
-            </ul>
-          </div>
-        </div>
-        <div className="navbox">
-          <p className="hd ic2 hover">
-            <a>个人中心</a>
-          </p>
-          <div className="nav">
-            <ul>
-              <li><Link className={path.indexOf(Path.USER_BASIC)===-1?'':'hover'} to={Path.USER_BASIC}>基础资料</Link></li>
-              <li><Link className={path.indexOf(Path.SAFE_CENTER)===-1?'':'hover'} to={Path.SAFE_CENTER}>安全中心</Link></li>
-              {/*<li><Link className={path.indexOf(Path.BANK_CARD)===-1?'':'hover'} to={Path.BANK_CARD}>银行卡</Link></li>*/}
-              <li><Link className={path.indexOf(Path.STATION_MESSAGE) ===-1?'':'hover'} to={Path.STATION_MESSAGE}>站内消息</Link></li>
-              <li><Link className={path.indexOf(Path.NOTICE_LIST) ===-1?'':'hover'} to={Path.NOTICE_LIST}>站内公告</Link></li>
-            </ul>
-          </div>
-        </div>
-        <div className="navbox">
-          <p className="hd ic4 hover">
-            <a>我的投资</a>
-          </p>
-          <div className="nav">
-            <ul>
-              <li><Link className={path.indexOf(Path.MY_INVEST) ===-1?'':'hover'} to={Path.MY_INVEST}>我的投资</Link></li>
-              <li><Link className={path.indexOf(Path.ALL_INVEST) ===-1?'':'hover'} to={Path.ALL_INVEST}>投资总览</Link></li>
-              <li><Link className={path.indexOf(Path.RECEIVE_PLAN) ===-1?'':'hover'} to={Path.RECEIVE_PLAN}a>回款计划</Link></li>
-            </ul>
-          </div>
-        </div>
-        <div className="navbox">
-          <p className="hd ic5 hover">
-            <a>我的企业</a>
-          </p>
-          <div className="nav">
-            <ul>
-              <li><Link className={path.indexOf(Path.COMPANY_LIST)===-1?'':'hover'} to={Path.COMPANY_LIST}>企业列表</Link></li>
-            </ul>
-          </div>
-        </div>
-        <div className="navbox">
-          <p className="hd ic7">
-            <a>我的优惠券</a>
-          </p>
-        </div>
-      </div>
+      // <div className="fl uc-lbody">
+      
+      //   <div className="navbox">
+      //     <p className="hd ic1 hover">
+      //       <a>安全中心</a>
+      //     </p>
+      //     <div className="nav">
+      //       <ul>
+      //         <li><Link className={path.indexOf(Path.REALNAME_AUTHENTICATION)===-1?'':'hover'} to={Path.REALNAME_AUTHENTICATION}>实名认证</Link></li>
+      //       </ul>
+      //     </div>
+      //   </div>
+      //   <div className="navbox">
+      //     <p className="hd ic2 hover">
+      //       <a>个人中心</a>
+      //     </p>
+      //     <div className="nav">
+      //       <ul>
+      //         <li><Link className={path.indexOf(Path.USER_BASIC)===-1?'':'hover'} to={Path.USER_BASIC}>基础资料</Link></li> 
+      //         <li><Link className={path.indexOf(Path.BANK_CARD)===-1?'':'hover'} to={Path.BANK_CARD}>银行卡</Link></li>
+      //         <li><Link className={path.indexOf(Path.STATION_MESSAGE) ===-1?'':'hover'} to={Path.STATION_MESSAGE}>站内消息</Link></li>
+      //         <li><Link className={path.indexOf(Path.NOTICE_LIST) ===-1?'':'hover'} to={Path.NOTICE_LIST}>站内公告</Link></li>
+      //       </ul>
+      //     </div>
+      //   </div>
+      //   <div className="navbox">
+      //     <p className="hd ic4 hover">
+      //       <a>我的投资</a>
+      //     </p>
+      //     <div className="nav">
+      //       <ul>
+      //         <li><Link className={path.indexOf(Path.MY_INVEST) ===-1?'':'hover'} to={Path.MY_INVEST}>我的投资</Link></li>
+      //         <li><Link className={path.indexOf(Path.ALL_INVEST) ===-1?'':'hover'} to={Path.ALL_INVEST}>投资总览</Link></li>
+      //         <li></li>
+      //       </ul>
+      //     </div>
+      //   </div>
+      //   <div className="navbox">
+      //     <p className="hd ic5 hover">
+      //       <a>我的企业</a>
+      //     </p>
+      //     <div className="nav">
+      //       <ul>
+      //         <li><Link className={path.indexOf(Path.COMPANY_LIST)===-1?'':'hover'} to={Path.COMPANY_LIST}>企业列表</Link></li>
+      //       </ul>
+      //     </div>
+      //   </div>
+      //   <div className="navbox">
+      //     <p className="hd ic7">
+      //       <a>我的优惠券</a>
+      //     </p>
+      //   </div>
+      // </div>
     );
   }
 }

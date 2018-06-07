@@ -1,7 +1,5 @@
 @import '../common/_var.scss';
-@import './_leftmenu.scss';
-@import './_timetree.scss';
-
+ 
 .topnav1 {
     background-color: #333;
 }
@@ -100,10 +98,7 @@
         margin-left: 10px;
     }
 }
-.uc-lbody {
-    width: 240px;
-    background-color: #fff;
-}
+
 .uc-rbody {
     width: 932px;
     padding: 30px;
