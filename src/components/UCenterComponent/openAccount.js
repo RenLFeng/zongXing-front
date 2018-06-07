@@ -19,12 +19,14 @@ export default class OpenAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      phone: ''
-    }
+      phone: '',
+      realName: '',
+      idcard: '',
+    };
   }
 
   componentDidMount() {
-    this.getUserPhone()
+    this.getUserPhone();
   }
 
   // 获取用户手机号
@@ -34,24 +36,32 @@ export default class OpenAccount extends React.Component {
     if (response.code === 0) {
       if (response.data) {
         this.setState({
-          phone: response.data.fmobile
+          phone: response.data.fmobile,
+          realName: response.data.freal_name,
+          idcard: response.data.fidcard_No,
         });
       }
     }
   }
-
   render() {
-    const { match, history } = this.props;
+    console.log("match:",this.props.match);
+    const { match, history, parentHandSubmit } = this.props;
     const type = match.params.type;
 
     return (
       <div>
-        <LeftMenu param={this.props}/>
+        {/* <LeftMenu param={this.props}/> */}
         <div className="fr uc-rbody" >
-          <FormOpenComponent type={type} history={history} phone={this.state.phone}/>
+          <FormOpenComponent
+            type={type}
+            history={history}
+            phone={this.state.phone}
+            realName={this.state.realName}
+            idcard={this.state.idcard}
+            parentHandSubmit={parentHandSubmit}
+          />
         </div>
       </div>
-      
     );
   }
 }
@@ -121,32 +131,32 @@ class FormComponent extends React.Component {
     this.props.form.validateFieldsAndScroll( async (err, values) => {
       console.log(err);
       if (!err) {
-        console.log('表单获取的数据', values);
         // 提交表单接口
         values.accountType = '0';
-        values.cityCode = values.city[values.city.length-1];
+        values.cityCode = values.city[values.city.length - 1];
         this.setState({loading: true});
         try {
           const response = await commitOpenAccount(values);
           this.setState({loading: false});
           if (response.code === 0) {
             message.info(response.msg);
+            this.props.parentHandSubmit(response.data);
             // 提交表单接口回调成功使用
             // this.commitSuccess();
-            if (values.accountType === '0') {
-              this.props.history.push(Path.PERSONAL_ACCOUNT);
-            } else if (values.accountType === '1') {
-              this.props.history.push(Path.COMPANY_ACCOUNT);
-              Modal.confirm({
-                title: '提示',
-                content: '企业账户已开通，请完成实名认证',
-                okText: '前往',
-                cancelText: '取消',
-                onOk: () => {
-                  window.open(AUTH_ADDRESS);
-                }
-              });
-            }
+            // if (values.accountType === '0') {
+            //   this.props.history.push(Path.PERSONAL_ACCOUNT);
+            // } else if (values.accountType === '1') {
+            //   this.props.history.push(Path.COMPANY_ACCOUNT);
+            //   Modal.confirm({
+            //     title: '提示',
+            //     content: '企业账户已开通，请完成实名认证',
+            //     okText: '前往',
+            //     cancelText: '取消',
+            //     onOk: () => {
+            //       window.open(AUTH_ADDRESS);
+            //     }
+            //   });
+            // }
           } else {
             message.error(response.msg);
           }
@@ -256,7 +266,7 @@ class FormComponent extends React.Component {
     this.setState({
       openType: val,
       companyName: '',
-      license: ''
+      license: '',
     });
     this.props.form.resetFields();
 
@@ -264,9 +274,10 @@ class FormComponent extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { parentHandSubmit } = this.props;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Row style={{postion: 'relative'}}>
+        <Row style={{ postion: 'relative' }}>
           <FormItem
             {...formItemLayout}
             label="手机"
@@ -275,44 +286,47 @@ class FormComponent extends React.Component {
               initialValue: this.props.phone,
               rules: [{ pattern: VER_PHONE, message: '手机格式不正确' },
                 { required: true, message: '请填写手机' }],
-            })(<Input maxLength={'20'} autocomplete="off" readOnly/>)}
+            })(<Input maxLength={'20'} autocomplete="off" readOnly />)}
           </FormItem>
-          <Tooltip title="如需修改请去安全中心更换手机号" style={{position: 'absolute', top: 10, right: 250}}>
-            <Icon type="question-circle-o" style={{position: 'absolute', top: 10, right: 250}}/>
+          <Tooltip title="如需修改请去安全中心更换手机号" style={{position: 'absolute', top: 10, right: 250 }}>
+            <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
           </Tooltip>
         </Row>
-        <FormItem
-          {...formItemLayout}
-          label="邮箱"
-        >
-          {getFieldDecorator('email', {
-            rules: [{ type: 'email', message: '邮箱格式不正确', },
-              { required: true, message: '请填写邮箱' }],
-          })(<Input maxLength={'40'} autocomplete="off"/>)}
-        </FormItem>
         { this.state.openType === '0' ?
           <div>
-            <FormItem
-              {...formItemLayout}
-              label="身份证号"
-            >
-              {getFieldDecorator('identificationNo', {
-                rules: [
-                  { pattern: ID_CORD, message: '身份证格式不正确' },
-                  { required: true, message: '请填写身份证号' },
-                ],
-              })(<Input maxLength={'20'} autocomplete="off"/>)}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="真实姓名"
-            >
-              {getFieldDecorator('realName', {
-                rules: [
-                 { required: true, message: '请填写真实姓名' },
-                ],
-              })(<Input maxLength={'20'} autocomplete="off"/>)}
-            </FormItem>
+            <Row>
+              <FormItem
+                {...formItemLayout}
+                label="身份证号"
+              >
+                {getFieldDecorator('identificationNo', {
+                  initialValue: this.props.idcard,
+                  rules: [
+                    { pattern: ID_CORD, message: '身份证格式不正确' },
+                    { required: true, message: '请填写身份证号' },
+                  ],
+                })(<Input maxLength={'20'} autocomplete="off" />)}
+              </FormItem>
+              <Tooltip title="该信息无法修改" style={{ position: 'absolute', top: 10, right: 250 }}>
+                <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
+              </Tooltip>
+            </Row>
+            <Row>
+              <FormItem
+                {...formItemLayout}
+                label="真实姓名"
+              >
+                {getFieldDecorator('realName', {
+                  initialValue: this.props.realName,
+                  rules: [
+                  { required: true, message: '请填写真实姓名' },
+                  ],
+                })(<Input maxLength={'20'} autocomplete="off" />)}
+              </FormItem>
+              <Tooltip title="该信息无法修改" style={{ position: 'absolute', top: 10, right: 250 }}>
+                <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
+              </Tooltip>
+            </Row>
             <FormItem
               {...formItemLayout}
               label="所在城市"
@@ -325,18 +339,27 @@ class FormComponent extends React.Component {
             </FormItem>
           </div>
           : null }
-        <FormItem {...btnLayout}>
-          <Button type="primary"  htmlType="submit" loading={this.state.loading} style={{width: '200px'}}>提交</Button>
+        <FormItem
+          {...formItemLayout}
+          label="邮箱"
+        >
+          {getFieldDecorator('email', {
+            rules: [{ type: 'email', message: '邮箱格式不正确' },
+              { required: true, message: '请填写邮箱' }],
+          })(<Input maxLength={'40'} autocomplete="off" />)}
         </FormItem>
-        <Modal
+        <FormItem {...btnLayout}>
+          <Button type="primary" htmlType="submit" loading={this.state.loading} style={{ width: '200px' }}>提交</Button>
+        </FormItem>
+        {/* <Modal
           visible={this.state.visible}
           title="提交中"
           onCancel={this.handleCancel}
           footer={null}
           maskClosable={false}
         >
-          <p style={{fontSize:20}}>正在开户, 请等待。。。({this.state.countDownTime}s)</p>
-        </Modal>
+          <p style={{ fontSize: 20 }}>正在开户, 请等待。。。({this.state.countDownTime}s)</p>
+        </Modal> */}
       </Form>
     );
   }

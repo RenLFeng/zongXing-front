@@ -1,95 +1,80 @@
 import React from 'react';
-import { Icon, Input, Button,} from 'antd';
+import { Icon, Button } from 'antd';
 import '../../assets/ucenter/realName.scss';
-
-
+import OpenAccount from './openAccount';
 
 export default class OpenQAccount extends React.Component {
-  constructor(props){
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showPage: 'china',
-      userName: '',
-    }
+      realName: '',
+      idcard: '',
+      submitParam: null,
+      
+    };
   }
-  render(){
-    const { userName } = this.state;
-    const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
-      return(
-          <div className="pages">
-          {
-            this.state.showPage === 'china' ? 
-            <div>
-              <div className="real_title_">
-                  <span className="safeCenter_">实名认证</span>
-                  <span>> 开通乾多多资金托管账户 > 发起开通申请</span>
-              </div>
-              {/* <div className="card">
-                <div className="id_card">
-                  <Icon type="idcard" className="id_Card"/>
-                </div>
-                <span className="china">中国大陆居民身份认证</span>
-                <Button type="primary" onClick={()=>{this.setState({showPage:'china_card'})}}>我要认证</Button>
-              </div> */}
-              <div className="page_content">
-                <div className="openingHints">
-                    <img src={require('../../assets/img/ucenter/u4288.png')} />
-                    <p style={{marginTop:60}}>开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</p>
-                    <p style={{marginTop:25}}>保障您的资金安全</p>
-                </div>
-                <div className="buttonGroup">
-                    <Button className="open" onClick={this.setState({showPage:'china_card'})}>申请开通</Button>
-                    <p>系统提交用户身份资料给乾多多，进行是否已有账户判断</p>
-                    <Button className="bind">已有乾多多账号进行绑定操作</Button>
-                    <Button className="bind1">未有乾多多账号进行注册操作</Button>
-                </div>
-                
-              </div>
-              
-            </div> : 
-            (this.state.showPage === 'china_card' ) ? 
-            <div>
-              <div className="real_title_">
-                  <span className="safeCenter_">安全中心</span>
-                  <span>> 身份认证 > 中国大陆居民身份认证</span>
-              </div>
-              <div className="Prompt">
-                <img src={require("../../assets/img/u3530.png")}/>
-                <p className="p1"> 成身份认证，有助于建立完善可靠的互联网信用体系</p>
-                <p className="p2">姓名必须与充值、提现的银行卡开户名保持一致</p>
-              </div>
-              <div className="info">
-                <div className="inp">
-                  <Input placeholder="请输入真实姓名"/>
-                  <img src={require('../../assets/img/u186.png')} />
-                </div>
-                <div className="inp">
-                  <Input placeholder="请输入第二代身份证号码"/>
-                  <img src={require('../../assets/img/u192.png')} />
-                </div>
-                <Button onClick={()=>{this.setState({showPage:'ok'})}}>立即身份认证</Button>
-              </div>
-            </div> :
-            (this.state.showPage === 'ok' ) ? 
-            <div>
-              <div className="real_title_">
-                  <span className="safeCenter_">安全中心</span>
-                  <span>> 身份认证 > 身份认证成功</span>
-              </div>
-              <div className="info">
-                <p>众借帮使用“全国公民身份证号码查询服务中心”（NCIIC）权威认证</p>
-                <h1>
-                  <img src={require('../../assets/img/u3551.png')}/>
-                  人名字，恭喜您已经通过身份认证</h1>
-                <a className="goback">3秒后自动返回</a>
-              </div>
-            </div> :null
-          }
-            
 
-          </div>
-      )
+  componentDidMount() {
+    console.log('this.state', this.state);
+    console.log('this.state.showPage', this.state.showPage);
+  }
+
+  handSubmit = (param) => {
+    console.log("submitParam:",param);
+    this.setState({ submitParam: param, showPage: 'mmmpage-warn' });
+  }
+
+  render() {
+    console.log('this.state.showPage', this.state.showPage);
+    console.log("submitParam:",this.state.submitParam);
+    const { realName, submitParam } = this.state;
+    const suffix = realName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
+    let formRef = null;
+      return(
+        <div className="pages">
+          {
+            this.state.showPage === 'china' ?
+              <div>
+                <OpenAccount parentHandSubmit={this.handSubmit} match={this.props.match} />
+              </div> :
+            (this.state.showPage === 'mmmpage-warn') ?
+              <div>
+                <div className="real_title_">
+                  <span className="safeCenter_">实名认证</span>
+                  <span>&gt; 开通乾多多资金托管账户 &gt; 发起开通申请</span>
+                </div>
+                <div className="page_content">
+                  <div className="openingHints">
+                    <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
+                    <p style={{ marginTop: 60 }}>开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</p>
+                    <p style={{ marginTop: 25 }}>保障您的资金安全</p>
+                  </div>
+                  <div className="buttonGroup">
+                    <Button className="open" onClick={() => { this.formId.submit(); }}>申请开通</Button>
+                    <p>系统提交用户身份资料给乾多多，进行是否已有账户判断</p>
+                  </div>
+                </div>
+                <form ref={ref => { this.formId = ref; formRef = ref; }} action={submitParam.submitUrl} method="post" target="_blank" style={{ display: 'none' }}>
+                  <input id="AccountType" name="AccountType" value={submitParam.reqParam.AccountType} />
+                  <input id="Email" name="Email" value={submitParam.reqParam.Email} />
+                  <input id="IdentificationNo" name="IdentificationNo" value={submitParam.reqParam.IdentificationNo} />
+                  <input id="LoanPlatformAccount" name="LoanPlatformAccount" value={submitParam.reqParam.LoanPlatformAccount} />
+                  <input id="Mobile" name="Mobile" value={submitParam.reqParam.Mobile} />
+                  <input id="NotifyURL" name="NotifyURL" value={submitParam.reqParam.NotifyURL} />
+                  <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={submitParam.reqParam.PlatformMoneymoremore} />
+                  <input id="RandomTimeStamp" name="RandomTimeStamp" value={submitParam.reqParam.RandomTimeStamp} />
+                  <input id="RealName" name="RealName" value={submitParam.reqParam.RealName} />
+                  <input id="RegisterType" name="RegisterType" value={submitParam.reqParam.RegisterType} />
+                  <input id="Remark1" name="Remark1" value={submitParam.reqParam.Remark1} />
+                  <input id="Remark2" name="Remark2" value={submitParam.reqParam.Remark2} />
+                  <input id="Remark3" name="Remark3" value={submitParam.reqParam.Remark3} />
+                  <input id="ReturnURL" name="ReturnURL" value={submitParam.reqParam.ReturnURL} />
+                  <input id="SignInfo" name="SignInfo" value={submitParam.reqParam.SignInfo} />
+                </form>
+              </div> : null
+          }
+        </div>
+      );
   }
 }
-
-
