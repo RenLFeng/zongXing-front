@@ -38,7 +38,7 @@ export default class OpenQAccount extends React.Component {
                     <p style={{marginTop:25}}>保障您的资金安全</p>
                 </div>
                 <div className="buttonGroup">
-                    <Button className="open" onClick={this.setState({showPage:'china_card'})}>申请开通</Button>
+                    <Button className="open" >申请开通</Button>
                     <p>系统提交用户身份资料给乾多多，进行是否已有账户判断</p>
                     <Button className="bind">已有乾多多账号进行绑定操作</Button>
                     <Button className="bind1">未有乾多多账号进行注册操作</Button>

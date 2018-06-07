@@ -340,3 +340,128 @@
             }
         }
 }
+
+.cardBox{
+    height:111px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    .IDCard{
+        width:279px;
+        position: relative;
+        .bg{
+            position: absolute;
+        }
+        .s_bg{
+            position: absolute;
+            top:10px;
+            left:10px;
+        }
+        .s_bg_{
+            position: absolute;
+            top:18px;
+            left:18px;
+        }
+        .s_bg_1{
+            position: absolute;
+            top:14px;
+            left:14px;
+        }
+        .s_bg1_{
+            width: 86px;
+            height: 93px;
+            position: absolute;
+            top:9px;
+            right:7px;
+            opacity: 0.1;
+        }
+        .text{
+            width:200px;
+            height:80px;
+            position: absolute;
+            top:15px;
+            left:68px;
+            p{
+                color:white;
+                font-family: '微软雅黑';
+                font-weight: 400;
+                font-style: normal;
+                color: #FFFFFF;
+            }
+            .card_name{
+                font-size: 16px;
+            }
+            .type{
+                font-size: 12px;
+            }
+            .card_num{
+                font-size: 20px;
+                margin-top: 12px;
+            }
+
+        }
+    }
+}
+
+.unbind{
+    color:blue !important;
+    text-decoration-line: underline;
+    margin: 10px 0px 10px 220px;
+}
+.unbindBox{
+    width:277px;
+    height:193px;
+    background: #F2F2F2;
+    p{
+        color:#333333;
+        text-align: center;
+    }
+    .word1_{
+        padding-top: 20px;
+    }
+    .word2_{
+        margin:25px 0 10px 0;;
+    }
+    .inp{
+        margin: 10px 0 10px 15px;
+        width:247px;
+        height:41px;
+        position: relative;
+        .ant-input{
+            width:247px;
+            height:41px; 
+            padding-left: 30px;
+        }
+        .img1{
+            position: absolute;
+            top:10px;
+            left:10px;
+        }
+        .img2{
+            position: absolute;
+            top:13px;
+            right:10px;
+        }
+    }
+    Button{
+        margin-left: 96px; 
+        width:85px;
+        height:37px;       
+    }
+}
+.addId{
+    width:277px;
+    height:111px;
+    background:white;
+    border-radius: 5px;
+    border:1px dashed lightgray;
+    margin-top: 10px;
+    p{
+        text-align: center;
+    }
+    .add{
+        font-size: 20px;
+        margin: 20px 0;
+        color: #666666;
+    }
+}
