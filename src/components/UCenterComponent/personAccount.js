@@ -295,7 +295,6 @@ export default class PersonAccount extends React.Component {
 
   render() {
     const { openStatus, errorMessage } = this.props;
-    console.log(this.props.personal)
     if (openStatus === 0) {
       return (
         <div className="fr uc-rbody">
@@ -317,77 +316,77 @@ export default class PersonAccount extends React.Component {
     }
     return (
       <div>
-      <LeftMenu param={this.props}/>
-      <div className="fr uc-rbody">
-        <div className="ptit">
-          <i>账户总资产</i>
-          <b>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</b>
-          <em>单位：元</em>
-        </div>
-        <div className="tright hd1">
-          <a className="fl" style={{cursor: 'default'}}>
-            <i>累计充值</i>
-            <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
-          </a>
-          <a className="fl" style={{cursor: 'default'}}>
-            <i>累计提现</i>
-            <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
-          </a>
-          <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.personal.totalAssets.accountId)}>充值</a>
-          <a className="btn btn2" onClick={()=>this.jumpRecharge_(this.props.personal.totalAssets.accountId)}>提现</a>
-          {/*<a className="btn btn3">好友转账</a>*/}
-        </div>
-        <div className="border shadow box1">
-          <div className="pieDiv">
-            <div>
-              <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</span>
-              <span style={{fontSize: '14px'}}>账户总资产</span>
+        <LeftMenu param={this.props}/>
+        <div className="fr uc-rbody">
+          <div className="ptit">
+            <i>账户总资产</i>
+            <b>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</b>
+            <em>单位：元</em>
+          </div>
+          <div className="tright hd1">
+            <a className="fl" style={{cursor: 'default'}}>
+              <i>累计充值</i>
+              <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
+            </a>
+            <a className="fl" style={{cursor: 'default'}}>
+              <i>累计提现</i>
+              <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
+            </a>
+            <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.personal.totalAssets.accountId)}>充值</a>
+            <a className="btn btn2" onClick={()=>this.jumpRecharge_(this.props.personal.totalAssets.accountId)}>提现</a>
+            {/*<a className="btn btn3">好友转账</a>*/}
+          </div>
+          <div className="border shadow box1">
+            <div className="pieDiv">
+              <div>
+                <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</span>
+                <span style={{fontSize: '14px'}}>账户总资产</span>
+              </div>
+            </div>
+            <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
+            <div className="coupon">
+              <i className="c6">代金券</i>
+              <i className="fr">{(this.props.personal.totalAssets.capitalCoupon+'').fm()}</i>
             </div>
           </div>
-          <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
-          <div className="coupon">
-            <i className="c6">代金券</i>
-            <i className="fr">{(this.props.personal.totalAssets.capitalCoupon+'').fm()}</i>
+
+          <div className="hd2 clearfix">
+            <a className="fl hover">回款计划</a>
+            {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}
+            <Link className="fr" to={Path.RECEIVE_PLAN}>更多 &gt;&gt;</Link>
           </div>
-        </div>
+          <div>
+            <LineReact height="450px" width="900px" option={this.state.lineOption}/>
+          </div>
 
-        <div className="hd2 clearfix">
-          <a className="fl hover">回款计划</a>
-          {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}
-          <Link className="fr" to={Path.RECEIVE_PLAN}>更多 &gt;&gt;</Link>
-        </div>
-        <div>
-          <LineReact height="450px" width="900px" option={this.state.lineOption}/>
-        </div>
-
-        <div className="hd3">
-          <a className="fl">资金动态</a>
-          <Link className="fr" to={Path.MORE_INFO}>查看更多 &gt;&gt;</Link>
-        </div>
-        <div>
-          <div className="timetree">
-            <div className="end"/>
-            <div className="list">
-              {
-                this.props.personal.accountDynamicVos.map((data,index) => {
-                  let year_ = moment(data.time).format('YYYY');
-                  let month = moment(data.time).format('MM-DD');
-                  return(
-                    <div className="item" key={index}>
-                      <p className="date">
-                        <i className="y">{year_}</i><br /><i className="d">{month}</i>
-                      </p>
-                      <i className="cc"/>
-                      <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
-                    </div>
-                  );
-                })
-              }
+          <div className="hd3">
+            <a className="fl">资金动态</a>
+            <Link className="fr" to={Path.MORE_INFO}>查看更多 &gt;&gt;</Link>
+          </div>
+          <div>
+            <div className="timetree">
+              <div className="end"/>
+              <div className="list">
+                {
+                  this.props.personal.accountDynamicVos.map((data,index) => {
+                    let year_ = moment(data.time).format('YYYY');
+                    let month = moment(data.time).format('MM-DD');
+                    return(
+                      <div className="item" key={index}>
+                        <p className="date">
+                          <i className="y">{year_}</i><br /><i className="d">{month}</i>
+                        </p>
+                        <i className="cc"/>
+                        <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
+                      </div>
+                    );
+                  })
+                }
+              </div>
+              <div className="start"/>
             </div>
-            <div className="start"/>
           </div>
         </div>
-      </div>
       </div>
      
     );

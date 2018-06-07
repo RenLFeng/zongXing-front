@@ -5,7 +5,7 @@ import { Link } from 'dva/router';
 import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL} from '../../common/systemParam';
 import { connect } from 'dva';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState,closeAuthorization, phoneExist} from '../../services/api';
-import {AUTHENTICATION} from '../../common/pagePath';
+import {AUTHENTICATION, OPENQACCOUNT} from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -52,8 +52,8 @@ export default class RealName extends React.Component {
       status:'',  //投标状态
       showAuth: false , //判断开户展示授权
 
-      // data:{},  //取消授权
-      // closeUrl:'',
+      changePayPass:false,  //判断修改支付密码
+      changeLoginPass:false, //判断修改登录密码
     };
     this.countDownFun = null;
     this.countDownFun_ = null;
@@ -383,7 +383,7 @@ export default class RealName extends React.Component {
           <Steps progressDot current={0} direction="vertical">
             <Step title="第一步" 
             description={
-            <div style={{marginBottom:50}}>
+            <div style={{marginBottom:65}}>
               <div className="first">
                 <span style={{color:'#ff9900',fontSize:'28px',lineHeight:'28px',position:'absolute',left:'30px',top:'45px'}}>*</span> <span className="left">身份认证</span> 
                 <span className="middle">用于提升账户安全性，认证后不能修改</span>
@@ -397,9 +397,90 @@ export default class RealName extends React.Component {
             </div> 
           } />
             <Step title="第二步" description={
-              <div className="second-step">
-                
-              </div>
+              <div style={{marginBottom:65}}>
+                <div className="first">
+                  <span style={{color:'#ff9900',fontSize:'28px',lineHeight:'28px',position:'absolute',left:'30px',top:'45px'}}>*</span> <span className="left">开通乾多多资金托管账户</span> 
+                  <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
+                  <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a>
+                </div>
+                <div style={{marginTop:30,marginBottom:8}}>
+                  <img src={require('../../assets/img/ucenter/u4288.png')} />
+                </div>
+                <div className="personal">
+                  <span style={{color:'black'}}>你的钱多多账户：2560434</span>
+                  <div className="findPass">
+                    <span className="a" >找回乾多多支付密码 </span>
+                    <span className="line" >|</span>
+                    <span className="a" >找回乾多多支付登录密码 </span>
+                  </div>  
+                </div>
+               <div className="imgBox">
+                    <div className="step">
+                      <div className="step_id">1</div>
+                      <div className="step_box">
+                        <p className="text">打开乾多多官网</p>
+                        <Button className="goWeb">前往</Button>
+                      </div>
+                    </div>
+                    <div className="step">
+                      <div className="step_id">2</div>
+                      <div className="step_box">
+                        <p className="login">登录进入乾多多网站</p>
+                        <img src={require('../../assets/img/ucenter/u4322.png')} style={{width:130,height:126,marginLeft:'23px'}}/>
+                      </div>
+                    </div>
+                    <div className="step">
+                      <div className="step_id">3</div>
+                      <div className="step_box">
+                        <p className="account">"我的账户"</p>
+                        <img src={require('../../assets/img/ucenter/u4329.png')} style={{width:158,height:67,marginLeft:'13px'}}/>
+                        <p className="login">点击 "找回支付密码"</p>
+                      </div>
+                    </div>
+                    <div className="step">
+                      <div className="step_id">4</div>
+                      <div className="step_box">
+                        <p className="account">"点击 "立即找回""</p>
+                        <p className="account">通过手机验证+身份验证</p>
+                        <p className="account">重新设置支付密码</p>
+                        <img src={require('../../assets/img/u3551.png')} style={{width:30,height:25,marginLeft:'70px'}}/>
+                      </div>
+                    </div>
+               </div>
+               <div className="imgBox">
+                    <div className="step">
+                      <div className="step_id">1</div>
+                      <div className="step_box">
+                        <p className="text">打开乾多多官网</p>
+                        <Button className="goWeb">前往</Button>
+                      </div>
+                    </div>
+                    <div className="step">
+                      <div className="step_id">2</div>
+                      <div className="step_box">
+                        <p className="login">在登录窗口</p>
+                        <img src={require('../../assets/img/ucenter/u4353.png')} style={{width:153,height:95,marginLeft:'13px'}}/>
+                        <p className="login">点击“忘记登录密码”</p>
+                      </div>
+                    </div>
+                    <div className="step">
+                      <div className="step_id">3</div>
+                      <div className="step_box">
+                        <p className="user">账户名可输入手机号码，你的真实姓名、乾多多数字账户</p>
+                        <img src={require('../../assets/img/ucenter/u4371.png')} style={{width:158,height:67,marginLeft:'13px'}}/>
+                      </div>
+                    </div>
+                    <div className="step">
+                      <div className="step_id">4</div>
+                      <div className="step_box">
+                        <p className="account">"点击 "立即找回""</p>
+                        <p className="account">通过手机验证+身份验证</p>
+                        <p className="account">重新设置登录密码</p>
+                        <img src={require('../../assets/img/u3551.png')} style={{width:30,height:25,marginLeft:'70px'}}/>
+                      </div>
+                    </div>
+               </div>
+              </div> 
             } />
             <Step title="第三步" description="This is a description." />
           </Steps>

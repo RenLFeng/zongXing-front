@@ -33,10 +33,11 @@
     .hd {
         margin-bottom: 30px;
         a {
-            width: 80px;
+            width: 130px;
             line-height: 38px;
             border-bottom: 2px solid #D9D9D9;
-            font-size: 16px;
+            font-size: 28px;
+            color: #666666;
             &.hover {
                 border-bottom-color: #FF8533;
             }
@@ -48,17 +49,26 @@
     .row {
       margin-bottom: 20px;
       display: block;
-      p {
+      .prompts {
         margin-top: 5px;
         color: red;
+      }
+      .registration-prompts{
+        color: #868686 !important;
+        font-size: 11px !important;
+        margin-left: 30px;
+        a{
+            color: #FF9900;
+            font-size: 13px;
+        }
       }
     }
     .put {
         border: 1px solid #d9d9d9;
         border-radius: 3px;
         padding: 0 0 0 40px;
-        width: 258px;
-        line-height: 42px;
+        width: 300px;
+        line-height: 41px;
         height: 42px;
         font-size: 14px;
         background-position: 14px center;
@@ -109,6 +119,8 @@
 }
 .logf .tright {
     padding-top: 10px;
+    width:70px !important;
+    position: relative;
 }
 .logindiv1 .other {
     text-align: center;
@@ -179,14 +191,62 @@
 }
 
 .box{
-  //border:1px solid red;
   padding-top:20px;
 }
 
 .back{
-    background:  no-repeat right center #fff !important;
+    background:  #fff ;
     width:474px;
     height:470px;
-    border:1px solid red;
-    // position: absolute;
+    display: inline-block;
+    .forget{
+        position: relative;
+        top:-132px;
+        left:300px;
+    }
+}
+.back_{
+    position: absolute;
+    background:  #D3D3D3 ;
+    width:474px;
+    height:470px;
+    top:0px;
+    left:474px;
+    p{
+        font-family: '微软雅黑';
+        font-weight: 400;
+        font-style: normal;
+        font-size: 28px;
+        color: #666666;
+        text-align: center;
+        padding-top: 80px;
+    }
+}
+.logindiv1{
+    background: none !important; 
+}
+
+.safe-info{
+    margin-top: 10px;
+    font-size: 13px;
+    color: #333333;
+    text-align: center;
+    vertical-align: auto;
+}
+.statistics{
+    margin-top: 55px;
+    span{
+        font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
+        font-weight: 700;
+        font-style: normal;
+        font-size: 20px;
+        color: #FF9900;
+        word-wrap: break-word;
+        vertical-align: auto;
+        display: inline-block;
+        margin-left: 8px
+    }
+}
+.btn{
+    font-size: 18px !important;
 }
