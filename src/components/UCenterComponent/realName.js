@@ -7,7 +7,7 @@ import moment from 'moment';
 import '../../assets/ucenter/realName.scss';
 import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL} from '../../common/systemParam';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist } from '../../services/api';
-import {AUTHENTICATION, OPENQACCOUNT } from '../../common/pagePath';
+import {AUTHENTICATION, OPENQACCOUNT, BINDCARD } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -515,7 +515,7 @@ export default class RealName extends React.Component {
                           <Button type="primary">解绑</Button>
                         </div>
                         <div className="addId">
-                          <p className="add"><Icon type="plus" />绑定新银行卡</p>
+                          <p className="add" style={{ cursor: 'pointer' }} onClick={() => this.props.history.push(BINDCARD)}><Icon type="plus" />绑定新银行卡</p>
                           <p>（只支持储蓄卡）</p>
                         </div>
                       </div>

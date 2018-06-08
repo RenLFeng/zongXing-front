@@ -71,11 +71,19 @@ export default class Header extends React.Component {
             }}>收藏项目</a>
             { !this.props.loginStatus ?
               <a className="btn btn2"
-                 onClick={()=>{
+                >
+                <span  onClick={()=>{
                    history.push('/index/login');
                    $("#fix").removeClass('fix');
                    $(window).scrollTop(0);
-                }}>登录 / 注册</a> :
+                }}>登录</span>
+                <span style={{display:'inline-block',marginRight:10,marginLeft:10}}>|</span>
+                <span  onClick={()=>{
+                   history.push('/index/register');
+                   $("#fix").removeClass('fix');
+                   $(window).scrollTop(0);
+                }}>注册</span>
+                </a> :
               <a className="btn btn2" onClick={()=>{
                   history.push('/index/uCenter/personAccount');
                   $("#fix").removeClass('fix');
@@ -129,11 +137,17 @@ export default class Header extends React.Component {
             }}>收藏项目</a>
             { !this.props.loginStatus ?
               <a className="btn btn2"
-                 onClick={()=>{
+                 >
+                 <span onClick={()=>{
                    history.push('/index/login');
                    $("#fix").removeClass('fix');
-                   $(window).scrollTop(0);
-                 }}>登录 /注册</a> :
+                   $(window).scrollTop(0)}}>登录</span>
+                 <span style={{display:'inline-block',marginRight:10,marginLeft:10}}>|</span>
+                <span onClick={()=>{
+                   history.push('/index/register');
+                   $("#fix").removeClass('fix');
+                   $(window).scrollTop(0)}}>注册</span>
+                 </a> :
               <a className="btn btn2" onClick={()=>{
                 history.push('/index/uCenter/personAccount');
                 $("#fix").removeClass('fix');
