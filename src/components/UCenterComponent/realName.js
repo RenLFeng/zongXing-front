@@ -1,11 +1,13 @@
 import React from 'react';
-import '../../assets/ucenter/realName.scss';
-import { Icon, Form, Modal, Input, message, Row, Col, Button, Card,Steps} from 'antd';
-import { Link } from 'dva/router';
-import {AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL} from '../../common/systemParam';
+import { Icon, Form, Modal, Input, message, Row, Col, Button, Card, Steps} from 'antd';
 import { connect } from 'dva';
-import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState,closeAuthorization, phoneExist} from '../../services/api';
-import {AUTHENTICATION, OPENQACCOUNT} from '../../common/pagePath';
+import { Link } from 'dva/router';
+import moment from 'moment';
+
+import '../../assets/ucenter/realName.scss';
+import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL} from '../../common/systemParam';
+import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist } from '../../services/api';
+import {AUTHENTICATION, OPENQACCOUNT } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -17,12 +19,12 @@ const formItemLayout = {
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 20},
+    sm: { span: 20 },
   },
 };
 @connect((state)=>({
   safeData: state.safeCenter.safeData,
-  safeDataLoading: state.safeCenter.safeDataLoading
+  safeDataLoading: state.safeCenter.safeDataLoading,
 }))
 export default class RealName extends React.Component {
   constructor(props) {
@@ -52,9 +54,10 @@ export default class RealName extends React.Component {
       status: '',  // 投标状态
       showAuth: false, // 判断开户展示授权
 
-      changePayPass: false, // 判断修改支付密码
-      changeLoginPass: false, // 判断修改登录密码
+      showMMMChangepayPassword: false, // 判断修改支付密码
+      showMMMChangeLoginPass: false, // 判断修改登录密码
       num: 1,
+      safeData: null,
     };
     this.countDownFun = null;
     this.countDownFun_ = null;
@@ -300,7 +303,7 @@ export default class RealName extends React.Component {
           title: '提示',
           content: '请在新页面完成操作,可刷新页面查看结果',
           okText: '确定',
-          onOk: ()=> {
+          onOk: () => {
             this.getAuthorizationState();
           },
         });
@@ -310,16 +313,15 @@ export default class RealName extends React.Component {
     }
   }
 
-
-  //查询授权状态  1:自动投标，2：自动还款，3：二次分配自动通过
-  async getAuthorizationState(){
-    this.setState({loading:true});
+  // 查询授权状态  1:自动投标，2：自动还款，3：二次分配自动通过
+  async getAuthorizationState() {
+    this.setState({ loading: true });
     const response = await authorizationState('');
     console.log('1234', response);
-    this.setState({loading:true});
-    if(response.code === 0){
+    this.setState({loading: true });
+    if (response.code === 0) {
       this.setState({
-        status:response.data?response.data: '',
+        status: response.data ? response.data : '',
       })
     } else if (response.code === -3) {
       this.setState({
@@ -331,49 +333,39 @@ export default class RealName extends React.Component {
 
   }
 
-  //关闭授权
+  // 关闭授权
   async CloseAuthorization(type){
-    const response = await closeAuthorization(type,'', encodeURIComponent(window.location.href));
+    const response = await closeAuthorization(type, '', encodeURIComponent(window.location.href));
     console.log(response);
-    if(response.code === 0){
+    if (response.code === 0) {
       this.setState({
-        distribution:response.data.param,
-        url:response.data,
-      },()=>{
+        distribution: response.data.param,
+        url: response.data,
+      }, () => {
         this.formId.submit();
         Modal.info({
           title: '提示',
           content: '请在新页面完成操作,可刷新页面查看结果',
           okText: '确定',
-          onOk: ()=> {
+          onOk: () => {
             this.getAuthorizationState();
           },
         });
       });
     } else {
-      response.msg && message.error(response.msg);
+       response.msg && message.error(response.msg);
     }
-
-  }
-  
-  show(){
-    this.setState({
-      num:this.state.num++
-    },()=>{
-      console.log('000',this.state.num)
-    })
-    this.changStutas(this.state.num)
   }
 
-  changStutas(num){
-    if(num % 2 === 0){
+  changStutas(num) {
+    if (num % 2 === 0) {
       this.setState({
-        changePayPass:true,
-      })
+        changePayPass: true,
+      });
     } else {
       this.setState({
-        changePayPass:false,
-      })
+        changePayPass: false,
+      });
     }
     // this.setState({
     //   changePayPass:true,
@@ -390,9 +382,10 @@ export default class RealName extends React.Component {
   }
 
   render() {
-    const {distribution,url,status} = this.state;
-    console.log(status);
-    const { safeData} = this.props;
+    console.log('this.props', this.props);
+
+    // 初始化数据
+    const { safeData } = this.props;
     return (
       <div>
         {/* <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{display:'none'}}>
@@ -408,182 +401,132 @@ export default class RealName extends React.Component {
           <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
           <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
         </form> */}
-        <LeftMenu param={this.props}/>
-        <div className="fr uc-rbody">
-          <div className="real_title">
-             <span className="safeCenter_">安全中心</span>
-             <span className="registrationTime">注册时间：2018/05/18 19:25</span>
-          </div>
-          <Steps progressDot current={0} direction="vertical">
-            <Step title="第一步" 
-            description={
-            <div style={{marginBottom:65}}>
-              <div className="first">
-                <span style={{color:'#ff9900',fontSize:'28px',lineHeight:'28px',position:'absolute',left:'30px',top:'45px'}}>*</span> <span className="left">身份认证</span> 
-                <span className="middle">用于提升账户安全性，认证后不能修改</span>
-                <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a>
+        {
+          safeData.userSecurityCenter.fCertification !== undefined ?
+            <div>
+              <LeftMenu param={this.props} />
+              <div className="fr uc-rbody">
+                <div className="real_title">
+                  <span className="safeCenter_">安全中心</span>
+                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm:ss')}</span>
+                </div>
+                <Steps progressDot current={0} direction="vertical">
+                  <Step title="第一步" 
+                    description={
+                      <div style={{ marginBottom: 65 }}>
+                        <div className="first">
+                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">身份认证</span> 
+                          <span className="middle">用于提升账户安全性，认证后不能修改</span>
+                          {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
+                        </div>
+                        <div className="personal">
+                          <span className="name">{safeData.fRealName}|</span>
+                          <span className="id">{safeData.fIdcardNo}</span>
+                          {safeData.userSecurityCenter.fCertification ? <span className="result" >认证通过</span> : null }
+                        </div>
+                      </div>
+                    }
+                  />
+                  <Step
+                    title="第二步"
+                    description={
+                      <div style={{ marginBottom: 65 }}>
+                        <div className="first">
+                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">开通乾多多资金托管账户</span> 
+                          <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
+                          {!safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
+                        </div>
+                        <div style={{ marginTop: 30, marginBottom: 8 }}>
+                          <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
+                        </div>
+                        {
+                          safeData.userSecurityCenter.fThirdAccount ?
+                            <div className="personal">
+                              <span style={{ color: 'black' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
+                              <div className="findPass">
+                                <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: true, showMMMChangeLoginPass: false })}>找回乾多多支付密码 </span>
+                                <span className="line" >|</span>
+                                <span className="a" onClick={() => this.setState({ showMMMChangeLoginPass: true, showMMMChangepayPassword: false })}>找回乾多多支付登录密码 </span>
+                              </div>
+                            </div>
+                          : null
+                        }
+                        {
+                          this.state.showMMMChangepayPassword === true ?
+                            <ChangePayPayPass /> : null
+                        }
+                        {
+                          this.state.showMMMChangeLoginPass === true ?
+                            <ChangeLoginPass /> : null
+                        }
+                      </div>
+                } />
+                  <Step
+                    title="第三步" description={
+                      <div style={{ marginBottom: 65 }}>
+                        <div className="first">
+                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">我的银行卡</span>
+                          <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
+                          <a className="right" style={{ display: 'none' }}>设置</a>
+                        </div>
+                        <div className="cardBox">
+                          <div className="IDCard">
+                            <img alt="" src={require('../../assets/img/ucenter/u4385.png')} className="bg" />
+                            <img alt="" src={require('../../assets/img/u214.png')} className="s_bg" />
+                            <img alt="" src={require('../../assets/img/u215.png')} className="s_bg_" />
+                            <img alt="" src={require('../../assets/img/u213.png')} className="s_bg1_" />
+                            <div className="text">
+                              <p className="card_name">建设银行</p>
+                              <p className="type">储蓄卡</p>
+                              <p className="card_num">6227 **** **** 0687</p>
+                            </div>
+                          </div>
+                          <div className="IDCard">
+                            <img alt="" src={require('../../assets/img/ucenter/u4415.png')} />
+                            <img alt="" src={require('../../assets/img/u214.png')} className="s_bg" />
+                            <img alt="" src={require('../../assets/img/u230.png')} className="s_bg_1" />
+                            <img alt="" src={require('../../assets/img/u231.png')} className="s_bg1_" />
+                            <div className="text">
+                              <p className="card_name">招商银行</p>
+                              <p className="type">储蓄卡</p>
+                              <p className="card_num">6227 **** **** 0687</p>
+                            </div>
+                          </div>
+                          <div className="IDCard">
+                            <img alt="" src={require('../../assets/img/ucenter/u4427.png')} className="bg" />
+                            <img alt="" src={require('../../assets/img/u214.png')} className="s_bg" />
+                            <img alt="" src={require('../../assets/img/u232.png')} className="s_bg_1" />
+                            <div className="text">
+                              <p className="card_name">华夏银行</p>
+                              <p className="type">储蓄卡</p>
+                              <p className="card_num">6227 **** **** 0687</p>
+                            </div>
+                          </div>
+                        </div>
+                        <a className="unbind">解除绑定</a>
+                        <div className="unbindBox">
+                          <p className="word1_">解绑银行卡</p>
+                          <p className="word2_">请输入登录密码，以验证身份。</p>
+                          <div className="inp">
+                            <Input placeholder="请输入登录密码" />
+                            <img alt="" src={require('../../assets/img/u22.png')} className="img1" />
+                            <img alt="" src={require('../../assets/img/u81.png')} className="img2" />
+                          </div>
+                          <Button type="primary">解绑</Button>
+                        </div>
+                        <div className="addId">
+                          <p className="add"><Icon type="plus" />绑定新银行卡</p>
+                          <p>（只支持储蓄卡）</p>
+                        </div>
+                      </div>
+                  }
+                  />
+                </Steps>
               </div>
-              <div className="personal">
-                <span className="name">赵妮莎 |</span>
-                <span className="id">610425198803202829</span>
-                <span className="result" >认证通过</span>
-              </div>
-            </div> 
-          } />
-            <Step title="第二步" description={
-              <div style={{marginBottom:65}}>
-                <div className="first">
-                  <span style={{color:'#ff9900',fontSize:'28px',lineHeight:'28px',position:'absolute',left:'30px',top:'45px'}}>*</span> <span className="left">开通乾多多资金托管账户</span> 
-                  <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                  <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a>
-                </div>
-                <div style={{marginTop:30,marginBottom:8}}>
-                  <img src={require('../../assets/img/ucenter/u4288.png')} />
-                </div>
-                <div className="personal">
-                  <span style={{color:'black'}}>你的钱多多账户：2560434</span>
-                  <div className="findPass">
-                    <span className="a" onClick={() => this.show()}>找回乾多多支付密码 </span>
-                    <span className="line" >|</span>
-                    <span className="a" onClick={() => this.setState({changeLoginPass:true})}>找回乾多多支付登录密码 </span>
-                  </div>  
-                </div>
-                {
-                  this.state.changePayPass === true ? 
-                  <div className="imgBox">
-                    <div className="step">
-                      <div className="step_id">1</div>
-                      <div className="step_box">
-                        <p className="text">打开乾多多官网</p>
-                        <Button className="goWeb">前往</Button>
-                      </div>
-                    </div>
-                    <div className="step">
-                      <div className="step_id">2</div>
-                      <div className="step_box">
-                        <p className="login">登录进入乾多多网站</p>
-                        <img src={require('../../assets/img/ucenter/u4322.png')} style={{width:130,height:126,marginLeft:'23px'}}/>
-                      </div>
-                    </div>
-                    <div className="step">
-                      <div className="step_id">3</div>
-                      <div className="step_box">
-                        <p className="account">"我的账户"</p>
-                        <img src={require('../../assets/img/ucenter/u4329.png')} style={{width:158,height:67,marginLeft:'13px'}}/>
-                        <p className="login">点击 "找回支付密码"</p>
-                      </div>
-                    </div>
-                    <div className="step">
-                      <div className="step_id">4</div>
-                      <div className="step_box">
-                        <p className="account">"点击 "立即找回""</p>
-                        <p className="account">通过手机验证+身份验证</p>
-                        <p className="account">重新设置支付密码</p>
-                        <img src={require('../../assets/img/u3551.png')} style={{width:30,height:25,marginLeft:'70px'}}/>
-                      </div>
-                    </div>
-                  </div> :null
-                }
-                 {
-                   this.state.changeLoginPass === true ?
-                    <div className="imgBox">
-                      <div className="step">
-                        <div className="step_id">1</div>
-                        <div className="step_box">
-                          <p className="text">打开乾多多官网</p>
-                          <Button className="goWeb">前往</Button>
-                        </div>
-                      </div>
-                      <div className="step">
-                        <div className="step_id">2</div>
-                        <div className="step_box">
-                          <p className="login">在登录窗口</p>
-                          <img src={require('../../assets/img/ucenter/u4353.png')} style={{width:153,height:95,marginLeft:'13px'}}/>
-                          <p className="login">点击“忘记登录密码”</p>
-                        </div>
-                      </div>
-                      <div className="step">
-                        <div className="step_id">3</div>
-                        <div className="step_box">
-                          <p className="user">账户名可输入手机号码，你的真实姓名、乾多多数字账户</p>
-                          <img src={require('../../assets/img/ucenter/u4371.png')} style={{width:158,height:67,marginLeft:'13px'}}/>
-                        </div>
-                      </div>
-                      <div className="step">
-                        <div className="step_id">4</div>
-                        <div className="step_box">
-                          <p className="account">"点击 "立即找回""</p>
-                          <p className="account">通过手机验证+身份验证</p>
-                          <p className="account">重新设置登录密码</p>
-                          <img src={require('../../assets/img/u3551.png')} style={{width:30,height:25,marginLeft:'70px'}}/>
-                        </div>
-                      </div>
-                    </div> : null
-                 }
-              
-              </div> 
-            } />
-            <Step title="第三步" description={
-              <div style={{marginBottom:65}}>
-                 <div className="first">
-                    <span style={{color:'#ff9900',fontSize:'28px',lineHeight:'28px',position:'absolute',left:'30px',top:'45px'}}>*</span> <span className="left">我的银行卡</span> 
-                    <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
-                    <a className="right" >设置</a>
-                </div>
-                <div className="cardBox">
-                  <div className="IDCard">
-                    <img src={require('../../assets/img/ucenter/u4385.png')} className="bg"/>
-                    <img src={require('../../assets/img/u214.png')} className="s_bg"/>
-                    <img src={require('../../assets/img/u215.png')} className="s_bg_"/>
-                    <img src={require('../../assets/img/u213.png')} className="s_bg1_"/>
-                    <div className="text">
-                      <p  className="card_name">建设银行</p>
-                      <p className="type">储蓄卡</p>
-                      <p className="card_num">6227 **** **** 0687</p>                      
-                    </div>
-                  </div>
-                  <div className="IDCard">
-                    <img src={require('../../assets/img/ucenter/u4415.png')} />
-                    <img src={require('../../assets/img/u214.png')} className="s_bg"/>
-                    <img src={require('../../assets/img/u230.png')} className="s_bg_1"/>
-                    <img src={require('../../assets/img/u231.png')} className="s_bg1_"/>
-                    <div className="text">
-                      <p  className="card_name">招商银行</p>
-                      <p className="type">储蓄卡</p>
-                      <p className="card_num">6227 **** **** 0687</p>                      
-                    </div>
-                  </div>
-                  <div className="IDCard">
-                    <img src={require('../../assets/img/ucenter/u4427.png')} className="bg"/>
-                    <img src={require('../../assets/img/u214.png')} className="s_bg"/>
-                    <img src={require('../../assets/img/u232.png')} className="s_bg_1"/>
-                    <div className="text">
-                      <p  className="card_name">华夏银行</p>
-                      <p className="type">储蓄卡</p>
-                      <p className="card_num">6227 **** **** 0687</p>                      
-                    </div>
-                  </div>
-                </div>
-                <a className="unbind">解除绑定</a>
-                <div className="unbindBox">
-                   <p className="word1_">解绑银行卡</p>
-                   <p className="word2_">请输入登录密码，以验证身份。</p>
-                   <div className="inp">
-                     <Input placeholder="请输入登录密码"/>
-                       <img src={require('../../assets/img/u22.png')} className="img1"/>
-                       <img src={require('../../assets/img/u81.png')} className="img2"/>
-                   </div>
-                   <Button type="primary">解绑</Button>
-                </div>
-                <div className="addId">
-                  <p className="add"><Icon type="plus" />绑定新银行卡</p>
-                  <p>（只支持储蓄卡）</p>
-                </div>
-              </div>
-            } />
-          </Steps>
-        </div>
-      </div> 
+            </div> : null
+
+        }
+      </div>
 
     );
   }
@@ -751,3 +694,83 @@ const EmailAuth = Form.create()(
     );
   }
 );
+
+class ChangeLoginPass extends React.Component {
+  render() {
+    return (
+      <div className="imgBox">
+        <div className="step">
+          <div className="step_id">1</div>
+          <div className="step_box">
+            <p className="text">打开乾多多官网</p>
+            <Button className="goWeb">前往</Button>
+          </div>
+        </div>
+        <div className="step">
+          <div className="step_id">2</div>
+          <div className="step_box">
+            <p className="login">在登录窗口</p>
+            <img alt="" src={require('../../assets/img/ucenter/u4353.png')} style={{ width: 153, height: 95, marginLeft: '13px' }} />
+            <p className="login">点击“忘记登录密码”</p>
+          </div>
+        </div>
+        <div className="step">
+          <div className="step_id">3</div>
+          <div className="step_box">
+            <p className="user">账户名可输入手机号码，你的真实姓名、乾多多数字账户</p>
+            <img alt="" src={require('../../assets/img/ucenter/u4371.png')} style={{ width: 158, height: 67, marginLeft: '13px' }} />
+          </div>
+        </div>
+        <div className="step">
+          <div className="step_id">4</div>
+          <div className="step_box">
+            <p className="account">"点击 "立即找回""</p>
+            <p className="account">通过手机验证+身份验证</p>
+            <p className="account">重新设置登录密码</p>
+            <img alt="" src={require('../../assets/img/u3551.png')} style={{ width: 30, height: 25, marginLeft: '70px' }} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+class ChangePayPayPass extends React.Component {
+  render() {
+    return (
+      <div className="imgBox">
+        <div className="step">
+          <div className="step_id">1</div>
+          <div className="step_box">
+            <p className="text">打开乾多多官网</p>
+            <Button className="goWeb">前往</Button>
+          </div>
+        </div>
+        <div className="step">
+          <div className="step_id">2</div>
+          <div className="step_box">
+            <p className="login">登录进入乾多多网站</p>
+            <img alt="" src={require('../../assets/img/ucenter/u4322.png')} style={{ width: 130, height: 126, marginLeft: '23px' }} />
+          </div>
+        </div>
+        <div className="step">
+          <div className="step_id">3</div>
+          <div className="step_box">
+            <p className="account">&quot;我的账户&quot;</p>
+            <img alt="" src={require('../../assets/img/ucenter/u4329.png')} style={{width:158,height:67,marginLeft:'13px'}}/>
+            <p className="login">点击 &quot;找回支付密码&quot;</p>
+          </div>
+        </div>
+        <div className="step">
+          <div className="step_id">4</div>
+          <div className="step_box">
+            <p className="account">&quot;点击 &quot;立即找回&quot;&quot;</p>
+            <p className="account">通过手机验证+身份验证</p>
+            <p className="account">重新设置支付密码</p>
+            <img alt="" src={require('../../assets/img/u3551.png')} style={{width:30,height:25,marginLeft:'70px'}}/>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
