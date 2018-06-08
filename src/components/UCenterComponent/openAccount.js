@@ -286,7 +286,7 @@ class FormComponent extends React.Component {
               initialValue: this.props.phone,
               rules: [{ pattern: VER_PHONE, message: '手机格式不正确' },
                 { required: true, message: '请填写手机' }],
-            })(<Input maxLength={'20'} autocomplete="off" readOnly />)}
+            })(<Input maxLength={'20'} autoComplete="off" readOnly />)}
           </FormItem>
           <Tooltip title="如需修改请去安全中心更换手机号" style={{position: 'absolute', top: 10, right: 250 }}>
             <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
@@ -305,7 +305,7 @@ class FormComponent extends React.Component {
                     { pattern: ID_CORD, message: '身份证格式不正确' },
                     { required: true, message: '请填写身份证号' },
                   ],
-                })(<Input maxLength={'20'} autocomplete="off" />)}
+                })(<Input maxLength={'20'} autoComplete="off" />)}
               </FormItem>
               <Tooltip title="该信息无法修改" style={{ position: 'absolute', top: 10, right: 250 }}>
                 <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
@@ -321,7 +321,7 @@ class FormComponent extends React.Component {
                   rules: [
                   { required: true, message: '请填写真实姓名' },
                   ],
-                })(<Input maxLength={'20'} autocomplete="off" />)}
+                })(<Input maxLength={'20'} autoComplete="off" />)}
               </FormItem>
               <Tooltip title="该信息无法修改" style={{ position: 'absolute', top: 10, right: 250 }}>
                 <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
@@ -346,7 +346,7 @@ class FormComponent extends React.Component {
           {getFieldDecorator('email', {
             rules: [{ type: 'email', message: '邮箱格式不正确' },
               { required: true, message: '请填写邮箱' }],
-          })(<Input maxLength={'40'} autocomplete="off" />)}
+          })(<Input maxLength={'40'} autoComplete="off" />)}
         </FormItem>
         <FormItem {...btnLayout}>
           <Button type="primary" htmlType="submit" loading={this.state.loading} style={{ width: '200px' }}>提交</Button>
