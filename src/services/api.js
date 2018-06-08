@@ -627,3 +627,13 @@ export async function selectPlatformReport() {
 export async function selectFinancialStatements() {
   return request(`${BASE_URL}/zjb-manage/report/show/financial`)
 }
+
+// 实名认证接口
+export async function verifyIdcard(params) {
+  return request(`${BASE_URL}/zjb-website/jh/idcard`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}

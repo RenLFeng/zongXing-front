@@ -76,8 +76,8 @@ export default class UCenter extends React.Component {
                 </div>
                 <div className="fr">
                     {/* 去除退出系统按钮 */}
-                    {/* <p style={{display:'none'}}>   */}
-                    <p>  
+                    {/* style={{display:'none'}} */}
+                    <p >  
                         <a style={{color: 'blue'}} onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a>
                     </p>
                     <div className="account-content">

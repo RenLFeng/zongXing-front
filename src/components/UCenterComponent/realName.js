@@ -28,40 +28,40 @@ export default class RealName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nameAuth: false,
-      phoneAuth: false,
-      emailAuth: false,
-      loading:false,
-      showAuthCode: true,//显示获取验证码的接口
-      regPhone: '', //注册手机号
-      token_:'',
-      countDown: AUTH_CODE_TIME_,  //获取验证码倒计时
+      nameAuth: false, // 实名认证
+      phoneAuth: false, // 手机认证
+      emailAuth: false, // 邮箱认证
+      loading: false, // 标记是否为加载状态
+      showAuthCode: true,
+      regPhone: '', // 注册手机号
+      token_: '',
+      countDown: AUTH_CODE_TIME_,  // 获取验证码倒计时
 
       countDown_: AUTH_CODE_TIME_,
-      showAuthCode_: true,//显示获取验证码的接口
-      changePhoneAuth: false,   //更新手机号码表单
-      fmobile:'',  //更新后的手机号码
-      authcode:'', //新验证码
+      showAuthCode_: true, // 显示获取验证码的接口
+      changePhoneAuth: false,   // 更新手机号码表单
+      fmobile: '',  // 更新后的手机号码
+      authcode: '', // 新验证码
 
       getCodeMobile: '',
-      regPhoneErr: '',  //注册手机号提示
-      regAuthErr: '', //验证码提示
+      regPhoneErr: '',  // 注册手机号提示
+      regAuthErr: '', // 验证码提示
 
-      distribution:{},  //授权表单数据
-      url:'',     //提交表单乾多多链接
-      status:'',  //投标状态
-      showAuth: false , //判断开户展示授权
+      distribution: {},  // 授权表单数据
+      url: '',     // 提交表单乾多多链接
+      status: '',  // 投标状态
+      showAuth: false, // 判断开户展示授权
 
-      changePayPass:false,  //判断修改支付密码
-      changeLoginPass:false, //判断修改登录密码
-      num:1,
+      changePayPass: false, // 判断修改支付密码
+      changeLoginPass: false, // 判断修改登录密码
+      num: 1,
     };
     this.countDownFun = null;
     this.countDownFun_ = null;
   }
 
  getCodeNum(val) {
-    this.setState({getCodeMobile: val});
+    this.setState({ getCodeMobile: val });
  }
 
   componentDidMount() {
@@ -80,8 +80,8 @@ export default class RealName extends React.Component {
   // 初始化安全中心首页数据
   initFetchSafeData= () => {
     this.props.dispatch({
-      type: 'safeCenter/getSafe'
-    })
+      type: 'safeCenter/getSafe',
+    });
   };
 
   handleCancel = () => {
@@ -90,28 +90,28 @@ export default class RealName extends React.Component {
       phoneAuth: false,
       emailAuth: false,
       countDown_: AUTH_CODE_TIME_,
-      showAuthCode: true
+      showAuthCode: true,
     });
     this.nameForm.resetFields();
     this.phoneForm.resetFields();
     this.emailForm.resetFields();
-    if (this.countDownFun){
+    if (this.countDownFun) {
       clearInterval(this.countDownFun);
     }
   };
 
-  //提交新表单
+  // 提交新表单
   handleCancel_ = () => {
     this.setState({
-      changePhoneAuth:false
+      changePhoneAuth: false,
     });
     this.changePhoneAuthForm.resetFields();
-    if (this.countDownFun_){
+    if (this.countDownFun_) {
       clearInterval(this.countDownFun_);
     }
   }
 
-  //提交 实名认证
+  // 提交 实名认证
   changeNameAuth = () => {
     const form = this.nameForm;
     form.validateFields((err, values) => {
@@ -124,7 +124,7 @@ export default class RealName extends React.Component {
     });
   };
 
-  //提交 手机号绑定
+  // 提交 手机号绑定
   changePhoneAuth = () => {
     const form = this.phoneForm;
     form.validateFields( async (err, values) => {
