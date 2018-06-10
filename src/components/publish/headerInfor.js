@@ -29,7 +29,7 @@ export default class HeaderInfor extends React.Component {
   render() {
     const {match, location} = this.props.param;
   	return (
-      <div className="topnav" style={location.pathname.indexOf('/infor/') === -1 && location.pathname.indexOf('/index/login') === -1 && location.pathname.indexOf('/index/register') === -1 ? {backgroundColor:'transparent'}: {backgroundColor:'#333'}}>
+      <div className="topnav" style={location.pathname.indexOf('/infor/') === -1 && location.pathname.indexOf('/index/login') === -1 ? {backgroundColor:'transparent'}: {backgroundColor:'#333'}}>
         <div className="w clearfix">
           <Link className="logo fl" to={`/`}>
             <img src={require('../../assets/img/logo.png')} />

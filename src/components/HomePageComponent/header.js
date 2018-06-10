@@ -29,7 +29,7 @@ export default class Header extends React.Component {
   render() {
     const {match, location, history} = this.props.param;
     const styleS = location.pathname.indexOf('/index/howLoan') !== -1 || location.pathname.indexOf('/index/howInvest') !== -1 ? {position:'fixed'}: {position:'absolute'};
-    if (location.pathname.indexOf('/index/uCenter') === -1 && location.pathname.indexOf('/index/login') === -1 && location.pathname.indexOf('index/collection') === -1) {
+    if (location.pathname.indexOf('/index/uCenter') === -1 && location.pathname.indexOf('/index/login') === -1 && location.pathname.indexOf('index/collection') === -1 && location.pathname.indexOf('/index/register') === -1 && location.pathname.indexOf('/index/forgetPassWord') === -1 ) {
       return (
       <div id="fix" className="topnav" style={styleS}>
         <div className="w clearfix">
