@@ -1,74 +1,106 @@
-.coupon{
-    display: inline-block;
-    width: 375px;
-    height: 205px;
-    position: relative;
-    .coupon-left{
-        float: left;
-        width: 115px; 
-        .logo{
-            height: 95px;
-            width: 95px;
-            margin:55px 20px; 
-            border-radius: 50%;
-            border:4px solid #d8d8d8;
-            box-shadow: 0px 0px 5px 0px rgba(38, 142, 225, 0.5);
-        }
-    }
-    .coupon-center{
-        width: 185px;
-        padding: 24px 5px 0 14px;
-        float: left; 
-        color: #fff;
-        font-family: MicrosoftYaHeiUI;
-        .name{ 
-            font-size: 12px;
-            line-height: 12px;
-           
-        }
-        .money{
-            margin-top: 25px;
-            .face-money{
-                font-size: 35px;
-                line-height: 35px;
-            }
-        }
-        ul{
-            margin-top: 10px;
-            li{
-                list-style: disc;
-                margin-left: 14px;
-                font-size: 12px;
-                line-height: 21px;
-           }
-        }
-        
-    }
-    .coupon-right{
-        float: right;
-        width: 75px;
-        padding: 15px 15px;
-        .staus-btn{
-            width: 32px;
-            margin: 25px 0;
-            cursor: pointer; 
-            font-size: 32px;
-            line-height: 35px;
-            color: #fff; 
-            &:hover{
-                opacity: .8;
-            }
-        }
-        &>span{
-            font-size: 14px;
-            color: #fff; 
-            position: absolute;
-            top: 175px;
-            right:20px ;
-        }
-    }
 
-    
+.coupon-content{
+    display: inline-block;
+    .project-title{
+        font-size: 14px;
+        color: #999;
+    }
+    .project-no{
+        font-size: 14px;
+        color: #666;
+    }
+    .coupon{  
+        width: 375px;
+        height: 205px;
+        margin-top: 10px;
+        position: relative;
+        .coupon-left{ 
+            float: left;
+            cursor: default;
+            width: 115px;
+            height: 205px;
+            .logo{
+                height: 95px;
+                width: 95px;
+                margin:55px 0px 45px 15px; 
+                border-radius: 50%;
+                border:4px solid #d8d8d8;
+                box-shadow: 0px 0px 5px 0px rgba(38, 142, 225, 0.5);
+            }
+        }
+        .coupon-center{ 
+            cursor: default;
+            width: 171px;
+            height: 171px;
+            padding: 24px 0 10px 10px;
+            float: left; 
+            color: #fff;
+            font-family: MicrosoftYaHeiUI;
+            .name{ 
+                font-size: 12px;
+                line-height: 12px;
+            
+            }
+            .money{
+                margin-top: 25px;
+                width: 100%;
+                .face-money{
+                    display: inline-block;
+                    padding: 0;
+                    margin-top: 10px;
+                    font-size: 35px;
+                    line-height: 30px;
+                }
+                .face-vlaue{
+                    float: right; 
+                    margin-right: 10px;
+                    font-size: 16px;
+                    line-height: 16px;
+                    padding: 3px 5px; 
+                    margin-top:16px;  
+                    border:1px dotted #fff;
+                }
+            }
+            ul{
+                margin-top: 10px;
+                li{
+                    list-style: disc;
+                    margin-left: 14px;
+                    font-size: 12px;
+                    line-height: 21px;
+            }
+            }
+            
+        }
+        .coupon-right{ 
+            float: right;
+            width: 35px;
+            height: 175px;
+            margin-right:4px; 
+            padding: 15px 20px;
+            .staus-btn{
+                width: 32px;
+                margin: 25px 0; 
+                font-size: 32px;
+                line-height: 35px;
+                color: #fff;
+                cursor: default;
+            }
+            .canClick{
+                cursor: pointer; 
+                &:hover{
+                    opacity: .8;
+                }
+            }
+            &>span{
+                font-size: 14px;
+                color: #fff; 
+                position: absolute;
+                top: 175px;
+                right:20px ;
+            }
+        } 
+    }
 }
 .xcy-line-img{
     background:  url(../../assets/img/coupon/xcy-line.png) no-repeat;
@@ -106,4 +138,24 @@
 }
 .other-img{
     background:  url(../../assets/img/coupon/other.png) no-repeat;
+}
+
+
+.xcy-disable{
+    background:  url(../../assets/img/coupon/xcy-disable.png) no-repeat;
+}
+.xfw-disable{
+    background:  url(../../assets/img/coupon/xfw-disable.png) no-repeat;
+}
+.xls-disable{
+    background:  url(../../assets/img/coupon/xls-disable.png) no-repeat;
+}
+.xny-disable{
+    background:  url(../../assets/img/coupon/xny-disable.png) no-repeat;
+}
+.xyl-disable{
+    background:  url(../../assets/img/coupon/xyl-disable.png) no-repeat;
+}
+.other-disable{
+    background:  url(../../assets/img/coupon/other-disable.png) no-repeat;
 }

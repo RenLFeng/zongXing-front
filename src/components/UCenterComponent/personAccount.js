@@ -6,6 +6,7 @@ import Path from '../../common/pagePath';
 import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
+import { Modal, Button } from 'antd';
 
 @connect((state)=>({
   personal: state.account.personal,
@@ -141,11 +142,25 @@ export default class PersonAccount extends React.Component {
     this.getInitData();
   }
 
-  getInitData() {
+  getInitData() { 
     this.props.dispatch({
       type: 'account/getPersonalAccount',
-      payload:{showNumInfo:4}
-    });
+      payload:{
+        showNumInfo:4,
+        jumpAuth:()=>this.jumpAuth()
+      }
+    }); 
+  }
+
+  jumpAuth() {
+    var that = this;
+    Modal.info({
+      title: '您目前还没有开户，请先开户！', 
+      okText:'去开户',
+      onOk() {
+        that.props.history.push('/index/uCenter/realName')
+      },
+    }); 
   }
 
   componentWillReceiveProps(nextProps) {
@@ -298,21 +313,30 @@ export default class PersonAccount extends React.Component {
     console.log(this.props.personal)
     if (openStatus === 0) {
       return (
-        <div className="fr uc-rbody">
-          <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+        <div>
+          <LeftMenu param={this.props}/>
+          <div className="fr uc-rbody">
+            <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+          </div>
         </div>
       );
     } else if (openStatus === 1) {
       return (
-        <div className="fr uc-rbody">
-          <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
-        </div>
+        <div>
+          <LeftMenu param={this.props}/>
+          <div className="fr uc-rbody">
+            <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
+          </div>
+        </div> 
       );
     } else if (openStatus === 2) {
       return (
-        <div className="fr uc-rbody">
-          <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
-        </div>
+        <div>
+          <LeftMenu param={this.props}/>
+          <div className="fr uc-rbody">
+            <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+          </div>
+        </div> 
       );
     }
     return (

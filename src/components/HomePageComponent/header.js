@@ -27,9 +27,11 @@ export default class Header extends React.Component {
   }
 
   render() {
+    // couponCenter
     const {match, location, history} = this.props.param;
+    let localPath =location.pathname;
     const styleS = location.pathname.indexOf('/index/howLoan') !== -1 || location.pathname.indexOf('/index/howInvest') !== -1 ? {position:'fixed'}: {position:'absolute'};
-    if (location.pathname.indexOf('/index/uCenter') === -1 && location.pathname.indexOf('/index/login') === -1 && location.pathname.indexOf('index/collection') === -1) {
+    if (localPath.indexOf('/index/couponCenter') === -1 && localPath.indexOf('/index/uCenter') === -1 && localPath.indexOf('/index/login') === -1 && location.pathname.indexOf('index/collection') === -1) {
       return (
       <div id="fix" className="topnav" style={styleS}>
         <div className="w clearfix">
@@ -55,7 +57,7 @@ export default class Header extends React.Component {
               $(window).scrollTop(0);
             }}>如何投资</a>
             <a className="a1" onClick={()=>{
-              history.push(`${match.path}/businessDiscount`);
+              history.push(`${match.path}/companyDiscount`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>商家优惠</a>
@@ -113,7 +115,7 @@ export default class Header extends React.Component {
               $(window).scrollTop(0);
             }}>如何投资</a>
             <a className="a1" onClick={()=>{
-              history.push(`${match.path}/businessDiscount`);
+              history.push(`${match.path}/companyDiscount`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>商家优惠</a>
