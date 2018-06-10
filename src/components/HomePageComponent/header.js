@@ -23,15 +23,26 @@ const styles = {
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state={
+      fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter'
+    }
   }
 
   render() {
     // couponCenter
     const {match, location, history} = this.props.param;
     let localPath =location.pathname;
-    const styleS = location.pathname.indexOf('/index/howLoan') !== -1 || location.pathname.indexOf('/index/howInvest') !== -1 ? {position:'fixed'}: {position:'absolute'};
-    if (location.pathname.indexOf('/index/uCenter') === -1 && location.pathname.indexOf('/index/login') === -1 && location.pathname.indexOf('index/collection') === -1 && location.pathname.indexOf('/index/register') === -1 && location.pathname.indexOf('/index/forgetPassWord') === -1 ) {
+    const styleS = localPath.indexOf('/index/howLoan') !== -1 || localPath.indexOf('/index/howInvest') !== -1 ? {position:'fixed'}: {position:'absolute'};
+    
+    let shouldFix=true;
+    this.state.fixContent.split(',').map((item)=>{
+      if(localPath.indexOf('/index/'+item)!=-1){
+        shouldFix = false;
+        return false;
+      }
+    });
+
+  if (shouldFix) {
       return (
       <div id="fix" className="topnav" style={styleS}>
         <div className="w clearfix">
