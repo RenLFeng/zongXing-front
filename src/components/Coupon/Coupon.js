@@ -1,5 +1,6 @@
 import React from 'react';
 import './coupon.scss';
+import {Button} from 'antd';
 
 
 class Coupon extends React.Component {
@@ -64,16 +65,16 @@ class Coupon extends React.Component {
     }
     render() { 
         return ( 
-            <div className='coupon-content'>
+            <div className='cp-coupon-content'>
                 <p><span className='project-title'>项目编号：</span><span className='project-no'>{this.state.data.fproject_no||''}</span></p>
-                <div className={`coupon ${this.state.data.fbus_type||'other'}${this.props.hasLine==='true'?'-line':''}-img`}> 
+                <div className={`cp-coupon ${this.state.data.fbus_type||'other'}${this.props.hasLine==='true'?'-line':''}-img`}> 
                     {/* 左*/}
-                    <div className="coupon-left" >
+                    <div className="cp-coupon-left" >
                         {/* logo */}
                         <img className="logo" src={this.state.data.flogo_pic||this.state.defaultHead}/>
                     </div>
                     {/* 中 */}
-                    <div className="coupon-center">
+                    <div className="cp-coupon-center">
                         {/* 优惠券名称 */}
                         <span className="name">{this.state.data.fname||'优惠券名称'}</span>
                         {/* 金额 */}
@@ -88,13 +89,13 @@ class Coupon extends React.Component {
                             {/* 满多少抵扣 */}
                             <li>销费满{this.state.data.ffull_sub_condition||0}元，抵扣{this.state.data.ffull_sub_money||0}元</li>
                             {/* 截止时间 */}  
-                            <li>{this.state.data.fend_time_str}前使用</li> 
+                            <li>{this.state.data.fend_time_str||'----年--月--日'}前使用</li> 
                             {/* 使用地点 */}
                             <li>使用地点：{this.state.data.fuser_place||'优惠券使用地址'}</li>
                         </ul> 
                     </div>
                     {/* 右 */}
-                    <div className={`coupon-right  ${this.state.data.ffalg===5?(this.state.data.fbus_type+'-disable' || 'other-disable'):''}`}>
+                    <div className={`cp-coupon-right  ${this.state.data.ffalg===5?(this.state.data.fbus_type+'-disable' || 'other-disable'):''}`}>
                         {/* 上 按钮 */}
                         { this.props.hasLine==='true'?
                         <div className={`staus-btn ${this.state.canEdit?'canClick':''}`} onClick={this.props.handlerBtnClick&&this.state.canEdit?this.props.handlerBtnClick.bind(this,this.state.data.fid,this.state.data):()=>{} }>
@@ -104,6 +105,17 @@ class Coupon extends React.Component {
                         {/* 下 张数 */}
                         <span>共{this.state.data.fsurplus_num>0?this.state.data.fsurplus_num:1}张</span>
                     </div>
+                </div>
+                <div className='btns'>
+                    {
+                        this.props.giveFriend?
+                        <Button onClick={this.props.handlerGiveFriedClick?this.props.handlerGiveFriedClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handlerGiveFriedClick回调事件');}} >{this.props.giveFriend}</Button>:null
+                    }
+                    {
+                        this.props.exchange?
+                        <Button onClick={this.props.handlerExchangeClick?this.props.handlerExchangeClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handlerExchangeClick回调事件');}} >{this.props.exchange}</Button>:null
+                    }
+                    
                 </div>
             </div>
          )
