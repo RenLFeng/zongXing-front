@@ -1,25 +1,28 @@
 
-.coupon-content{
+.cp-coupon-content{
     display: inline-block;
-    .project-title{
-        font-size: 14px;
-        color: #999;
+    margin-bottom: 10px;
+    &>p{
+        &>.project-title{
+            font-size: 14px;
+            color: #999;
+        }
+        &>.project-no{
+            font-size: 14px;
+            color: #666;
+        }
     }
-    .project-no{
-        font-size: 14px;
-        color: #666;
-    }
-    .coupon{  
+    &>.cp-coupon{  
         width: 375px;
         height: 205px;
         margin-top: 10px;
         position: relative;
-        .coupon-left{ 
+        &>.cp-coupon-left{ 
             float: left;
             cursor: default;
             width: 115px;
             height: 205px;
-            .logo{
+            &>.logo{
                 height: 95px;
                 width: 95px;
                 margin:55px 0px 45px 15px; 
@@ -28,7 +31,7 @@
                 box-shadow: 0px 0px 5px 0px rgba(38, 142, 225, 0.5);
             }
         }
-        .coupon-center{ 
+        &>.cp-coupon-center{ 
             cursor: default;
             width: 171px;
             height: 171px;
@@ -36,22 +39,22 @@
             float: left; 
             color: #fff;
             font-family: MicrosoftYaHeiUI;
-            .name{ 
+            &>.name{ 
                 font-size: 12px;
                 line-height: 12px;
             
             }
-            .money{
+            &>.money{
                 margin-top: 25px;
                 width: 100%;
-                .face-money{
+                &>.face-money{
                     display: inline-block;
                     padding: 0;
                     margin-top: 10px;
                     font-size: 35px;
                     line-height: 30px;
                 }
-                .face-vlaue{
+                &>.face-vlaue{
                     float: right; 
                     margin-right: 10px;
                     font-size: 16px;
@@ -61,9 +64,9 @@
                     border:1px dotted #fff;
                 }
             }
-            ul{
+            &>ul{
                 margin-top: 10px;
-                li{
+                &>li{
                     list-style: disc;
                     margin-left: 14px;
                     font-size: 12px;
@@ -72,13 +75,13 @@
             }
             
         }
-        .coupon-right{ 
+        &>.cp-coupon-right{ 
             float: right;
             width: 35px;
             height: 175px;
             margin-right:4px; 
             padding: 15px 20px;
-            .staus-btn{
+            &>.staus-btn{
                 width: 32px;
                 margin: 25px 0; 
                 font-size: 32px;
@@ -100,6 +103,13 @@
                 right:20px ;
             }
         } 
+    }
+    &>.btns{
+        float: right;
+        margin-top: 9px;
+        Button{
+            margin-left: 10px;
+        }
     }
 }
 .xcy-line-img{

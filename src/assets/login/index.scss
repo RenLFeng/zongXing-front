@@ -259,6 +259,16 @@
     // border:1px solid red;
     box-shadow: -5px -5px 5px rgba(228, 228, 228, 1);
     background: white;
+    Button {
+        color: #fff;
+        background-color: #169BD5;
+        border-color: #169BD5;
+    } 
+    // Button:hover {
+    //     color: #fff;
+    //     background-color: #169BD5 !important;
+    //     border-color: #169BD5 !important;
+    // } 
     .forget_title{
         font-size: 28px;
         padding: 30px 10px 0 10px;
@@ -269,16 +279,98 @@
     .forget_btnGroup{
         width:820px;
         margin: 30px auto;
-        border:1px solid red;
         Button{
             width:140px;
             height:40px;
         }
         .line{
             font-size: 18px;
+            color:#E4E4E4;
         }
-        // .btn2{
-            
-        // }
+        
+    }
+    .forget_form{
+        width:300px;
+        margin: 65px auto 0 auto;
+        .forget_inp{
+            position: relative;
+            margin-top: 20px;
+            height:41px;
+            Input{
+                padding-left: 35px;
+                height:41px;
+            }
+            .forget_phone{
+                position: absolute;
+                top:13px;
+                left:10px;
+            }
+            .input1{
+                position: relative;
+                padding-right:124px;
+                padding-left:10px;
+            }
+            .input2{
+                position: relative;
+                width:124px;
+                height:41px;
+                top:-40px;
+                left:174px;
+                background: rgba(255, 153, 0, 1);
+                padding-left:10px;
+                color:white !important;
+            }
+            .slider{
+                border:1px solid red;
+                width:300px;
+                height:41px;
+                background: #E8E8E8;
+            }
+        }
+        .forget-prompts{
+            color: #868686 !important;
+            font-size: 11px !important;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            a{
+                color: #FF9900;
+                font-size: 13px;
+            }
+          }
+          .ok_img{
+              margin: auto;
+              width:46px;
+          }
+          .second_p{
+              color:#6B6B6B;
+              font-size: 13px;
+              span{
+                  display: inline-block;
+                  margin-left: 30px;
+              }
+          }
+
+          .forget_third{
+            position: relative;
+            .ft_inp{
+                height:41px;
+                padding-left: 30px;
+            }
+            .img1{
+               position:absolute;
+               top:10px;
+               left:10px;
+            }
+            .img2{
+                position: absolute;
+                top:10px;
+                right:10px;
+            }
+        }
+    }
+    .forget_form4{
+        width:300px;
+        margin: 80px auto 0 auto;
+        text-align: center;
     }
 }

@@ -508,103 +508,13 @@ export default class Login extends React.Component {
   }
 
   render() {
-    const {showReg, showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
+    const {showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="logindiv1 shadow">
         <div className="back">
-          <Modal
-            visible={this.state.authPhone}
-            title="解除账号锁定"
-            okText="提交"
-            cancelText="取消"
-            confirmLoading={this.state.relieveLoading}
-            onOk={() => this.relieveAccountLock()}
-            onCancel={() => {
-              if (this.state.relieveLoading) {
-                message.warning('请求处理中请稍后');
-                return;
-              }
-              this.setState({authPhone: false});
-            }}
-          >
-            <Row>
-              <Col span={3}>手机号</Col>
-              <Col span={15}>
-                <Input value={this.state.phoneNumber} disabled/>
-              </Col>
-              <Col span={6} style={{textAlign: 'right'}}>
-                <Button type="primary" loading={this.state.sendErrorCodeLoading} onClick={()=>this.sendErrorCodeAuth()} disabled={this.state.errorTime !== 60}>
-                  {this.state.errorTime === 60 ? '发送验证码' : `${this.state.errorTime}s后重试`}
-                </Button>
-              </Col>
-            </Row>
-            <Row style={{marginTop: 20}}>
-              <Col span={3}>
-                验证码
-              </Col>
-              <Col span={21}>
-                <Input type="password" value={this.state.errorAuthCode} placeholder="请输入" onChange={(e)=>this.setState({errorAuthCode: e.target.value})} maxLength={10}/>
-              </Col>
-            </Row>
-          </Modal>
-          {showReg ?
-            <div className="form regf" onChange={this.onChange}>
-              <div className="hd center">
-                <a className="hover" onClick={() => this.setState({showReg: true})}>注册</a>
-                {/* <a onClick={() => this.setState({showReg: false})}>登录</a> */}
-              </div>
-              <Spin tip="请求中..." spinning={this.state.regLoading || this.state.authLoading}>
-                <div className="row">
-                  <input className="put mobile" value={regPhone} maxLength={11} name="regPhone" type="tel"
-                        placeholder="请输入手机号码" onChange={(e) => this.setState({regPhone: e.target.value})}
-                        onBlur={()=>this.checkPhoneNumber(true)} />
-                  <p>{this.state.regNameErr}</p>
-                </div>
-                <div className="row relative" style={{marginBottom: 0}}>
-                  <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
-                        placeholder="输入验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})}/>
-                  <p>{this.state.regAuthErr}</p>
-                  {// 根据倒计时时间显示是否可以点击获取验证码按钮
-                    this.state.registerShow ?
-                      ((showAuthCode) ?
-                      <a className="getvc center" onClick={()=>this.checkPhoneNumber(false)}>获取验证码</a> :
-                      <span className="getvc center" style={{backgroundColor: '#D1D1D1'}}>{countDown}s后重新获取</span>) :
-                      <span className="getvc center" style={{backgroundColor: '#D1D1D1'}}>获取验证码</span>
-                  }
-                </div>
-                <p style={{color: 'red', marginBottom: 20, marginTop: 5}}>{this.state.authErr}</p>
-                <div className="row">
-                  <input 
-                    className="put pwd" value={regPwd} maxLength={16} name="regPwd" type="password"
-                    placeholder="设置登录密码" onChange={(e) => this.setState({regPwd: e.target.value})}/>
-                  <p>{this.state.regPwdErr}</p>
-                </div>
-                <div>
-                  <a className="btn" onClick={this.submitReg}>注册</a>
-                </div>
-                <div className="bot">
-                  <p>
-                    <input
-                      className="fl"
-                      id="chk1"
-                      checked={readStatus}
-                      type="checkbox"
-                      onChange={() => this.setState({readStatus: !readStatus})}
-                    />
-                    <label className="fl">
-                      <i>已阅读并接受</i>
-                      <a className="blue">注册协议</a>
-                    </label>
-                  </p>
-                </div>
-                <br/><p style={{color: 'red'}}>{this.state.textErr}</p>
-              </Spin>
-            </div> :
-            ((flag === 1) ?
                 <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">
-                    {/* <a onClick={() => this.setState({showReg: true})}>注册</a> */}
                     <a className="hover" onClick={() => this.setState({showReg: false})}>登录</a>
                   </div>
                   <Spin tip="登录中..." spinning={this.props.submitting}>
@@ -613,7 +523,7 @@ export default class Login extends React.Component {
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
                             placeholder="手机号|用户名"/>
                       <p className="prompts">{this.state.loginNameErr}</p>
-                      <p className="registration-prompts">该手机号还未注册，<a>立即注册</a></p>
+                      <p className="registration-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
                     </div>
 
                     <div className="row">
@@ -633,68 +543,8 @@ export default class Login extends React.Component {
                       <p className="tright"><a className="gray f14"
                                               onClick={() => this.props.history.push('./forgetPassWord')}>忘记密码?</a></p>
                     </div>
-                    {/* <div className="statistics">
-                      <p className="safe-info">平台累计投资用户量
-                        <span>8787,984</span>
-                      </p>
-                    </div> */}
-                    
                   </Spin>
-                </div> :
-                (flag === 2) ?
-                  <div className="form logf" onChange={this.onChange}>
-                    <div className="hd center">
-                      <a className="PwdTitle"><Icon type="lock"/>找回密码</a>
-                    </div>
-                    <div className="box">
-                      <div className="row">
-                        <input className="put mobile" type="tel" value={loginName} name="loginName"
-                              placeholder="请输入手机号码/用户名" onChange={(e) => this.setState({loginName: e.target.value})}/>
-                        <p>{this.state.codeNameErr1}</p>
-                      </div>
-
-                      <div className="row relative">
-                        <input className="put vcode input_" value={authCode} name="code"
-                              onChange={(e) => this.setState({authCode: e.target.value})} placeholder="输入6位验证码"/>
-                        <p>{this.state.codeNameErr2}</p>
-                        {flagShow ? <p
-                          className="Prompt">短信已发送至绑定手机号{this.state.mobile.substr(0, 3) + "****" + this.state.mobile.substr(7)}，请注意查收！</p> : null
-                        }
-
-                        { // 根据倒计时时间显示是否可以点击获取验证码按钮
-                          this.state.showAuthCodeFor ?
-                            <a className="getvc center" onClick={this.getAuthCode_}>获取验证码</a> :
-                            <span className="getvc center"
-                                  style={{backgroundColor: '#D1D1D1', border: '#D1D1D1'}}>{countDown_}s后重新获取</span>}
-                      </div>
-                      <div style={{display:'flex', justifyContent: 'space-between'}}>
-                        <a className="btn" style={{display: 'inline-block',width: '45%'}} onClick={() => this.returnLogin()}>返回登录</a>
-                        <a className="btn" style={{display: 'inline-block',width: '45%'}} onClick={() => this.submitInformation()}>下一步</a>
-                      </div>
-                    </div>
-                  </div> :
-                  <div className="form logf" onChange={this.onChange}>
-                    <div className="hd center">
-                      <a className="PwdTitle"><Icon type="lock"/>重置密码</a>
-                    </div>
-                    <div className="row">
-                      <input className="put pwd" value={newPass} name="newPass" type="password" placeholder="请输入新密码"
-                            onChange={(e) => this.setState({newPass: e.target.value})}/>
-                      <p>{this.state.message1}</p>
-                    </div>
-
-                    <div className="row">
-                      <input className="put pwd" value={newPass_} name="newPass_" type="password" placeholder="请再次确认新密码"
-                            onChange={(e) => this.setState({newPass_: e.target.value})}/>
-                      <p>{this.state.message2}</p>
-                    </div>
-                    <div style={{display:'flex', justifyContent: 'space-between'}}>
-                      <a className="btn" style={{display: 'inline-block',width: '45%'}} onClick={() => this.returnLogin()}>返回登录</a>
-                      <a className="btn" style={{display: 'inline-block',width: '45%'}}  type="primary" onClick={() => this.changePassword()}>完成</a>
-                    </div>
-                  </div>
-            )
-          }
+                </div> 
         </div>
         <div className="back_">
           <p>直接投资中国小微企业</p>

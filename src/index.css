@@ -1,0 +1,14 @@
+
+
+.ant-btn{
+    border:1px solid #f90!important;
+    color: #f90!important;
+    border-radius: 3px!important;
+}
+.ant-btn:hover{
+    opacity: .7;
+}
+
+.ant-btn-primary{
+    color: #fff!important;
+}
