@@ -637,3 +637,8 @@ export async function verifyIdcard(params) {
     },
   });
 }
+
+// 银行卡信息校验
+export async function verifyBankCard(params) {
+
+}

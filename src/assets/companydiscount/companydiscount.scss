@@ -1,9 +1,12 @@
+ 
 @import '../common/_var.scss';
 @import '../common/styles/pager.scss';
-
-.banner {}
-
+ 
+.banner{
+    margin-bottom: 40px;
+}
 .cats {
+    position: relative;
     padding: 30px 0 25px 0;
     .tit {
         float: left;
@@ -22,12 +25,15 @@
             border-bottom: 2px solid $f60;
         }
     }
+    .to-coupon{
+        position: absolute;
+        right: 20px;
+        bottom: 15px; 
+    }
 }
-.list {
-    width: 870px;
-}
-.list .item {
+  .item {
     padding: 30px;
+    margin-top: 20px;
     margin-bottom: 20px;
     position: relative;
     &>.fl {
@@ -105,11 +111,11 @@
     }
     .ic_like {
         right: 90px;
-        background-image: url(../img/sales/ic_like.png);
+        background-image: url(../img/companydiscount/ic_like.png);
     }
     .ic_share {
         right: 30px;
-        background-image: url(../img/sales/ic_share.png);
+        background-image: url(../img/companydiscount/ic_share.png);
     }
 }
 

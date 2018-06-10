@@ -27,7 +27,9 @@ export default {
   ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
   RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
 
-  MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券
+  MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
+  Project_Collection:'/index/uCenter/projectcollection',
+  COUPON_CENTER:'/index/couponCenter',//优惠券交易中心
 
 
   NOTICE_DETAIL: '/infor/plantNotice', //平台公告页面

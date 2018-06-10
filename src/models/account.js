@@ -50,6 +50,7 @@ export default {
               }
             }
           });
+          payload.jumpAuth()
         } else {
           if (response.data && response.data.fflag === 0) {
             yield put({

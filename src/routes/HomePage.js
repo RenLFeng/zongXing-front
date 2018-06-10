@@ -8,7 +8,7 @@ import ProjectLoan from './homePage/ProjectLoan';
 import HowLoan from './homePage/HowLoan';
 import HowInvest from './homePage/HowInvest';
 import HomeIndex from './homePage/HomeIndex';
-import BusinessDiscount from './homePage/BusinessDiscount';
+import CompanyDiscount from '../components/CompanyDiscount/CompanyDiscount';
 import LoanCollege from './homePage/LoanCollege';
 import ProjectList from './homePage/ProjectList';
 import ProjectDetail from './homePage/ProjectDetail';
@@ -37,6 +37,9 @@ import { BASE_URL, getAuth } from '../services/api';
 import PlatformNotice from "./information/legalSupport";
 import NewsReports from "./information/newsReports";
 import LegalDeclaration from "./information/lawsRegulations";
+//优惠券兑换中心
+import CouponCenter from '../components/CouponCenter/CouponCenter';
+
 
 @connect((state) => ({
 	login: state.login
@@ -77,11 +80,18 @@ export default class HomePage extends React.Component{
 			<div>
 				<Header param={this.props}/>
           <Switch>
+            {/* 首界面 */}
             <Route path={`${match.path}/`} exact component={HomeIndex}/>
+            {/* 借款项目 */}
             <Route path={`${match.path}/projectLoan`} component={ProjectLoan}/>
             <Route path={`${match.path}/howLoan`} component={HowLoan}/>
             <Route path={`${match.path}/howInvest`} component={HowInvest}/>
-            <Route path={`${match.path}/businessDiscount`} component={BusinessDiscount}/>
+            {/* 商家优惠 */}  
+            <Route path={`${match.path}/companyDiscount`} component={CompanyDiscount}/>
+            优惠券兑换中心
+            <Route path={`${match.path}/couponCenter`} component={CouponCenter}/>
+            
+
             <Route path={`${match.path}/loanCollege`} component={LoanCollege}/>
             <Route path={`${match.path}/applyLoan`} component={ApplyLoan} />
             <Route path={`${match.path}/uCenter`} component={UCenter} />

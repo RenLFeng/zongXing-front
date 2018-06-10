@@ -35,7 +35,7 @@ export default class Authentication extends React.Component {
       return;
     }
     if (!param.idcard) {
-      message.error('银行卡号不能为空！');
+      message.error('身份证号不能为空！');
       return;
     }
     const response = await verifyIdcard(param);
