@@ -54,6 +54,8 @@ export default class ForgetPassWord extends React.Component {
 
       registerShow:true,  //校验手机号是否存在时，发送验证码按钮的状态
 
+      flagPage:'first'  //第一步
+
 
     };
     this.getAuthCode = this.getAuthCode.bind(this);
@@ -513,14 +515,64 @@ export default class ForgetPassWord extends React.Component {
         <div className="forget_page">
           <p className="forget_title">找回登陆密码</p>
           <div className="forget_btnGroup">
-            <Button>1.验证手机</Button>
+            <Button type="primary" onClick={()=>this.setState({flagPage:'first'})}>1.验证手机</Button>
             <span className="line">-----------</span>
-            <Button className="btn2">2.验证身份</Button>
+            <Button className="btn2" type="primary" onClick={()=>this.setState({flagPage:'second'})}>2.验证身份</Button>
+            <span className="line" >-----------</span>
+            <Button className="btn2" type="primary" onClick={()=>this.setState({flagPage:'third'})}>3.重设密码</Button>
             <span className="line">-----------</span>
-            <Button className="btn2">3.重设密码</Button>
-            <span className="line">-----------</span>
-            <Button className="btn2">4.找回成功</Button>
+            <Button className="btn2" type="primary" onClick={()=>this.setState({flagPage:'four'})}>4.找回成功</Button>
           </div>
+          {
+            this.state.flagPage === 'first' ? 
+            <div className="forget_form">
+              <div className="forget_inp">
+                <Input placeholder="手机号"  />
+                <img alt="" src={require('../../assets/img/login/u45.png')} className="forget_phone"/>
+              </div>
+              <p className="forget-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
+
+              <div className="forget_inp">
+                <div className="slider">
+
+                </div>
+              </div>
+              <Button style={{width:300,marginTop:20,height:41,fontSize:18}} type="primary" onClick={()=>this.setState({flagPage:'second'})}>下一步</Button>
+            </div> : 
+             (this.state.flagPage === 'second') ? 
+            <div className="forget_form">
+              <p className="second_p">手机号      <span>132*****082</span> </p>
+              <div className="forget_inp">
+                <Input placeholder="输入短信验证码"   className="input1"/>
+                <Button className="input2">点击获取验证码</Button>
+              </div>
+              <div className="forget_inp">
+                <Input placeholder="请输入姓名" />
+                <img alt="" src={require('../../assets/img/u186.png')} className="forget_phone"/>
+              </div>
+              <div className="forget_inp">
+                <Input placeholder="请输入身份证号"  />
+                <img alt="" src={require('../../assets/img/u192.png')} className="forget_phone"/>
+              </div>
+              <Button style={{width:300,marginTop:20,height:41,fontSize:18}} type="primary" onClick={()=>this.setState({flagPage:'third'})}>下一步</Button>
+            </div> : 
+            (this.state.flagPage === 'third') ? 
+            <div className="forget_form">
+              <div className="forget_third">
+                <Input placeholder="请输入新登录密码" className="ft_inp"/>
+                <img alt="" src={require('../../assets/img/u22.png')} className="img1" />
+                <img alt="" src={require('../../assets/img/u81.png')} className="img2" />
+              </div>
+              <Button style={{width:300,marginTop:30,height:41,fontSize:18}} type="primary" onClick={()=>this.setState({flagPage:'four'})}>确认</Button>
+            </div> : 
+             (this.state.flagPage === 'four') ? 
+            <div className="forget_form4">
+              <img src={require('../../assets/img/u179.png')} className="ok_img"/>
+              <p style={{fontSize:20,marginTop:20,marginBottom:20,color:'#333333'}}>恭喜您，找回登录密码成功</p>
+              <a style={{fontSize:20,color:'#FF9900',textDecorationLine:'underline',fontWeight:'bold'}} onClick={() => this.props.history.push('./login')}>返回登录</a>
+            </div>: null
+          }
+          
         </div>
        </div>
       
