@@ -411,11 +411,13 @@ export default class Login extends React.Component {
     }
     const login = {
       loginName: loginPhone,
-      password: loginPwd
+      password: loginPwd,
+      type: 0, //投资用户
     };
     this.setState({
       loginNameErr: '',
-      loginPwdErr: ''
+      loginPwdErr: '',
+     
     });
     this.props.dispatch({
       type: 'login/login',

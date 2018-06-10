@@ -7,7 +7,12 @@ export default {
   state: {
     status: localStorage.getItem('accessToken')? true: false,
     submitting: false,
-    nickName: localStorage.getItem('accessToken')?JSON.parse(localStorage.getItem('accessToken')).nickName:""
+    nickName: localStorage.getItem('accessToken')?JSON.parse(localStorage.getItem('accessToken')).nickName:"",
+    baseData: {
+      userSecurityCenter: {
+
+      }
+    }
   },
   effects: {
     *login({ payload, passwordError }, { call, put }) {
@@ -29,6 +34,12 @@ export default {
             payload: {
               nickName: response.data.nickName,
               code: true
+            },
+          });
+          yield put({
+            type: 'saveLoginData',
+            payload: {
+              response: response.data
             },
           });
         } else if (response.code === -2) {
@@ -112,6 +123,13 @@ export default {
       return {
         ...state,
         nickName: payload
+      }
+    },
+    // 保存登录数据
+    saveLoginData(state, {payload}) {
+      return {
+        ...state,
+        baseData: payload.response
       }
     }
   },
