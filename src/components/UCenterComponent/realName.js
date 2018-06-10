@@ -383,7 +383,7 @@ export default class RealName extends React.Component {
 
   render() {
     console.log('this.props', this.props);
-
+    
     // 初始化数据
     const { safeData } = this.props;
     return (
@@ -401,10 +401,11 @@ export default class RealName extends React.Component {
           <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
           <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
         </form> */}
-        {
-          safeData.userSecurityCenter.fCertification !== undefined ?
+        
             <div>
               <LeftMenu param={this.props} />
+              {
+               safeData.userSecurityCenter.fCertification !== undefined ?
               <div className="fr uc-rbody">
                 <div className="real_title">
                   <span className="safeCenter_">安全中心</span>
@@ -419,11 +420,12 @@ export default class RealName extends React.Component {
                           <span className="middle">用于提升账户安全性，认证后不能修改</span>
                           {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
                         </div>
+                        {safeData.userSecurityCenter.fCertification ? 
                         <div className="personal">
                           <span className="name">{safeData.fRealName}|</span>
                           <span className="id">{safeData.fIdcardNo}</span>
-                          {safeData.userSecurityCenter.fCertification ? <span className="result" >认证通过</span> : null }
-                        </div>
+                          <span className="result" >认证通过</span>
+                        </div> : null }
                       </div>
                     }
                   />
@@ -522,10 +524,10 @@ export default class RealName extends React.Component {
                   }
                   />
                 </Steps>
-              </div>
-            </div> : null
+              </div>: null      }
+            </div> 
 
-        }
+  
       </div>
 
     );

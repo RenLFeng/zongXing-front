@@ -620,7 +620,7 @@ export default class Login extends React.Component {
                             placeholder="登录密码"/>
                       <p className="prompts">{this.state.loginPwdErr}</p>
                     </div>
-                    <div>
+                    <div style={{marginTop:45}}>
                       <a className="btn" onClick={this.submitLogin}>登录</a>
                     </div>
                     <p className="safe-info">
@@ -629,13 +629,13 @@ export default class Login extends React.Component {
                     </p>
                     <div className="forget">
                       <p className="tright"><a className="gray f14"
-                                              onClick={() => this.setState({flag: this.state.flag + 1})}>忘记密码?</a></p>
+                                              onClick={() => this.props.history.push('./forgetPassWord')}>忘记密码?</a></p>
                     </div>
-                    <div className="statistics">
+                    {/* <div className="statistics">
                       <p className="safe-info">平台累计投资用户量
                         <span>8787,984</span>
                       </p>
-                    </div>
+                    </div> */}
                     
                   </Spin>
                 </div> :
