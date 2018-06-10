@@ -140,7 +140,15 @@ export default class PersonAccount extends React.Component {
 
   componentDidMount() {
     this.getInitData();
+    this.initFetchSafeData();
   }
+
+  // 初始化安全中心首页数据
+  initFetchSafeData= () => {
+    this.props.dispatch({
+      type: 'safeCenter/getSafe',
+    });
+  };
 
   getInitData() { 
     this.props.dispatch({
