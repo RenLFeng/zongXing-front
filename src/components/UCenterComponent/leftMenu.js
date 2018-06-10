@@ -21,7 +21,7 @@ export default class LeftMenu extends React.Component {
                 </span>
                 <ul>
                   <li> <Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'active'} to={Path.PERSONAL_ACCOUNT}>账户总览</Link></li>
-                  <li>投资记录</li>
+                  <li><Link className={path.indexOf(Path.MY_INVEST) ===-1?'':'active'} to={Path.MY_INVEST}>投资记录</Link></li>
                   <li><Link className={path.indexOf(Path.RECEIVE_PLAN) ===-1?'':'active'} to={Path.RECEIVE_PLAN}>回款计划</Link></li>
                   <li>资金流水</li>
                   <li><Link className={path.indexOf(Path.MY_COUPON) ===-1?'':'active'} to={Path.MY_COUPON}>我的优惠券</Link>   </li>
@@ -82,7 +82,7 @@ export default class LeftMenu extends React.Component {
       //     </p>
       //     <div className="nav">
       //       <ul>
-      //         <li><Link className={path.indexOf(Path.MY_INVEST) ===-1?'':'hover'} to={Path.MY_INVEST}>我的投资</Link></li>
+      //         <li></li>
       //         <li><Link className={path.indexOf(Path.ALL_INVEST) ===-1?'':'hover'} to={Path.ALL_INVEST}>投资总览</Link></li>
       //         <li></li>
       //       </ul>

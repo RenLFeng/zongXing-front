@@ -65,6 +65,10 @@ export default class UCenter extends React.Component {
           <Switch>
             {/* 账户总览 */}
             <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
+            {/* 投资记录 */}
+            <Route path={Path.MY_INVEST} exact component={MyInvestList} />
+
+
             {/* 用户基本信息 */}
             <Route path={Path.USER_BASIC} component={UserBasic} />
             {/* 开户 */}
@@ -91,8 +95,7 @@ export default class UCenter extends React.Component {
             <Route path={Path.COMPANY_LIST} component={CompanyList} />
             {/* 站内公告列表 */}
             <Route path={Path.NOTICE_LIST} component={NoticeList} />
-            {/* 我的投资列表 */}
-            <Route path={Path.MY_INVEST} exact component={MyInvestList} />
+           
             {/* 平台公告列表 */}
             <Route path={Path.INCOME_PLAN} component={IncomePlan} />
             {/* 资金动态 */}
@@ -103,6 +106,7 @@ export default class UCenter extends React.Component {
             <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
             {/* 我的优惠券 */}
             <Route path={Path.MY_COUPON}  component={myCoupon} />
+            {/* 项目收藏 */}
             <Route path={Path.Project_Collection} component={projectCollection}/>>
  
           </Switch>

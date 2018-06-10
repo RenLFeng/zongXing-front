@@ -2,8 +2,58 @@
 
 @import '../common/_var.scss';
 
-.projectcollection{
-    width: 932px; 
-    
+.pc-project-collection{
+    width: 992px;  
+    &>.search-area{
+        padding: 30px;
+        background-color: #fff; 
+        &>.top-title{
+            font-size: 21px;
+            color: #333;
+            padding-bottom: 5px;
+            border-bottom: dashed 1px #e6e6e6;
+        }
+        &>.search-tag{
+            list-style:none ;
+            margin-top: 20px;
+            &>li{
+                display: inline-block;
+                font-size: 16px;
+                color: $c6;
+                margin-right: 25px; 
+                cursor: pointer;
+                &:hover{
+                    color: $f90; 
+                }
+                &.active{
+                    color: $f90; 
+                }
+                &.error{
+                    color: #ff4f46;
+                }
+            }  
+        }
+        &>.search-text{
+            margin-top: 35px;
+            &>span{
+                font-size: 15px;
+                color: $c9;
+            }
+            Input{
+                width: 230px;
+                margin: 0 20px;
+            }
+        }
+        
+    }
+    &>p{
+        margin:40px 30px 5px;
+        color: $c9;
+        font-size: 14px;
+    }
+    &>.project-list{
+        padding: 30px;
+        background-color: #fff; 
+    }
 
 }
