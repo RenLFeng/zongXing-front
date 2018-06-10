@@ -122,7 +122,7 @@ class BindCard extends React.Component {
           <span className="safeCenter_">实名认证</span>
           <span>&gt; 我的银行卡 &gt; 绑定新银行卡</span>
         </div>
-        <div className="form">
+        <div className="forms">
           <p>
             <span className="name">持卡人姓名</span> <span>{this.state.userBaseInfo ? this.state.userBaseInfo.freal_name : ''}</span> </p>
           <Form layout="inline" >

@@ -3,15 +3,15 @@
 .logindiv1 {
     // position: relative;
     margin: 0 auto 300px auto;
-    width: 948px;
-    height: 470px;
+    width: 970px;
+    height: 483px;
     left: 50%;
     z-index: 10;
     background: url(../img/login/pic1.jpg) no-repeat right center #fff;
     transform: translate(0,200px);
     transition: transform ease 0.5s;
     a.blue {
-        color: #069;
+        color: #3399FF;
         text-decoration: underline;
     }
     a.gray {
@@ -27,7 +27,7 @@
 }
 .logindiv1 .form {
     float: left;
-    padding: 52px 0 0 88px;
+    padding: 40px 0 0 88px;
   //position: relative;
 
     .hd {
@@ -92,8 +92,9 @@
         top: 1px;
         background-color: #FF8533;
         color: #fff;
-        line-height: 42px;
-        width: 95px;
+        line-height: 40px;
+        width: 124px;
+       
     }
     .pwd {
         background-image: url(../img/login/ic_pwd.png);
@@ -196,22 +197,22 @@
 
 .back{
     background:  #fff ;
-    width:474px;
-    height:470px;
+    width:484px;
+    height:483px;
     display: inline-block;
     .forget{
         position: relative;
-        top:-132px;
+        top:-160px;
         left:300px;
     }
 }
 .back_{
     position: absolute;
     background:  #D3D3D3 ;
-    width:474px;
-    height:470px;
+    width:484px;
+    height:483px;
     top:0px;
-    left:474px;
+    left:484px;
     p{
         font-family: '微软雅黑';
         font-weight: 400;
@@ -249,4 +250,35 @@
 }
 .btn{
     font-size: 18px !important;
+}
+
+.forget_page{
+    width:970px;
+    height:522px;
+    margin: 0 auto 300px auto;
+    // border:1px solid red;
+    box-shadow: -5px -5px 5px rgba(228, 228, 228, 1);
+    background: white;
+    .forget_title{
+        font-size: 28px;
+        padding: 30px 10px 0 10px;
+        border-bottom: 2px solid #FF9900;
+        width:950px;
+        margin: auto;
+    }
+    .forget_btnGroup{
+        width:820px;
+        margin: 30px auto;
+        border:1px solid red;
+        Button{
+            width:140px;
+            height:40px;
+        }
+        .line{
+            font-size: 18px;
+        }
+        // .btn2{
+            
+        // }
+    }
 }
