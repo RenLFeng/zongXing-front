@@ -3,7 +3,8 @@ import {connect} from 'dva';
 import {Button, Divider} from 'antd';
 
 @connect((state) => ({
-    nickName: state.login.nickName
+    nickName: state.login.nickName,
+    baseData: state.login.baseData
 }))
 class LoginInfo extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class LoginInfo extends React.Component {
          }
     } 
     render() { 
+			const {baseData} = this.props
         return ( 
             <div>
                     {
@@ -28,9 +30,9 @@ class LoginInfo extends React.Component {
                             <p className="uinfo">
                                 <span>赵妮沙</span>
                                 <span className="split">|</span> 
-                                <i title="绑定手机号" className="zjb zjb-shouji" style={{color:'#f90'}}></i>
-                                <i title="身份证认证" className="zjb zjb-shouji"></i> 
-                                <i title="银行卡绑定" className="zjb zjb-shouji"></i>
+                                <i title="绑定手机号" className="zjb zjb-shouji-copy" style={baseData.userSecurityCenter.fMobileBinding?{color:'#f90'}:null}></i>
+                                <i title="身份证认证" className="zjb zjb-shenfenrenzheng" style={baseData.userSecurityCenter.fCertification?{color:'#f90',fontSize: 22}:{fontSize: 22}}></i> 
+                                <i title="银行卡绑定" className="zjb zjb-icon" style={baseData.userSecurityCenter.fBankCardBinding?{color:'#f90',fontSize: 18}:{fontSize: 18}}></i>
                             </p>
                             
                         </div>
@@ -44,17 +46,17 @@ class LoginInfo extends React.Component {
                             </p>
                             <div className="account-content">
                                 <p>待领取代金券</p>
-                                <p className="account-money">8张</p>
+                                <p className="account-money">{baseData.countCoupon}张</p>
                             </div >
                             <i></i>
                             <div className="account-content">
                                 <p>券额</p>
-                                <p className="account-money">￥100.00</p>
+                                <p className="account-money">￥{`${baseData.sumCoupon}`.fm()}</p>
                             </div>
                             <i></i>
                             <div className="account-content" style={{borderRight:'0px'}}>
                                 <p>可用资金余额</p>
-                                <p className="account-money">￥150.00</p>
+                                <p className="account-money">￥{`${baseData.balance}`.fm()}</p>
                             </div>
                         </div>  
                     </div>
@@ -62,8 +64,12 @@ class LoginInfo extends React.Component {
                         <span className="text1">系统消息：</span>
                         <span className="text2">[6-5]微软以75亿美元的价格收购GitHub,引发了开发者群体的关注。</span> 
                         
-                        <Button className="buttonl">提现</Button>
-                        <Button type="primary" className="buttonl">充值</Button>  
+												{ baseData.userSecurityCenter.fThirdAccount ?
+                        	<Button className="buttonl">提现</Button> : null
+												}
+												{ baseData.userSecurityCenter.fThirdAccount ?
+													<Button type="primary" className="buttonl">充值</Button> : null 
+												}
                     </div> 
                 </div>:''
                 }

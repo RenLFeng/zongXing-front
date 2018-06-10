@@ -638,7 +638,18 @@ export async function verifyIdcard(params) {
   });
 }
 
-// 银行卡信息校验
-export async function verifyBankCard(params) {
-
+// 银行卡信息校验——聚合数据校验
+export async function verifyBankCard(param) {
+  return request(`${BASE_URL}/zjb-website/jh/bankCardInfo?bankCard=${param}`);
 }
+
+// 银行卡绑定
+export async function bindBankCard(params) {
+  return request(`${BASE_URL}/zjb-website/bankcard/add`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+

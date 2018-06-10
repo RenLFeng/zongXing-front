@@ -203,13 +203,15 @@
     }
   }
   Button{
-      position: absolute;
-      top:180px;
-      left:465px;
+    //   position: absolute;
+    //   top:180px;
+    //   left:465px;
+      margin-left: 465px;
+      margin-top: 40px;
       width:300px;
       height:40px;
-      background:#169BD5;
-      color:white;
+    //   background:#169BD5;
+    //   color:white;
       font-size: 16px;
   }
   p{
@@ -520,3 +522,82 @@
     height:41px;
 }
     
+
+.bind_item_view{
+    width: 420px;
+    padding: 10px 10px;
+    vertical-align: middle;
+    &>span {
+        width: 75px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    &>input {
+        display: inline-block;
+        width: 300px;
+        margin-right: 20px;
+    }
+    &>.ant-select {
+        width: 300px;
+        margin-right: 20px;
+        vertical-align: middle;
+    }
+    &>.bind_password{
+        display: inline-block;
+        width: 300px;
+        border: 1px solid #d9d9d9;
+        height: 45px;
+        border-radius: 4px;
+        vertical-align: middle;
+        &>.zjb {
+            display: inline-block;
+            color: #d9d9d9;
+            font-size: 22px;
+            margin-left: 7px;
+            height: 38px;
+            padding-right: 5px;
+            border-right: 1px solid #d9d9d9;
+            margin-right: 5px
+        }
+        &>input {
+            display: inline-block;
+            width: 200px;
+            height: 40px;
+            margin-right: 20px;
+            border: 1px;
+            font-size: 16px;
+            margin-top: 2px;
+        }
+    }
+    &>.bind_desc{
+        height: 20px;
+        vertical-align: middle;
+        display: inline-block;
+        vertical-align: middle;
+        &>input {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        &>span {
+            vertical-align: middle;
+            line-height: 12px
+        }
+    }
+
+}
+
+.bind_btn {
+    width: 302px;
+    height: 42px;
+    font-size: 18px;
+}
+
+.bind_error_msg{ 
+    color: red;
+    margin-left: 90px;
+}
+
+.bind_tip_msg {
+    margin-left: 90px;
+    color: green;
+}

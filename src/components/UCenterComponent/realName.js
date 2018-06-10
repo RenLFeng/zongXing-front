@@ -381,6 +381,19 @@ export default class RealName extends React.Component {
     // })
   }
 
+  // 判断步骤
+  _judgeAccount(safeData) {
+    let step = 0;
+    if (safeData.userSecurityCenter.fCertification) {
+      step = 1;
+    } 
+    if (safeData.userSecurityCenter.fThirdAccount) {
+      step = 2;
+    }
+    return step;
+  }
+
+
   render() {
     console.log('this.props', this.props);
     
@@ -411,7 +424,7 @@ export default class RealName extends React.Component {
                   <span className="safeCenter_">安全中心</span>
                   <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm:ss')}</span>
                 </div>
-                <Steps progressDot current={0} direction="vertical">
+                <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">
                   <Step title="第一步" 
                     description={
                       <div style={{ marginBottom: 65 }}>
@@ -422,7 +435,7 @@ export default class RealName extends React.Component {
                         </div>
                         {safeData.userSecurityCenter.fCertification ? 
                         <div className="personal">
-                          <span className="name">{safeData.fRealName}|</span>
+                          <span className="name">{safeData.fRealName}&nbsp;|</span>
                           <span className="id">{safeData.fIdcardNo}</span>
                           <span className="result" >认证通过</span>
                         </div> : null }
