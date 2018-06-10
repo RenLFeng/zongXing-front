@@ -13,7 +13,7 @@ const Step = Steps.Step;
   submitting: state.login.submitting
 }))
 @Form.create()
-export default class Login extends React.Component {
+export default class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -509,6 +509,7 @@ export default class Login extends React.Component {
     const {showReg, showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
+       
       <div className="logindiv1 shadow">
         <div className="back">
           <Modal
@@ -603,7 +604,7 @@ export default class Login extends React.Component {
                 <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">
                     {/* <a onClick={() => this.setState({showReg: true})}>注册</a> */}
-                    <a className="hover" onClick={() => this.setState({showReg: false})}>登录</a>
+                    <a className="hover" onClick={() => this.setState({showReg: false})}>注册</a>
                   </div>
                   <Spin tip="登录中..." spinning={this.props.submitting}>
                     <div className="row">

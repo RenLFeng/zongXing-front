@@ -15,6 +15,7 @@ import ProjectDetail from './homePage/ProjectDetail';
 import Project from './homePage/Project';
 import Risk from './homePage/Risk';
 import Login from './homePage/login';
+import Register from './homePage/register';
 import Header from '../components/HomePageComponent/header';
 import Footer from '../components/HomePageComponent/footer';
 import '../assets/common/index';
@@ -94,6 +95,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/applyLoan`} component={ApplyLoan} />
             <Route path={`${match.path}/uCenter`} component={UCenter} />
             <Route path={`${match.path}/login`} component={Login} />
+            <Route path={`${match.path}/register`} component={Register} />
             <Route path={`${match.path}/risk`} component={Risk} />
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
             <Route path={`${match.path}/project/:projectId`} component={Project} />

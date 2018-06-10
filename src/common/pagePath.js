@@ -7,6 +7,8 @@ export default {
   SAFE_CENTER: '/index/uCenter/safeCenter', //安全中心页面地址
   REALNAME_AUTHENTICATION: '/index/uCenter/realName', //实名认证页面地址
   AUTHENTICATION: '/index/uCenter/authentication', //实名认证页面
+  OPENQACCOUNT: '/index/uCenter/openQAccount', //开通乾多多认证
+  BINDCARD: '/index/uCenter/bindCard', //绑定银行卡
   COMPANY_ACCOUNT: '/index/uCenter/companyAccount',  //企业账户页面地址
   BANK_CARD: '/index/uCenter/bankCard',  //银行卡管理页面
   BANK_CARD_UPDATE: '/index/uCenter/bankCardUpdate',  //银行卡修改

@@ -29,7 +29,7 @@ export default class HeaderInfor extends React.Component {
   render() {
     const {match, location} = this.props.param;
   	return (
-      <div className="topnav" style={location.pathname.indexOf('/infor/') === -1 && location.pathname.indexOf('/index/login') === -1 ? {backgroundColor:'transparent'}: {backgroundColor:'#333'}}>
+      <div className="topnav" style={location.pathname.indexOf('/infor/') === -1 && location.pathname.indexOf('/index/login') === -1 && location.pathname.indexOf('/index/register') === -1 ? {backgroundColor:'transparent'}: {backgroundColor:'#333'}}>
         <div className="w clearfix">
           <Link className="logo fl" to={`/`}>
             <img src={require('../../assets/img/logo.png')} />
@@ -42,7 +42,12 @@ export default class HeaderInfor extends React.Component {
             <Link className="a1" to={`/index/loanCollege`}>众借学院</Link>
             <a className="btn btn1" href="">收藏项目</a>
             { !this.props.loginStatus ?
-              <Link className="btn btn2" to={'/index/login'}>登录 / 注册</Link> :
+              <Link className="btn btn2" >
+                <Link  to={'/index/login'}>登录 </Link>
+                <span>|</span>
+                <Link  to={'/index/register'}>注册</Link>
+
+              </Link> :
               <Link className="btn btn2" to={'/index/uCenter'}>个人中心</Link>
             }
           </span>

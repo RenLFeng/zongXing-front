@@ -36,7 +36,7 @@ export default class LeftMenu extends React.Component {
                      安全中心
                 </span>
                 <ul>
-                    <li><Link className={path.indexOf(Path.SAFE_CENTER)===-1?'':'active'} to={Path.SAFE_CENTER}>实名认证</Link></li>
+                    <li><Link className={path.indexOf(Path.REALNAME_AUTHENTICATION)===-1?'':'active'} to={Path.REALNAME_AUTHENTICATION}>实名认证</Link></li>
                     <li>IP记录</li>
                 </ul>
              </li>

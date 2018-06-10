@@ -44,7 +44,7 @@
     }
 }
 .personal{
-    margin-top: 12px;
+    margin: 12px 0;
     height:43px;
     background-color: rgba(242, 242, 242, 1);
     font-size: 14px;
@@ -66,6 +66,21 @@
        display: inline-block;
        padding-left: 50px;
     }
+    .line{
+        display: inline-block;
+        width:50px;
+        text-align: center;
+     }
+     .findPass{
+         display: inline-block;
+         margin-left: 323px;
+         .a{
+            color:#0066FF;
+         }
+         .a:hover{
+             cursor: pointer;
+         }
+     }
 }
 .ant-steps-item-title {
     color: #ff9900 !important;
@@ -216,6 +231,292 @@
   }
 }
 
+.page_content{
+    width:780px;
+    margin:50px auto 70px auto;
+    .openingHints{
+        width:780px;
+        height:320px;
+        background: #F2F2F2;
+        margin:auto;
+        img{
+            width:308px;
+            margin-top:3px;
+            margin-left: calc(50% - 154px);
+        }
+        p{
+            text-align: center;
+        }
+    }
+    .buttonGroup{
+        .open{
+            width:300px;
+            height:40px;
+            margin: 70px 0 0 238px;
+          }
+          p{
+              text-align: center;
+              margin: 20px 0 ;
+          }
+          .bind{
+              width:250px;
+              height:35px;
+              color:#FF55FF;
+              margin-left: 111px;
+          }
+          .bind1{
+            width:250px;
+            height:35px;
+            color:#FF55FF;
+            margin-left: 50px;
+        }
+    }
+    
+}
+
 .top{
     margin-top: 20px;
 }
+
+.imgBox{
+    height:220px;
+    display: flex;
+    justify-content:space-between;
+        .step{
+            position: relative;
+            width:200px;
+            .step_id{
+              width:25px;
+              height:25px;
+              background: #FF9900;
+              border-radius: 50%;
+              position: absolute;
+              z-index: 1;  
+              text-align: center;
+              line-height: 22px;
+              font-size: 13px;
+              color:white;
+            }
+            .step_box{
+              width:177px;
+              height:194px;
+              border:1px solid lightgray;
+              position: absolute;
+              top:12px;
+              left:12px;
+              .text{
+                  color:black;
+                  font-size: 14px;
+                  text-align: center;
+                  margin: 50px 0;
+              }
+              .login{
+                color:black;
+                font-size: 14px;
+                text-align: center;
+                margin: 12px 0;
+              }
+              .account{
+                color:black;
+                font-size: 14px;
+                text-align: center;
+                margin: 20px 0;
+              }
+              .user{
+                width:140px;
+                text-align: left;
+                color:black;
+                font-size: 14px;
+                margin: 20px 18px;
+              }
+              .goWeb{
+                  margin-top: 10px;
+                  margin-left: 42px;
+                  width:89px;
+                  height:33px;
+                  background: rgba(255, 153, 0, 1);
+                  color:white;
+              }
+            }
+        }
+}
+
+.cardBox{
+    height:111px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    .IDCard{
+        width:279px;
+        position: relative;
+        .bg{
+            position: absolute;
+        }
+        .s_bg{
+            position: absolute;
+            top:10px;
+            left:10px;
+        }
+        .s_bg_{
+            position: absolute;
+            top:18px;
+            left:18px;
+        }
+        .s_bg_1{
+            position: absolute;
+            top:14px;
+            left:14px;
+        }
+        .s_bg1_{
+            width: 86px;
+            height: 93px;
+            position: absolute;
+            top:9px;
+            right:7px;
+            opacity: 0.1;
+        }
+        .text{
+            width:200px;
+            height:80px;
+            position: absolute;
+            top:15px;
+            left:68px;
+            p{
+                color:white;
+                font-family: '微软雅黑';
+                font-weight: 400;
+                font-style: normal;
+                color: #FFFFFF;
+            }
+            .card_name{
+                font-size: 16px;
+            }
+            .type{
+                font-size: 12px;
+            }
+            .card_num{
+                font-size: 20px;
+                margin-top: 12px;
+            }
+
+        }
+    }
+}
+
+.unbind{
+    color:blue !important;
+    text-decoration-line: underline;
+    margin: 10px 0px 10px 220px;
+}
+.unbindBox{
+    width:277px;
+    height:193px;
+    background: #F2F2F2;
+    p{
+        color:#333333;
+        text-align: center;
+    }
+    .word1_{
+        padding-top: 20px;
+    }
+    .word2_{
+        margin:25px 0 10px 0;;
+    }
+    .inp{
+        margin: 10px 0 10px 15px;
+        width:247px;
+        height:41px;
+        position: relative;
+        .ant-input{
+            width:247px;
+            height:41px; 
+            padding-left: 30px;
+        }
+        .img1{
+            position: absolute;
+            top:10px;
+            left:10px;
+        }
+        .img2{
+            position: absolute;
+            top:13px;
+            right:10px;
+        }
+    }
+    Button{
+        margin-left: 96px; 
+        width:85px;
+        height:37px;       
+    }
+}
+.addId{
+    width:277px;
+    height:111px;
+    background:white;
+    border-radius: 5px;
+    border:1px dashed lightgray;
+    margin-top: 10px;
+    p{
+        text-align: center;
+    }
+    .add{
+        font-size: 20px;
+        margin: 20px 0;
+        color: #666666;
+    }
+}
+
+.form{
+    width:400px;
+    margin: 45px auto;
+    p{
+        padding:10px 0;
+        color:#99B5D7;
+        span{
+            display: inline-block;
+            width:102px;    
+        }
+        .name{
+            text-align: center;
+        }
+    }
+    .ant-form-inline .ant-form-item .ant-form-item-label {
+        width: 96px;
+        height: 40px;
+    }
+    .ant-form-inline .ant-form-item .ant-form-item-control {
+        width: 285px;
+        height: 40px;
+    }
+    .word2_{
+       padding-left: 140px;
+        color:#333333;
+        margin-top: 25px;
+    }
+    .inp{
+        margin: 0px 0 25px 95px;
+        width:247px;
+        height:41px;
+        position: relative;
+        .ant-input{
+            width:285px;
+            height:41px; 
+            padding-left: 30px;
+        }
+        .img1{
+            position: absolute;
+            top:8px;
+            left:10px;
+        }
+        .img2{
+            position: absolute;
+            top:9px;
+            right:-30px;
+        }
+    }
+}
+
+.ant-select-selection--single{
+    height:41px;
+}
+    
