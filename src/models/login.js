@@ -12,7 +12,8 @@ export default {
       userSecurityCenter: {
         
       }
-    }
+    },
+    socketData: null, // 长连接对象
   },
   effects: {
     *login({ payload, passwordError }, { call, put }) {
@@ -72,6 +73,14 @@ export default {
         });
       }
     },
+    *saveLoadingDataAfter({response}, { put })  {
+      yield put({
+        type: 'saveLoginData',
+        payload: {
+          response
+        },
+      });
+    },
     *logout(_, { put }) {
       yield put({
         type: 'changeLoginStatus',
@@ -97,6 +106,12 @@ export default {
       yield put({
         type: 'nickName',
         payload: payload.nickName
+      })
+    },
+    *saveSocketData({socketData}, {put}) {
+      yield put({
+        type: 'saveSocket',
+        socketData
       })
     }
   },
@@ -130,6 +145,13 @@ export default {
       return {
         ...state,
         baseData: payload.response
+      }
+    },
+    saveSocket(state, {socketData}) {
+      console.log(socketData);
+      return {
+        ...state,
+        socketData
       }
     }
   },

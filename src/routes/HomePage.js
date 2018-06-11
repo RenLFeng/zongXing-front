@@ -3,6 +3,8 @@ import {Link, Route,Switch } from 'dva/router';
 import i18n from '../i18n/i18n'
 import { connect } from 'dva';
 
+import { getLoginData, testSocket } from '../services/api';
+
 import Test from './homePage/Test';
 import ProjectLoan from './homePage/ProjectLoan';
 import HowLoan from './homePage/HowLoan';
@@ -40,12 +42,20 @@ import LegalDeclaration from "./information/lawsRegulations";
 //优惠券兑换中心
 import CouponCenter from '../components/CouponCenter/CouponCenter';
 
+import io from 'socket.io-client';
+import { SOCKET_URL } from '../common/systemParam';
 
 @connect((state) => ({
-	login: state.login
+  login: state.login,
+  userId: state.login.baseData.userId,
+  socketData: state.login.socketData
 }))
 export default class HomePage extends React.Component{
   componentDidMount() {
+    // 判断有没有token请求获取用户基础数据
+    if (localStorage.getItem('accessToken')) {
+      this.getUserBaseData();
+    }
     //判断本地是否已经有了城市地区编码，若没有则重新请求
     if (!localStorage.getItem('addressCode')) {
       //获取城市编码存入本地缓存
@@ -71,6 +81,39 @@ export default class HomePage extends React.Component{
             })
         }
       });
+    }
+  }
+
+  connectSocket(userId) {
+    let socket = io.connect(`${SOCKET_URL}?clientId=${userId}`)
+    // this.props.dispatch({
+    //   type: 'login/saveSocketData',
+    //   socketData: socket
+    // });
+    
+    socket.on('connect', ()=> {
+      console.log('connect');
+      // setInterval(()=>{
+      //   testSocket();
+      // }, 2000)
+    });
+
+    
+    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps.socketData', nextProps.socketData);
+    if (this.props.userId !== nextProps.userId && nextProps.userId) {
+      // this.connectSocket(nextProps.userId);
+    }
+  }
+
+  async getUserBaseData() {
+    const response = await getLoginData();
+    console.log('response', response);
+    if (response.code === 0) {
+      this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
     }
   }
 
