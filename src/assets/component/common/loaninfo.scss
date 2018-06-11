@@ -32,14 +32,42 @@
                 position: relative; 
                 &>.li-title{
                     padding:17px 0 0  36px; 
-                    &>span{
+                    &>.state{
+                        width: 77px;
+                        height:26px ;
+                        color: #fff; 
+                        padding: 5px 20px;
+                        border-radius: 2px;
+                        &.ckz{
+                            background-color: $f90;
+                        }
+                        &.dfk{
+                            background-color: #268eff;
+                        }
+                        &.hkz{
+                            background-color: #4cd964;
+                        }
+                        &.yjq{
+                            background-color: $c9;
+                        }
+                        &.ylb{
+                            background-color: #ff3b30;
+                        }
+
+                    }
+                    &>.pname{
                         position: absolute;
                         left: 160px;
-                        top: 14px; 
+                        top: 10px; 
                         display: inline-block; 
                         font-size: 25px; 
                         font-weight: 500;
                         color:#000;
+                        .zjb-jinggao{
+                            margin-left: 10px;
+                            font-size: 25px;
+                            color: red;
+                        }
                     }
                 }
                 &>.text{
@@ -68,10 +96,14 @@
                 
             }
             &>.li-right{
+                height: 134px;
                 float: left;
                 padding: 20px;
                 .ant-steps-vertical .ant-steps-item-content{
-                    min-height: 20px;
+                    min-height: 25px;
+                }
+                .ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-title{
+                    color: $f90;
                 }
             }
         }
@@ -81,8 +113,15 @@
             font-size: 16px;
             line-height: 20px;
             padding: 15px 0 15px 22px;
-            &>a.btns{
-                display: inline-block;
+            &>span{
+                .money{
+                    color: $f90;
+                }
+                &>.split{
+                    margin: 0 5px; 
+                }
+            }
+            &>a.btn{ 
                 width:120px;
                 text-align: center;
                 margin-top: -15px;
@@ -95,6 +134,16 @@
                     opacity: .7;
                 }
             }
+            &>.btn2{
+                float: right;
+                margin-right: 5px;
+                color: #268eff;
+                text-decoration: underline;
+                &:hover{
+                    opacity: .7;
+                }
+            }
+
         }
     }
     &>a{
