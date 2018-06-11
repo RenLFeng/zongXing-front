@@ -53,7 +53,7 @@ export default class Login extends React.Component {
       flagShow: false, //验证码发送之后提示语
 
       registerShow:true,  //校验手机号是否存在时，发送验证码按钮的状态
-
+      loginError: true
 
     };
     this.getAuthCode = this.getAuthCode.bind(this);
@@ -507,6 +507,29 @@ export default class Login extends React.Component {
     }
   }
 
+  // 判断  手机号是否已被注册过
+  async checkPhone() {
+    const {loginPhone} = this.state;
+    if (loginPhone.length === 0) {
+      return;
+    }
+    if (!VER_PHONE.test(loginPhone)) {
+      return;
+    }
+    if (this.state.checkPhoneLoading) {
+      return;
+    }
+    this.setState({checkPhoneLoading: true});
+    const response = await phoneExist(loginPhone);
+    console.log(response);
+    this.setState({checkPhoneLoading: false});
+    if (response.code === 0) {
+      this.setState({loginError: true});
+    } else {
+      this.setState({loginError: false});
+    }
+  }
+
   render() {
     const {showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
     const { getFieldDecorator } = this.props.form;
@@ -521,9 +544,14 @@ export default class Login extends React.Component {
                     <div className="row">
                       <input className="put user" onKeyUp={(e) => this.pressKey(e)} value={loginPhone} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
+                            onBlur={()=>this.checkPhone()}
                             placeholder="手机号|用户名"/>
                       <p className="prompts">{this.state.loginNameErr}</p>
-                      <p className="registration-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
+                      {!this.state.loginError ?
+                      <p className="registration-prompts">
+                        该手机号/用户名还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a>
+                      </p> : null
+                      }
                     </div>
 
                     <div className="row">
@@ -540,8 +568,12 @@ export default class Login extends React.Component {
                       您的信息已使用SSL加密技术，数据传输安全
                     </p>
                     <div className="forget">
-                      <p className="tright"><a className="gray f14"
-                                              onClick={() => this.props.history.push('./forgetPassWord')}>忘记密码?</a></p>
+                      <p className="tright">
+                        <a className="gray f14"
+                          onClick={() => this.props.history.push('./forgetPassWord')}>
+                          忘记密码?
+                        </a>
+                      </p>
                     </div>
                   </Spin>
                 </div> 
