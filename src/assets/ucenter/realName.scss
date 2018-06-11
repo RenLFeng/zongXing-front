@@ -82,7 +82,8 @@
          }
      }
 }
-.ant-steps-item-title {
+
+.rn-content > .ant-steps-item-title {
     color: #ff9900 !important;
 }
 
@@ -336,8 +337,6 @@
                   margin-left: 42px;
                   width:89px;
                   height:33px;
-                  background: rgba(255, 153, 0, 1);
-                  color:white;
               }
             }
         }
@@ -518,7 +517,7 @@
     }
 }
 
-.ant-select-selection--single{
+.rn-content > .ant-select-selection--single{
     height:41px;
 }
     

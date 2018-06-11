@@ -5,8 +5,8 @@ import { Link } from 'dva/router';
 import moment from 'moment';
 
 import '../../assets/ucenter/realName.scss';
-import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL} from '../../common/systemParam';
-import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist } from '../../services/api';
+import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL, AUTH_ADDRESS} from '../../common/systemParam';
+import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist,getBankCardList } from '../../services/api';
 import {AUTHENTICATION, OPENQACCOUNT, BINDCARD } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
@@ -25,6 +25,7 @@ const formItemLayout = {
 @connect((state)=>({
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
+  accountId: state.login.baseData.userSecurityCenter.accountId
 }))
 export default class RealName extends React.Component {
   constructor(props) {
@@ -69,6 +70,7 @@ export default class RealName extends React.Component {
 
   componentDidMount() {
     this.initFetchSafeData();
+    this.getBankCardListAjax(); // 获取用户绑定银行卡
     if (this.countDownFun) {
       clearInterval(this.countDownFun);
     }
@@ -78,6 +80,17 @@ export default class RealName extends React.Component {
     }
 
     this.getAuthorizationState();
+  }
+
+  // 获取用户绑定银行卡
+  getBankCardListAjax = async () => {
+    const response = await getBankCardList(this.props.accountId);
+    console.log(response);
+    if (response.code === 0) {
+      
+    } else {
+      message.error(response.msg);
+    }
   }
 
   // 初始化安全中心首页数据
@@ -424,6 +437,7 @@ export default class RealName extends React.Component {
                   <span className="safeCenter_">安全中心</span>
                   <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm:ss')}</span>
                 </div>
+                <div className="rn-content">
                 <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">
                   <Step title="第一步" 
                     description={
@@ -537,6 +551,7 @@ export default class RealName extends React.Component {
                   }
                   />
                 </Steps>
+                </div>
               </div>: null      }
             </div> 
 
@@ -718,7 +733,7 @@ class ChangeLoginPass extends React.Component {
           <div className="step_id">1</div>
           <div className="step_box">
             <p className="text">打开乾多多官网</p>
-            <Button className="goWeb">前往</Button>
+            <Button className="goWeb" type="primary" onClick={()=>window.open(AUTH_ADDRESS)}>前往</Button>
           </div>
         </div>
         <div className="step">
@@ -758,7 +773,7 @@ class ChangePayPayPass extends React.Component {
           <div className="step_id">1</div>
           <div className="step_box">
             <p className="text">打开乾多多官网</p>
-            <Button className="goWeb">前往</Button>
+            <Button className="goWeb"  type="primary" onClick={()=>window.open(AUTH_ADDRESS)}>前往</Button>
           </div>
         </div>
         <div className="step">
