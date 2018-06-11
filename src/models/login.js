@@ -8,9 +8,9 @@ export default {
     status: localStorage.getItem('accessToken')? true: false,
     submitting: false,
     nickName: localStorage.getItem('accessToken')?JSON.parse(localStorage.getItem('accessToken')).nickName:"",
-    baseData: {
+    baseData: { // 登录基础数据
       userSecurityCenter: {
-
+        
       }
     }
   },

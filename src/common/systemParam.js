@@ -1,6 +1,4 @@
 
-// 企业实名认证地址
-export const AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 
 
 // 部署替换
@@ -11,6 +9,7 @@ let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务�
 let IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
 let TURN_BACK = 'http://testmanage.5izjb.com'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
 let LIMIT_MOENY = true;  // 金额限制 true进行限制 false不进行限制
+let AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/' // 乾多多地址
 /*测试楼下配置*/
 if (build === 'production') {
   // 远端
@@ -19,6 +18,7 @@ if (build === 'production') {
   IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
   TURN_BACK = 'http://testmanage.5izjb.com'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
   LIMIT_MOENY = true;
+  AUTH_ADDRESS = 'https://my.moneymoremore.com/';
 } else if (build === 'test') { 
   //  测试
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
@@ -26,6 +26,7 @@ if (build === 'production') {
   PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
   TURN_BACK = 'http://dev3manage.zjb188.com:7956'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
   LIMIT_MOENY = false;
+  AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 } else if (build === 'local') {
   /*开发配置*/
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
@@ -33,10 +34,11 @@ if (build === 'production') {
   PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
   TURN_BACK = 'http://192.168.1.192:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
   LIMIT_MOENY = false;
+  AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 }
 
 // 导出环境变量配置
-export {PIC_BUCKET,REGION,IMG_BASE_URL,TURN_BACK,build,LIMIT_MOENY};
+export {PIC_BUCKET,REGION,IMG_BASE_URL,TURN_BACK,build,LIMIT_MOENY, AUTH_ADDRESS};
 
 // 个人账户页面
 export const PERSONAL_PAGE = `http://${window.location.host}/#/index/uCenter/personAccount`;

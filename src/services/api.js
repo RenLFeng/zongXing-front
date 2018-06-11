@@ -653,3 +653,12 @@ export async function bindBankCard(params) {
   });
 }
 
+// 获取已绑定的银行卡列表
+export async function getBankCardList(param) {
+  return request(`${BASE_URL}/zjb-website/bankcard/list?accountId=${param}`);
+}
+
+// 获取用户基础信息与login相同
+export async function getLoginData() {
+  return request(`${BASE_URL}/zjb-website/login/getData`)
+}

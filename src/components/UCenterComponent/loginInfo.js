@@ -27,11 +27,11 @@ class LoginInfo extends React.Component {
                         <div className="fl">
                             {/* 用户名 */}
                             <p className="t1"><span>用户昵称</span><span className="split">|</span>{this.state.nickName}</p> 
-                            <p className="uinfo">
+                            <p className="uinfo" style={{position: 'relative'}}>
                                 <span>赵妮沙</span>
                                 <span className="split">|</span> 
                                 <i title="绑定手机号" className="zjb zjb-shouji-copy" style={baseData.userSecurityCenter.fMobileBinding?{color:'#f90'}:null}></i>
-                                <i title="身份证认证" className="zjb zjb-shenfenrenzheng" style={baseData.userSecurityCenter.fCertification?{color:'#f90',fontSize: 22}:{fontSize: 22}}></i> 
+                                <i title="身份证认证" className="zjb zjb-shenfenrenzheng" style={baseData.userSecurityCenter.fCertification?{color:'#f90',fontSize: 20}:{fontSize: 20}}></i> 
                                 <i title="银行卡绑定" className="zjb zjb-icon" style={baseData.userSecurityCenter.fBankCardBinding?{color:'#f90',fontSize: 18}:{fontSize: 18}}></i>
                             </p>
                             
