@@ -1,0 +1,102 @@
+@import '../../common/_var.scss';
+
+.li-content{
+    margin-bottom: 50px;
+    &>p{
+        font-size: 14px;
+        &>span:nth-child(1){
+           color:#999;
+        }
+        &>span:nth-child(2){
+            color:#333;
+         }
+        &>span:nth-child(3){
+            color:#999;
+            float: right;
+        }
+    }
+    &>.li-middle{
+        &>.li-top{
+            height: 174px;
+            background-color: #f9f9f9;
+            &>.li-left{
+                float: left;
+                img{
+                    width: 174px;
+                    height: 174px;
+                }
+            }
+            &>.li-center{ 
+                float: left;
+                width: 450px; 
+                position: relative; 
+                &>.li-title{
+                    padding:17px 0 0  36px; 
+                    &>span{
+                        position: absolute;
+                        left: 160px;
+                        top: 14px; 
+                        display: inline-block; 
+                        font-size: 25px; 
+                        font-weight: 500;
+                        color:#000;
+                    }
+                }
+                &>.text{
+                    width: 150px;
+                    text-align: center;
+                    color: $c3;
+                    margin-top: 15px;
+                    &.li-nh{
+                        float: left; 
+                    }
+                    &.li-qx{
+                        float: left; 
+                    }
+                    &.li-je{
+                        float: right; 
+                    }
+                    &>p{
+                        font-size: 34px; 
+                        color: $f90;
+                    }
+                    &>.tip{
+                        color: $c9;
+                    }
+                }
+
+                
+            }
+        }
+        &>.li-down{
+            height: 20px;
+            background-color: #f2f2f2; 
+            font-size: 16px;
+            line-height: 20px;
+            padding: 15px 0 15px 22px;
+            &>a{
+                display: inline-block;
+                width:120px;
+                text-align: center;
+                margin-top: -15px;
+                background-color: $f90;
+                height: 35px;
+                float: right;
+                padding-top:15px; 
+                color: #fff;
+                &:hover{
+                    opacity: .7;
+                }
+            }
+        }
+    }
+    &>a{
+        font-size: 12px;
+        color: #268eff;
+        float: right;
+        &:hover{
+            opacity: .7;
+        }
+    }
+    
+}

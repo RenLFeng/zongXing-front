@@ -3,9 +3,9 @@
 @import '../common/_var.scss';
 
 .mycoupon{
-    width: 932px; 
+    width: 992px; 
     .top-content{
-        padding: 20px;
+        padding: 30px;
         background-color: #fff;
         .top-title{
             font-size: 21px;
@@ -34,7 +34,7 @@
    
     p.sub-text{
         margin-top: 20px;
-        margin-left: 20px;
+        margin-left: 30px;
         span{
             font-size: 14px;
             color: $c9;
@@ -53,7 +53,7 @@
             display: inline-block;
         }
         &>div:nth-child(odd){
-            margin-right:75px; 
+            margin-right:140px; 
         }
     }
 }
