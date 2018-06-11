@@ -31,11 +31,11 @@ export default class MyInvestment extends React.Component {
         projectId: this.props.location.state.projectId
       }, () => {
         // true 代表列表默认展开子列表
-        this.getMyinvestAjax(1, 0);
+       // this.getMyinvestAjax(1, 0);
       });
       return;
     }
-    this.getMyinvestAjax(1);  //调用请求
+    //this.getMyinvestAjax(1);  //调用请求
   }
 
   //获取我的投资列表
@@ -186,7 +186,8 @@ export default class MyInvestment extends React.Component {
           </div>  
           <p>共8条记录</p>
           <div className='project-list'>
-              <LoanInfo/> <LoanInfo/>
+              <LoanInfo/> 
+              <LoanInfo/>
           </div> 
         </div>  
         {/* 之前代码 */}
