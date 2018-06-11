@@ -19,7 +19,141 @@ export default class MyInvestment extends React.Component {
       flag: null, // 我的投资状态查询列表
       showText: '更多状态',
       dataSource: {}, //获取参数
-      projectId: null
+      projectId: null,
+
+      data1:{
+        fid:1,
+        fstate:1,
+        fprojectNo:'P1800001',
+        fCName:'深圳众鑫众借帮网络借贷平台',
+        fPName:'我的项目名称1',
+        nh:9,
+        qx:12,
+        je:15.00,
+        area:'北京',
+        type:'xcy',
+        ytje:100,
+        djq:8,
+        ztz:6,
+        zlx:2700,
+        dsbj:100,
+        dslx:300,
+        stateData:[
+          {fstate:1,time:'2018/05/06 12:20'}, 
+        ]
+
+      },
+      data2:{
+        fstate:2,
+        fprojectNo:'P1800001',
+        fCName:'深圳众鑫众借帮网络借贷平台',
+        fPName:'我的项目名称2',
+        nh:10,
+        qx:6,
+        je:12.00,
+        area:'陕西',
+        type:'xny',
+        ytje:100,
+        djq:8,
+        ztz:6,
+        zlx:2700,
+        dsbj:100,
+        dslx:300,
+        stateData:[
+          {fstate:1,time:'2018/05/06 12:20'},
+          {fstate:2,time:'2018/05/06 12:20'}, 
+        ]
+      },
+      data3:{
+        fstate:3,
+        fprojectNo:'P1800001',
+        fCName:'深圳众鑫众借帮网络借贷平台',
+        fPName:'我的项目名称3',
+        nh:7,
+        qx:8,
+        je:14.00,
+        area:'成都',
+        type:'xyl',
+        ytje:100,
+        djq:8,
+        ztz:6,
+        zlx:2700,
+        dsbj:100,
+        dslx:300,
+        stateData:[
+          {fstate:1,time:'2018/05/06 12:20'},
+          {fstate:2,time:'2018/05/06 12:20'},
+          {fstate:3,time:'2018/05/06 12:20'}, 
+        ]
+      },
+      data3e:{
+        fstate:3,
+        fprojectNo:'P1800001',
+        fCName:'深圳众鑫众借帮网络借贷平台',
+        fPName:'我的项目名称3',
+        nh:7,
+        qx:8,
+        je:14.00,
+        area:'成都',
+        type:'xyl',
+        ytje:100,
+        djq:8,
+        ztz:6,
+        zlx:2700,
+        dsbj:100,
+        dslx:300,
+        hasError:true,
+        stateData:[
+          {fstate:1,time:'2018/05/06 12:20'},
+          {fstate:2,time:'2018/05/06 12:20'},
+          {fstate:3,time:'2018/05/06 12:20'}, 
+        ]
+      },
+      data4:{
+        fstate:4,
+        fprojectNo:'P1800001',
+        fCName:'深圳众鑫众借帮网络借贷平台',
+        fPName:'我的项目名称4',
+        nh:9,
+        qx:12,
+        je:15.00,
+        area:'上海',
+        type:'xls',
+        ytje:100,
+        djq:8,
+        ztz:6,
+        zlx:2700,
+        dsbj:100,
+        dslx:300,
+        stateData:[
+          {fstate:1,time:'2018/05/06 12:20'},
+          {fstate:2,time:'2018/05/06 12:20'},
+          {fstate:3,time:'2018/05/06 12:20'},
+          {fstate:4,time:'2018/05/06 12:20'}, 
+        ]
+      },
+      data5:{
+        fstate:5,
+        fprojectNo:'P1800001',
+        fCName:'深圳众鑫众借帮网络借贷平台',
+        fPName:'我的项目名称5',
+        nh:12,
+        qx:4,
+        je:11.00,
+        area:'深圳',
+        type:'xny',
+        ytje:100,
+        djq:8,
+        ztz:6,
+        zlx:2700,
+        dsbj:100,
+        dslx:300,
+        stateData:[
+          {fstate:1,time:'2018/05/06 12:20'}
+        ]
+      }
+
+
     }
   }
 
@@ -31,11 +165,11 @@ export default class MyInvestment extends React.Component {
         projectId: this.props.location.state.projectId
       }, () => {
         // true 代表列表默认展开子列表
-        this.getMyinvestAjax(1, 0);
+       // this.getMyinvestAjax(1, 0);
       });
       return;
     }
-    this.getMyinvestAjax(1);  //调用请求
+    //this.getMyinvestAjax(1);  //调用请求
   }
 
   //获取我的投资列表
@@ -186,7 +320,12 @@ export default class MyInvestment extends React.Component {
           </div>  
           <p>共8条记录</p>
           <div className='project-list'>
-              <LoanInfo/> <LoanInfo/>
+              <LoanInfo data={this.state.data1}/> 
+              <LoanInfo data={this.state.data2}/>
+              <LoanInfo data={this.state.data3}/>
+              <LoanInfo data={this.state.data3e}/>
+              <LoanInfo data={this.state.data4}/>
+              <LoanInfo data={this.state.data5}/>
           </div> 
         </div>  
         {/* 之前代码 */}
