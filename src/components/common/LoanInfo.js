@@ -45,6 +45,7 @@ class LoanInfo extends React.Component {
 				{/* 左  logo*/}
 			<div className='li-left'>
 				<img  src={this.state.data.logo||'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'} />
+				<span> B+ </span>
 			</div>
 				{/* 中 */}
 			<div className='li-center'>  
@@ -69,11 +70,11 @@ class LoanInfo extends React.Component {
 						this.state.data.fstate===this.state.fstate.ylb?
 						<spna className='state ylb'>已流标</spna> :null
 					} 
-					<span className='pname'>{this.state.data.fPName||''} 
+					<a className='pname'  title='进入项目详情页面' onClick={this.props.handllerMXClick?this.props.handllerMXClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerMXClick事件，跳转到项目详细界面！');}}>{this.state.data.fPName||''} 
 						{
 							this.state.data.hasError?<i className='zjb zjb-jinggao'></i>:null
 						} 
-					</span>
+					</a>
 				</div>
 				<div className='text li-nh'>
 					<span>年化收益率</span>
@@ -169,12 +170,12 @@ class LoanInfo extends React.Component {
 			{ 
 				/* 右侧按钮 */
 				this.state.data.fstate===this.state.fstate.hkz||this.state.data.fstate===this.state.fstate.yjq ?
-				<a className='btn2' onClick={this.props.handllerMXClick?this.props.handllerMXClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerMXClick事件！');}}> 查看回款明细 </a>:null 
+				<a className='btn2' onClick={this.props.handllerHKClick?this.props.handllerHKClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerHKClick事件！');}}> 查看回款明细 </a>:null 
 			}
 			
 		</div>
 		</div> 
-		<a>《查看投资合同》</a>
+		<a  onClick={this.props.handllerHTClick?this.props.handllerHTClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerHTClick事件！');}}>《查看投资合同》</a>
 				
 				 
       </div>

@@ -22,7 +22,7 @@ export default class MyInvestment extends React.Component {
       projectId: null,
 
       data1:{
-        fid:1,
+        fid:'fe06b16e553a43e99213379fb15cd42d',
         fstate:1,
         fprojectNo:'P1800001',
         fCName:'深圳众鑫众借帮网络借贷平台',
