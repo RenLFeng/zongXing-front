@@ -2,6 +2,9 @@ import React from 'react';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/mycoupon.scss';
 import Coupon from '../Coupon/Coupon';
+import {CouponService} from '../../services/api2';
+
+
 
 class MyCoupon extends React.Component {
  
@@ -58,7 +61,13 @@ class MyCoupon extends React.Component {
             } 
         }
     }
-   
+    componentWillMount(){
+        this.getSlelectItem();
+    } 
+    async getSlelectItem(){
+        const response = await CouponService.getCouponCount();
+        console.log('log',response);
+    }
     render() { 
         return (
             <div>

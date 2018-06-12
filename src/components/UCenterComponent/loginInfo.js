@@ -15,7 +15,7 @@ class LoginInfo extends React.Component {
          }
     } 
     render() { 
-			const {baseData} = this.props
+        const {baseData} = this.props
         return ( 
             <div>
                     {
@@ -44,20 +44,27 @@ class LoginInfo extends React.Component {
                             <p>  
                                 <a style={{color: 'blue'}} onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a>
                             </p>
-                            <div className="account-content">
-                                <p>待领取代金券</p>
-                                <p className="account-money">{baseData.countCoupon}张</p>
-                            </div >
+                            {
+                                baseData.countCoupon?<div className="account-content">
+                                    <p>待领取代金券</p>
+                                    <p className="account-money">{baseData.countCoupon}张</p>
+                                </div >:null
+                            } 
                             <i></i>
-                            <div className="account-content">
-                                <p>券额</p>
-                                <p className="account-money">￥{`${baseData.sumCoupon}`.fm()}</p>
-                            </div>
+                            {
+                                baseData.sumCoupon? <div className="account-content">
+                                    <p>券额</p>
+                                    <p className="account-money">￥{`${baseData.sumCoupon}`.fm()}</p>
+                                </div>:null
+                            } 
                             <i></i>
-                            <div className="account-content" style={{borderRight:'0px'}}>
-                                <p>可用资金余额</p>
-                                <p className="account-money">￥{`${baseData.balance}`.fm()}</p>
-                            </div>
+                            {
+                               baseData.balance?<div className="account-content" style={{borderRight:'0px'}}>
+                                    <p>可用资金余额</p>
+                                    <p className="account-money">￥{`${baseData.balance}`.fm()}</p>
+                                </div>:null
+                            }
+                            
                         </div>  
                     </div>
                     <div className="uc-message">
