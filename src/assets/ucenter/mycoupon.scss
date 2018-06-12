@@ -55,5 +55,15 @@
         &>div:nth-child(odd){
             margin-right:140px; 
         }
+        &>.coupon-paging{
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        &>.not-found{
+            color: $c9;
+            text-align: center;
+            width: 100%;
+        }
     }
 }
