@@ -4,25 +4,23 @@ import {Button, Divider} from 'antd';
 
 @connect((state) => ({
     nickName: state.login.nickName,
-    baseData: state.login.baseData
+    baseData: state.login.baseData,
+    status: state.login.status,
 }))
 class LoginInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            nickName:'13335437530',
             realName:'屈云峰',
-            isLogin:true,
-
-
          }
     } 
+
     render() { 
         const {baseData} = this.props
         return ( 
             <div>
                     {
-                    this.state.isLogin ?  <div className="w">
+                    this.props.status ?  <div className="w">
                     <div className="uc-tbody clearfix"> 
                         {/* 用户头像 */}
                         <a className="fl">
@@ -34,17 +32,16 @@ class LoginInfo extends React.Component {
                             <p className="t1">
                                 <span>用户名(系统默认自动成功)</span>
                                 <span className="split">|</span>
-                                {this.state.nickName}  
+                                {this.props.nickName}  
                                 <a onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a> 
                             </p> 
                             <p className="uinfo" style={{position: 'relative'}}>
-                                <span>{this.state.realName}</span>
+                                <span>{baseData.userSecurityCenter.fCertification?baseData?baseData.realName:'未认证':'未认证'}</span>
                                 <span className="split">|</span> 
                                 <i title="绑定手机号" className="zjb zjb-shouji-copy" style={baseData.userSecurityCenter.fMobileBinding?{color:'#f90'}:null}></i>
                                 <i title="身份证认证" className="zjb zjb-shenfenrenzheng" style={baseData.userSecurityCenter.fCertification?{color:'#f90',fontSize: 20}:{fontSize: 20}}></i> 
                                 <i title="银行卡绑定" className="zjb zjb-icon" style={baseData.userSecurityCenter.fBankCardBinding?{color:'#f90',fontSize: 18}:{fontSize: 18}}></i>
                             </p>
-                            
                         </div>
                         <div className="fr"> 
                             {
