@@ -1,7 +1,7 @@
 import React from 'react';
 import './coupon.scss';
 import {Button} from 'antd';
-
+import moment from 'moment';
 
 class Coupon extends React.Component {
     //  data 
@@ -89,7 +89,7 @@ class Coupon extends React.Component {
                             {/* 满多少抵扣 */}
                             <li>销费满{this.state.data.ffull_sub_condition||0}元，抵扣{this.state.data.ffull_sub_money||0}元</li>
                             {/* 截止时间 */}  
-                            <li>{this.state.data.fend_time_str||'----年--月--日'}前使用</li> 
+                            <li>{this.state.data.fend_time?moment(this.state.data.fend_time).format('YYYY年MM月DD日'):'----年--月--日'}前使用</li> 
                             {/* 使用地点 */}
                             <li>使用地点：{this.state.data.fuser_place||'优惠券使用地址'}</li>
                         </ul> 

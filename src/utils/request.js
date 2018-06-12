@@ -3,6 +3,7 @@ import { routerRedux } from 'dva/router';
 import store from '../index';
 
 import { build } from '../common/systemParam';
+import { debug } from 'util';
 
 let BASE_URL = 'http://test.5izjb.com:8001'; // 测试服务器
 if (build === 'production') {
@@ -36,8 +37,7 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护',
   504: '网关超时',
 };
-function checkStatus(response) {
-  console.log(store);
+function checkStatus(response) { 
   const { dispatch } = store;
   if (response.status === 288) {
     dispatch({ type: 'login/logout' });
@@ -125,6 +125,7 @@ export const req={
       }
       const Options = {  
         credentials: 'include', 
+        method: 'GET',
         headers:{
           Accept: 'application/json',
           'Content-Type': 'application/json; charset=utf-8',
@@ -147,6 +148,7 @@ export const req={
         })
     },
     post:(url, param)=>{ 
+      debugger
       if(url.substring(0,1)=='/'){
         url = BASE_URL+url;
       }else{
@@ -159,6 +161,7 @@ export const req={
         token = webTokenObj.webToken ? webTokenObj.webToken : '';
       }
       const newOptions = {
+        method: 'POST',
         credentials: 'include',
         headers:{
           Accept: 'application/json',
@@ -166,12 +169,10 @@ export const req={
           'zjb-user-token': token,
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, HEAD',
-          Origin: '*',
-          ...newOptions.headers,
+          Origin: '*' 
         },
         body:JSON.stringify(param)
-      };   
-      
+      };    
       console.log(url);
       return fetch(url, newOptions)
         .then(checkStatus)
