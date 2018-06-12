@@ -29,6 +29,7 @@ class Coupon extends React.Component {
     
         let btnName = "";
         let canEdit= false;
+        console.log(couponData.ffalg)
         switch(couponData.ffalg){
             case 1:
                 btnName ='待领取';

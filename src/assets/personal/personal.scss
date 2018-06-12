@@ -120,3 +120,19 @@
 
 }
 
+.per_account {
+  background-color: #fff;
+  padding: 30px;
+}
+
+.coupon_list {
+  .tips {
+    color: #c9c9c9;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .cp-coupon-content:nth-child(even) {
+    margin-right: 80px;
+  }
+}
+

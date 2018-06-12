@@ -13,11 +13,11 @@ export default class LeftMenu extends React.Component {
     const {param} = this.props;
     const path = param.location.pathname;
     return (
-        <div className="uc-left-menu">
+        <div className="uc-left-menu" style={{borderTop: '2px solid #FF6600', width: 290}}>
           <ul className="">
              <li>
                 <span>
-                    <i className="zjb zjb-shouji" ></i> 我的账户
+                    <i className="zjb zjb-zhanghu"  style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i> 我的账户
                 </span>
                 <ul>
                   <li> <Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'active'} to={Path.PERSONAL_ACCOUNT}>账户总览</Link></li>
@@ -32,7 +32,7 @@ export default class LeftMenu extends React.Component {
              </li>
              <li>
                 <span>
-                     <i className="zjb zjb-shouji" ></i> 
+                     <i className="zjb zjb-zhanghu"  style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i> 
                      安全中心
                 </span>
                 <ul>
@@ -42,7 +42,7 @@ export default class LeftMenu extends React.Component {
              </li>
              <li>
                 <span>
-                     <i className="zjb zjb-shouji" ></i> 
+                     <i className="zjb zjb-zhanghu" style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i> 
                      通知中心
                 </span>
                  <ul>
