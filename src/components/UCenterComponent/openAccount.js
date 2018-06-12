@@ -5,7 +5,7 @@ import { Form, Input, Button, Select, Modal, message, Row, Col, Icon,Tooltip, Ca
 import { connect } from 'dva';
 
 import '../../assets/ucenter/modelCenter.scss';
-import { VER_PHONE, ID_CORD, AUTH_ADDRESS } from '../../common/systemParam';
+import { VER_PHONE, ID_CORD, AUTH_ADDRESS, TURN_BACK } from '../../common/systemParam';
 import Path from '../../common/pagePath';
 import { city } from '../../common/cityData';
 
@@ -134,6 +134,7 @@ class FormComponent extends React.Component {
         // 提交表单接口
         values.accountType = '0';
         values.cityCode = values.city[values.city.length - 1];
+        values.notifyPageUrl = `${TURN_BACK}/#/index/uCenter/bindCard`
         this.setState({loading: true});
         try {
           const response = await commitOpenAccount(values);

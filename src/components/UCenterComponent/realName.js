@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import '../../assets/ucenter/realName.scss';
 import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL, AUTH_ADDRESS} from '../../common/systemParam';
-import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist,getBankCardList } from '../../services/api';
+import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist,getBankCardList, unbindBankCard } from '../../services/api';
 import {AUTHENTICATION, OPENQACCOUNT, BINDCARD } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
@@ -25,7 +25,8 @@ const formItemLayout = {
 @connect((state)=>({
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
-  accountId: state.login.baseData.userSecurityCenter.accountId
+  accountId: state.login.baseData.accountId,
+
 }))
 export default class RealName extends React.Component {
   constructor(props) {
@@ -59,27 +60,35 @@ export default class RealName extends React.Component {
       showMMMChangeLoginPass: false, // 判断修改登录密码
       num: 1,
       safeData: null,
+      cardList: []
     };
     this.countDownFun = null;
     this.countDownFun_ = null;
   }
 
- getCodeNum(val) {
+  getCodeNum(val) {
     this.setState({ getCodeMobile: val });
- }
+  }
 
   componentDidMount() {
     this.initFetchSafeData();
-    this.getBankCardListAjax(); // 获取用户绑定银行卡
+    // 第三方开户成功再去获取用户银行卡信息
+    if (this.props.safeData.userSecurityCenter.fThirdAccount) {
+      this.getBankCardListAjax(); // 获取用户绑定银行卡
+    }
     if (this.countDownFun) {
       clearInterval(this.countDownFun);
     }
-
     if (this.countDownFun_) {
       clearInterval(this.countDownFun_);
     }
-
     this.getAuthorizationState();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.safeData.userSecurityCenter.fThirdAccount !== nextProps.safeData.userSecurityCenter.fThirdAccount) {
+      this.getBankCardListAjax(); // 获取用户绑定银行卡
+    }
   }
 
   // 获取用户绑定银行卡
@@ -87,7 +96,11 @@ export default class RealName extends React.Component {
     const response = await getBankCardList(this.props.accountId);
     console.log(response);
     if (response.code === 0) {
-      
+      if (response.data) {
+        this.setState({
+          cardList: response.data
+        })
+      }
     } else {
       message.error(response.msg);
     }
@@ -407,6 +420,35 @@ export default class RealName extends React.Component {
   }
 
 
+  // 解除银行卡绑定
+  async unbindBankCardAjax(cardId, fid) {
+    if (!this.state[`${fid}password`] || (this.state[`${fid}password`] && this.state[`${fid}password`].trim().length===0)) {
+      message.error('密码不能为空');
+      return;
+    }
+    if (this.state.unbindLoading) {
+      return;
+    }
+    this.setState({unbindLoading: true});
+    const response = await unbindBankCard({
+      accountId: this.props.accountId,
+      bankcard: cardId,
+      password: this.state[`${fid}password`].trim()
+    });
+    this.setState({unbindLoading: false});
+    if (response.code === 0) {
+      for (let i = 0,len = this.state.cardList.length; i< len ; i++) {
+        if (this.state.cardList[i].fbankcard === cardId) {
+          this.state.cardList.splice(1, i);
+          break;
+        }
+      }
+      this.setState({cardList: this.state.cardList});
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
   render() {
     console.log('this.props', this.props);
     
@@ -499,53 +541,50 @@ export default class RealName extends React.Component {
                           <a className="right" style={{ display: 'none' }}>设置</a>
                         </div>
                         <div className="cardBox">
-                          <div className="IDCard">
-                            <img alt="" src={require('../../assets/img/ucenter/u4385.png')} className="bg" />
-                            <img alt="" src={require('../../assets/img/u214.png')} className="s_bg" />
-                            <img alt="" src={require('../../assets/img/u215.png')} className="s_bg_" />
-                            <img alt="" src={require('../../assets/img/u213.png')} className="s_bg1_" />
-                            <div className="text">
-                              <p className="card_name">建设银行</p>
-                              <p className="type">储蓄卡</p>
-                              <p className="card_num">6227 **** **** 0687</p>
-                            </div>
-                          </div>
-                          <div className="IDCard">
-                            <img alt="" src={require('../../assets/img/ucenter/u4415.png')} />
-                            <img alt="" src={require('../../assets/img/u214.png')} className="s_bg" />
-                            <img alt="" src={require('../../assets/img/u230.png')} className="s_bg_1" />
-                            <img alt="" src={require('../../assets/img/u231.png')} className="s_bg1_" />
-                            <div className="text">
-                              <p className="card_name">招商银行</p>
-                              <p className="type">储蓄卡</p>
-                              <p className="card_num">6227 **** **** 0687</p>
-                            </div>
-                          </div>
-                          <div className="IDCard">
-                            <img alt="" src={require('../../assets/img/ucenter/u4427.png')} className="bg" />
-                            <img alt="" src={require('../../assets/img/u214.png')} className="s_bg" />
-                            <img alt="" src={require('../../assets/img/u232.png')} className="s_bg_1" />
-                            <div className="text">
-                              <p className="card_name">华夏银行</p>
-                              <p className="type">储蓄卡</p>
-                              <p className="card_num">6227 **** **** 0687</p>
-                            </div>
-                          </div>
+                          {this.state.cardList.map((data, index)=> {
+                            console.log('datadata', data);
+                            return (
+                              <div className="card_div" key={index}>
+                                <div className="IDCard">
+                                  <div>
+                                    <span className="id_num">
+                                      {data.fbankcard.substring(0,4)} **** **** {data.fbankcard.substring(data.fbankcard.length-5,data.fbankcard.length-1)}
+                                    </span>
+                                  </div>
+                                </div>
+                                { !this.state[data.fid]?
+                                  <a className="unbind_card" onClick={()=>this.setState({[data.fid]: true})}>解除绑定</a>:
+                                  <div className="unbind_block">
+                                    <span className="unbind_span">解绑银行卡</span>
+                                    <span className="unbind_span">请输入登录密码</span>
+                                    <Input
+                                      type={this.state[`${data.fid}hide`]?'text':'password'}
+                                      className="unbind_password"
+                                      placeholder="请输入登录密码"
+                                      onChange={(e)=>this.setState({[`${data.fid}password`]: e.target.value})}
+                                      prefix={<Icon type="lock" />}
+                                      suffix={<Icon type="eye-o" onClick={()=>this.setState({[`${data.fid}hide`]:!this.state[`${data.fid}hide`]})}/>}
+                                    />
+                                    <Button 
+                                      type="primary"
+                                      className="unbind-btn"
+                                      onClick={()=>this.unbindBankCardAjax(data.fbankcard, data.fid)}
+                                      loading={this.state.unbindLoading}
+                                    >解绑</Button>
+                                  </div>
+                                }
+                              </div>
+                            )
+                          })}
                         </div>
-                        <a className="unbind">解除绑定</a>
-                        <div className="unbindBox">
-                          <p className="word1_">解绑银行卡</p>
-                          <p className="word2_">请输入登录密码，以验证身份。</p>
-                          <div className="inp">
-                            <Input placeholder="请输入登录密码" />
-                            <img alt="" src={require('../../assets/img/u22.png')} className="img1" />
-                            <img alt="" src={require('../../assets/img/u81.png')} className="img2" />
-                          </div>
-                          <Button type="primary">解绑</Button>
-                        </div>
-                        <div className="addId">
-                          <p className="add" style={{ cursor: 'pointer' }} onClick={() => this.props.history.push(BINDCARD)}><Icon type="plus" />绑定新银行卡</p>
-                          <p>（只支持储蓄卡）</p>
+                        <div className="unbind_div" onClick={() => this.props.history.push(BINDCARD)}>
+                          <Icon type="plus" className="icon-plus"/>
+                          <span className="bind_new_bank">绑定新银行卡</span>
+                          <span 
+                            className="bind_new_bank" 
+                            style={{color: '#e6e6e6',fontSize: 14}}
+                          >(只支持储蓄卡)</span>
+
                         </div>
                       </div>
                   }

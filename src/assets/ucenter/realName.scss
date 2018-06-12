@@ -343,64 +343,82 @@
 }
 
 .cardBox{
-    height:111px;
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
-    .IDCard{
-        width:279px;
-        position: relative;
-        .bg{
-            position: absolute;
-        }
-        .s_bg{
-            position: absolute;
-            top:10px;
-            left:10px;
-        }
-        .s_bg_{
-            position: absolute;
-            top:18px;
-            left:18px;
-        }
-        .s_bg_1{
-            position: absolute;
-            top:14px;
-            left:14px;
-        }
-        .s_bg1_{
-            width: 86px;
-            height: 93px;
-            position: absolute;
-            top:9px;
-            right:7px;
-            opacity: 0.1;
-        }
-        .text{
-            width:200px;
-            height:80px;
-            position: absolute;
-            top:15px;
-            left:68px;
-            p{
-                color:white;
-                font-family: '微软雅黑';
-                font-weight: 400;
-                font-style: normal;
-                color: #FFFFFF;
+    flex-wrap: wrap;
+    .card_div {
+        margin-bottom: 20px;
+        margin-right: 10px;
+        .IDCard{
+            width:279px;
+            height: 159px;
+            border-radius: 10px;
+            background-color: #4CC261;
+            .id_num {
+                display: inline-block;
+                color: #fff;
+                font-size: 22px;
+                
             }
-            .card_name{
-                font-size: 16px;
-            }
-            .type{
-                font-size: 12px;
-            }
-            .card_num{
-                font-size: 20px;
-                margin-top: 12px;
-            }
+        }
+        .unbind_card {
+            display: inline-block;
+            margin-left: 220px;
+            color:blue !important;
 
         }
+        .unbind_block {
+            margin-top: 20px;
+            width: 279px;
+            height: 158px;
+            border: 1px solid #e6e6e6;
+            border-radius: 10px;
+            background-color: #F2F2F2;
+            .unbind_span {
+                display: block;
+                text-align: center;
+            }
+            .unbind_span:first-child{
+                margin-bottom: 15px;
+                margin-top: 10px;
+            }
+            .unbind_password {
+                margin-top: 5px;
+                margin-left: 30px;
+                width: 220px;
+                height: 30px;
+            }
+            .unbind-btn {
+                margin-top: 5px;
+                margin-left: 106px;
+                
+            }
+        }
+    }
+}
+
+.unbind_div {
+    width: 279px;
+    height: 158px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    cursor: pointer;
+    .icon-plus {
+        display: block;
+        font-size: 50px;
+        color: #d6d6d6;
+        margin-top: 30px;
+    }
+    .bind_new_bank {
+        display: block;
+        font-size: 16px;
+        text-align: center;
+    }
+}
+.unbind_div:hover {
+    border: 1px solid #FF7E10;
+    .icon-plus {
+        color: #FF7E10
     }
 }
 
@@ -410,6 +428,9 @@
     margin: 10px 0px 10px 220px;
 }
 .unbindBox{
+    position: absolute;
+    top: -40px;
+    right: 0px;
     width:277px;
     height:193px;
     background: #F2F2F2;

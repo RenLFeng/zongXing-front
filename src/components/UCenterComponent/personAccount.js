@@ -323,7 +323,7 @@ export default class PersonAccount extends React.Component {
         <div>
           <LeftMenu param={this.props}/>
           <div className="fr uc-rbody">
-            <span>您还没有开通个人账户，开通 <Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+            <span>您还没有开通个人账户，开通 <Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
         </div>
       );
@@ -341,7 +341,7 @@ export default class PersonAccount extends React.Component {
         <div>
           <LeftMenu param={this.props}/>
           <div className="fr uc-rbody">
-            <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPEN_ACCOUNT+'/0'} style={{color: 'blue'}}>点击此处</Link></span>
+            <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
         </div> 
       );

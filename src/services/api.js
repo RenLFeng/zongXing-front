@@ -662,3 +662,18 @@ export async function getBankCardList(param) {
 export async function getLoginData() {
   return request(`${BASE_URL}/zjb-website/login/getData`)
 }
+
+// 解除银行卡绑定接口
+export async function unbindBankCard(params) {
+  return request(`${BASE_URL}/zjb-website/bankcard/delete`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+// 测试开户
+export async function testSocket() {
+  return request(`${BASE_URL}/zjb-dc/test/socket`)
+}
