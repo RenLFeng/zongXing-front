@@ -7,6 +7,8 @@ import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import { Modal, Button } from 'antd';
+import Coupon from '../Coupon/Coupon';
+import '../../assets/personal/personal.scss';
 
 @connect((state)=>({
   personal: state.account.personal,
@@ -134,6 +136,33 @@ export default class PersonAccount extends React.Component {
           }
         }]
       },
+      couponList: [
+        {
+          fproject_no:'P18060007',
+          fid:2,
+          ffull_sub_condition:100,
+          ffull_sub_money:30,
+          fname:'陕西魏家凉皮优惠券',
+          fbus_type:'xfw',
+          fuser_place:'西安',
+          fend_time_str:'2018年12月30日',
+          flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
+          fsurplus_num:9, 
+          ffalg:5
+        }, {
+          fproject_no:'P18060007',
+          fid:2,
+          ffull_sub_condition:100,
+          ffull_sub_money:30,
+          fname:'陕西魏家凉皮优惠券',
+          fbus_type:'xfw',
+          fuser_place:'西安',
+          fend_time_str:'2018年12月30日',
+          flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
+          fsurplus_num:9, 
+          ffalg:1
+        }
+      ]
     };
     this.jumpRecharge = this.jumpRecharge.bind(this);
   }
@@ -349,39 +378,47 @@ export default class PersonAccount extends React.Component {
     return (
       <div>
         <LeftMenu param={this.props}/>
-        <div className="fr uc-rbody">
-          <div className="ptit">
-            <i>账户总资产</i>
-            <b>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</b>
-            <em>单位：元</em>
-          </div>
-          <div className="tright hd1">
-            <a className="fl" style={{cursor: 'default'}}>
-              <i>累计充值</i>
-              <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
-            </a>
-            <a className="fl" style={{cursor: 'default'}}>
-              <i>累计提现</i>
-              <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
-            </a>
-            <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.personal.totalAssets.accountId)}>充值</a>
-            <a className="btn btn2" onClick={()=>this.jumpRecharge_(this.props.personal.totalAssets.accountId)}>提现</a>
-            {/*<a className="btn btn3">好友转账</a>*/}
-          </div>
-          <div className="border shadow box1">
-            <div className="pieDiv">
-              <div>
-                <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</span>
-                <span style={{fontSize: '14px'}}>账户总资产</span>
+        <div className="fr uc-rbody" style={{backgroundColor: '#F5F5F5',padding: 0}}>
+          <div className="per_account">
+            <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>
+              <i>账户总资产</i>
+              <b>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</b>
+              <em>单位：元</em>
+            </div>
+            <div className="tright hd1">
+              <a className="fl" style={{cursor: 'default'}}>
+                <i>累计充值</i>
+                <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
+              </a>
+              <a className="fl" style={{cursor: 'default'}}>
+                <i>累计提现</i>
+                <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
+              </a>
+            </div>
+            <div className="border shadow box1" style={{marginTop: 90}}>
+              <div className="pieDiv">
+                <div>
+                  <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</span>
+                  <span style={{fontSize: '14px'}}>账户总资产</span>
+                </div>
               </div>
-            </div>
-            <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
-            <div className="coupon">
-              <i className="c6">代金券</i>
-              <i className="fr">{(this.props.personal.totalAssets.capitalCoupon+'').fm()}</i>
+              <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
             </div>
           </div>
-
+          {/* 未领取优惠券 */}
+          { this.state.couponList.length >0 ?
+            <div className="per_account coupon_list" style={{marginTop: 30}}>
+              <span className="tips">您有多少张优惠券待领取 有多少张优惠券即将过期</span>
+              {this.state.couponList.map((data)=>{
+                return (
+                  <Coupon data={data} hasLine='true' handlerBtnClick={(id,data)=>{
+                    console.log(id);
+                    console.log(data);
+                    }}/>
+                );
+              })}
+            </div> : null
+          }
           <div className="hd2 clearfix">
             <a className="fl hover">回款计划</a>
             {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}

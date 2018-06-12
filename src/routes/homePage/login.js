@@ -524,9 +524,9 @@ export default class Login extends React.Component {
     console.log(response);
     this.setState({checkPhoneLoading: false});
     if (response.code === 0) {
-      this.setState({loginError: true});
-    } else {
       this.setState({loginError: false});
+    } else {
+      this.setState({loginError: true});
     }
   }
 
@@ -534,7 +534,43 @@ export default class Login extends React.Component {
     const {showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
-      <div className="logindiv1 shadow">
+      <div className="logindiv1 shadow"  style={{height: 495}}>
+      <Modal
+          visible={this.state.authPhone}
+          title="解除账号锁定"
+          okText="提交"
+          cancelText="取消"
+          confirmLoading={this.state.relieveLoading}
+          onOk={() => this.relieveAccountLock()}
+          onCancel={() => {
+            if (this.state.relieveLoading) {
+              message.warning('请求处理中请稍后');
+              return;
+            }
+            this.setState({authPhone: false});
+          }}
+        >
+          <Row>
+            <Col span={3}>手机号</Col>
+            <Col span={15}>
+              <Input value={this.state.phoneNumber} disabled/>
+            </Col>
+            <Col span={6} style={{textAlign: 'right'}}>
+              <Button type="primary" loading={this.state.sendErrorCodeLoading} onClick={()=>this.sendErrorCodeAuth()} disabled={this.state.errorTime !== 60}>
+                {this.state.errorTime === 60 ? '发送验证码' : `${this.state.errorTime}s后重试`}
+              </Button>
+            </Col>
+          </Row>
+          <Row style={{marginTop: 20}}>
+            <Col span={3}>
+              验证码
+            </Col>
+            <Col span={21}>
+              <Input type="password" value={this.state.errorAuthCode} placeholder="请输入" onChange={(e)=>this.setState({errorAuthCode: e.target.value})} maxLength={10}/>
+            </Col>
+          </Row>
+        </Modal>
+
         <div className="back">
                 <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">

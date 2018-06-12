@@ -53,13 +53,12 @@ export default class Register extends React.Component {
       flagShow: false, //验证码发送之后提示语
 
       registerShow:true,  //校验手机号是否存在时，发送验证码按钮的状态
-
+      loginError: true
 
     };
     this.getAuthCode = this.getAuthCode.bind(this);
     this.onChange = this.onChange.bind(this);
     this.submitReg = this.submitReg.bind(this);
-    this.submitLogin = this.submitLogin.bind(this);
     this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
     this.countDownFun = null;
     this.countDownFun_ = null;
@@ -80,17 +79,6 @@ export default class Register extends React.Component {
     }
   }
 
-  async close() {
-    this.setState({
-      showReg: false,
-    })
-    console.log(111)
-  }
-
-  check() {
-    const {regPhone} = this.state;
-  }
-
   //检验手机号是否存在
   async checkPhoneNumber(type) {
     const phoneNum = this.state.regPhone;
@@ -105,6 +93,13 @@ export default class Register extends React.Component {
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await phoneExist(phoneNum);
       if (response.code !== 0) {
+        if (response.msg === '该手机号已注册，请直接登录！') {
+          this.setState({
+            registerShow: false,
+            loginError: false
+          });
+          return;
+        }
         this.setState({
           regNameErr: response.msg,
           registerShow: false,
@@ -168,146 +163,6 @@ export default class Register extends React.Component {
         this.setState({countDown: this.state.countDown - 1});
       }
     }, 1000);
-  }
-
-  // 身份验证——手机号
-  getAuthCode_ = async () => {
-    const {loginName, mobile, authCode} = this.state;
-    if (loginName.length === 0) {
-      this.setState({codeNameErr1: '手机号/用户名不能为空'});
-      return;
-    }
-
-    this.setState({codeNameErr1: ''});
-    // 发送验证码的时间存在本地
-    const sendTime = localStorage.getItem(loginName);
-    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000) {
-      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
-      return;
-    }
-    this.setState({authLoading: true});
-    try {
-      const response = await changePW(loginName);
-      if (response.code === 0) {
-        this.setState({
-          authLoading: false,
-          mobile: response.data,
-          flagShow: true,
-        });
-      } else {
-        message.error(response.msg);
-        return;
-      }
-    } catch (e) {
-      this.setState({authLoading: false});
-      message.error('请求失败');
-      return;
-    }
-    localStorage.setItem(loginName, new Date().getTime());
-    //发送请求 按钮变不可点状态
-    this.setState({showAuthCodeFor: false});
-    //成功之后倒计时开始启动
-    this.countDownFun_ = setInterval(() => {
-      if (this.state.countDown_ === 0) {
-        clearInterval(this.countDownFun_);
-        this.setState({countDown_: AUTH_CODE_TIME_, showAuthCodeFor: true, flagShow: false,});
-      } else {
-        this.setState({countDown_: this.state.countDown_ - 1});
-      }
-    }, 1000);
-  };
-
-  //提交验证手机号码
-  async submitInformation() {
-    const {mobile, authCode, codeNameErr1, codeNameErr2} = this.state;
-    if (mobile.trim().length === 0) {
-      this.setState({codeNameErr1: '请获取验证码'});
-      return
-    }
-    // if (!VER_PHONE.test(mobile.trim())) {
-    //   this.setState({codeNameErr1: '请输入正确的手机号'});
-    //   return;
-    // }
-    if (authCode.trim().length === 0) {
-      this.setState({codeNameErr2: '验证码不能为空'});
-      return
-    }
-    this.setState({authLoading: true});
-    try {
-      const response = await checkCode(mobile, authCode);
-      if (response.code === 0) {
-        this.setState({authLoading: false});
-        if (this.countDownFun_) {
-          clearInterval(this.countDownFun_);
-        }
-        this.setState({
-          flag: this.state.flag + 1,
-          countDown_: AUTH_CODE_TIME_,
-          showAuthCodeFor: true,
-          flagShow: false,
-          authCode: '',
-          codeNameErr1: '',
-          codeNameErr2: '',
-        });
-        console.log(this.state.mobile);
-      } else {
-        message.error(response.msg);
-      }
-    } catch (e) {
-      console.log(e);
-      message.error('服务器繁忙，请稍后重试');
-      this.setState({authLoading: false});
-    }
-  }
-
-
-  //修改密码
-  async changePassword() {
-    const {newPass, newPass_} = this.state;
-    if (newPass.trim().length === 0) {
-      this.setState({
-        message1: '该内容不能为空'
-      });
-      return;
-    }
-    if (newPass.trim().length < 6) {
-      this.setState({
-        message1: '密码长度不能小于6位'
-      });
-      return;
-    }
-    if (newPass_.trim().length === 0) {
-      this.setState({
-        message2: '该内容不能为空'
-      });
-      return;
-    }
-    if (newPass.trim() !== newPass_.trim()) {
-      this.setState({
-        message2: '两次输入的密码不一致'
-      })
-      return;
-    }
-    this.setState({authLoading: true});
-    const {loginName, password} = this.state;
-    const respondse = await changePassword({
-      loginName: this.state.loginName,
-      password: this.state.newPass
-    });
-    if (respondse.code === 0) {
-      this.setState({
-        flag: 1,
-        authLoading: false,
-        newPass: '',
-        newPass_: '',
-        message1: '',
-        message2: '',
-        loginName: '',
-      });
-      message.info("密码修改成功！");
-    } else {
-      message.error(response.msg);
-    }
   }
 
   //修改所有input的state统一方法
@@ -391,117 +246,32 @@ export default class Register extends React.Component {
     }
   }
 
-  //登录提交方法
-  submitLogin() {
-    const {loginPhone, loginPwd} = this.state;
-    if (loginPhone.trim().length === 0 && loginPwd.trim().length === 0) {
+  // 判断  手机号是否已被注册过
+  async checkPhone() {
+    const {loginPhone} = this.state;
+    if (loginPhone.length === 0) {
+      return;
+    }
+    if (!VER_PHONE.test(loginPhone)) {
+      return;
+    }
+    if (this.state.checkPhoneLoading) {
+      return;
+    }
+    this.setState({checkPhoneLoading: true});
+    const response = await phoneExist(loginPhone);
+    console.log(response);
+    this.setState({checkPhoneLoading: false});
+    if (response.code === 0) {
       this.setState({
-        loginNameErr: '请输入登录名',
-        loginPwdErr: '请输入密码'
+        loginError: true,
+        registerShow: true
       });
-      return;
-    }
-    if (loginPhone.trim().length === 0) {
-      this.setState({loginNameErr: '请输入登录名'});
-      return;
-    }
-    if (loginPwd.trim().length === 0) {
-      this.setState({loginPwdErr: '请输入密码'});
-      return;
-    }
-    const login = {
-      loginName: loginPhone,
-      password: loginPwd
-    };
-    this.setState({
-      loginNameErr: '',
-      loginPwdErr: ''
-    });
-    this.props.dispatch({
-      type: 'login/login',
-      payload: login,
-      passwordError: (phoneNumber) => this.passwordError(phoneNumber)
-    });
-  }
-
-  passwordError(phoneNumber) {
-    console.log(phoneNumber);
-    this.setState({
-      phoneNumber,
-      authPhone: true,
-      errorAuthCode: ''
-    });
-  }
-
-  pressKey(e) {
-    if (e.keyCode === 13) {
-      this.submitLogin();
-    }
-  }
-  returnLogin() {
-    this.setState({
-      flag: 1,
-      codeNameErr2: '',
-      codeNameErr1: '',
-      flagShow: false,
-      authCode: '',
-      loginName: '',
-      newPass: '',
-      newPass_: '',
-      message1: '',
-      message2:''
-    })
-  }
-
-  // 用户5次错误之后 发送验证码的接口
-  async sendErrorCodeAuth() {
-    if (this.state.sendErrorCodeLoading) {
-      return;
-    }
-    const sendTime = localStorage.getItem(`${this.state.phoneNumber}errorCode`);
-    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000) {
-      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
-      return;
-    }
-    this.setState({sendErrorCodeLoading: true});
-    const response = await getAuthCode(this.state.phoneNumber);
-    this.setState({sendErrorCodeLoading: false});
-    if (response.code === 0) {
-      localStorage.setItem(`${this.state.phoneNumber}errorCode`, new Date().getTime());
+    } else {
       this.setState({
-        errorTime: 59
-      }, ()=> {
-        this.countDownErrorCode = setInterval(()=>{
-          if (this.state.errorTime !== 0) {
-            this.setState({ errorTime: this.state.errorTime - 1});
-          } else {
-            this.setState({ errorTime: 60 });
-            clearInterval(this.countDownErrorCode);
-          }
-        }, 1000);
-      })
-    } else {
-      response.msg && message.error(response.msg);
-    }
-  }
-
-  // 解锁用户
-  async relieveAccountLock() {
-    if (this.state.relieveLoading) {
-      return;
-    }
-    if (!this.state.errorAuthCode || (this.state.errorAuthCode && this.state.errorAuthCode.trim().length === 0)) {
-      message.error('请输入验证码')
-      return;
-    }
-    this.setState({relieveLoading: true});
-    const response = await relieveAccountAjax(this.state.phoneNumber, this.state.errorAuthCode.trim());
-    this.setState({relieveLoading: false});
-    if (response.code === 0) {
-      message.info('用户已解锁，请重新登录');
-      this.setState({authPhone: false});
-    } else {
-      response.msg && message.error(response.msg);
+        loginError: false,
+        registerShow: false,
+      });
     }
   }
 
@@ -510,7 +280,7 @@ export default class Register extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
        
-      <div className="logindiv1 shadow">
+      <div className="logindiv1 shadow" style={{height: 495}}>
         <div className="back">
                 <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">
@@ -518,16 +288,18 @@ export default class Register extends React.Component {
                   </div>
                   <Spin tip="登录中..." spinning={this.props.submitting}>
                     <div className="row">
-                      <input className="put user" onKeyUp={(e) => this.pressKey(e)} value={loginPhone} maxLength={20}
-                            onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
-                            placeholder="手机号|用户名"/>
-                      <p className="prompts">{this.state.loginNameErr}</p>
-                      <p className="registration-prompts">该手机号已注册，<a onClick={() => this.props.history.push('./login')}>立即登录</a></p>
+                      <input className="put user" value={regPhone} maxLength={20}
+                            onChange={(e) => {this.setState({regPhone: e.target.value})}} name="loginPhone" type="tel"
+                            onBlur={()=>this.checkPhone()}
+                            placeholder="手机号"/>
+                      <p className="prompts">{this.state.regNameErr}</p>
+                        <p className="registration-prompts">{ !this.state.loginError ? '该手机号已注册，' : ''}
+                        <a onClick={() => this.props.history.push('./login')}>{ !this.state.loginError ? '立即登录':''}</a></p>
                     </div>
                     <div className="row relative" style={{marginTop:-10,marginBottom:30}}>
                       <input className="put vcode" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
                             placeholder="输入验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})}/>
-                      <p>{this.state.regAuthErr}</p>
+                      <p style={{color: 'red'}}>{this.state.regAuthErr}</p>
                       {// 根据倒计时时间显示是否可以点击获取验证码按钮
                         this.state.registerShow ?
                           ((showAuthCode) ?
@@ -537,10 +309,10 @@ export default class Register extends React.Component {
                       }
                     </div>
                     <div className="row">
-                      <input className="put pwd" onKeyUp={(e) => this.pressKey(e)} value={loginPwd} maxLength={16}
-                            name="loginPwd" type="password" onChange={(e) => this.setState({loginPwd: e.target.value})}
+                      <input className="put pwd" value={regPwd} maxLength={16}
+                            name="loginPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
                             placeholder="登录密码"/>
-                      <p className="prompts">{this.state.loginPwdErr}</p>
+                      <p className="prompts">{this.state.regPwdErr}</p>
                       <p className="registration-prompts">密码不可纯数字，区分大小写，8-15位字符</p>
                     </div>
                    
@@ -556,10 +328,11 @@ export default class Register extends React.Component {
                         <label className="fl"  style={{ marginLeft:17,color:'#949494'}}>
                           <i>已阅读并接受</i>
                           <a className="blue">注册协议</a>
+                          <span style={{color: 'red'}}>&nbsp; &nbsp;{this.state.textErr}</span>
                         </label>
                       </p>
                     <div style={{marginTop:45}}>
-                      <a className="btn" onClick={this.submitLogin}>注册</a>
+                      <a className="btn" onClick={this.submitReg}>注册</a>
                     </div>
                     <p className="safe-info">
                       <img src={require('../../assets/img/login/u30.png')} />
@@ -569,7 +342,7 @@ export default class Register extends React.Component {
                 </div> 
         </div>
         <div className="back_">
-          <img  src={require('../../assets/img/login/u94.jpg')} style={{width:484,height:483}} />
+          <img  src={require('../../assets/img/login/u94.jpg')} style={{width:484,height:495}} />
         </div>
       </div>
       
