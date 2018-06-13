@@ -680,12 +680,22 @@ export async function testSocket() {
 
 //忘记密码获取验证码及检验是否实名认证
 export async function fp_getCode(param) {
-  return request(`${BASE_URL}/zjb-website//userInfo/forgetPwd?loginName=${param}`);
+  return request(`${BASE_URL}/zjb-website/userInfo/forgetPwd?loginName=${param}`);
 }
 
 //忘记密码检验信息
 export async function fp_checkInfo(params) {
-  return request(`${BASE_URL}/zjb-website//userInfo/checkAuthCode`, {
+  return request(`${BASE_URL}/zjb-website/userInfo/checkAuthCode`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+//查询ip记录
+export async function getIPRecord(params) {
+  return request(`${BASE_URL}/zjb-website/login/rcord`, {
     method: 'POST',
     body: {
       ...params,

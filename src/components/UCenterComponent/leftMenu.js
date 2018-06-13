@@ -20,7 +20,7 @@ export default class LeftMenu extends React.Component {
                     <i className="zjb zjb-zhanghu"  style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i> 我的账户
                 </span>
                 <ul>
-                  <li> <Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'active'} to={Path.PERSONAL_ACCOUNT}>账户总览</Link></li>
+                  <li><Link className={path.indexOf(Path.PERSONAL_ACCOUNT)===-1?'':'active'} to={Path.PERSONAL_ACCOUNT}>账户总览</Link></li>
                   <li><Link className={path.indexOf(Path.MY_INVEST) ===-1?'':'active'} to={Path.MY_INVEST}>投资记录</Link></li>
                   <li><Link className={path.indexOf(Path.RECEIVE_PLAN) ===-1?'':'active'} to={Path.RECEIVE_PLAN}>回款计划</Link></li>
                   <li>资金流水</li>
@@ -37,7 +37,7 @@ export default class LeftMenu extends React.Component {
                 </span>
                 <ul>
                     <li><Link className={path.indexOf(Path.REALNAME_AUTHENTICATION)===-1?'':'active'} to={Path.REALNAME_AUTHENTICATION}>实名认证</Link></li>
-                    <li>IP记录</li>
+                    <li><Link className={path.indexOf(Path.IPRECORD)===-1?'':'active'} to={Path.IPRECORD}>IP记录</Link></li>
                 </ul>
              </li>
              <li>
