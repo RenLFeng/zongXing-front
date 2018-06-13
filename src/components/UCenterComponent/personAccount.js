@@ -6,7 +6,7 @@ import Path from '../../common/pagePath';
 import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
-import { Modal, Button } from 'antd';
+import { Modal, Button,Table } from 'antd';
 import Coupon from '../common/Coupon';
 import '../../assets/personal/personal.scss';
 
@@ -147,7 +147,7 @@ export default class PersonAccount extends React.Component {
           fuser_place:'西安',
           fend_time_str:'2018年12月30日',
           flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-          fsurplus_num:9, 
+          fsurplus_num:9,
           ffalg:5
         }, {
           fproject_no:'P18060007',
@@ -159,11 +159,69 @@ export default class PersonAccount extends React.Component {
           fuser_place:'西安',
           fend_time_str:'2018年12月30日',
           flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-          fsurplus_num:9, 
+          fsurplus_num:9,
           ffalg:1
         }
-      ]
+      ],
+      showType: 'biaoge',
+      reMoneyList: [{name: 1}, {name: 2}]
     };
+    this.reMoneyColumn = [
+      {
+        align: 'center',
+        title: '序号',
+        className: 'per_table_font',
+        width: '5%'
+      },
+      {
+        align: 'center',
+        title: '回款日期',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '项目名称',
+        className: 'per_table_font',
+        width: '12%'
+      },
+      {
+        align: 'center',
+        title: '本金',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '利息',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '佣金',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '当期回款总额',
+        className: 'per_table_font',
+        width: '12%'
+      },
+      {
+        align: 'center',
+        title: '回款状态',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '项目编号',
+        className: 'per_table_font',
+        width: '12%'
+      },
+    ];
     this.jumpRecharge = this.jumpRecharge.bind(this);
   }
 
@@ -179,25 +237,25 @@ export default class PersonAccount extends React.Component {
     });
   };
 
-  getInitData() { 
+  getInitData() {
     this.props.dispatch({
       type: 'account/getPersonalAccount',
       payload:{
         showNumInfo:4,
         jumpAuth:()=>this.jumpAuth()
       }
-    }); 
+    });
   }
 
   jumpAuth() {
     var that = this;
     Modal.info({
-      title: '您目前还没有开户，请先开户！', 
+      title: '您目前还没有开户，请先开户！',
       okText:'去开户',
       onOk() {
         that.props.history.push('/index/uCenter/realName')
       },
-    }); 
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -351,7 +409,7 @@ export default class PersonAccount extends React.Component {
       return (
         <div>
           <LeftMenu param={this.props}/>
-          <div className="fr uc-rbody">
+          <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30,width: 850}}>
             <span>您还没有开通个人账户，开通 <Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
         </div>
@@ -360,19 +418,19 @@ export default class PersonAccount extends React.Component {
       return (
         <div>
           <LeftMenu param={this.props}/>
-          <div className="fr uc-rbody">
+          <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30,width: 850}}>
             <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
           </div>
-        </div> 
+        </div>
       );
     } else if (openStatus === 2) {
       return (
         <div>
           <LeftMenu param={this.props}/>
-          <div className="fr uc-rbody">
+          <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding:30,width: 850}}>
             <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
-        </div> 
+        </div>
       );
     }
     return (
@@ -409,9 +467,9 @@ export default class PersonAccount extends React.Component {
           { this.state.couponList.length >0 ?
             <div className="per_account coupon_list" style={{marginTop: 30}}>
               <span className="tips">您有多少张优惠券待领取 有多少张优惠券即将过期</span>
-              {this.state.couponList.map((data)=>{
+              {this.state.couponList.map((data, index)=>{
                 return (
-                  <Coupon data={data} hasLine='true' handlerBtnClick={(id,data)=>{
+                  <Coupon key={index} data={data} hasLine='true' handlerBtnClick={(id,data)=>{
                     console.log(id);
                     console.log(data);
                     }}/>
@@ -419,45 +477,71 @@ export default class PersonAccount extends React.Component {
               })}
             </div> : null
           }
-          <div className="hd2 clearfix">
-            <a className="fl hover">回款计划</a>
-            {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}
-            <Link className="fr" to={Path.RECEIVE_PLAN}>更多 &gt;&gt;</Link>
-          </div>
-          <div>
-            <LineReact height="450px" width="900px" option={this.state.lineOption}/>
-          </div>
-
-          <div className="hd3">
-            <a className="fl">资金动态</a>
-            <Link className="fr" to={Path.MORE_INFO}>查看更多 &gt;&gt;</Link>
-          </div>
-          <div>
-            <div className="timetree">
-              <div className="end"/>
-              <div className="list">
-                {
-                  this.props.personal.accountDynamicVos.map((data,index) => {
-                    let year_ = moment(data.time).format('YYYY');
-                    let month = moment(data.time).format('MM-DD');
-                    return(
-                      <div className="item" key={index}>
-                        <p className="date">
-                          <i className="y">{year_}</i><br /><i className="d">{month}</i>
-                        </p>
-                        <i className="cc"/>
-                        <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
-                      </div>
-                    );
-                  })
-                }
+          {/* 回款计划 */}
+          <div className="per_account" style={{marginTop: 30}}>
+            <div className="return_money">
+              <em>回款计划</em>
+              <span>更多>></span>
+            </div>
+            <div className="return_money_desc" style={{marginTop: 20}}>
+              <span>待收总额：172,581.00 &nbsp;&nbsp; 待收本金：170,000.00 &nbsp;&nbsp; 待收利息：2581.00</span>
+              <div className="icon_btn">
+                <i className={`zjb zjb-biaoge btn ${this.state.showType==='biaoge'?'orange_font':''}`} style={{fontSize: 20,marginRight: 10}} onClick={()=>this.setState({showType: 'biaoge'})}/>
+                <i className={`zjb zjb-shuju01 btn ${this.state.showType==='shuju'?'orange_font':''}`} style={{fontSize: 22}} onClick={()=>this.setState({showType: 'shuju'})}/>
               </div>
-              <div className="start"/>
+              { this.state.showType === 'shuju'?
+                <div style={{marginTop: 20}}>
+                  <LineReact height="450px" width="900px" option={this.state.lineOption}/>
+                </div> :
+                <div className="table_div">
+                  <Table
+                    dataSource={this.state.reMoneyList}
+                    columns={this.reMoneyColumn}
+                    bordered
+                    size="small"
+                    scroll={{y: 300}}
+                    pagination={{
+                      showTotal: (total, range)=>{
+                        return <span className="table_count_text">展示多少调数据</span>
+                      }
+                    }}
+                  />
+                </div>
+              }
+            </div>
+
+
+            <div className="hd3">
+              <a className="fl">资金动态</a>
+              <Link className="fr" to={Path.MORE_INFO}>查看更多 &gt;&gt;</Link>
+            </div>
+            <div>
+              <div className="timetree">
+                <div className="end"/>
+                <div className="list">
+                  {
+                    this.props.personal.accountDynamicVos.map((data,index) => {
+                      let year_ = moment(data.time).format('YYYY');
+                      let month = moment(data.time).format('MM-DD');
+                      return(
+                        <div className="item" key={index}>
+                          <p className="date">
+                            <i className="y">{year_}</i><br /><i className="d">{month}</i>
+                          </p>
+                          <i className="cc"/>
+                          <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+                <div className="start"/>
+              </div>
             </div>
           </div>
         </div>
       </div>
-     
+
     );
   }
 }

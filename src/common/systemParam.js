@@ -38,7 +38,7 @@ if (build === 'production') {
   TURN_BACK = 'http://192.168.1.192:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
   LIMIT_MOENY = false;
   AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
-  SOCKET_URL = 'http://192.168.1.36:8899';
+  SOCKET_URL = 'http://192.168.1.4:8001';
 }
 
 // 导出环境变量配置
@@ -52,7 +52,6 @@ export const AUTH_PAGE_URL = `http://${window.location.host}/#/index/uCenter/saf
 
 // 手机号验证正则
 export const VER_PHONE = /^1([38][0-9]|5[012356789]|4[579]|7[0135678]|9[89])[0-9]{8}$/;
-
 // 身份证号正则
 export const ID_CORD = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
 
@@ -130,6 +129,9 @@ export const MONEY_REG_ = /[2-9](\.\d*[1-9]){1}|[1-9]\d+(\.\d*[1-9])?$/
 
 // 大于1 带小数
 export const MONEY1_REG_ = /[1-9](\.\d*[1-9]){1}|[1-9]\d+(\.\d*[1-9])?$/;
+
+//身份证号
+export const CARD_REG = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
 
 //一天多少秒
 const DATE_SECONDS = 86400;

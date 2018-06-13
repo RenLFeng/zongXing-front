@@ -677,3 +677,18 @@ export async function unbindBankCard(params) {
 export async function testSocket() {
   return request(`${BASE_URL}/zjb-dc/test/socket`)
 }
+
+//忘记密码获取验证码及检验是否实名认证
+export async function fp_getCode(param) {
+  return request(`${BASE_URL}/zjb-website//userInfo/forgetPwd?loginName=${param}`);
+}
+
+//忘记密码检验信息
+export async function fp_checkInfo(params) {
+  return request(`${BASE_URL}/zjb-website//userInfo/checkAuthCode`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
