@@ -120,3 +120,71 @@
 
 }
 
+.per_account {
+  background-color: #fff;
+  padding: 30px;
+  .return_money {
+    border-bottom: 1px dashed #c9c9c9;
+    em {
+      font-size: 22px;
+      color: #333;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+    span {
+      float: right;
+      margin-top: 10px;
+    }
+  }
+  .return_money_desc {
+    margin-top: 15px;
+    clear: both;
+    span {
+      color: #ff9900;
+      display: inline-block;
+      margin-top: 5px;
+      
+    }
+    .orange_font {
+      color: #ff9900;
+    }
+    .icon_btn {
+      float: right;
+      right: 0px;
+      display: inline-block;
+      .btn {
+        z-index: 999;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.table_count_text {
+  position: absolute;
+  left: 0;
+  color: #333;
+}
+
+.per_table_font > span {
+  color: #333 !important;
+}
+
+.table_div {
+  margin-top: 50px;
+  .ant-table {
+    overflow: visible;
+  }
+}
+
+.coupon_list {
+  .tips {
+    color: #c9c9c9;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .cp-coupon-content:nth-child(even) {
+    margin-right: 80px;
+  }
+}
+

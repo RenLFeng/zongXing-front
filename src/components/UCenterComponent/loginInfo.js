@@ -4,60 +4,67 @@ import {Button, Divider} from 'antd';
 
 @connect((state) => ({
     nickName: state.login.nickName,
-    baseData: state.login.baseData
+    baseData: state.login.baseData,
+    status: state.login.status,
 }))
 class LoginInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            nickName:'测试',
-            isLogin:true,
+            realName:'屈云峰',
          }
     } 
+
     render() { 
-			const {baseData} = this.props
+        const {baseData} = this.props
         return ( 
             <div>
                     {
-                    this.state.isLogin ?  <div className="w">
+                    this.props.status ?  <div className="w">
                     <div className="uc-tbody clearfix"> 
                         {/* 用户头像 */}
-                        <a className="fl"><img className="av" src={require('../../assets/img/ucenter/av1.png')} /></a>
+                        <a className="fl">
+                            <img className="av" src={require('../../assets/img/ucenter/av1.png')} />
+                        </a>
                         {/* 用户信息 */}
                         <div className="fl">
                             {/* 用户名 */}
-                            <p className="t1"><span>用户昵称</span><span className="split">|</span>{this.state.nickName}</p> 
+                            <p className="t1">
+                                <span>用户名(系统默认自动成功)</span>
+                                <span className="split">|</span>
+                                {this.props.nickName}  
+                                <a onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a> 
+                            </p> 
                             <p className="uinfo" style={{position: 'relative'}}>
-                                <span>赵妮沙</span>
+                                <span>{baseData.userSecurityCenter.fCertification?baseData?baseData.realName:'未认证':'未认证'}</span>
                                 <span className="split">|</span> 
                                 <i title="绑定手机号" className="zjb zjb-shouji-copy" style={baseData.userSecurityCenter.fMobileBinding?{color:'#f90'}:null}></i>
                                 <i title="身份证认证" className="zjb zjb-shenfenrenzheng" style={baseData.userSecurityCenter.fCertification?{color:'#f90',fontSize: 20}:{fontSize: 20}}></i> 
                                 <i title="银行卡绑定" className="zjb zjb-icon" style={baseData.userSecurityCenter.fBankCardBinding?{color:'#f90',fontSize: 18}:{fontSize: 18}}></i>
                             </p>
-                            
                         </div>
-                        <div className="fr">
-                            {/* 去除退出系统按钮 */}
-                            {/* <p style={{display:'none'}}>  
-                                <a style={{color: 'blue'}} onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a>
-                            </p> */}
-                            <p>  
-                                <a style={{color: 'blue'}} onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a>
-                            </p>
-                            <div className="account-content">
-                                <p>待领取代金券</p>
-                                <p className="account-money">{baseData.countCoupon}张</p>
-                            </div >
+                        <div className="fr"> 
+                            {
+                                baseData.countCoupon?<div className="account-content">
+                                    <p>待领取代金券</p>
+                                    <p className="account-money">{baseData.countCoupon}张</p>
+                                </div >:null
+                            } 
                             <i></i>
-                            <div className="account-content">
-                                <p>券额</p>
-                                <p className="account-money">￥{`${baseData.sumCoupon}`.fm()}</p>
-                            </div>
+                            {
+                                baseData.sumCoupon? <div className="account-content">
+                                    <p>券额</p>
+                                    <p className="account-money">￥{`${baseData.sumCoupon}`.fm()}</p>
+                                </div>:null
+                            } 
                             <i></i>
-                            <div className="account-content" style={{borderRight:'0px'}}>
-                                <p>可用资金余额</p>
-                                <p className="account-money">￥{`${baseData.balance}`.fm()}</p>
-                            </div>
+                            {
+                               baseData.balance?<div className="account-content" style={{borderRight:'0px'}}>
+                                    <p>可用资金余额</p>
+                                    <p className="account-money">￥{`${baseData.balance}`.fm()}</p>
+                                </div>:null
+                            }
+                            
                         </div>  
                     </div>
                     <div className="uc-message">

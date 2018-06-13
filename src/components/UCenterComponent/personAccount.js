@@ -6,7 +6,9 @@ import Path from '../../common/pagePath';
 import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Table } from 'antd';
+import Coupon from '../Coupon/Coupon';
+import '../../assets/personal/personal.scss';
 
 @connect((state)=>({
   personal: state.account.personal,
@@ -134,7 +136,92 @@ export default class PersonAccount extends React.Component {
           }
         }]
       },
+      couponList: [
+        {
+          fproject_no:'P18060007',
+          fid:2,
+          ffull_sub_condition:100,
+          ffull_sub_money:30,
+          fname:'陕西魏家凉皮优惠券',
+          fbus_type:'xfw',
+          fuser_place:'西安',
+          fend_time_str:'2018年12月30日',
+          flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
+          fsurplus_num:9, 
+          ffalg:5
+        }, {
+          fproject_no:'P18060007',
+          fid:2,
+          ffull_sub_condition:100,
+          ffull_sub_money:30,
+          fname:'陕西魏家凉皮优惠券',
+          fbus_type:'xfw',
+          fuser_place:'西安',
+          fend_time_str:'2018年12月30日',
+          flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
+          fsurplus_num:9, 
+          ffalg:1
+        }
+      ],
+      showType: 'biaoge',
+      reMoneyList: [{name: 1}, {name: 2}]
     };
+    this.reMoneyColumn = [
+      {
+        align: 'center',
+        title: '序号',
+        className: 'per_table_font',
+        width: '5%'
+      },
+      {
+        align: 'center',
+        title: '回款日期',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '项目名称',
+        className: 'per_table_font',
+        width: '12%'
+      },
+      {
+        align: 'center',
+        title: '本金',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '利息',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '佣金',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '当期回款总额',
+        className: 'per_table_font',
+        width: '12%'
+      },
+      {
+        align: 'center',
+        title: '回款状态',
+        className: 'per_table_font',
+        width: '8%'
+      },
+      {
+        align: 'center',
+        title: '项目编号',
+        className: 'per_table_font',
+        width: '12%'
+      },
+    ];
     this.jumpRecharge = this.jumpRecharge.bind(this);
   }
 
@@ -322,7 +409,7 @@ export default class PersonAccount extends React.Component {
       return (
         <div>
           <LeftMenu param={this.props}/>
-          <div className="fr uc-rbody">
+          <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30,width: 850}}>
             <span>您还没有开通个人账户，开通 <Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
         </div>
@@ -331,7 +418,7 @@ export default class PersonAccount extends React.Component {
       return (
         <div>
           <LeftMenu param={this.props}/>
-          <div className="fr uc-rbody">
+          <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30,width: 850}}>
             <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
           </div>
         </div> 
@@ -340,7 +427,7 @@ export default class PersonAccount extends React.Component {
       return (
         <div>
           <LeftMenu param={this.props}/>
-          <div className="fr uc-rbody">
+          <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding:30,width: 850}}>
             <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
         </div> 
@@ -349,74 +436,108 @@ export default class PersonAccount extends React.Component {
     return (
       <div>
         <LeftMenu param={this.props}/>
-        <div className="fr uc-rbody">
-          <div className="ptit">
-            <i>账户总资产</i>
-            <b>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</b>
-            <em>单位：元</em>
-          </div>
-          <div className="tright hd1">
-            <a className="fl" style={{cursor: 'default'}}>
-              <i>累计充值</i>
-              <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
-            </a>
-            <a className="fl" style={{cursor: 'default'}}>
-              <i>累计提现</i>
-              <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
-            </a>
-            <a className="btn btn1" onClick={()=>this.jumpRecharge(this.props.personal.totalAssets.accountId)}>充值</a>
-            <a className="btn btn2" onClick={()=>this.jumpRecharge_(this.props.personal.totalAssets.accountId)}>提现</a>
-            {/*<a className="btn btn3">好友转账</a>*/}
-          </div>
-          <div className="border shadow box1">
-            <div className="pieDiv">
-              <div>
-                <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</span>
-                <span style={{fontSize: '14px'}}>账户总资产</span>
+        <div className="fr uc-rbody" style={{backgroundColor: '#F5F5F5',padding: 0}}>
+          <div className="per_account">
+            <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>
+              <i>账户总资产</i>
+              <b>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</b>
+              <em>单位：元</em>
+            </div>
+            <div className="tright hd1">
+              <a className="fl" style={{cursor: 'default'}}>
+                <i>累计充值</i>
+                <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
+              </a>
+              <a className="fl" style={{cursor: 'default'}}>
+                <i>累计提现</i>
+                <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
+              </a>
+            </div>
+            <div className="border shadow box1" style={{marginTop: 90}}>
+              <div className="pieDiv">
+                <div>
+                  <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</span>
+                  <span style={{fontSize: '14px'}}>账户总资产</span>
+                </div>
               </div>
-            </div>
-            <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
-            <div className="coupon">
-              <i className="c6">代金券</i>
-              <i className="fr">{(this.props.personal.totalAssets.capitalCoupon+'').fm()}</i>
+              <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
             </div>
           </div>
-
-          <div className="hd2 clearfix">
-            <a className="fl hover">回款计划</a>
-            {/*<i className="fl">|</i><a className="fl hover">还款计划</a>*/}
-            <Link className="fr" to={Path.RECEIVE_PLAN}>更多 &gt;&gt;</Link>
-          </div>
-          <div>
-            <LineReact height="450px" width="900px" option={this.state.lineOption}/>
-          </div>
-
-          <div className="hd3">
-            <a className="fl">资金动态</a>
-            <Link className="fr" to={Path.MORE_INFO}>查看更多 &gt;&gt;</Link>
-          </div>
-          <div>
-            <div className="timetree">
-              <div className="end"/>
-              <div className="list">
-                {
-                  this.props.personal.accountDynamicVos.map((data,index) => {
-                    let year_ = moment(data.time).format('YYYY');
-                    let month = moment(data.time).format('MM-DD');
-                    return(
-                      <div className="item" key={index}>
-                        <p className="date">
-                          <i className="y">{year_}</i><br /><i className="d">{month}</i>
-                        </p>
-                        <i className="cc"/>
-                        <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
-                      </div>
-                    );
-                  })
-                }
+          {/* 未领取优惠券 */}
+          { this.state.couponList.length >0 ?
+            <div className="per_account coupon_list" style={{marginTop: 30}}>
+              <span className="tips">您有多少张优惠券待领取 有多少张优惠券即将过期</span>
+              {this.state.couponList.map((data, index)=>{
+                return (
+                  <Coupon key={index} data={data} hasLine='true' handlerBtnClick={(id,data)=>{
+                    console.log(id);
+                    console.log(data);
+                    }}/>
+                );
+              })}
+            </div> : null
+          }
+          {/* 回款计划 */}
+          <div className="per_account" style={{marginTop: 30}}>
+            <div className="return_money">
+              <em>回款计划</em>
+              <span>更多>></span>
+            </div>
+            <div className="return_money_desc" style={{marginTop: 20}}>
+              <span>待收总额：172,581.00 &nbsp;&nbsp; 待收本金：170,000.00 &nbsp;&nbsp; 待收利息：2581.00</span>
+              <div className="icon_btn">
+                <i className={`zjb zjb-biaoge btn ${this.state.showType==='biaoge'?'orange_font':''}`} style={{fontSize: 20,marginRight: 10}} onClick={()=>this.setState({showType: 'biaoge'})}/>
+                <i className={`zjb zjb-shuju01 btn ${this.state.showType==='shuju'?'orange_font':''}`} style={{fontSize: 22}} onClick={()=>this.setState({showType: 'shuju'})}/>
               </div>
-              <div className="start"/>
+              { this.state.showType === 'shuju'?
+                <div style={{marginTop: 20}}>
+                  <LineReact height="450px" width="900px" option={this.state.lineOption}/>
+                </div> : 
+                <div className="table_div">
+                  <Table
+                    dataSource={this.state.reMoneyList}
+                    columns={this.reMoneyColumn}
+                    bordered
+                    size="small"
+                    scroll={{y: 300}}
+                    pagination={{
+                      showTotal: (total, range)=>{
+                        return <span className="table_count_text">展示多少调数据</span>
+                      }
+                    }} 
+                  />
+                </div>
+              }
             </div>
+            
+
+            <div className="hd3">
+              <a className="fl">资金动态</a>
+              <Link className="fr" to={Path.MORE_INFO}>查看更多 &gt;&gt;</Link>
+            </div>
+            <div>
+              <div className="timetree">
+                <div className="end"/>
+                <div className="list">
+                  {
+                    this.props.personal.accountDynamicVos.map((data,index) => {
+                      let year_ = moment(data.time).format('YYYY');
+                      let month = moment(data.time).format('MM-DD');
+                      return(
+                        <div className="item" key={index}>
+                          <p className="date">
+                            <i className="y">{year_}</i><br /><i className="d">{month}</i>
+                          </p>
+                          <i className="cc"/>
+                          <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+                <div className="start"/>
+              </div>
+            </div>  
           </div>
         </div>
       </div>

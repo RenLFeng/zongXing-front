@@ -38,7 +38,7 @@ if (build === 'production') {
   TURN_BACK = 'http://192.168.1.192:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
   LIMIT_MOENY = false;
   AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
-  SOCKET_URL = 'http://192.168.1.36:8899';
+  SOCKET_URL = 'http://192.168.1.4:8001';
 }
 
 // 导出环境变量配置

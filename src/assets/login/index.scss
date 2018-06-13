@@ -225,8 +225,13 @@
 
 .back{
     background:  #fff ;
+<<<<<<< .mine
     width:603px;
     height:544px;
+=======
+    width:484px;
+    height:495px;
+>>>>>>> .theirs
     display: inline-block;
     .forget{
         position: relative;
@@ -237,8 +242,13 @@
 .back_{
     position: absolute;
     background:  #D3D3D3 ;
+<<<<<<< .mine
     width:603px;
     height:544px;
+=======
+    width:484px;
+    height:495px;
+>>>>>>> .theirs
     top:0px;
     left:597px;
     p{
@@ -296,13 +306,22 @@
     //     color: #fff;
     //     background-color: #169BD5 !important;
     //     border-color: #169BD5 !important;
-    // } 
+    // } slider
+    
     .forget_title{
+<<<<<<< .mine
         // font-size: 28px;
         padding: 33px 0 0 19px;
         border-bottom: 2px dashed #e6e6e6;
         width:1157px;
         margin: auto;
+=======
+        font-size: 28px;
+        padding: 30px 30px 0 30px;
+        border-bottom: 2px solid #FF9900;
+        margin: auto 20px auto 20px;
+
+>>>>>>> .theirs
         height: 32px;
         font-family: MicrosoftYaHeiUI;
         font-size: 20px;
@@ -325,13 +344,39 @@
         }
         
     }
+
     .forget_form{
         width:300px;
         margin: 65px auto 0 auto;
+        .slider-div {
+            // width: 300px;
+            // height: 42px;
+            // border: 1px solid #e4e4e4;
+            .ant-slider {
+                border: 1px solid #e4e4e4;
+                height: 42px;
+            }
+            .ant-slider-rail {
+                height: 42px;
+            }
+            .ant-slider-track {
+                height: 42px;
+                border-radius: 0px;
+            }
+            .ant-slider-step {
+                position: static;
+            }
+            .ant-slider-handle {
+                width: 30px;
+                height: 42px;
+                border-radius: 0px;
+            }
+        }
         .forget_inp{
             position: relative;
             margin-top: 20px;
             height:41px;
+            
             Input{
                 padding-left: 35px;
                 height:41px;

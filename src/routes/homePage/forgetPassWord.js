@@ -2,6 +2,7 @@ import React from 'react';
 import '../../assets/login/index.scss';
 import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_} from '../../common/systemParam';
 import {connect} from 'dva';
+
 import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
 import {phoneExist, getAuthCode, regUser, changePW,  changePassword, relieveAccountAjax, fp_getCode, fp_checkInfo} from '../../services/api';
 
@@ -175,7 +176,7 @@ export default class ForgetPassWord extends React.Component {
     return (
       <div className="logindiv1 " >
         <div className="forget_page" style={{width:1197}}>
-          <p className="forget_title">找回登陆密码</p>
+          <p className="forget_title">找回登录密码</p>
           <div className="forget_btnGroup">
             <Steps current={this.state.currentNum}>
               <Step title="验证手机"  />
@@ -195,10 +196,8 @@ export default class ForgetPassWord extends React.Component {
               <p className="prompts" style={{marginBottom:5,color:'red'}}>{this.state.prompt}</p>
               <p className="forget-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
 
-              <div className="forget_inp">
-                <div className="slider">
-
-                </div>
+              <div className="slider-div">
+                <Slider />
               </div>
               {
                 this.state.firstClick ? 
