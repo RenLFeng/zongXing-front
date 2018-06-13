@@ -52,7 +52,6 @@ export const AUTH_PAGE_URL = `http://${window.location.host}/#/index/uCenter/saf
 
 // 手机号验证正则
 export const VER_PHONE = /^1([38][0-9]|5[012356789]|4[579]|7[0135678]|9[89])[0-9]{8}$/;
-
 // 身份证号正则
 export const ID_CORD = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
 
