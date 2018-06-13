@@ -204,9 +204,6 @@ export default class Login extends React.Component {
                           忘记密码?
                         </a>
                     </div>
-                    {/* <p className="tright"> */}
-                        
-                      {/* </p> */}
                     <div style={{marginTop:89}}>
                       <a className="btn" onClick={this.submitLogin}>登录</a>
                     </div>
@@ -214,15 +211,10 @@ export default class Login extends React.Component {
                       <img src={require('../../assets/img/login/u30.png')} />
                       您的信息已使用SSL加密技术，数据传输安全
                     </p>
-                    {/* <div className="forget"> */}
-                      
-                    {/* </div> */}
                   </Spin>
                 </div> 
         </div>
         <div className="back_">
-          {/* <p>直接投资中国小微企业</p>
-          <p>真正助力小微企业成长</p> */}
           <img src={require('../../assets/img/登陆_03.png')} />
         </div>
       </div>

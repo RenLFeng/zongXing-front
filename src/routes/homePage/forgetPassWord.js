@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../assets/login/index.scss';
-import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_} from '../../common/systemParam';
+import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_,CARD_REG} from '../../common/systemParam';
 import {connect} from 'dva';
 
 import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
@@ -55,10 +55,14 @@ export default class ForgetPassWord extends React.Component {
     if (phoneNum.length === 0) {
       this.setState({prompt: '请输入手机号'});
       return;
+    } else {
+      this.setState({prompt: ''});
     }
     if (!VER_PHONE.test(phoneNum)) {
       this.setState({prompt: '请输入正确的手机号'});
       return;
+    } else {
+      this.setState({prompt: ''});
     }
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await phoneExist(phoneNum);
@@ -117,6 +121,16 @@ export default class ForgetPassWord extends React.Component {
 
 //校验用户信息
   async fp_checkInfo(){
+    if(!CARD_REG.test(this.state.idCard)){
+       this.setState({
+        id_prompt:'身份证格式不正确'
+       })
+       return;
+    } else {
+      this.setState({
+        id_prompt:''
+       })
+    }
     let params = {
        mobile:this.state.firstPhone,
        authCode:this.state.code,
@@ -196,8 +210,8 @@ export default class ForgetPassWord extends React.Component {
               <p className="prompts" style={{marginBottom:5,color:'red'}}>{this.state.prompt}</p>
               <p className="forget-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
 
-              <div className="slider-div">
-                <Slider />
+              <div className="slider">
+          
               </div>
               {
                 this.state.firstClick ? 
@@ -229,6 +243,7 @@ export default class ForgetPassWord extends React.Component {
                     <Input placeholder="请输入身份证号"  value={idCard} onChange={(e)=>{this.setState({idCard:e.target.value})}} />
                     <img alt="" src={require('../../assets/img/u192.png')} className="forget_phone"/>
                   </div>
+                  <p className="prompts" style={{marginBottom:5,color:'red'}}>{this.state.id_prompt}</p>
                 </div> :null
               }
               

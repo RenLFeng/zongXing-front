@@ -225,13 +225,8 @@
 
 .back{
     background:  #fff ;
-<<<<<<< .mine
     width:603px;
     height:544px;
-=======
-    width:484px;
-    height:495px;
->>>>>>> .theirs
     display: inline-block;
     .forget{
         position: relative;
@@ -242,13 +237,8 @@
 .back_{
     position: absolute;
     background:  #D3D3D3 ;
-<<<<<<< .mine
     width:603px;
     height:544px;
-=======
-    width:484px;
-    height:495px;
->>>>>>> .theirs
     top:0px;
     left:597px;
     p{
@@ -309,19 +299,11 @@
     // } slider
     
     .forget_title{
-<<<<<<< .mine
         // font-size: 28px;
         padding: 33px 0 0 19px;
         border-bottom: 2px dashed #e6e6e6;
         width:1157px;
         margin: auto;
-=======
-        font-size: 28px;
-        padding: 30px 30px 0 30px;
-        border-bottom: 2px solid #FF9900;
-        margin: auto 20px auto 20px;
-
->>>>>>> .theirs
         height: 32px;
         font-family: MicrosoftYaHeiUI;
         font-size: 20px;
@@ -401,12 +383,13 @@
                 padding-left:10px;
                 color:white !important;
             }
-            .slider{
-                border:1px solid red;
-                width:300px;
-                height:41px;
-                background: #E8E8E8;
-            }
+           
+        }
+        .slider{
+            border:1px solid red;
+            width:300px;
+            height:41px;
+            background: #E8E8E8;
         }
         .forget-prompts{
             color: #868686 !important;
