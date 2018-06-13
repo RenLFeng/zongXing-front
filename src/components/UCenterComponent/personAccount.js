@@ -7,7 +7,7 @@ import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import { Modal, Button } from 'antd';
-import Coupon from '../Coupon/Coupon';
+import Coupon from '../common/Coupon';
 import '../../assets/personal/personal.scss';
 
 @connect((state)=>({

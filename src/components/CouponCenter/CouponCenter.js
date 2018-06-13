@@ -3,7 +3,7 @@ import React from 'react';
 import Path from '../../common/pagePath'; 
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import '../../assets/couponCenter/couponcenter.scss';
-import Coupon from '../Coupon/Coupon';
+import Coupon from '../common/Coupon';
 import {Button} from 'antd';
 
 class CouponCenter extends React.Component {
