@@ -6,8 +6,8 @@ import Path from '../../common/pagePath';
 import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
-import { Modal, Button, Table } from 'antd';
-import Coupon from '../Coupon/Coupon';
+import { Modal, Button,Table } from 'antd';
+import Coupon from '../common/Coupon';
 import '../../assets/personal/personal.scss';
 
 @connect((state)=>({
@@ -147,7 +147,7 @@ export default class PersonAccount extends React.Component {
           fuser_place:'西安',
           fend_time_str:'2018年12月30日',
           flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-          fsurplus_num:9, 
+          fsurplus_num:9,
           ffalg:5
         }, {
           fproject_no:'P18060007',
@@ -159,7 +159,7 @@ export default class PersonAccount extends React.Component {
           fuser_place:'西安',
           fend_time_str:'2018年12月30日',
           flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-          fsurplus_num:9, 
+          fsurplus_num:9,
           ffalg:1
         }
       ],
@@ -237,25 +237,25 @@ export default class PersonAccount extends React.Component {
     });
   };
 
-  getInitData() { 
+  getInitData() {
     this.props.dispatch({
       type: 'account/getPersonalAccount',
       payload:{
         showNumInfo:4,
         jumpAuth:()=>this.jumpAuth()
       }
-    }); 
+    });
   }
 
   jumpAuth() {
     var that = this;
     Modal.info({
-      title: '您目前还没有开户，请先开户！', 
+      title: '您目前还没有开户，请先开户！',
       okText:'去开户',
       onOk() {
         that.props.history.push('/index/uCenter/realName')
       },
-    }); 
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -421,7 +421,7 @@ export default class PersonAccount extends React.Component {
           <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30,width: 850}}>
             <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
           </div>
-        </div> 
+        </div>
       );
     } else if (openStatus === 2) {
       return (
@@ -430,7 +430,7 @@ export default class PersonAccount extends React.Component {
           <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding:30,width: 850}}>
             <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
-        </div> 
+        </div>
       );
     }
     return (
@@ -492,7 +492,7 @@ export default class PersonAccount extends React.Component {
               { this.state.showType === 'shuju'?
                 <div style={{marginTop: 20}}>
                   <LineReact height="450px" width="900px" option={this.state.lineOption}/>
-                </div> : 
+                </div> :
                 <div className="table_div">
                   <Table
                     dataSource={this.state.reMoneyList}
@@ -504,12 +504,12 @@ export default class PersonAccount extends React.Component {
                       showTotal: (total, range)=>{
                         return <span className="table_count_text">展示多少调数据</span>
                       }
-                    }} 
+                    }}
                   />
                 </div>
               }
             </div>
-            
+
 
             <div className="hd3">
               <a className="fl">资金动态</a>
@@ -537,11 +537,11 @@ export default class PersonAccount extends React.Component {
                 </div>
                 <div className="start"/>
               </div>
-            </div>  
+            </div>
           </div>
         </div>
       </div>
-     
+
     );
   }
 }

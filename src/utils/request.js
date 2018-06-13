@@ -147,8 +147,7 @@ export const req={
           return response.json();
         })
     },
-    post:(url, param)=>{ 
-      debugger
+    post:(url, param)=>{  
       if(url.substring(0,1)=='/'){
         url = BASE_URL+url;
       }else{

@@ -1,5 +1,5 @@
 import React from 'react';
-import './coupon.scss';
+import '../../assets/component/common/coupon.scss';
 import {Button} from 'antd';
 import moment from 'moment';
 
@@ -14,56 +14,63 @@ class Coupon extends React.Component {
     //     fsurplus_num:0,//剩余数量（待领取时用）
     //     fuser_place:'',//使用地点  
     //     fbus_type :'other', //行业
-    //     ffalg:1  //1:待领取  2：待生效  3:待消费  4：已使用  5：已失效
-    //   } 
-
+    //      countNum:0,//张数，
+    //     fflag:1  //1:待领取  2：待生效  3:待消费  4：已使用  5：已失效
+    //   }  
     // hasLine:是否存在线
     // handlerBtnClick:点击按钮回调事件，返回id，数据
-  
+    
+
     constructor(props) {
         super(props);   
+        this.renderData(props);
+    }
+
+    componentWillReceiveProps(props){
+        this.renderData(props);
+    }
+
+    renderData(props){
         let couponData  = {}
         if(props.data){
            couponData =  props.data;
-        } 
-    
+        }  
+        let canEdit= false; 
+        if(couponData.fflag==0||couponData.fflag==2||couponData.fflag==3){
+            canEdit = true;
+        }
         let btnName = "";
-        let canEdit= false;
-        console.log(couponData.ffalg)
-        switch(couponData.ffalg){
+        switch(couponData.fflag){
+            case 0:
+                btnName ='待领取'; 
+                break;
             case 1:
-                btnName ='待领取';
-                canEdit = true;
+                btnName ='待生效'; 
                 break;
             case 2:
-                btnName ='待生效';
-                canEdit = false;
+                btnName ='待消费'; 
                 break;
             case 3:
-                btnName ='待消费';
-                canEdit = true;
+                btnName ='兑换券'; 
                 break;
             case 4:
-                btnName ='已使用';
-                canEdit = false;
+                btnName ='已使用'; 
                 break;
             case 5:
-                btnName ='已失效';
-                canEdit = false;
+                btnName ='已失效'; 
                 break;
             default:
-                btnName='';
-                canEdit = false;
+                btnName=''; 
                 break; 
-        } 
-
+        }   
         this.state = { 
             data: couponData,
-            defaultHead:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg',
             btnName:btnName,
+            defaultHead:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg', 
             canEdit:canEdit
          }; 
     }
+
     render() { 
         return ( 
             <div className='cp-coupon-content'>
@@ -96,15 +103,15 @@ class Coupon extends React.Component {
                         </ul> 
                     </div>
                     {/* 右 */}
-                    <div className={`cp-coupon-right  ${this.state.data.ffalg===5?(this.state.data.fbus_type+'-disable' || 'other-disable'):''}`}>
+                    <div className={`cp-coupon-right  ${this.state.data.fflag===5?(this.state.data.fbus_type+'-disable' || 'other-disable'):''}`}>
                         {/* 上 按钮 */}
                         { this.props.hasLine==='true'?
                         <div className={`staus-btn ${this.state.canEdit?'canClick':''}`} onClick={this.props.handlerBtnClick&&this.state.canEdit?this.props.handlerBtnClick.bind(this,this.state.data.fid,this.state.data):()=>{} }>
                             {this.state.btnName}
                         </div>:null
-                        }
+                        } 
                         {/* 下 张数 */}
-                        <span>共{this.state.data.fsurplus_num>0?this.state.data.fsurplus_num:1}张</span>
+                        <span>共{this.state.data.countNum>0?this.state.data.countNum:1}张</span>
                     </div>
                 </div>
                 <div className='btns'>

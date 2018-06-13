@@ -1,56 +1,22 @@
 import React from 'react';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/mycoupon.scss';
-import Coupon from '../Coupon/Coupon';
+import Coupon from '../common/Coupon';
 import {CouponService} from '../../services/api2';
 import { get } from 'http';
-import { Pagination } from 'antd';
-
-
-
-// {
-//     "code": 0,
-//     "msg": "查询我的优惠券成功",
-//     "data": {
-//       "money": 0,
-//       "allCount": 0,
-//       "list":[{
-//          fid,优惠券ID
-//           fname,优惠券名称
-//           ffull_sub_condition,满减条件
-//           ffull_sub_money,面值
-//           flogo_pic,企业logo
-//           fend_time,有效期截至日期
-//           fdesc,代金券说明
-//           fsurplus_num,剩余数量（待领取时用）
-//           fuser_place,使用地点
-//           fproject_no,项目编号
-//           freceive_time,领取时间
-//           ftype_color 颜色
-//        }]
-//     }
-//   }
-
-// money:总面值，allcount：总张数
-
-// {
-//     "flag":1,状态0.待领取， 1：待生效   2：正常  3：过期  4.已使用 
-//     "gainWays":1,获取方式：1.自己领取，2.兑换得到
-//     "pageParam":{
-//     "pageCurrent":1,当前页数
-//     "pageSize":10  每页条数
-//     }
-//     }
-
+import { Pagination} from 'antd';
+  
 class MyCoupon extends React.Component {
     // "flag":1,   状态   0.待领取， 1：待生效   2：正常  3:兑换券  4：过期  5.已使用 
     constructor(props){
         super(props); 
         this.state = {
-            activeFlag:0,
+            loading:true,
+            activeFlag:0, 
+            activemoney:0,//激活状态下的优惠券总额
             currPage:1,
-            pageSize:10,
-            totalPage:0,
+            pageSize:2,
+            totalNum:0,
             lables:[
                 {flag:0,lable:'待领取',val:0},
                 {flag:1,lable:'待生效',val:0},
@@ -59,8 +25,8 @@ class MyCoupon extends React.Component {
                 {flag:4,lable:'已使用',val:0},
                 {flag:5,lable:'已失效',val:0},
             ], 
-            couponCount:{
-                count: 0, //总数量
+            flagCount:0,
+            couponCount:{ 
                 allmoney: 0 , //总额度
                 canConvert: 0,// 可兑换额度
             },
@@ -81,12 +47,14 @@ class MyCoupon extends React.Component {
         }
     }
     componentWillMount(){
-        this.getSlelectItem();
+        this.getSlelectLable();
     }
-    async getSlelectItem(){ 
+    //获取顶部查询列表
+    async getSlelectLable(){ 
         //获取顶部标题数量
         let rest = await CouponService.getCouponCount();
-        if(rest.code===0){
+        if(rest.code===0){ 
+            console.log('获取顶部标题数量',rest.data);
             let temp = this.state.lables; 
             let  haveDataFlag = 0;
             if(rest.data.flagCount && rest.data.flagCount.length>0){
@@ -97,45 +65,58 @@ class MyCoupon extends React.Component {
                     }
                 });
             }
+            console.log('haveDataFlag',haveDataFlag);
             this.setState({
                 couponCount:rest.data.couponCount,
                 lables:temp,
                 activeFlag:haveDataFlag,
+            },()=>{
+                //获取我的优惠券
+                this.getCoupon();
             });
-            //获取我的优惠券
-            this.getCoupon(haveDataFlag);
         }
     }
-    //获取我的优惠券
-    async getCoupon(flag){ 
+    /**
+     * 获取我的优惠券
+     * @param {*} flag 
+     */
+    async getCoupon(){ 
         var param={ 
-            flag:flag, 
-            gainWays:flag==3?2:1,
+            flag:this.state.activeFlag,  
             pageParam:{
                 pageCurrent:this.state.currPage,//当前页数
                 pageSize:this.state.pageSize,//每页条数
             }
-        };
-        console.log(param);
+        }; 
         let rest = await CouponService.getCoupon(param);
-        if(rest.code===0){
-
+        if(rest.code===0){ 
+            console.log('CouponService',rest.data);
             //设置总页数
             this.setState({
-                 totalPage:Math.ceil(rest.data.totalNum/this.state.pageSize),
-                 data:rest.data.list,
-            });
-            console.log(rest.data.list)
+                totalNum:rest.data.totalNum,
+                data:rest.data.list,
+                activemoney:rest.data.money,
+            }); 
         }
     }
     //点击顶部标题
-    handlerLableClick(flag){
-        this.setState({
-            activeFlag:flag,
+    handlerLableClick(flag){  
+        this.setState({ 
+            activeFlag:flag, 
             currPage:1,//设置为第一页
-        });
-        //获取我的优惠券
-        this.getCoupon(flag);
+        },()=>{
+            //获取我的优惠券
+            this.getCoupon();
+        });  
+    }
+    handlerPageChange=(page)=>{
+        this.setState({  
+            currPage:page,//设置为第一页
+        },()=>{
+            //获取我的优惠券
+            this.getCoupon();
+        }); 
+        
     }
 
     render() { 
@@ -154,28 +135,28 @@ class MyCoupon extends React.Component {
                         </ul> 
                     </div> 
                     {/* 
-                    <Coupon  hasLine='false'></Coupon>*/}  
-                    <p className='sub-text'>
-                        <span>可用优惠券共 </span><span className='val'>{this.state.couponCount.count}张</span> 
-                        <span>优惠券总额度 </span><span className='val'>{this.state.couponCount.allmoney}元</span>
-                        <span>可兑换券总额度 </span><span className='val'>{this.state.couponCount.canConvert}元</span>
-                    </p>
+                    <Coupon  hasLine='false'></Coupon>*/} 
+                    {
+                         this.state.data.length >0 ?<p className='sub-text'> 
+                            <span>优惠券总额度 </span>
+                            <span className='val'>{String(this.state.activemoney).fm()}元</span> 
+                        </p>:null
+                    }
+                    
                     <div className='coupon-list'>
                         {
-                             this.state.data.length===0?<div className='not-found'>暂无优惠券</div>:null
+                            this.state.data.length===0?<div className='not-found'>暂无优惠券</div>:null
                         }
                         {
                             this.state.data.map(item=>{
                                 return <div> <Coupon  data={item} showVal='true'  hasLine='true'></Coupon> </div>
                             })
-                        } 
-
+                        }  
                         {
-                            this.state.totalPage>1?<div className='coupon-paging'>
-                                    <Pagination defaultCurrent={this.state.currPage} total={this.state.totalPage} />
+                            Math.ceil(this.state.totalNum/this.state.pageSize)>1?<div className='coupon-paging'>
+                                    <Pagination  current={this.state.currPage} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
                                 </div>:null
-                        }
-                        
+                        } 
                     </div>
                 </div> 
             </div>

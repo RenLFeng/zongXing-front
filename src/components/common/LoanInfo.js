@@ -78,7 +78,7 @@ class LoanInfo extends React.Component {
 				</div>
 				<div className='text li-nh'>
 					<span>年化收益率</span>
-					<p>{this.state.data.nh}%</p>
+					<p>{this.state.data.nh}<span>万</span></p> 
 					<span className='tip'>{this.state.data.area}/
 						{
 							this.state.data.type==='xcy'?'新餐饮':''
@@ -102,16 +102,18 @@ class LoanInfo extends React.Component {
 				</div>
 				<div className='text li-qx'>
 					<span>投资期限</span>
-					<p>{this.state.data.qx}个月</p>
+					<p>{this.state.data.qx}<span>个月</span></p>
+					
 				</div>
 				<div className='text li-je'>
 					<span>借款金额</span>
-					<p>{this.state.data.je}万</p>
+					<p>{this.state.data.je}<span>万</span></p> 
 					<span className='tip'>按月等额本息还款</span>
 				</div> 
 			</div>
 			{/* 右 */}
 			<div className='li-right'>
+				<div className='line'>&ensp;</div>
 				<Steps size="small" current={this.state.current} progressDot direction="vertical"> 
 					{
 						this.state.data.stateData.map((item)=>{

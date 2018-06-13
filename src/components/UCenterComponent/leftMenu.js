@@ -13,7 +13,7 @@ export default class LeftMenu extends React.Component {
     const {param} = this.props;
     const path = param.location.pathname;
     return (
-        <div className="uc-left-menu" style={{borderTop: '2px solid #FF6600', width: 290}}>
+        <div className="uc-left-menu" >
           <ul className="">
              <li>
                 <span>
@@ -32,8 +32,7 @@ export default class LeftMenu extends React.Component {
              </li>
              <li>
                 <span>
-                     <i className="zjb zjb-zhanghu"  style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i> 
-                     安全中心
+                     <i className="zjb zjb-zhanghu"  style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i>安全中心
                 </span>
                 <ul>
                     <li><Link className={path.indexOf(Path.REALNAME_AUTHENTICATION)===-1?'':'active'} to={Path.REALNAME_AUTHENTICATION}>实名认证</Link></li>
