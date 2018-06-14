@@ -7,7 +7,7 @@ import moment from 'moment';
 import '../../assets/ucenter/realName.scss';
 import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL, AUTH_ADDRESS} from '../../common/systemParam';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist,getBankCardList, unbindBankCard } from '../../services/api';
-import {AUTHENTICATION, OPENQACCOUNT, BINDCARD } from '../../common/pagePath';
+import {AUTHENTICATION, OPENQACCOUNT, BINDCARD,USER_BASIC } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -185,7 +185,7 @@ export default class RealName extends React.Component {
       const response = await getOldPhoneCode(data);
       this.setState({loading:false});
       if(response.code ===0){
-        
+
         localStorage.setItem(regPhone, new Date().getTime());
         //发送请求 按钮变不可点状态
         this.setState({ showAuthCode: false });
@@ -251,7 +251,7 @@ export default class RealName extends React.Component {
       if (res.msg === '该手机号已注册，请直接登录！') {
         message.error('手机号已注册');
         return;
-      } 
+      }
       message.error(res.msg);
       return;
     }
@@ -412,7 +412,7 @@ export default class RealName extends React.Component {
     let step = 0;
     if (safeData.userSecurityCenter.fCertification) {
       step = 1;
-    } 
+    }
     if (safeData.userSecurityCenter.fThirdAccount) {
       step = 2;
     }
@@ -451,7 +451,7 @@ export default class RealName extends React.Component {
 
   render() {
     console.log('this.props', this.props);
-    
+
     // 初始化数据
     const { safeData } = this.props;
     return (
@@ -469,7 +469,7 @@ export default class RealName extends React.Component {
           <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
           <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
         </form> */}
-        
+
             <div>
               <LeftMenu param={this.props} />
               {
@@ -481,15 +481,15 @@ export default class RealName extends React.Component {
                 </div>
                 <div className="rn-content">
                 <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">
-                  <Step title="第一步" 
+                  <Step title="第一步"
                     description={
                       <div style={{ marginBottom: 65 }}>
                         <div className="first">
-                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">身份认证</span> 
+                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">身份认证</span>
                           <span className="middle">用于提升账户安全性，认证后不能修改</span>
                           {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
                         </div>
-                        {safeData.userSecurityCenter.fCertification ? 
+                        {safeData.userSecurityCenter.fCertification ?
                         <div className="personal">
                           <span className="name">{safeData.fRealName}&nbsp;|</span>
                           <span className="id">{safeData.fIdcardNo}</span>
@@ -503,7 +503,7 @@ export default class RealName extends React.Component {
                     description={
                       <div style={{ marginBottom: 65 }}>
                         <div className="first">
-                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">开通乾多多资金托管账户</span> 
+                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">开通乾多多资金托管账户</span>
                           <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
                           {!safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
                         </div>
@@ -565,7 +565,7 @@ export default class RealName extends React.Component {
                                       prefix={<Icon type="lock" />}
                                       suffix={<Icon type="eye-o" onClick={()=>this.setState({[`${data.fid}hide`]:!this.state[`${data.fid}hide`]})}/>}
                                     />
-                                    <Button 
+                                    <Button
                                       type="primary"
                                       className="unbind-btn"
                                       onClick={()=>this.unbindBankCardAjax(data.fbankcard, data.fid)}
@@ -580,8 +580,8 @@ export default class RealName extends React.Component {
                         <div className="unbind_div" onClick={() => this.props.history.push(BINDCARD)}>
                           <Icon type="plus" className="icon-plus"/>
                           <span className="bind_new_bank">绑定新银行卡</span>
-                          <span 
-                            className="bind_new_bank" 
+                          <span
+                            className="bind_new_bank"
                             style={{color: '#e6e6e6',fontSize: 14}}
                           >(只支持储蓄卡)</span>
 
@@ -591,12 +591,22 @@ export default class RealName extends React.Component {
                   />
                 </Steps>
                 </div>
-              </div>: null      }
-            </div> 
-
-  
+              </div> : null}
+              {
+                safeData.userSecurityCenter.fCertification !== undefined ?
+                  <div className="fr uc-rbody ant-steps-item-description" style={{marginTop:'30px'}}>
+                    <div className="user_basic fl" onClick={() => this.props.history.push(USER_BASIC)}>
+                      <p className="ic"><b></b></p>
+                      <p className="tit">基础资料</p>
+                      <p className="info in1">完善个人信息，增强账户安全等级</p>
+                      <p className="info in2">
+                        <i>*</i><i>*</i><i>*</i><i>*</i><i>*</i>
+                      </p>
+                    </div>
+                  </div> :null
+              }
+            </div>
       </div>
-
     );
   }
 }
