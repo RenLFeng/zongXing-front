@@ -7,13 +7,11 @@
 .hide{
    display: none!important;
    visibility: hidden;
- }
-
-
+ } 
  .mi-my-invest{
     width: 992px;  
     &>.search-area{
-      padding: 30px;
+      padding: 30px 30px 20px;
       background-color: #fff; 
       &>.top-title{
           font-size: 21px;

@@ -517,17 +517,7 @@ export async function closeAuthorization(num, companyNo, returnUrl) {
 export async function getIncomePlan(projectId, money) {
   return request(`${BASE_URL}/zjb-website/invRecord/getEarPlan?projectId=${projectId}&money=${money}`)
 }
-
-//资金动态
-export async function capitalDynamics(params) {
-  return request(`${BASE_URL}/zjb-dc/capital/dynamic`,{
-      method:'POST',
-      body: {
-        ...params
-      }
-    })
-}
-
+ 
 //修改或删除企业列表信息
 export async function UpdataOrDele(params) {
   return request(`${BASE_URL}/zjb-website/company/deleteOrUpdate`,{

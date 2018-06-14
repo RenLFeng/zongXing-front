@@ -36,7 +36,7 @@ class Coupon extends React.Component {
            couponData =  props.data;
         }  
         let canEdit= false; 
-        if(couponData.fflag==0||couponData.fflag==2||couponData.fflag==3){
+        if(couponData.fflag==1||couponData.fflag==2||couponData.fflag==3){
             canEdit = true;
         }
         let btnName = "";
@@ -45,7 +45,7 @@ class Coupon extends React.Component {
                 btnName ='待领取'; 
                 break;
             case 1:
-                btnName ='待生效'; 
+                btnName ='待领取'; 
                 break;
             case 2:
                 btnName ='待消费'; 
