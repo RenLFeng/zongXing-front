@@ -57,13 +57,13 @@ export default class HomePage extends React.Component{
       this.getUserBaseData();
     }
     //判断本地是否已经有了城市地区编码，若没有则重新请求
-    if (!localStorage.getItem('addressCode')) {
-      //获取城市编码存入本地缓存
-      getLocation().then((data)=>{
-        console.log(data);
-        localStorage.setItem('addressCode', data.adcode);
-      })
-    }
+    // if (!localStorage.getItem('addressCode')) {
+    //   //获取城市编码存入本地缓存
+    //   getLocation().then((data)=>{
+    //     console.log(data);
+    //     localStorage.setItem('addressCode', data.adcode);
+    //   })
+    // }
     if (!global.cos) {
       global.cos = new COS({
         getAuthorization: function (options, callback) {

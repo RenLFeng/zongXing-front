@@ -224,7 +224,7 @@ export default class Register extends React.Component {
     const reg = {
       fmobile: regPhone.trim(),
       fpwd: regPwd.trim(),
-      authcode: regAuthCode.trim(),
+
       type: 0, //投资用户
     };
     // 调用注册接口
@@ -298,6 +298,7 @@ export default class Register extends React.Component {
                   </div> */}
                   <Spin tip="注册中..." spinning={this.props.submitting} >
                     <div className="row">
+                  
                       <input className="put user"  value={regPhone} maxLength={20}
                             onChange={(e) => {this.setState({regPhone: e.target.value})}} name="regPhone" type="tel"
                             placeholder="手机号|用户名"/>
@@ -317,6 +318,7 @@ export default class Register extends React.Component {
                       }
                     </div>
                     <div className="row" style={{marginBottom:70}}>
+
                       <input className="put pwd"  value={regPwd} maxLength={16}
                             name="regPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
                             placeholder="登录密码"/>
