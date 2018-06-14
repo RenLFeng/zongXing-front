@@ -62,7 +62,7 @@
         padding-left: 20px;
     }
     .result{
-       color:#009900;
+       color:#84E192;
        display: inline-block;
        padding-left: 50px;
     }
@@ -83,8 +83,19 @@
      }
 }
 
-.rn-content > .ant-steps-item-title {
-    color: #ff9900 !important;
+.rn-content {
+    .ant-steps-item-tail{
+        // height:90% !important;
+        padding: 15px 1px !important;
+     }
+     .ant-steps-icon-dot{
+         width:10px !important;
+         height:10px !important;
+         background:#FF7E10 !important;
+     }
+     .ant-steps-item-title {
+        color: #ff9900 !important;
+    }
 }
 
 .pages {

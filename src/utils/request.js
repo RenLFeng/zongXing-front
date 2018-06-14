@@ -16,7 +16,7 @@ if (build === 'production') {
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.4:8001';
+  BASE_URL = 'http://192.168.1.173:8001';
   document.title ="众借帮--开发环境"; 
 }
 
@@ -147,8 +147,7 @@ export const req={
           return response.json();
         })
     },
-    post:(url, param)=>{ 
-      debugger
+    post:(url, param)=>{  
       if(url.substring(0,1)=='/'){
         url = BASE_URL+url;
       }else{

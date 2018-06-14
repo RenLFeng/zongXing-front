@@ -517,17 +517,7 @@ export async function closeAuthorization(num, companyNo, returnUrl) {
 export async function getIncomePlan(projectId, money) {
   return request(`${BASE_URL}/zjb-website/invRecord/getEarPlan?projectId=${projectId}&money=${money}`)
 }
-
-//资金动态
-export async function capitalDynamics(params) {
-  return request(`${BASE_URL}/zjb-dc/capital/dynamic`,{
-      method:'POST',
-      body: {
-        ...params
-      }
-    })
-}
-
+ 
 //修改或删除企业列表信息
 export async function UpdataOrDele(params) {
   return request(`${BASE_URL}/zjb-website/company/deleteOrUpdate`,{
@@ -676,4 +666,30 @@ export async function unbindBankCard(params) {
 // 测试开户
 export async function testSocket() {
   return request(`${BASE_URL}/zjb-dc/test/socket`)
+
+}
+
+//忘记密码获取验证码及检验是否实名认证
+export async function fp_getCode(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/forgetPwd?loginName=${param}`);
+}
+
+//忘记密码检验信息
+export async function fp_checkInfo(params) {
+  return request(`${BASE_URL}/zjb-website/userInfo/checkAuthCode`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+//查询ip记录
+export async function getIPRecord(params) {
+  return request(`${BASE_URL}/zjb-website/login/rcord`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
 }
