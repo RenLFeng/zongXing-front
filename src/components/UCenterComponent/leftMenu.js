@@ -14,7 +14,7 @@ export default class LeftMenu extends React.Component {
     const path = param.location.pathname;
     return (
         <div className="uc-left-menu" >
-       
+          <ul>
              <li>
                 <span>
                   
