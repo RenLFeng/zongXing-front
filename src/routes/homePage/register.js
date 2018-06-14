@@ -4,6 +4,7 @@ import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_} from '../../common/systemPar
 import {connect} from 'dva';
 import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input} from 'antd';
 import {phoneExist, getAuthCode, regUser, changePW, checkCode, changePassword, relieveAccountAjax} from '../../services/api';
+import { setTimeout } from 'timers';
 
 
 const Step = Steps.Step;
@@ -177,6 +178,7 @@ export default class Register extends React.Component {
   //注册提交方法
   async submitReg() {
     const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
+    let that = this.props;
     let flag = true;
     if (regPhone.trim().length === 0) {
       this.setState({regNameErr: '请输入手机号'});
@@ -222,7 +224,8 @@ export default class Register extends React.Component {
     const reg = {
       fmobile: regPhone.trim(),
       fpwd: regPwd.trim(),
-      authcode: regAuthCode.trim()
+
+      type: 0, //投资用户
     };
     // 调用注册接口
     try {
@@ -238,6 +241,11 @@ export default class Register extends React.Component {
           regAuthCode: '',
           showAuthCode: true,
         });
+        message.info('注册成功,即将跳转到登陆界面')
+        setTimeout(function(){
+          that.history.push('./login')
+        },3000)
+        
       } else {
         message.warning(response.msg);
       }
@@ -290,7 +298,8 @@ export default class Register extends React.Component {
                   </div> */}
                   <Spin tip="注册中..." spinning={this.props.submitting} >
                     <div className="row">
-                      <input className="put user" value={regPhone} maxLength={20}
+                  
+                      <input className="put user"  value={regPhone} maxLength={20}
                             onChange={(e) => {this.setState({regPhone: e.target.value})}} name="regPhone" type="tel"
                             placeholder="手机号|用户名"/>
                       <p className="prompts">{this.state.regNameErr}</p>
@@ -309,7 +318,8 @@ export default class Register extends React.Component {
                       }
                     </div>
                     <div className="row" style={{marginBottom:70}}>
-                      <input className="put pwd" onKeyUp={(e) => this.pressKey(e)} value={regPwd} maxLength={16}
+
+                      <input className="put pwd"  value={regPwd} maxLength={16}
                             name="regPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
                             placeholder="登录密码"/>
                       <p className="prompts">{this.state.regPwdErr}</p>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import {Button, Divider} from 'antd';
+import '../../assets/login/login.scss';
 
 @connect((state) => ({
     nickName: state.login.nickName,
@@ -9,16 +10,12 @@ import {Button, Divider} from 'antd';
 }))
 class LoginInfo extends React.Component {
     constructor(props) {
-        super(props);
-        this.state = { 
-            realName:'屈云峰',
-         }
-    } 
-
+        super(props); 
+    }  
     render() { 
         const {baseData} = this.props
         return ( 
-            <div>
+            <div className='lg-login'>
                     {
                     this.props.status ?  <div className="w">
                     <div className="uc-tbody clearfix"> 

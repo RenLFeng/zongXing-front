@@ -28,7 +28,7 @@ export default class ForgetPassWord extends React.Component {
       currentNum:0,    //当前步骤
       firstPhone:'',    //忘记密码第一步
       prompt:'',   //提示语
-      firstClick:false,  //第一步按钮状态
+      firstClick:null,  //第一步按钮状态
       whetherAuthentication:false,   //是否实名认证
       realName:'',    //真实姓名
       idCard:'',      //身份证号
@@ -183,6 +183,12 @@ export default class ForgetPassWord extends React.Component {
       message.error(response.msg);
     }
   }
+
+  prompt(){
+    this.setState({firstClick:false},()=>{
+      message.warning('请填写手机号')
+    })
+  }
  
  
   render() {
@@ -211,12 +217,13 @@ export default class ForgetPassWord extends React.Component {
               <p className="forget-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
 
               <div className="slider">
-          
+                请按住滑块，拖到最右边
+                <div className="block"> >> </div>
               </div>
               {
                 this.state.firstClick ? 
                  <Button style={{width:300,marginTop:20,height:41,fontSize:18}} type="primary" onClick={()=>this.setState({flagPage:'second',currentNum:1})}>下一步</Button> : 
-                <Button style={{width:300,marginTop:20,height:41,fontSize:18}} type="primary" >下一步</Button>
+                <Button style={{width:300,marginTop:20,height:41,fontSize:18}} type="primary" onClick={()=>{this.prompt()}} >下一步</Button>
               }   
             </div> : 
              (this.state.flagPage === 'second') ? 

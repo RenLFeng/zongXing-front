@@ -8,6 +8,7 @@ export default {
   REALNAME_AUTHENTICATION: '/index/uCenter/realName', //实名认证页面地址
   AUTHENTICATION: '/index/uCenter/authentication', //实名认证页面
   OPENQACCOUNT: '/index/uCenter/openQAccount', //开通乾多多认证
+  IPRECORD: '/index/uCenter/IPRecord', //IP记录页面
   BINDCARD: '/index/uCenter/bindCard', //绑定银行卡
   COMPANY_ACCOUNT: '/index/uCenter/companyAccount',  //企业账户页面地址
   BANK_CARD: '/index/uCenter/bankCard',  //银行卡管理页面
@@ -21,14 +22,17 @@ export default {
   LOAN_LIST: '/index/uCenter/loanList', //借款项目列表
   COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
   NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
-  MY_INVEST: '/index/uCenter/myInvest', //我的投资列表
+
   INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //平台公告列表 
-  MORE_INFO:'/index/uCenter/personAccount/moreInfo',  //资金动态
+
   ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
   RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
 
-  MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
+
   Project_Collection:'/index/uCenter/projectcollection',
+  INVEST_MENT: '/index/account/InvestMent', //投资记录
+  ACCOUNT_STATEMENT:'/index/uCenter/personAccount/accountstatement',  //资金动态
+  MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
   COUPON_CENTER:'/index/couponCenter',//优惠券交易中心
 
 

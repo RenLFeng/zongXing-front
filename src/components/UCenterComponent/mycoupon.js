@@ -15,11 +15,11 @@ class MyCoupon extends React.Component {
             activeFlag:0, 
             activemoney:0,//激活状态下的优惠券总额
             currPage:1,
-            pageSize:2,
+            pageSize:6,
             totalNum:0,
             lables:[
                 {flag:0,lable:'待领取',val:0},
-                {flag:1,lable:'待生效',val:0},
+                // {flag:1,lable:'待生效',val:0},
                 {flag:2,lable:'待消费',val:0},
                 {flag:3,lable:'兑换券',val:0},
                 {flag:4,lable:'已使用',val:0},
@@ -56,11 +56,14 @@ class MyCoupon extends React.Component {
         if(rest.code===0){ 
             console.log('获取顶部标题数量',rest.data);
             let temp = this.state.lables; 
-            let  haveDataFlag = 0;
+            let  haveDataFlag = 0; 
             if(rest.data.flagCount && rest.data.flagCount.length>0){
                 rest.data.flagCount.map(item=>{
+                    if(item.flag>0){ //待生效不显示
+                        item.flag = item.flag-1; 
+                    }
                     temp[item.flag].val = item.count; 
-                    if(haveDataFlag!=0 && item.count!=0){
+                    if(haveDataFlag==0 && item.count!=0){
                         haveDataFlag = item.flag;
                     }
                 });
@@ -70,7 +73,7 @@ class MyCoupon extends React.Component {
                 couponCount:rest.data.couponCount,
                 lables:temp,
                 activeFlag:haveDataFlag,
-            },()=>{
+            },()=>{ 
                 //获取我的优惠券
                 this.getCoupon();
             });
@@ -149,7 +152,14 @@ class MyCoupon extends React.Component {
                         }
                         {
                             this.state.data.map(item=>{
-                                return <div> <Coupon  data={item} showVal='true'  hasLine='true'></Coupon> </div>
+                                if(item.ffalg==2){
+                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友' exchange='兑换券额'></Coupon> </div>  
+                                }else if(item.ffalg==3){
+                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友'></Coupon> </div>  
+                                } 
+                                else{
+                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' ></Coupon> </div>
+                                } 
                             })
                         }  
                         {
