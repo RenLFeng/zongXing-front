@@ -14,27 +14,18 @@ export default class LeftMenu extends React.Component {
     const path = param.location.pathname;
     return (
         <div className="uc-left-menu" >
-          <ul className="">
+          <ul >
              <li>
                 <span>
-                    <i className="zjb zjb-zhanghu"  style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i> 我的账户
+                    <i className="zjb zjb-zhanghu" ></i> 我的账户
                 </span>
-                <ul>
-                
-        
-                  <li><Link className={path.indexOf(Path.INVEST_MENT) ===-1?'':'active'} to={Path.INVEST_MENT}>投资记录</Link></li>
-                  <li><Link className={path.indexOf(Path.RECEIVE_PLAN) ===-1?'':'active'} to={Path.RECEIVE_PLAN}>回款计划</Link></li>
-  
-                  <li><Link className={path.indexOf(Path.ACCOUNT_STATEMENT) ===-1?'':'active'} to={Path.ACCOUNT_STATEMENT}>资金流水</Link></li>
-                  <li><Link className={path.indexOf(Path.MY_COUPON) ===-1?'':'active'} to={Path.MY_COUPON}>我的优惠券</Link>   </li>
-                  <li>券额明细</li>
-                  <li><Link className={path.indexOf(Path.Project_Collection) ===-1?'':'active'} to={Path.Project_Collection}>项目收藏</Link> </li>
-                  <li>我的邀请码</li>
+                <ul> 
+                 
                 </ul> 
              </li>
              <li>
                 <span>
-                     <i className="zjb zjb-zhanghu"  style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i>安全中心
+                     <i className="zjb zjb-49"></i>安全中心
                 </span>
                 <ul>
                     <li><Link className={path.indexOf(Path.REALNAME_AUTHENTICATION)===-1?'':'active'} to={Path.REALNAME_AUTHENTICATION}>实名认证</Link></li>
@@ -43,7 +34,7 @@ export default class LeftMenu extends React.Component {
              </li>
              <li>
                 <span>
-                     <i className="zjb zjb-zhanghu" style={{fontSize: 24,marginLeft: -10, color: '#ff6600'}}></i> 
+                     <i className="zjb zjb-tongzhi"></i> 
                      通知中心
                 </span>
                  <ul>

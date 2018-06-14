@@ -2,6 +2,7 @@
 
 export default {
   PERSONAL_ACCOUNT: '/index/uCenter/personAccount',  //个人账户页面地址
+
   USER_BASIC: '/index/uCenter/userBasic', //个人基础资料页面地址
   OPEN_ACCOUNT: '/index/uCenter/openAccount',  //开户页面地址
   SAFE_CENTER: '/index/uCenter/safeCenter', //安全中心页面地址
@@ -30,9 +31,10 @@ export default {
 
 
   Project_Collection:'/index/uCenter/projectcollection',
-  INVEST_MENT: '/index/account/InvestMent', //投资记录
-  ACCOUNT_STATEMENT:'/index/uCenter/personAccount/accountstatement',  //资金动态
+  INVEST_MENT: '/index/uCenter/InvestMent', //投资记录
+  ACCOUNT_STATEMENT:'/index/uCenter/accountstatement',  //资金动态
   MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
+
   COUPON_CENTER:'/index/couponCenter',//优惠券交易中心
 
 
