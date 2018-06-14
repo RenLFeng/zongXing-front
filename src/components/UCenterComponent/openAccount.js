@@ -306,7 +306,7 @@ class FormComponent extends React.Component {
                     { pattern: ID_CORD, message: '身份证格式不正确' },
                     { required: true, message: '请填写身份证号' },
                   ],
-                })(<Input maxLength={'20'} autoComplete="off" />)}
+                })(<Input maxLength={'20'} readOnly autoComplete="off" />)}
               </FormItem>
               <Tooltip title="该信息无法修改" style={{ position: 'absolute', top: 10, right: 250 }}>
                 <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
@@ -322,7 +322,7 @@ class FormComponent extends React.Component {
                   rules: [
                   { required: true, message: '请填写真实姓名' },
                   ],
-                })(<Input maxLength={'20'} autoComplete="off" />)}
+                })(<Input maxLength={'20'} readOnly autoComplete="off" />)}
               </FormItem>
               <Tooltip title="该信息无法修改" style={{ position: 'absolute', top: 10, right: 250 }}>
                 <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
@@ -334,7 +334,7 @@ class FormComponent extends React.Component {
             >
               {getFieldDecorator('city', {
                 rules: [
-                 { required: true, message: '请选择所在城市' },
+                 { required: false, message: '请选择所在城市' },
                 ],
               })(<Cascader options={city} placeholder="请选择" />)}
             </FormItem>
@@ -346,7 +346,7 @@ class FormComponent extends React.Component {
         >
           {getFieldDecorator('email', {
             rules: [{ type: 'email', message: '邮箱格式不正确' },
-              { required: true, message: '请填写邮箱' }],
+              { required: false, message: '请填写邮箱' }],
           })(<Input maxLength={'40'} autoComplete="off" />)}
         </FormItem>
         <FormItem {...btnLayout}>
