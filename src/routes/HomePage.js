@@ -91,8 +91,7 @@ export default class HomePage extends React.Component{
     //   socketData: socket
     // });
     
-    socket.on('connect', ()=> {
-      console.log('connect');
+    socket.on('connect', ()=> { 
       // setInterval(()=>{
       //   testSocket();
       // }, 2000)
@@ -102,16 +101,14 @@ export default class HomePage extends React.Component{
     
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps.socketData', nextProps.socketData);
+  componentWillReceiveProps(nextProps) { 
     if (this.props.userId !== nextProps.userId && nextProps.userId) {
       // this.connectSocket(nextProps.userId);
     }
   }
 
   async getUserBaseData() {
-    const response = await getLoginData();
-    console.log('response', response);
+    const response = await getLoginData(); 
     if (response.code === 0) {
       this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
     }
