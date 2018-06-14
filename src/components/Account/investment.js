@@ -3,12 +3,12 @@ import {Input,Icon, message, Table, Button, Checkbox, Dropdown, Menu, Modal} fro
 import {getPlantNotice, getMyInvestment, toPayment, delOrder} from '../../services/api.js';
 import moment from 'moment';
 import {pageShows, MY_INCOME_STATUS, ORDER_STATUS, MY_INVEST_URL} from '../../common/systemParam';  //分页组件
-import '../../assets/myInvest/myInvest.scss'; 
 import Path from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import LoanInfo from '../common/LoanInfo.js';
+import '../../assets/account/investment.scss'; 
 
-export default class MyInvestment extends React.Component {
+export default class Investment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

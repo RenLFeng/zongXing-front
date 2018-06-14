@@ -20,7 +20,7 @@ import AccountRecharge from '../../components/UCenterComponent/accountRecharge';
 import AccountWithdrawals from '../../components/UCenterComponent/accountWithdrawals';
 import Message from '../../components/UCenterComponent/message';
 import NoticeList from '../../components/UCenterComponent/NoticeList';
-import MyInvestList from '../../components/UCenterComponent/myInvestment';
+import InvestMent from '../../components/Account/investment';
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import IncomePlan from '../../components/UCenterComponent/IncomePlan';
 import AllInvest from '../../components/UCenterComponent/AllInvest';
@@ -34,7 +34,7 @@ import myCoupon from '../../components/UCenterComponent/mycoupon';
 
 import projectCollection from '../../components/UCenterComponent/projectcollection'; 
 import Path from '../../common/pagePath';
-import MoreInfo from "../../components/UCenterComponent/moreInfo";
+import AccountStatement from "../../components/Account/accountstatement";
 
 
 export default class UCenter extends React.Component {
@@ -66,8 +66,13 @@ export default class UCenter extends React.Component {
             {/* 账户总览 */}
             <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
             {/* 投资记录 */}
-            <Route path={Path.MY_INVEST} exact component={MyInvestList} />
-
+            <Route path={Path.INVEST_MENT} exact component={InvestMent} />
+            {/* 资金动态 */}
+            <Route path={Path.ACCOUNT_STATEMENT}  component={AccountStatement} />
+            {/* 我的优惠券 */}
+            <Route path={Path.MY_COUPON}  component={myCoupon} />
+            {/* 项目收藏 */}
+            <Route path={Path.Project_Collection} component={projectCollection}/>
 
             {/* 用户基本信息 */}
             <Route path={Path.USER_BASIC} component={UserBasic} />
@@ -98,16 +103,12 @@ export default class UCenter extends React.Component {
            
             {/* 平台公告列表 */}
             <Route path={Path.INCOME_PLAN} component={IncomePlan} />
-            {/* 资金动态 */}
-            <Route path={Path.MORE_INFO}  component={MoreInfo} />
+            
             {/* 投资总览 */}
             <Route path={Path.ALL_INVEST}  component={AllInvest} />
             {/* 回款计划 */}
             <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
-            {/* 我的优惠券 */}
-            <Route path={Path.MY_COUPON}  component={myCoupon} />
-            {/* 项目收藏 */}
-            <Route path={Path.Project_Collection} component={projectCollection}/>>
+           
  
           </Switch>
         </div>
