@@ -57,13 +57,13 @@ export default class HomePage extends React.Component{
       this.getUserBaseData();
     }
     //判断本地是否已经有了城市地区编码，若没有则重新请求
-    if (!localStorage.getItem('addressCode')) {
-      //获取城市编码存入本地缓存
-      getLocation().then((data)=>{
-        console.log(data);
-        localStorage.setItem('addressCode', data.adcode);
-      })
-    }
+    // if (!localStorage.getItem('addressCode')) {
+    //   //获取城市编码存入本地缓存
+    //   getLocation().then((data)=>{
+    //     console.log(data);
+    //     localStorage.setItem('addressCode', data.adcode);
+    //   })
+    // }
     if (!global.cos) {
       global.cos = new COS({
         getAuthorization: function (options, callback) {
@@ -91,8 +91,7 @@ export default class HomePage extends React.Component{
     //   socketData: socket
     // });
     
-    socket.on('connect', ()=> {
-      console.log('connect');
+    socket.on('connect', ()=> { 
       // setInterval(()=>{
       //   testSocket();
       // }, 2000)
@@ -102,16 +101,14 @@ export default class HomePage extends React.Component{
     
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps.socketData', nextProps.socketData);
+  componentWillReceiveProps(nextProps) { 
     if (this.props.userId !== nextProps.userId && nextProps.userId) {
       // this.connectSocket(nextProps.userId);
     }
   }
 
   async getUserBaseData() {
-    const response = await getLoginData();
-    console.log('response', response);
+    const response = await getLoginData(); 
     if (response.code === 0) {
       this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
     }

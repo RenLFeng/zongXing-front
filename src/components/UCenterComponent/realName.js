@@ -1,13 +1,11 @@
 import React from 'react';
-import { Icon, Form, Modal, Input, message, Row, Col, Button, Card, Steps} from 'antd';
+
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 import moment from 'moment';
 
 import '../../assets/ucenter/realName.scss';
-import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL, AUTH_ADDRESS} from '../../common/systemParam';
-import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist,getBankCardList, unbindBankCard } from '../../services/api';
-import {AUTHENTICATION, OPENQACCOUNT, BINDCARD } from '../../common/pagePath';
+
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -22,7 +20,7 @@ const formItemLayout = {
     sm: { span: 20 },
   },
 };
-@connect((state)=>({
+
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
   accountId: state.login.baseData.accountId,
@@ -82,6 +80,7 @@ export default class RealName extends React.Component {
     if (this.countDownFun_) {
       clearInterval(this.countDownFun_);
     }
+    //获取已经授权的授权代码
     this.getAuthorizationState();
   }
 
@@ -107,7 +106,8 @@ export default class RealName extends React.Component {
   }
 
   // 初始化安全中心首页数据
-  initFetchSafeData= () => {
+
+  initFetchSafeData = () => {
     this.props.dispatch({
       type: 'safeCenter/getSafe',
     });
@@ -163,7 +163,7 @@ export default class RealName extends React.Component {
       const response = await getOldCode(values.captcha);
       if (response.code === 0) {
         console.log('手机号认证数据: ', values);
-        this.setState({changePhoneAuth:true});
+        this.setState({ changePhoneAuth: true });
         form.resetFields();
         this.handleCancel();
       } else {
@@ -172,20 +172,24 @@ export default class RealName extends React.Component {
     });
   };
 
-//获取旧手机号验证码
+
+  //获取旧手机号验证码
   async getOldCode(data) {
     const { regPhone } = this.state;
-    this.setState({loading:true});
+
+    this.setState({ loading: true });
     const sendTime = localStorage.getItem(regPhone);
-    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000 ) {
+
       alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
       return;
     }
-    try{
+
+    try {
       const response = await getOldPhoneCode(data);
-      this.setState({loading:false});
-      if(response.code ===0){
-        
+
+      this.setState({ loading: false });
+      if (response.code === 0) {
+
         localStorage.setItem(regPhone, new Date().getTime());
         //发送请求 按钮变不可点状态
         this.setState({ showAuthCode: false });
@@ -198,11 +202,12 @@ export default class RealName extends React.Component {
             this.setState({ countDown: this.state.countDown - 1 });
           }
         }, 1000);
-      }  else{
+
         message.error(response.msg);
       }
-    } catch(e){
-      this.setState({loading:false});
+    
+    } catch (e) {
+      this.setState({ loading: false });
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
@@ -213,7 +218,8 @@ export default class RealName extends React.Component {
   //提交修改后的手机
   changePhoneAuth_ = () => {
     const form = this.changePhoneAuthForm;
-    form.validateFields( async (err, values) => {
+  
+    form.validateFields(async (err, values) => {
       if (err) {
         return;
       }
@@ -224,7 +230,8 @@ export default class RealName extends React.Component {
       const response = await changePhoneNum(data);
       if (response.code === 0) {
         this.initFetchSafeData();
-        this.setState({changePhoneAuth:false});
+    
+        this.setState({ changePhoneAuth: false });
         form.resetFields();
         this.handleCancel_();
       } else {
@@ -235,30 +242,37 @@ export default class RealName extends React.Component {
 
   //获取新手机号验证码
   async getNewCode_() {
-    const {getCodeMobile} = this.state;
-    if(getCodeMobile.trim().length ===0){
+  
+    const { getCodeMobile } = this.state;
+    if (getCodeMobile.trim().length === 0) {
       message.error('手机号不能为空')
       return;
     }
     if (!VER_PHONE.test(getCodeMobile)) {
-      this.setState({regPhoneErr:'请输入正确的手机号'});
+     
+      this.setState({ regPhoneErr: '请输入正确的手机号' });
       return;
     }
-    this.setState({loading:true});
+  
+    this.setState({ loading: true });
     const res = await phoneExist(getCodeMobile);
     if (res.code !== 0) {
-      this.setState({loading:false});
+     
+      this.setState({ loading: false });
       if (res.msg === '该手机号已注册，请直接登录！') {
         message.error('手机号已注册');
         return;
-      } 
+ 
+      }
       message.error(res.msg);
       return;
     }
-    try{
+   
+    try {
       const response = await getNewCode(getCodeMobile);
-      this.setState({loading:false});
-      if(response.code ===0) {
+     
+      this.setState({ loading: false });
+      if (response.code === 0) {
         this.setState({ showAuthCode_: false });
         //成功之后倒计时开始启动
         this.countDownFun_ = setInterval(() => {
@@ -269,11 +283,13 @@ export default class RealName extends React.Component {
             this.setState({ countDown_: this.state.countDown_ - 1 });
           }
         }, 1000);
-      } else{
+      
+      } else {
         message.error(response.msg);
       }
-    } catch(e){
-      this.setState({loading:false});
+   
+    } catch (e) {
+      this.setState({ loading: false });
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
@@ -295,7 +311,8 @@ export default class RealName extends React.Component {
         message.info('邮件发送成功');
         form.resetFields();
         this.handleCancel();
-        this.setState({emailAuth:false});
+      
+        this.setState({ emailAuth: false });
         Modal.confirm({
           title: '提示',
           content: '邮件已发送,请注意查看',
@@ -314,16 +331,19 @@ export default class RealName extends React.Component {
     });
   };
 
-//授权
+
+  //授权
   async getDistribution(type) {
-    this.setState({loading:true});
-    const response = await distribution(type,'',encodeURIComponent(window.location.href));
-    this.setState({loading:false});
-    if(response.code === 0){
+   
+    this.setState({ loading: true });
+    const response = await distribution(type, '', encodeURIComponent(window.location.href));
+    this.setState({ loading: false });
+    if (response.code === 0) {
       this.setState({
-        distribution:response.data.param,
-        url:response.data,
-      },()=>{
+     
+        distribution: response.data.param,
+        url: response.data,
+      }, () => {
         this.formId.submit();
         Modal.info({
           title: '提示',
@@ -334,7 +354,8 @@ export default class RealName extends React.Component {
           },
         });
       });
-    }else {
+
+    } else {
       response.msg && message.error(response.msg);
     }
   }
@@ -344,7 +365,8 @@ export default class RealName extends React.Component {
     this.setState({ loading: true });
     const response = await authorizationState('');
     console.log('1234', response);
-    this.setState({loading: true });
+   
+    this.setState({ loading: true });
     if (response.code === 0) {
       this.setState({
         status: response.data ? response.data : '',
@@ -360,7 +382,8 @@ export default class RealName extends React.Component {
   }
 
   // 关闭授权
-  async CloseAuthorization(type){
+
+  async CloseAuthorization(type) {
     const response = await closeAuthorization(type, '', encodeURIComponent(window.location.href));
     console.log(response);
     if (response.code === 0) {
@@ -379,7 +402,8 @@ export default class RealName extends React.Component {
         });
       });
     } else {
-       response.msg && message.error(response.msg);
+
+      response.msg && message.error(response.msg);
     }
   }
 
@@ -412,7 +436,8 @@ export default class RealName extends React.Component {
     let step = 0;
     if (safeData.userSecurityCenter.fCertification) {
       step = 1;
-    } 
+
+    }
     if (safeData.userSecurityCenter.fThirdAccount) {
       step = 2;
     }
@@ -422,38 +447,43 @@ export default class RealName extends React.Component {
 
   // 解除银行卡绑定
   async unbindBankCardAjax(cardId, fid) {
-    if (!this.state[`${fid}password`] || (this.state[`${fid}password`] && this.state[`${fid}password`].trim().length===0)) {
+
+    if (!this.state[`${fid}password`] || (this.state[`${fid}password`] && this.state[`${fid}password`].trim().length === 0)) {
       message.error('密码不能为空');
       return;
     }
     if (this.state.unbindLoading) {
       return;
     }
-    this.setState({unbindLoading: true});
+
+    this.setState({ unbindLoading: true });
     const response = await unbindBankCard({
       accountId: this.props.accountId,
       bankcard: cardId,
       password: this.state[`${fid}password`].trim()
     });
-    this.setState({unbindLoading: false});
+
+    this.setState({ unbindLoading: false });
     if (response.code === 0) {
-      for (let i = 0,len = this.state.cardList.length; i< len ; i++) {
+
+      for (let i = 0, len = this.state.cardList.length; i < len; i++) {
         if (this.state.cardList[i].fbankcard === cardId) {
           this.state.cardList.splice(1, i);
           break;
         }
       }
-      this.setState({cardList: this.state.cardList});
+
+      this.setState({ cardList: this.state.cardList });
     } else {
       response.msg && message.error(response.msg);
     }
   }
 
   render() {
-    console.log('this.props', this.props);
-    
+ 
     // 初始化数据
     const { safeData } = this.props;
+    const { status } = this.state;
     return (
       <div>
         {/* <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{display:'none'}}>
@@ -469,132 +499,169 @@ export default class RealName extends React.Component {
           <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
           <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
         </form> */}
-        
-            <div>
-              <LeftMenu param={this.props} />
-              {
-               safeData.userSecurityCenter.fCertification !== undefined ?
+       
+
+        <div>
+          <LeftMenu param={this.props} />
+          {
+            safeData.userSecurityCenter.fCertification !== undefined ?
               <div className="fr uc-rbody">
                 <div className="real_title">
                   <span className="safeCenter_">安全中心</span>
                   <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
-                <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">
-                  <Step title="第一步" 
-                    description={
-                      <div style={{ marginBottom: 65 }}>
-                        <div className="first">
-                          <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">身份认证</span> 
-                          <span className="middle">用于提升账户安全性，认证后不能修改</span>
-                          {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
-                        </div>
-                        {safeData.userSecurityCenter.fCertification ? 
-                        <div className="personal">
-                          <span className="name">{safeData.fRealName}&nbsp;|</span>
-                          <span className="id">{safeData.fIdcardNo}</span>
-                          <span className="result" >认证通过</span>
-                        </div> : null }
-                      </div>
-                    }
-                  />
-                  <Step
-                    title="第二步"
-                    description={
-                      <div style={{ marginBottom: 65 }}>
-                        <div className="first">
-                          <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">开通乾多多资金托管账户</span> 
-                          <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                          {!safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
-                        </div>
-                        <div style={{ marginTop: 30, marginBottom: 8 }}>
-                          <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
-                        </div>
-                        {
-                          safeData.userSecurityCenter.fThirdAccount ?
+               
+                  <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">
+                    <Step title="第一步"
+                      description={
+                        <div style={{ marginBottom: 65 }}>
+                          <div className="first">
+                            <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">身份认证</span>
+                            <span className="middle">用于提升账户安全性，认证后不能修改</span>
+                            {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
+                          </div>
+                          {safeData.userSecurityCenter.fCertification ?
                             <div className="personal">
-                              <span style={{ color: 'black' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
-                              <div className="findPass">
-                                <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: true, showMMMChangeLoginPass: false })}>找回乾多多支付密码 </span>
-                                <span className="line" >|</span>
-                                <span className="a" onClick={() => this.setState({ showMMMChangeLoginPass: true, showMMMChangepayPassword: false })}>找回乾多多支付登录密码 </span>
-                              </div>
-                            </div>
-                          : null
-                        }
-                        {
-                          this.state.showMMMChangepayPassword === true ?
-                            <ChangePayPayPass /> : null
-                        }
-                        {
-                          this.state.showMMMChangeLoginPass === true ?
-                            <ChangeLoginPass /> : null
-                        }
-                      </div>
-                } />
-                  <Step
-                    title="第三步" description={
-                      <div style={{ marginBottom: 65 }}>
-                        <div className="first">
-                          <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">我的银行卡</span>
-                          <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
-                          <a className="right" style={{ display: 'none' }}>设置</a>
+                              <span className="name">{safeData.fRealName}&nbsp;|</span>
+                              <span className="id">{safeData.fIdcardNo}</span>
+                              <span className="result" >认证通过</span>
+                            </div> : null}
                         </div>
-                        <div className="cardBox">
-                          {this.state.cardList.map((data, index)=> {
-                            console.log('datadata', data);
-                            return (
-                              <div className="card_div" key={index}>
-                                <div className="IDCard">
-                                  <div>
-                                    <span className="id_num">
-                                      {data.fbankcard.substring(0,4)} **** **** {data.fbankcard.substring(data.fbankcard.length-5,data.fbankcard.length-1)}
-                                    </span>
-                                  </div>
+                       
+                      }
+                    />
+                    <Step
+                      title="第二步"
+                      description={
+                        <div style={{ marginBottom: 65 }}>
+                          <div className="first">
+                            <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">开通乾多多资金托管账户</span>
+                            <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
+                            {!safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
+                          </div>
+                          <div style={{ marginTop: 30, marginBottom: 8 }}>
+                            <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
+                          </div>
+                          {
+                            safeData.userSecurityCenter.fThirdAccount ?
+                              <div className="personal">
+                                <span style={{ color: 'black' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
+                                <div className="findPass">
+                                  <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: true, showMMMChangeLoginPass: false })}>找回乾多多支付密码 </span>
+                                  <span className="line" >|</span>
+                                  <span className="a" onClick={() => this.setState({ showMMMChangeLoginPass: true, showMMMChangepayPassword: false })}>找回乾多多支付登录密码 </span>
                                 </div>
-                                { !this.state[data.fid]?
-                                  <a className="unbind_card" onClick={()=>this.setState({[data.fid]: true})}>解除绑定</a>:
-                                  <div className="unbind_block">
-                                    <span className="unbind_span">解绑银行卡</span>
-                                    <span className="unbind_span">请输入登录密码</span>
-                                    <Input
-                                      type={this.state[`${data.fid}hide`]?'text':'password'}
-                                      className="unbind_password"
-                                      placeholder="请输入登录密码"
-                                      onChange={(e)=>this.setState({[`${data.fid}password`]: e.target.value})}
-                                      prefix={<Icon type="lock" />}
-                                      suffix={<Icon type="eye-o" onClick={()=>this.setState({[`${data.fid}hide`]:!this.state[`${data.fid}hide`]})}/>}
-                                    />
-                                    <Button 
-                                      type="primary"
-                                      className="unbind-btn"
-                                      onClick={()=>this.unbindBankCardAjax(data.fbankcard, data.fid)}
-                                      loading={this.state.unbindLoading}
-                                    >解绑</Button>
-                                  </div>
-                                }
                               </div>
-                            )
-                          })}
+                              : null
+                          }
+                          {
+                            this.state.showMMMChangepayPassword === true ?
+                              <ChangePayPayPass /> : null
+                          }
+                          {
+                            this.state.showMMMChangeLoginPass === true ?
+                              <ChangeLoginPass /> : null
+                          }
                         </div>
-                        <div className="unbind_div" onClick={() => this.props.history.push(BINDCARD)}>
-                          <Icon type="plus" className="icon-plus"/>
-                          <span className="bind_new_bank">绑定新银行卡</span>
-                          <span 
-                            className="bind_new_bank" 
-                            style={{color: '#e6e6e6',fontSize: 14}}
-                          >(只支持储蓄卡)</span>
+                      } />
+                    <Step
+                      title="第三步" description={
+                        <div style={{ marginBottom: 65 }}>
+                          <div className="first">
+                            <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">我的银行卡</span>
+                            <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
+                            <a className="right" style={{ display: 'none' }}>设置</a>
+                          </div>
+                          <div className="cardBox">
+                            {this.state.cardList.map((data, index) => {
+                              console.log('datadata', data);
+                              return (
+                                <div className="card_div" key={index}>
+                                  <div className="IDCard">
+                                    <div>
+                                      <span className="id_num">
+                                        {data.fbankcard.substring(0, 4)} **** **** {data.fbankcard.substring(data.fbankcard.length - 5, data.fbankcard.length - 1)}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  {!this.state[data.fid] ?
+                                    <a className="unbind_card" onClick={() => this.setState({ [data.fid]: true })}>解除绑定</a> :
+                                    <div className="unbind_block">
+                                      <span className="unbind_span">解绑银行卡</span>
+                                      <span className="unbind_span">请输入登录密码</span>
+                                      <Input
+                                        type={this.state[`${data.fid}hide`] ? 'text' : 'password'}
+                                        className="unbind_password"
+                                        placeholder="请输入登录密码"
+                                        onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
+                                        prefix={<Icon type="lock" />}
+                                        suffix={<Icon type="eye-o" onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                                      />
+                                      <Button
+                                        type="primary"
+                                        className="unbind-btn"
+                                        onClick={() => this.unbindBankCardAjax(data.fbankcard, data.fid)}
+                                        loading={this.state.unbindLoading}
+                                      >解绑</Button>
+                                    </div>
+                                  }
+                                </div>
+                              )
+                            })}
+                          </div>
+                          <div className="unbind_div" onClick={() => this.props.history.push(BINDCARD)}>
+                            <Icon type="plus" className="icon-plus" />
+                            <span className="bind_new_bank">绑定新银行卡</span>
+                            <span
+                              className="bind_new_bank"
+                              style={{ color: '#e6e6e6', fontSize: 14 }}
+                            >(只支持储蓄卡)</span>
 
+                          </div>
                         </div>
-                      </div>
-                  }
-                  />
-                </Steps>
+                      }
+                    />
+                  </Steps>
                 </div>
-              </div>: null      }
-            </div> 
+                <div style={{ marginTop: '20px' }}>
+                  <div className="safeCenter">
+                    <div className="real_title">
+                      <span className="safeCenter_">乾多多授权</span>
+                    </div>
+                    <div className="line">
+                      <div className="block1">
+                        {
+                          status.indexOf('3') !== -1 ? <Icon type="check" className="i1" /> : <Icon type="warning" className="i2" />
+                        }
+                        <span className="word">二次分配授权</span>
+                        {
+                          status.indexOf('3') !== -1 ? <span className="icon">V</span> : <span className="icon1">V</span>
+                        }
+                      </div>
+                      <div className="block2">{status.indexOf('3') !== -1 ? '您已授权二次分配' : '您还未授权二次分配，建议您尽快授权'}</div>
+                      <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)}>立即启用</Button>}</div>
+                    </div>
 
-  
+                    {/* <div className="line">
+                      <div className="block1">
+                        {
+                          status.indexOf('2') !== -1 ? <Icon type="check" className="i1" /> : <Icon type="warning" className="i2" />
+                        }
+                        <span className="word">自动还款授权</span>
+                        {
+                          status.indexOf('2') !== -1 ? <span className="icon">V</span> : <span className="icon1">V</span>
+                        }
+                      </div>
+                      <div className="block2">{status.indexOf('2') !== -1 ? '您已授权自动还款' : '您还未授权自动还款，建议您尽快授权'}</div>
+                      <div className="block3">{status.indexOf('2') !== -1 ? <Button onClick={() => this.CloseAuthorization(2)}>取消授权</Button> : <Button onClick={() => this.getDistribution(2)}>立即启用</Button>}</div>
+                    </div> */}
+
+
+                </div>
+
+
+
       </div>
 
     );
@@ -625,7 +692,7 @@ const NameAuth = Form.create()(
           <FormItem label="身份证号">
             {getFieldDecorator('description', {
               rules: [{ required: true, message: '身份证不能为空' },
-                {pattern: ID_CORD, message: '身份证号格式不正确'}],
+  
             })(<Input />)}
           </FormItem>
         </Form>
@@ -637,7 +704,8 @@ const NameAuth = Form.create()(
 // 手机绑定
 const PhoneAuth = Form.create()(
   (props) => {
-    const { visible, onCancel, onCreate, form ,token_} = props;
+
+    const { visible, onCancel, onCreate, form, token_ } = props;
     const { getFieldDecorator } = form;
     return (
       <Modal
@@ -662,17 +730,20 @@ const PhoneAuth = Form.create()(
                 )}
               </Col>
               <Col span={6}>
-                  {
-                    props.showAuthCode ? <Button onClick={()=> props.getOldCode()}>获取验证码</Button> :
-                      <Button loading={props.loading}>
-                        {props.countDown}s获取验证码
+
+                {
+                  props.showAuthCode ? <Button onClick={() => props.getOldCode()}>获取验证码</Button> :
+                    <Button loading={props.loading}>
+                      {props.countDown}s获取验证码
                     </Button>
-                  }
+
+                }
               </Col>
               <Col span={5} push={2}>
                 {
                   props.showAuthCode ? null :
-                    <span style={{lineHeight: '30px'}}>已发送</span>
+
+                    <span style={{ lineHeight: '30px' }}>已发送</span>
                 }
               </Col>
             </Row>
@@ -698,10 +769,11 @@ const ChangePhoneAuth = Form.create()(
       >
         <Form layout="vertical">
           <FormItem {...formItemLayout} label="新手机号">
-          {getFieldDecorator('title', {
-          rules: [{ required: true, message: '手机号不能为空' },
-          {pattern: VER_PHONE, message: '手机号格式不正确'}],
-          })(<Input onChange={(e) => props.getCodeNum(e.target.value)} />)}
+
+            {getFieldDecorator('title', {
+              rules: [{ required: true, message: '手机号不能为空' },
+              { pattern: VER_PHONE, message: '手机号格式不正确' }],
+            })(<Input onChange={(e) => props.getCodeNum(e.target.value)} />)}
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -717,7 +789,8 @@ const ChangePhoneAuth = Form.create()(
               </Col>
               <Col span={6}>
                 {
-                  props.showAuthCode_ ? <Button onClick={()=> props.getNewCode(props.getCodeMobile)}>获取验证码</Button> :
+
+                  props.showAuthCode_ ? <Button onClick={() => props.getNewCode(props.getCodeMobile)}>获取验证码</Button> :
                     <Button loading={props.loading}>
                       {props.countDown_}s获取验证码
                     </Button>
@@ -726,7 +799,8 @@ const ChangePhoneAuth = Form.create()(
               <Col span={6} push={2}>
                 {
                   props.showAuthCode_ ? null :
-                    <span style={{lineHeight: '30px'}}>已发送</span>
+
+                    <span style={{ lineHeight: '30px' }}>已发送</span>
                 }
               </Col>
             </Row>
@@ -755,7 +829,8 @@ const EmailAuth = Form.create()(
           <FormItem label="邮箱">
             {getFieldDecorator('email', {
               rules: [{ type: 'email', message: '邮箱格式不正确', },
-                { required: true, message: '邮箱不能为空' }],
+
+              { required: true, message: '邮箱不能为空' }],
             })(<Input />)}
           </FormItem>
         </Form>
@@ -772,7 +847,8 @@ class ChangeLoginPass extends React.Component {
           <div className="step_id">1</div>
           <div className="step_box">
             <p className="text">打开乾多多官网</p>
-            <Button className="goWeb" type="primary" onClick={()=>window.open(AUTH_ADDRESS)}>前往</Button>
+
+            <Button className="goWeb" type="primary" onClick={() => window.open(AUTH_ADDRESS)}>前往</Button>
           </div>
         </div>
         <div className="step">
@@ -812,7 +888,8 @@ class ChangePayPayPass extends React.Component {
           <div className="step_id">1</div>
           <div className="step_box">
             <p className="text">打开乾多多官网</p>
-            <Button className="goWeb"  type="primary" onClick={()=>window.open(AUTH_ADDRESS)}>前往</Button>
+
+            <Button className="goWeb" type="primary" onClick={() => window.open(AUTH_ADDRESS)}>前往</Button>
           </div>
         </div>
         <div className="step">
@@ -826,7 +903,8 @@ class ChangePayPayPass extends React.Component {
           <div className="step_id">3</div>
           <div className="step_box">
             <p className="account">&quot;我的账户&quot;</p>
-            <img alt="" src={require('../../assets/img/ucenter/u4329.png')} style={{width:158,height:67,marginLeft:'13px'}}/>
+
+            <img alt="" src={require('../../assets/img/ucenter/u4329.png')} style={{ width: 158, height: 67, marginLeft: '13px' }} />
             <p className="login">点击 &quot;找回支付密码&quot;</p>
           </div>
         </div>
@@ -836,7 +914,8 @@ class ChangePayPayPass extends React.Component {
             <p className="account">&quot;点击 &quot;立即找回&quot;&quot;</p>
             <p className="account">通过手机验证+身份验证</p>
             <p className="account">重新设置支付密码</p>
-            <img alt="" src={require('../../assets/img/u3551.png')} style={{width:30,height:25,marginLeft:'70px'}}/>
+
+            <img alt="" src={require('../../assets/img/u3551.png')} style={{ width: 30, height: 25, marginLeft: '70px' }} />
           </div>
         </div>
       </div>

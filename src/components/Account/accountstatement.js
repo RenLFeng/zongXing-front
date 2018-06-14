@@ -76,7 +76,7 @@ export default class AccountStatement extends React.Component{
                 </ul>  
             </div>  
             {/* 内容区域 */}
-          <div>
+          <div >
             <Steps current={1} progressDot direction="vertical" size="small">
                 <Step title="Finished" description="You can hover on the dot." />
                 <Step title="In Progress" description="You can hover on the dot." />
