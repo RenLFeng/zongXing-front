@@ -477,7 +477,7 @@ export default class RealName extends React.Component {
               <div className="fr uc-rbody">
                 <div className="real_title">
                   <span className="safeCenter_">安全中心</span>
-                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm:ss')}</span>
+                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
                 <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">

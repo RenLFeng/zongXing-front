@@ -86,6 +86,17 @@
 .rn-content > .ant-steps-item-title {
     color: #ff9900 !important;
 }
+.rn-content {
+    .ant-steps-item-tail{
+        height:90% !important;
+        padding: 18px 0 !important;
+     }
+     .ant-steps-icon-dot{
+         width:10px !important;
+         height:10px !important;
+         background:#FF7E10 !important;
+     }
+}
 
 .pages {
    background: white;

@@ -171,7 +171,7 @@ export default class Login extends React.Component {
               验证码
             </Col>
             <Col span={21}>
-              <Input type="password" value={this.state.errorAuthCode} placeholder="请输入" onChange={(e)=>this.setState({errorAuthCode: e.target.value})} maxLength={10}/>
+              <Input type="password" value={this.state.errorAuthCode} placeholder="请输入" onChange={(e)=>this.setState({errorAuthCode: e.target.value})} maxLength="10"/>
             </Col>
           </Row>
         </Modal>
@@ -183,7 +183,7 @@ export default class Login extends React.Component {
                   </div>
                   <Spin tip="登录中..." spinning={this.props.submitting}>
                     <div className="row">
-                      <input className="put user" onKeyUp={(e) => this.pressKey(e)} value={loginPhone} maxLength={20}
+                      <input className="put user" onKeyUp={(e) => this.pressKey(e)} value={loginPhone} maxLength="20"
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
                             placeholder="手机号|用户名"/>
                       <p className="prompts">{this.state.loginNameErr}</p>
@@ -195,7 +195,7 @@ export default class Login extends React.Component {
                     </div>
 
                     <div className="row">
-                      <input className="put pwd" onKeyUp={(e) => this.pressKey(e)} value={loginPwd} maxLength={16}
+                      <input className="put pwd" onKeyUp={(e) => this.pressKey(e)} value={loginPwd} maxLength="16"
                             name="loginPwd" type="password" onChange={(e) => this.setState({loginPwd: e.target.value})}
                             placeholder="登录密码"/>
                       <p className="prompts">{this.state.loginPwdErr}</p>
