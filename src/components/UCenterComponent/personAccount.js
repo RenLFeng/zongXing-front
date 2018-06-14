@@ -242,7 +242,8 @@ export default class PersonAccount extends React.Component {
       type: 'account/getPersonalAccount',
       payload:{
         showNumInfo:4,
-        jumpAuth:()=>this.jumpAuth()
+        // jumpAuth:()=>this.jumpAuth()
+        jumpAuth:()=>{}
       }
     });
   }
@@ -513,7 +514,7 @@ export default class PersonAccount extends React.Component {
 
             <div className="hd3">
               <a className="fl">资金动态</a>
-              <Link className="fr" to={Path.MORE_INFO}>查看更多 &gt;&gt;</Link>
+              <Link className="fr" to={Path.ACCOUNT_STATEMENT}>查看更多 &gt;&gt;</Link>
             </div>
             <div>
               <div className="timetree">

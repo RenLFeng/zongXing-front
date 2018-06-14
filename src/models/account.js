@@ -36,6 +36,7 @@ export default {
     },
     *getPersonalAccount({payload}, {call, put}) {
       const response = yield call(getPersonAccountNew, payload); 
+      console.log(response);
       if (response.code === 0) {
         if (!response.data) {
           yield put({
@@ -117,6 +118,7 @@ export default {
   },
   reducers: {
     savePersonal(state, {payload}) {
+      console.log(payload);
       return {
         ...state,
         openStatus: payload.openStatus,
