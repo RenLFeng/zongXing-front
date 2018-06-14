@@ -290,7 +290,7 @@ export default class Register extends React.Component {
                   </div> */}
                   <Spin tip="注册中..." spinning={this.props.submitting} >
                     <div className="row">
-                      <input className="put user" onKeyUp={(e) => this.pressKey(e)} value={regPhone} maxLength={20}
+                      <input className="put user" value={regPhone} maxLength={20}
                             onChange={(e) => {this.setState({regPhone: e.target.value})}} name="regPhone" type="tel"
                             placeholder="手机号|用户名"/>
                       <p className="prompts">{this.state.regNameErr}</p>
