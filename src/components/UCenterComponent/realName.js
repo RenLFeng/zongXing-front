@@ -485,7 +485,7 @@ export default class RealName extends React.Component {
                     description={
                       <div style={{ marginBottom: 65 }}>
                         <div className="first">
-                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">身份认证</span> 
+                          <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">身份认证</span> 
                           <span className="middle">用于提升账户安全性，认证后不能修改</span>
                           {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
                         </div>
@@ -503,7 +503,7 @@ export default class RealName extends React.Component {
                     description={
                       <div style={{ marginBottom: 65 }}>
                         <div className="first">
-                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">开通乾多多资金托管账户</span> 
+                          <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">开通乾多多资金托管账户</span> 
                           <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
                           {!safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
                         </div>
@@ -536,7 +536,7 @@ export default class RealName extends React.Component {
                     title="第三步" description={
                       <div style={{ marginBottom: 65 }}>
                         <div className="first">
-                          <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">我的银行卡</span>
+                          <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">我的银行卡</span>
                           <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
                           <a className="right" style={{ display: 'none' }}>设置</a>
                         </div>

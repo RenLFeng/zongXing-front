@@ -5,6 +5,7 @@ import {connect} from 'dva';
 
 import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
 import {phoneExist, getAuthCode, regUser, changePW,  changePassword, relieveAccountAjax, fp_getCode, fp_checkInfo} from '../../services/api';
+import {SliderLock} from '../../components/UCenterComponent/slider'
 
 
 const Step = Steps.Step;
@@ -33,8 +34,8 @@ export default class ForgetPassWord extends React.Component {
       realName:'',    //真实姓名
       idCard:'',      //身份证号
       code:'',       //验证码
-      password:''    //修改之后的密码
-
+      password:'',    //修改之后的密码
+      down:false
 
 
     };
@@ -47,6 +48,7 @@ export default class ForgetPassWord extends React.Component {
     if (this.countDownFun) {
       clearInterval(this.countDownFun);
     }
+    this.SliderLock();
   }
 
   //检验手机号是否存在
@@ -190,7 +192,7 @@ export default class ForgetPassWord extends React.Component {
     })
   }
  
- 
+
   render() {
     const {showAuthCode, countDown, realName, idCard, firstPhone, code,password} = this.state;
     return (
@@ -216,9 +218,23 @@ export default class ForgetPassWord extends React.Component {
               <p className="prompts" style={{marginBottom:5,color:'red'}}>{this.state.prompt}</p>
               <p className="forget-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
 
-              <div className="slider">
+              {/* <div className="slider" onClick={ SliderLock(".slider",function(){
+                            alert("验证成功");
+                            $(".slider").after('<div class="send_vercode" style="display:none"><input type="text" placeholder="验证码"><input type="button" value="发送验证码"></div>');
+                            //保证足够的高度
+                            
+                            $(".send_vercode").fadeIn("slow");
+                          }).init()
+                        }>
                 请按住滑块，拖到最右边
-                <div className="block"> >> </div>
+                <div className="block" > >> </div>
+              </div> */}
+               <div className="outer">
+                  <div className="filter-box"></div>
+                  <span>
+                      按住滑块，请拖到最右边
+                  </span>
+                  <div className="inner">&gt;&gt;</div>
               </div>
               {
                 this.state.firstClick ? 
