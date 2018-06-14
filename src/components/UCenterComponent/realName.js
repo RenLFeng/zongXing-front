@@ -591,7 +591,7 @@ export default class RealName extends React.Component {
                   />
                 </Steps>
                 </div>
-              </div>: null      }
+              </div>: null }
             </div> 
 
   
