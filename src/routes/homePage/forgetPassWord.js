@@ -28,13 +28,11 @@ export default class ForgetPassWord extends React.Component {
       currentNum:0,    //当前步骤
       firstPhone:'',    //忘记密码第一步
       prompt:'',   //提示语
-      firstClick:null,  //第一步按钮状态
       whetherAuthentication:false,   //是否实名认证
       realName:'',    //真实姓名
       idCard:'',      //身份证号
       code:'',       //验证码
-      password:''    //修改之后的密码
-
+      password:'',    //修改之后的密码
 
 
     };
@@ -43,11 +41,44 @@ export default class ForgetPassWord extends React.Component {
     this.countDownFun = null;
   }
 
+  componentDidMount(){
+      $(".inner").mousedown(function(e){
+        var el = $(".inner"),os = el.offset(),dx,$span=$(".outer>span"),$filter=$(".filter-box"),_differ=$(".outer").width()-el.width();
+        $(document).mousemove(function(e){
+            dx = e.pageX - os.left;
+            if(dx<0){
+                dx=0;
+            }else if(dx>_differ){
+                dx=_differ;
+            }
+            $filter.css('width',dx);
+            el.css("left",dx);
+        });
+        $(document).mouseup(function(e){
+            $(document).off('mousemove');
+            $(document).off('mouseup');
+            dx = e.pageX - os.left;
+            if(dx<_differ){
+                dx=0;
+                $span.html("按住滑块，请拖到最右边");
+            }else if(dx>=_differ){
+                dx=_differ;
+                $(".outer").addClass("act");           
+                $span.html("验证通过！");
+                el.html('&radic;');
+            }
+            $filter.css('width',dx);
+            el.css("left",dx);
+        })
+    })
+  }
+
   componentWillUnmount() {
     if (this.countDownFun) {
       clearInterval(this.countDownFun);
     }
   }
+
 
   //检验手机号是否存在
   async checkPhoneNumber() {
@@ -55,25 +86,44 @@ export default class ForgetPassWord extends React.Component {
     if (phoneNum.length === 0) {
       this.setState({prompt: '请输入手机号'});
       return;
-    } else {
-      this.setState({prompt: ''});
-    }
+    } 
     if (!VER_PHONE.test(phoneNum)) {
       this.setState({prompt: '请输入正确的手机号'});
       return;
-    } else {
-      this.setState({prompt: ''});
     }
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await phoneExist(phoneNum);
-      console.log('jiaoyan',response)
       if (response.code !== 0) {
         this.setState({
-         firstClick:true
+         prompt:''
        });
       } else {
-        message.info('该手机号还未注册,请先去注册')  
+        // message.info('该手机号还未注册,请先去注册') 
+        this.setState({prompt: '该手机号还未注册,请先去注册'});
       }
+    }
+  }
+
+  //下一步按钮触发的事件
+  next(){
+    if(this.state.firstPhone.length === 0 ){
+      message.warning('请填写手机号')
+      return
+    }
+    if(this.spanText.innerHTML === '按住滑块，请拖到最右边'){
+      message.warning('请拖动滑块完成验证')
+      return
+    }
+    if(this.spanText.prompt !== ''){
+      message.warning('请输入正确的手机号')
+      return
+    }
+    if(this.spanText.innerHTML === '验证通过！' && VER_PHONE.test(this.state.firstPhone)){
+      this.setState({
+        // down:true,
+        flagPage:'second',
+        currentNum:1
+      })
     }
   }
 
@@ -89,7 +139,6 @@ export default class ForgetPassWord extends React.Component {
     this.setState({authLoading: true});
     try{
       const response = await fp_getCode(firstPhone);
-      console.log('2222',response)
       if(response.code === 0){
         message.info('发送成功');
          this.setState({
@@ -138,7 +187,6 @@ export default class ForgetPassWord extends React.Component {
        idCard:this.state.idCard
     }
     const response = await fp_checkInfo(params);
-    console.log('xinxi',response)
     if(response.code === 0){
       this.setState({
         flagPage:'third',
@@ -184,13 +232,9 @@ export default class ForgetPassWord extends React.Component {
     }
   }
 
-  prompt(){
-    this.setState({firstClick:false},()=>{
-      message.warning('请填写手机号')
-    })
-  }
- 
- 
+
+  
+
   render() {
     const {showAuthCode, countDown, realName, idCard, firstPhone, code,password} = this.state;
     return (
@@ -216,15 +260,14 @@ export default class ForgetPassWord extends React.Component {
               <p className="prompts" style={{marginBottom:5,color:'red'}}>{this.state.prompt}</p>
               <p className="forget-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
 
-              <div className="slider">
-                请按住滑块，拖到最右边
-                <div className="block"> >> </div>
+               <div className="outer">
+                  <div className="filter-box"></div>
+                  <span className="span" ref={(ref)=>this.spanText = ref}>
+                      按住滑块，请拖到最右边
+                  </span>
+                  <div className="inner">&gt;&gt;</div>
               </div>
-              {
-                this.state.firstClick ? 
-                 <Button style={{width:300,marginTop:20,height:41,fontSize:18}} type="primary" onClick={()=>this.setState({flagPage:'second',currentNum:1})}>下一步</Button> : 
-                <Button style={{width:300,marginTop:20,height:41,fontSize:18}} type="primary" onClick={()=>{this.prompt()}} >下一步</Button>
-              }   
+                 <Button style={{width:300,marginTop:20,height:41,fontSize:18}} type="primary" onClick={()=>this.next()}>下一步</Button> 
             </div> : 
              (this.state.flagPage === 'second') ? 
             <div className="forget_form">

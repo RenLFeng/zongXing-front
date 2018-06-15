@@ -574,7 +574,7 @@ export default class RealName extends React.Component {
                                     </div>
                                   }
                                 </div>
-                              )
+                              );
                             })}
                           </div>
                           <div className="unbind_div" onClick={() => this.props.history.push(BINDCARD)}>
@@ -591,26 +591,40 @@ export default class RealName extends React.Component {
                     />
                   </Steps>
                 </div>
-                <div style={{ marginTop: '20px' }}>
-                  <div className="safeCenter">
-                    <div className="real_title">
-                      <span className="safeCenter_">乾多多授权</span>
-                    </div>
-                    <div className="line">
-                      <div className="block1">
-                        {
-                          status.indexOf('3') !== -1 ? <Icon type="check" className="i1" /> : <Icon type="warning" className="i2" />
-                        }
-                        <span className="word">二次分配授权</span>
-                        {
-                          status.indexOf('3') !== -1 ? <span className="icon">V</span> : <span className="icon1">V</span>
-                        }
+                {
+                  safeData.userSecurityCenter.fCertification !== undefined ?
+                      <div className="fr uc-rbody ant-steps-item-description" style={{marginTop:'30px'}}>
+                        <div className="user_basic fl" onClick={() => this.props.history.push(USER_BASIC)}>
+                          <p className="ic"><b></b></p>
+                          <p className="tit">基础资料</p>
+                          <p className="info in1">完善个人信息，增强账户安全等级</p>
+                          <p className="info in2">
+                            <i>*</i><i>*</i><i>*</i><i>*</i><i>*</i>
+                          </p>
+                        </div>
+                      </div> :null
+                }
+                {safeData.userSecurityCenter.fCertification ?
+                  <div style={{ marginTop: '20px' }}>
+                    <div className="safeCenter">
+                      <div className="real_title">
+                        <span className="safeCenter_">乾多多授权</span>
                       </div>
-                      <div className="block2">{status.indexOf('3') !== -1 ? '您已授权二次分配' : '您还未授权二次分配，建议您尽快授权'}</div>
-                      <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)}>立即启用</Button>}</div>
-                    </div>
+                      <div className="line">
+                        <div className="block1">
+                          {
+                            status.indexOf('3') !== -1 ? <Icon type="check" className="i1" /> : <Icon type="warning" className="i2" />
+                          }
+                          <span className="word">二次分配授权</span>
+                          {
+                            status.indexOf('3') !== -1 ? <span className="icon">V</span> : <span className="icon1">V</span>
+                          }
+                        </div>
+                        <div className="block2">{status.indexOf('3') !== -1 ? '您已授权二次分配' : '您还未授权二次分配，建议您尽快授权'}</div>
+                        <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)}>立即启用</Button>}</div>
+                      </div>
 
-                    {/* <div className="line">
+                      {/* <div className="line">
                       <div className="block1">
                         {
                           status.indexOf('2') !== -1 ? <Icon type="check" className="i1" /> : <Icon type="warning" className="i2" />
@@ -624,8 +638,8 @@ export default class RealName extends React.Component {
                       <div className="block3">{status.indexOf('2') !== -1 ? <Button onClick={() => this.CloseAuthorization(2)}>取消授权</Button> : <Button onClick={() => this.getDistribution(2)}>立即启用</Button>}</div>
                     </div> */}
 
-                  </div>
-                </div>
+                    </div>
+                  </div> : null}
               </div> : null}
         </div>
 
@@ -878,3 +892,4 @@ class ChangePayPayPass extends React.Component {
     );
   }
 }
+

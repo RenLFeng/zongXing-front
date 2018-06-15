@@ -13,6 +13,7 @@ import SafeCenter from '../../components/UCenterComponent/safeCenter';
 import RealName from '../../components/UCenterComponent/realName';
 import Authentication from '../../components/UCenterComponent/authentication';
 import OpenQAccount from '../../components/UCenterComponent/openQAccount';
+import IpRecord from '../../components/UCenterComponent/IPRecord';
 import BindCard from '../../components/UCenterComponent/bindCard';
 import CompanyAccount from '../../components/UCenterComponent/companyAccount';
 import BankCard from '../../components/UCenterComponent/bankCard';
@@ -89,6 +90,8 @@ export default class UCenter extends React.Component {
             <Route path={Path.OPENQACCOUNT} component={OpenQAccount} />
             <Route path={Path.BINDCARD} component={BindCard} />
             <Route path={Path.BANK_CARD} exact component={BankCard} />
+             {/* IP记录 */}
+            <Route path={Path.IPRECORD} exact component={IpRecord} />
             {/* 充值 */}
             <Route path={Path.ACCOUNT_RECHARGE} component={AccountRecharge} />
             {/* 提现 */}
