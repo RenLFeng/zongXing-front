@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'dva'
 import Path from '../../common/pagePath';
 import {Link} from 'dva/router';
 import {Form, Input, Button, Select, Modal, message} from 'antd';
@@ -7,6 +8,9 @@ import {getRecharge} from  '../../services/api';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/recharge.scss';
 
+@connect((state) =>({
+  accountId: state.login.baseData.accountId
+}))
 export default class AccountRecharge extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +18,8 @@ export default class AccountRecharge extends React.Component {
       personAccount: null,
       companyAccount: [],
       recharge: {},
-      loading: false
+      loading: false,
+      amount: 0.0, //充值金额
     };
   }
 
@@ -60,8 +65,29 @@ export default class AccountRecharge extends React.Component {
     });
   }
 
+  handleMoneyChange = (event) => {
+    console.log("amount:",event.target.value);
+    if(isNaN(Number(event.target.value))){
+      this.setState({ amountError: true })
+    }else{
+      this.setState({ amountError: false })
+      this.setState({amount:event.target.value})
+    }
+    
+  }
+
+  handleSubmit = () => {
+    let param = {
+      accountId: this.props.accountId,
+      rechargeType: this.state.rechargeType,
+      amount: this.state.amount
+    }
+    this.setRechargeData(param);
+  }
+
   render() {
-    const { match } = this.props;
+    const { match,accountId } = this.props;
+    console.log("this.props:",this.props);
     const { recharge } = this.state;
     console.log(recharge);
     return (
@@ -78,14 +104,15 @@ export default class AccountRecharge extends React.Component {
             <div className="label_div">
               <div className="input-view">
                 <span className="money_tip">￥</span>
-                <input type="text" className="input_money"/>
+                <input type="text" className="input_money" onChange={this.handleMoneyChange} />
               </div>
+              {this.state.amountError ? <div><span style={{ color:'red', fontSize:'10px' }}>只能输入数字</span></div> : null}
               <div className="select_div">
-                <span className={`recharge_btn ${this.state.rechargeType?'recharge_btn_choose': ''}`} style={{marginRight: '20px'}} onClick={()=>this.setState({rechargeType: true})}>快捷支付</span>
-                <span className={`recharge_btn ${this.state.rechargeType?'': 'recharge_btn_choose'}`} onClick={()=>this.setState({rechargeType: false})}>网银充值</span>
+                <span className={`recharge_btn ${this.state.rechargeType?'recharge_btn_choose': ''}`} style={{marginRight: '20px'}} onClick={()=>this.setState({rechargeType: 2})}>快捷支付</span>
+                <span className={`recharge_btn ${this.state.rechargeType?'': 'recharge_btn_choose'}`} onClick={()=>this.setState({rechargeType: 0})}>网银充值</span>
               </div>
             </div>
-            <Button type="primary" style={{width: 279}}>发起充值</Button>
+            <Button type="primary" onClick={this.handleSubmit} style={{width: 279}}>发起充值</Button>
           </div>
         </div>
         <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
