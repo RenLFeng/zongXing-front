@@ -70,10 +70,10 @@ class LoginInfo extends React.Component {
                         <span className="text2">[6-5]微软以75亿美元的价格收购GitHub,引发了开发者群体的关注。</span> 
                         
 												{ baseData.userSecurityCenter.fThirdAccount ?
-                        	                        <Button className="buttonl" onClick={()=>this.props.history.push(ACCOUNT_RECHARGE)}>提现</Button> : null
+                        	                        <Button className="buttonl" onClick={()=>this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
 												}
 												{ baseData.userSecurityCenter.fThirdAccount ?
-													<Button type="primary" className="buttonl" onClick={()=>this.props.history.push(ACCOUNT_WITHDRAWALS)}>充值</Button> : null 
+													<Button type="primary" className="buttonl" onClick={()=>this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null 
 												}
                     </div> 
                 </div>:''
