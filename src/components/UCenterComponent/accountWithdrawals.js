@@ -7,6 +7,7 @@ import Path from "../../common/pagePath";
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/recharge.scss';
 import BankCard from './Card';
+import {connect} from 'dva';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -31,8 +32,10 @@ const btnLayout = {
     },
   },
 };
-
-class EnterprisePresentation extends React.Component {
+@connect((state)=>({
+  accountId: state.login.baseData.accountId
+}))
+export default class EnterprisePresentation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -214,7 +217,6 @@ class EnterprisePresentation extends React.Component {
   }
 
   render() {
-    const {getFieldDecorator} = this.props.form;
     const {withdrawals} = this.state;
     const Option = Select.Option;
     console.log('this.state.provinces', this.state.provinces)
@@ -224,12 +226,24 @@ class EnterprisePresentation extends React.Component {
             <span className="rech_title">提现</span><span className="rech_title" style={{marginLeft: 10, marginRight: 10}}>></span><span className="rech_title" style={{fontSize: '16px'}}>发起提现</span>
           </div>
           <span className="withdrawals_title">请选择到账银行卡</span>
-          <div style={{padding: '0 32px'}}>
+          <div style={{padding: '0 32px 32px', borderBottom: '1px dashed #e6e6e6'}}>
             <BankCard style={{margin: '32px 32px 0 0'}}/>
           </div>
-          <div className="withdrawals_form">
-            <div className="withdrawals_form_div">
+          <div className="rech_center" style={{position: 'relative', paddingTop: 0, }}>
+            <div className="label_div" style={{width: '116px'}}>
+              <span className="label_text" style={{position: 'absolute', top: 32}}>到账银行卡</span>
+              <span className="label_text" style={{position: 'absolute', top: 105}}>提现金额</span>
             </div>
+            <div className="label_div" style={{paddingTop: '32px'}}>
+              <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px'}}>招商银行</span>
+              <div className="input-view" style={{marginTop: 36}}>
+                <span className="money_tip">￥</span>
+                <input type="text" className="input_money"/>
+                <span className="rate_text_position" style={{display: 'inline-block'}}>账户可提现金额￥</span>
+              </div>
+              <span className="rate_text">&nbsp;&nbsp;提现手续费￥1.00（费率0.1%）</span>
+            </div>
+            <Button type="primary" style={{width: 279, marginTop: 30}}>发起提现</Button>
           </div>
           <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
             <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />
@@ -255,4 +269,4 @@ class EnterprisePresentation extends React.Component {
   }
 }
 
-export default Form.create()(EnterprisePresentation);
+
