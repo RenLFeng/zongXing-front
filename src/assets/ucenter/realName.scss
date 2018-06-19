@@ -3,17 +3,19 @@
     font-family: '微软雅黑';
     font-weight: 400;
     font-style: normal;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
+    padding-bottom: 5px;
+    margin-bottom: 23px;
     .safeCenter_{
         display: inline-block;
         font-size: 20px;
     }
     .registrationTime{
         display: inline-block;
-        font-size: 14px;
+        font-size: 12px;
         color: #AEAEAE;
         float: right;
+        line-height: 25px;
+        margin-top: 8px;
     }
 }
 .first{
@@ -21,7 +23,7 @@
     font-family: '微软雅黑';
     font-weight: 400;
     font-style: normal;
-    margin-top: 15px;
+    margin-top: 10px;
     // padding-bottom: 10px;
     .left{
         margin-left: 20px;
@@ -44,7 +46,7 @@
     }
 }
 .personal{
-    margin: 12px 0;
+    margin-top:20px;
     height:43px;
     background-color: rgba(242, 242, 242, 1);
     font-size: 14px;
@@ -86,7 +88,7 @@
 .rn-content {
     .ant-steps-item-tail{
         // height:90% !important;
-        padding: 15px 1px !important;
+        padding: 0px 0px !important;
      }
      .ant-steps-icon-dot{
          width:10px !important;
@@ -95,6 +97,13 @@
      }
      .ant-steps-item-title {
         color: #ff9900 !important;
+    }
+    .ant-steps-vertical.ant-steps-dot .ant-steps-item-process .ant-steps-icon-dot{
+        left:-1px;
+    }
+    .ant-steps-vertical.ant-steps-dot .ant-steps-item-tail{
+        left:-8px;
+        top:11px;
     }
 }
 
@@ -552,7 +561,9 @@
 .rn-content > .ant-select-selection--single{
     height:41px;
 }
-    
+ 
+
+
 
 .bind_item_view{
     width: 420px;
@@ -631,4 +642,57 @@
 .bind_tip_msg {
     margin-left: 90px;
     color: green;
+}
+
+.safeCenter{
+    padding-bottom: 0;
+    .line{
+        border: none;
+        padding:0;
+        height:80px;
+        .block1,.block2,.block3{
+            margin-top: 25px;
+        }
+        .block1{
+            width:29%;
+        }
+        .block2{
+            width:55%;
+        }
+        .block3{
+            Button{
+                width:135px;
+                height:35px;
+               
+            }
+        }
+    }
+}
+
+.baseInfo{
+  height:200px;
+  text-align:center;
+  padding:30px 42px;
+  color: #999999;
+  i{
+      color:#E6E6E6;
+      font-size: 50px;
+      font-weight: bold;
+      width:50px;
+      height: 60px;
+  }
+  h3{
+    color: #999999;
+    font-size: 18px !important;
+  }
+  p{
+      margin: 3px 0 ;
+  }
+  span{
+      color:#ff9900
+  }
+  a{
+      color:#268EFF;
+      text-decoration: underline;
+  }
 }

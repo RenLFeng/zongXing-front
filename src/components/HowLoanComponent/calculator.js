@@ -103,7 +103,7 @@ export default class Calculator extends React.Component {
     return (
       <div className="cal">
         <div className="row clearfix row1">
-          <div className="col1">
+          <div className="col1" >
             <i>贷款金额</i>
           </div>
           <div className="col2">

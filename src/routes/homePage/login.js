@@ -115,11 +115,14 @@ export default class Login extends React.Component {
 
   // 判断  手机号是否已被注册过
   async checkPhone() {
+    console.log(1111)
     const {loginPhone} = this.state;
     if (loginPhone.length === 0) {
+      this.setState({loginNameErr:'手机号|用户名不能为空'})
       return;
     }
-    if (!VER_PHONE.test(loginPhone)) {
+    if (loginPhone.length < 6 || loginPhone.length > 16) {
+      this.setState({loginNameErr:'用户名长度为6-16位字符',loginError: true})
       return;
     }
     if (this.state.checkPhoneLoading) {
@@ -127,12 +130,12 @@ export default class Login extends React.Component {
     }
     this.setState({checkPhoneLoading: true});
     const response = await phoneExist(loginPhone);
-    console.log(response);
+    console.log('2222',response);
     this.setState({checkPhoneLoading: false});
     if (response.code === 0) {
       this.setState({loginError: false});
     } else {
-      this.setState({loginError: true});
+      this.setState({loginError: true,loginNameErr:''});
     }
   }
 
@@ -182,15 +185,14 @@ export default class Login extends React.Component {
                     <a className="hover">欢迎登录</a>
                   </div>
                   <Spin tip="登录中..." spinning={this.props.submitting}>
-                    <div className="row">
-
-                      <input className="put user" value={loginPhone} maxLength={20}
+                    <div className="row" style={{position:'relative'}}>
+                      <input className="put" value={loginPhone} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
-
                             placeholder="手机号|用户名" onBlur={()=>this.checkPhone()}/>
+                      <Icon type="mobile" style={{position:'absolute',top:'10px',left:'8px',fontSize:25,color:'#D4D4D4'}}/>
                       {
                         this.state.loginError ? this.state.loginNameErr?
-                        <p className="registration-prompts">
+                        <p className="registration-prompts_" >
                           {this.state.loginNameErr}
                         </p> : 
                         <p className="registration-prompts">
@@ -198,19 +200,16 @@ export default class Login extends React.Component {
                         </p>
                         :
                         <p className="registration-prompts">
-                          该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a>
+                          该用户还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a>
                         </p> 
-                      }
-                    
-                      
+                      }                 
                     </div>
 
-                    <div className="row">
-
-                      <input className="put pwd"  value={loginPwd} maxLength="16"
+                    <div className="row" style={{position:'relative'}}>
+                      <input className="put"  value={loginPwd} maxLength="16"
                             name="loginPwd" type="password" onChange={(e) => this.setState({loginPwd: e.target.value})}
-                            placeholder="登录密码"/>
-
+                            placeholder="请输入登录密码"/>
+                      <Icon type="lock" style={{position:'absolute',top:'7px',left:'8px',fontSize:28,color:'#D4D4D4'}} />
                       <p className="prompts" style={{color: '#868686'}}>{this.state.loginPwdErr}</p>
                       <a className="gray f14"
                           style={{marginTop: -5}}
