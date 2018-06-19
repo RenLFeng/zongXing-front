@@ -38,6 +38,7 @@ import Path from '../../common/pagePath';
 import AccountStatement from "../../components/Account/accountstatement";
 
 
+
 export default class UCenter extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +58,8 @@ export default class UCenter extends React.Component {
   };
 
   render() {
-    const { match, nickName, showMask } = this.props;
+    const { match, nickName, showMask} = this.props;
+ 
     return (
       <div className="body2">
         <LoginInfo history={this.props.history}/>
@@ -110,8 +112,6 @@ export default class UCenter extends React.Component {
             <Route path={Path.ALL_INVEST}  component={AllInvest} />
             {/* 回款计划 */}
             <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
-           
- 
           </Switch>
         </div>
       </div>

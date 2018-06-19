@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Button, Select, Modal, message} from 'antd';
+import {Form, Input, Button, Select, Modal, message, Icon } from 'antd';
 import '../../assets/ucenter/withdrawals.scss';
 import {getBankCard, getCity, putInformation} from '../../services/api';
 import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE } from '../../common/systemParam';
@@ -33,8 +33,10 @@ const btnLayout = {
   },
 };
 @connect((state)=>({
-  accountId: state.login.baseData.accountId
+  accountId: state.login.baseData.accountId,
+  baseData: state.login.baseData,
 }))
+
 export default class EnterprisePresentation extends React.Component {
   constructor(props) {
     super(props);
@@ -58,13 +60,13 @@ export default class EnterprisePresentation extends React.Component {
       province: '',
       city: '',
       remark: '',
-      num: 0
+      num: 0,
+      value:''   //提現金額
     }
   }
 
   componentDidMount() {
     // 获取跳转类型 0：个人 1：企业
-    // console.log(this.props.match.params.type)
     this.setState({
       accountId: this.props.location.state ? this.props.location.state.account : ''
     });
@@ -147,6 +149,7 @@ export default class EnterprisePresentation extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log(this.props)
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         values.amount = values.amount * 1.00;
@@ -179,7 +182,6 @@ export default class EnterprisePresentation extends React.Component {
   }
 
   changeCity(val) {
-    console.log(12312321321)
     this.setState({
       num: this.state.num+1,
     }, ()=> {
@@ -218,16 +220,25 @@ export default class EnterprisePresentation extends React.Component {
 
   render() {
     const {withdrawals} = this.state;
+    const {baseData} = this.props;
     const Option = Select.Option;
-    console.log('this.state.provinces', this.state.provinces)
     return (
         <div className="fr uc-rbody" style={{width: 1248,padding: '30px 20px'}}>
           <div className="rech_div">
             <span className="rech_title">提现</span><span className="rech_title" style={{marginLeft: 10, marginRight: 10}}>></span><span className="rech_title" style={{fontSize: '16px'}}>发起提现</span>
           </div>
           <span className="withdrawals_title">请选择到账银行卡</span>
-          <div style={{padding: '0 32px 32px', borderBottom: '1px dashed #e6e6e6'}}>
-            <BankCard style={{margin: '32px 32px 0 0'}}/>
+          <div style={{padding: '0 0 30px 52px', borderBottom: '1px dashed #e6e6e6'}}>
+            <div style={{display:'flex',justifyContent: 'space-between'}}>
+              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'农业银行'} cardId={'1234 **** **** 7894'} id="1"/>
+              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'建设银行'} cardId={'6284 **** **** 1234'} id="2"/>
+              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'招商银行'} cardId={'2345 **** **** 4569'} id="3"/>
+            </div> 
+            <div className="card_add" >
+              <Icon type="plus" onClick={() => this.props.history.push(Path.BINDCARD)}/>
+              <p className="add">绑定新银行卡</p>
+              <p className="card_type">（只支持储蓄卡）</p>
+            </div>
           </div>
           <div className="rech_center" style={{position: 'relative', paddingTop: 0, }}>
             <div className="label_div" style={{width: '116px'}}>
@@ -238,12 +249,12 @@ export default class EnterprisePresentation extends React.Component {
               <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px'}}>招商银行</span>
               <div className="input-view" style={{marginTop: 36}}>
                 <span className="money_tip">￥</span>
-                <input type="text" className="input_money"/>
-                <span className="rate_text_position" style={{display: 'inline-block'}}>账户可提现金额￥</span>
+                <input type="text" className="input_money" onChange={(e)=>{this.setState({value:e.target.value})}} value={this.state.value}/>
+                <span className="rate_text_position" style={{display: 'inline-block'}}>账户可提现金额￥{baseData ? baseData.balance : 0}</span>
               </div>
-              <span className="rate_text">&nbsp;&nbsp;提现手续费￥1.00（费率0.1%）</span>
+              <span className="rate_text">提现手续费￥<span>{this.state.value * 0.01}</span>（费率1%）</span>
             </div>
-            <Button type="primary" style={{width: 279, marginTop: 30}}>发起提现</Button>
+            <Button type="primary" style={{width: 279, marginTop: 30,height:35}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
           <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
             <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />

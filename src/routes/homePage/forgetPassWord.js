@@ -24,7 +24,7 @@ export default class ForgetPassWord extends React.Component {
 
       message1: '', //第一次输入密码时提示
 
-      flagPage: 'third',  //第一步
+      flagPage: 'first',  //第一步
       currentNum: 0,    //当前步骤
       firstPhone: '',    //忘记密码第一步
       prompt: '',   //提示语

@@ -577,8 +577,8 @@ export default class RealName extends React.Component {
                               );
                             })}
                           </div>
-                          <div className="unbind_div" onClick={() => this.props.history.push(BINDCARD)}>
-                            <Icon type="plus" className="icon-plus" />
+                          <div className="unbind_div" >
+                            <Icon type="plus" className="icon-plus" onClick={() => this.props.history.push(BINDCARD)}/>
                             <span className="bind_new_bank">绑定新银行卡</span>
                             <span
                               className="bind_new_bank"
@@ -594,7 +594,7 @@ export default class RealName extends React.Component {
               </div> : null}
 
               {safeData.userSecurityCenter.fCertification ?
-                  <div div className="fr uc-rbody" style={{ marginTop: '20px' }}>
+                  <div div className="fr uc-rbody" style={{ marginTop: '20px',padding:'0' }}>
                     <div className="safeCenter">
                       <div className="line">
                         <div className="block1">

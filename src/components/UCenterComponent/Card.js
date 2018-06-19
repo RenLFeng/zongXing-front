@@ -18,7 +18,14 @@ export default class Card extends React.Component {
   render() {
     return (
      <div className={`card_bank_component ${this.props.className||''}`} style={this.props.style}>
-
+       <div className="card_info">
+         <div className="card_img"></div>
+         <div className="card_text">
+          <p>{this.props.cardName}</p>
+          <span>储蓄卡</span>
+         </div>
+       </div>
+       <p className="card_num">{this.props.cardId}</p>
      </div>
     );
   }

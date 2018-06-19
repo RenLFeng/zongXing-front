@@ -5,8 +5,6 @@ import { getIPRecord } from '../../services/api';
 import moment from 'moment';
 
 
-
-
 export default class IpRecord extends React.Component{
   constructor(props){
     super();
@@ -105,8 +103,7 @@ onShowSizeChange = (current, pageSize) => {
                      pageSize={this.state.pageSize}
                      onChange={this.onchange}
                      onShowSizeChange={this.onShowSizeChange}
-                     style={{float:'right',marginTop:30}}
-                     size="small"
+                     style={{marginTop:30,textAlign:'center'}}
                      />
                 </div>
             </div>
