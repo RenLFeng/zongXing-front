@@ -483,9 +483,9 @@ export default class RealName extends React.Component {
                   <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">
                     <Step title="第一步"
                       description={
-                        <div style={{ marginBottom: 65 }}>
+                        <div style={{ marginBottom: 28 }}>
                           <div className="first">
-                            <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">身份认证</span>
+                            <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">身份认证</span>
                             <span className="middle">用于提升账户安全性，认证后不能修改</span>
                             {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
                           </div>
@@ -501,18 +501,18 @@ export default class RealName extends React.Component {
                     <Step
                       title="第二步"
                       description={
-                        <div style={{ marginBottom: 65 }}>
+                        <div style={{ marginBottom:28 }}>
                           <div className="first">
-                            <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">开通乾多多资金托管账户</span>
+                            <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">开通乾多多资金托管账户</span>
                             <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
                             {!safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
                           </div>
-                          <div style={{ marginTop: 30, marginBottom: 8 }}>
+                          <div >
                             <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
                           </div>
                           {
                             safeData.userSecurityCenter.fThirdAccount ?
-                              <div className="personal">
+                              <div className="personal" style={{marginTop:0}}>
                                 <span style={{ color: 'black' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
                                 <div className="findPass">
                                   <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: true, showMMMChangeLoginPass: false })}>找回乾多多支付密码 </span>
@@ -534,9 +534,9 @@ export default class RealName extends React.Component {
                       } />
                     <Step
                       title="第三步" description={
-                        <div style={{ marginBottom: 65 }}>
+                        <div style={{ marginBottom: 28 }}>
                           <div className="first">
-                            <span style={{ color: '#ff9900', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '45px' }}>*</span> <span className="left">我的银行卡</span>
+                            <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">我的银行卡</span>
                             <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
                             <a className="right" style={{ display: 'none' }}>设置</a>
                           </div>
@@ -591,25 +591,11 @@ export default class RealName extends React.Component {
                     />
                   </Steps>
                 </div>
-                {
-                  safeData.userSecurityCenter.fCertification !== undefined ?
-                      <div className="fr uc-rbody ant-steps-item-description" style={{marginTop:'30px'}}>
-                        <div className="user_basic fl" onClick={() => this.props.history.push(USER_BASIC)}>
-                          <p className="ic"><b></b></p>
-                          <p className="tit">基础资料</p>
-                          <p className="info in1">完善个人信息，增强账户安全等级</p>
-                          <p className="info in2">
-                            <i>*</i><i>*</i><i>*</i><i>*</i><i>*</i>
-                          </p>
-                        </div>
-                      </div> :null
-                }
-                {safeData.userSecurityCenter.fCertification ?
-                  <div style={{ marginTop: '20px' }}>
+              </div> : null}
+
+              {safeData.userSecurityCenter.fCertification ?
+                  <div div className="fr uc-rbody" style={{ marginTop: '20px' }}>
                     <div className="safeCenter">
-                      <div className="real_title">
-                        <span className="safeCenter_">乾多多授权</span>
-                      </div>
                       <div className="line">
                         <div className="block1">
                           {
@@ -623,24 +609,32 @@ export default class RealName extends React.Component {
                         <div className="block2">{status.indexOf('3') !== -1 ? '您已授权二次分配' : '您还未授权二次分配，建议您尽快授权'}</div>
                         <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)}>立即启用</Button>}</div>
                       </div>
-
-                      {/* <div className="line">
-                      <div className="block1">
-                        {
-                          status.indexOf('2') !== -1 ? <Icon type="check" className="i1" /> : <Icon type="warning" className="i2" />
-                        }
-                        <span className="word">自动还款授权</span>
-                        {
-                          status.indexOf('2') !== -1 ? <span className="icon">V</span> : <span className="icon1">V</span>
-                        }
-                      </div>
-                      <div className="block2">{status.indexOf('2') !== -1 ? '您已授权自动还款' : '您还未授权自动还款，建议您尽快授权'}</div>
-                      <div className="block3">{status.indexOf('2') !== -1 ? <Button onClick={() => this.CloseAuthorization(2)}>取消授权</Button> : <Button onClick={() => this.getDistribution(2)}>立即启用</Button>}</div>
-                    </div> */}
-
                     </div>
                   </div> : null}
-              </div> : null}
+
+              {safeData.userSecurityCenter.fCertification ?
+                  <div className="fr uc-rbody" style={{ marginTop: '30px',padding:0 , display: 'flex',
+                  justifyContent: 'space-between'}}>
+                      <div className="baseInfo">
+                        <Icon type="user" />
+                        <h3>基础资料</h3>
+                        <p>完善个人资料，增强账户安全等级</p>
+                        <p><span>****</span>**</p>
+                      </div>
+                    
+                      <div className="baseInfo">
+                        <Icon type="unlock" />
+                        <h3>修改登陆密码</h3>
+                        <p>定期更改账户密码让你的账户更安全</p>
+                        <span>2018/6/15（最新设置时间）</span>
+                      </div>
+                      <div className="baseInfo">
+                        <Icon type="mail" />
+                        <h3>变更绑定邮箱</h3>
+                        <p>绑定电子邮箱后便于接收平台各种通知</p>
+                        <p><span>还未绑定邮箱，</span><a>点击绑定</a></p>
+                      </div>
+                </div>: null}
         </div>
 
 

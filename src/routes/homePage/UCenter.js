@@ -60,7 +60,7 @@ export default class UCenter extends React.Component {
     const { match, nickName, showMask } = this.props;
     return (
       <div className="body2">
-        <LoginInfo/>
+        <LoginInfo history={this.props.history}/>
         <div className="w clearfix">
           {/* <LeftMenu param={this.props}/> */}
           <Switch>

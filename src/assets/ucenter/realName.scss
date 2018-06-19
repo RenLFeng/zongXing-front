@@ -3,17 +3,20 @@
     font-family: '微软雅黑';
     font-weight: 400;
     font-style: normal;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
+    padding-bottom: 5px;
+    margin-bottom: 23px;
     .safeCenter_{
         display: inline-block;
         font-size: 20px;
     }
     .registrationTime{
         display: inline-block;
-        font-size: 14px;
+
+        font-size: 12px;
         color: #AEAEAE;
         float: right;
+        line-height: 25px;
+        margin-top: 8px;
     }
 }
 .first{
@@ -21,7 +24,7 @@
     font-family: '微软雅黑';
     font-weight: 400;
     font-style: normal;
-    margin-top: 15px;
+    margin-top: 10px;
     // padding-bottom: 10px;
     .left{
         margin-left: 20px;
@@ -44,7 +47,7 @@
     }
 }
 .personal{
-    margin: 12px 0;
+    margin-top:20px;
     height:43px;
     background-color: rgba(242, 242, 242, 1);
     font-size: 14px;
@@ -55,7 +58,7 @@
         width:50px;
         display: inline-block;
         color:black;
-
+       
     }
     .id{
         display: inline-block;
@@ -86,7 +89,7 @@
 .rn-content {
     .ant-steps-item-tail{
         // height:90% !important;
-        padding: 15px 1px !important;
+        padding: 0px 0px !important;
      }
      .ant-steps-icon-dot{
          width:10px !important;
@@ -96,13 +99,20 @@
      .ant-steps-item-title {
         color: #ff9900 !important;
     }
+    .ant-steps-vertical.ant-steps-dot .ant-steps-item-process .ant-steps-icon-dot{
+        left:-1px;
+    }
+    .ant-steps-vertical.ant-steps-dot .ant-steps-item-tail{
+        left:-8px;
+        top:11px;
+    }
 }
 
 .pages {
    background: white;
    width: 1248px;
    height:678px !important;
-   margin: auto;
+   margin: auto; 
    padding-top: 5px;
 }
 .real_title_{
@@ -175,14 +185,14 @@
         left: 338px;
         top: 94px;
         width: 105px;
-        height: 30px;
+        height: 30px;   
         transition:transform 0.2s ease-out;
-        transform: rotateZ(180deg);
+        transform: rotateZ(180deg);  
     }
     p{
         color:black;
         font-size: 14px;
-        text-align: center;
+   
         // line-height: 40px;
     }
     .p1{
@@ -204,7 +214,7 @@
         width:300px;
         height:40px;
         padding-left:30px;
-        margin: 30px auto 0 auto;
+        margin: 30px auto 0 auto; 
         margin-left: 465px;
     }
     img{
@@ -285,7 +295,7 @@
             margin-left: 50px;
         }
     }
-
+    
 }
 
 .top{
@@ -305,7 +315,7 @@
               background: #FF9900;
               border-radius: 50%;
               position: absolute;
-              z-index: 1;
+
               text-align: center;
               line-height: 22px;
               font-size: 13px;
@@ -369,7 +379,7 @@
                 display: inline-block;
                 color: #fff;
                 font-size: 22px;
-
+                
             }
         }
         .unbind_card {
@@ -402,7 +412,7 @@
             .unbind-btn {
                 margin-top: 5px;
                 margin-left: 106px;
-
+                
             }
         }
     }
@@ -462,7 +472,7 @@
         position: relative;
         .ant-input{
             width:247px;
-            height:41px;
+           
             padding-left: 30px;
         }
         .img1{
@@ -477,9 +487,9 @@
         }
     }
     Button{
-        margin-left: 96px;
+     
         width:85px;
-        height:37px;
+      
     }
 }
 .addId{
@@ -507,7 +517,7 @@
         color:#99B5D7;
         span{
             display: inline-block;
-            width:102px;
+       
         }
         .name{
             text-align: center;
@@ -623,6 +633,7 @@
     font-size: 18px;
 }
 
+
 .bind_error_msg{
     color: red;
     margin-left: 90px;
@@ -715,3 +726,57 @@
     text-align: center;
   }
 }
+
+.safeCenter{
+    padding-bottom: 0;
+    .line{
+        border: none;
+        padding:0;
+        height:80px;
+        .block1,.block2,.block3{
+            margin-top: 25px;
+        }
+        .block1{
+            width:29%;
+        }
+        .block2{
+            width:55%;
+        }
+        .block3{
+            Button{
+                width:135px;
+                height:35px;
+               
+            }
+        }
+    }
+}
+
+.baseInfo{
+  height:200px;
+  text-align:center;
+  padding:30px 42px;
+  color: #999999;
+  i{
+      color:#E6E6E6;
+      font-size: 50px;
+      font-weight: bold;
+      width:50px;
+      height: 60px;
+  }
+  h3{
+    color: #999999;
+    font-size: 18px !important;
+  }
+  p{
+      margin: 3px 0 ;
+  }
+  span{
+      color:#ff9900
+  }
+  a{
+      color:#268EFF;
+      text-decoration: underline;
+  }
+}
+
