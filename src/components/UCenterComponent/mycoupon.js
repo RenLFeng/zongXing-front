@@ -92,8 +92,7 @@ class MyCoupon extends React.Component {
             }
         }; 
         let rest = await CouponService.getCoupon(param);
-        if(rest.code===0){ 
-            console.log('CouponService',rest.data);
+        if(rest.code===0){  
             //设置总页数
             this.setState({
                 totalNum:rest.data.totalNum,

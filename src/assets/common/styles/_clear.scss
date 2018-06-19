@@ -29,14 +29,12 @@ h1,h2,h3,h4,h5,p{
     line-height: 150%;
 }
 a {
-    display: inline-block;
     color: #333;
     cursor: pointer;
 }
 a:hover{
     color: #666;
 }
-i,em {
-    display: inline-block;
+i,em { 
     font-style: normal;
 }

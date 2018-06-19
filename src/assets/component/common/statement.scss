@@ -57,7 +57,16 @@
             &>span:nth-child(2){
                 display: inline-block;
                 width: 240px;
-            } 
+            }
+            .success{
+                color: #4cd964;
+            }
+            .todo{
+                color: #007aff;
+            }
+            .error{
+                color: #ff3b30;
+            }
         }
         &>div.text2{
             color: $c3;
