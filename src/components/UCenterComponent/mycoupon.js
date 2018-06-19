@@ -123,8 +123,9 @@ class MyCoupon extends React.Component {
             couponId :fcoupon_id
         });
         console.log(rest);
-        if(rest.code===0){   
-             this.getSlelectLable();
+        if(rest.code===0){
+            message.info(rest.msg);
+            this.getSlelectLable();
         }else{
             rest.msg && message.error(rest.msg);
         }
@@ -144,9 +145,7 @@ class MyCoupon extends React.Component {
                                 })
                             }
                         </ul> 
-                    </div> 
-                    {/* 
-                    <Coupon  hasLine='false'></Coupon>*/} 
+                    </div>
                     {
                          this.state.data.length >0 ?<p className='sub-text'> 
                             <span>优惠券总额度 </span>
@@ -159,16 +158,16 @@ class MyCoupon extends React.Component {
                             this.state.data.length===0?<div className='not-found'>暂无优惠券</div>:null
                         }
                         {
-                            this.state.data.map(item=>{ 
+                            this.state.data.map((item,idnex)=>{ 
                                 if(item.fflag==1){
-                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerBtnClick} ></Coupon> </div>
+                                    return <div> <Coupon  data={item} key={index} showVal='true'  hasLine='true' handlerBtnClick={this.handlerBtnClick} ></Coupon> </div>
                                 }else if(item.fflag==2){
-                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友' exchange='兑换券额'></Coupon> </div>  
+                                    return <div> <Coupon  data={item} key={index}  showVal='true'  hasLine='true' giveFriend='赠送好友' exchange='兑换券额'></Coupon> </div>  
                                 }else if(item.fflag==3){
-                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友'></Coupon> </div>  
+                                    return <div> <Coupon  data={item} key={index}  showVal='true'  hasLine='true' giveFriend='赠送好友'></Coupon> </div>  
                                 } 
                                 else{
-                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true'></Coupon> </div>
+                                    return <div> <Coupon  data={item} key={index}  showVal='true'  hasLine='true'></Coupon> </div>
                                 } 
                             })
                         }  
