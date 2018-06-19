@@ -4,23 +4,7 @@ import {Button} from 'antd';
 import moment from 'moment';
 
 class Coupon extends React.Component {
-    //  data 
-    //   { fid:0,//优惠券ID
-    //     fname:'优惠券名称',
-    //     ffull_sub_condition:'',//满减条件
-    //     ffull_sub_money:0,//面值
-    //     flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo 
-    //     fend_time_str:'2018年12月30日',  
-    //     fsurplus_num:0,//剩余数量（待领取时用）
-    //     fuser_place:'',//使用地点  
-    //     fbus_type :'other', //行业
-    //      countNum:0,//张数，
-    //     fflag:1  //1:待领取  2：待生效  3:待消费  4：已使用  5：已失效
-    //   }  
-    // hasLine:是否存在线
-    // handlerBtnClick:点击按钮回调事件，返回id，数据
     
-
     constructor(props) {
         super(props);   
         this.renderData(props);
@@ -42,7 +26,7 @@ class Coupon extends React.Component {
         let btnName = "";
         switch(couponData.fflag){
             case 0:
-                btnName ='待领取'; 
+                btnName ='待领取'; //待生效 
                 break;
             case 1:
                 btnName ='待领取'; 
@@ -106,7 +90,7 @@ class Coupon extends React.Component {
                     <div className={`cp-coupon-right  ${this.state.data.fflag===5?(this.state.data.fbus_type+'-disable' || 'other-disable'):''}`}>
                         {/* 上 按钮 */}
                         { this.props.hasLine==='true'?
-                        <div className={`staus-btn ${this.state.canEdit?'canClick':''}`} onClick={this.props.handlerBtnClick&&this.state.canEdit?this.props.handlerBtnClick.bind(this,this.state.data.fid,this.state.data):()=>{} }>
+                        <div className={`staus-btn ${this.state.canEdit?'canClick':''}`} onClick={this.props.handlerBtnClick?this.props.handlerBtnClick.bind(this,this.state.data.fcoupon_id,this.state.data):()=>{} }>
                             {this.state.btnName}
                         </div>:null
                         } 

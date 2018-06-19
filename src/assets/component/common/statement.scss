@@ -50,14 +50,23 @@
         &>div.text1{
             color: $c3;
             margin-top: 10px;
-            &>span:nth-child(1){
+            &>span.span1{
                 display: inline-block;
                 width: 100px;
             }
-            &>span:nth-child(2){
+            &>span.span2{
                 display: inline-block;
                 width: 240px;
-            } 
+            }
+            .success{
+                color: #4cd964;
+            }
+            .todo{
+                color: #007aff;
+            }
+            .error{
+                color: #ff3b30;
+            }
         }
         &>div.text2{
             color: $c3;

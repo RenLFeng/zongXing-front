@@ -19,6 +19,7 @@
     .btn {
         text-align: center;
         margin-left: 10px;
+        display: inline-block;
     }
     .btn1 {
         width: 142px;
@@ -27,6 +28,7 @@
         color: #ff9900;
         font-size: 16px;
         position: relative;
+        display: inline-block;
         &:hover{
             background-color: #ffa;
         }
@@ -48,6 +50,7 @@
         background-color: #ff9900;
         color: #fff;
         font-size: 16px;
+        display: inline-block;
         &:hover{
             background-color: #f80;
         }
