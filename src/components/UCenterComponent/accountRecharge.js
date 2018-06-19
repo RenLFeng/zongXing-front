@@ -1,11 +1,16 @@
 import React from 'react';
+import { connect } from 'dva'
 import Path from '../../common/pagePath';
 import {Link} from 'dva/router';
 import {Form, Input, Button, Select, Modal, message} from 'antd';
 import { MONEY_REG, MONEY_REG_, PERSONAL_PAGE} from '../../common/systemParam';
 import {getRecharge} from  '../../services/api';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
+import '../../assets/ucenter/recharge.scss';
 
+@connect((state) =>({
+  accountId: state.login.baseData.accountId
+}))
 export default class AccountRecharge extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +18,8 @@ export default class AccountRecharge extends React.Component {
       personAccount: null,
       companyAccount: [],
       recharge: {},
-      loading: false
+      loading: false,
+      amount: 0.0, //充值金额
     };
   }
 
@@ -59,155 +65,76 @@ export default class AccountRecharge extends React.Component {
     });
   }
 
+  handleMoneyChange = (event) => {
+    console.log("amount:",event.target.value);
+    if(isNaN(Number(event.target.value))){
+      this.setState({ amountError: true })
+    }else{
+      this.setState({ amountError: false })
+      this.setState({amount:event.target.value})
+    }
+    
+  }
+
+  handleSubmit = () => {
+    if(this.state.amountError){
+      return;
+    }
+    let param = {
+      accountId: this.props.accountId,
+      rechargeType: this.state.rechargeType,
+      amount: this.state.amount
+    }
+    this.setRechargeData(param);
+  }
+
   render() {
-    const { match } = this.props;
+    const { match,accountId } = this.props;
+    console.log("this.props:",this.props);
     const { recharge } = this.state;
     console.log(recharge);
     return (
-      <div>
-        <LeftMenu param={this.props}/>
-        <div className="fr uc-rbody">
-          <Recharge setData={this.setRechargeData.bind(this)} param={this.props.location.state} loading={this.state.loading}/>
-          <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
-            <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
-            <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
-            <input id="OrderNo" name="OrderNo" value={recharge.orderNo} type="hidden" />
-            <input id="Amount" name="Amount" value={recharge.amount} type="hidden" />
-            <input id="RechargeType" name="RechargeType" value={recharge.rechargeType} type="hidden" />
-            <input id="FeeType" name="FeeType" value={recharge.feeType} type="hidden" />
-            <input id="CardNo" name="CardNo" value={recharge.cardNo} type="hidden" />
-            <input id="RandomTimeStamp" name="RandomTimeStamp" value={recharge.randomTimeStamp} type="hidden" />
-            <input id="Remark1" name="Remark1" value={recharge.remark1} type="hidden" />
-            <input id="Remark2" name="Remark2" value={recharge.remark2} type="hidden" />
-            <input id="Remark3" name="Remark3" value={recharge.remark3} type="hidden" />
-            <input id="ReturnURL" name="ReturnURL" value={recharge.returnURL} type="hidden" />
-            <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL} type="hidden"  />
-            <input id="SignInfo" name="SignInfo" value={recharge.signInfo} type="hidden" />
-          </form>
+      <div className="fr uc-rbody" style={{width: 1248,padding: '30px 20px'}}>
+        <div className="rech_div">
+          <span className="rech_title">充值</span><span className="rech_title" style={{marginLeft: 10, marginRight: 10}}>></span><span className="rech_title" style={{fontSize: '16px'}}>发起充值</span>
         </div>
+        <div>
+          <div className="rech_center">
+            <div className="label_div" style={{width: '116px'}}>
+              <span className="label_text">充值金额</span>
+              <span className="label_text">充值方式</span>
+            </div>
+            <div className="label_div">
+              <div className="input-view">
+                <span className="money_tip">￥</span>
+                <input type="text" className="input_money" onChange={this.handleMoneyChange} />
+              </div>
+              {this.state.amountError ? <div><span style={{ color:'red', fontSize:'10px' }}>只能输入数字</span></div> : null}
+              <div className="select_div">
+                <span className={`recharge_btn ${this.state.rechargeType?'recharge_btn_choose': ''}`} style={{marginRight: '20px'}} onClick={()=>this.setState({rechargeType: 2})}>快捷支付</span>
+                <span className={`recharge_btn ${this.state.rechargeType?'': 'recharge_btn_choose'}`} onClick={()=>this.setState({rechargeType: 0})}>网银充值</span>
+              </div>
+            </div>
+            <Button type="primary" onClick={this.handleSubmit} style={{width: 279}}>发起充值</Button>
+          </div>
+        </div>
+        <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
+          <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
+          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
+          <input id="OrderNo" name="OrderNo" value={recharge.orderNo} type="hidden" />
+          <input id="Amount" name="Amount" value={recharge.amount} type="hidden" />
+          <input id="RechargeType" name="RechargeType" value={recharge.rechargeType} type="hidden" />
+          <input id="FeeType" name="FeeType" value={recharge.feeType} type="hidden" />
+          <input id="CardNo" name="CardNo" value={recharge.cardNo} type="hidden" />
+          <input id="RandomTimeStamp" name="RandomTimeStamp" value={recharge.randomTimeStamp} type="hidden" />
+          <input id="Remark1" name="Remark1" value={recharge.remark1} type="hidden" />
+          <input id="Remark2" name="Remark2" value={recharge.remark2} type="hidden" />
+          <input id="Remark3" name="Remark3" value={recharge.remark3} type="hidden" />
+          <input id="ReturnURL" name="ReturnURL" value={recharge.returnURL} type="hidden" />
+          <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL} type="hidden"  />
+          <input id="SignInfo" name="SignInfo" value={recharge.signInfo} type="hidden" />
+        </form>
       </div>
-     
     );
   }
 }
-
-
-const FormItem = Form.Item;
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 5 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 12 },
-  },
-};
-const btnLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
-class Forms extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        if (values.amount * 1.00 > 100000000) {
-          message.error('金额超过最大限制,不能超过100000000');
-          return;
-        }
-        values.rechargeType = values.rechargeType * 1;
-        values.amount = values.amount * 1.00;
-        console.log('表单提交的数据', values);
-        this.fetchParam(values);
-      }
-    });
-  };
-
-  async fetchParam(values) {
-    // 调取接口返回数据
-    this.props.setData(values);
-  }
-
-  validateNumber = (rule, value, callback) => {
-    const { getFieldValue } = this.props.form;
-    if (MONEY_REG.test(value) && value * 1 <= 2 ) {
-      callback('金额不能小于2');
-
-    }
-    // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
-    callback()
-  };
-  render() {
-    const { getFieldDecorator } = this.props.form;
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormItem
-          {...formItemLayout}
-          label="账户"
-          style={{display:'none'}}
-        >
-          {getFieldDecorator('accountId', {
-            initialValue: this.props.param? this.props.param.account : null
-          })(<Input.TextArea maxLength={'200'} />)}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="充值类型"
-        >
-          {getFieldDecorator('rechargeType', {
-            rules:[{ required: true, message: '请选择充值类型' }],
-            initialValue: '0'
-          })(<Select >
-            <Select.Option value="0">网银充值</Select.Option>
-            <Select.Option value="2">快捷支付</Select.Option>
-            <Select.Option value="3">汇款充值</Select.Option>
-            <Select.Option value="4">企业网银</Select.Option>
-          </Select>)}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="充值金额"
-          extra="充值金额需大于2元"
-        >
-          {getFieldDecorator('amount', {
-            rules:[{ required: true, message: '充值金额不能为空' },
-              {pattern: MONEY_REG, message: '金额格式不正确'},
-              {validator: this.validateNumber}]
-          })(<Input  maxLength={'50'} />)}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="备注"
-        >
-          {getFieldDecorator('remark', {
-            rules:[],
-            initialValue: ''
-          })(<Input.TextArea maxLength={'200'} />)}
-        </FormItem>
-        <FormItem {...btnLayout}>
-          <Button id="button_" style={{width: '200px'}} type="primary" htmlType="submit" loading={this.props.loading} disabled={!(!!this.props.param && this.props.param.account)}
-          >
-            提交
-          </Button>
-        </FormItem>
-      </Form>
-    );
-  }
-}
-const Recharge = Form.create()(Forms);
-
-
-

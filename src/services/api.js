@@ -7,7 +7,7 @@ if (build === 'production') {
   // 远端
   BASE_URL = 'http://test.5izjb.com:8001';
   document.title ="众借帮--客户测试环境";
-} else if (build === 'test') { 
+} else if (build === 'test') {
   //  测试
   BASE_URL = 'http://dev3api.zjb188.com:7956';
   document.title ="众借帮--本地测试环境";
@@ -666,6 +666,7 @@ export async function unbindBankCard(params) {
 // 测试开户
 export async function testSocket() {
   return request(`${BASE_URL}/zjb-dc/test/socket`)
+
 }
 
 //忘记密码获取验证码及检验是否实名认证

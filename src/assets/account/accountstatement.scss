@@ -28,10 +28,14 @@
               &.active{
                   color: $f90; 
               } 
-          }  
+          } 
       } 
     } 
-
+    &>.as-list{
+        margin-top:37px;
+        padding: 26px 50px;
+        background-color: #fff; 
+    }
 }
 
 
