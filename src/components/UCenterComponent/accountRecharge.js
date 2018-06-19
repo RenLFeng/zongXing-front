@@ -77,6 +77,9 @@ export default class AccountRecharge extends React.Component {
   }
 
   handleSubmit = () => {
+    if(this.state.amountError){
+      return;
+    }
     let param = {
       accountId: this.props.accountId,
       rechargeType: this.state.rechargeType,
