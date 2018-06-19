@@ -52,6 +52,7 @@
         background-color: #fff;
         &>div{
             display: inline-block;
+            vertical-align: top;
         }
         &>div:nth-child(odd){
             margin-right:140px; 

@@ -104,12 +104,29 @@
         } 
     }
     &>.btns{
-        float: right;
+        text-align: right;
+        width: 100%;
         margin-top: 9px;
         Button{
             margin-left: 10px;
         }
     }
+    &>.doing-panle{
+        padding: 20px;
+        margin-top: 10px;
+        background: #f1f1f1;
+        &>a{
+            font-size: 20px;
+            padding:5px;
+        }
+        &>.coupon-num{
+            width: 60px;
+        }
+        &>.money{
+            margin: 0 30px;
+        }
+    }
+
 }
 .xcy-line-img{
     background:  url(../../img/coupon/xcy-line.png) no-repeat;

@@ -352,7 +352,7 @@ export default class AccountStatement extends React.Component{
             <div className={this.state.activeCode==='0000'?'':'hide'}>
               {
                 this.state.infoList.map((item,index)=>{
-                  return <Statement showTitle={index==0} data={item}></Statement>
+                  return <Statement key={index} showTitle={index==0} data={item}></Statement>
                 })
               } 
             </div>
