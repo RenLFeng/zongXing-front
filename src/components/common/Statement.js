@@ -15,21 +15,21 @@ class Statement extends React.Component {
             typeName='充值';
         }else if(this.props.data.busType==='1301'){
             typeName='提现';
-        }else if(this.props.data.busType==='1405'){
-            typeName='回款';
         }else if(this.props.data.busType==='1404'){
             typeName='投资';
+        }else if(this.props.data.busType==='1405'){
+            typeName='回款';
         }
         this.state={
             data : this.props.data,
             typeName:typeName,
         } 
     }
- //业务类型码: 
- //1201:充值
- //1301：提现
- //1405：回款
- //1404：投资 
+    //业务类型码: 
+    //1201:充值
+    //1301：提现
+    //1405：回款
+    //1404：投资 
     render() { 
         return (  
             <div className='cp-sm'>
@@ -45,18 +45,18 @@ class Statement extends React.Component {
                     <div className='text1'>
                         {
                             //充值 提现
-                            this.state.data.busType==='1201'|| this.state.data.busType==='1301'?  <span>￥{String(this.state.data.resultObj.famount).fm()}</span>:null
+                            this.state.data.busType==='1201'|| this.state.data.busType==='1301'?  <span className='span1'>￥{String(this.state.data.resultObj.famount).fm()}</span>:null
                         } 
                         {
                             //投资
-                            this.state.data.busType==='1404'&& this.state.data.resultObj ? <span>￥{String(this.state.data.resultObj.invAmount).fm()}</span>:null
-                        }
-                        {
-                            //回款
-                            this.state.data.busType==='1405'&& this.state.data.resultObj ? <span>￥{String(this.state.data.resultObj.invAmount).fm()}</span>:null
+                            this.state.data.busType==='1404'&& this.state.data.resultObj ? <span  className='span1'>￥{String(this.state.data.resultObj.invAmount).fm()}</span>:null
                         } 
+                        
                         {
-                           this.state.data.busType==='1301'?<span>{this.state.data.resultObj && this.state.data.resultObj.bankName||''}  尾号{this.state.data.resultObj.fcardNo.substring(this.state.data.resultObj.fcardNo.length-4)}</span>:null
+                            //提现
+                           this.state.data.busType==='1301'?
+                           <span className='span2'>{this.state.data.resultObj && this.state.data.resultObj.bankName||''}  尾号{this.state.data.resultObj.fcardNo.substring(this.state.data.resultObj.fcardNo.length-4)}</span>
+                           :null
                         } 
                         {
                             this.state.data.resultCode==='88'&&this.state.data.busType !='1405'? <span className='success'>完成</span>:null
@@ -69,9 +69,9 @@ class Statement extends React.Component {
                         } 
                     </div>
                     {
-                        this.state.data.busType==='1301'?
-                        <div className='sm-tx'>
-                            <p>手续费：￥{String(this.state.data.fuserFeeWithdraw).fm()||'0'}</p>
+                        this.state.data.busType==='1301' && this.state.data.famount && this.state.data.fuserFeeWithdraw?
+                        <div className='sm-tx'> 
+                            <p>手续费：￥{this.state.data.fuserFeeWithdraw?(String(this.state.data.fuserFeeWithdraw).fm()||'0'):''}</p>
                             <p>到账金额：￥{String(this.state.data.famount -  this.state.data.fuserFeeWithdraw).fm()||'0'}</p>
                         </div>:null
                     } 
@@ -87,18 +87,16 @@ class Statement extends React.Component {
                     {
                         this.state.data.busType==='1405'?
                         <div className='sm-tz'>
-                            <p>6/12期回款</p> 
+                            <p>{this.state.data.resultObj.periods}/{this.state.data.resultObj.totalPeriods}期回款</p> 
                         </div>:null
-                    }
-                          
+                    }  
                    {
                        (this.state.data.busType==='1404'||this.state.data.busType==='1405')&& this.state.data.resultObj?
                        <div className='sm-tz'> 
                             <p>项目编号：{this.state.data.resultObj.projectNo}</p>
                             <p>项目名称：{this.state.data.resultObj.projectName}</p>
                         </div> :null
-                   }
-                    
+                   } 
                     <i></i>
                </div>
             </div>

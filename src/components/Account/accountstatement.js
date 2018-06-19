@@ -14,7 +14,7 @@ export default class AccountStatement extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      activeCode:'1404',
+      activeCode:'0000',
       pageCurrent: 1,
       pageSize:5,
       totalNum:0,
@@ -43,7 +43,7 @@ export default class AccountStatement extends React.Component{
   async getCapitalDynamics(){
     try {  
       this.setState({
-        loading:true,
+        loading:true, 
       });
       let param = { 
         busTypeCode:this.state.activeCode==='0000'?null:this.state.activeCode,
@@ -55,12 +55,7 @@ export default class AccountStatement extends React.Component{
       console.log("res",res);
       if(res.code === 0){  
         this.setState({  
-          totalNum:res.data.totalNumber,
-          infoList:[],
-          chongzData:[],
-          tixianData:[],
-          touziData:[],
-          huiKuanData:[]
+          totalNum:res.data.totalNumber, 
         }); 
         if(this.state.activeCode==='0000'){
           this.setState({  
@@ -83,7 +78,15 @@ export default class AccountStatement extends React.Component{
             huiKuanData:res.data.infoList, 
           }); 
         } 
-      } else { 
+      } else {
+        this.setState({ 
+          totalNum:0,
+          infoList:[],
+          chongzData:[],
+          tixianData:[],
+          touziData:[],
+          huiKuanData:[]
+        }); 
         res.msg && message.error(res.msg);
       } 
       this.setState({
@@ -106,6 +109,9 @@ export default class AccountStatement extends React.Component{
      this.setState({
       activeCode:code,
      },()=>{
+       this.setState({
+         pageCurrent:1
+       });
       this.getCapitalDynamics();
      });
   } 
@@ -135,10 +141,10 @@ export default class AccountStatement extends React.Component{
         }
       }, {
         title: '充值金额',
-        dataIndex: 'resultObj',
+        dataIndex: 'resultObj.famount',
         align:'right',
         render:function(text,record,index){
-          return String(text.famount).fm();
+          return String(text).fm();
         }
       }, {
         title: '充值状态',
@@ -172,22 +178,37 @@ export default class AccountStatement extends React.Component{
         align:'right',
         dataIndex: 'resultObj.fuserFeeWithdraw',
         render:function(text,record,index){
-          return String(text).fm();
+          if(text){
+            return String(text).fm();
+          }else{
+            return '';
+          }
         }
       }, {
         title: '提现到账金额',
         align:'right',
-        dataIndex: 'resultObj.famount',
+        dataIndex: 'resultObj.',
         render:function(text,record,index){
-          return String(text - record.resultObj.fuserFeeWithdraw).fm();
+          if(text.famount && text.fuserFeeWithdraw){
+            return String(text.famount -text.fuserFeeWithdraw).fm();
+          }else{
+            return '';
+          } 
         }
         
       }, {
         title: '提现银行卡', 
         align:'center',
-        dataIndex: 'resultObj.bankName',
+        dataIndex: 'resultObj',
         render:function(text,record,index){
-          return text + ' 尾号'+record.resultObj.fcardNo.substring(record.resultObj.fcardNo.length-4);
+          let text_ ='';
+          if(text.bankName){
+            textext_t = text.bankName;
+          }
+          if(text.fcardNo){
+            text_+=' 尾号'+ text.fcardNo.substring(record.resultObj.fcardNo.length-4);
+          }
+          return text_;
         }
       }, {
         title: '提现状态',
@@ -245,35 +266,59 @@ export default class AccountStatement extends React.Component{
       }]; 
     //回款
     const huikColumn = [{
-        title: '序号',
-        dataIndex: 'name',
+        title: '序号', 
+        align:'center',
+        width:50,
         render:function(text,record,index){
           return index+1;
         }
       }, {
         title: '回款日期',
-        dataIndex: 'age',
+        dataIndex: 'ftime',
+        align:'center',
+        render:function(text,record,index){
+          return text?moment(text).format('YYYY/MM/DD HH:mm'):'----/--/--/ --:--';
+        }
       }, {
         title: '本金',
-        dataIndex: 'address',
+        dataIndex: 'resultObj.fprincipal',
+        align:'right',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
       }, {
         title: '利息',
-        dataIndex: 'address1',
+        dataIndex: 'resultObj.finterest',
+        align:'right',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
       }, {
         title: '佣金',
-        dataIndex: 'address2',
+        dataIndex: 'resultObj.fkickBack',
+        align:'right',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
       }, {
         title: '当期回款总金额',
-        dataIndex: 'address3',
+        dataIndex: 'resultObj.sumAmount',
+        align:'right',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
       }, {
         title: '项目编号',
-        dataIndex: 'address4',
+        dataIndex: 'resultObj.projectNo',
+        align:'center',
       }, {
-        title: '项目名称',
-        dataIndex: 'address5',
+        title: '项目名称', 
+        dataIndex: 'resultObj.projectName',
+        align:'center',
       }, {
-        title: '还款期数',
-        dataIndex: 'address6',
+        title: '还款期数', 
+        dataIndex: 'resultObj.periods',
+        align:'center',
       }]; 
 
       const locale = {
@@ -314,7 +359,7 @@ export default class AccountStatement extends React.Component{
             </div>
             {/* 提现 */}
             <div className={this.state.activeCode==='1301'?'':'hide'}>
-              <Table columns={tixianColumn} locale={locale} dataSource={this.state.tixianData} loading={this.state.loading} pagination={false} bordered size="small" />
+              <Table columns={tixianColumn} locale={locale}  dataSource={this.state.tixianData} loading={this.state.loading} pagination={false} bordered size="small" />
             </div>
             {/* 投资 */}
             <div className={this.state.activeCode==='1404'?'':'hide'}>
@@ -328,7 +373,7 @@ export default class AccountStatement extends React.Component{
              {
                 Math.ceil(this.state.totalNum/this.state.pageSize)>1?
                 <div className='as-paging'>
-                  <Pagination  current={this.state.pageCurrent} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
+                  <Pagination   current={this.state.pageCurrent} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
                 </div>:null
               } 
           </div> 

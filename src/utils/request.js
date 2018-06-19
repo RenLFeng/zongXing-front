@@ -136,7 +136,7 @@ export const req={
         }
       };
       if (param) {
-        url += '?' + common.serialize(param);
+        url += '?' + serialize(param);
     }
       return fetch(url, Options)
         .then(checkStatus)
