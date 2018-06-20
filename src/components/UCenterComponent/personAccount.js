@@ -9,6 +9,8 @@ import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import { Modal, Button,Table } from 'antd';
 import Coupon from '../common/Coupon';
 import '../../assets/personal/personal.scss';
+import Statement from '../common/Statement';
+import {accountService} from '../../services/api2.js'; 
 
 @connect((state)=>({
   personal: state.account.personal,
@@ -164,7 +166,8 @@ export default class PersonAccount extends React.Component {
         }
       ],
       showType: 'biaoge',
-      reMoneyList: [{name: 1}, {name: 2}]
+      reMoneyList: [{name: 1}, {name: 2}],
+      infoList: []
     };
     this.reMoneyColumn = [
       {
@@ -243,7 +246,7 @@ export default class PersonAccount extends React.Component {
       payload:{
         showNumInfo:4,
         // jumpAuth:()=>this.jumpAuth()
-        jumpAuth:()=>{}
+        jumpAuth:()=>this.jumpAuth()
       }
     });
   }
@@ -257,6 +260,21 @@ export default class PersonAccount extends React.Component {
         that.props.history.push('/index/uCenter/realName')
       },
     });
+  }
+
+  async getAccountStatement() {
+    let param = { 
+      busTypeCode:this.state.activeCode==='0000'?null:this.state.activeCode,
+      pageCurrent: 1, 
+      pageSize: 10
+    }; 
+    //调用后台
+    const res = await accountService.getAccountStatement(param); 
+    if (res.code === 0) {
+      this.setState({
+        infoList:res.data.infoList, 
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -510,35 +528,20 @@ export default class PersonAccount extends React.Component {
                 </div>
               }
             </div>
+          </div>
 
-
-            <div className="hd3">
-              <a className="fl">资金动态</a>
-              <Link className="fr" to={Path.ACCOUNT_STATEMENT}>查看更多 &gt;&gt;</Link>
+          {/* 资金动态 */}
+          <div className="per_account" style={{marginTop: 30}}>
+            <div className="return_money">
+              <em>资金动态</em>
+              <span>更多>></span>
             </div>
-            <div>
-              <div className="timetree">
-                <div className="end"/>
-                <div className="list">
-                  {
-                    this.props.personal.accountDynamicVos.map((data,index) => {
-                      let year_ = moment(data.time).format('YYYY');
-                      let month = moment(data.time).format('MM-DD');
-                      return(
-                        <div className="item" key={index}>
-                          <p className="date">
-                            <i className="y">{year_}</i><br /><i className="d">{month}</i>
-                          </p>
-                          <i className="cc"/>
-                          <p className="text">{data.remark} {data.inMoney=== 0 ? null : `收入: ${(data.inMoney+'').fm()}元`} { data.outMoney === 0 ? null : `支出: ${(data.outMoney+'').fm()}元`}</p>
-                        </div>
-                      );
-                    })
-                  }
-                </div>
-                <div className="start"/>
-              </div>
-            </div>
+            <p style={{color: '#c9c9c9',marginBottom: 20}}>以下为您近期最新10笔资金动态</p>
+            {
+              this.state.infoList.map((data, index)=> {
+                return <Statement key={index} showTitle={index==0} data={item}></Statement>
+              })
+            }
           </div>
         </div>
       </div>

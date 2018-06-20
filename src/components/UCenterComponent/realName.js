@@ -417,6 +417,7 @@ export default class RealName extends React.Component {
     if (safeData.userSecurityCenter.fThirdAccount) {
       step = 2;
     }
+    console.log('step', step);
     return step;
   }
 
@@ -480,8 +481,9 @@ export default class RealName extends React.Component {
                   <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
-                  <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">
+                  <Steps progressDot direction="vertical">
                     <Step title="第一步"
+                      status="wait"
                       description={
                         <div style={{ marginBottom: 28 }}>
                           <div className="first">
@@ -505,7 +507,7 @@ export default class RealName extends React.Component {
                           <div className="first">
                             <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">开通乾多多资金托管账户</span>
                             <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                            {!safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
+                            {!safeData.userSecurityCenter.fThirdAccount && safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
                           </div>
                           <div >
                             <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
