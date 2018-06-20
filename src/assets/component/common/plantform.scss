@@ -1,0 +1,39 @@
+
+//平台通知组件
+@import '../../common/_var.scss';
+
+.plat_warp{
+    margin-top: -25px;
+    .time{
+        padding-left: 30px;
+        padding-bottom: 5px; 
+        font-size: 14px;
+        color: #C9C9C9;
+    }
+    .plat_content{
+        padding-left: 30px;
+        position: relative;
+        .spot{
+            width: 12px;
+            height: 12px;
+            background: $f90;
+            border-radius:50%;
+            position: absolute;
+            top:5px;
+            left:0;
+        }
+       
+        .p_title{
+            width:500px;
+            cursor: pointer;
+        }
+        .p_word{
+            border-left:1px solid $f90;
+             padding:10px 0 65px 24px;
+             position: relative;
+             left: -25px;
+             color: #C9C9C9;
+        }
+    }
+}
+

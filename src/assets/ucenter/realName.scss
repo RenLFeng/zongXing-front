@@ -192,8 +192,6 @@
     p{
         color:black;
         font-size: 14px;
-   
-        // line-height: 40px;
     }
     .p1{
         padding-top: 20px;
@@ -224,17 +222,24 @@
         z-index: 1;
     }
   }
-  Button{
-    //   position: absolute;
-    //   top:180px;
-    //   left:465px;
-      margin-left: 465px;
-      margin-top: 40px;
+  .Button{
+      position: absolute;
+      top:180px;
+      left:465px;
+    //   margin-left: 465px;
+    //   margin-top: 40px;
       width:300px;
       height:40px;
-    //   background:#169BD5;
-    //   color:white;
       font-size: 16px;
+      background: rgb(245, 126, 57);
+      text-align: center;
+      color:white;
+      line-height: 40px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  .Button:hover{
+    background: #ff9900;
   }
   p{
       text-align: center;
