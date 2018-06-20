@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input, message,Button,Pagination} from 'antd'; 
+import {Input, message,Button,Pagination, Modal} from 'antd'; 
 import {connect} from 'dva';
 import Path from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
@@ -32,8 +32,11 @@ export default class Investment extends React.Component {
   }
 
   componentDidMount() { 
-  
-    this.getLables();
+    if (this.props.openStatus == 3) {
+      this.getLables();
+      return;
+    }
+    this.jumpAuth();
      
   }
   
