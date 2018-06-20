@@ -540,7 +540,7 @@ export default class PersonAccount extends React.Component {
             <p style={{color: '#c9c9c9',marginBottom: 20}}>以下为您近期最新10笔资金动态</p>
             {
               this.state.infoList.map((data, index)=> {
-                return <Statement key={index} showTitle={index==0} data={item}></Statement>
+                return <Statement key={index} showTitle={index==0} data={data}></Statement>
               })
             }
           </div>
