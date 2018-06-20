@@ -100,7 +100,6 @@ export default class Register extends React.Component {
     }
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await phoneExist(phoneNum);
-      console.log('注册手机号',response)
       if (response.code !== 0) {
         if (response.msg === '该手机号已注册，请直接登录！') {
           this.setState({
@@ -191,8 +190,6 @@ export default class Register extends React.Component {
     }
     const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
     let that = this.props;
-    console.log('0000')
-    console.log('密码为',regPwd)
     let flag = true;
     if (regPhone.trim().length === 0) {
       this.setState({regNameErr: '请输入手机号'});
@@ -213,7 +210,6 @@ export default class Register extends React.Component {
       this.setState({regAuthErr: ''});
     }
     if (regPwd.trim().length !== regPwd.length) {
-      console.log(11111)
       this.setState({regPwdErr: '密码中不能含空格'});
       flag = false;
     } else if (regPwd.length === 0) {
@@ -259,7 +255,6 @@ export default class Register extends React.Component {
     try {
       this.setState({regLoading: true});
       const response = await regUser(reg);
-      console.log('注册数据',response)
       this.setState({regLoading: false});
       if (response.code === 0) {
         this.setState({showReg: false});
@@ -278,7 +273,6 @@ export default class Register extends React.Component {
         response.msg && message.warning(response.msg);
       }
     } catch (e) {
-      console.log(e);
       this.setState({regLoading: false});
       message.error('服务器繁忙，请稍后重试');
     }
@@ -307,7 +301,7 @@ export default class Register extends React.Component {
                     </div>
                     <div className="row relative" style={{marginBottom:30}}>
                       <input className="put" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
-                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value},()=>{console.log(regAuthCode)})} style={{paddingLeft:'12px'}}/>
+                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'12px'}}/>
                       <p className="prompts">{this.state.regAuthErr}</p>
                       {// 根据倒计时时间显示是否可以点击获取验证码按钮
                         this.state.registerShow_ ? 

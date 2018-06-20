@@ -177,7 +177,6 @@ export default class ForgetPassWord extends React.Component {
 
   //校验用户信息
   async fp_checkInfo() {
-    console.log(11111)
     if (this.state.idCard && !CARD_REG.test(this.state.idCard)) {
       this.setState({
         id_prompt: '身份证格式不正确'
@@ -205,7 +204,6 @@ export default class ForgetPassWord extends React.Component {
       idCard: this.state.idCard
     }
     const response = await fp_checkInfo(params);
-    console.log('校验信息', response)
     if (response.code === 0) {
       this.setState({
         flagPage: 'third',
@@ -262,7 +260,6 @@ export default class ForgetPassWord extends React.Component {
   }
 
   changePassStatus(flag) {
-    console.log(flag)
     if (flag === 'show') {
       this.setState({
         show: false
