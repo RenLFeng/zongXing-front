@@ -229,6 +229,7 @@ export default class PersonAccount extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.openStatus);
     this.getInitData();
     this.initFetchSafeData();
     this.getAccountStatement();
@@ -460,7 +461,7 @@ export default class PersonAccount extends React.Component {
           <div className="per_account">
             <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>
               <i>账户总资产</i>
-              <b>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</b>
+              <b>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</b>
               <em>单位：元</em>
             </div>
             <div className="tright hd1">
@@ -476,7 +477,7 @@ export default class PersonAccount extends React.Component {
             <div className="border shadow box1" style={{marginTop: 90}}>
               <div className="pieDiv">
                 <div>
-                  <span style={{fontSize: '22px'}}>{(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm()}</span>
+                  <span style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</span>
                   <span style={{fontSize: '14px'}}>账户总资产</span>
                 </div>
               </div>
