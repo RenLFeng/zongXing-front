@@ -454,7 +454,7 @@ export default class RealName extends React.Component {
   render() {
     // 初始化数据
     const { safeData } = this.props;
-    const { status, distribution,url } = this.state;
+    const { status, distribution, url } = this.state;
     return (
       <div>
         <div>
@@ -488,7 +488,7 @@ export default class RealName extends React.Component {
                     <Step
                       title="第二步"
                       description={
-                        <div style={{ marginBottom:28 }}>
+                        <div style={{ marginBottom: 28 }}>
                           <div className="first">
                             <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">开通乾多多资金托管账户</span>
                             <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
@@ -499,7 +499,7 @@ export default class RealName extends React.Component {
                           </div>
                           {
                             safeData.userSecurityCenter.fThirdAccount ?
-                              <div className="personal" style={{marginTop:0}}>
+                              <div className="personal" style={{ marginTop: 0 }}>
                                 <span style={{ color: 'black' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
                                 <div className="findPass">
                                   <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: true, showMMMChangeLoginPass: false })}>找回乾多多支付密码 </span>
@@ -564,26 +564,23 @@ export default class RealName extends React.Component {
                               );
                             })}
                           </div>
-                          {this.props.accountId ? 
+                          {this.props.accountId ?
                             <div className="unbind_div" >
-                            <Icon type="plus" className="icon-plus" onClick={() => this.props.history.push(BINDCARD)}/>
-                            <span className="bind_new_bank">绑定新银行卡</span>
-                            <span
-                              className="bind_new_bank"
-                              style={{ color: '#e6e6e6', fontSize: 14 }}
-                            >(只支持储蓄卡)</span>
-
-                          </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
-                          
+                              <Icon type="plus" className="icon-plus" onClick={() => this.props.history.push(BINDCARD)} />
+                              <span className="bind_new_bank">绑定新银行卡</span>
+                              <span
+                                className="bind_new_bank"
+                                style={{ color: '#e6e6e6', fontSize: 14 }}
+                              >(只支持储蓄卡)</span>
+                            </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
                         </div>
                       }
                     />
                   </Steps>
                 </div>
               </div> : null}
-
-                  {safeData.userSecurityCenter.fThirdAccount? 
-                  <div div className="fr uc-rbody" style={{ marginTop: '20px',padding:'0' }}>
+              {safeData.userSecurityCenter.fThirdAccount ?
+                  <div className="fr uc-rbody" style={{ marginTop: '30px', padding: '0' }}>
                     <div className="safeCenter">
                       <div className="line">
                         <div className="block1">
@@ -600,43 +597,45 @@ export default class RealName extends React.Component {
                       </div>
                     </div>
                   </div> : null}
-                  <div className="fr uc-rbody" style={{ marginTop: '30px',padding:0 , display: 'flex',
-                  justifyContent: 'space-between'}}>
-                      <div className="baseInfo">
-                        <Icon type="user" />
-                        <h3>基础资料</h3>
-                        <p>完善个人资料，增强账户安全等级</p>
-                        <p><span>****</span>**</p>
-                      </div>
-                    
-                      <div className="baseInfo">
-                        <Icon type="unlock" />
-                        <h3>修改登陆密码</h3>
-                        <p>定期更改账户密码让你的账户更安全</p>
-                        <span>2018/6/15（最新设置时间）</span>
-                      </div>
-                      <div className="baseInfo">
-                        <Icon type="mail" />
-                        <h3>变更绑定邮箱</h3>
-                        <p>绑定电子邮箱后便于接收平台各种通知</p>
-                        <p><span>还未绑定邮箱，</span><a>点击绑定</a></p>
-                      </div>
-                </div>
+          <div className="fr uc-rbody" style={{
+            marginTop: '30px', padding: 0, display: 'flex',
+            justifyContent: 'space-between'
+          }}>
+            <div className="baseInfo">
+              <Icon type="user" />
+              <h3>基础资料</h3>
+              <p>完善个人资料，增强账户安全等级</p>
+              <p><span>****</span>**</p>
+            </div>
+
+            <div className="baseInfo">
+              <Icon type="unlock" />
+              <h3>修改登陆密码</h3>
+              <p>定期更改账户密码让你的账户更安全</p>
+              <span>2018/6/15（最新设置时间）</span>
+            </div>
+            <div className="baseInfo">
+              <Icon type="mail" />
+              <h3>变更绑定邮箱</h3>
+              <p>绑定电子邮箱后便于接收平台各种通知</p>
+              <p><span>还未绑定邮箱，</span><a>点击绑定</a></p>
+            </div>
+          </div>
         </div>
-        {distribution ? 
-          <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{display:'none'}}>
-          <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId?distribution.moneymoremoreId:''}/>
-          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore?distribution.platformMoneymoremore:''}/>
-          <input id="AuthorizeTypeOpen" name="AuthorizeTypeOpen" value={distribution.authorizeTypeOpen?distribution.authorizeTypeOpen:''}/>
-          <input id="AuthorizeTypeClose" name="AuthorizeTypeClose" value={distribution.authorizeTypeClose?distribution.authorizeTypeClose:''}/>
-          <input id="RandomTimeStamp" name="RandomTimeStamp" value={distribution.randomTimeStamp?distribution.randomTimeStamp:''}/>
-          <input id="Remark1" name="Remark1" value={distribution.remark1?distribution.remark1:''}/>
-          <input id="Remark2" name="Remark2" value={distribution.remark2?distribution.remark2:''}/>
-          <input id="Remark3" name="Remark3" value={distribution.remark3?distribution.remark3:''}/>
-          <input id="ReturnURL" name="ReturnURL" value={distribution.returnURL?distribution.returnURL:''} />
-          <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
-          <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
-        </form> : null}
+        {distribution ?
+          <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{ display: 'none' }}>
+            <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId ? distribution.moneymoremoreId : ''} />
+            <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore ? distribution.platformMoneymoremore : ''} />
+            <input id="AuthorizeTypeOpen" name="AuthorizeTypeOpen" value={distribution.authorizeTypeOpen ? distribution.authorizeTypeOpen : ''} />
+            <input id="AuthorizeTypeClose" name="AuthorizeTypeClose" value={distribution.authorizeTypeClose ? distribution.authorizeTypeClose : ''} />
+            <input id="RandomTimeStamp" name="RandomTimeStamp" value={distribution.randomTimeStamp ? distribution.randomTimeStamp : ''} />
+            <input id="Remark1" name="Remark1" value={distribution.remark1 ? distribution.remark1 : ''} />
+            <input id="Remark2" name="Remark2" value={distribution.remark2 ? distribution.remark2 : ''} />
+            <input id="Remark3" name="Remark3" value={distribution.remark3 ? distribution.remark3 : ''} />
+            <input id="ReturnURL" name="ReturnURL" value={distribution.returnURL ? distribution.returnURL : ''} />
+            <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL ? distribution.notifyURL : ''} />
+            <input id="SignInfo" name="SignInfo" value={distribution.signInfo ? distribution.signInfo : ''} />
+          </form> : null}
       </div>
 
     );
