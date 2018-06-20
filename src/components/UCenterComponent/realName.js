@@ -586,7 +586,7 @@ export default class RealName extends React.Component {
                               style={{ color: '#e6e6e6', fontSize: 14 }}
                             >(只支持储蓄卡)</span>
 
-                          </div> : null}
+                          </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
                           
                         </div>
                       }
