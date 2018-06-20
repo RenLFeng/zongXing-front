@@ -45,12 +45,12 @@ class LoginInfo extends React.Component {
                         <div className="fr">  
                             <div className="account-content">
                                 <p>待领取代金券</p>
-                                <p className="account-money">{baseData.countCoupon}张</p>
+                                <p className="account-money">{baseData.countCoupon||'0'}张</p>
                             </div >  
                             <i></i>
                            <div className="account-content">
                                 <p>券额</p>
-                                <p className="account-money">￥{`${baseData.sumCoupon}`.fm()}</p>
+                                <p className="account-money">￥{`${baseData.sumCoupon||0}`.fm()}</p>
                             </div>
                             <i></i>
                              <div className="account-content" style={{borderRight:'0px'}}>

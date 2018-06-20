@@ -29,11 +29,12 @@ export default {
   INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //平台公告列表 
 
   ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
-  RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
+
 
 
   Project_Collection:'/index/uCenter/projectcollection',
   INVEST_MENT: '/index/uCenter/InvestMent', //投资记录
+  RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
   ACCOUNT_STATEMENT:'/index/uCenter/accountstatement',  //资金动态
   MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
 

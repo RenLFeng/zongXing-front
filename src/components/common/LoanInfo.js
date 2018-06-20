@@ -56,10 +56,8 @@ class LoanInfo extends React.Component {
 	},async ()=>{
 		let param = {
 			projectId:this.state.projectId
-		}; 
-		console.log(param)
-		const rest =  await accountService.getInvestmentPlan(param);
-		console.log('查询回款明细',rest)
+		};  
+		const rest =  await accountService.getInvestmentPlan(param); 
 		this.setState({ 
 			loading:false,
 		});
@@ -83,8 +81,8 @@ class LoanInfo extends React.Component {
     const tableColumn = [{
         title: '期数', 
         align:'center',
-		width:50,
-		dataIndex: 'fsort',
+			width:50,
+			dataIndex: 'fsort',
       }, {
         title: '回款日期',
         dataIndex: 'ffor_pay_time',
