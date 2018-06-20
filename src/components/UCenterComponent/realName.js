@@ -483,7 +483,6 @@ export default class RealName extends React.Component {
                 <div className="rn-content">
                   <Steps progressDot direction="vertical" current={this._judgeAccount(safeData)}>
                     <Step title="第一步"
-                      status="wait"
                       description={
                         <div style={{ marginBottom: 28 }}>
                           <div className="first">

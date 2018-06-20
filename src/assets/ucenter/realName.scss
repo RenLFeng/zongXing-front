@@ -90,12 +90,12 @@
     .ant-steps-item-tail{
         // height:90% !important;
         padding: 0px 0px !important;
-     }
-     .ant-steps-icon-dot{
-         width:10px !important;
-         height:10px !important;
-     }
-     .ant-steps-item-title {
+    }
+    .ant-steps-icon-dot{
+        width:10px !important;
+        height:10px !important;
+    }
+    .ant-steps-item-title {
 
     }
     .ant-steps-vertical.ant-steps-dot .ant-steps-item-process .ant-steps-icon-dot{
@@ -103,11 +103,14 @@
     }
     .ant-steps-vertical.ant-steps-dot .ant-steps-item-tail{
         left:-8px;
-        top: 18px;
+        top: 17px;
         height: 95%;
     }
     .ant-steps-item-process .ant-steps-item-icon .ant-steps-icon .ant-steps-icon-dot {
         left: 0px;
+    }
+    .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot {
+        background-color: #ff9900;
     }
 }
 
