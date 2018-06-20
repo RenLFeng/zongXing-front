@@ -1,7 +1,7 @@
 // 长条借款项目 
 import React from 'react';
 import '../../assets/component/common/loaninfo.scss';
-import {Button,Steps,Table} from 'antd';
+import {Button,Steps,Table,message} from 'antd';
 import moment from 'moment'; 
 import {accountService}  from '../../services/api2';
 
@@ -35,21 +35,45 @@ class LoanInfo extends React.Component {
 		visableTable:false,
 		tableData:[],
 		loading:false,
+		projectId:'',
 	}
   }
  //查看回款明细
-  handllerHKClick=(projectId)=>{ 
+  handllerHKClick(projectId){ 
 	this.setState({
-		visableTable:!this.state.visableTable
+		visableTable:!this.state.visableTable,
+		projectId:projectId,
 	},()=>{
 		if(this.state.visableTable &&(this.state.tableData || this.state.tableData.length==0)){
-
+			this.searchDetail();
 		}
 	}); 
  }
  //查询回款明细
+  searchDetail(){
+	this.setState({
+		loading:true,
+	},async ()=>{
+		let param = {
+			projectId:this.state.projectId
+		}; 
+		console.log(param)
+		const rest =  await accountService.getInvestmentPlan(param);
+		console.log('查询回款明细',rest)
+		this.setState({ 
+			loading:false,
+		});
+		if(rest.code===0){
+			this.setState({
+				tableData:rest.data, 
+			});
+		}else{
+			message.error(rest.msg);
+		}
+	}) 
+ }
 
- handllerHTClick = async (projectId)=>{
+ handllerHTClick = async ()=>{
 	alert('查看安心签投资合同')
  }
 
@@ -66,7 +90,7 @@ class LoanInfo extends React.Component {
         dataIndex: 'ffor_pay_time',
         align:'center',
         render:function(text,record,index){
-          return text?moment(text).format('YYYY/MM/DD HH:mm'):'----/--/--/ --:--';
+          return text?moment(text).format('YYYY/MM/DD HH:mm'):'';
         }
       }, {
         title: '本金',
@@ -101,7 +125,11 @@ class LoanInfo extends React.Component {
         dataIndex: 'fispay',
         align:'center',
         render:function(text,record,index){
-          return String(text).fm();
+          if(text){
+			  return '已回款';
+		  }else{
+			  return '待回款';
+		  }
         }
       }, {
         title: '到账日期',
@@ -227,8 +255,8 @@ class LoanInfo extends React.Component {
 				{
 					this.state.data.projectFlag ===this.state.fstate.yjq?
 					<Steps size="small" current={3} progressDot direction="vertical"> 
-						<Step   title={`项目上线：${this.state.data.upLineDate?moment(this.state.data.upLineDate).format('YYYY/MM/DD HH:mm'):'YYYY/MM/DD HH:mm'}`} />
-						<Step   title={`项目满标：${this.state.data.fullDate?moment(this.state.data.fullDate).format('YYYY/MM/DD HH:mm'):'YYYY/MM/DD HH:mm'}`} /> 
+						<Step   title={`项目上线：${this.state.data.upLineDate?moment(this.state.data.upLineDate).format('YYYY/MM/DD HH:mm'):''}`} />
+						<Step   title={`项目满标：${this.state.data.fullDate?moment(this.state.data.fullDate).format('YYYY/MM/DD HH:mm'):''}`} /> 
 						<Step   title={`项目计息：${this.state.data.loanDate?moment(this.state.data.loanDate).format('YYYY/MM/DD HH:mm'):''}`} /> 
 						<Step   title={`项目结清：${this.state.data.finishDate?moment(this.state.data.finishDate).format('YYYY/MM/DD HH:mm'):''}`} />  
 					</Steps>:null
