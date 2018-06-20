@@ -1,15 +1,19 @@
 import React from 'react';
-import {Table,Pagination} from 'antd';
+import {Table,Pagination, Modal} from 'antd';
 import {message} from "antd/lib/index";
 import moment from 'moment'; 
 import {pageShows} from "../../common/systemParam";
 import LeftMenu from '../UCenterComponent/leftMenu';
 import {accountService} from '../../services/api2.js'; 
 import Statement from '../common/Statement';
+import {connect} from 'dva';
 import '../../assets/account/accountstatement.scss';
 /**
  * 资金流水界面
  */
+@connect((state)=>({
+  openStatus: state.account.openStatus
+}))
 export default class AccountStatement extends React.Component{
   constructor(props){
     super(props);
@@ -37,7 +41,21 @@ export default class AccountStatement extends React.Component{
   }
 
   componentDidMount() {
-    this.getCapitalDynamics();  //调用请求
+    if (this.props.openStatus == 3) {
+      this.getCapitalDynamics();  //调用请求
+      return;
+    }
+    this.jumpAuth()
+  }
+  jumpAuth() {
+    var that = this;
+    Modal.info({
+      title: '您目前还没有开户，请先开户！',
+      okText:'去开户',
+      onOk() {
+        that.props.history.push('/index/uCenter/realName')
+      },
+    });
   }
   //获取资金动态列表
   async getCapitalDynamics(){
