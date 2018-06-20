@@ -188,3 +188,50 @@
   }
 }
 
+.money_dynamic_item {
+  border: 1 solid #333;
+
+  .money_dynamic_top_line {
+    height: 30px;
+    border-left: 1px solid #ff9900;
+    margin-bottom: 5px;
+    margin-left: 4px;
+    padding-left: 20px;
+    padding-top: 5px;
+    span {
+      color: #C9C9C9;
+    }
+  }
+  .money_dynamic_circle {
+    width: 10px;
+    height: 10px;
+    background-color: #ff9900;
+    border-radius: 50px;
+    display: inline-block;
+    margin-right: 15px;
+  }
+
+  .money_dynamic_bottom_line {
+    height: 100px;
+    border-left: 1px solid #ff9900;
+    margin-top: 5px;
+    margin-left: 4px;
+    padding-left: 20px;
+    .money_dynamic_bottom_line_div {
+      display: inline-block;
+    }
+    .money_dynamic_bottom_span {
+      display: inline-block;
+    }
+  }
+  .money_dynamic_bottom_money {
+    color: #ff9900;
+    font-weight: bolder;
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+    margin-top: -100px;
+  }
+}
+

@@ -115,27 +115,24 @@
                     &>.tip{
                         color: $c9;
                     }
-                }
-
-                
+                } 
             }
             &>.li-right{
                 height: 134px;
                 float: left;
-                padding: 20px;
+                padding: 20px 10px;
                 position: relative;
                 &>.line{
-                    left: 23px;
-                    top: 30px; 
-                    height: 100px; 
+                    left: 13px;
+                    top: 33px; 
+                    height: 125px; 
                     width: 0;
                     border-left:1px solid #e6e6e6;
                     position: absolute;
                     padding-bottom: 30px;
                 }
                 .ant-steps-vertical .ant-steps-item-content{
-                    min-height: 41px;
-                    padding-left: 10px;
+                    min-height: 41px; 
                 }
                 .ant-steps-item-finish > .ant-steps-item-tail:after{
                     background-color: #e6e6e6;
@@ -152,8 +149,14 @@
                     height: 12px;
                     width: 12px;
                 }
+                .ant-steps-vertical.ant-steps-dot .ant-steps-item-tail{
+                    margin: 0;
+                    left: -9px;
+                    top: 20px;
+                    padding: 5px 0 0px;
+                }
                 .ant-steps-vertical.ant-steps-small .ant-steps-item-title{
-                    font-size: 16px;
+                    font-size: 15px;
                 }
                 .ant-steps-dot .ant-steps-item-process .ant-steps-item-icon{
                     line-height: 12px;
@@ -167,16 +170,16 @@
             }
         }
         &>.li-down{
-            height: 20px;
+            height: 50px;
             background-color: #f2f2f2; 
-            font-size: 16px;
+            font-size: 14px;
             line-height: 20px;
             padding: 15px 0 15px 22px;
-            &>span{ 
+            span{ 
                 color: #666;
                 &>.split{
                     color: #7e7e7e;
-                    margin: 0 15px; 
+                    margin: 0 10px; 
                 }
             }
             &>a.btn{ 
@@ -184,7 +187,7 @@
                 text-align: center;
                 margin-top: -15px;
                 background-color: $f90;
-                height: 35px;
+                height: 50px;
                 float: right;
                 padding-top:15px; 
                 color: #fff;

@@ -127,6 +127,9 @@ export default class Register extends React.Component {
 
   //获取验证码
   async getAuthCode() {
+    if (this.state.authLoading) {
+      return;
+    }
     const {regPhone} = this.state;
     if (regPhone.length === 0) {
       this.setState({regNameErr: '手机号不能为空'});
@@ -147,8 +150,8 @@ export default class Register extends React.Component {
     this.setState({authLoading: true});
     try {
       const response = await getAuthCode(regPhone);
+      this.setState({authLoading: false});
       if (response.code === 0) {
-        this.setState({authLoading: false});
         message.info('发送成功');
       } else {
         message.error(response.msg);
@@ -183,6 +186,9 @@ export default class Register extends React.Component {
 
   //注册提交方法
   async submitReg() {
+    if (this.state.regLoading) {
+      return;
+    }
     const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
     let that = this.props;
     console.log('0000')
