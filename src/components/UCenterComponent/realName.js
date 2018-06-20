@@ -597,7 +597,7 @@ export default class RealName extends React.Component {
                 </div>
               </div> : null}
 
-              {safeData.userSecurityCenter.fCertification ?
+    
                   <div div className="fr uc-rbody" style={{ marginTop: '20px',padding:'0' }}>
                     <div className="safeCenter">
                       <div className="line">
@@ -614,9 +614,7 @@ export default class RealName extends React.Component {
                         <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)}>立即启用</Button>}</div>
                       </div>
                     </div>
-                  </div> : null}
-
-              {safeData.userSecurityCenter.fCertification ?
+                  </div> 
                   <div className="fr uc-rbody" style={{ marginTop: '30px',padding:0 , display: 'flex',
                   justifyContent: 'space-between'}}>
                       <div className="baseInfo">
@@ -638,7 +636,7 @@ export default class RealName extends React.Component {
                         <p>绑定电子邮箱后便于接收平台各种通知</p>
                         <p><span>还未绑定邮箱，</span><a>点击绑定</a></p>
                       </div>
-                </div>: null}
+                </div>
         </div>
 
 
