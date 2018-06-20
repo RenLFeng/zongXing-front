@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Input, Button, Select, Modal, message, Icon } from 'antd';
 import '../../assets/ucenter/withdrawals.scss';
-import {getBankCard, getCity, putInformation} from '../../services/api';
+import {getBankCardList, getCity, putInformation} from '../../services/api';
 import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE } from '../../common/systemParam';
 import Path from "../../common/pagePath";
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
@@ -67,18 +67,21 @@ export default class EnterprisePresentation extends React.Component {
 
   componentDidMount() {
     // 获取跳转类型 0：个人 1：企业
+    console.log('lalalalalalalal',this.props)
+    console.log('lalalalalalalal',this.props.history)
     this.setState({
-      accountId: this.props.location.state ? this.props.location.state.account : ''
+      accountId: this.props? this.props.accountId : ''
     });
-    if (this.props.location.state) {
-      this.getCardInformation(this.props.location.state.account);
+    if (this.props) {
+      // this.getCardInformation(this.props.accountId);
     }
+
   }
 
   //获取银行卡
   async getCardInformation(data) {
-    const response = await getBankCard(data);
-    console.log(response);
+    const response = await getBankCardList(data);
+    console.log('提现银行卡接口',response);
     if (response.code === 0) {
       this.setState({
         withdrawals: response.data,
@@ -103,7 +106,6 @@ export default class EnterprisePresentation extends React.Component {
   }
 
   async getCity_(data) {
-    console.log(this.state.num);
     const response = await getCity(data);
     if (response.code === 0) {
       this.setState({
@@ -218,6 +220,11 @@ export default class EnterprisePresentation extends React.Component {
     console.log('focus');
   }
 
+  //点击不同的银行卡，显示不同的信息
+  showCardInfo(id){
+    console.log('银行卡id位',id)
+  }
+
   render() {
     const {withdrawals} = this.state;
     const {baseData} = this.props;
@@ -230,9 +237,16 @@ export default class EnterprisePresentation extends React.Component {
           <span className="withdrawals_title">请选择到账银行卡</span>
           <div style={{padding: '0 0 30px 52px', borderBottom: '1px dashed #e6e6e6'}}>
             <div style={{display:'flex',justifyContent: 'space-between'}}>
-              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'农业银行'} cardId={'1234 **** **** 7894'} id="1"/>
-              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'建设银行'} cardId={'6284 **** **** 1234'} id="2"/>
-              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'招商银行'} cardId={'2345 **** **** 4569'} id="3"/>
+            {
+              this.state.bankInfos.map((data)=>{
+                 return(
+                     <div key={data.userBankId} onClick={()=>{this.showCardInfo(data.userBankId)}} >
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={data.bankName} cardId={data.cardNo.substr(0,4) +'**** **** '+data.cardNo.substr(12)}  /> 
+                     </div>
+                     
+                 )
+              })
+            }
             </div> 
             <div className="card_add" >
               <Icon type="plus" onClick={() => this.props.history.push(Path.BINDCARD)}/>

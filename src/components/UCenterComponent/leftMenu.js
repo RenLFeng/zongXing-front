@@ -22,8 +22,8 @@ export default class LeftMenu extends React.Component {
                 <ul> 
                   <li><Link className={path.indexOf(Path.INVEST_MENT) ===-1?'':'active'} to={Path.INVEST_MENT}>投资记录</Link></li>    
                   <li><Link className={path.indexOf(Path.ACCOUNT_STATEMENT) ===-1?'':'active'} to={Path.ACCOUNT_STATEMENT}>资金流水</Link></li>
-                  <li><Link className={path.indexOf(Path.MY_COUPON) ===-1?'':'active'} to={Path.MY_COUPON}>我的优惠券</Link>   </li>
-                  <li>券额明细</li>
+                  <li><Link className={path.indexOf(Path.MY_COUPON) ===-1?'':'active'} to={Path.MY_COUPON}>我的优惠券</Link></li>
+                  <li><Link className={path.indexOf(Path.VOUCHER) ===-1?'':'active'} to={Path.VOUCHER}>券额明细</Link></li>
                   <li><Link className={path.indexOf(Path.Project_Collection) ===-1?'':'active'} to={Path.Project_Collection}>项目收藏</Link> </li>
                   <li>我的邀请码</li>
                 </ul> 
@@ -43,7 +43,7 @@ export default class LeftMenu extends React.Component {
                   通知中心
                 </span>
                  <ul>
-                     <li>平台登录</li>
+                     <li><Link className={path.indexOf(Path.PLATFORM_NOTICE) ===-1?'':'active'} to={Path.PLATFORM_NOTICE}>平台通知</Link></li>
                  </ul>
              </li>
           </ul> 
