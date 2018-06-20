@@ -119,7 +119,9 @@ class LoginInfo extends React.Component {
     }
 
     async getNotice(){
+        console.log(111)
         const response = await getSiteNotice(this.state.pageCurrent,this.state.pageSize);
+        console.log('站内消息',response)
         if(response.code === 0){
             this.setState({
                 dataInfo:response.data.notices,
@@ -176,9 +178,9 @@ class LoginInfo extends React.Component {
                         </div>  
                     </div>
                     <div className="uc-message">             
-                            <span className="text1" style={{verticalAlign: 'middle',height:25,display:'inline-block',marginTop:'-8px'}}>系统消息：</span>    
+                            <span className="text1" style={[{verticalAlign: 'middle',height:25,display:'inline-block'},this.state.dataInfo.length > 1 ? {marginTop:'-8px'}:{marginTop:'0px'}]}>系统消息：</span>    
                             {
-                                this.state.dataInfo.length < 1 ? 
+                                this.state.dataInfo.length > 1 ? 
                                 <div id="marquee4" style={{width:400,height:25,overflow:'hidden',display:'inline-block'}}>
                                     <ul>
                                     {

@@ -78,7 +78,6 @@ export default class Login extends React.Component {
   }
 
   passwordError(phoneNumber) {
-    console.log(phoneNumber);
     this.setState({
       phoneNumber,
       authPhone: true,
@@ -87,7 +86,6 @@ export default class Login extends React.Component {
   }
 
   pressKey(e) {
-    console.log('e',e)
     if (e.keyCode === 13) {
       this.submitLogin();
     } else {
@@ -132,7 +130,6 @@ export default class Login extends React.Component {
     }
     this.setState({checkPhoneLoading: true});
     const response = await phoneExist(loginPhone);
-    console.log('2222',response);
     this.setState({checkPhoneLoading: false});
     if (response.code === 0) {
       this.setState({loginError: false});
