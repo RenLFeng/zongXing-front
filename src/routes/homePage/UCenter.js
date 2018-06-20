@@ -27,9 +27,9 @@ import InvestMent from '../../components/Account/investment';
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import IncomePlan from '../../components/UCenterComponent/IncomePlan';
 import AllInvest from '../../components/UCenterComponent/AllInvest';
-
 import Test from '../../components/UCenterComponent/test';
 import CompanyList from '../../components/UCenterComponent/companyList';
+import BindSuccess from '../../components/UCenterComponent/bindSuccess';
 import receivePlan from '../../components/UCenterComponent/receivePlan';
 //我的优惠券
 import myCoupon from '../../components/UCenterComponent/mycoupon';
@@ -87,6 +87,8 @@ export default class UCenter extends React.Component {
             <Route path={Path.COMPANY_ACCOUNT} component={CompanyAccount} />
             {/* 安全中心 */}
             <Route path={Path.SAFE_CENTER} component={SafeCenter} />
+             {/* 绑定成功界面 */}
+             <Route path={Path.BIND_SUCCESS} component={BindSuccess} />
             {/* 实名认证 类型调整页面地址 */}
             <Route path={Path.REALNAME_AUTHENTICATION} component={RealName} />
             {/* 实名认证 */}
