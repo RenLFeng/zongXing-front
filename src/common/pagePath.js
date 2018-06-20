@@ -25,15 +25,16 @@ export default {
   LOAN_LIST: '/index/uCenter/loanList', //借款项目列表
   COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
   NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
-
+  BIND_SUCCESS: '/index/uCenter/bindSuccess',
   INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //平台公告列表 
 
   ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
-  RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
+
 
 
   Project_Collection:'/index/uCenter/projectcollection',
   INVEST_MENT: '/index/uCenter/InvestMent', //投资记录
+  RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
   ACCOUNT_STATEMENT:'/index/uCenter/accountstatement',  //资金动态
   MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
 

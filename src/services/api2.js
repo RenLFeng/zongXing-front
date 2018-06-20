@@ -29,5 +29,6 @@ export const accountService={
     //获取投资记录条数
     getInvestmentRecordCount:async()=>req.get('/zjb-website/invRecord/MyInvRecord/count'),
     //获取投资回款明细
+    getInvestmentPlan:async(param)=>req.get('/zjb-website/invRecord/MyInvRecord/plan',param)
     
 }

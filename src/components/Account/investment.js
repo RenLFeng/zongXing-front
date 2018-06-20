@@ -1,12 +1,14 @@
 import React from 'react';
 import {Input, message,Button,Pagination} from 'antd'; 
-
+import {connect} from 'dva';
 import Path from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import LoanInfo from '../common/LoanInfo.js';
 import '../../assets/account/investment.scss';
 import {accountService}  from '../../services/api2';
-
+@connect((state)=>({
+  openStatus: state.account.openStatus,
+}))
 export default class Investment extends React.Component {
   constructor(props) {
     super(props); 
@@ -30,9 +32,24 @@ export default class Investment extends React.Component {
   }
 
   componentDidMount() { 
-    //this.getMyinvestAjax(1);  //调用请求
+  
     this.getLables();
+     
   }
+  
+  jumpAuth() {
+    var that = this;
+    Modal.info({
+      title: '您目前还没有开户，请先开户！',
+      okText:'去开户',
+      onOk() {
+        that.props.history.push('/index/uCenter/realName')
+      },
+    });
+  }
+
+
+
   //获取顶部标签的个数
   async getLables(){
     let lables =[
@@ -113,99 +130,19 @@ export default class Investment extends React.Component {
         this.getMyinvest();
     });  
 }
- 
-
- 
-  //获取我的投资列表
-  async getMyinvestAjax(page, flag) {
-    try {
-      const response = await accountService({
-        pageParam: {
-          pageSize: this.state.pageSize,
-          pageCurrent: page
-        },
-        flag: this.state.flag,
-        projectName: this.state.projectId
-      });
-      console.log(response);
-      if(response.code ===0){
-        const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
-        this.setState({
-          maxPage: maxPage,
-          pageCurrent: page,
-          arr: response.data.infoList.map((item, index)=>{
-            if (index === flag) {
-              item.isShow = true;
-            }
-            return item;
-          }),
-          num:response.data.totalNumber,
-        })
-      }  else {
-        message.error(response.msg);
-      }
-    } catch(e) {
-      if (typeof e === 'object' && e.name === 288) {
-        message.error('未登录或登录超时');
-        localStorage.removeItem('accessToken');
-        this.props.history.push('/index/login');
-      }
-      console.log(e);
-    }
-
-  }
-
-  // 根据选择的状态切换数据
-  changeStatus(key) {
-    this.setState({
-      showText: MY_INCOME_STATUS[key],
-      flag: key
-    }, ()=>{
-      this.getMyinvestAjax(1);
-    })
-  }
-
-  // 搜索所有状态的我的投资
-  searchAll() {
-    this.setState({
-      showText: '更多状态',
-      flag: null,
-      projectId: null
-    }, ()=>{
-      this.getMyinvestAjax(1);
-    })
-  }
-
-  // 订单去付款接口
-  async toPaymentAjax(payId, index) {
-    // 防止重复提交
-    if (this.state.loading) {
-      return;
-    }
-    this.setState({loading: true});
-    console.log(window.location.href);
-    const response = await toPayment(payId, encodeURIComponent(window.location.href));
-    this.setState({loading: false});
-    console.log(response);
-    if (response.code === 0) {
-      this.setState({
-        dataSource: response.data
-      }, ()=> {
-        this.formId.submit();
-        Modal.info({
-          title: '提示',
-          content: '请在新页面完成操作,可刷sss新页面查看结果',
-          okText: '确定',
-          onOk: ()=> {
-            // 刷新页面
-            this.getMyinvestAjax(1, index);
-          },
-        });
-      })
-    } else {
-      response.msg && message.error(response.msg);
-    }
-  } 
+ handlerOnChange=(e)=>{
+   this.setState({
+     projectName:e.target.value
+   });
+ }
+ handlerSearchClick=()=>{
+    this.setState({  
+      pageCurrent:1,
+    },()=>{
+        //获取我的投资列表
+        this.getMyinvest();
+    });  
+ }
   
   render() { 
     return (
@@ -224,8 +161,8 @@ export default class Investment extends React.Component {
               {/* 搜索文本区域 */}
               <div className='search-text'>
                   <span>项目名称</span>
-                  <Input className='sarch-input'/>
-                  <Button>查询</Button>
+                  <Input className='sarch-input' value={this.state.projectName} onChange={this.handlerOnChange}/>
+                  <Button onClick={this.handlerSearchClick}>查询</Button>
               </div> 
           </div>  
           <p>共{this.state.totalNum}条记录</p>

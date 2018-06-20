@@ -24,6 +24,21 @@ export default class OpenQAccount extends React.Component {
     console.log('this.state.showPage', this.state.showPage);
   }
 
+   // 获取用户手机号
+   async getUserPhone() {
+    const response = await getUserBaseData();
+    console.log(response);
+    if (response.code === 0) {
+      if (response.data) {
+        this.setState({
+          phone: response.data.fmobile,
+          realName: response.data.freal_name,
+          idcard: response.data.fidcard_No,
+        });
+      }
+    }
+  }
+
   handSubmit = (param) => {
     console.log("submitParam:",param);
     this.setState({showPage: 'mmmpage-warn'});
