@@ -785,3 +785,37 @@
   }
 }
 
+
+.bind_success_div {
+    margin-top: 50px;
+    width: 100%;
+    .bind_success_tip {
+        margin-bottom: 20px;
+        width: 100%;
+        text-align: center;
+        .bind_success_title {
+            color: #333;
+            font-size: 34px;
+            display: inline-block;
+        }
+    }
+    .bind_success_title_sub {
+        color: #ff9900;
+        font-size: 18px;
+        margin-bottom: 20px;
+        width: 100%;
+        text-align: center;
+    }
+    .bind_success_path {
+        color: #0066FF;
+        text-decoration: underline;
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+    }
+    .duihao_icon {
+        color: #FF9900;
+        font-size: 60px;
+        display: inline-block;
+    }
+}

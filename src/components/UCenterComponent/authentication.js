@@ -12,9 +12,18 @@ export default class Authentication extends React.Component {
       showPage: 'idcard',
       realName: '',
       idcard: '',
+      openName: '',
+      num: 5, // 5秒后
     };
+    this.countDown = null;
   }
   componentDidMount() {
+  }
+
+  componentWillUnmount() {
+    if (this.countDown) {
+      clearInterval(this.countDown);
+    }
   }
 
   updateRealName = (e) => {
@@ -30,7 +39,7 @@ export default class Authentication extends React.Component {
       return;
     }
     const param = {
-      realName: this.state.realName,
+      realName: this.state.realName.trim(),
       idcard: this.state.idcard,
     };
     if (!param.realName) {
@@ -45,13 +54,26 @@ export default class Authentication extends React.Component {
     const response = await verifyIdcard(param);
     this.setState({loading: false})
     if (response.code === 1) {
-      response.msg && message.success(response.msg);
-      this.setState({ showPage: 'ok' });
-      this.props.history.push(Path.REALNAME_AUTHENTICATION);
+      this.setState({ 
+        showPage: 'ok',
+        openName: param.realName
+      });
+      this.countDown = setInterval(()=>{ 
+         this.setState({
+           num: this.state.num - 1
+         }, () => {
+           if (!this.state.num) {
+             clearInterval(this.timeDown);
+             this.props.history.push('/index/uCenter/openQAccount');
+           }
+         });
+      }, 1000);
     } else {
       response.msg && message.error(response.msg);
     }
   };
+
+
 
   render() {
     const { userName } = this.state;
@@ -124,9 +146,9 @@ export default class Authentication extends React.Component {
                 <p>众借帮使用“全国公民身份证号码查询服务中心”（NCIIC）权威认证</p>
                 <h1>
                   <img alt="ok" src={require('../../assets/img/u3551.png')} />
-                  人名字，恭喜您已经通过身份认证
+                  {this.state.openName}，恭喜您已经通过身份认证
                 </h1>
-                <a className="goback">3秒后自动返回</a>
+                <a className="goback" onClick={()=>this.props.history.push('/index/uCenter/openQAccount')}>{this.state.num}秒后自动返回</a>
               </div>
             </div> : null
         }

@@ -7,12 +7,17 @@ const NO_OPEN = 0;
 const OPENING = 1;
 const OPEN_FAIL = 2;
 const OPEN_SUCCESS = 3;
+let webToken = null;
+if (localStorage.getItem('accessToken')) {
+  const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+  webToken = webTokenObj.webToken ? webTokenObj.webToken : '';
+}
 
 export default {
   namespace: 'account',
   state: {
     message: '',
-    openStatus: 0,
+    openStatus: localStorage.getItem(webToken)?localStorage.getItem(webToken):0,
     personal: {
       accountDynamicVos: [],
       plan: [],
@@ -35,6 +40,7 @@ export default {
 
     },
     *getPersonalAccount({payload}, {call, put}) {
+      let webToken = '';
       const response = yield call(getPersonAccountNew, payload); 
       console.log(response);
       if (response.code === 0) {
@@ -50,6 +56,7 @@ export default {
               }
             }
           });
+          saveOpenStatus(NO_OPEN);
           payload.jumpAuth()
         } else {
           if (response.data && response.data.fflag === 0) {
@@ -64,6 +71,7 @@ export default {
                 }
               }
             });
+            saveOpenStatus(OPENING);
           } else if (response.data && response.data.fflag === -1) {
             yield put({
               type: 'savePersonal',
@@ -77,6 +85,7 @@ export default {
                 message: response.data.freturnMessage
               }
             });
+            saveOpenStatus(OPEN_FAIL);
           } else {
             yield put({
               type: 'savePersonal',
@@ -85,6 +94,7 @@ export default {
                 data: response.data
               }
             });
+            
           }
         }
       } else {
@@ -118,7 +128,7 @@ export default {
   },
   reducers: {
     savePersonal(state, {payload}) {
-      console.log(payload);
+      saveOpenStatus(payload.openStatus);
       return {
         ...state,
         openStatus: payload.openStatus,
@@ -142,3 +152,16 @@ export default {
     }
   },
 };
+
+
+function saveOpenStatus(param) {
+  console.log('保存开户状态', param);
+  let webToken = '';
+  if (localStorage.getItem('accessToken')) {
+    const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+    webToken = webTokenObj.webToken ? webTokenObj.webToken : '';
+  }
+  if (webToken) {
+    localStorage.setItem(webToken, param);
+  }
+}
