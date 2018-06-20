@@ -454,23 +454,9 @@ export default class RealName extends React.Component {
   render() {
     // 初始化数据
     const { safeData } = this.props;
-    const { status } = this.state;
+    const { status, distribution,url } = this.state;
     return (
       <div>
-        {/* <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{display:'none'}}>
-          <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId?distribution.moneymoremoreId:''}/>
-          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore?distribution.platformMoneymoremore:''}/>
-          <input id="AuthorizeTypeOpen" name="AuthorizeTypeOpen" value={distribution.authorizeTypeOpen?distribution.authorizeTypeOpen:''}/>
-          <input id="AuthorizeTypeClose" name="AuthorizeTypeClose" value={distribution.authorizeTypeClose?distribution.authorizeTypeClose:''}/>
-          <input id="RandomTimeStamp" name="RandomTimeStamp" value={distribution.randomTimeStamp?distribution.randomTimeStamp:''}/>
-          <input id="Remark1" name="Remark1" value={distribution.remark1?distribution.remark1:''}/>
-          <input id="Remark2" name="Remark2" value={distribution.remark2?distribution.remark2:''}/>
-          <input id="Remark3" name="Remark3" value={distribution.remark3?distribution.remark3:''}/>
-          <input id="ReturnURL" name="ReturnURL" value={distribution.returnURL?distribution.returnURL:''} />
-          <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
-          <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
-        </form> */}
-
         <div>
           <LeftMenu param={this.props} />
           {
@@ -638,8 +624,20 @@ export default class RealName extends React.Component {
                       </div>
                 </div>
         </div>
-
-
+        {distribution ? 
+          <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{display:'none'}}>
+          <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId?distribution.moneymoremoreId:''}/>
+          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore?distribution.platformMoneymoremore:''}/>
+          <input id="AuthorizeTypeOpen" name="AuthorizeTypeOpen" value={distribution.authorizeTypeOpen?distribution.authorizeTypeOpen:''}/>
+          <input id="AuthorizeTypeClose" name="AuthorizeTypeClose" value={distribution.authorizeTypeClose?distribution.authorizeTypeClose:''}/>
+          <input id="RandomTimeStamp" name="RandomTimeStamp" value={distribution.randomTimeStamp?distribution.randomTimeStamp:''}/>
+          <input id="Remark1" name="Remark1" value={distribution.remark1?distribution.remark1:''}/>
+          <input id="Remark2" name="Remark2" value={distribution.remark2?distribution.remark2:''}/>
+          <input id="Remark3" name="Remark3" value={distribution.remark3?distribution.remark3:''}/>
+          <input id="ReturnURL" name="ReturnURL" value={distribution.returnURL?distribution.returnURL:''} />
+          <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
+          <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
+        </form> : null}
       </div>
 
     );
