@@ -95,8 +95,8 @@ export default class Authentication extends React.Component {
               </div>
               <div className="Prompt">
                 <img alt="提示" src={require('../../assets/img/u3530.png')} />
-                <p className="p1"> 成身份认证，有助于建立完善可靠的互联网信用体系</p>
-                <p className="p2">姓名必须与充值、提现的银行卡开户名保持一致</p>
+                <p className="p1" style={{textAlign: 'center'}}>完成成身份认证，有助于建立完善可靠的互联网信用体系</p>
+                <p className="p2" style={{textAlign: 'center'}}>姓名必须与充值、提现的银行卡开户名保持一致</p>
               </div>
               {/* <Spin style={{height: 200}}> */}
                 <div className="info">

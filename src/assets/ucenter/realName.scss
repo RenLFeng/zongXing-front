@@ -315,7 +315,7 @@
               background: #FF9900;
               border-radius: 50%;
               position: absolute;
-
+              z-index:9;
               text-align: center;
               line-height: 22px;
               font-size: 13px;
@@ -565,7 +565,7 @@
 
 
 .bind_item_view{
-    width: 420px;
+    width: 450px;
     padding: 10px 10px;
     vertical-align: middle;
     &>span {
@@ -594,7 +594,7 @@
             display: inline-block;
             color: #d9d9d9;
             font-size: 22px;
-            margin-left: 7px;
+            margin-left: 6    px;
             height: 38px;
             padding-right: 5px;
             border-right: 1px solid #d9d9d9;

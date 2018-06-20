@@ -14,6 +14,8 @@ import RealName from '../../components/UCenterComponent/realName';
 import Authentication from '../../components/UCenterComponent/authentication';
 import OpenQAccount from '../../components/UCenterComponent/openQAccount';
 import IpRecord from '../../components/UCenterComponent/IPRecord';
+import Voucher from '../../components/UCenterComponent/voucher';
+import PlatformNotice from '../../components/UCenterComponent/platformNotice';
 import BindCard from '../../components/UCenterComponent/bindCard';
 import CompanyAccount from '../../components/UCenterComponent/companyAccount';
 import BankCard from '../../components/UCenterComponent/bankCard';
@@ -94,6 +96,10 @@ export default class UCenter extends React.Component {
             <Route path={Path.BANK_CARD} exact component={BankCard} />
              {/* IP记录 */}
             <Route path={Path.IPRECORD} exact component={IpRecord} />
+            {/* 券额明细 */}
+            <Route path={Path.VOUCHER} exact component={Voucher} />
+            {/* 平台通知 */}
+            <Route path={Path.PLATFORM_NOTICE} exact component={PlatformNotice} />
             {/* 充值 */}
             <Route path={Path.ACCOUNT_RECHARGE} component={AccountRecharge} />
             {/* 提现 */}

@@ -19,6 +19,7 @@ export default class AccountRecharge extends React.Component {
       companyAccount: [],
       recharge: {},
       loading: false,
+      rechargeType: 2, //默认充值方式
       amount: 0.0, //充值金额
     };
   }
