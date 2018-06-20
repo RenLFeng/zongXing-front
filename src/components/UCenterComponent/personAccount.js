@@ -231,6 +231,7 @@ export default class PersonAccount extends React.Component {
   componentDidMount() {
     this.getInitData();
     this.initFetchSafeData();
+    this.getAccountStatement();
   }
 
   // 初始化安全中心首页数据
@@ -521,7 +522,7 @@ export default class PersonAccount extends React.Component {
                     scroll={{y: 300}}
                     pagination={{
                       showTotal: (total, range)=>{
-                        return <span className="table_count_text">展示多少调数据</span>
+                        return <span className="table_count_text" style={{color: '#C9C9C9'}}>共{total}条数据</span>
                       }
                     }}
                   />

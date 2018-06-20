@@ -18,7 +18,7 @@ class projectcollection extends React.Component {
                 <LeftMenu  param={this.props} />
                 <div className='fr pc-project-collection'> 
                     <div className='search-area'>
-                        <p className='top-title'>我的优惠券 </p>
+                        <p className='top-title'>项目收藏 </p>
                         <ul className='search-tag'>
                             <li className='active'>全部(1)</li>
                             <li>筹款中(2)</li>
@@ -36,8 +36,16 @@ class projectcollection extends React.Component {
                         </div>
                     </div> 
                     <p>共8条记录</p>
-                    <div className='project-list'>
-                        <h1>这个地方  放收藏项目列表</h1>
+                    <div className='project-list box99'>
+                        <div style={{ cursor:'pointer' }}>
+                            <div className="pic_box"><img className="pic" src={``} /></div>
+                            <p className="name">{123}</p>
+                            <div className="circle" data-value={20}/>
+                            <i className="price">￥{100.00}</i>
+                            <i className="city"><span className="high">{1}<i>借款期限</i></span>个月 | {2}</i>
+                            <div className="line"/>
+                            <i className="level">{12}</i>
+                        </div>
                     </div>
                 </div> 
             </div>
