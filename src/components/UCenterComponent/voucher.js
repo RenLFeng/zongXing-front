@@ -108,6 +108,14 @@ onShowSizeChange = (current, pageSize) => {
         key: 'fname',
         align:'center',
       }];
+
+      const locale = {
+		filterTitle: '筛选',
+		filterConfirm: '确定',
+		filterReset: '重置',
+		emptyText: '暂无数据',
+	};
+
       return(
           <div>
               <LeftMenu param={this.props} />
@@ -125,16 +133,20 @@ onShowSizeChange = (current, pageSize) => {
                     bordered
                     size="small"
                     style={{padding:'0 !important' }}
+                    locale={locale}
                     />
-                   
-                    <Pagination 
-                     total={this.state.total} 
-                     current={this.state.pageCurrent}
-                     pageSize={this.state.pageSize}
-                     onChange={this.onchange}
-                     onShowSizeChange={this.onShowSizeChange}
-                     style={{marginTop:30,textAlign:'center'}}
-                     />
+                   {
+                        Math.ceil(this.state.total/this.state.pageSize) > 1 ?  
+                        <Pagination 
+                        total={this.state.total} 
+                        current={this.state.pageCurrent}
+                        pageSize={this.state.pageSize}
+                        onChange={this.onchange}
+                        onShowSizeChange={this.onShowSizeChange}
+                        style={{marginTop:30,textAlign:'center'}}
+                        /> : null
+                   }
+                    
                 </div>
           </div>
       )

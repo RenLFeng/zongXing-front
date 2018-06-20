@@ -1,12 +1,14 @@
 import React from 'react';
 import {Input, message,Button,Pagination} from 'antd'; 
-
+import {connect} from 'dva';
 import Path from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import LoanInfo from '../common/LoanInfo.js';
 import '../../assets/account/investment.scss';
 import {accountService}  from '../../services/api2';
-
+@connect((state)=>({
+  openStatus: state.account.openStatus,
+}))
 export default class Investment extends React.Component {
   constructor(props) {
     super(props); 
@@ -30,9 +32,24 @@ export default class Investment extends React.Component {
   }
 
   componentDidMount() { 
-    //this.getMyinvestAjax(1);  //调用请求
+  
     this.getLables();
+     
   }
+  
+  jumpAuth() {
+    var that = this;
+    Modal.info({
+      title: '您目前还没有开户，请先开户！',
+      okText:'去开户',
+      onOk() {
+        that.props.history.push('/index/uCenter/realName')
+      },
+    });
+  }
+
+
+
   //获取顶部标签的个数
   async getLables(){
     let lables =[
