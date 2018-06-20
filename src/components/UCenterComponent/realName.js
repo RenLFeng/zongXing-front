@@ -90,11 +90,14 @@ export default class RealName extends React.Component {
     if (this.props.safeData.userSecurityCenter.fThirdAccount !== nextProps.safeData.userSecurityCenter.fThirdAccount) {
       this.getBankCardListAjax(); // 获取用户绑定银行卡
     }
+    if (this.props.accountId !== nextProps.accountId) {
+      this.getBankCardListAjax(nextProps.accountId); // 获取用户绑定银行卡
+    }
   }
 
   // 获取用户绑定银行卡
-  getBankCardListAjax = async () => {
-    const response = await getBankCardList(this.props.accountId);
+  getBankCardListAjax = async (param) => {
+    const response = await getBankCardList(param?param:this.props.accountId);
     console.log(response);
     if (response.code === 0) {
       if (response.data) {
@@ -439,13 +442,14 @@ export default class RealName extends React.Component {
     });
     this.setState({ unbindLoading: false });
     if (response.code === 0) {
-      for (let i = 0, len = this.state.cardList.length; i < len; i++) {
-        if (this.state.cardList[i].fbankcard === cardId) {
-          this.state.cardList.splice(1, i);
-          break;
-        }
-      }
-      this.setState({ cardList: this.state.cardList });
+      this.getBankCardListAjax()
+      // for (let i = 0, len = this.state.cardList.length; i < len; i++) {
+      //   if (this.state.cardList[i].fbankcard === cardId) {
+      //     this.state.cardList.splice(1, i);
+      //     break;
+      //   }
+      // }
+      // this.setState({ cardList: this.state.cardList });
     } else {
       response.msg && message.error(response.msg);
     }

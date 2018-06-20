@@ -136,14 +136,14 @@ export default class AccountStatement extends React.Component{
       this.getCapitalDynamics();
      });
   } 
- //点击分页
- handlerPageChange=(page)=>{
-  this.setState({  
-      pageCurrent:page,//设置为第一页
-  },()=>{
-      this.getCapitalDynamics();
-  });  
-}
+  //点击分页
+  handlerPageChange=(page)=>{
+    this.setState({  
+        pageCurrent:page,//设置为第一页
+    },()=>{
+        this.getCapitalDynamics();
+    });  
+  }
   render(){  
     //充值
     const chongzColumn = [{
@@ -340,6 +340,9 @@ export default class AccountStatement extends React.Component{
         title: '还款期数', 
         dataIndex: 'resultObj.periods',
         align:'center',
+        render:function(text,record,index){
+          return <span>text</span>
+        }
       }]; 
 
       const locale = {

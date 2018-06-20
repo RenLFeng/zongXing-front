@@ -41,7 +41,7 @@ export default class OpenQAccount extends React.Component {
           realName: response.data.freal_name,
           identificationNo: response.data.fidcard_No,
           accountType: '0',
-          notifyPageUrl: `${TURN_BACK}/#/index/uCenter/bindCard`
+          notifyPageUrl: `${TURN_BACK}#/index/uCenter/bindCard`
         }
         this.setState({param});
       }
