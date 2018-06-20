@@ -12,6 +12,8 @@ export default {
   IPRECORD: '/index/uCenter/IPRecord', //IP记录页面
   VOUCHER: '/index/uCenter/voucher', //券额明细页面
   PLATFORM_NOTICE: '/index/uCenter/platformNotice', //平台通知页面
+  SITE_NOTICE: '/index/uCenter/siteNotice', //站内通知页面
+
   BINDCARD: '/index/uCenter/bindCard', //绑定银行卡
   COMPANY_ACCOUNT: '/index/uCenter/companyAccount',  //企业账户页面地址
   BANK_CARD: '/index/uCenter/bankCard',  //银行卡管理页面

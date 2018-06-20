@@ -2,7 +2,7 @@ import React from 'react';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import {Steps,Pagination} from 'antd';
 import Platform from '../common/platform';
-import { getSiteNotice,getOPlantNotice } from '../../services/api';
+import { getPlantNotice,getOPlantNotice } from '../../services/api';
 import moment from 'moment';
 
 const Step = Steps.Step;
@@ -20,11 +20,12 @@ export default class Voucher extends React.Component{
       }
     }
     componentDidMount(){
-        this.getSiteNotice(this.state.pageCurrent,this.state.pageSize);
+        this.getPlantNotice(this.state.pageCurrent,this.state.pageSize);
     }
 
-    async getSiteNotice(current,size){
-        const response = await getSiteNotice(current,size);
+    async getPlantNotice(current,size){
+        const response = await getPlantNotice(current,size);
+        console.log('站内消息',response)
         if(response.code === 0){
             this.setState({
                 dataInfo:response.data.notices,
@@ -53,7 +54,7 @@ onchange = (page) => {
     this.setState({
         pageCurrent: page,
     },()=>{
-    this.getSiteNotice(this.state.pageCurrent,this.state.pageSize);
+    this.getPlantNotice(this.state.pageCurrent,this.state.pageSize);
     });
   }
 
@@ -63,7 +64,7 @@ onShowSizeChange = (current, pageSize) => {
         pageSize: pageSize,
         pageCurrent: current,
     },()=>{
-        this.getSiteNotice(this.state.pageCurrent,this.state.pageSize)
+        this.getPlantNotice(this.state.pageCurrent,this.state.pageSize)
     });
   }
 

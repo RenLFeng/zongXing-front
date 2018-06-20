@@ -16,6 +16,7 @@ import OpenQAccount from '../../components/UCenterComponent/openQAccount';
 import IpRecord from '../../components/UCenterComponent/IPRecord';
 import Voucher from '../../components/UCenterComponent/voucher';
 import PlatformNotice from '../../components/UCenterComponent/platformNotice';
+import SiteNotice from '../../components/UCenterComponent/siteNotice';
 import BindCard from '../../components/UCenterComponent/bindCard';
 import CompanyAccount from '../../components/UCenterComponent/companyAccount';
 import BankCard from '../../components/UCenterComponent/bankCard';
@@ -105,6 +106,8 @@ export default class UCenter extends React.Component {
             <Route path={Path.VOUCHER} exact component={Voucher} />
             {/* 平台通知 */}
             <Route path={Path.PLATFORM_NOTICE} exact component={PlatformNotice} />
+             {/* 站内通知 */}
+             <Route path={Path.SITE_NOTICE} exact component={SiteNotice} />
             {/* 充值 */}
             <Route path={Path.ACCOUNT_RECHARGE} component={AccountRecharge} />
             {/* 提现 */}

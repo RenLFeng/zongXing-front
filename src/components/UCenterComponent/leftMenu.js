@@ -45,6 +45,7 @@ export default class LeftMenu extends React.Component {
                 </span>
                  <ul>
                      <li><Link className={path.indexOf(Path.PLATFORM_NOTICE) ===-1?'':'active'} to={Path.PLATFORM_NOTICE}>平台通知</Link></li>
+                     <li><Link className={path.indexOf(Path.SITE_NOTICE) ===-1?'':'active'} to={Path.SITE_NOTICE}>站内通知</Link></li>
                  </ul>
              </li>
           </ul> 
