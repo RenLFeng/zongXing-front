@@ -50,8 +50,9 @@
         margin-top: 35px;
         padding: 20px 50px;
         background-color: #fff;
-        div{
+        &>div{
             display: inline-block;
+            vertical-align: top;
         }
         &>div:nth-child(odd){
             margin-right:140px; 

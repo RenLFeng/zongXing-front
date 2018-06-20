@@ -577,7 +577,8 @@ export default class RealName extends React.Component {
                               );
                             })}
                           </div>
-                          <div className="unbind_div" >
+                          {this.props.accountId ? 
+                            <div className="unbind_div" >
                             <Icon type="plus" className="icon-plus" onClick={() => this.props.history.push(BINDCARD)}/>
                             <span className="bind_new_bank">绑定新银行卡</span>
                             <span
@@ -585,7 +586,8 @@ export default class RealName extends React.Component {
                               style={{ color: '#e6e6e6', fontSize: 14 }}
                             >(只支持储蓄卡)</span>
 
-                          </div>
+                          </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
+                          
                         </div>
                       }
                     />

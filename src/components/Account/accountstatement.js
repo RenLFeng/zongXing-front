@@ -52,7 +52,7 @@ export default class AccountStatement extends React.Component{
       }; 
       //调用后台
       const res = await accountService.getAccountStatement(param); 
-      console.log("res",res);
+      //console.log("res",res);
       if(res.code === 0){  
         this.setState({  
           totalNum:res.data.totalNumber, 
@@ -100,18 +100,21 @@ export default class AccountStatement extends React.Component{
         localStorage.removeItem('accessToken');
         this.props.history.push('/index/login');
       }
-      console.log(e);
+      //console.log(e);
     }
   } 
   //方法区域
   // 点击选择类型
   handlerClcikLable=(code)=>{
+    let pageSize =15;
+    if(code==='0000'){
+      pageSize = 5;
+    }
      this.setState({
       activeCode:code,
-     },()=>{
-       this.setState({
-         pageCurrent:1
-       });
+      pageSize:pageSize,
+      pageCurrent:1
+     },()=>{ 
       this.getCapitalDynamics();
      });
   } 
@@ -187,7 +190,7 @@ export default class AccountStatement extends React.Component{
       }, {
         title: '提现到账金额',
         align:'right',
-        dataIndex: 'resultObj.',
+        dataIndex: 'resultObj',
         render:function(text,record,index){
           if(text.famount && text.fuserFeeWithdraw){
             return String(text.famount -text.fuserFeeWithdraw).fm();
@@ -199,14 +202,14 @@ export default class AccountStatement extends React.Component{
       }, {
         title: '提现银行卡', 
         align:'center',
-        dataIndex: 'resultObj',
+        dataIndex: 'resultObj.fcardNo',
         render:function(text,record,index){
           let text_ ='';
-          if(text.bankName){
-            textext_t = text.bankName;
+          if(record.resultObj.bankName){
+            text_ = record.resultObj.bankName;
           }
-          if(text.fcardNo){
-            text_+=' 尾号'+ text.fcardNo.substring(record.resultObj.fcardNo.length-4);
+          if(text){
+            text_+=' 尾号'+ text.substring(text.length-4);
           }
           return text_;
         }
@@ -349,7 +352,7 @@ export default class AccountStatement extends React.Component{
             <div className={this.state.activeCode==='0000'?'':'hide'}>
               {
                 this.state.infoList.map((item,index)=>{
-                  return <Statement showTitle={index==0} data={item}></Statement>
+                  return <Statement key={index} showTitle={index==0} data={item}></Statement>
                 })
               } 
             </div>

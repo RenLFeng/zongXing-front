@@ -121,10 +121,25 @@ class MyCoupon extends React.Component {
     handlerBtnClick =async (fcoupon_id)=>{
         let rest = await CouponService.receiveCoupon({
             couponId :fcoupon_id
-        });
+        }); 
+        if(rest.code===0){
+            message.info(rest.msg);
+            this.getSlelectLable();
+        }else{
+            rest.msg && message.error(rest.msg);
+        }
+    }
+
+    //点击兑换
+    handlerExchangeClick=async (couponId,pieces)=>{ 
+        let rest = await CouponService.convertCoupon({
+            couponId :couponId,
+            pieces:pieces,
+        }); 
         console.log(rest);
-        if(rest.code===0){   
-             this.getSlelectLable();
+        if(rest.code===0){
+            message.info(rest.msg);
+            this.getSlelectLable();
         }else{
             rest.msg && message.error(rest.msg);
         }
@@ -139,14 +154,12 @@ class MyCoupon extends React.Component {
                         <p className='top-title'>我的优惠券 </p>
                         <ul className='search-tag'>
                             {
-                                this.state.lables.map(item=>{
-                                    return  <li onClick={this.handlerLableClick.bind(this,item.flag)} className={this.state.activeFlag===item.flag?'active':''}>{item.lable}({item.val})</li>;
+                                this.state.lables.map((item,index)=>{
+                                    return  <li key={index} onClick={this.handlerLableClick.bind(this,item.flag)} className={this.state.activeFlag===item.flag?'active':''}>{item.lable}({item.val})</li>;
                                 })
                             }
                         </ul> 
-                    </div> 
-                    {/* 
-                    <Coupon  hasLine='false'></Coupon>*/} 
+                    </div>
                     {
                          this.state.data.length >0 ?<p className='sub-text'> 
                             <span>优惠券总额度 </span>
@@ -159,16 +172,15 @@ class MyCoupon extends React.Component {
                             this.state.data.length===0?<div className='not-found'>暂无优惠券</div>:null
                         }
                         {
-                            this.state.data.map(item=>{ 
+                            this.state.data.map((item,index)=>{ 
                                 if(item.fflag==1){
-                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerBtnClick} ></Coupon> </div>
+                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerBtnClick} ></Coupon> </div>
                                 }else if(item.fflag==2){
-                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友' exchange='兑换券额'></Coupon> </div>  
+                                    return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true' giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
                                 }else if(item.fflag==3){
-                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友'></Coupon> </div>  
-                                } 
-                                else{
-                                    return <div> <Coupon  data={item} showVal='true'  hasLine='true'></Coupon> </div>
+                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友'></Coupon> </div>  
+                                }else{
+                                    return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true'></Coupon> </div>
                                 } 
                             })
                         }  
