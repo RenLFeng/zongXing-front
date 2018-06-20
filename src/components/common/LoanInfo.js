@@ -1,42 +1,130 @@
-// 长条借款项目
-
+// 长条借款项目 
 import React from 'react';
 import '../../assets/component/common/loaninfo.scss';
-import {Button,Steps} from 'antd';
-
+import {Button,Steps,Table} from 'antd';
+import moment from 'moment'; 
+import {accountService}  from '../../services/api2';
 
 class LoanInfo extends React.Component {
   constructor(props) {
 	super(props); 
+	this.setStateData(props);
+  }
+  componentWillReceiveProps(props){
+	  this.setStateData(props);
+  }
+  setStateData(props){
 	let data = this.props.data; 
 	if(!data.stateData){
 		data.stateData = [];
 	}
 	let len = data.stateData.length;
-	if(data.fstate===5){
+	if(data.projectFlag===5){
 		len=0;
 	}
     this.state = {
 		fstate:{
-			ckz:1,//筹款中
-			dfk:2,//待放款
-			hkz:3,//回款中
-			yjq:4,//已结清
-			ylb:5,//已流标
-		},
-		current:len-1,
+			ckz:10,//筹款中
+			dfk:11,//待放款
+			hkz:12,//回款中
+			yjq:13,//已结清
+			ylb:-1,//已流标
+			hkyc:-4,//还款异常
+		}, 
 		data:data,
+		visableTable:false,
+		tableData:[],
+		loading:false,
 	}
   }
+ //查看回款明细
+  handllerHKClick=(projectId)=>{ 
+	this.setState({
+		visableTable:!this.state.visableTable
+	},()=>{
+		if(this.state.visableTable &&(this.state.tableData || this.state.tableData.length==0)){
+
+		}
+	}); 
+ }
+ //查询回款明细
+
+ handllerHTClick = async (projectId)=>{
+	alert('查看安心签投资合同')
+ }
+
   render() { 
 	const Step = Steps.Step;
+	//投资
+    const tableColumn = [{
+        title: '期数', 
+        align:'center',
+		width:50,
+		dataIndex: 'fsort',
+      }, {
+        title: '回款日期',
+        dataIndex: 'ffor_pay_time',
+        align:'center',
+        render:function(text,record,index){
+          return text?moment(text).format('YYYY/MM/DD HH:mm'):'----/--/--/ --:--';
+        }
+      }, {
+        title: '本金',
+        dataIndex: 'fprincipal',
+        align:'right',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
+      }, {
+        title: '利息',
+        dataIndex: 'finterest',
+        align:'right',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
+      }, {
+        title: '佣金',
+        dataIndex: 'fkick_back',
+        align:'right',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
+      }, {
+        title: '当期回款总额',
+        dataIndex: 'allMoney',
+        align:'right',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
+      }, {
+        title: '回款状态',
+        dataIndex: 'fispay',
+        align:'center',
+        render:function(text,record,index){
+          return String(text).fm();
+        }
+      }, {
+        title: '到账日期',
+        dataIndex: 'fpay_time',
+        align:'center',
+		render:function(text,record,index){
+			return text?moment(text).format('YYYY/MM/DD HH:mm'):'----/--/--/ --:--';
+		}
+      }]; 
+	const locale = {
+		filterTitle: '筛选',
+		filterConfirm: '确定',
+		filterReset: '重置',
+		emptyText: '暂无数据',
+	};
+	  
     return (  
       <div className='li-content'>
          {/* 顶部标题 */}
          <p>
            <span>项目编号：</span>
-           <span>{this.state.data.fprojectNo||''}</span>
-           <span>{this.state.data.fCName||''}</span> 
+           <span>{this.state.data.projectNo||''}</span>
+           <span>{this.state.data.companyName||''}</span> 
          </p>
 		{/* 中间内容 */}
 		<div className='li-middle'>
@@ -44,141 +132,180 @@ class LoanInfo extends React.Component {
 		<div className='li-top'>
 				{/* 左  logo*/}
 			<div className='li-left'>
-				<img  src={this.state.data.logo||'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'} />
-				<span> B+ </span>
+				<img  src={'http://zjb01-1255741041.picsh.myqcloud.com/'+this.state.data.cardPicPath||'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'} />
+				<span> {this.state.data.leveName} </span>
 			</div>
 				{/* 中 */}
 			<div className='li-center'>  
 				<div className='li-title'>
 					{
-						this.state.data.fstate===this.state.fstate.ckz?
+						this.state.data.projectFlag===this.state.fstate.ckz?
 						<spna className='state ckz'>筹款中</spna> :null
 					}
 					{
-						this.state.data.fstate===this.state.fstate.dfk?
+						this.state.data.projectFlag===this.state.fstate.dfk?
 						<spna className='state dfk'>待放款</spna> :null
 					}
 					{
-						this.state.data.fstate===this.state.fstate.hkz?
+						this.state.data.projectFlag===this.state.fstate.hkz||
+						this.state.data.projectFlag===this.state.fstate.hkyc?
 						<spna className='state hkz'>回款中</spna> :null
 					}
 					{
-						this.state.data.fstate===this.state.fstate.yjq?
+						this.state.data.projectFlag===this.state.fstate.yjq?
 						<spna className='state yjq'>已结清</spna> :null
 					}
 					{
-						this.state.data.fstate===this.state.fstate.ylb?
+						this.state.data.projectFlag===this.state.fstate.ylb?
 						<spna className='state ylb'>已流标</spna> :null
 					} 
-					<a className='pname'  title='进入项目详情页面' onClick={this.props.handllerMXClick?this.props.handllerMXClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerMXClick事件，跳转到项目详细界面！');}}>{this.state.data.fPName||''} 
+					<a className='pname'  title='进入项目详情页面' onClick={this.props.handllerMXClick?this.props.handllerMXClick.bind(this,this.state.data.projectId,this.state.data):()=>{alert('请绑定handllerMXClick事件，跳转到项目详细界面！');}}>{this.state.data.projectName||''} 
 						{
-							this.state.data.hasError?<i className='zjb zjb-jinggao'></i>:null
+							this.state.data.projectFlag===this.state.fstate.hkyc?<i className='zjb zjb-jinggao'></i>:null
 						} 
 					</a>
 				</div>
 				<div className='text li-nh'>
 					<span>年化收益率</span>
-					<p>{this.state.data.nh}<span>万</span></p> 
-					<span className='tip'>{this.state.data.area}/
+					<p>{this.state.data.rate}<span>%</span></p> 
+					<span className='tip'>{this.state.data.cityName}/
 						{
-							this.state.data.type==='xcy'?'新餐饮':''
+							this.state.data.busType==='xcy'?'新餐饮':''
 						}
 						{
-							this.state.data.type==='xfw'?'新服务':''
+							this.state.data.busType==='xfw'?'新服务':''
 						}
 						{
-							this.state.data.type==='xls'?'新零售':''
+							this.state.data.busType==='xls'?'新零售':''
 						}
 						{
-							this.state.data.type==='xny'?'新农业':''
+							this.state.data.busType==='xny'?'新农业':''
 						}
 						{
-							this.state.data.type==='xyl'?'新娱乐':''
+							this.state.data.busType==='xyl'?'新娱乐':''
 						}
 						{
-							this.state.data.type==='other'?'其他':''
+							this.state.data.busType==='other'?'其他':''
 						} 
 					</span>
 				</div>
 				<div className='text li-qx'>
 					<span>投资期限</span>
-					<p>{this.state.data.qx}<span>个月</span></p>
+					<p>{this.state.data.month}<span>个月</span></p>
 					
 				</div>
 				<div className='text li-je'>
 					<span>借款金额</span>
-					<p>{this.state.data.je}<span>万</span></p> 
+					<p>{this.state.data.practicalLoanMoney}<span>万</span></p> 
 					<span className='tip'>按月等额本息还款</span>
 				</div> 
 			</div>
 			{/* 右 */}
 			<div className='li-right'>
-				<div className='line'>&ensp;</div>
-				<Steps size="small" current={this.state.current} progressDot direction="vertical"> 
-					{
-						this.state.data.stateData.map((item)=>{
-							if(item.fstate===1){
-								return <Step   title={"项目上线："+item.time} />
-							}else if(item.fstate===2){ 
-								return  <Step   title={"项目满标："+item.time} />
-							}else if(item.fstate===3){ 
-								return <Step   title={"项目计息："+item.time} />
-							}else if(item.fstate===4){ 
-								return <Step   title={"项目结清："+item.time} />
-							}else if(item.fstate===5){ 
-								return <Step title={"项目流标"+item.time} className='normary'/>
-							}
-						})
-					} 
-				</Steps>
-			</div>
-		</div>
+				<div className='line'>&ensp;</div> 
+				{
+					this.state.data.projectFlag ===this.state.fstate.ckz?
+					<Steps size="small" current={0} progressDot direction="vertical"> 
+						<Step   title={`项目上线：${this.state.data.upLineDate?moment(this.state.data.upLineDate).format('YYYY/MM/DD HH:mm'):''}`} />
+					</Steps>:null
+				} 
+				{
+					this.state.data.projectFlag ===this.state.fstate.dfk?
+					<Steps size="small" current={1} progressDot direction="vertical"> 
+						<Step   title={`项目上线：${this.state.data.upLineDate?moment(this.state.data.upLineDate).format('YYYY/MM/DD HH:mm'):''}`} />
+						<Step   title={`项目满标：${this.state.data.fullDate?moment(this.state.data.fullDate).format('YYYY/MM/DD HH:mm'):''}`} /> 
+					</Steps>:null
+				}  
+				{
+					this.state.data.projectFlag ===this.state.fstate.hkz?
+					<Steps size="small" current={2} progressDot direction="vertical"> 
+						<Step   title={`项目上线：${this.state.data.upLineDate?moment(this.state.data.upLineDate).format('YYYY/MM/DD HH:mm'):''}`} />
+						<Step   title={`项目满标：${this.state.data.fullDate?moment(this.state.data.fullDate).format('YYYY/MM/DD HH:mm'):''}`} /> 
+						<Step   title={`项目计息：${this.state.data.loanDate?moment(this.state.data.loanDate).format('YYYY/MM/DD HH:mm'):''}`} /> 
+					</Steps>:null
+				} 
+				{
+					this.state.data.projectFlag ===this.state.fstate.yjq?
+					<Steps size="small" current={3} progressDot direction="vertical"> 
+						<Step   title={`项目上线：${this.state.data.upLineDate?moment(this.state.data.upLineDate).format('YYYY/MM/DD HH:mm'):'YYYY/MM/DD HH:mm'}`} />
+						<Step   title={`项目满标：${this.state.data.fullDate?moment(this.state.data.fullDate).format('YYYY/MM/DD HH:mm'):'YYYY/MM/DD HH:mm'}`} /> 
+						<Step   title={`项目计息：${this.state.data.loanDate?moment(this.state.data.loanDate).format('YYYY/MM/DD HH:mm'):''}`} /> 
+						<Step   title={`项目结清：${this.state.data.finishDate?moment(this.state.data.finishDate).format('YYYY/MM/DD HH:mm'):''}`} />  
+					</Steps>:null
+				} 
+				{
+					this.state.data.projectFlag ===this.state.fstate.ylb?
+					<Steps size="small" current={0} progressDot direction="vertical"> 
+						<Step   className='normary' title={`项目流标${this.state.data.upLineDate?moment(this.state.data.upLineDate).format('YYYY/MM/DD HH:mm'):''}`} />  
+					</Steps>:null
+				} 
+			</div> 
+		</div> 
 		{/* 下 */}
 		<div className='li-down'>
-			 {/* 底部统计信息 */}
-			 {
-				this.state.data.fstate===this.state.fstate.ckz||this.state.data.fstate===this.state.fstate.dfk||this.state.data.fstate===this.state.fstate.hkz?
+			{/* 底部统计信息 */} 
 				<span>
-					<span>已投资金额：</span> 
-					<span className='money'>100元</span>
-					<i className='split'>|</i>
-					<span>可用代金券：</span>
-					<span className='money'>8张</span>
-				</span>:null 
-			 }
-			 {
-				 this.state.data.fstate ===this.state.fstate.yjq?
-				<span>
-					<span>总投资金额：</span> 
-					<span className='money'>{this.state.data.ztz}元</span>
-					<i className='split'>|</i>
-					<span>总投利息收益：</span> 
-					<span className='money'>{this.state.data.zlx}元</span>
-					<i className='split'>|</i> 
-					<span>待收本金：</span> 
-					<span className='money'>{this.state.data.dsbj}元</span>
-					<i className='split'>|</i>
-					<span>待收利息：</span> 
-					<span className='money'>{this.state.data.dslx}元</span>
-					<i className='split'>|</i>
-					<span>可用代金券</span>
-					<span className='money'>{this.state.data.djq}张</span>
-				</span>:null
-			 } 
+					{
+						this.state.data.projectFlag===this.state.fstate.ckz?
+						<span>
+							<span>已投资金额：</span> 
+							<span className='money'>{String(this.state.data.invMoney||0).fm()}元</span>
+							<i className='split'>|</i>
+							<span>可用代金券：</span>
+							<span className='money'>{this.state.data.couponCount}张</span>
+						</span>:null 
+					}
+					{
+						this.state.data.projectFlag===this.state.fstate.dfk||
+						this.state.data.projectFlag===this.state.fstate.ylb?
+						<span>
+							<span>总投资金额：</span> 
+							<span className='money'>{String(this.state.data.allMoney||0).fm()}元</span>
+							<i className='split'>|</i>
+							<span>可用代金券：</span>
+							<span className='money'>{this.state.data.couponCount}张</span>
+						</span>:null
+					}
+					{
+						this.state.data.projectFlag===this.state.fstate.hkz||
+						this.state.data.projectFlag===this.state.fstate.hkyc||
+						this.state.data.projectFlag===this.state.fstate.yjq?
+						<span>
+							<span>总投资金额：</span> 
+							<span className='money'>{String(this.state.data.allMoney||0).fm()}元</span>
+							<i className='split'>|</i>
+							<span>总投利息收益：</span> 
+							<span className='money'>{ String(this.state.data.allInterest||0).fm()}元</span>
+							<i className='split'>|</i> 
+							<span>待收本金：</span> 
+							<span className='money'>{String(this.state.data.principal||0).fm()}元</span>
+							<i className='split'>|</i>
+							<span>待收利息：</span> 
+							<span className='money'>{String(this.state.data.interest||0).fm()}元</span>
+							<i className='split'>|</i>
+							<span>可用代金券</span>
+							<span className='money'>{this.state.data.couponCount}张</span>
+						</span>:null
+					} 
+				</span> 
 			{ 
 				/* 右侧按钮 */
-				this.state.data.fstate===this.state.fstate.ckz ?<a className='btn'  onClick={this.props.handllerTZClick?this.props.handllerTZClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerTZClick事件！');}}> 继续投资 </a>:null 
+				this.state.data.projectFlag===this.state.fstate.ckz ?<a className='btn'  onClick={this.props.handllerTZClick?this.props.handllerTZClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerTZClick事件！');}}> 继续投资 </a>:null 
 			}
 			{ 
 				/* 右侧按钮 */
-				this.state.data.fstate===this.state.fstate.hkz||this.state.data.fstate===this.state.fstate.yjq ?
-				<a className='btn2' onClick={this.props.handllerHKClick?this.props.handllerHKClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerHKClick事件！');}}> 查看回款明细 </a>:null 
+				this.state.data.projectFlag===this.state.fstate.hkz||
+				this.state.data.projectFlag===this.state.fstate.hkyc||
+				this.state.data.projectFlag===this.state.fstate.yjq ?
+				<a className='btn2' onClick={this.handllerHKClick.bind(this,this.state.data.projectId)}> 查看回款明细 </a>:null 
 			}
 			
+			</div>
 		</div>
-		</div> 
-		<a  onClick={this.props.handllerHTClick?this.props.handllerHTClick.bind(this,this.state.data.fid,this.state.data):()=>{alert('请绑定handllerHTClick事件！');}}>《查看投资合同》</a>
-				
+		<div className={`detail ${this.state.visableTable?'':'hide'}`}>
+			<Table columns={tableColumn} locale={locale} dataSource={this.state.tableData} loading={this.state.loading} pagination={false} bordered size="small" /> 
+		</div>
+		<a  onClick={this.handllerHTClick.bind(this,this.state.data.projectId)}>《查看投资合同》</a>
 				 
       </div>
     );
