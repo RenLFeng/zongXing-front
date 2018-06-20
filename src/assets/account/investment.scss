@@ -58,6 +58,17 @@
     }
     &>.project-list{
         padding: 30px;
-        background-color: #fff; 
+        background-color: #fff;  
+        &>span{
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            color: rgba(0, 0, 0, 0.45);
+        
+        }
+        &>.im-paging{
+            width: 100%;
+            text-align: center;
+        }
     }
  }

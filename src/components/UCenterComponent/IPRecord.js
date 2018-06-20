@@ -86,7 +86,7 @@ onShowSizeChange = (current, pageSize) => {
             <div>
                 <LeftMenu param={this.props} />
                 <div className="fr uc-rbody">
-                    <div style={{fontSize:18,borderBottom:'1px dashed #f0f0f0',marginBottom:30}}>IP记录</div>
+                    <div style={{fontSize:18,borderBottom:'1px dashed #f0f0f0',marginBottom:30,paddingBottom:7}}>IP记录</div>
                     
                     <Table 
                     dataSource={this.state.dataSource}
