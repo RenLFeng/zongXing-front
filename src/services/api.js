@@ -693,3 +693,15 @@ export async function getIPRecord(params) {
     },
   });
 }
+
+
+//查询券额明细
+export async function getVoucher(params) {
+  return request(`${BASE_URL}/zjb-website/coupon/convert/record`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+

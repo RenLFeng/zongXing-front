@@ -25,7 +25,7 @@ export default {
   LOAN_LIST: '/index/uCenter/loanList', //借款项目列表
   COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
   NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
-
+  BIND_SUCCESS: '/index/uCenter/bindSuccess',
   INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //平台公告列表 
 
   ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
