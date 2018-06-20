@@ -3,7 +3,8 @@
 @import '../../common/_var.scss';
 
 .plat_warp{
-    margin-top: -25px;
+    border-left:1px solid $f90;
+    margin-left: 9px;
     .time{
         padding-left: 30px;
         padding-bottom: 5px; 
@@ -20,7 +21,7 @@
             border-radius:50%;
             position: absolute;
             top:5px;
-            left:0;
+            left:-6px;
         }
        
         .p_title{
@@ -28,8 +29,7 @@
             cursor: pointer;
         }
         .p_word{
-            border-left:1px solid $f90;
-             padding:10px 0 65px 24px;
+             padding:10px 0 45px 24px;
              position: relative;
              left: -25px;
              color: #C9C9C9;

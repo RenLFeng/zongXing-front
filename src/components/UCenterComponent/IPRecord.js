@@ -57,8 +57,11 @@ onShowSizeChange = (current, pageSize) => {
         const columns = [{
             title: '序号',
             dataIndex: 'fsort',
-            key: 'name',
-            align:'center'
+            key: 'fsort',
+            align:'center',    
+            render:function(text,record,index){
+                return index+1;
+              } 
           }, {
             title: 'IP地址',
             dataIndex: 'flogin_ip',
@@ -82,6 +85,13 @@ onShowSizeChange = (current, pageSize) => {
             align:'center',
             render: (text) => <a style={{color:'#669bff'}}>{text}</a>,
           }];
+          const locale = {
+            filterTitle: '筛选',
+            filterConfirm: '确定',
+            filterReset: '重置',
+            emptyText: '暂无数据',
+        };
+    
         return(
             <div>
                 <LeftMenu param={this.props} />
@@ -91,20 +101,24 @@ onShowSizeChange = (current, pageSize) => {
                     <Table 
                     dataSource={this.state.dataSource}
                     columns={columns}
+                    locale = {locale}
                     pagination={false}   
                     bordered
                     size="small"
                     style={{padding:'0 !important' }}
                     />
+                   {
+                       Math.ceil(this.state.pagination/this.state.pageSize) > 1 ?  
+                       <Pagination 
+                        total={this.state.pagination} 
+                        current={this.state.pageCurrent}
+                        pageSize={this.state.pageSize}
+                        onChange={this.onchange}
+                        onShowSizeChange={this.onShowSizeChange}
+                        style={{marginTop:30,textAlign:'center'}}
+                        /> :null
+                   }
                    
-                    <Pagination 
-                     total={this.state.pagination} 
-                     current={this.state.pageCurrent}
-                     pageSize={this.state.pageSize}
-                     onChange={this.onchange}
-                     onShowSizeChange={this.onShowSizeChange}
-                     style={{marginTop:30,textAlign:'center'}}
-                     />
                 </div>
             </div>
         )

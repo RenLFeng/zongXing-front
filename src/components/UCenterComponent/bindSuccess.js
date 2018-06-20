@@ -9,7 +9,8 @@ export default class BindSuccess extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      countDownTiem: 5
+      countDownTiem: 5,
+      realName: '',
     };
     let timeDown = null;
   }
@@ -42,11 +43,26 @@ export default class BindSuccess extends React.Component {
             <span className="safeCenter_">实名认证</span>
             <span> &gt; 身份认证 &gt; 身份认证成功</span>
           </div>
-          <div style={{marginTop: 50}}>
-            <span>{'姓名'},恭喜您已通过身份认证</span>
-            <span>下一步：前往开通资金托管账户</span>
-            <a>{this.state.countDownTiem}秒后自动跳转</a>
-          </div>
+          { this.state.realName ? 
+            <div className="bind_success_div">
+              <div className="bind_success_tip">
+                <i className={`zjb zjb-duihao duihao_icon`}></i>
+                <p className="bind_success_title">{'姓名'},恭喜您已通过身份认证</p>
+              </div>
+              <p className="bind_success_title_sub">下一步：前往开通资金托管账户</p>
+              <a className="bind_success_path">{this.state.countDownTiem}秒后自动跳转</a>
+            </div> : null
+          }
+          {/* { this.state.realName ? 
+            <div className="bind_success_div">
+              <div className="bind_success_tip">
+                <i className={`zjb zjb-duihao duihao_icon`}></i>
+                <p className="bind_success_title">{'姓名'},恭喜您已通过身份认证</p>
+              </div>
+              <p className="bind_success_title_sub">下一步：前往开通资金托管账户</p>
+              <a className="bind_success_path">{this.state.countDownTiem}秒后自动跳转</a>
+            </div> : null
+          } */}
         </div>
       </div>
     );

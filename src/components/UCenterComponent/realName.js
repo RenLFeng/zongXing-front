@@ -467,9 +467,8 @@ export default class RealName extends React.Component {
                   <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
-                  <Steps progressDot direction="vertical">
+                  <Steps progressDot direction="vertical" current={this._judgeAccount(safeData)}>
                     <Step title="第一步"
-                      status="wait"
                       description={
                         <div style={{ marginBottom: 28 }}>
                           <div className="first">
@@ -583,7 +582,7 @@ export default class RealName extends React.Component {
                 </div>
               </div> : null}
 
-    
+                  {safeData.userSecurityCenter.fThirdAccount? 
                   <div div className="fr uc-rbody" style={{ marginTop: '20px',padding:'0' }}>
                     <div className="safeCenter">
                       <div className="line">
@@ -600,7 +599,7 @@ export default class RealName extends React.Component {
                         <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)}>立即启用</Button>}</div>
                       </div>
                     </div>
-                  </div> 
+                  </div> : null}
                   <div className="fr uc-rbody" style={{ marginTop: '30px',padding:0 , display: 'flex',
                   justifyContent: 'space-between'}}>
                       <div className="baseInfo">

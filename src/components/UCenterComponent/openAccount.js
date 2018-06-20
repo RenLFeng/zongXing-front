@@ -155,7 +155,6 @@ class FormComponent extends React.Component {
               setTimeout(()=>{
                 this.props.parentHandSubmit(response.data);
               },100)
-              
             })
             // 提交表单接口回调成功使用
             // this.commitSuccess();
@@ -310,8 +309,6 @@ class FormComponent extends React.Component {
             <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
           </Tooltip>
         </Row>
-        { this.state.openType === '0' ?
-          <div>
             <Row>
               <FormItem
                 {...formItemLayout}
@@ -345,39 +342,9 @@ class FormComponent extends React.Component {
                 <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
               </Tooltip>
             </Row>
-            {/* <FormItem
-              {...formItemLayout}
-              label="所在城市"
-            >
-              {getFieldDecorator('city', {
-                rules: [
-                 { required: false, message: '请选择所在城市' },
-                ],
-              })(<Cascader options={city} placeholder="请选择" />)}
-            </FormItem> */}
-          </div>
-          : null }
-        {/* <FormItem
-          {...formItemLayout}
-          label="邮箱"
-        >
-          {getFieldDecorator('email', {
-            rules: [{ type: 'email', message: '邮箱格式不正确' },
-              { required: false, message: '请填写邮箱' }],
-          })(<Input maxLength={'40'} autoComplete="off" />)}
-        </FormItem> */}
         <FormItem {...btnLayout}>
           <Button type="primary" htmlType="submit" loading={this.state.loading} style={{ width: '200px' }}>开通</Button>
         </FormItem>
-        {/* <Modal
-          visible={this.state.visible}
-          title="提交中"
-          onCancel={this.handleCancel}
-          footer={null}
-          maskClosable={false}
-        >
-          <p style={{ fontSize: 20 }}>正在开户, 请等待。。。({this.state.countDownTime}s)</p>
-        </Modal> */}
         
       </Form>
         <form ref={ref => { this.formId = ref}} action={submitParam.submitUrl} method="post" style={{ display: 'none' }}>

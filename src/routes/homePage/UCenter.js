@@ -24,13 +24,14 @@ import AccountWithdrawals from '../../components/UCenterComponent/accountWithdra
 import Message from '../../components/UCenterComponent/message';
 import NoticeList from '../../components/UCenterComponent/NoticeList';
 import InvestMent from '../../components/Account/investment';
+import receivePlan from '../../components/Account/receivePlan';
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import IncomePlan from '../../components/UCenterComponent/IncomePlan';
 import AllInvest from '../../components/UCenterComponent/AllInvest';
 import Test from '../../components/UCenterComponent/test';
 import CompanyList from '../../components/UCenterComponent/companyList';
 import BindSuccess from '../../components/UCenterComponent/bindSuccess';
-import receivePlan from '../../components/UCenterComponent/receivePlan';
+
 //我的优惠券
 import myCoupon from '../../components/UCenterComponent/mycoupon';
 //项目收藏
@@ -72,6 +73,8 @@ export default class UCenter extends React.Component {
             <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
             {/* 投资记录 */}
             <Route path={Path.INVEST_MENT} exact component={InvestMent} />
+             {/* 回款计划 */}
+             <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
             {/* 资金动态 */}
             <Route path={Path.ACCOUNT_STATEMENT}  component={AccountStatement} />
             {/* 我的优惠券 */}
@@ -118,8 +121,7 @@ export default class UCenter extends React.Component {
             <Route path={Path.INCOME_PLAN} component={IncomePlan} /> 
             {/* 投资总览 */}
             <Route path={Path.ALL_INVEST}  component={AllInvest} />
-            {/* 回款计划 */}
-            <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
+           
           </Switch>
         </div>
       </div>

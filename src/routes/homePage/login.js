@@ -32,7 +32,7 @@ export default class Login extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
   }
-
+ 
 
   //修改所有input的state统一方法
   onChange(e) {
@@ -87,8 +87,11 @@ export default class Login extends React.Component {
   }
 
   pressKey(e) {
+    console.log('e',e)
     if (e.keyCode === 13) {
       this.submitLogin();
+    } else {
+
     }
   }
 
@@ -115,7 +118,6 @@ export default class Login extends React.Component {
 
   // 判断  手机号是否已被注册过
   async checkPhone() {
-    console.log(1111)
     const {loginPhone} = this.state;
     if (loginPhone.length === 0) {
       this.setState({loginNameErr:'手机号|用户名不能为空'})
@@ -188,7 +190,7 @@ export default class Login extends React.Component {
                     <div className="row" style={{position:'relative'}}>
                       <input className="put" value={loginPhone} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
-                            placeholder="手机号|用户名" onBlur={()=>this.checkPhone()}/>
+                            placeholder="手机号|用户名" onBlur={()=>this.checkPhone()} onKeyDown={(e)=>this.pressKey(e)}/>
                       <Icon type="mobile" style={{position:'absolute',top:'10px',left:'8px',fontSize:25,color:'#D4D4D4'}}/>
                       {
                         this.state.loginError ? this.state.loginNameErr?
@@ -208,7 +210,7 @@ export default class Login extends React.Component {
                     <div className="row" style={{position:'relative'}}>
                       <input className="put"  value={loginPwd} maxLength="16"
                             name="loginPwd" type="password" onChange={(e) => this.setState({loginPwd: e.target.value})}
-                            placeholder="请输入登录密码"/>
+                            placeholder="请输入登录密码" onKeyDown={(e)=>this.pressKey(e)}/>
                       <Icon type="lock" style={{position:'absolute',top:'7px',left:'8px',fontSize:28,color:'#D4D4D4'}} />
                       <p className="prompts" style={{color: '#868686'}}>{this.state.loginPwdErr}</p>
                       <a className="gray f14"
