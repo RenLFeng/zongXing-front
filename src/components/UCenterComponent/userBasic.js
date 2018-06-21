@@ -6,6 +6,7 @@ import moment from 'moment';
 import { connect } from 'dva';
 import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD, NAME_REG_, QQ_REG, WeChat_REG, ZHUZHI_REG, HOBBY_REG} from '../../common/systemParam';
 import {city} from '../../common/cityData';
+import {REALNAME_AUTHENTICATION} from '../../common/pagePath';
 
 import { getJudgeUserName,getUserBaseData,saveUserBase } from '../../services/api';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
@@ -116,9 +117,12 @@ class UserBaseFormInput extends React.Component {
             fHobby: JSON.stringify(values.fHobby)
           }
         };
-        console.log('数据接收后台需要的数据', userBase);
-
         const response = await saveUserBase(userBase);
+        if (response.code === 0) {
+          this.props.history.push('/index/uCenter/realName');
+        } else {
+          response.msg && message.error(response.msg);
+        }
 
         console.log(response);
 

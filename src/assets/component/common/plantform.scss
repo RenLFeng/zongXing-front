@@ -27,6 +27,10 @@
         .p_title{
             width:500px;
             cursor: pointer;
+            text-decoration: underline;
+        }
+        .p_title:hover{
+            opacity: 0.7
         }
         .p_word{
              padding:10px 0 45px 24px;

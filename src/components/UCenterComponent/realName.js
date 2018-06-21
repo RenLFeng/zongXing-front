@@ -7,7 +7,7 @@ import moment from 'moment';
 import '../../assets/ucenter/realName.scss';
 import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL, AUTH_ADDRESS } from '../../common/systemParam';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist, getBankCardList, unbindBankCard } from '../../services/api';
-import { AUTHENTICATION, OPENQACCOUNT, BINDCARD } from '../../common/pagePath';
+import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC, CHANGE_LPWD } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -572,8 +572,8 @@ export default class RealName extends React.Component {
                             {/* 绑定银行卡 */}
                               {this.props.accountId ?
                               <div className="unbind_div" >
-                                <Icon type="plus" className="icon-plus" onClick={() => this.props.history.push(BINDCARD)} />
-                                <span className="bind_new_bank">绑定新银行卡</span>
+                                <Icon type="plus" className="icon-plus" />
+                                <span className="bind_new_bank" onClick={() => this.props.history.push(BINDCARD)} >绑定新银行卡</span>
                                 <span
                                   className="bind_new_bank"
                                   style={{ color: '#e6e6e6', fontSize: 14 }}
@@ -610,14 +610,14 @@ export default class RealName extends React.Component {
           }}>
             <div className="baseInfo">
               <Icon type="user" />
-              <h3>基础资料</h3>
+              <h3 onClick={()=>{this.props.history.push(USER_BASIC)}}>基础资料</h3>
               <p>完善个人资料，增强账户安全等级</p>
               <p><span>****</span>**</p>
             </div>
 
             <div className="baseInfo">
               <Icon type="unlock" />
-              <h3>修改登陆密码</h3>
+              <h3 onClick={()=>{this.props.history.push(CHANGE_LPWD)}}>修改登陆密码</h3>
               <p>定期更改账户密码让你的账户更安全</p>
               <span>2018/6/15（最新设置时间）</span>
             </div>

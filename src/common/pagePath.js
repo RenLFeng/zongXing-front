@@ -4,6 +4,7 @@ export default {
   PERSONAL_ACCOUNT: '/index/uCenter/personAccount',  //个人账户页面地址
 
   USER_BASIC: '/index/uCenter/userBasic', //个人基础资料页面地址
+  CHANGE_LPWD: '/index/uCenter/changeLPwd', //修改登陆密码页面地址
   OPEN_ACCOUNT: '/index/uCenter/openAccount',  //开户页面地址
   SAFE_CENTER: '/index/uCenter/safeCenter', //安全中心页面地址
   REALNAME_AUTHENTICATION: '/index/uCenter/realName', //实名认证页面地址
