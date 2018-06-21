@@ -11,6 +11,7 @@ import { startAnimate } from '../../assets/home/index';
 import { knobsmall } from '../../assets/common/module/knob';
 import { getCollectionProjectNew, getCollectionCount } from '../../services/api';
 import { IMG_BASE_URL } from '../../common/systemParam';
+import Path from '../../common/pagePath';
 
 class projectcollection extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class projectcollection extends React.Component {
         this.state = { 
             count: {},
             param: {
-                flag: 0,
+                flag: null,
                 projectName: '',
                 pageParam: {
                     pageCurrent: 1,
@@ -55,7 +56,9 @@ class projectcollection extends React.Component {
         this.setState({loading: false});
         if (response.code === 0) {
             this.setState({
-                collectionList: response.data.infoList
+                collectionList: response.data.infoList,
+                totalNum: response.data.totalNumber,
+                allNum: !this.state.param.flag?response.data.totalNumber:this.state.allNum
             }, ()=> {
                 if (this.state.collectionList.length > 0) {
                     knobsmall();
@@ -90,7 +93,7 @@ class projectcollection extends React.Component {
                 ...this.state.param,
                 pageParam: {
                     pageCurrent: page,
-                    pageSize: 9
+                    pageSize: 99
                 }
             },
           },()=>{
@@ -109,7 +112,7 @@ class projectcollection extends React.Component {
                     <div className='search-area'>
                         <p className='top-title'>项目收藏 </p>
                         <ul className='search-tag'>
-                            <li className={`${param.flag==0?'active': ''}`} onClick={()=>this.handleClick(0)}>全部{count[0]?`(${count[0]})`:''}</li>
+                            <li className={`${param.flag?'': 'active'}`} onClick={()=>this.handleClick(null)}>全部{this.state.allNum?`(${this.state.allNum})`: ''}</li>
                             <li className={`${param.flag==10?'active': ''}`} onClick={()=>this.handleClick(10)}>筹款中{count[10]?`(${count[10]})`:''}</li>
                             <li className={`${param.flag==11?'active': ''}`} onClick={()=>this.handleClick(11)}>待放款{count[11]?`(${count[11]})`:''}</li>
                             <li className={`${param.flag==12?'active': ''}`} onClick={()=>this.handleClick(12)}>回款中{count[12]?`(${count[12]})`:''}</li>
@@ -124,7 +127,7 @@ class projectcollection extends React.Component {
                             <Button onClick={this.handlerSearchClick}>查询</Button>
                         </div>
                     </div> 
-                    <p>共8条记录</p>
+                    <p>共{this.state.totalNum}条记录</p>
                     <div className='project-list box99'>
                         
                         {
@@ -134,7 +137,30 @@ class projectcollection extends React.Component {
                             this.state.collectionList.map(item=>{
                                 const path = item.fcard_pic_path
                                 return (
-                                    <div className="colect_div" key={item.fproject_id}>
+                                    <div className="colect_div" key={item.fproject_id} onClick={()=>this.props.history.push(Path.PROJECT_DETAIL+`/${item.fproject_id}`)}>
+                                    {/* <div className='li-title'>
+                                        {
+                                            this.state.data.projectFlag===this.state.fstate.ckz?
+                                            <spna className='state ckz'>筹款中</spna> :null
+                                        }
+                                        {
+                                            this.state.data.projectFlag===this.state.fstate.dfk?
+                                            <spna className='state dfk'>待放款</spna> :null
+                                        }
+                                        {
+                                            this.state.data.projectFlag===this.state.fstate.hkz||
+                                            this.state.data.projectFlag===this.state.fstate.hkyc?
+                                            <spna className='state hkz'>回款中</spna> :null
+                                        }
+                                        {
+                                            this.state.data.projectFlag===this.state.fstate.yjq?
+                                            <spna className='state yjq'>已结清</spna> :null
+                                        }
+                                        {
+                                            this.state.data.projectFlag===this.state.fstate.ylb?
+                                            <spna className='state ylb'>已流标</spna> :null
+                                        } 
+                                    </div> */}
                                         <span className="pro_colect_Title">项目编号&nbsp;<span style={{color: '#333'}}>{item.fproject_no}</span></span>
                                         <div className="colect_item" style={{ cursor:'pointer' }}>
                                             <div className="pic_box"><img className="pic" src={`${IMG_BASE_URL}${item.fcard_pic_path}`} /></div>
@@ -156,7 +182,7 @@ class projectcollection extends React.Component {
                             })
                         } 
                         {
-                            Math.ceil(this.state.totalNum/this.state.param.pageParam.pageCurrent)>1?
+                            Math.ceil(this.state.totalNum/this.state.param.pageParam.pageSize)>1?
                             <div className='collection-paging'>
                                 <Pagination   current={this.state.param.pageParam.pageCurrent} pageSize={this.state.param.pageParam.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
                             </div>:null
