@@ -214,12 +214,12 @@ class BindCard extends React.Component {
   }
 
   // 绑定银行卡接口
-  bindBank = () => {
+  bindBank = async () => {
     if (this.state.commmitLoading) {
       return;
     }
     this.setState({commmitLoading: true});
-    const response = bindBankCard({
+    const response = await bindBankCard({
       fbankCode: this.state.openName,
       fcityCode: this.state.cityId,
       fprovinceCode: this.state.provinceId,

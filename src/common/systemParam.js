@@ -17,7 +17,7 @@ if (build === 'production') {
   PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
   REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
   IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
-  TURN_BACK = 'http://testmanage.5izjb.com'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
+  TURN_BACK = 'http://test.5izjb.com/zjbindex.html'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
   LIMIT_MOENY = true;
   AUTH_ADDRESS = 'https://my.moneymoremore.com/';
   SOCKET_URL = 'http://192.168.1.36:8899';
