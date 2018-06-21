@@ -20,7 +20,7 @@ export default class HowInvest extends React.Component {
   }
 	render() {
 		return(
-      <div >
+      <div className="g" >
         <div className="banner autosize">
           <img className="big" src={require('../../assets/img/invest/banner.jpg')} />
           <div className="w">
@@ -30,11 +30,11 @@ export default class HowInvest extends React.Component {
                  this.props.history.push(Path.PROJECT_LIST)}}><i>我要投资</i></a>
           </div>
         </div>
+        <TabBottom />
         <TabTop />
         <InCome />
         <Worth />
         <Profit />
-        <TabBottom />
         <Qa />
       </div>
 		);

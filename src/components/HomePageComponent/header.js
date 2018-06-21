@@ -33,7 +33,20 @@ export default class Header extends React.Component {
     const {match, location, history} = this.props.param;
     let localPath =location.pathname;
     const styleS = localPath.indexOf('/index/howLoan') !== -1 || localPath.indexOf('/index/howInvest') !== -1 ? {position:'fixed'}: {position:'absolute'};
-    
+    let fontColor = 'null';
+          if(localPath.indexOf('/index/projectLoan')!== -1){
+            fontColor='project';
+          }else if(localPath.indexOf('/index/howLoan')!== -1){
+            fontColor='howLoan';
+          }else if(localPath.indexOf('/index/howInvest')!== -1){
+            fontColor='howInvest';
+          }else if(localPath.indexOf('/index/companyDiscount')!== -1){
+            fontColor='companyDiscount';
+          }else if(localPath.indexOf('/index/loanCollege')!== -1){
+            fontColor='loanCollege';
+          }else if(localPath.indexOf('/index/uCenter/personAccount')!== -1){
+            fontColor='uCenter';
+          }
     let shouldFix=true;
     this.state.fixContent.split(',').map((item)=>{
       if(localPath.indexOf('/index/'+item)!=-1){
@@ -54,34 +67,29 @@ export default class Header extends React.Component {
             <img src={require('../../assets/img/logo.png')} />
           </a>
           <span className="fr">
-            <a className="a1" onClick={()=>{
+            <a className={'a1 '+(fontColor=='project'?'project':null)} onClick={()=>{
               history.push(`${match.path}/projectLoan`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
-            }}>借款项目</a>
-            <a className="a1" onClick={()=>{
-              history.push(`${match.path}/howLoan`);
-              $(window).scrollTop(0);
-            }}>如何借款</a>
-            <a className="a1" onClick={()=>{
+            }}>投资项目</a>
+            <a className={'a1 '+(fontColor=='howInvest'?'howInvest':null)} onClick={()=>{
               history.push(`${match.path}/howInvest`);
               $(window).scrollTop(0);
             }}>如何投资</a>
-            <a className="a1" onClick={()=>{
+            <a className={'a1 '+(fontColor=='companyDiscount'?'companyDiscount':null)} onClick={()=>{
               history.push(`${match.path}/companyDiscount`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>商家优惠</a>
-            <a className="a1" onClick={()=>{
+             <a className={'a1 '+(fontColor=='howLoan'?'howLoan':null)} onClick={()=>{
+              history.push(`${match.path}/howLoan`);
+              $(window).scrollTop(0);
+            }}>如何借款</a>
+            <a className={'a1 '+(fontColor=='loanCollege'?'loanCollege':null)} onClick={()=>{
               history.push(`${match.path}/loanCollege`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
-            }}>众借学院</a>
-            <a className="btn btn1" onClick={()=>{
-              history.push(`${match.path}/collection`);
-              $("#fix").removeClass('fix');
-              $(window).scrollTop(0);
-            }}>收藏项目</a>
+            }}>信息披露</a>
             { !this.props.loginStatus ?
               <a className="btn btn2"
                 >
@@ -97,7 +105,7 @@ export default class Header extends React.Component {
                    $(window).scrollTop(0);
                 }}>注册</span>
                 </a> :
-              <a className="btn btn2" onClick={()=>{
+              <a className={'btn btn2 '+(fontColor=='uCenter'?'uCenter':null)} onClick={()=>{
                   history.push('/index/uCenter/personAccount');
                   $("#fix").removeClass('fix');
                   $(window).scrollTop(0);
@@ -120,34 +128,29 @@ export default class Header extends React.Component {
             <img src={require('../../assets/img/logo.png')} />
           </a>
           <span className="fr">
-            <a className="a1" onClick={()=>{
+            <a className={'a1 '+(fontColor=='project'?'project':null)} onClick={()=>{
               history.push(`${match.path}/projectLoan`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
-            }}>借款项目</a>
-            <a className="a1" onClick={()=>{
-              history.push(`${match.path}/howLoan`);
-              $(window).scrollTop(0);
-            }}>如何借款</a>
-            <a className="a1" onClick={()=>{
+            }}>投资项目</a>
+             <a className={'a1 '+(fontColor=='howInvest'?'howInvest':null)} onClick={()=>{
               history.push(`${match.path}/howInvest`);
               $(window).scrollTop(0);
             }}>如何投资</a>
-            <a className="a1" onClick={()=>{
+            <a className={'a1 '+(fontColor=='companyDiscount'?'companyDiscount':null)} onClick={()=>{
               history.push(`${match.path}/companyDiscount`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>商家优惠</a>
-            <a className="a1" onClick={()=>{
+            <a className={'a1 '+(fontColor=='howLoan'?'howLoan':null)} onClick={()=>{
+              history.push(`${match.path}/howLoan`);
+              $(window).scrollTop(0);
+            }}>如何借款</a>
+            <a className={'a1 '+(fontColor=='loanCollege'?'loanCollege':null)} onClick={()=>{
               history.push(`${match.path}/loanCollege`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
-            }}>众借学院</a>
-            <a className="btn btn1" onClick={()=>{
-              history.push(`${match.path}/collection`);
-              $("#fix").removeClass('fix');
-              $(window).scrollTop(0);
-            }}>收藏项目</a>
+            }}>信息披露</a>
             { !this.props.loginStatus ?
               <a className="btn btn2"
                  >
@@ -161,7 +164,7 @@ export default class Header extends React.Component {
                    $("#fix").removeClass('fix');
                    $(window).scrollTop(0)}}>注册</span>
                  </a> :
-              <a className="btn btn2" onClick={()=>{
+              <a className={'btn btn2 '+(fontColor=='uCenter'?'uCenter':null)} onClick={()=>{
                 history.push('/index/uCenter/personAccount');
                 $("#fix").removeClass('fix');
                 $(window).scrollTop(0);

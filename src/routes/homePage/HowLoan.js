@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { startAnimate } from '../../assets/finance/index';
+
 import Calculator from '../../components/HowLoanComponent/calculator';
 import TopTab from '../../components/HowLoanComponent/topTab';
 import BottomTab from '../../components/HowLoanComponent/bottomTab';
 import Qa from '../../components/HowLoanComponent/qa';
-
+import { startAnimate } from '../../assets/finance/index';
 
 export default class HowLoan extends React.Component {
   componentDidMount() {
@@ -20,58 +20,56 @@ export default class HowLoan extends React.Component {
       <div >
         <div className="banner1 autosize">
           <img className="big" src={require('../../assets/img/finance/bg0.png')} />
-          <div className="w">
-            <Calculator history={this.props.history}/>
-          </div>
         </div>
+        <BottomTab />
         <TopTab />
         <div className="section sec-road autosize">
           <img className="big" src={require('../../assets/img/finance/pic4.jpg')} />
           <div className="w"/>
         </div>
-        <div className="section sec-profit1">
+        <div className="section sec-profit1 g">
           <div className="w">
             <div className="tit">
               <i>众借的好处</i>
             </div>
-            <div className="box61 clearfix">
+            <div className="box61 box6 clearfix">
               <div className="shadow">
-                <div className="pic">
-                  <i className="c1"/>
+                <div className="pic circlechart" data-percentage="100">
+                  <i className="c1"></i>
                 </div>
                 <p className="t1">利息低</p>
                 <p className="t2">借款企业信用等级越高，<br />利息越低，最低年化利率8%</p>
               </div>
               <div className="shadow">
-                <div className="pic">
+                <div className="pic circlechart" data-percentage="100">
                   <i className="c2"/>
                 </div>
                 <p className="t1">速度快</p>
                 <p className="t2">48小时内审核完成<br />您的在线借款申请</p>
               </div>
               <div className="shadow">
-                <div className="pic">
+                <div className="pic circlechart" data-percentage="100">
                   <i className="c3"/>
                 </div>
                 <p className="t1">申请便捷</p>
                 <p className="t2">无担保无抵押<br />在线申请</p>
               </div>
               <div className="shadow">
-                <div className="pic">
+                <div className="pic circlechart" data-percentage="100">
                   <i className="c4"/>
                 </div>
                 <p className="t1">拓展客户</p>
                 <p className="t2">把投资人变成客户<br />把投资人变成粉丝</p>
               </div>
               <div className="shadow">
-                <div className="pic">
+                <div className="pic circlechart" data-percentage="100">
                   <i className="c5"/>
                 </div>
                 <p className="t1">精准营销</p>
                 <p className="t2">发放优惠券、发起活动、<br />互动交流</p>
               </div>
               <div className="shadow">
-                <div className="pic">
+                <div className="pic circlechart" data-percentage="100">
                   <i className="c6"/>
                 </div>
                 <p className="t1">借款用途广</p>
@@ -80,7 +78,6 @@ export default class HowLoan extends React.Component {
             </div>
           </div>
         </div>
-        <BottomTab />
         <Qa />
 			</div>
 		);

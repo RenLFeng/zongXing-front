@@ -18,6 +18,7 @@ export default class HomeIndex extends React.Component {
       <div className="body">
         <Banner history={this.props.history}/>
         <Company />
+        <Tab3 />
         <Project param={this.props.match} history={this.props.history}/>
         <div className="section sec-touzi">
           {/*<canvas id="canvas-invest"></canvas>*/}
@@ -31,16 +32,16 @@ export default class HomeIndex extends React.Component {
                 <p className="tit4">自己决定你的投资项目</p>
                 <div className="list-dot">
                   <p>选择熟悉的地区、了解的行业，根据你的兴趣爱好进行投资。</p>
-                  <p>借款项目经过<b>五级专业审查</b>：申请资料初审、反欺诈风控模型、信用评分综合模型、系统性线下复核、行业专家组终审。</p>
-                  <p>你的投资，直接用于提高小微企业的运营能力和品牌影响力。</p>
-                  <p>所有借款项目来自中国认证的成长型公司和小微企业。</p>
+                  <p><b>借款项目风控流程</b>：筛选项目、项目展现、反欺诈模型、信用评分、行业专家审核、群众风控、贷后管理。</p>
+                  <p>你的投资，直接用于扩大生产和经营，提高企业盈利能力。</p>
+                  <p>每一个投资项目，贷前、贷中、贷后全程接受投资人监督。</p>
                 </div>
               </div>
               <div className="fr sec3">
                 <p className="tit4">投资实体经济，获取丰厚收益</p>
                 <div className="list-suc">
                   <p>门槛低，100元起投</p>
-                  <p>8%+的固定利率回报</p>
+                  <p>丰厚的固定利率回报</p>
                   <p>小额分散，低风险</p>
                   <p>直接参与小微企业成长</p>
                   <p>企业让利，额外惊喜</p>
@@ -79,7 +80,6 @@ export default class HomeIndex extends React.Component {
             </div>
           </div>
         </div>
-        <Tab3 />
       </div>
     );
   }
