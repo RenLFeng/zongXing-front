@@ -105,7 +105,7 @@
                         float: right; 
                     }
                     &>p{
-                        margin-top: 3px;
+                        margin: 3px 0 0;
                         font-size: 34px; 
                         color: $f90;
                         &>span{
@@ -167,6 +167,9 @@
                 .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon .ant-steps-icon-dot{
                     background-color: #e6e6e6;
                 } 
+                .ant-steps-vertical.ant-steps-dot .ant-steps-item:first-child .ant-steps-icon-dot{
+                    left:0px;
+                }
             }
         }
         &>.li-down{

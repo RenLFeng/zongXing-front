@@ -10,6 +10,12 @@ class Platform extends React.Component {
             data :this.props.data ,
         }     
     }
+    componentWillReceiveProps(nextprops){
+        this.setState({
+            data:nextprops.data
+        })
+       
+    }
    
     render() {    
         return (  

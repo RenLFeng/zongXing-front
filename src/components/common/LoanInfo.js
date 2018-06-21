@@ -134,7 +134,7 @@ class LoanInfo extends React.Component {
         dataIndex: 'fpay_time',
         align:'center',
 		render:function(text,record,index){
-			return text?moment(text).format('YYYY/MM/DD HH:mm'):'----/--/--/ --:--';
+			return text||'';
 		}
       }]; 
 	const locale = {

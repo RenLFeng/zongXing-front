@@ -7,7 +7,7 @@ import moment from 'moment';
 import '../../assets/ucenter/realName.scss';
 import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL, AUTH_ADDRESS } from '../../common/systemParam';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist, getBankCardList, unbindBankCard } from '../../services/api';
-import { AUTHENTICATION, OPENQACCOUNT, BINDCARD } from '../../common/pagePath';
+import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC, CHANGE_LPWD } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -531,52 +531,55 @@ export default class RealName extends React.Component {
                             <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
                             <a className="right" style={{ display: 'none' }}>设置</a>
                           </div>
+
                           <div className="cardBox">
-                            {this.state.cardList.map((data, index) => {
-                              console.log('datadata', data);
-                              return (
-                                <div className="card_div" key={index}>
-                                  <div className="IDCard">
-                                    <div>
-                                      <span className="id_num">
-                                        {data.fbankcard.substring(0, 4)} **** **** {data.fbankcard.substring(data.fbankcard.length - 5, data.fbankcard.length - 1)}
-                                      </span>
+                            {/* 银行卡展示 */}
+                              {this.state.cardList.map((data, index) => {
+                                console.log('datadata', data);
+                                return (
+                                  <div className="card_div" key={index}>
+                                    <div className="IDCard">
+                                      <div>
+                                        <span className="id_num">
+                                          {data.fbankcard.substring(0, 4)} **** **** {data.fbankcard.substring(data.fbankcard.length - 5, data.fbankcard.length - 1)}
+                                        </span>
+                                      </div>
                                     </div>
+                                    {!this.state[data.fid] ?
+                                      <a className="unbind_card" onClick={() => this.setState({ [data.fid]: true })}>解除绑定</a> :
+                                      <div className="unbind_block">
+                                        <span className="unbind_span">解绑银行卡</span>
+                                        <span className="unbind_span">请输入登录密码</span>
+                                        <Input
+                                          type={this.state[`${data.fid}hide`] ? 'text' : 'password'}
+                                          className="unbind_password"
+                                          placeholder="请输入登录密码"
+                                          onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
+                                          prefix={<Icon type="lock" />}
+                                          suffix={<Icon type="eye-o" onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                                        />
+                                        <Button
+                                          type="primary"
+                                          className="unbind-btn"
+                                          onClick={() => this.unbindBankCardAjax(data.fbankcard, data.fid)}
+                                          loading={this.state.unbindLoading}
+                                        >解绑</Button>
+                                      </div>
+                                    }
                                   </div>
-                                  {!this.state[data.fid] ?
-                                    <a className="unbind_card" onClick={() => this.setState({ [data.fid]: true })}>解除绑定</a> :
-                                    <div className="unbind_block">
-                                      <span className="unbind_span">解绑银行卡</span>
-                                      <span className="unbind_span">请输入登录密码</span>
-                                      <Input
-                                        type={this.state[`${data.fid}hide`] ? 'text' : 'password'}
-                                        className="unbind_password"
-                                        placeholder="请输入登录密码"
-                                        onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
-                                        prefix={<Icon type="lock" />}
-                                        suffix={<Icon type="eye-o" onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
-                                      />
-                                      <Button
-                                        type="primary"
-                                        className="unbind-btn"
-                                        onClick={() => this.unbindBankCardAjax(data.fbankcard, data.fid)}
-                                        loading={this.state.unbindLoading}
-                                      >解绑</Button>
-                                    </div>
-                                  }
-                                </div>
-                              );
-                            })}
-                          </div>
-                          {this.props.accountId ?
-                            <div className="unbind_div" >
-                              <Icon type="plus" className="icon-plus" onClick={() => this.props.history.push(BINDCARD)} />
-                              <span className="bind_new_bank">绑定新银行卡</span>
-                              <span
-                                className="bind_new_bank"
-                                style={{ color: '#e6e6e6', fontSize: 14 }}
-                              >(只支持储蓄卡)</span>
-                            </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
+                                );
+                              })}
+                            {/* 绑定银行卡 */}
+                              {this.props.accountId ?
+                              <div className="unbind_div" >
+                                <Icon type="plus" className="icon-plus" />
+                                <span className="bind_new_bank" onClick={() => this.props.history.push(BINDCARD)} >绑定新银行卡</span>
+                                <span
+                                  className="bind_new_bank"
+                                  style={{ color: '#e6e6e6', fontSize: 14 }}
+                                >(只支持储蓄卡)</span>
+                              </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}                               
+                          </div>                          
                         </div>
                       }
                     />
@@ -607,14 +610,14 @@ export default class RealName extends React.Component {
           }}>
             <div className="baseInfo">
               <Icon type="user" />
-              <h3>基础资料</h3>
+              <h3 onClick={()=>{this.props.history.push(USER_BASIC)}}>基础资料</h3>
               <p>完善个人资料，增强账户安全等级</p>
               <p><span>****</span>**</p>
             </div>
 
             <div className="baseInfo">
               <Icon type="unlock" />
-              <h3>修改登陆密码</h3>
+              <h3 onClick={()=>{this.props.history.push(CHANGE_LPWD)}}>修改登陆密码</h3>
               <p>定期更改账户密码让你的账户更安全</p>
               <span>2018/6/15（最新设置时间）</span>
             </div>

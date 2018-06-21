@@ -5,6 +5,24 @@
 .cp-sm{ 
     display: block;
     position: relative;
+    .sm-left{
+        padding: 0;
+        padding-top: 2px; 
+        float: left;
+        width: 150px; 
+        text-align: right;
+        &>p:nth-child(1){
+            color: $c9;
+            font-size: 15px;
+            line-height: 15px;
+        }
+        &>p:nth-child(2){
+            color: $f90;
+            font-size: 18px;
+            line-height: 18px;
+            margin-top: 16px;
+        }
+    } 
     .sm-right{
         display: inline-block;
         border-left: 1px solid #e6e6e6;
