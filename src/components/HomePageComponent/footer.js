@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link,Switch,Route} from 'dva/router';
-export default class Footer extends React.Component {
 
+export default class Footer extends React.Component {
   componentDidMount() {
     $('.fl ul li a').on('click', ()=>{
       console.log(123);
@@ -24,7 +24,7 @@ export default class Footer extends React.Component {
                   <img src={require('../../assets/img/logo2.png')} />
                 </a>
               </div>
-              <div>
+              <div style={{marginTop:60,marginLeft:4}}>
                 <a className="ic ic_wx"/>
                 <a className="ic ic_weibo"/>
                 <a className="ic ic_print"/>

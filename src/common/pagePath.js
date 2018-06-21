@@ -4,12 +4,17 @@ export default {
   PERSONAL_ACCOUNT: '/index/uCenter/personAccount',  //个人账户页面地址
 
   USER_BASIC: '/index/uCenter/userBasic', //个人基础资料页面地址
+  CHANGE_LPWD: '/index/uCenter/changeLPwd', //修改登陆密码页面地址
   OPEN_ACCOUNT: '/index/uCenter/openAccount',  //开户页面地址
   SAFE_CENTER: '/index/uCenter/safeCenter', //安全中心页面地址
   REALNAME_AUTHENTICATION: '/index/uCenter/realName', //实名认证页面地址
   AUTHENTICATION: '/index/uCenter/authentication', //实名认证页面
   OPENQACCOUNT: '/index/uCenter/openQAccount', //开通乾多多认证
   IPRECORD: '/index/uCenter/IPRecord', //IP记录页面
+  VOUCHER: '/index/uCenter/voucher', //券额明细页面
+  PLATFORM_NOTICE: '/index/uCenter/platformNotice', //平台通知页面
+  SITE_NOTICE: '/index/uCenter/siteNotice', //站内通知页面
+
   BINDCARD: '/index/uCenter/bindCard', //绑定银行卡
   COMPANY_ACCOUNT: '/index/uCenter/companyAccount',  //企业账户页面地址
   BANK_CARD: '/index/uCenter/bankCard',  //银行卡管理页面
@@ -23,15 +28,16 @@ export default {
   LOAN_LIST: '/index/uCenter/loanList', //借款项目列表
   COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
   NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
-
+  BIND_SUCCESS: '/index/uCenter/bindSuccess',
   INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //平台公告列表 
 
   ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
-  RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
+
 
 
   Project_Collection:'/index/uCenter/projectcollection',
   INVEST_MENT: '/index/uCenter/InvestMent', //投资记录
+  RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
   ACCOUNT_STATEMENT:'/index/uCenter/accountstatement',  //资金动态
   MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
 

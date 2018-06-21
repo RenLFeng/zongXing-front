@@ -1,28 +1,77 @@
 import React from 'react';
-import { Icon, Button } from 'antd';
+import { Icon, Button,Modal,message  } from 'antd';
 import '../../assets/ucenter/realName.scss';
 import OpenAccount from './openAccount';
-
+import { getUserBaseData, commitOpenAccount} from '../../services/api';
+import { TURN_BACK } from '../../common/systemParam';
+import { connect } from 'dva';
+@connect((state)=> ({
+  openStatus: state.account.openStatus
+}))
 export default class OpenQAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showPage: 'china',
+      showPage: 'mmmpage-warn',
       realName: '',
       idcard: '',
-      submitParam: null,
-      
+      submitParam: {
+        reqParam: {
+
+        }
+      },
+      param: null
     };
   }
 
   componentDidMount() {
     console.log('this.state', this.state);
     console.log('this.state.showPage', this.state.showPage);
+    this.getUserPhone();
+  }
+
+   // 获取用户手机号
+   async getUserPhone() {
+    const response = await getUserBaseData();
+    console.log(response);
+    if (response.code === 0) {
+      if (response.data) {
+        let param = {
+          mobile: response.data.fmobile,
+          realName: response.data.freal_name,
+          identificationNo: response.data.fidcard_No,
+          accountType: '0',
+          notifyPageUrl: `${TURN_BACK}#/index/uCenter/bindCard`
+        }
+        this.setState({param});
+      }
+    }
+  }
+
+  // 提交数据
+  async handleSubmitParam() {
+    if (this.state.loading) {
+      return;
+    }
+    this.setState({loading: true});
+    const response = await commitOpenAccount(this.state.param);
+    this.setState({loading: false});
+    if (response.code === 0) {
+      if (response.data) {
+        this.setState({
+          submitParam: response.data
+        }, ()=>{
+          this.formId.submit();
+        })
+      }
+    } else {
+      response.msg && message.error(response.msg);
+    }
   }
 
   handSubmit = (param) => {
     console.log("submitParam:",param);
-    this.setState({ submitParam: param, showPage: 'mmmpage-warn' });
+    this.setState({showPage: 'mmmpage-warn'});
   }
 
   render() {
@@ -34,11 +83,7 @@ export default class OpenQAccount extends React.Component {
       return(
         <div className="pages">
           {
-            this.state.showPage === 'china' ?
-              <div>
-                <OpenAccount parentHandSubmit={this.handSubmit} match={this.props.match} />
-              </div> :
-            (this.state.showPage === 'mmmpage-warn') ?
+            this.state.showPage === 'mmmpage-warn' ?
               <div>
                 <div className="real_title_">
                   <span className="safeCenter_">实名认证</span>
@@ -51,12 +96,12 @@ export default class OpenQAccount extends React.Component {
                     <p style={{ marginTop: 25 }}>保障您的资金安全</p>
                   </div>
                   <div className="buttonGroup">
-                    <Button className="open" onClick={() => { this.formId.submit(); }}>申请开通</Button>
+                    <Button type="primary" className="open" disabled={!this.state.param} loading={this.state.loading} onClick={() => this.handleSubmitParam()}>申请开通</Button>
                     <p>系统提交用户身份资料给乾多多，进行是否已有账户判断</p>
                   </div>
                 </div>
-                <form ref={ref => { this.formId = ref; formRef = ref; }} action={submitParam.submitUrl} method="post" target="_blank" style={{ display: 'none' }}>
-                  <input id="AccountType" name="AccountType" value={submitParam.reqParam.AccountType} />
+                <form ref={ref => { this.formId = ref}} action={submitParam.submitUrl} method="post" style={{ display: 'none' }}>
+                  <input id="AccountType" name="AccountType" value={0} />
                   <input id="Email" name="Email" value={submitParam.reqParam.Email} />
                   <input id="IdentificationNo" name="IdentificationNo" value={submitParam.reqParam.IdentificationNo} />
                   <input id="LoanPlatformAccount" name="LoanPlatformAccount" value={submitParam.reqParam.LoanPlatformAccount} />

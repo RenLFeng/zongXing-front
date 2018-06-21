@@ -1,8 +1,8 @@
 import React from 'react';
 import {Form, Input, Button, Select, Modal, message, Icon } from 'antd';
 import '../../assets/ucenter/withdrawals.scss';
-import {getBankCard, getCity, putInformation} from '../../services/api';
-import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE } from '../../common/systemParam';
+import {getBankCardList, getCity, putInformation} from '../../services/api';
+import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE,  } from '../../common/systemParam';
 import Path from "../../common/pagePath";
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/recharge.scss';
@@ -44,7 +44,7 @@ export default class EnterprisePresentation extends React.Component {
       // accountId:this.props.location.state ? this.props.location.state.account: '',
       accountId: '',
       bankCodes: [],   //银行列表
-      bankInfos: [],   //银行信息
+      bankcardInfos: [],   //银行信息
       provinces: [],   //省份列表
       withdrawals: {},  //提交表单后返回的数据
       loading: false,
@@ -55,36 +55,31 @@ export default class EnterprisePresentation extends React.Component {
       provinceName: '',
       citys: [],         //城市接口返回的城市列表
       //  提交表单参数
-      amount: '',
+      amount: '', //提現金額
       cardType: 0,
       province: '',
       city: '',
       remark: '',
       num: 0,
-      value:''   //提現金額
+      value:'',   
+      selectedCard: null, //选中的提现银行卡号
+      moneyError: false, //提现金额是否错误
+      moneyErrorMsg:'', //金额错误提示语
     }
   }
 
   componentDidMount() {
     // 获取跳转类型 0：个人 1：企业
-    this.setState({
-      accountId: this.props.location.state ? this.props.location.state.account : ''
-    });
-    if (this.props.location.state) {
-      this.getCardInformation(this.props.location.state.account);
-    }
+    this.getCardInformation(this.props.accountId); 
   }
 
   //获取银行卡
   async getCardInformation(data) {
-    const response = await getBankCard(data);
-    console.log(response);
+    const response = await getBankCardList(data);
+    console.log('提现银行卡接口',response);
     if (response.code === 0) {
       this.setState({
-        withdrawals: response.data,
-        bankCodes: response.data.bankCodes,
-        bankInfos: response.data.bankInfos,
-        provinces: response.data.provinces
+        bankcardInfos: response.data
       });
     } else {
       message.error(response.msg);
@@ -103,7 +98,6 @@ export default class EnterprisePresentation extends React.Component {
   }
 
   async getCity_(data) {
-    console.log(this.state.num);
     const response = await getCity(data);
     if (response.code === 0) {
       this.setState({
@@ -147,22 +141,34 @@ export default class EnterprisePresentation extends React.Component {
     }
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(this.props)
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        values.amount = values.amount * 1.00;
-        console.log('表单提交的数据', values);
-        this.getInformation(values);
-      }
-    });
+  handleSubmit = () => {
+       console.log("this.state.selectedCard:",this.state.selectedCard);
+        this.state.selectedCard ? this.setState({selectedCardError: false}) : this.setState({selectedCardError: true});
+        if(this.moneyError){
+          return;
+        }
+        if(Number(this.state.amount) < 2){
+          this.setState({moneyError:true, moneyErrorMsg: '金不能小于1'})
+        }
+        console.log("this.selectedCard:",this.selectedCard);
+        let param = {
+          notifyPageUrl: `${window.location.host}/#/uCenter`,
+          amount: this.state.amount,
+          accountId: this.props.accountId,
+          cardNo: this.state.selectedCard.fbankcard,
+          bankCode: this.state.selectedCard.fbankCode,
+          province: this.state.selectedCard.fprovinceCode,
+          city: this.state.selectedCard.fcityCode
+        }
+        console.log('表单提交的数据', param);
+        this.getInformation(param);
+      
   };
 
 
   changeBank(val) {
     console.log(val);
-    for (let data of this.state.bankInfos) {
+    for (let data of this.state.bankcardInfos) {
       if (data.userBankId === val) {
         console.log('data.province', data.province);
         this.props.form.resetFields();
@@ -218,6 +224,17 @@ export default class EnterprisePresentation extends React.Component {
     console.log('focus');
   }
 
+  changeMoney = (event) => {
+    console.log("money:",event.target.value);
+    if(isNaN(Number(event.target.value))){
+      this.setState({ moneyError: true, moneyErrorMsg: '只能输入数字' })
+      this.setState({})
+    }else{
+      this.setState({ moneyError: false })
+      this.setState({amount:event.target.value})
+    }
+  }
+
   render() {
     const {withdrawals} = this.state;
     const {baseData} = this.props;
@@ -230,9 +247,16 @@ export default class EnterprisePresentation extends React.Component {
           <span className="withdrawals_title">请选择到账银行卡</span>
           <div style={{padding: '0 0 30px 52px', borderBottom: '1px dashed #e6e6e6'}}>
             <div style={{display:'flex',justifyContent: 'space-between'}}>
-              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'农业银行'} cardId={'1234 **** **** 7894'} id="1"/>
-              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'建设银行'} cardId={'6284 **** **** 1234'} id="2"/>
-              <BankCard style={{margin: '32px 32px 0 0'}} cardName={'招商银行'} cardId={'2345 **** **** 4569'} id="3"/>
+            {
+              this.state.bankcardInfos.map((data)=>{
+                 return(
+                     <div style={{cursor:"pointer"}} key={data.fid} onClick={()=>{this.setState({selectedCard: data,selectedCardError: false})}} >
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={data.fbank} cardId={data.fbankcard.substr(0,4) +'**** **** '+data.fbankcard.substr(12)}  /> 
+                     </div>
+                     
+                 )
+              })
+            }
             </div> 
             <div className="card_add" >
               <Icon type="plus" onClick={() => this.props.history.push(Path.BINDCARD)}/>
@@ -246,14 +270,16 @@ export default class EnterprisePresentation extends React.Component {
               <span className="label_text" style={{position: 'absolute', top: 105}}>提现金额</span>
             </div>
             <div className="label_div" style={{paddingTop: '32px'}}>
-              <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px'}}>招商银行</span>
+              <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px'}}>{this.state.selectedCard ? this.state.selectedCard.fbank : null}</span>
               <div className="input-view" style={{marginTop: 36}}>
                 <span className="money_tip">￥</span>
-                <input type="text" className="input_money" onChange={(e)=>{this.setState({value:e.target.value})}} value={this.state.value}/>
+                <input type="text" className="input_money" onChange={this.changeMoney} value={this.state.amount}/>
                 <span className="rate_text_position" style={{display: 'inline-block'}}>账户可提现金额￥{baseData ? baseData.balance : 0}</span>
               </div>
-              <span className="rate_text">提现手续费￥<span>{this.state.value * 0.01}</span>（费率1%）</span>
+              <span className="rate_text">提现手续费￥<span>{this.state.amount * 0.01}</span>（费率1%）</span>
             </div>
+            {this.state.selectedCardError ? <div><span style={{ color:'red', fontSize:'10px' }}>请选择到账银行卡</span></div> : null}
+            {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px' }}>{this.state.moneyErrorMsg}</span></div> : null}
             <Button type="primary" style={{width: 279, marginTop: 30,height:35}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
           <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>

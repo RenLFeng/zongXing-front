@@ -100,7 +100,12 @@ class FormComponent extends React.Component {
       loading: false,
       regCompany: [],
       companyName: '',
-      license: ''
+      license: '',
+      submitParam: {
+        reqParam: {
+
+        }
+      }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.countDown = null;
@@ -132,8 +137,10 @@ class FormComponent extends React.Component {
       console.log(err);
       if (!err) {
         // 提交表单接口
+        if (this.state.loading) {
+          return;
+        }
         values.accountType = '0';
-        values.cityCode = values.city[values.city.length - 1];
         values.notifyPageUrl = `${TURN_BACK}/#/index/uCenter/bindCard`
         this.setState({loading: true});
         try {
@@ -141,7 +148,14 @@ class FormComponent extends React.Component {
           this.setState({loading: false});
           if (response.code === 0) {
             message.info(response.msg);
-            this.props.parentHandSubmit(response.data);
+            this.setState({
+              submitParam: response.data
+            }, ()=>{
+              this.formId.submit();
+              setTimeout(()=>{
+                this.props.parentHandSubmit(response.data);
+              },100)
+            })
             // 提交表单接口回调成功使用
             // this.commitSuccess();
             // if (values.accountType === '0') {
@@ -276,7 +290,9 @@ class FormComponent extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { parentHandSubmit } = this.props;
+    const { submitParam } = this.state;
     return (
+      <div>
       <Form onSubmit={this.handleSubmit}>
         <Row style={{ postion: 'relative' }}>
           <FormItem
@@ -293,8 +309,6 @@ class FormComponent extends React.Component {
             <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
           </Tooltip>
         </Row>
-        { this.state.openType === '0' ?
-          <div>
             <Row>
               <FormItem
                 {...formItemLayout}
@@ -328,40 +342,29 @@ class FormComponent extends React.Component {
                 <Icon type="question-circle-o" style={{ position: 'absolute', top: 10, right: 250 }} />
               </Tooltip>
             </Row>
-            <FormItem
-              {...formItemLayout}
-              label="所在城市"
-            >
-              {getFieldDecorator('city', {
-                rules: [
-                 { required: false, message: '请选择所在城市' },
-                ],
-              })(<Cascader options={city} placeholder="请选择" />)}
-            </FormItem>
-          </div>
-          : null }
-        <FormItem
-          {...formItemLayout}
-          label="邮箱"
-        >
-          {getFieldDecorator('email', {
-            rules: [{ type: 'email', message: '邮箱格式不正确' },
-              { required: false, message: '请填写邮箱' }],
-          })(<Input maxLength={'40'} autoComplete="off" />)}
-        </FormItem>
         <FormItem {...btnLayout}>
-          <Button type="primary" htmlType="submit" loading={this.state.loading} style={{ width: '200px' }}>提交</Button>
+          <Button type="primary" htmlType="submit" loading={this.state.loading} style={{ width: '200px' }}>开通</Button>
         </FormItem>
-        {/* <Modal
-          visible={this.state.visible}
-          title="提交中"
-          onCancel={this.handleCancel}
-          footer={null}
-          maskClosable={false}
-        >
-          <p style={{ fontSize: 20 }}>正在开户, 请等待。。。({this.state.countDownTime}s)</p>
-        </Modal> */}
+        
       </Form>
+        <form ref={ref => { this.formId = ref}} action={submitParam.submitUrl} method="post" style={{ display: 'none' }}>
+          <input id="AccountType" name="AccountType" value={0} />
+          <input id="Email" name="Email" value={submitParam.reqParam.Email} />
+          <input id="IdentificationNo" name="IdentificationNo" value={submitParam.reqParam.IdentificationNo} />
+          <input id="LoanPlatformAccount" name="LoanPlatformAccount" value={submitParam.reqParam.LoanPlatformAccount} />
+          <input id="Mobile" name="Mobile" value={submitParam.reqParam.Mobile} />
+          <input id="NotifyURL" name="NotifyURL" value={submitParam.reqParam.NotifyURL} />
+          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={submitParam.reqParam.PlatformMoneymoremore} />
+          <input id="RandomTimeStamp" name="RandomTimeStamp" value={submitParam.reqParam.RandomTimeStamp} />
+          <input id="RealName" name="RealName" value={submitParam.reqParam.RealName} />
+          <input id="RegisterType" name="RegisterType" value={submitParam.reqParam.RegisterType} />
+          <input id="Remark1" name="Remark1" value={submitParam.reqParam.Remark1} />
+          <input id="Remark2" name="Remark2" value={submitParam.reqParam.Remark2} />
+          <input id="Remark3" name="Remark3" value={submitParam.reqParam.Remark3} />
+          <input id="ReturnURL" name="ReturnURL" value={submitParam.reqParam.ReturnURL} />
+          <input id="SignInfo" name="SignInfo" value={submitParam.reqParam.SignInfo} />
+        </form>
+      </div>
     );
   }
 }

@@ -214,12 +214,12 @@ class BindCard extends React.Component {
   }
 
   // 绑定银行卡接口
-  bindBank = () => {
+  bindBank = async () => {
     if (this.state.commmitLoading) {
       return;
     }
     this.setState({commmitLoading: true});
-    const response = bindBankCard({
+    const response = await bindBankCard({
       fbankCode: this.state.openName,
       fcityCode: this.state.cityId,
       fprovinceCode: this.state.provinceId,
@@ -278,12 +278,12 @@ class BindCard extends React.Component {
           <span className="bind_tip_msg">{this.state.showBankName?this.state.showBankName:''}</span>
           <div className="bind_item_view">
             <span>开户省市</span>
-            <Select size="large" placeholder="请选择省份" value={this.state.provinceId} style={{width: 130,height: 42}} onChange={(val)=>this.chooseCity(val)}>
+            <Select size="large" placeholder="请选择省份" notFoundContent="暂无数据" value={this.state.provinceId} style={{width: 130,height: 42}} onChange={(val)=>this.chooseCity(val)}>
               {moneyCity.provincerList.map((data,index)=>{
                 return <Select.Option value={data.fcode} key={data.fcode}>{data.fname}</Select.Option>
               })}
             </Select>
-            <Select size="large" placeholder="请选择城市" value={this.state.cityId} style={{width: 130,height: 42}} onChange={(val)=>this.setState({cityId: val})}>
+            <Select size="large" placeholder="请选择城市" notFoundContent="暂无数据" value={this.state.cityId} style={{width: 130,height: 42}} onChange={(val)=>this.setState({cityId: val})}>
               {this.state.cityArr?this.state.cityArr.map((data,index)=>{
                 return <Select.Option value={data.fcode} key={data.fcode}>{data.fname}</Select.Option>
               }): null}
@@ -297,7 +297,7 @@ class BindCard extends React.Component {
           <span className="bind_error_msg">{this.state.cardType==='信用卡'?'不支持信用卡':null}</span>
           <div className="bind_item_view">
             <span/>
-            <div className="bind_password">
+            <div className="bind_password" style={{paddingLeft: 10}}>
               <i className="zjb zjb-mima2" />
               <input type={this.state.showPwd?'text':'password'} onChange={(e)=>this.setState({userPassword: e.target.value.trim()})}/>
               <i className="zjb zjb-htmal5icon08" onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>

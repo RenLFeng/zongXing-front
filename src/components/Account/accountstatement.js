@@ -1,15 +1,19 @@
 import React from 'react';
-import {Table,Pagination} from 'antd';
+import {Table,Pagination, Modal} from 'antd';
 import {message} from "antd/lib/index";
 import moment from 'moment'; 
 import {pageShows} from "../../common/systemParam";
 import LeftMenu from '../UCenterComponent/leftMenu';
 import {accountService} from '../../services/api2.js'; 
 import Statement from '../common/Statement';
+import {connect} from 'dva';
 import '../../assets/account/accountstatement.scss';
 /**
  * 资金流水界面
  */
+@connect((state)=>({
+  openStatus: state.account.openStatus
+}))
 export default class AccountStatement extends React.Component{
   constructor(props){
     super(props);
@@ -37,7 +41,21 @@ export default class AccountStatement extends React.Component{
   }
 
   componentDidMount() {
-    this.getCapitalDynamics();  //调用请求
+    if (this.props.openStatus == 3) {
+      this.getCapitalDynamics();  //调用请求
+      return;
+    }
+    this.jumpAuth()
+  }
+  jumpAuth() {
+    var that = this;
+    Modal.info({
+      title: '您目前还没有开户，请先开户！',
+      okText:'去开户',
+      onOk() {
+        that.props.history.push('/index/uCenter/realName')
+      },
+    });
   }
   //获取资金动态列表
   async getCapitalDynamics(){
@@ -118,14 +136,14 @@ export default class AccountStatement extends React.Component{
       this.getCapitalDynamics();
      });
   } 
- //点击分页
- handlerPageChange=(page)=>{
-  this.setState({  
-      pageCurrent:page,//设置为第一页
-  },()=>{
-      this.getCapitalDynamics();
-  });  
-}
+  //点击分页
+  handlerPageChange=(page)=>{
+    this.setState({  
+        pageCurrent:page,//设置为第一页
+    },()=>{
+        this.getCapitalDynamics();
+    });  
+  }
   render(){  
     //充值
     const chongzColumn = [{
@@ -322,6 +340,9 @@ export default class AccountStatement extends React.Component{
         title: '还款期数', 
         dataIndex: 'resultObj.periods',
         align:'center',
+        render:function(text,record,index){
+          return <span>text</span>
+        }
       }]; 
 
       const locale = {
@@ -354,7 +375,10 @@ export default class AccountStatement extends React.Component{
                 this.state.infoList.map((item,index)=>{
                   return <Statement key={index} showTitle={index==0} data={item}></Statement>
                 })
-              } 
+              }
+              {
+                this.state.infoList.length===0?<span className='no-data'>暂无数据</span>:null
+              }
             </div>
             {/* 充值 */}
             <div className={this.state.activeCode==='1201'?'':'hide'}>

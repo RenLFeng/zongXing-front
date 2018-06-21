@@ -3,7 +3,7 @@ import '../../assets/login/index.scss';
 import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_} from '../../common/systemParam';
 import {connect} from 'dva';
 import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input} from 'antd';
-import {phoneExist, regUser, changePW, checkCode, relieveAccountAjax} from '../../services/api';
+import {phoneExist, regUser, changePW, checkCode, relieveAccountAjax, getAuthCode} from '../../services/api';
 
 
 const Step = Steps.Step;
@@ -26,13 +26,20 @@ export default class Login extends React.Component {
       authCode: '',
       password: '',
       code: '', //忘记密码时验证码
-      loginError: true
+      loginError: true, 
+      errorTime: 60
 
     };
     this.onChange = this.onChange.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
+    this.countDownErrorCode = null;
   }
-
+ 
+  componentWillUnmount() {
+    if (this.countDownErrorCode) {
+      clearInterval(this.countDownErrorCode);
+    }
+  }
 
   //修改所有input的state统一方法
   onChange(e) {
@@ -78,7 +85,6 @@ export default class Login extends React.Component {
   }
 
   passwordError(phoneNumber) {
-    console.log(phoneNumber);
     this.setState({
       phoneNumber,
       authPhone: true,
@@ -89,9 +95,10 @@ export default class Login extends React.Component {
   pressKey(e) {
     if (e.keyCode === 13) {
       this.submitLogin();
+    } else {
+
     }
   }
-
 
   // 解锁用户
   async relieveAccountLock() {
@@ -115,7 +122,6 @@ export default class Login extends React.Component {
 
   // 判断  手机号是否已被注册过
   async checkPhone() {
-    console.log(1111)
     const {loginPhone} = this.state;
     if (loginPhone.length === 0) {
       this.setState({loginNameErr:'手机号|用户名不能为空'})
@@ -130,7 +136,6 @@ export default class Login extends React.Component {
     }
     this.setState({checkPhoneLoading: true});
     const response = await phoneExist(loginPhone);
-    console.log('2222',response);
     this.setState({checkPhoneLoading: false});
     if (response.code === 0) {
       this.setState({loginError: false});
@@ -138,6 +143,39 @@ export default class Login extends React.Component {
       this.setState({loginError: true,loginNameErr:''});
     }
   }
+
+  // 用户5次错误之后 发送验证码的接口
+  async sendErrorCodeAuth() {
+    if (this.state.sendErrorCodeLoading) {
+      return;
+    }
+    const sendTime = localStorage.getItem(`${this.state.phoneNumber}errorCode`);
+    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000) {
+      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
+      return;
+    }
+    this.setState({sendErrorCodeLoading: true});
+    const response = await getAuthCode(this.state.phoneNumber);
+    this.setState({sendErrorCodeLoading: false});
+    if (response.code === 0) {
+      localStorage.setItem(`${this.state.phoneNumber}errorCode`, new Date().getTime());
+      this.setState({
+        errorTime: 59
+      }, ()=> {
+        this.countDownErrorCode = setInterval(()=>{
+          if (this.state.errorTime !== 0) {
+            this.setState({ errorTime: this.state.errorTime - 1});
+          } else {
+            this.setState({ errorTime: 60 });
+            clearInterval(this.countDownErrorCode);
+          }
+        }, 1000);
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
 
   render() {
     const {  loginPhone, loginPwd} = this.state;
@@ -174,7 +212,7 @@ export default class Login extends React.Component {
               验证码
             </Col>
             <Col span={21}>
-
+            <Input type="password" value={this.state.errorAuthCode} placeholder="请输入" onChange={(e)=>this.setState({errorAuthCode: e.target.value})} maxLength={10}/>
             </Col>
           </Row>
         </Modal>
@@ -188,7 +226,7 @@ export default class Login extends React.Component {
                     <div className="row" style={{position:'relative'}}>
                       <input className="put" value={loginPhone} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
-                            placeholder="手机号|用户名" onBlur={()=>this.checkPhone()}/>
+                            placeholder="手机号|用户名" onBlur={()=>this.checkPhone()} onKeyDown={(e)=>this.pressKey(e)}/>
                       <Icon type="mobile" style={{position:'absolute',top:'10px',left:'8px',fontSize:25,color:'#D4D4D4'}}/>
                       {
                         this.state.loginError ? this.state.loginNameErr?
@@ -208,7 +246,7 @@ export default class Login extends React.Component {
                     <div className="row" style={{position:'relative'}}>
                       <input className="put"  value={loginPwd} maxLength="16"
                             name="loginPwd" type="password" onChange={(e) => this.setState({loginPwd: e.target.value})}
-                            placeholder="请输入登录密码"/>
+                            placeholder="请输入登录密码" onKeyDown={(e)=>this.pressKey(e)}/>
                       <Icon type="lock" style={{position:'absolute',top:'7px',left:'8px',fontSize:28,color:'#D4D4D4'}} />
                       <p className="prompts" style={{color: '#868686'}}>{this.state.loginPwdErr}</p>
                       <a className="gray f14"

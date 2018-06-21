@@ -276,10 +276,10 @@ export async function clickPraise(param) {
   return request(`${BASE_URL}/zjb-website/projectJourney/praise?journeyId=${param}`);
 }
 
-//获取提现的银行卡的接口
-export async function getBankCard(param) {
-  return request(`${BASE_URL}/zjb-website/userBankCard/account/info?accountId=${param}`);
-}
+// //获取提现的银行卡的接口
+// export async function getBankCard(param) {
+//   return request(`${BASE_URL}/zjb-website/userBankCard/account/info?accountId=${param}`);
+// }
 
 //获取省份对应的城市
 export async function getCity(param) {
@@ -693,3 +693,30 @@ export async function getIPRecord(params) {
     },
   });
 }
+
+
+//查询券额明细
+export async function getVoucher(params) {
+  return request(`${BASE_URL}/zjb-website/coupon/convert/record`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+// 获取收藏项目列表（新）
+export async function getCollectionProjectNew(param) {
+  return request(`${BASE_URL}/zjb-website/projectCollection/list`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  });
+}
+
+// 获取收藏项目个数
+export async function getCollectionCount(param) {
+  return request(`${BASE_URL}/zjb-website/projectCollection/flagCount`);
+}
+

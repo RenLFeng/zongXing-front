@@ -110,7 +110,7 @@ export default function request(url, options) {
 
  
 export const req={
-    get:(url, param)=>{ 
+    get:(url, param)=>{  
       if(url.substring(0,1)=='/'){
         url = BASE_URL+url;
       }else{
@@ -192,7 +192,7 @@ function serialize (data){
   for(var name in data){
   if(!data.hasOwnProperty(name)) continue;//排除嵌套对象
     if(typeof data[name]==='function')
-        continue;//排除操作数是函数
+        continue;//排除操作数是函数 
     var value=data[name].toString();
     name=encodeURIComponent(name);
     value=encodeURIComponent(value);

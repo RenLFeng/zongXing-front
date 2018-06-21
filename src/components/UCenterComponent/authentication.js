@@ -12,9 +12,18 @@ export default class Authentication extends React.Component {
       showPage: 'idcard',
       realName: '',
       idcard: '',
+      openName: '',
+      num: 5, // 5秒后
     };
+    this.countDown = null;
   }
   componentDidMount() {
+  }
+
+  componentWillUnmount() {
+    if (this.countDown) {
+      clearInterval(this.countDown);
+    }
   }
 
   updateRealName = (e) => {
@@ -30,7 +39,7 @@ export default class Authentication extends React.Component {
       return;
     }
     const param = {
-      realName: this.state.realName,
+      realName: this.state.realName.trim(),
       idcard: this.state.idcard,
     };
     if (!param.realName) {
@@ -45,13 +54,26 @@ export default class Authentication extends React.Component {
     const response = await verifyIdcard(param);
     this.setState({loading: false})
     if (response.code === 1) {
-      response.msg && message.success(response.msg);
-      this.setState({ showPage: 'ok' });
-      this.props.history.push(Path.REALNAME_AUTHENTICATION);
+      this.setState({ 
+        showPage: 'ok',
+        openName: param.realName
+      });
+      this.countDown = setInterval(()=>{ 
+         this.setState({
+           num: this.state.num - 1
+         }, () => {
+           if (!this.state.num) {
+             clearInterval(this.timeDown);
+             this.props.history.push('/index/uCenter/openQAccount');
+           }
+         });
+      }, 1000);
     } else {
       response.msg && message.error(response.msg);
     }
   };
+
+
 
   render() {
     const { userName } = this.state;
@@ -95,8 +117,9 @@ export default class Authentication extends React.Component {
               </div>
               <div className="Prompt">
                 <img alt="提示" src={require('../../assets/img/u3530.png')} />
-                <p className="p1"> 成身份认证，有助于建立完善可靠的互联网信用体系</p>
-                <p className="p2">姓名必须与充值、提现的银行卡开户名保持一致</p>
+              
+                <p className="p1" style={{textAlign:'center'}}> 成身份认证，有助于建立完善可靠的互联网信用体系</p>
+                <p className="p2"  style={{textAlign:'center'}}>姓名必须与充值、提现的银行卡开户名保持一致</p>
               </div>
               {/* <Spin style={{height: 200}}> */}
                 <div className="info">
@@ -108,7 +131,8 @@ export default class Authentication extends React.Component {
                     <Input placeholder="请输入第二代身份证号码" onChange={this.updateIdcard} />
                     <img alt="身份证id" src={require('../../assets/img/u192.png')} />
                   </div>
-                  <Button onClick={this.handleSubmit} type="primary" loading={this.state.loading}>立即身份认证</Button>
+      
+                  <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button">立即身份认证</span>
                 </div>
               {/* </Spin> */}
             </div> :
@@ -122,9 +146,9 @@ export default class Authentication extends React.Component {
                 <p>众借帮使用“全国公民身份证号码查询服务中心”（NCIIC）权威认证</p>
                 <h1>
                   <img alt="ok" src={require('../../assets/img/u3551.png')} />
-                  人名字，恭喜您已经通过身份认证
+                  {this.state.openName}，恭喜您已经通过身份认证
                 </h1>
-                <a className="goback">3秒后自动返回</a>
+                <a className="goback" onClick={()=>this.props.history.push('/index/uCenter/openQAccount')}>{this.state.num}秒后自动返回</a>
               </div>
             </div> : null
         }

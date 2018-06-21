@@ -96,8 +96,8 @@ export default class ProjectLoan extends React.Component {
           <div className="w tright">
             <div className="pager">
               {pageData.lastPage ?
-                <a className="first" onClick={this.fetchComplete.bind(this, currentPage * 1 - 1)}>&lt;</a> :
-                <a className="first" style={{backgroundColor:'#eee'}}>&lt;</a>}
+                <a onClick={this.fetchComplete.bind(this, currentPage * 1 - 1)}>&lt;</a> :
+                <a  style={{backgroundColor:'#eee'}}>&lt;</a>}
               {pageData.firstPage ?
                 <a className={`${1 == currentPage  ? 'hover' : ''}`}
                    onClick={this.fetchComplete.bind(this, 1)}>1</a> :
@@ -119,8 +119,8 @@ export default class ProjectLoan extends React.Component {
                    onClick={this.fetchComplete.bind(this, maxPage)}>{maxPage}</a> :
                 null}
               {pageData.nextPage ?
-                <a className="last" onClick={this.fetchComplete.bind(this, currentPage * 1 + 1)}>&gt;</a> :
-                <a className="last" style={{backgroundColor:'#eee'}}>&gt;</a>}
+                <a onClick={this.fetchComplete.bind(this, currentPage * 1 + 1)}>&gt;</a> :
+                <a style={{backgroundColor:'#eee'}}>&gt;</a>}
             </div>
           </div>
         </div>

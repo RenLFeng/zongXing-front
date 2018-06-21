@@ -7,7 +7,7 @@ import moment from 'moment';
 import '../../assets/ucenter/realName.scss';
 import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL, AUTH_ADDRESS } from '../../common/systemParam';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist, getBankCardList, unbindBankCard } from '../../services/api';
-import { AUTHENTICATION, OPENQACCOUNT, BINDCARD } from '../../common/pagePath';
+import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC, CHANGE_LPWD } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -90,11 +90,14 @@ export default class RealName extends React.Component {
     if (this.props.safeData.userSecurityCenter.fThirdAccount !== nextProps.safeData.userSecurityCenter.fThirdAccount) {
       this.getBankCardListAjax(); // 获取用户绑定银行卡
     }
+    if (this.props.accountId !== nextProps.accountId) {
+      this.getBankCardListAjax(nextProps.accountId); // 获取用户绑定银行卡
+    }
   }
 
   // 获取用户绑定银行卡
-  getBankCardListAjax = async () => {
-    const response = await getBankCardList(this.props.accountId);
+  getBankCardListAjax = async (param) => {
+    const response = await getBankCardList(param?param:this.props.accountId);
     console.log(response);
     if (response.code === 0) {
       if (response.data) {
@@ -417,6 +420,7 @@ export default class RealName extends React.Component {
     if (safeData.userSecurityCenter.fThirdAccount) {
       step = 2;
     }
+    console.log('step', step);
     return step;
   }
 
@@ -438,13 +442,14 @@ export default class RealName extends React.Component {
     });
     this.setState({ unbindLoading: false });
     if (response.code === 0) {
-      for (let i = 0, len = this.state.cardList.length; i < len; i++) {
-        if (this.state.cardList[i].fbankcard === cardId) {
-          this.state.cardList.splice(1, i);
-          break;
-        }
-      }
-      this.setState({ cardList: this.state.cardList });
+      this.getBankCardListAjax()
+      // for (let i = 0, len = this.state.cardList.length; i < len; i++) {
+      //   if (this.state.cardList[i].fbankcard === cardId) {
+      //     this.state.cardList.splice(1, i);
+      //     break;
+      //   }
+      // }
+      // this.setState({ cardList: this.state.cardList });
     } else {
       response.msg && message.error(response.msg);
     }
@@ -453,23 +458,9 @@ export default class RealName extends React.Component {
   render() {
     // 初始化数据
     const { safeData } = this.props;
-    const { status } = this.state;
+    const { status, distribution, url } = this.state;
     return (
       <div>
-        {/* <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{display:'none'}}>
-          <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId?distribution.moneymoremoreId:''}/>
-          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore?distribution.platformMoneymoremore:''}/>
-          <input id="AuthorizeTypeOpen" name="AuthorizeTypeOpen" value={distribution.authorizeTypeOpen?distribution.authorizeTypeOpen:''}/>
-          <input id="AuthorizeTypeClose" name="AuthorizeTypeClose" value={distribution.authorizeTypeClose?distribution.authorizeTypeClose:''}/>
-          <input id="RandomTimeStamp" name="RandomTimeStamp" value={distribution.randomTimeStamp?distribution.randomTimeStamp:''}/>
-          <input id="Remark1" name="Remark1" value={distribution.remark1?distribution.remark1:''}/>
-          <input id="Remark2" name="Remark2" value={distribution.remark2?distribution.remark2:''}/>
-          <input id="Remark3" name="Remark3" value={distribution.remark3?distribution.remark3:''}/>
-          <input id="ReturnURL" name="ReturnURL" value={distribution.returnURL?distribution.returnURL:''} />
-          <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL?distribution.notifyURL:''}/>
-          <input id="SignInfo" name="SignInfo" value={distribution.signInfo?distribution.signInfo:''}/>
-        </form> */}
-
         <div>
           <LeftMenu param={this.props} />
           {
@@ -480,7 +471,7 @@ export default class RealName extends React.Component {
                   <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
-                  <Steps progressDot current={this._judgeAccount(safeData)} direction="vertical">
+                  <Steps progressDot direction="vertical" current={this._judgeAccount(safeData)}>
                     <Step title="第一步"
                       description={
                         <div style={{ marginBottom: 28 }}>
@@ -501,18 +492,18 @@ export default class RealName extends React.Component {
                     <Step
                       title="第二步"
                       description={
-                        <div style={{ marginBottom:28 }}>
+                        <div style={{ marginBottom: 28 }}>
                           <div className="first">
                             <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">开通乾多多资金托管账户</span>
                             <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                            {!safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
+                            {!safeData.userSecurityCenter.fThirdAccount && safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
                           </div>
                           <div >
                             <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
                           </div>
                           {
                             safeData.userSecurityCenter.fThirdAccount ?
-                              <div className="personal" style={{marginTop:0}}>
+                              <div className="personal" style={{ marginTop: 0 }}>
                                 <span style={{ color: 'black' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
                                 <div className="findPass">
                                   <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: true, showMMMChangeLoginPass: false })}>找回乾多多支付密码 </span>
@@ -540,63 +531,63 @@ export default class RealName extends React.Component {
                             <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
                             <a className="right" style={{ display: 'none' }}>设置</a>
                           </div>
-                          <div className="cardBox">
-                            {this.state.cardList.map((data, index) => {
-                              console.log('datadata', data);
-                              return (
-                                <div className="card_div" key={index}>
-                                  <div className="IDCard">
-                                    <div>
-                                      <span className="id_num">
-                                        {data.fbankcard.substring(0, 4)} **** **** {data.fbankcard.substring(data.fbankcard.length - 5, data.fbankcard.length - 1)}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  {!this.state[data.fid] ?
-                                    <a className="unbind_card" onClick={() => this.setState({ [data.fid]: true })}>解除绑定</a> :
-                                    <div className="unbind_block">
-                                      <span className="unbind_span">解绑银行卡</span>
-                                      <span className="unbind_span">请输入登录密码</span>
-                                      <Input
-                                        type={this.state[`${data.fid}hide`] ? 'text' : 'password'}
-                                        className="unbind_password"
-                                        placeholder="请输入登录密码"
-                                        onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
-                                        prefix={<Icon type="lock" />}
-                                        suffix={<Icon type="eye-o" onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
-                                      />
-                                      <Button
-                                        type="primary"
-                                        className="unbind-btn"
-                                        onClick={() => this.unbindBankCardAjax(data.fbankcard, data.fid)}
-                                        loading={this.state.unbindLoading}
-                                      >解绑</Button>
-                                    </div>
-                                  }
-                                </div>
-                              );
-                            })}
-                          </div>
-                          {this.props.accountId ? 
-                            <div className="unbind_div" >
-                            <Icon type="plus" className="icon-plus" onClick={() => this.props.history.push(BINDCARD)}/>
-                            <span className="bind_new_bank">绑定新银行卡</span>
-                            <span
-                              className="bind_new_bank"
-                              style={{ color: '#e6e6e6', fontSize: 14 }}
-                            >(只支持储蓄卡)</span>
 
-                          </div> : null}
-                          
+                          <div className="cardBox">
+                            {/* 银行卡展示 */}
+                              {this.state.cardList.map((data, index) => {
+                                console.log('datadata', data);
+                                return (
+                                  <div className="card_div" key={index}>
+                                    <div className="IDCard">
+                                      <div>
+                                        <span className="id_num">
+                                          {data.fbankcard.substring(0, 4)} **** **** {data.fbankcard.substring(data.fbankcard.length - 5, data.fbankcard.length - 1)}
+                                        </span>
+                                      </div>
+                                    </div>
+                                    {!this.state[data.fid] ?
+                                      <a className="unbind_card" onClick={() => this.setState({ [data.fid]: true })}>解除绑定</a> :
+                                      <div className="unbind_block">
+                                        <span className="unbind_span">解绑银行卡</span>
+                                        <span className="unbind_span">请输入登录密码</span>
+                                        <Input
+                                          type={this.state[`${data.fid}hide`] ? 'text' : 'password'}
+                                          className="unbind_password"
+                                          placeholder="请输入登录密码"
+                                          onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
+                                          prefix={<Icon type="lock" />}
+                                          suffix={<Icon type="eye-o" onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                                        />
+                                        <Button
+                                          type="primary"
+                                          className="unbind-btn"
+                                          onClick={() => this.unbindBankCardAjax(data.fbankcard, data.fid)}
+                                          loading={this.state.unbindLoading}
+                                        >解绑</Button>
+                                      </div>
+                                    }
+                                  </div>
+                                );
+                              })}
+                            {/* 绑定银行卡 */}
+                              {this.props.accountId ?
+                              <div className="unbind_div" >
+                                <Icon type="plus" className="icon-plus" />
+                                <span className="bind_new_bank" onClick={() => this.props.history.push(BINDCARD)} >绑定新银行卡</span>
+                                <span
+                                  className="bind_new_bank"
+                                  style={{ color: '#e6e6e6', fontSize: 14 }}
+                                >(只支持储蓄卡)</span>
+                              </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}                               
+                          </div>                          
                         </div>
                       }
                     />
                   </Steps>
                 </div>
               </div> : null}
-
-              {safeData.userSecurityCenter.fCertification ?
-                  <div div className="fr uc-rbody" style={{ marginTop: '20px',padding:'0' }}>
+              {safeData.userSecurityCenter.fThirdAccount ?
+                  <div className="fr uc-rbody" style={{ marginTop: '30px', padding: '0' }}>
                     <div className="safeCenter">
                       <div className="line">
                         <div className="block1">
@@ -613,33 +604,45 @@ export default class RealName extends React.Component {
                       </div>
                     </div>
                   </div> : null}
+          <div className="fr uc-rbody" style={{
+            marginTop: '30px', padding: 0, display: 'flex',
+            justifyContent: 'space-between'
+          }}>
+            <div className="baseInfo">
+              <Icon type="user" />
+              <h3 onClick={()=>{this.props.history.push(USER_BASIC)}}>基础资料</h3>
+              <p>完善个人资料，增强账户安全等级</p>
+              <p><span>****</span>**</p>
+            </div>
 
-              {safeData.userSecurityCenter.fCertification ?
-                  <div className="fr uc-rbody" style={{ marginTop: '30px',padding:0 , display: 'flex',
-                  justifyContent: 'space-between'}}>
-                      <div className="baseInfo">
-                        <Icon type="user" />
-                        <h3>基础资料</h3>
-                        <p>完善个人资料，增强账户安全等级</p>
-                        <p><span>****</span>**</p>
-                      </div>
-                    
-                      <div className="baseInfo">
-                        <Icon type="unlock" />
-                        <h3>修改登陆密码</h3>
-                        <p>定期更改账户密码让你的账户更安全</p>
-                        <span>2018/6/15（最新设置时间）</span>
-                      </div>
-                      <div className="baseInfo">
-                        <Icon type="mail" />
-                        <h3>变更绑定邮箱</h3>
-                        <p>绑定电子邮箱后便于接收平台各种通知</p>
-                        <p><span>还未绑定邮箱，</span><a>点击绑定</a></p>
-                      </div>
-                </div>: null}
+            <div className="baseInfo">
+              <Icon type="unlock" />
+              <h3 onClick={()=>{this.props.history.push(CHANGE_LPWD)}}>修改登陆密码</h3>
+              <p>定期更改账户密码让你的账户更安全</p>
+              <span>2018/6/15（最新设置时间）</span>
+            </div>
+            <div className="baseInfo">
+              <Icon type="mail" />
+              <h3>变更绑定邮箱</h3>
+              <p>绑定电子邮箱后便于接收平台各种通知</p>
+              <p><span>还未绑定邮箱，</span><a>点击绑定</a></p>
+            </div>
+          </div>
         </div>
-
-
+        {distribution ?
+          <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{ display: 'none' }}>
+            <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId ? distribution.moneymoremoreId : ''} />
+            <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore ? distribution.platformMoneymoremore : ''} />
+            <input id="AuthorizeTypeOpen" name="AuthorizeTypeOpen" value={distribution.authorizeTypeOpen ? distribution.authorizeTypeOpen : ''} />
+            <input id="AuthorizeTypeClose" name="AuthorizeTypeClose" value={distribution.authorizeTypeClose ? distribution.authorizeTypeClose : ''} />
+            <input id="RandomTimeStamp" name="RandomTimeStamp" value={distribution.randomTimeStamp ? distribution.randomTimeStamp : ''} />
+            <input id="Remark1" name="Remark1" value={distribution.remark1 ? distribution.remark1 : ''} />
+            <input id="Remark2" name="Remark2" value={distribution.remark2 ? distribution.remark2 : ''} />
+            <input id="Remark3" name="Remark3" value={distribution.remark3 ? distribution.remark3 : ''} />
+            <input id="ReturnURL" name="ReturnURL" value={distribution.returnURL ? distribution.returnURL : ''} />
+            <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL ? distribution.notifyURL : ''} />
+            <input id="SignInfo" name="SignInfo" value={distribution.signInfo ? distribution.signInfo : ''} />
+          </form> : null}
       </div>
 
     );
