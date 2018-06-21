@@ -146,9 +146,9 @@ class LoginInfo extends React.Component {
                         <div className="fl">
                             {/* 用户名 */}
                             <p className="t1">
-                                <span>用户名(系统默认自动成功)</span>
+                                <span>{this.props.nickName}</span>
                                 <span className="split">|</span>
-                                {this.props.nickName}  
+                                {this.props.baseData.mobile}  
                                 <a onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a> 
                             </p> 
                             <p className="uinfo" style={{position: 'relative'}}>

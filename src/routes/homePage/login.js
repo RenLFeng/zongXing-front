@@ -3,7 +3,7 @@ import '../../assets/login/index.scss';
 import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_} from '../../common/systemParam';
 import {connect} from 'dva';
 import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input} from 'antd';
-import {phoneExist, regUser, changePW, checkCode, relieveAccountAjax} from '../../services/api';
+import {phoneExist, regUser, changePW, checkCode, relieveAccountAjax, getAuthCode} from '../../services/api';
 
 
 const Step = Steps.Step;
@@ -26,13 +26,20 @@ export default class Login extends React.Component {
       authCode: '',
       password: '',
       code: '', //忘记密码时验证码
-      loginError: true
+      loginError: true, 
+      errorTime: 60
 
     };
     this.onChange = this.onChange.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
+    this.countDownErrorCode = null;
   }
  
+  componentWillUnmount() {
+    if (this.countDownErrorCode) {
+      clearInterval(this.countDownErrorCode);
+    }
+  }
 
   //修改所有input的state统一方法
   onChange(e) {
@@ -94,6 +101,8 @@ export default class Login extends React.Component {
   }
 
 
+
+
   // 解锁用户
   async relieveAccountLock() {
     if (this.state.relieveLoading) {
@@ -138,6 +147,39 @@ export default class Login extends React.Component {
     }
   }
 
+  // 用户5次错误之后 发送验证码的接口
+  async sendErrorCodeAuth() {
+    if (this.state.sendErrorCodeLoading) {
+      return;
+    }
+    const sendTime = localStorage.getItem(`${this.state.phoneNumber}errorCode`);
+    if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME_ * 1000) {
+      alert(`${AUTH_CODE_TIME_}秒内仅能获取一次验证码，请稍后重试`);
+      return;
+    }
+    this.setState({sendErrorCodeLoading: true});
+    const response = await getAuthCode(this.state.phoneNumber);
+    this.setState({sendErrorCodeLoading: false});
+    if (response.code === 0) {
+      localStorage.setItem(`${this.state.phoneNumber}errorCode`, new Date().getTime());
+      this.setState({
+        errorTime: 59
+      }, ()=> {
+        this.countDownErrorCode = setInterval(()=>{
+          if (this.state.errorTime !== 0) {
+            this.setState({ errorTime: this.state.errorTime - 1});
+          } else {
+            this.setState({ errorTime: 60 });
+            clearInterval(this.countDownErrorCode);
+          }
+        }, 1000);
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
+
   render() {
     const {  loginPhone, loginPwd} = this.state;
     return (
@@ -173,7 +215,7 @@ export default class Login extends React.Component {
               验证码
             </Col>
             <Col span={21}>
-
+            <Input type="password" value={this.state.errorAuthCode} placeholder="请输入" onChange={(e)=>this.setState({errorAuthCode: e.target.value})} maxLength={10}/>
             </Col>
           </Row>
         </Modal>

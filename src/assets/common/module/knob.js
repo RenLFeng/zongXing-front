@@ -2,7 +2,7 @@ export function knob (options) {
 
     options = $.extend({
         selector: '.circle',
-        width: 120,
+        width: 105,
         slow: true
     }, options || {});
 
@@ -55,3 +55,20 @@ function grow() {
         }
     }, 10);
 }
+
+export function knobsmall (options) {
+
+    options = $.extend({
+        selector: '.circle',
+        width: 75,
+        slow: true
+    }, options || {});
+
+    if ($.fn.knob) {
+        initKnob(options);
+    } else {
+        av.loadjs('/assets/third/jquery.knob.min.js', function () {
+            initKnob(options);
+        });
+    }
+};

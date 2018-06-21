@@ -131,7 +131,6 @@ export default class HomePage extends React.Component{
             优惠券兑换中心
             <Route path={`${match.path}/couponCenter`} component={CouponCenter}/>
             
-
             <Route path={`${match.path}/loanCollege`} component={LoanCollege}/>
             <Route path={`${match.path}/applyLoan`} component={ApplyLoan} />
             <Route path={`${match.path}/uCenter`} component={UCenter} />

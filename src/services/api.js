@@ -705,3 +705,18 @@ export async function getVoucher(params) {
   });
 }
 
+// 获取收藏项目列表（新）
+export async function getCollectionProjectNew(param) {
+  return request(`${BASE_URL}/zjb-website/projectCollection/list`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  });
+}
+
+// 获取收藏项目个数
+export async function getCollectionCount(param) {
+  return request(`${BASE_URL}/zjb-website/projectCollection/flagCount`);
+}
+
