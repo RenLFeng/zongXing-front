@@ -76,9 +76,9 @@ onShowSizeChange = (current, pageSize) => {
               <div className="fr uc-rbody"  >
                 <div style={{fontSize:18,borderBottom:'1px dashed #f0f0f0',marginBottom:40,paddingBottom:7}}>平台通知</div>       
                   {
-                      this.state.dataInfo.map((item,index) => {
+                      this.state.dataInfo.length > 0 ? this.state.dataInfo.map((item,index) => {
                          return  <Platform key={index} data={item} getOPlantNotice={()=>this.getOPlantNotices(item.fid)}/>
-                      })
+                      }) : <div style={{textAlign:'center'}}>暂无数据</div>
                   }
                   {
                        Math.ceil(this.state.total/this.state.pageSize) > 1 ?  

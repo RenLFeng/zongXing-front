@@ -381,6 +381,7 @@
     .card_div {
         margin-bottom: 20px;
         margin-right: 10px;
+        display: inline-block;
         .IDCard{
             width:279px;
             height: 159px;
@@ -427,32 +428,36 @@
             }
         }
     }
+
+    .unbind_div {
+        width: 279px;
+        height: 158px;
+        border: 1px solid #e6e6e6;
+        border-radius: 10px;
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 10px;
+        .icon-plus {
+            display: block;
+            font-size: 50px;
+            color: #d6d6d6;
+            margin-top: 30px;
+        }
+        .bind_new_bank {
+            display: block;
+            font-size: 16px;
+            text-align: center;
+        }
+    }
+    .unbind_div:hover {
+        border: 1px solid #FF7E10;
+        .icon-plus {
+            color: #FF7E10
+        }
+    }
 }
 
-.unbind_div {
-    width: 279px;
-    height: 158px;
-    border: 1px solid #e6e6e6;
-    border-radius: 10px;
-    cursor: pointer;
-    .icon-plus {
-        display: block;
-        font-size: 50px;
-        color: #d6d6d6;
-        margin-top: 30px;
-    }
-    .bind_new_bank {
-        display: block;
-        font-size: 16px;
-        text-align: center;
-    }
-}
-.unbind_div:hover {
-    border: 1px solid #FF7E10;
-    .icon-plus {
-        color: #FF7E10
-    }
-}
+
 
 .unbind{
     color:blue !important;
