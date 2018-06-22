@@ -1,7 +1,6 @@
 @import '../common/_var.scss';
 
 .logindiv1 {
-    // position: relative;
     margin: 0 auto 300px auto;
     width: 1200px;
     height: 544px;
@@ -11,12 +10,10 @@
     transform: translate(0,200px);
     transition: transform ease 0.5s;
     a.blue {
-        color: #3399FF;
+        color: #268eff;
         text-decoration: underline;
     }
     a.gray {
-        // color: #666;
-        // text-decoration: underline;
         width: 80px;
         height: 17px;
         font-family: MicrosoftYaHeiUI;
@@ -29,7 +26,7 @@
         color: #c4c4c4;
         position: absolute;
         top:14px;
-        left:350px;
+        left:341px;
     }
     a:hover {
         opacity: 0.7;
@@ -40,9 +37,7 @@
 }
 .logindiv1 .form {
     float: left;
-    padding: 0px 0 0 115px;
-  //position: relative;
-
+    padding: 0px 0 0 134px;
     .hd {
         margin-bottom: 50px;
         margin-top: 80px;
@@ -64,25 +59,28 @@
       .prompts {
         margin-top: 5px;
         color: red;
+        font-size: 13px !important;
       }
       .registration-prompts_{
-        font-size: 11px !important;
+        margin-top: 5px;
+        font-size: 13px !important;
         color: red !important;
       }
       .registration-prompts{
-        color: #868686 !important;
-        font-size: 11px !important;
+        margin-top: 5px;
+        color: #d5d5d5 !important;
+        font-size: 13px !important;
         // margin-left: 30px;
         a{
-            color: #FF9900;
+            color: #64a7ff;
             font-size: 13px;
         }
       }
     }
     .put {
         border: 1px solid #d9d9d9;
-        border-radius: 3px;
-        padding: 0 0 0 40px;
+        border-radius: 6px;
+        padding: 0 0 0 61px;
         width: 329px;
         line-height: 42px;
         height: 44px;
@@ -92,6 +90,23 @@
         &:focus {
             border-color: #FF8533;
         }
+    }
+    .put::-webkit-input-placeholder {
+        color: #e6e6e6;
+        font-size: 15px;
+    }
+        
+    .put:-moz-placeholder {
+        color:#e6e6e6;
+        font-size: 15px;
+    }
+    .put::-moz-placeholder{
+        color:#e6e6e6;
+        font-size: 15px;
+    }
+    .put:-ms-input-placeholder{
+        color:#e6e6e6;
+        font-size: 15px;
     }
     .mobile {
         background-image: url(../img/login/ic_mobile.png);
@@ -111,8 +126,8 @@
         line-height: 41px;
         height:44px;
         width: 124px;
-       border-bottom-right-radius: 3px;
-       border-top-right-radius: 3px;
+       border-bottom-right-radius: 6px;
+       border-top-right-radius: 6px;
     }
     .pwd {
         background-image: url(../img/login/ic_pwd.png);
@@ -126,6 +141,7 @@
         color: #fff;
         line-height: 42px;
         font-size: 14px;
+        border-radius: 6px;
     }
   .btns{
 
@@ -221,6 +237,8 @@
     width:603px;
     height:544px;
     display: inline-block;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     .forget{
         position: relative;
         top:-160px;
@@ -249,11 +267,10 @@
 }
 
 .safe-info{
-    margin-top: 10px;
+    margin-top: 6px;
     font-size: 13px;
-    color: #333333;
+	color: #999999;
     text-align: center;
-    vertical-align: auto;
 }
 .statistics{
     margin-top: 55px;
@@ -514,4 +531,3 @@
         z-index: 99;
     }
 }
-
