@@ -56,8 +56,9 @@ export default class Register extends React.Component {
       registerShow:true,  //校验是否显示已注册提示
       registerShow_:true,  //校验手机号是否存在时，发送验证码按钮的状态
       loginError: true,
-      regPwdErrShow: true
+      regPwdErrShow: true,
       
+      status:false,  //密码是否可见
 
     };
     this.getAuthCode = this.getAuthCode.bind(this);
@@ -278,12 +279,25 @@ export default class Register extends React.Component {
     }
   }
 
+  pwdStatus(status){
+    if(status === 'show'){
+       this.setState({
+         status:false
+       })
+    } 
+    if(status === 'hide') {
+      this.setState({
+        status:true
+      })
+    }
+  }
+
   render() {
     const {showReg, showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
        
-      <div className="logindiv1 shadow" style={{height: 495}}>
+      <div className="logindiv1"  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
         <div className="back">
                 <div className="form logf" onChange={this.onChange} style={{paddingTop:80}}>
                   <Spin tip="注册中..." spinning={this.props.submitting} >
@@ -291,17 +305,20 @@ export default class Register extends React.Component {
                       <input className="put "  value={regPhone} maxLength={20}
                             onChange={(e) => {this.setState({regPhone: e.target.value})}} name="regPhone" type="tel"
                             placeholder="请输入11位手机号码" onBlur={()=>this.checkPhoneNumber()}/>
-                            <Icon type="mobile" style={{position:'absolute',top:'10px',left:'8px',fontSize:25,color:'#D4D4D4'}}/>
-                      <p className="prompts">{this.state.regNameErr}</p>
+                           <i className="zjb zjb-shouji-copy" style={{position:'absolute',top:'4px',left:'11px',fontSize:25,color:'#d5d5d5'}}></i>
+                           <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
+                      
                       {
-                        this.state.registerShow ? <p className="registration-prompts"></p> : 
+                        this.state.registerShow ?this.state.regNameErr?
+                        <p className="prompts">{this.state.regNameErr}</p>:
+                        <p className="registration-prompts"> &nbsp;</p> : 
                         <p className="registration-prompts">该手机号已注册，<a onClick={() => this.props.history.push('./login')}>立即登录</a></p>
                        }
                      
                     </div>
                     <div className="row relative" style={{marginBottom:30}}>
                       <input className="put" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
-                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'12px'}}/>
+                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}}/>
                       <p className="prompts">{this.state.regAuthErr}</p>
                       {// 根据倒计时时间显示是否可以点击获取验证码按钮
                         this.state.registerShow_ ? 
@@ -312,10 +329,29 @@ export default class Register extends React.Component {
                       }
                     </div>
                     <div className="row" style={{marginBottom:70,position:'relative'}}>
-                      <input className="put "  value={regPwd} maxLength={15}
+                     
+                           {
+                             this.state.status ? 
+                             <div>
+                                  <input className="put "  value={regPwd} maxLength={15}
+                            name="regPwd" onChange={(e) => this.setState({regPwd: e.target.value})}
+                            placeholder="请设置登录密码" />
+                           <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
+                           <i className="zjb zjb-mimakejian" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('show')}}></i>
+                           <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
+                             </div>:
+
+                             <div>
+                               <input className="put "  value={regPwd} maxLength={15}
                             name="regPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
                             placeholder="请设置登录密码" />
-                            <Icon type="lock" style={{position:'absolute',top:'7px',left:'8px',fontSize:28,color:'#D4D4D4'}} />
+                           <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
+                           <i className="zjb zjb-htmal5icon08" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('hide')}}></i>
+                           <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
+                             </div>
+                            
+                           }
+                           
                       <p className="prompts">{this.state.regPwdErr}</p>
                       {
                         this.state.regPwdErrShow ?  <p className="registration-prompts">密码不可纯数字，区分大小写，8-15位字符</p>  : null
@@ -330,11 +366,11 @@ export default class Register extends React.Component {
                           checked={readStatus}
                           type="checkbox"
                           onChange={() => this.setState({readStatus: !readStatus})}
-                          style={{position:'absolute',top:3}}
+                          style={{position:'absolute',top:-3}}
                         />
-                        <label className="fl"  style={{ marginLeft:17,color:'#949494'}}>
+                        <label className="fl"  style={{ marginLeft:17,color:'#333333',marginTop:-7}}>
                           <i>已阅读并接受</i>
-                          <a className="blue">注册协议</a>
+                          <a className="blue" style={{textDecoration:'none'}}>注册协议</a>
                       
                         </label>
                       </p>
@@ -346,7 +382,7 @@ export default class Register extends React.Component {
                       
                     </div>
                     <p className="safe-info">
-                      <img src={require('../../assets/img/login/u30.png')} />
+                      <i className="zjb zjb-renzheng1" style={{color:'#4cd964',fontSize:14,marginRight:5}}/>
                       您的信息已使用SSL加密技术，数据传输安全
                     </p>
                   </Spin>

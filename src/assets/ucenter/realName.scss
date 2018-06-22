@@ -8,12 +8,12 @@
     .safeCenter_{
         display: inline-block;
         font-size: 20px;
+        color:#333333;
     }
     .registrationTime{
         display: inline-block;
-
         font-size: 12px;
-        color: #AEAEAE;
+        color: #999999;
         float: right;
         line-height: 25px;
         margin-top: 8px;
@@ -31,18 +31,19 @@
         display: inline-block;
         font-size: 16px;
         line-height: 28px;
+        color: #999999;
     }
     .middle{
         display: inline-block;
         font-size: 14px;
-        color: #CCCCCC;
+        color:  #e6e6e6;
         margin-left: 50px;
         line-height: 28px;
     }
     .right{
         font-size: 16px;
         float: right;
-        color:blue;
+        color:#268eff;
         line-height: 28px;
     }
 }
@@ -57,12 +58,14 @@
     .name{
         width:50px;
         display: inline-block;
-        color:black;
+        font-size: 14px;
+        color:#999999;
        
     }
     .id{
         display: inline-block;
         padding-left: 20px;
+        color:#999999
     }
     .result{
        color:#84E192;
@@ -78,7 +81,7 @@
          display: inline-block;
          margin-left: 323px;
          .a{
-            color:#0066FF;
+            color:#268eff;;
          }
          .a:hover{
              cursor: pointer;
@@ -95,9 +98,15 @@
         width:10px !important;
         height:10px !important;
     }
-    .ant-steps-item-title {
-
+    //第一步字体颜色
+    .ant-steps-item-process > .ant-steps-item-content > .ant-steps-item-title{
+        color:#ff9900
     }
+    //完成之后的字体颜色
+    .ant-steps-item-finish > .ant-steps-item-content > .ant-steps-item-title{
+        color:#ff9900
+    }
+    
     .ant-steps-vertical.ant-steps-dot .ant-steps-item-process .ant-steps-icon-dot{
         left:2px;
     }
@@ -123,32 +132,29 @@
 }
 .real_title_{
     border-bottom: 1px dashed lightgrey;
-    // font-family: '微软雅黑';
-    // font-weight: 400;
-    // font-style: normal;
-    padding-bottom: 10px;
+    padding-bottom: 2px;
     margin: 30px 20px 30px 20px;
+    color:#333333;
     .safeCenter_{
         display: inline-block;
         font-size: 20px;
     }
   }
 .card{
-    width:700px;
+    width:653px;
     height:100px;
-    border:1px solid lightgray;
-    margin:  40px auto 0 auto;
+    border:1px solid #999999;
+    margin:  85px auto 0 auto;
     position: relative;
     .id_card{
-        margin-top: 28px;
-        margin-left: 50px;
+        margin-top: 29px;
+        margin-left: 54px;
         display: inline-block;
-        width:40px;
-        height:40px;
+        width:47px;
+        height:41px;
         vertical-align: middle;
-        background: #3DB0FA;
-        color:white;
-        border-radius: 50%;
+        font-size: 25px;
+        color:#3DB0FA;
         position: relative;
         .id_Card{
           position: absolute;
@@ -166,17 +172,20 @@
     .china{
         display: inline-block;
         vertical-align: middle;
-        margin-top: 28px;
-        margin-left: 30px;
+        margin-top: 31px;
+        margin-left: 37px;
+        font-size: 16px;
+        color:#333333;
     }
     Button{
-        width:150px;
-        height:40px;
+        width:134px;
+        height:35px;
         vertical-align: middle;
-        margin-top: 28px;
+        margin-top: 33px;
         // float:right;
         position: absolute;
-        right:20px;
+        right:46px;
+        font-size: 18px;
     }
 }
 
@@ -186,6 +195,7 @@
     height: 94px;
     background-color: rgba(242, 242, 242, 1);
     position: relative;
+    margin-top: 45px;
     img{
         position: absolute;
         left: 338px;
@@ -196,14 +206,14 @@
         transform: rotateZ(180deg);  
     }
     p{
-        color:black;
+        color:#2E2E2E;
         font-size: 14px;
     }
     .p1{
         padding-top: 20px;
     }
     .p2{
-        padding-top: 10px;
+        padding-top: 20px;
     }
 }
 
@@ -217,23 +227,41 @@
     Input{
         width:300px;
         height:40px;
-        padding-left:30px;
-        margin: 30px auto 0 auto; 
+        padding-left:40px;
+        margin: 33px auto 0 auto; 
         margin-left: 465px;
     }
-    img{
+    .img1{
         position: absolute;
-        top:40px;
-        left:470px;
+        top:45px;
+        left:475px;
         z-index: 1;
+    }
+    .img2{
+        position: absolute;
+        top:35px;
+        left:475px;
+        z-index: 1;
+    }
+    .span_{
+        position: absolute;
+        top:42px;
+        left:495px;
+        z-index: 1;
+        color:#D2D2D2;
+    }
+    .span_1{
+        position: absolute;
+        top:32px;
+        left:495px;
+        z-index: 1;
+        color:#D2D2D2;
     }
   }
   .Button{
       position: absolute;
-      top:180px;
+      top:173px;
       left:465px;
-    //   margin-left: 465px;
-    //   margin-top: 40px;
       width:300px;
       height:40px;
       font-size: 16px;
@@ -243,6 +271,7 @@
       line-height: 40px;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 18px;
   }
   .Button:hover{
     background: #ff9900;
@@ -310,7 +339,7 @@
 }
 
 .top{
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .imgBox{
@@ -383,21 +412,50 @@
         margin-right: 10px;
         display: inline-block;
         .IDCard{
-            width:279px;
-            height: 159px;
+            width:287px;
+            height: 158px;
             border-radius: 10px;
             background-color: #4CC261;
+            .card_info{
+                padding-top: 24px;
+               .card_img{
+                width:48px;
+                height:48px;
+                background: #fff;
+                border-radius: 50%;
+                margin: 0 20px 0 25px;
+                display: inline-block;          
+               }
+               .card_text{
+                 display: inline-block;
+                 position: absolute;
+                 p{
+                  font-size: 14px;
+                  color: #ffffff;
+                 }
+                 span{
+                  display: block;     
+                  font-size: 12px;      
+                  margin-top: 10px;
+                  color: rgba(255, 255, 255, 0.5);
+                 }
+               }
+              }
             .id_num {
-                display: inline-block;
-                color: #fff;
-                font-size: 22px;
+                font-size: 21px;
+                color: #ffffff;
+                // margin: 30px 0 45px 28px;
+                position: relative;
+                top:18px;
+                left:24px;
                 
             }
         }
         .unbind_card {
+            font-size: 13px;
             display: inline-block;
             margin-left: 220px;
-            color:blue !important;
+            color:#268eff !important;
 
         }
         .unbind_block {
@@ -439,19 +497,23 @@
         margin-right: 10px;
         .icon-plus {
             display: block;
-            font-size: 50px;
-            color: #d6d6d6;
-            margin-top: 30px;
+            font-size: 36px;
+            color: #999999;
+            margin: 30px auto 0 120px;
         }
         .bind_new_bank {
             display: block;
             font-size: 16px;
             text-align: center;
+            color:#999999;
         }
     }
     .unbind_div:hover {
         border: 1px solid #FF7E10;
         .icon-plus {
+            color: #FF7E10
+        }
+        .bind_new_bank{
             color: #FF7E10
         }
     }
@@ -688,6 +750,32 @@
   .upload_box{
     .ant-form-item-label label{
       line-height: 90px;
+      font-weight: 400;
+      font-size: 18px;
+    }
+  }
+  .ant-form-item-children {
+      input {
+          font-size: 16px;
+          height: 35px!important;
+          width: 232px;
+      }
+      .ant-cascader-picker-show-search {
+        width: 232px;
+      }
+      textarea {
+          width: 232px;
+      }
+  }
+  .ant-radio-wrapper {
+      span {
+          font-size: 18px;
+      }
+  }
+  .upload_text{
+    .ant-form-item-label label{
+      font-weight: 400;
+      font-size: 18px;
     }
   }
   .ant-row{
@@ -748,30 +836,39 @@
     .line{
         border: none;
         padding:0;
-        height:80px;
+        height:77px;
+        position: relative;
         .block1,.block2,.block3{
             margin-top: 25px;
         }
         .block1{
-            width:29%;
+            width:212px;
+            border-right:1px solid #e6e6e6;
         }
         .block2{
             width:55%;
+            color:#e6e6e6;
+            font-size: 14px;
         }
         .block3{
+            
             Button{
                 width:135px;
                 height:35px;
-               
+               border-radius: 5px;
+               position: absolute;
+               right:0;
+               top:22px;
             }
+            
         }
     }
 }
 
 .baseInfo{
-  height:200px;
+  height:196px;
   text-align:center;
-  padding:30px 42px;
+  padding:15px 42px;
   color: #999999;
   i{
       color:#E6E6E6;
@@ -783,12 +880,20 @@
   h3{
     color: #999999;
     font-size: 18px !important;
+    cursor: pointer;
+  }
+  h3:hover{
+    color:#ff9900;
+    font-size: 18px !important;
+    cursor: pointer;
   }
   p{
       margin: 3px 0 ;
+      font-size: 12px;
   }
   span{
-      color:#ff9900
+      color:#ff9900;
+      font-size: 12px;
   }
   a{
       color:#268EFF;
@@ -828,5 +933,48 @@
         color: #FF9900;
         font-size: 60px;
         display: inline-block;
+    }
+}
+
+.hobby_list {
+    width: 232px;
+    .hobby_item {
+        display: inline-block;
+        width: 104px;
+        height: 32px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        text-align: center;
+        margin-right: 20px;
+        border-radius: 5px;
+        line-height: 32px;
+        font-size: 16px;
+        color: #666;
+    }
+    .hobby_item_choose {
+        display: inline-block;
+        width: 104px;
+        height: 32px;
+        background-color: #ff9900;
+        cursor: pointer;
+        text-align: center;
+        margin-right: 20px;
+        border-radius: 5px;
+        line-height: 32px;
+        font-size: 16px;
+        color: #fff;
+    }
+    .hobby_item:nth-child(even) {
+        margin-right: 0;
+    }
+    .hobby_item_choose:nth-child(even) {
+        margin-right: 0;
+    }
+    .hobby_item:hover {
+        display: inline-block;
+        width: 104px;
+        height: 32px;
+        background-color: #ff9900;
+        color: #fff;
     }
 }

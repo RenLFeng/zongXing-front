@@ -90,7 +90,8 @@ export default class Authentication extends React.Component {
               </div>
               <div className="card">
                 <div className="id_card">
-                  <Icon type="idcard" className="id_Card" />
+                  <img src={require('../../assets/img/card.png')}/>
+                  {/* <Icon type="idcard" className="id_Card" /> */}
                 </div>
                 <span className="china">中国大陆居民身份认证</span>
                 <Button
@@ -102,8 +103,7 @@ export default class Authentication extends React.Component {
               </div>
               <div className="card top">
                 <div className="id_card">
-                  <Icon type="idcard" className="id_Card" />
-                  <Icon type="close-circle-o" className="close" />
+                <img src={require('../../assets/img/card.png')}/>
                 </div>
                 <span className="china">港澳台居民身份认证</span>
                 <Button type="primary">我要认证</Button>
@@ -125,11 +125,13 @@ export default class Authentication extends React.Component {
                 <div className="info">
                   <div className="inp">
                     <Input placeholder="请输入真实姓名" onChange={this.updateRealName} />
-                    <img alt="真实姓名" src={require('../../assets/img/u186.png')} />
+                    <img alt="真实姓名" src={require('../../assets/img/u186.png')} className="img1"/>
+                    <span className="span_">|</span>
                   </div>
                   <div className="inp">
-                    <Input placeholder="请输入第二代身份证号码" onChange={this.updateIdcard} />
-                    <img alt="身份证id" src={require('../../assets/img/u192.png')} />
+                    <Input placeholder="请输入第二代身份证号码" onChange={this.updateIdcard} style={{marginTop:23}}/>
+                    <img alt="身份证id" src={require('../../assets/img/u192.png')}  className="img2"/>
+                    <span className="span_1">|</span>
                   </div>
       
                   <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button">立即身份认证</span>

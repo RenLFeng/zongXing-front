@@ -4,10 +4,10 @@ import { Link } from 'dva/router';
 import { Form, Input, Button, Select, Radio, DatePicker, Cascader, Spin,Checkbox,Row, Col,Upload, Icon, message } from 'antd';
 import moment from 'moment';
 import { connect } from 'dva';
-import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD, NAME_REG_, QQ_REG, WeChat_REG, ZHUZHI_REG, HOBBY_REG} from '../../common/systemParam';
+import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD, NAME_REG_, QQ_REG, WeChat_REG, ZHUZHI_REG, HOBBY_REG, IMG_BASE_URL} from '../../common/systemParam';
 import {city} from '../../common/cityData';
 import {REALNAME_AUTHENTICATION} from '../../common/pagePath';
-
+import UploadSingle from '../../components/Account/ImgUpload';
 import { getJudgeUserName,getUserBaseData,saveUserBase } from '../../services/api';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
@@ -48,6 +48,12 @@ class UserBaseFormInput extends React.Component {
       }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.data = {
+      className: "ant-upload",
+      type: "images/",
+      divClassName: "upload-div",
+      baseUrl: IMG_BASE_URL
+    };
   }
 
   componentDidMount() {
@@ -74,7 +80,7 @@ class UserBaseFormInput extends React.Component {
           fid:base.fid,
           userBase: {
             ...base,
-            fhobby: base.fhobby?JSON.parse(base.fhobby):[]
+            // fhobby: base.fhobby?JSON.parse(base.fhobby):[]
           }
         });
       }
@@ -95,6 +101,7 @@ class UserBaseFormInput extends React.Component {
     this.props.form.validateFieldsAndScroll(async(err, values) => {
       if (!err) {
         // 数据格式转换 cityCode
+        console.log(values)
         let fCityCode = '';
         if (values.fCityCode && values.fCityCode.length > 0) {
           fCityCode = values.fCityCode[values.fCityCode.length - 1];
@@ -103,7 +110,7 @@ class UserBaseFormInput extends React.Component {
         const userBase = {
           user:{
             fid:this.state.fid,
-            fheadPic:values.fheadPic?values.fheadPic:""
+            fheadPic:values.fhead_pic?values.fhead_pic:''
           },
           userInfo: {
             fMarital: values.fMarital * 1,
@@ -114,7 +121,7 @@ class UserBaseFormInput extends React.Component {
             fGender: values.fGender,
             fCityCode,
             fJob: values.fJob,
-            fHobby: JSON.stringify(values.fHobby)
+            fHobby: ''
           }
         };
         const response = await saveUserBase(userBase);
@@ -152,27 +159,22 @@ class UserBaseFormInput extends React.Component {
             >
             {getFieldDecorator('fhead_pic', {
               initialValue: userBase.fhead_pic?userBase.fhead_pic:null
-            })(<Upload name="files" action="/upload" listType="picture"
-              >
-              <Button type="ghost">
-                <Icon type="upload" /> 点击上传
-              </Button>
-            </Upload>)}
+            })(<UploadSingle {...this.data} prefix={'personal/'} tipText="点击上传"/>)}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="性别"
+            label="性别" className="upload_text"
             >
             {getFieldDecorator('fGender', {
               initialValue: userBase.fgender?userBase.fgender: '1'
             })(<Radio.Group >
-              <Radio value='1'>男</Radio>
+              <Radio value='1' >男</Radio>
               <Radio value='2'>女</Radio>
             </Radio.Group>)}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="婚否"
+            label="婚否" className="upload_text"
             >
             {getFieldDecorator('fMarital', {
               initialValue: userBase.fmarital?userBase.fmarital+'':'1'
@@ -183,7 +185,7 @@ class UserBaseFormInput extends React.Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="学历"
+            label="学历" className="upload_text"
             >
             {getFieldDecorator('fDeucation', {
               initialValue: userBase.fdeucation?userBase.fdeucation:'',
@@ -196,7 +198,7 @@ class UserBaseFormInput extends React.Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="微信号"
+            label="微信号" className="upload_text"
             >
             {getFieldDecorator('fweichat', {
               rules:[{pattern: WeChat_REG, message:'请输入合法的微信号'}],
@@ -205,7 +207,7 @@ class UserBaseFormInput extends React.Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="QQ号"
+            label="QQ号" className="upload_text"
             >
             {getFieldDecorator('fQQ', {
               rules:[
@@ -217,7 +219,7 @@ class UserBaseFormInput extends React.Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="工作"
+            label="工作" className="upload_text"
             >
             {getFieldDecorator('fJob', {
               rules:[{pattern: HOBBY_REG, message: '请输入合法的内容'}],
@@ -226,7 +228,7 @@ class UserBaseFormInput extends React.Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="所在城市"
+            label="所在城市" className="upload_text"
             >
             {getFieldDecorator('fCityCode', {
               initialValue: userBase.fcity_code ? userBase.fcity_code[0]==='0'&& userBase.fcity_code[1]===','?userBase.fcity_code.substring(2, userBase.fcity_code.length).split(','):userBase.fcity_code.split(','): null,
@@ -236,7 +238,7 @@ class UserBaseFormInput extends React.Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="家庭住址"
+            label="家庭住址" className="upload_text"
             >
             {getFieldDecorator('fAddress', {
               rules:[{pattern: ZHUZHI_REG, message:'请输入合法的家庭住址信息' }],
@@ -245,18 +247,18 @@ class UserBaseFormInput extends React.Component {
           </FormItem>
         <FormItem
           {...formItemLayout}
-          label="兴趣爱好"
+          label="兴趣爱好" className="upload_text"
         >
           {getFieldDecorator('fHobby', {
             initialValue: userBase.fhobby?userBase.fhobby : [],
           })(
-            <CheckboxGroup options={plainOptions} />
+            <HobbyList />
           )}
         </FormItem>
 
         <FormItem {...btnLayout} className="ant_submit">
           <Button
-            style={{width: '200px'}}
+            style={{width: '230px', marginLeft: -100,fontSize: 16}}
             type="primary" htmlType="submit" loading={this.props.param.loading}>提交</Button>
         </FormItem>
       </Form>
@@ -283,7 +285,7 @@ export default class UserBasic extends React.Component {
           <Spin spinning={this.props.loading} tip="请稍后" size="large">
             <div className="real_title_">
               <span className="safeCenter_">实名认证</span>
-              <span>&gt; 基础资料</span>
+              <span style={{fontSize: 16}}> &gt; 基础资料</span>
             </div>
             <UserBaseForm param={this.props}/>
           </Spin>
@@ -291,5 +293,46 @@ export default class UserBasic extends React.Component {
       </div>
 
     );
+  }
+}
+
+class HobbyList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hobbyList: [
+        {id: 1, name: '游泳'},
+        {id: 2, name: '健身'}
+      ]
+    }
+  }
+  handleClick(id, status) {
+    for (let obj of this.state.hobbyList) {
+      if (obj.id === id) {
+        obj.status = !status;
+        break;
+      }
+    }
+    this.props.onChange(this.state.hobbyList);
+  }
+  componentWillReceiveProps(nextProps) {
+    if ('value' in nextProps && this.props.hobbyList !== nextProps.hobbyList) {
+      this.setState({hobbyList: nextProps.hobbyList});
+    }
+  }
+  render() {
+    return (
+      <div className="hobby_list">
+        {
+          this.state.hobbyList.map((data)=> {
+            return (
+              <span onClick={()=>this.handleClick(data.id, data.status)} className={data.status?'hobby_item_choose':'hobby_item'}>
+                {data.name}
+              </span>
+            )
+          })
+        }
+      </div>
+    )
   }
 }
