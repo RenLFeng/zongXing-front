@@ -100,8 +100,9 @@
   width:343px;
   height:189px;
   border: solid 1px #e6e6e6;
-  margin-top: 30px;
   border-radius: 10px;
+  display: inline-block;
+  cursor: pointer;
   i{
     font-size: 46px;
     color: #999999;
@@ -116,6 +117,28 @@
     font-size: 16px;
     color: #e6e6e6;
     text-align: center;
+  }
+}
+.zjb-mima2-input::-webkit-input-placeholder { /* WebKit browsers */
+  color:    #BFBFBF;
+}
+.zjb-mima2-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:    #BFBFBF;
+}
+.zjb-mima2-input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:    #BFBFBF;
+}
+.zjb-mima2-input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color:    #BFBFBF;
+}
+
+.card_add:hover {
+  border: solid 1px #ff9900;
+  .add{
+    color: #ff9900;
+  }
+  .pluc {
+    color: #ff9900;
   }
 }
 

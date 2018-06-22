@@ -217,27 +217,27 @@ class LoginInfo extends React.Component {
                                 </div>
                                      
                             {/* <span className="text1" style={[{verticalAlign: 'middle',height:25,display:'inline-block'},this.state.dataInfo.length > 1 ? {marginTop:'-8px'}:{marginTop:'0px'}]}>系统消息：</span>    
-                            {
-                                this.state.dataInfo.length > 1 ? 
-                                <div id="marquee4" style={{width:400,height:25,overflow:'hidden',display:'inline-block'}}>
-                                    <ul>
-                                    {
-                                        this.state.dataInfo.map((data,index)=>{
-                                            return(
-                                                <li key={index} style={{float:'left', width:380, padding:' 5px 10px',color:'#7D7D7D'}}>[{moment(data.fpublishTime).format('M-D')}]<a onClick={()=>this.props.history.push(Path.SITE_NOTICE)} style={{color:'#7D7D7D'}}>{data.ftitle} &gt; </a></li>
-                                            )
-                                        })
-                                    }
-                                    </ul>
-                                </div> : <span className="text2" style={{height:25}}>[{moment(this.state.dataInfo.fpublishTime).format('M-D')}]{this.state.dataInfo.ftitle}</span> 
-                            }
-                        */}
+                                {
+                                    this.state.dataInfo.length > 1 ? 
+                                    <div id="marquee4" style={{width:400,height:25,overflow:'hidden',display:'inline-block'}}>
+                                        <ul>
+                                        {
+                                            this.state.dataInfo.map((data,index)=>{
+                                                return(
+                                                    <li key={index} style={{float:'left', width:380, padding:' 5px 10px',color:'#7D7D7D'}}>[{moment(data.fpublishTime).format('M-D')}]<a onClick={()=>this.props.history.push(Path.SITE_NOTICE)} style={{color:'#7D7D7D'}}>{data.ftitle} &gt; </a></li>
+                                                )
+                                            })
+                                        }
+                                        </ul>
+                                    </div> : <span className="text2" style={{height:25}}>[{moment(this.state.dataInfo.fpublishTime).format('M-D')}]{this.state.dataInfo.ftitle}</span> 
+                                }
+                            */}
 
                             { baseData.userSecurityCenter.fThirdAccount ?
-                                <Button className="buttonl" onClick={()=>this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
+                                <Button className="buttonl" style={{width: '136px'}} onClick={()=>this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
                             }
                             { baseData.userSecurityCenter.fThirdAccount ?
-                                <Button type="primary" className="buttonl" onClick={()=>this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null 
+                                <Button type="primary" className="buttonl" style={{width: '136px'}} onClick={()=>this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null 
                             }
                     </div> 
                 </div>:''

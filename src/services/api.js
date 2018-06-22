@@ -100,8 +100,6 @@ export async function saveUserBase(params) {
   });
 }
 
-
-
 // 获取用户基础信息的接口
 export async function getUserBaseData() {
   return request(`${BASE_URL}/zjb-website/userInfo/findOne`);
