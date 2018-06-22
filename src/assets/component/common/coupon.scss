@@ -2,6 +2,7 @@
 .cp-coupon-content{
     display: inline-block;
     margin-bottom: 10px;
+    vertical-align: top;
     &>p{
         &>.project-title{
             font-size: 14px;
@@ -109,6 +110,12 @@
         margin-top: 9px;
         Button{
             margin-left: 10px;
+            border:1px solid #f90;
+            color: #f90;
+            border-radius: 5px;
+            &:hover{
+                opacity: .7;
+            }
         }
     }
     &>.doing-panle{
