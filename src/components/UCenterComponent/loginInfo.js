@@ -145,7 +145,7 @@ class LoginInfo extends React.Component {
                 //      let  h = $('#news_li li').length * 19; //19为每个li的高度
                 //      let z;
                 //      setTimeout(b,3000);//滚动间隔时间 现在是3秒
-                //  })           
+         
             })
         } else{
             response.msg && message.error( response.msg)
@@ -200,6 +200,7 @@ class LoginInfo extends React.Component {
                     </div>
                     <div className="uc-message">  
 
+ 
                                 {/* <div id="box">
                                     <div id="t_news">
                                         <b>最新播报：</b>
@@ -212,8 +213,10 @@ class LoginInfo extends React.Component {
                                         </ul>
                                         <ul id="swap"></ul>
                                     </div>
+
                                 </div> */}
                                      
+                            
                             <span className="text1" style={[{verticalAlign: 'middle',height:25,display:'inline-block'},this.state.dataInfo.length > 1 ? {marginTop:'-8px'}:{marginTop:'0px'}]}>系统消息：</span>    
                             {
                                 this.state.dataInfo.length > 1 ? 
@@ -232,10 +235,12 @@ class LoginInfo extends React.Component {
                        
 
                             { baseData.userSecurityCenter.fThirdAccount ?
-                                <Button className="buttonl" onClick={()=>this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
+
+                                <Button className="buttonl" style={{width: '136px'}} onClick={()=>this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
                             }
                             { baseData.userSecurityCenter.fThirdAccount ?
-                                <Button type="primary" className="buttonl" onClick={()=>this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null 
+
+                                <Button type="primary" className="buttonl" style={{width: '136px'}} onClick={()=>this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null 
                             }
                     </div> 
                 </div>:''

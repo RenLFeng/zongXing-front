@@ -699,6 +699,32 @@
   .upload_box{
     .ant-form-item-label label{
       line-height: 90px;
+      font-weight: 400;
+      font-size: 18px;
+    }
+  }
+  .ant-form-item-children {
+      input {
+          font-size: 16px;
+          height: 35px!important;
+          width: 232px;
+      }
+      .ant-cascader-picker-show-search {
+        width: 232px;
+      }
+      textarea {
+          width: 232px;
+      }
+  }
+  .ant-radio-wrapper {
+      span {
+          font-size: 18px;
+      }
+  }
+  .upload_text{
+    .ant-form-item-label label{
+      font-weight: 400;
+      font-size: 18px;
     }
   }
   .ant-row{
@@ -845,5 +871,48 @@
         color: #FF9900;
         font-size: 60px;
         display: inline-block;
+    }
+}
+
+.hobby_list {
+    width: 232px;
+    .hobby_item {
+        display: inline-block;
+        width: 104px;
+        height: 32px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        text-align: center;
+        margin-right: 20px;
+        border-radius: 5px;
+        line-height: 32px;
+        font-size: 16px;
+        color: #666;
+    }
+    .hobby_item_choose {
+        display: inline-block;
+        width: 104px;
+        height: 32px;
+        background-color: #ff9900;
+        cursor: pointer;
+        text-align: center;
+        margin-right: 20px;
+        border-radius: 5px;
+        line-height: 32px;
+        font-size: 16px;
+        color: #fff;
+    }
+    .hobby_item:nth-child(even) {
+        margin-right: 0;
+    }
+    .hobby_item_choose:nth-child(even) {
+        margin-right: 0;
+    }
+    .hobby_item:hover {
+        display: inline-block;
+        width: 104px;
+        height: 32px;
+        background-color: #ff9900;
+        color: #fff;
     }
 }
