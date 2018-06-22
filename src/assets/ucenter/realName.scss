@@ -389,14 +389,42 @@
         margin-right: 10px;
         display: inline-block;
         .IDCard{
-            width:279px;
-            height: 159px;
+            width:287px;
+            height: 158px;
             border-radius: 10px;
             background-color: #4CC261;
+            .card_info{
+                padding-top: 24px;
+               .card_img{
+                width:48px;
+                height:48px;
+                background: #fff;
+                border-radius: 50%;
+                margin: 0 20px 0 25px;
+                display: inline-block;          
+               }
+               .card_text{
+                 display: inline-block;
+                 position: absolute;
+                 p{
+                  font-size: 14px;
+                  color: #ffffff;
+                 }
+                 span{
+                  display: block;     
+                  font-size: 12px;      
+                  margin-top: 10px;
+                  color: rgba(255, 255, 255, 0.5);
+                 }
+               }
+              }
             .id_num {
-                display: inline-block;
-                color: #fff;
-                font-size: 22px;
+                font-size: 21px;
+                color: #ffffff;
+                // margin: 30px 0 45px 28px;
+                position: relative;
+                top:18px;
+                left:24px;
                 
             }
         }
@@ -811,7 +839,7 @@
 .baseInfo{
   height:196px;
   text-align:center;
-  padding:30px 42px;
+  padding:15px 42px;
   color: #999999;
   i{
       color:#E6E6E6;
@@ -822,6 +850,11 @@
   }
   h3{
     color: #999999;
+    font-size: 18px !important;
+    cursor: pointer;
+  }
+  h3:hover{
+    color:#ff9900;
     font-size: 18px !important;
     cursor: pointer;
   }

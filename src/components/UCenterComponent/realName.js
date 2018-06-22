@@ -543,6 +543,13 @@ export default class RealName extends React.Component {
                                   <div className="card_div" key={index}>
                                     <div className="IDCard">
                                       <div>
+                                      <div className="card_info">
+                                          <div className="card_img"></div>
+                                          <div className="card_text">
+                                            <p>这是卡名称</p>
+                                            <span>储蓄卡</span>
+                                          </div>
+                                        </div>
                                         <span className="id_num">
                                           {data.fbankcard.substring(0, 4)} **** **** {data.fbankcard.substring(data.fbankcard.length - 5, data.fbankcard.length - 1)}
                                         </span>
