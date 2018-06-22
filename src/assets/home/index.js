@@ -9,9 +9,72 @@ export function startAnimate() {
 }
 
 function initPage() {
-
-  new TextSlider($('.home-banner .t1'));
-
+  let speed=1200;
+  let page=0;
+  let index=0;
+  let time=null;
+  let istrue=true;
+  showText1();
+  function showText1(){
+    addClas();
+    if(istrue){
+      index=0;
+    }else{
+      index=-1;
+    }
+    time=setInterval(function(){
+      index++;
+      move(index);
+      if(index==3 && page==0){
+        page=1;
+        index=0;
+        clearInterval(time);
+        time=null;
+        setTimeout(showText2,3000);
+      }
+    },speed)
+  }
+  function showText2(){
+    addClas();
+    time=setInterval(function(){
+      move(index);
+      index++;
+      if(index==3 && page==1){
+        page=2;
+        index=0;
+        clearInterval(time);
+        time=null;
+        setTimeout(function(){
+          $(".home-banner .w >p.item span").removeClass("act");
+          showText3();
+        },3000);
+      }
+    },speed)
+  }
+  function showText3(){
+    addClas();
+    time=setInterval(function(){
+      move(index);
+      index++;
+      if(index==3 && page==2){
+        page=0;
+        index=0;
+        clearInterval(time);
+        time=null;
+        istrue=false;
+        setTimeout(function(){
+          $(".home-banner .w >p.item span").removeClass("act");
+          showText1();
+        },3000);
+      }
+    },speed)
+  }
+  function move(index){
+    $(".home-banner .w p.act span").eq(index).addClass("act");
+  }
+  function addClas(){
+    $(".home-banner .w >p.item").eq(page).addClass("act").siblings().removeClass("act");
+  }
 }
 
 function bindEvent() {
@@ -20,49 +83,3 @@ function bindEvent() {
   });
 }
 
-class TextSlider {
-  constructor(arr){
-    this.arr = arr;
-    this.init();
-  }
-  init(){
-    let _this = this;
-
-    let i0 = this.arr.eq(0).find('i');
-    let i1 = _this.arr.eq(1).find('i');
-    let i2 = _this.arr.eq(2).find('i');
-
-    _this.first(i0);
-    setTimeout(function(){
-      i1.addClass('show');
-      setTimeout(function(){
-        i1.removeClass('show');
-      },4000);
-    }, 12000);
-    setTimeout(function(){
-      i2.addClass('show');
-      setTimeout(function(){
-        i2.removeClass('show');
-      },4000);
-      setTimeout(function(){
-        _this.init();
-      },7000);
-    }, 19000);
-  }
-  first(ii){
-    ii.eq(0).addClass('show');
-    setTimeout(function(){
-      ii.eq(1).addClass('show');
-    },2000);
-    setTimeout(function(){
-      ii.eq(2).addClass('show');
-    },4000);
-    setTimeout(function(){
-      ii.parent().addClass('hid');
-      ii.removeClass('show');
-    }, 8000);
-    setTimeout(function(){
-      ii.parent().removeClass('hid');
-    },10000);
-  }
-}

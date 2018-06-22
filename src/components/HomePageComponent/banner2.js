@@ -21,6 +21,7 @@ export default class Banner extends React.Component {
         show: true
       });
     }, 100)
+
   }
   jumpPage() {
     if (this.props.login) {
@@ -34,7 +35,7 @@ export default class Banner extends React.Component {
   render() {
     const {systemData} = this.props;
     return (
-      <div className="section home-banner">
+      <div className="section home-banner g">
         <video autoPlay="autoplay" loop="loop" preload="metadata" >
           <source src="https://n1video.hjfile.cn/zhuanti/2018/02/05/5b543a2fc89d1f464e152dc4015eea50.webm" type="video/webm"/>
           <source src="https://n1video.hjfile.cn/zhuanti/2018/02/05/5f381bab717a30c3c91f9dfae6d8334e.mp4" type="video/mp4"/>
@@ -51,16 +52,25 @@ export default class Banner extends React.Component {
         {/*</video>*/}
         <div className="masker"></div>
         <div className="w">
-          <p className="t1" style={{display: `${this.state.show?'block':'none'}`}}>
-            <i className="h">小微企业</i><i>能<span className="h">精准营销</span></i><i>的<span className="h">借贷平台</span></i>
+          <p className="item act" style={{display: `${this.state.show?'block':'none'}`}}>
+            <span className="h act">小微企业</span>&nbsp;
+            <span className="h"><i className="f">能</i>精准营销</span>&nbsp;
+            <span className="h"><i className="f">的</i>借贷平台</span>
           </p>
-          <p className="t1 hid" style={{display: `${this.state.show?'block':'none'}`}}>
-            <i>个人可以直接投资中国实体经济</i>
+          <p className="item" style={{display: `${this.state.show?'block':'none'}`}}>
+            <span className="h"><i className="f">个人可以</i></span>&nbsp;
+            <span className="h">直接投资</span>&nbsp;
+            <span className="h"><i className="f">中国</i>实体经济</span>
           </p>
-          <p className="t1 hid" style={{display: `${this.state.show?'block':'none'}`}}>
-            <i>通过帮助小微企业成功，获得丰厚回报</i>
+          <p className="item" style={{display: `${this.state.show?'block':'none'}`}}>
+            <span className="h"><i className="f">通过</i>帮助小微企业</span>&nbsp;
+            <span className="h"><i className="f">成功获得</i></span>&nbsp;
+            <span className="h"><i className="f"></i>丰厚回报</span>
           </p>
-          <p className="t2"><a className="btn" onClick={()=>this.jumpPage()}>我要投资</a></p>
+          <p className="t2" style={{display: `${this.state.show?'block':'none'}`}}>
+            <a className="btn finance" onClick={()=>this.jumpPage()}>我要借款</a>
+            <a className="btn invest" onClick={()=>this.jumpPage()}>我要投资</a>
+          </p>
         </div>
       </div>
     );

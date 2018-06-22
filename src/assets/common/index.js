@@ -43,7 +43,6 @@ av.getWeek = function (datestr) {
     }
 }());
 $(function(){
-
     $('body').on('click', '[data-href]', function (event) {
         window.location.href = $(this).attr('data-href');
         event.preventDefault();

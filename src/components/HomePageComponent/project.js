@@ -37,7 +37,7 @@ export default class Project extends React.Component {
           <p className="tit-line"><i>LATEST BUSSINESS LOANS</i></p>
           <p className="f18 c6">点击进入项目详情，可以收藏和分享</p>
         </div>
-        <div className="w box6 clearfix">
+        <div className="w box6 clearfix g">
           {
             this.props.homeProject.map((data) => {
               let dateCode = moment(data.fCreateTime).format('YYYY') + moment(data.fCreateTime).format('MM');
@@ -52,6 +52,7 @@ export default class Project extends React.Component {
                   <i className="botic botic1">年化利率<em>{data.fRateLast}%</em></i>
                   <i className="botic botic2">剩余时间<em>{conversionTime(data.fRemainingSecond)}</em></i>
                   <i className="level">{data.fLeveName}</i>
+                  <span className="collection">收藏</span>
                 </div>
               );
             })

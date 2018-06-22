@@ -166,24 +166,24 @@ class LoanInfo extends React.Component {
 				<div className='li-title'>
 					{
 						this.state.data.projectFlag===this.state.fstate.ckz?
-						<spna className='state ckz'>筹款中</spna> :null
+						<span className='state ckz'>筹款中</span> :null
 					}
 					{
 						this.state.data.projectFlag===this.state.fstate.dfk?
-						<spna className='state dfk'>待放款</spna> :null
+						<span className='state dfk'>待放款</span> :null
 					}
 					{
 						this.state.data.projectFlag===this.state.fstate.hkz||
 						this.state.data.projectFlag===this.state.fstate.hkyc?
-						<spna className='state hkz'>回款中</spna> :null
+						<span className='state hkz'>回款中</span> :null
 					}
 					{
 						this.state.data.projectFlag===this.state.fstate.yjq?
-						<spna className='state yjq'>已结清</spna> :null
+						<span className='state yjq'>已结清</span> :null
 					}
 					{
 						this.state.data.projectFlag===this.state.fstate.ylb?
-						<spna className='state ylb'>已流标</spna> :null
+						<span className='state ylb'>已流标</span> :null
 					} 
 					<a className='pname'  title='进入项目详情页面' onClick={this.props.handllerMXClick?this.props.handllerMXClick.bind(this,this.state.data.projectId,this.state.data):()=>{alert('请绑定handllerMXClick事件，跳转到项目详细界面！');}}>{this.state.data.projectName||''} 
 						{

@@ -11,10 +11,13 @@
     .a1 {
         font-size: 22px;
         color: #fff;
-        padding: 0 16px;
+        padding: 0 26px;
         &:hover {
             color: #ffc;
         }
+    }
+    a.project,a.howLoan,a.howInvest,a.companyDiscount,a.loanCollege{
+      color:#f90;
     }
     .btn {
         text-align: center;

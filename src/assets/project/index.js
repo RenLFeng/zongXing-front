@@ -13,7 +13,7 @@ function initPage() {
     });
     knob({
         selector: '.sec2 .circle',
-        width: 86
+        width: 74
     });
 }
 
