@@ -44,7 +44,7 @@ export default class EnterprisePresentation extends React.Component {
       // accountId:this.props.location.state ? this.props.location.state.account: '',
       accountId: '',
       bankCodes: [],   //银行列表
-      bankcardInfos: [],   //银行信息
+      bankcardInfos: [{fbankcard: '323156456456456'}, {fbankcard: '323156456456456'} , {fbankcard: '323156456456456'}],   //银行信息
       provinces: [],   //省份列表
       withdrawals: {},  //提交表单后返回的数据
       loading: false,
@@ -74,7 +74,7 @@ export default class EnterprisePresentation extends React.Component {
       this.props.history.push('/index/uCenter/realName');
       return;
     }
-    this.getCardInformation(this.props.accountId); 
+    // this.getCardInformation(this.props.accountId); 
   }
 
   //获取银行卡
