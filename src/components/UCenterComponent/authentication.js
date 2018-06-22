@@ -90,7 +90,8 @@ export default class Authentication extends React.Component {
               </div>
               <div className="card">
                 <div className="id_card">
-                  <Icon type="idcard" className="id_Card" />
+                  <img src={require('../../assets/img/card.png')}/>
+                  {/* <Icon type="idcard" className="id_Card" /> */}
                 </div>
                 <span className="china">中国大陆居民身份认证</span>
                 <Button
@@ -102,8 +103,7 @@ export default class Authentication extends React.Component {
               </div>
               <div className="card top">
                 <div className="id_card">
-                  <Icon type="idcard" className="id_Card" />
-                  <Icon type="close-circle-o" className="close" />
+                <img src={require('../../assets/img/card.png')}/>
                 </div>
                 <span className="china">港澳台居民身份认证</span>
                 <Button type="primary">我要认证</Button>

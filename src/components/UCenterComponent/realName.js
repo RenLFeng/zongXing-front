@@ -474,14 +474,15 @@ export default class RealName extends React.Component {
                   <Steps progressDot direction="vertical" current={this._judgeAccount(safeData)}>
                     <Step title="第一步"
                       description={
-                        <div style={{ marginBottom: 28 }}>
+                        <div style={{ marginBottom: 23 }}>
                           <div className="first">
-                            <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">身份认证</span>
+                            <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
+                            <span className="left">身份认证</span>
                             <span className="middle">用于提升账户安全性，认证后不能修改</span>
                             {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
                           </div>
                           {safeData.userSecurityCenter.fCertification ?
-                            <div className="personal">
+                            <div className="personal" style={{background:'#f9f9f9'}}>
                               <span className="name">{safeData.fRealName}&nbsp;|</span>
                               <span className="id">{safeData.fIdcardNo}</span>
                               <span className="result" >认证通过</span>
@@ -492,19 +493,20 @@ export default class RealName extends React.Component {
                     <Step
                       title="第二步"
                       description={
-                        <div style={{ marginBottom: 28 }}>
+                        <div style={{ marginBottom: 23 }}>
                           <div className="first">
-                            <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">开通乾多多资金托管账户</span>
+                            <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
+                            <span className="left">开通乾多多资金托管账户</span>
                             <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
                             {!safeData.userSecurityCenter.fThirdAccount && safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
                           </div>
-                          <div >
+                          <div style={{marginTop:9,marginBottom:5}}>
                             <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
                           </div>
                           {
                             safeData.userSecurityCenter.fThirdAccount ?
-                              <div className="personal" style={{ marginTop: 0 }}>
-                                <span style={{ color: 'black' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
+                              <div className="personal" style={{ marginTop: 0,background:'#f9f9f9'}}>
+                                <span style={{ color: 'black',color:'#999999' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
                                 <div className="findPass">
                                   <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: true, showMMMChangeLoginPass: false })}>找回乾多多支付密码 </span>
                                   <span className="line" >|</span>
@@ -525,9 +527,10 @@ export default class RealName extends React.Component {
                       } />
                     <Step
                       title="第三步" description={
-                        <div style={{ marginBottom: 28 }}>
+                        <div style={{ marginBottom: -12 }}>
                           <div className="first">
-                            <span style={{ color: 'red', fontSize: '28px', lineHeight: '28px', position: 'absolute', left: '30px', top: '39px' }}>*</span> <span className="left">我的银行卡</span>
+                            <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
+                            <span className="left">我的银行卡</span>
                             <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
                             <a className="right" style={{ display: 'none' }}>设置</a>
                           </div>
@@ -571,12 +574,12 @@ export default class RealName extends React.Component {
                               })}
                             {/* 绑定银行卡 */}
                               {this.props.accountId ?
-                              <div className="unbind_div" >
-                                <Icon type="plus" className="icon-plus" />
-                                <span className="bind_new_bank" onClick={() => this.props.history.push(BINDCARD)} >绑定新银行卡</span>
+                              <div className="unbind_div" onClick={() => this.props.history.push(BINDCARD)} >
+                                <i className="zjb zjb-add icon-plus"></i>
+                                <span className="bind_new_bank" >绑定新银行卡</span>
                                 <span
                                   className="bind_new_bank"
-                                  style={{ color: '#e6e6e6', fontSize: 14 }}
+                                  style={{ color: '#e6e6e6', fontSize: 14 ,color:'#e6e6e6'}}
                                 >(只支持储蓄卡)</span>
                               </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}                               
                           </div>                          
@@ -591,13 +594,9 @@ export default class RealName extends React.Component {
                     <div className="safeCenter">
                       <div className="line">
                         <div className="block1">
-                          {
-                            status.indexOf('3') !== -1 ? <Icon type="check" className="i1" /> : <Icon type="warning" className="i2" />
-                          }
-                          <span className="word">二次分配授权</span>
-                          {
-                            status.indexOf('3') !== -1 ? <span className="icon">V</span> : <span className="icon1">V</span>
-                          }
+                         <i className="zjb zjb-duihao" style={{color:'#4cc261',fontSize:27,marginRight:10,verticalAlign:'middle',lineHeight:'20px',position:'relative',top:-2}}></i> 
+                          <span className="word" style={{lineHeight:'20px'}}>二次分配授权</span>
+                          <i className="zjb zjb-renzheng " style={{fontSize:27,color:'#ffcb15',marginRight:5,verticalAlign:'middle',lineHeight:'20px',position:'relative',top:-3,left:1}}></i> 
                         </div>
                         <div className="block2">{status.indexOf('3') !== -1 ? '您已授权二次分配' : '您还未授权二次分配，建议您尽快授权'}</div>
                         <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)}>立即启用</Button>}</div>
@@ -609,20 +608,20 @@ export default class RealName extends React.Component {
             justifyContent: 'space-between'
           }}>
             <div className="baseInfo">
-              <Icon type="user" />
+              <i className="zjb zjb-moban"></i>
               <h3 onClick={()=>{this.props.history.push(USER_BASIC)}}>基础资料</h3>
               <p>完善个人资料，增强账户安全等级</p>
-              <p><span>****</span>**</p>
+              <p><span>****</span>*</p>
             </div>
 
             <div className="baseInfo">
-              <Icon type="unlock" />
+            <i className="zjb zjb-mima1"></i>
               <h3 onClick={()=>{this.props.history.push(CHANGE_LPWD)}}>修改登陆密码</h3>
               <p>定期更改账户密码让你的账户更安全</p>
               <span>2018/6/15（最新设置时间）</span>
             </div>
             <div className="baseInfo">
-              <Icon type="mail" />
+              <i className="zjb zjb-youxiang"></i>
               <h3>变更绑定邮箱</h3>
               <p>绑定电子邮箱后便于接收平台各种通知</p>
               <p><span>还未绑定邮箱，</span><a>点击绑定</a></p>

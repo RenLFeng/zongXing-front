@@ -25,7 +25,7 @@ class LoginInfo extends React.Component {
 
  
     componentDidMount(){
-        this.getNotice();
+        // this.getNotice();
     }
 
     componentDidUpdate() {
@@ -121,9 +121,7 @@ class LoginInfo extends React.Component {
     }
 
     async getNotice(){
-        console.log(111)
         const response = await getSiteNotice(this.state.pageCurrent,this.state.pageSize);
-        console.log('站内消息',response)
         if(response.code === 0){
             this.setState({
                 dataInfo:response.data.notices,

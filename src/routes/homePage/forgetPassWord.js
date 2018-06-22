@@ -276,8 +276,8 @@ export default class ForgetPassWord extends React.Component {
   render() {
     const { showAuthCode, countDown, realName, idCard, firstPhone, code, password } = this.state;
     return (
-      <div className="logindiv1 " >
-        <div className="forget_page" style={{ width: 1197 }}>
+      // <div className="logindiv1 " >
+        <div className="forget_page" style={{ width: 1197 ,height:991}}>
           <p className="forget_title">找回登录密码</p>
           <div className="forget_btnGroup">
             <Steps current={this.state.currentNum}>
@@ -292,25 +292,26 @@ export default class ForgetPassWord extends React.Component {
               <div className="forget_form">
                 <div className="forget_inp">
                   <Input placeholder="手机号" value={firstPhone} onChange={(e) => { this.setState({ firstPhone: e.target.value }) }} onBlur={() => { this.checkPhoneNumber() }} />
-                  <img alt="" src={require('../../assets/img/login/u45.png')} className="forget_phone" />
-
+                  <i className="zjb zjb-shouji-copy" style={{position:'absolute',top:'4px',left:'11px',fontSize:25,color:'#d5d5d5'}}></i>
+                  <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
                 </div>
-                <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.prompt}</p>
+               
                 {
-                  this.state.phoneExist ?
-                    <p className="forget-prompts"></p> :
+                  this.state.phoneExist ?this.state.prompt?
+                  <p className="prompts" style={{ marginTop: 5, color: 'red' }}>{this.state.prompt}</p>:
+                    <p className="forget-prompts">  &nbsp;</p> :
                     <p className="forget-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
                 }
 
 
                 <div className="outer">
                   <div className="filter-box"></div>
-                  <span className="span" ref={(ref) => this.spanText = ref}>
+                  <span className="span" ref={(ref) => this.spanText = ref} style={{color:'#c4c4c4',fontSize:15,background:"#f2f2f2"}}>
                     按住滑块，请拖到最右边
                   </span>
                   <div className="inner">&gt;&gt;</div>
                 </div>
-                <Button style={{ width: 300, marginTop: 20, height: 41, fontSize: 18 }} type="primary" onClick={() => this.next()}>下一步</Button>
+                <Button style={{ width: 300, marginTop: 44, height: 41, fontSize: 18 }} type="primary" onClick={() => this.next()}>下一步</Button>
               </div> :
               (this.state.flagPage === 'second') ?
                 <div className="forget_form">
@@ -343,7 +344,7 @@ export default class ForgetPassWord extends React.Component {
                       </div> : null
                   }
 
-                  <Button style={{ width: 300, marginTop: 20, height: 41, fontSize: 18 }} type="primary" onClick={() => this.fp_checkInfo()}>下一步</Button>
+                  <Button style={{ width: 300, marginTop:44 , height: 41, fontSize: 18, }} type="primary" onClick={() => this.fp_checkInfo()}>下一步</Button>
                 </div> :
                 (this.state.flagPage === 'third') ?
                   <div className="forget_form">
@@ -375,7 +376,7 @@ export default class ForgetPassWord extends React.Component {
           }
 
         </div>
-      </div>
+      // </div>
 
     );
   }
