@@ -251,7 +251,7 @@ export default class EnterprisePresentation extends React.Component {
           <span className="withdrawals_title">请选择到账银行卡</span>
           <div style={{padding: '0 0 30px 52px', borderBottom: '1px dashed #e6e6e6'}}>
             <div style={{display:'inline-block'}}>
-            {
+            {/* {
               this.state.bankcardInfos.map((data)=>{
                  return(
                      <div style={{cursor:"pointer",display: 'inline-block'}} key={data.fid} onClick={()=>{this.setState({selectedCard: data,selectedCardError: false})}} >
@@ -260,7 +260,19 @@ export default class EnterprisePresentation extends React.Component {
                      
                  )
               })
-            }
+            } */}
+                      <div style={{cursor:"pointer",display: 'inline-block'}} >
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={1543253535}  /> 
+                     </div>
+
+                     <div style={{cursor:"pointer",display: 'inline-block'}} >
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={4245245232543}  /> 
+                     </div>
+
+                     <div style={{cursor:"pointer",display: 'inline-block'}} >
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={148757825542453254}  /> 
+                     </div>
+
                 <div className="card_add" onClick={() => this.props.history.push(Path.BINDCARD)}>
                   <Icon type="plus" className="pluc"/>
                   <p className="add">绑定新银行卡</p>

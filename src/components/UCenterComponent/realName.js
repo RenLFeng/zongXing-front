@@ -543,6 +543,13 @@ export default class RealName extends React.Component {
                                   <div className="card_div" key={index}>
                                     <div className="IDCard">
                                       <div>
+                                      <div className="card_info">
+                                          <div className="card_img"></div>
+                                          <div className="card_text">
+                                            <p>这是卡名称</p>
+                                            <span>储蓄卡</span>
+                                          </div>
+                                        </div>
                                         <span className="id_num">
                                           {data.fbankcard.substring(0, 4)} **** **** {data.fbankcard.substring(data.fbankcard.length - 5, data.fbankcard.length - 1)}
                                         </span>
@@ -599,7 +606,7 @@ export default class RealName extends React.Component {
                           <i className="zjb zjb-renzheng " style={{fontSize:27,color:'#ffcb15',marginRight:5,verticalAlign:'middle',lineHeight:'20px',position:'relative',top:-3,left:1}}></i> 
                         </div>
                         <div className="block2">{status.indexOf('3') !== -1 ? '您已授权二次分配' : '您还未授权二次分配，建议您尽快授权'}</div>
-                        <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)}>立即启用</Button>}</div>
+                        <div className="block3">{status.indexOf('3') !== -1 ? null : <Button onClick={() => this.getDistribution(3)} >立即启用</Button>}</div>
                       </div>
                     </div>
                   </div> : null}
