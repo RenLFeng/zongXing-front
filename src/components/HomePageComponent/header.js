@@ -24,7 +24,7 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter'
+      fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter,companyDiscount'
     }
   }
 
