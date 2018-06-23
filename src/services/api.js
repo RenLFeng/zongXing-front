@@ -718,3 +718,7 @@ export async function getCollectionCount(param) {
   return request(`${BASE_URL}/zjb-website/projectCollection/flagCount`);
 }
 
+// 基础资料获取兴趣接口
+export async function getHobbyList() {
+  return request(`${BASE_URL}/zjb-website/userInfo/hobbyList`);
+}

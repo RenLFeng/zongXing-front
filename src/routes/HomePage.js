@@ -35,7 +35,7 @@ import CollectionOrder from './homePage/CollectionOrder';
 import AuditInformation from "./information/auditInformation";
 import BusinessInformation from "./information/businessInformation";
 import ProjectInformation from "./information/projectInformation";
-import { BASE_URL, getAuth } from '../services/api';
+import { BASE_URL, getAuth, getHobbyList } from '../services/api';
 import PlatformNotice from "./information/legalSupport";
 import NewsReports from "./information/newsReports";
 import LegalDeclaration from "./information/lawsRegulations";
@@ -56,14 +56,8 @@ export default class HomePage extends React.Component{
     if (localStorage.getItem('accessToken')) {
       this.getUserBaseData();
     }
-    //判断本地是否已经有了城市地区编码，若没有则重新请求
-    // if (!localStorage.getItem('addressCode')) {
-    //   //获取城市编码存入本地缓存
-    //   getLocation().then((data)=>{
-    //     console.log(data);
-    //     localStorage.setItem('addressCode', data.adcode);
-    //   })
-    // }
+    // 获取兴趣爱好
+    this.getHobby();
     if (!global.cos) {
       global.cos = new COS({
         getAuthorization: function (options, callback) {
@@ -81,6 +75,19 @@ export default class HomePage extends React.Component{
             })
         }
       });
+    }
+  }
+
+  async getHobby() {
+    const response = await getHobbyList();
+    console.log('hobby', response);
+    if (response.code === 0) {
+        this.props.dispatch({
+          type: 'login/hobby',
+          payload: {
+            hobbyList: response.data
+          }
+        })
     }
   }
 

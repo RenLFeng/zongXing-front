@@ -14,8 +14,15 @@ export default {
       }
     },
     socketData: null, // 长连接对象
+    hobbyList: [], // 兴趣
   },
   effects: {
+    *hobby({ payload }, { call, put }) {
+      yield put({
+        type: 'saveHobby',
+        payload: payload.hobbyList
+      });
+    },
     *login({ payload, passwordError }, { call, put }) {
       //开始请求之前，请求状态修改为正在请求
       yield put({
@@ -116,6 +123,12 @@ export default {
     }
   },
   reducers: {
+    saveHobby(state, {payload}) {
+      return {
+        ...state,
+        hobbyList: payload
+      }
+    },
     // 改变是否正在提交的状态，比如用户按下按钮等待请求发送的时间使用 submitting
     // 来判断是否正在请求 拒绝多次点击
     changeSubmitting(state) {
