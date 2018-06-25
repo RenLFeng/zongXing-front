@@ -58,6 +58,7 @@ class UserBaseFormInput extends React.Component {
 
   componentDidMount() {
     this.getUserBase();
+    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -121,7 +122,7 @@ class UserBaseFormInput extends React.Component {
             fGender: values.fGender,
             fCityCode,
             fJob: values.fJob,
-            fHobby: ''
+            fHobby: values.fHobby.join(',')
           }
         };
         const response = await saveUserBase(userBase);
@@ -250,9 +251,9 @@ class UserBaseFormInput extends React.Component {
           label="兴趣爱好" className="upload_text"
         >
           {getFieldDecorator('fHobby', {
-            initialValue: userBase.fhobby?userBase.fhobby : [],
+            initialValue: userBase.fhobby?userBase.fhobby.split(',') : [],
           })(
-            <HobbyList />
+            <HobbyList hobbyList={this.props.hobbyList}/>
           )}
         </FormItem>
 
@@ -271,12 +272,19 @@ const UserBaseForm = Form.create()(UserBaseFormInput);
 @connect((state) => ({
   loading: state.userData.userBaseLoading,
   userBase: state.userData.userBaseData,
-  successStatus: state.userData.changeDataStatus
+  successStatus: state.userData.changeDataStatus,
+  hobbyList: state.login.hobbyList
 }))
 
 export default class UserBasic extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    if (this.props.hobbyList.length === 0) {
+      this.props.history.push('/index/uCenter/realName');
+    }
   }
 
   render() {
@@ -288,11 +296,10 @@ export default class UserBasic extends React.Component {
               <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
               <span style={{fontSize: 16}}> &gt; 基础资料</span>
             </div>
-            <UserBaseForm param={this.props}/>
+            <UserBaseForm param={this.props} hobbyList={this.props.hobbyList}/>
           </Spin>
         </div>
       </div>
-
     );
   }
 }
@@ -301,24 +308,48 @@ class HobbyList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hobbyList: [
-        {id: 1, name: '游泳'},
-        {id: 2, name: '健身'}
-      ]
+      hobbyList: props.hobbyList
     }
   }
+
+  componentDidMount() {
+    for (let obj of this.props.value) {
+      for (value of this.state.hobbyList) {
+        if (obj == value.fid) {
+          value.status= true;
+        }
+      }
+    }
+    this.setState({
+      hobbyList: this.state.hobbyList
+    });
+  }
+
   handleClick(id, status) {
     for (let obj of this.state.hobbyList) {
-      if (obj.id === id) {
+      if (obj.fid === id) {
         obj.status = !status;
         break;
       }
     }
-    this.props.onChange(this.state.hobbyList);
+    let arr = [];
+    for (let obj of this.state.hobbyList) {
+      if (obj.status) {
+        arr.push(obj.fid)
+      }
+    }
+    this.props.onChange(arr);
   }
   componentWillReceiveProps(nextProps) {
-    if ('value' in nextProps && this.props.hobbyList !== nextProps.hobbyList) {
-      this.setState({hobbyList: nextProps.hobbyList});
+    if ('value' in nextProps) {
+      for (let obj of nextProps.value) {
+        for (let value of this.state.hobbyList) {
+          if (obj == value.fid) {
+            value.status= true;
+          }
+        }
+      }
+      this.setState({hobbyList: this.state.hobbyList});
     }
   }
   render() {
@@ -327,8 +358,8 @@ class HobbyList extends React.Component {
         {
           this.state.hobbyList.map((data)=> {
             return (
-              <span onClick={()=>this.handleClick(data.id, data.status)} className={data.status?'hobby_item_choose':'hobby_item'}>
-                {data.name}
+              <span onClick={()=>this.handleClick(data.fid, data.status)} className={data.status?'hobby_item_choose':'hobby_item'}>
+                {data.fhobby}
               </span>
             )
           })

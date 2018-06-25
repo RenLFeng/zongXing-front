@@ -23,9 +23,9 @@ export default class CompanyDiscount extends React.Component {
 	render() { 
 		return(
 			<div>
-        <div className="banner autosize">
-          <img className="big" src={require('../../assets/img/companydiscount/banner.jpg')} />
-          <div className="w"/>
+        <div style={{height: '148px'}}>
+          {/* <img className="big" src={require('../../assets/img/companydiscount/banner.jpg')} />
+          <div className="w"/> */}
         </div>
         <LoginInfo />
 

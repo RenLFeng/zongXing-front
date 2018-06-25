@@ -15,6 +15,15 @@ const styles = {
     background: 'rgba(0,0,0,.5)',
     zIndex: 5
   },
+  titleBtn: {
+    padding: '0 14px',
+    marginTop: '40px',
+    fontSize: '20px'
+  },
+  fr: {
+    display: 'inline-block',
+    marginTop: '30px'
+  }
 };
 
 @connect((state)=>({
@@ -24,7 +33,7 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter'
+      fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter,companyDiscount'
     }
   }
 
@@ -64,42 +73,41 @@ export default class Header extends React.Component {
             $("#fix").removeClass('fix');
             $(window).scrollTop(0);
           }}>
-            <img src={require('../../assets/img/logo.png')} />
+            <img src={require('../../assets/img/logo-main_1.png')} />
           </a>
-          <span className="fr">
-            <a className={'a1 '+(fontColor=='project'?'project':null)} onClick={()=>{
+          <span className="fr" style={styles.fr}>
+            <a className={'a1 '+(fontColor=='project'?'project':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/projectLoan`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>投资项目</a>
-            <a className={'a1 '+(fontColor=='howInvest'?'howInvest':null)} onClick={()=>{
+            <a className={'a1 '+(fontColor=='howInvest'?'howInvest':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/howInvest`);
               $(window).scrollTop(0);
             }}>如何投资</a>
-            <a className={'a1 '+(fontColor=='companyDiscount'?'companyDiscount':null)} onClick={()=>{
+            <a className={'a1 '+(fontColor=='companyDiscount'?'companyDiscount':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/companyDiscount`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>商家优惠</a>
-             <a className={'a1 '+(fontColor=='howLoan'?'howLoan':null)} onClick={()=>{
+             <a className={'a1 '+(fontColor=='howLoan'?'howLoan':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/howLoan`);
               $(window).scrollTop(0);
             }}>如何借款</a>
-            <a className={'a1 '+(fontColor=='loanCollege'?'loanCollege':null)} onClick={()=>{
+            <a className={'a1 '+(fontColor=='loanCollege'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/loanCollege`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>信息披露</a>
             { !this.props.loginStatus ?
-              <a className="btn btn2"
-                >
-                <span  onClick={()=>{
+              <a className="btn btn2" style={{width: 122, height: 40,marginTop:5}}>
+                <span style={{fontSize: 16}} onClick={()=>{
                    history.push('/index/login');
                    $("#fix").removeClass('fix');
                    $(window).scrollTop(0);
                 }}>登录</span>
                 <span style={{display:'inline-block',marginRight:10,marginLeft:10}}>|</span>
-                <span  onClick={()=>{
+                <span style={{fontSize: 16}} onClick={()=>{
                    history.push('/index/register');
                    $("#fix").removeClass('fix');
                    $(window).scrollTop(0);
@@ -125,34 +133,34 @@ export default class Header extends React.Component {
             $("#fix").removeClass('fix');
             $(window).scrollTop(0);
           }}>
-            <img src={require('../../assets/img/logo.png')} />
+            <img src={require('../../assets/img/logo-main_1.png')} />
           </a>
-          <span className="fr">
-            <a className={'a1 '+(fontColor=='project'?'project':null)} onClick={()=>{
+          <span className="fr" style={styles.fr}>
+            <a className={'a1 '+(fontColor=='project'?'project':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/projectLoan`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>投资项目</a>
-             <a className={'a1 '+(fontColor=='howInvest'?'howInvest':null)} onClick={()=>{
+             <a className={'a1 '+(fontColor=='howInvest'?'howInvest':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/howInvest`);
               $(window).scrollTop(0);
             }}>如何投资</a>
-            <a className={'a1 '+(fontColor=='companyDiscount'?'companyDiscount':null)} onClick={()=>{
+            <a className={'a1 '+(fontColor=='companyDiscount'?'companyDiscount':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/companyDiscount`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>商家优惠</a>
-            <a className={'a1 '+(fontColor=='howLoan'?'howLoan':null)} onClick={()=>{
+            <a className={'a1 '+(fontColor=='howLoan'?'howLoan':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/howLoan`);
               $(window).scrollTop(0);
             }}>如何借款</a>
-            <a className={'a1 '+(fontColor=='loanCollege'?'loanCollege':null)} onClick={()=>{
+            <a className={'a1 '+(fontColor=='loanCollege'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/loanCollege`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>信息披露</a>
             { !this.props.loginStatus ?
-              <a className="btn btn2"
+              <a className="btn btn2" style={{width: 122, height: 40}}
                  >
                  <span onClick={()=>{
                    history.push('/index/login');
