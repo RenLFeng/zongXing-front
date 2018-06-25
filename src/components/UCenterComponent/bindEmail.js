@@ -1,26 +1,24 @@
 
 import React from 'react';
 import { Input, Button, Spin } from 'antd';
-import { changePassword } from '../../services/api';
+import { getEmailAuth } from '../../services/api';
 import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC} from '../../common/pagePath';
-import { AUTH_CODE_TIME} from '../../common/systemParam';
+import { AUTH_CODE_TIME, E_MAIL} from '../../common/systemParam';
 import '../../assets/ucenter/changePwd.scss';
 
 
-export default class ChangeLPwd extends React.Component {
+export default class BindEmail extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      password:'',
-      show:false,  //密码隐藏
-      newPassword:'',
-      newShow:false,//密码隐藏
+      email:'',
       code:''  ,
       showAuthCode:true,
       loading:false,
       countDown: AUTH_CODE_TIME,  //获取验证码倒计时
       firstShow:true,
-      num:3   //3秒后跳转
+      num:3,  //3秒后跳转
+      message:''   //提示语
     }
     this.countDown = null;
   }
@@ -31,28 +29,6 @@ export default class ChangeLPwd extends React.Component {
     }
   }
   
-  changePassStatus(flag,num) {
-    if (flag === 'show' && num ===1) {
-      this.setState({
-        show: false
-      })
-    }   
-    if (flag === 'hide'&& num ===1) {
-      this.setState({
-        show: true
-      })
-    }
-    if (flag === 'show' && num ===2) {
-      this.setState({
-        newShow: false
-      })
-    }   
-    if (flag === 'hide'&& num ===2) {
-      this.setState({
-        newShow: true
-      })
-    }
-  }
 
   async getCode() {
     console.log('phone',this.props.baseData.mobile)
@@ -96,8 +72,24 @@ export default class ChangeLPwd extends React.Component {
     }, 1000);
   }
 
+
+  check(email){
+    console.log('email',email)
+    if(E_MAIL.test(email)){
+       this.setState({
+           massage:''
+       })
+    } else{
+        this.setState({
+            massage:'输入的邮箱格式不正确'
+        }) 
+    }
+
+  }
+
+
   render() {
-    const {password,newPassword,code,showAuthCode,countDown} = this.state
+    const {email,code,showAuthCode,countDown} = this.state
     return (
 
         <div className="fr uc-rbody user-form-box" style={{width:"100%",float:"none",height:900}}>
@@ -107,39 +99,21 @@ export default class ChangeLPwd extends React.Component {
               <div>
                 <div className="real_title_">
                   <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
-                  <span>&gt; 修改登录密码 &gt; 设置新登录密码</span>
+                  <span> &gt; 绑定邮箱</span>
                </div>
               <div style={{width:230,margin:'71px auto 0 auto'}}>
-                {this.state.show ? 
+                
                   <div className="pass">
-                    <Input placeholder="请输入当前登录密码" className="inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
-                    <p className="prompts" style={{ marginBottom: 5, color: 'red' }}></p>
-                    <i className="zjb zjb-mima2 img1" />
-                    <i className="zjb zjb-mimakejian img2" onClick={() => { this.changePassStatus('show',1) }} />
-                  </div>:
-                  <div className="pass">
-                    <Input placeholder="请输入当前登录密码" className="inp" value={password} type="password" onChange={(e) => { this.setState({ password: e.target.value }) }} />
-                    <p className="prompts" style={{ marginBottom: 5, color: 'red' }}></p>
-                    <i className="zjb zjb-mima2 img1"  />
-                    <i className="zjb zjb-htmal5icon08 img2" onClick={() => { this.changePassStatus('hide',1) }} />
+                    <Input placeholder="输入邮箱地址" className="inp" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} onBlur={(e)=>{this.check(e.target.value)}} />
+                    {
+                        this.state.message ? 
+                        <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.message}</p>:
+                        <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>&nbsp;</p>
+                    }
+                    
+                    <i className="zjb zjb-e-mail_icon img1" />
                   </div>
-                }    
-              </div>
-              <div style={{width:230,margin:'30px auto 0 auto'}}>
-                {this.state.newShow ? 
-                  <div className="pass">
-                    <Input placeholder="请设置新登录密码" className="inp" value={newPassword} onChange={(e) => { this.setState({ newPassword: e.target.value }) }} />
-                    <p className="prompts" style={{ marginBottom: 5, color: 'red' }}></p>
-                    <i className="zjb zjb-mima2 img1" />
-                    <i className="zjb zjb-mimakejian img2" onClick={() => { this.changePassStatus('show',2) }} />
-                  </div>:
-                  <div className="pass">
-                    <Input placeholder="请设置新登录密码" className="inp" value={newPassword} type="password" onChange={(e) => { this.setState({ newPassword: e.target.value }) }} />
-                    <p className="prompts" style={{ marginBottom: 5, color: 'red' }}></p>
-                    <i className="zjb zjb-mima2 img1"  />
-                    <i className="zjb zjb-htmal5icon08 img2" onClick={() => { this.changePassStatus('hide',2) }} />
-                  </div>
-                }    
+                
               </div>
               <div style={{width:230,margin:'30px auto 0 auto'}} className="codeInp">
                 <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} />
@@ -151,17 +125,17 @@ export default class ChangeLPwd extends React.Component {
                   <p className="prompts" style={{ marginBottom: 15, color: 'red', position: 'relative' }}>{this.state.code_prompt}</p>
               </div>
               <div style={{width:230,margin:'60px auto 0 auto'}} >
-                <Button style={{width:230,fontSize:18}} type="primary" onClick={()=>{this.setState({firstShow:false})}}>确定</Button>
+                <Button style={{width:230,fontSize:18}} type="primary" onClick={()=>{this.setState({firstShow:false})}}>绑定</Button>
               </div>
             </div>:
             <div>
                 <div className="real_title_">
                   <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
-                  <span>&gt; 修改登录密码 &gt; 新登录密码设置成功</span>
+                  <span> &gt; 绑定邮箱 &gt;  邮箱绑定成功</span>
                 </div>
                 <div className="success">
                   <h1>
-                     <img alt="ok" src={require('../../assets/img/u3551.png')} />人名字，恭喜您修改登录密码成功
+                     <img alt="ok" src={require('../../assets/img/u3551.png')} />人名字，恭喜您邮箱绑定成功
                   </h1>
                   <p className="goback">
                     <a  onClick={()=>this.props.history.push('/index/uCenter/realName')}>{this.state.num}秒后自动跳转</a>

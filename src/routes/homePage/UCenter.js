@@ -9,6 +9,8 @@ import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import PersonAccount from '../../components/UCenterComponent/personAccount';
 import UserBasic from '../../components/UCenterComponent/userBasic';
 import ChangeLPwd from '../../components/UCenterComponent/changeLoginPwd';
+import ChangeBindEmail from '../../components/UCenterComponent/changeBindEmail';
+import BindEmail from '../../components/UCenterComponent/bindEmail';
 import OpenAccount from '../../components/UCenterComponent/openAccount';
 import SafeCenter from '../../components/UCenterComponent/safeCenter';
 import RealName from '../../components/UCenterComponent/realName';
@@ -87,7 +89,11 @@ export default class UCenter extends React.Component {
             {/* 用户基本信息 */}
             <Route path={Path.USER_BASIC} component={UserBasic} />
             {/* 修改登陆密码 */}
-            <Route path={Path.CHANGE_LPWD} component={ChangeLPwd} />       
+            <Route path={Path.CHANGE_LPWD} component={ChangeLPwd} />  
+             {/* 邮箱绑定 */}
+             <Route path={Path.BIND_EMAIL} component={BindEmail} />    
+            {/* 变更邮箱绑定 */}
+            <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />      
             {/* 开户 */}
             <Route path={Path.OPEN_ACCOUNT+'/:type'} component={OpenAccount} />
             {/* 企业账户 */}

@@ -7,7 +7,7 @@ import { AUTH_CODE_TIME} from '../../common/systemParam';
 import '../../assets/ucenter/changePwd.scss';
 
 
-export default class ChangeLPwd extends React.Component {
+export default class ChangeBindEmail extends React.Component {
   constructor(props) {
     super(props);
     this.state={
@@ -30,29 +30,7 @@ export default class ChangeLPwd extends React.Component {
       clearInterval(this.countDown);
     }
   }
-  
-  changePassStatus(flag,num) {
-    if (flag === 'show' && num ===1) {
-      this.setState({
-        show: false
-      })
-    }   
-    if (flag === 'hide'&& num ===1) {
-      this.setState({
-        show: true
-      })
-    }
-    if (flag === 'show' && num ===2) {
-      this.setState({
-        newShow: false
-      })
-    }   
-    if (flag === 'hide'&& num ===2) {
-      this.setState({
-        newShow: true
-      })
-    }
-  }
+
 
   async getCode() {
     console.log('phone',this.props.baseData.mobile)
@@ -107,39 +85,23 @@ export default class ChangeLPwd extends React.Component {
               <div>
                 <div className="real_title_">
                   <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
-                  <span>&gt; 修改登录密码 &gt; 设置新登录密码</span>
+                  <span>&gt; 变更绑定邮箱 &gt;  绑定新邮箱</span>
                </div>
               <div style={{width:230,margin:'71px auto 0 auto'}}>
-                {this.state.show ? 
+                
                   <div className="pass">
-                    <Input placeholder="请输入当前登录密码" className="inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                    <Input placeholder="输入正在使用的邮箱地址" className="inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
                     <p className="prompts" style={{ marginBottom: 5, color: 'red' }}></p>
-                    <i className="zjb zjb-mima2 img1" />
-                    <i className="zjb zjb-mimakejian img2" onClick={() => { this.changePassStatus('show',1) }} />
-                  </div>:
-                  <div className="pass">
-                    <Input placeholder="请输入当前登录密码" className="inp" value={password} type="password" onChange={(e) => { this.setState({ password: e.target.value }) }} />
-                    <p className="prompts" style={{ marginBottom: 5, color: 'red' }}></p>
-                    <i className="zjb zjb-mima2 img1"  />
-                    <i className="zjb zjb-htmal5icon08 img2" onClick={() => { this.changePassStatus('hide',1) }} />
+                    <i className="zjb zjb-e-mail_icon img1" />
                   </div>
-                }    
+                
               </div>
               <div style={{width:230,margin:'30px auto 0 auto'}}>
-                {this.state.newShow ? 
-                  <div className="pass">
-                    <Input placeholder="请设置新登录密码" className="inp" value={newPassword} onChange={(e) => { this.setState({ newPassword: e.target.value }) }} />
+                <div className="pass">
+                    <Input placeholder="输入新邮箱地址" className="inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
                     <p className="prompts" style={{ marginBottom: 5, color: 'red' }}></p>
-                    <i className="zjb zjb-mima2 img1" />
-                    <i className="zjb zjb-mimakejian img2" onClick={() => { this.changePassStatus('show',2) }} />
-                  </div>:
-                  <div className="pass">
-                    <Input placeholder="请设置新登录密码" className="inp" value={newPassword} type="password" onChange={(e) => { this.setState({ newPassword: e.target.value }) }} />
-                    <p className="prompts" style={{ marginBottom: 5, color: 'red' }}></p>
-                    <i className="zjb zjb-mima2 img1"  />
-                    <i className="zjb zjb-htmal5icon08 img2" onClick={() => { this.changePassStatus('hide',2) }} />
-                  </div>
-                }    
+                    <i className="zjb zjb-e-mail_icon img1" />
+                </div>
               </div>
               <div style={{width:230,margin:'30px auto 0 auto'}} className="codeInp">
                 <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} />
@@ -157,11 +119,11 @@ export default class ChangeLPwd extends React.Component {
             <div>
                 <div className="real_title_">
                   <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
-                  <span>&gt; 修改登录密码 &gt; 新登录密码设置成功</span>
+                  <span>&gt; 变更绑定邮箱 &gt; 新邮箱绑定成功</span>
                 </div>
                 <div className="success">
                   <h1>
-                     <img alt="ok" src={require('../../assets/img/u3551.png')} />人名字，恭喜您修改登录密码成功
+                     <img alt="ok" src={require('../../assets/img/u3551.png')} />人名字，恭喜您新邮箱地址绑定成功
                   </h1>
                   <p className="goback">
                     <a  onClick={()=>this.props.history.push('/index/uCenter/realName')}>{this.state.num}秒后自动跳转</a>
