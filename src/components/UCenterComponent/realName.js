@@ -7,7 +7,7 @@ import moment from 'moment';
 import '../../assets/ucenter/realName.scss';
 import { AUTH_CODE_TIME, AUTH_CODE_TIME_, ID_CORD, VER_PHONE, AUTH_PAGE_URL, AUTH_ADDRESS } from '../../common/systemParam';
 import { getEmailAuth, getOldPhoneCode, getOldCode, changePhoneNum, getNewCode, distribution, authorizationState, closeAuthorization, phoneExist, getBankCardList, unbindBankCard } from '../../services/api';
-import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC, CHANGE_LPWD } from '../../common/pagePath';
+import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC, CHANGE_LPWD, CHANGE_BINDEMAIL, BIND_EMAIL } from '../../common/pagePath';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const Step = Steps.Step;
@@ -397,18 +397,6 @@ export default class RealName extends React.Component {
         changePayPass: false,
       });
     }
-    // this.setState({
-    //   changePayPass:true,
-    // },()=>{
-    //   console.log('1',this.state.changePayPass)
-    //   if(this.state.changePayPass === true){
-    //     this.setState({
-    //       changePayPass:false
-    //     },()=>{
-    //       console.log('2',this.state.changePayPass)
-    //     })
-    //   }
-    // })
   }
 
   // 判断步骤
@@ -498,7 +486,9 @@ export default class RealName extends React.Component {
                             <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                             <span className="left">开通乾多多资金托管账户</span>
                             <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                            {!safeData.userSecurityCenter.fThirdAccount && safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a> : null}
+                            {!safeData.userSecurityCenter.fThirdAccount && safeData.userSecurityCenter.fCertification ? 
+                            <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a>
+                             : null}
                           </div>
                           <div style={{marginTop:9,marginBottom:5}}>
                             <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
@@ -517,11 +507,13 @@ export default class RealName extends React.Component {
                           }
                           {
                             this.state.showMMMChangepayPassword === true ?
-                              <ChangePayPayPass /> : null
+                              <ChangePayPayPass /> 
+                              : null
                           }
                           {
                             this.state.showMMMChangeLoginPass === true ?
-                              <ChangeLoginPass /> : null
+                              <ChangeLoginPass /> 
+                              : null
                           }
                         </div>
                       } />
@@ -629,9 +621,9 @@ export default class RealName extends React.Component {
             </div>
             <div className="baseInfo">
               <i className="zjb zjb-youxiang"></i>
-              <h3>变更绑定邮箱</h3>
+              <h3 onClick={()=>{this.props.history.push(CHANGE_BINDEMAIL)}}>变更绑定邮箱</h3>
               <p>绑定电子邮箱后便于接收平台各种通知</p>
-              <p><span>还未绑定邮箱，</span><a>点击绑定</a></p>
+              <p><span>还未绑定邮箱，</span><a onClick={()=>{this.props.history.push(BIND_EMAIL)}}>点击绑定</a></p>
             </div>
           </div>
         </div>

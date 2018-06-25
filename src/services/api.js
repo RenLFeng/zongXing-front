@@ -718,3 +718,22 @@ export async function getCollectionCount(param) {
   return request(`${BASE_URL}/zjb-website/projectCollection/flagCount`);
 }
 
+// 基础资料获取兴趣接口
+export async function getHobbyList() {
+  return request(`${BASE_URL}/zjb-website/userInfo/hobbyList`);
+}
+
+// 获取回款计划按时间查数据
+export async function receivePlanByTime(param) {
+  return request(`${BASE_URL}/zjb-website/account/repayPlan/bottom/byTime`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  });
+}
+
+// 获取回款计划页面上半部分数据
+export async function receivePlanByTop() {
+  return request(`${BASE_URL}/zjb-website/account/repayPlan/top`)
+}

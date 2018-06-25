@@ -289,6 +289,7 @@ export default class PersonAccount extends React.Component {
       for (let obj of plan) {
         planArr.push([obj.month, obj.money])
       }
+      
       this.setState({
         pieOption: {
           tooltip: {
