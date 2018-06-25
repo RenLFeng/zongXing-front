@@ -24,7 +24,7 @@ export default class ForgetPassWord extends React.Component {
 
       message1: '', //第一次输入密码时提示
 
-      flagPage: 'first',  //第一步
+      flagPage: 'third',  //第一步
       currentNum: 0,    //当前步骤
       firstPhone: '',    //忘记密码第一步
       prompt: '',   //提示语
@@ -93,7 +93,7 @@ export default class ForgetPassWord extends React.Component {
     if (!VER_PHONE.test(phoneNum)) {
       this.setState({ prompt: '请输入正确的手机号' });
       return;
-    }
+    } 
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await phoneExist(phoneNum);
       if (response.code !== 0) {
@@ -276,8 +276,8 @@ export default class ForgetPassWord extends React.Component {
   render() {
     const { showAuthCode, countDown, realName, idCard, firstPhone, code, password } = this.state;
     return (
-      // <div className="logindiv1 " >
-        <div className="forget_page" style={{ width: 1197 ,height:991}}>
+      <div className="logindiv1 shadows" >
+        <div className="forget_page" style={{ width: 1200 ,height:590}}>
           <p className="forget_title">找回登录密码</p>
           <div className="forget_btnGroup">
             <Steps current={this.state.currentNum}>
@@ -291,16 +291,16 @@ export default class ForgetPassWord extends React.Component {
             this.state.flagPage === 'first' ?
               <div className="forget_form">
                 <div className="forget_inp">
-                  <Input placeholder="手机号" value={firstPhone} onChange={(e) => { this.setState({ firstPhone: e.target.value }) }} onBlur={() => { this.checkPhoneNumber() }} />
+                  <Input placeholder="请输入手机号" value={firstPhone} onChange={(e) => { this.setState({ firstPhone: e.target.value }) }} onBlur={() => { this.checkPhoneNumber() }} />
                   <i className="zjb zjb-shouji-copy" style={{position:'absolute',top:'4px',left:'11px',fontSize:25,color:'#d5d5d5'}}></i>
-                  <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
+                  <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
                 </div>
                
                 {
                   this.state.phoneExist ?this.state.prompt?
-                  <p className="prompts" style={{ marginTop: 5, color: 'red' }}>{this.state.prompt}</p>:
+                  <p className="prompts" style={{ marginTop: 10, color: 'red',marginLeft:53 }}>{this.state.prompt}</p>:
                     <p className="forget-prompts">  &nbsp;</p> :
-                    <p className="forget-prompts">该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
+                    <p className="forget-prompts" >该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
                 }
 
 
@@ -311,13 +311,13 @@ export default class ForgetPassWord extends React.Component {
                   </span>
                   <div className="inner">&gt;&gt;</div>
                 </div>
-                <Button style={{ width: 300, marginTop: 44, height: 41, fontSize: 18 }} type="primary" onClick={() => this.next()}>下一步</Button>
+                <Button style={{ width: 329, marginTop: 33, height: 43, fontSize: 18 }} type="primary" onClick={() => this.next()}>下一步</Button>
               </div> :
               (this.state.flagPage === 'second') ?
-                <div className="forget_form">
+                <div className="forget_form" style={{marginTop:-35}}>
                   <p className="second_p">手机号      <span>{this.state.firstPhone.substr(0, 3) + '****' + this.state.firstPhone.substr(7)}</span> </p>
                   <div className="forget_inp" style={{ marginBottom: 15 }}>
-                    <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} />
+                    <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} maxLength={6}/>
                     {// 根据倒计时时间显示是否可以点击获取验证码按钮
                       this.state.showAuthCode ?
                         <Button className="input2" onClick={() => this.fp_getCode()} loading={this.state.loading}>点击获取验证码</Button> :
@@ -333,50 +333,53 @@ export default class ForgetPassWord extends React.Component {
                     this.state.whetherAuthentication ?
                       <div>
                         <div className="forget_inp">
-                          <Input placeholder="请输入姓名" value={realName} onChange={(e) => { this.setState({ realName: e.target.value }) }} />
-                          <img alt="" src={require('../../assets/img/u186.png')} className="forget_phone" />
+                          <Input placeholder="请输入姓名" value={realName} onChange={(e) => { this.setState({ realName: e.target.value }) }} style={{width:329,marginTop:-2}} />
+                          <i className="zjb zjb-moban forget_name" />
+                          <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
                         </div>
                         <div className="forget_inp">
-                          <Input placeholder="请输入身份证号" value={idCard} onChange={(e) => { this.setState({ idCard: e.target.value }) }} />
-                          <img alt="" src={require('../../assets/img/u192.png')} className="forget_phone" />
+                          <Input placeholder="请输入身份证号" value={idCard} onChange={(e) => { this.setState({ idCard: e.target.value }) }}  style={{width:329,marginTop:-5}}/>
+                          <i className="zjb zjb-credentials forget_card" />
+                          <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
                         </div>
                         <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.id_prompt}</p>
                       </div> : null
-                  }
+                  } 
 
-                  <Button style={{ width: 300, marginTop:44 , height: 41, fontSize: 18, }} type="primary" onClick={() => this.fp_checkInfo()}>下一步</Button>
+                  <Button style={{ width: 329, marginTop:30, height: 43, fontSize: 18, }} type="primary" onClick={() => this.fp_checkInfo()}>下一步</Button>
                 </div> :
                 (this.state.flagPage === 'third') ?
-                  <div className="forget_form">
+                  <div className="forget_form" style={{marginTop:130}}>
                     {/* 根据点击状态判断密码是否隐藏 */}
                     {this.state.show ?
-                     
                       <div className="forget_third">
-                        <Input placeholder="请输入新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                        <Input placeholder="请输入重新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
                         <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.message1}</p>
-                        <img alt="" src={require('../../assets/img/u22.png')} className="img1" />
-                        <img alt="" src={require('../../assets/img/u81.png')} className="img2" onClick={() => { this.changePassStatus('show') }} />
+                        <i className="zjb zjb-mima img1" />
+                        <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
+                        <i className="zjb zjb-mimakejian img2" onClick={() => { this.changePassStatus('show') }} />
                       </div> :
                        <div className="forget_third">
-                       <Input placeholder="请输入新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} type="password" />
+                       <Input placeholder="请输入重新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} type="password" />
                        <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.message1}</p>
-                       <img alt="" src={require('../../assets/img/u22.png')} className="img1" />
-                       <img alt="" src={require('../../assets/img/closeEye.png')} className="img2" style={{ color: "black" }} onClick={() => { this.changePassStatus('hide') }} />
+                       <i className="zjb zjb-mima img1" />
+                       <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
+                       <i  className="zjb zjb-htmal5icon08 img2"  onClick={() => { this.changePassStatus('hide') }} />
                      </div> 
                     }
 
-                    <Button style={{ width: 300, marginTop: 30, height: 41, fontSize: 18 }} type="primary" onClick={() => this.changePassword()}>确认</Button>
+                    <Button style={{ width: 329, marginTop: 84, height: 43, fontSize: 18 }} type="primary" onClick={() => this.changePassword()}>确认</Button>
                   </div> :
                   (this.state.flagPage === 'four') ?
                     <div className="forget_form4">
                       <img src={require('../../assets/img/u179.png')} className="ok_img" />
-                      <p style={{ fontSize: 20, marginTop: 20, marginBottom: 20, color: '#333333' }}>恭喜您，找回登录密码成功</p>
-                      <a style={{ fontSize: 20, color: '#FF9900', textDecorationLine: 'underline', fontWeight: 'bold' }} onClick={() => this.props.history.push('./login')}>返回登录</a>
+                      <p style={{ fontSize: 18, marginTop: 20, marginBottom: 21, color: '#333333' }}>恭喜您，找回登录密码成功</p>
+                      <a style={{ fontSize: 18, color: '#FF9900', textDecorationLine: 'underline', fontWeight: 'bold' }} onClick={() => this.props.history.push('./login')}>返回登录</a>
                     </div> : null
           }
 
         </div>
-      // </div>
+       </div>
 
     );
   }

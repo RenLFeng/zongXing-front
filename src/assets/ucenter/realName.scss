@@ -8,7 +8,10 @@
     .safeCenter_{
         display: inline-block;
         font-size: 20px;
-        color:#333333;
+        color:#333333;     
+    }
+    .safeCenter_:hover{
+        cursor: pointer;
     }
     .registrationTime{
         display: inline-block;
@@ -79,7 +82,8 @@
      }
      .findPass{
          display: inline-block;
-         margin-left: 323px;
+         float: right;
+         margin-right: 21px;
          .a{
             color:#268eff;;
          }
@@ -125,8 +129,8 @@
 
 .pages {
    background: white;
-   width: 1248px;
-   height:678px !important;
+   width: 1197px;
+   height:900px !important;
    margin: auto; 
    padding-top: 5px;
 }
@@ -138,6 +142,9 @@
     .safeCenter_{
         display: inline-block;
         font-size: 20px;
+    }
+    .safeCenter_:hover{
+        cursor: pointer;
     }
   }
 .card{
@@ -285,13 +292,19 @@
   h1{
     text-align: center;
     font-size: 28px;
-    margin:  40px 0;
+    margin: 75PX 0  40px 0;
+  }
+  h3{
+    font-size: 20px;
+    color: #FF6600;
+    text-align: center;
   }
   a{
     text-align: center;
     color:blue;
     display: block;
     text-decoration-line: underline;
+    margin-top: 55px
   }
 }
 
@@ -299,41 +312,34 @@
     width:780px;
     margin:50px auto 70px auto;
     .openingHints{
-        width:780px;
-        height:320px;
+        width:465px;
+        height:177px;
         background: #F2F2F2;
         margin:auto;
         img{
-            width:308px;
-            margin-top:3px;
-            margin-left: calc(50% - 154px);
+            width:373px;
+            height:76px;
+            margin:52px 21px 49px 71px; 
         }
-        p{
-            text-align: center;
-        }
+        
+    }
+    .titleWord{
+        width: 464px;
+        height: 64px;
+        font-size: 16px;
+        color: #333333;
+        margin: 45px auto 0 auto;
+        text-align: center;
     }
     .buttonGroup{
+        width: 464px;
+        height: 35px;
+        margin: 103px auto 0 auto;
         .open{
-            width:300px;
-            height:40px;
-            margin: 70px 0 0 238px;
-          }
-          p{
-              text-align: center;
-              margin: 20px 0 ;
-          }
-          .bind{
-              width:250px;
-              height:35px;
-              color:#FF55FF;
-              margin-left: 111px;
-          }
-          .bind1{
-            width:250px;
+            width:134px;
             height:35px;
-            color:#FF55FF;
-            margin-left: 50px;
-        }
+            margin-left: 167px;
+          }
     }
     
 }
@@ -747,6 +753,7 @@
   }
 }
 .user-form-box{
+ 
   .upload_box{
     .ant-form-item-label label{
       line-height: 90px;
@@ -766,6 +773,11 @@
       textarea {
           width: 232px;
       }
+      .ant-upload.ant-upload-select-picture-card{
+        width: 100px !important;
+        height:100 !important;
+        border: solid 2px #e6e6e6;
+    }
   }
   .ant-radio-wrapper {
       span {

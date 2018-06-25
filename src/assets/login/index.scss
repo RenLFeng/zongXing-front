@@ -32,6 +32,12 @@
         opacity: 0.7;
     }
 }
+.shadows{
+    box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.2);
+    width:1200px;
+    height:590px;
+}
+
 .logindiv1 .show {
     transform: translate(0,0);
 }
@@ -60,6 +66,7 @@
         margin-top: 5px;
         color: red;
         font-size: 13px !important;
+        margin-left: 53px;
       }
       .registration-prompts_{
         margin-top: 5px;
@@ -293,26 +300,19 @@
 .forget_page{
     width:970px;
     height:522px;
-    margin:104px auto 0 auto;
+    margin:5px auto 130px auto;
     background: white;
     .forget_title{
-        // font-size: 28px;
-        padding: 33px 0 7px 0px;
-        border-bottom: 2px dashed #e6e6e6;
-        width:1157px;
+        padding: 40px 0 12px 0px;
+        border-bottom: 2px solid #ff9900;
+        width:1108px;
         margin: auto;
-        // height: 32px;
-        font-family: MicrosoftYaHeiUI;
         font-size: 20px;
-        font-weight: normal;
-        font-stretch: normal;
-        // line-height: 166px;
-        letter-spacing: 0px;
         color: #333333;
     }
     .forget_btnGroup{
         width:820px;
-        margin: 178px 0 134px 178px;
+        margin: 84px 0 88px 190px;
         Button{
             width:140px;
             height:40px;
@@ -337,7 +337,7 @@
     }
 
     .forget_form{
-        width:300px;
+        width:329px;
         margin: 65px auto 0 auto;
         .slider-div {
             // width: 300px;
@@ -366,17 +366,36 @@
         .forget_inp{
             position: relative;
             margin-top: 20px;
-            height:41px;
-            
+            height:44px;
+            width:329px;
             Input{
-                padding-left: 63px;
-                height:41px;
+                padding-left: 53px;
+                height:43px;
                 border-radius: 6px;
             }
             .forget_phone{
                 position: absolute;
                 top:13px;
                 left:10px;
+                font-size: 20px;
+                color: rgba(213, 213, 213, 0.5);
+                opacity: 0.5;
+            }
+            .forget_name{
+                position: absolute;
+                top:8px;
+                left:10px;
+                font-size: 20px;
+                color: rgba(213, 213, 213, 0.5);
+                opacity: 0.5;
+            }
+            .forget_card{
+                position: absolute;
+                top:9px;
+                left:10px;
+                font-size: 20px;
+                color: rgba(213, 213, 213, 0.5);
+                opacity: 0.5;
             }
             .input1{
                 position: relative;
@@ -388,15 +407,32 @@
                 // top:0;
                 // left:175px;  定位的按钮点击后按钮位置会动
                 float: right;
-                margin-top:-41px;
+                margin-top:-43px;
                 width:144px;
-                height:41px;
+                height:43px;
                
                 background: rgba(255, 153, 0, 1);
                 padding-left:10px;
                 color:white !important;
             }
-           
+
+            Input::-webkit-input-placeholder {
+                color: #e6e6e6;
+                font-size: 14px;
+            }
+                
+            Input:-moz-placeholder {
+                color:#e6e6e6;
+                font-size: 14px;
+            }
+            Input::-moz-placeholder{
+                color:#e6e6e6;
+                font-size: 14px;
+            }
+            Input:-ms-input-placeholder{
+                color:#e6e6e6;
+                font-size: 14px;
+            }   
         }
         .slider{
             width:300px;
@@ -423,8 +459,8 @@
         .forget-prompts{
             color: #868686 !important;
             font-size: 11px !important;
-            // margin-left: 30px;
-            margin-top: 5px;
+            margin-left: 53px;
+            margin-top: 10px;
             // margin-bottom: 20px;
             a{
                 color: #268eff;
@@ -436,8 +472,9 @@
               width:46px;
           }
           .second_p{
-              color:#6B6B6B;
+              color:#999999;
               font-size: 13px;
+              margin-bottom: -8px;
               span{
                   display: inline-block;
                   margin-left: 30px;
@@ -448,19 +485,21 @@
             position: relative;
             .ft_inp{
                 height:41px;
-                padding-left: 30px;
+                padding-left: 60px;
             }
             .img1{
                position:absolute;
-               top:10px;
-               left:10px;
+               top:7px;
+               left:12px;
+               color: rgba(213, 213, 213, 0.5);
+               font-size: 20px;
             }
             .img2{
                 position: absolute;
-                top:12px;
+                top:4px;
                 right:10px;
-                width:25px;
-                height:16px;
+                color: rgba(213, 213, 213, 0.5);
+                font-size: 26px;
             }
         }
     }
@@ -487,9 +526,9 @@
     .outer{
         position: relative;
         margin-top: 21px;
-        width: 300px;
-        height: 41px;
-        line-height: 41px;
+        width: 329px;
+        height: 43px;
+        line-height: 43px;
         background: #E8E8E8;
     }
     .outer span,.filter-box,.inner{
@@ -511,11 +550,11 @@
     }
   
     .inner{
-        width: 41px;
-        height: 41px;
+        width: 43px;
+        height: 43px;
         text-align: center;
         background: white;
-        line-height: 39px;
+        line-height: 40px;
         cursor: pointer;
         font-family: "宋体";
         font-size: 15px;
