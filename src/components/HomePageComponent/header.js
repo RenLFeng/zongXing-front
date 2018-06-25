@@ -101,17 +101,19 @@ export default class Header extends React.Component {
             }}>信息披露</a>
             { !this.props.loginStatus ?
               <a className="btn btn2" style={{width: 122, height: 40,marginTop:5}}>
-                <span style={{fontSize: 16}} onClick={()=>{
-                   history.push('/index/login');
-                   $("#fix").removeClass('fix');
-                   $(window).scrollTop(0);
-                }}>登录</span>
-                <span style={{display:'inline-block',marginRight:10,marginLeft:10}}>|</span>
-                <span style={{fontSize: 16}} onClick={()=>{
-                   history.push('/index/register');
-                   $("#fix").removeClass('fix');
-                   $(window).scrollTop(0);
-                }}>注册</span>
+                <p style={{paddingTop:7}}>
+                  <span style={{fontSize: 14}} onClick={()=>{
+                    history.push('/index/login');
+                    $("#fix").removeClass('fix');
+                    $(window).scrollTop(0);
+                  }}>登录</span>
+                  <span style={{display:'inline-block',marginRight:10,marginLeft:10,fontSize: 14}}>|</span>
+                  <span style={{fontSize: 14}} onClick={()=>{
+                    history.push('/index/register');
+                    $("#fix").removeClass('fix');
+                    $(window).scrollTop(0);
+                  }}>注册</span>
+                </p>
                 </a> :
               <a className={'btn btn2 '+(fontColor=='uCenter'?'uCenter':null)} onClick={()=>{
                   history.push('/index/uCenter/personAccount');
@@ -162,15 +164,18 @@ export default class Header extends React.Component {
             { !this.props.loginStatus ?
               <a className="btn btn2" style={{width: 122, height: 40}}
                  >
-                 <span onClick={()=>{
-                   history.push('/index/login');
-                   $("#fix").removeClass('fix');
-                   $(window).scrollTop(0)}}>登录</span>
-                 <span style={{display:'inline-block',marginRight:10,marginLeft:10}}>|</span>
-                <span onClick={()=>{
-                   history.push('/index/register');
-                   $("#fix").removeClass('fix');
-                   $(window).scrollTop(0)}}>注册</span>
+                 <p style={{paddingTop:7}}>
+                  <span onClick={()=>{
+                    history.push('/index/login');
+                    $("#fix").removeClass('fix');
+                    $(window).scrollTop(0)}} style={{fontSize:14}}>登录</span>
+                  <span style={{display:'inline-block',marginRight:10,marginLeft:10,fontSize:14}}>|</span>
+                  <span onClick={()=>{
+                    history.push('/index/register');
+                    $("#fix").removeClass('fix');
+                    $(window).scrollTop(0)}} style={{fontSize:14}}>注册</span>
+                 </p>
+                 
                  </a> :
               <a className={'btn btn2 '+(fontColor=='uCenter'?'uCenter':null)} onClick={()=>{
                 history.push('/index/uCenter/personAccount');
