@@ -4,29 +4,38 @@ import Path from '../../common/pagePath';
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import '../../assets/couponCenter/couponcenter.scss';
 import Coupon from '../common/Coupon';
-import {Button, Pagination,message} from 'antd'; 
+import {Button, Pagination,message,Modal} from 'antd'; 
 import {CouponService} from '../../services/api2.js';
+import {getLoginData} from  '../../services/api.js';
 import { Link } from 'dva/router'; 
+import { connect } from 'dva';
+@connect((state)=>({ 
+  }))
+  
 
-class CouponCenter extends React.Component {
+export default class  CouponCenter extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            hasLogin:false,
-            activeFace:0,
-            activaBuss:'all',
-            activaArea:'全部',
-            currPage:1,
-            pageSize:6,
-            totalNum:0,
-            currPageMy:1, 
-            totalNumMy:0,
-            myCoupon:[],
-            allCoupon:[],
-            zhquane:0,
-            ylqCount:0,
-            kdhMoney:0,
-            allCount:0,
+        this.state = { 
+            activeFace:0,//激活面值
+            activaBuss:'all',//激活业务
+            activaArea:'全部',//选中状态
+            currPage:1,//优惠券中心---当前页
+            pageSize:6,//分页大小
+            totalNum:0,//优惠券中心--总数
+            currPageMy:1, //我的优惠券--当前页数
+            totalNumMy:0,//我的优惠券总数
+            myCoupon:[],//我的优惠券
+            allCoupon:[],//优惠券中心优惠券
+            zhquane:0,//账户券额
+            ylqCount:0,//已领取优惠券张数
+            kdhMoney:0,//可兑换优惠券金额
+            allCount:0,//优惠券中心优惠券数量
+            visible:false, //是否显示提示框
+            fcoupon_id:'',//代金券的id
+            coupon_count:0,//代金券的数量
+            faceMoney:0, //兑换代金券的券额
+            area:[],
          }
     }
     componentWillMount(){
@@ -76,6 +85,13 @@ class CouponCenter extends React.Component {
             message.error(rest.msg);
         } 
     }
+
+    async reashLoginData(){
+        const response = await getLoginData(); 
+        if (response.code === 0) {
+            this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
+        }
+    }
  
     faceClick(activeFace){
         this.setState({
@@ -120,24 +136,35 @@ class CouponCenter extends React.Component {
             message.error('您的账户券额余额不足（余额：'+this.state.zhquane+'元，需要'+faceMoney*count+'元）！');
             return ;
         }
-        let param = {
-            //优惠券ID
-            couponId:fcoupon_id,
-            pieces:count,//兑换张数 
-            //兑换券额
-            couponMoney:faceMoney   
-        };
-        const rest = await CouponService.moneyConvertCoupon(param);
-        console.log('将优惠券兑换到我的账户',rest);
-        if(rest.code===0){
-            this.getMyCoupons();
-            this.getAllCoupons();
-        }else{
-            message.error(rest.msg);
-        } 
+       this.setState({
+           visible:true,
+           fcoupon_id : fcoupon_id,
+           coupon_count:count,
+           faceMoney:faceMoney,
+       });
     } 
- 
-
+     handleOk=()=>{
+         this.setState({
+             visible:false,
+         },async()=>{
+            let param = {
+                //优惠券ID
+                couponId:this.state.fcoupon_id,
+                pieces:this.state.coupon_count,//兑换张数 
+                //兑换券额
+                couponMoney:this.state.faceMoney   
+            };
+            const rest = await CouponService.moneyConvertCoupon(param);  
+            if(rest.code===0){
+                message.info(rest.msg);
+                this.reashLoginData();
+                this.getMyCoupons();
+                this.getAllCoupons();
+            }else{
+                message.error(rest.msg);
+            } 
+         }); 
+    } 
     render() {  
         const  faceMoney= [
             {text:'全部',val:0},
@@ -161,13 +188,14 @@ class CouponCenter extends React.Component {
         ];  
         return ( 
         <div className='coupon-center'>
-            {/* <Modal title=""
-            visible={this.state.visible}
+            <Modal title="警告" visible={this.state.visible}
             onOk={this.handleOk}
-            onCancel={this.handleCancel}
+            onCancel={()=>{this.setState({visible:false})}}
+            okText='去兑换'
+            cancelText='算了'
             >
-            <p>Some contents...</p> 
-            </Modal> */}
+            <p>您确定要兑换该优惠券吗？</p> 
+            </Modal> 
 
             {/* 用户账户信息 */}
             <LoginInfo />
@@ -233,7 +261,7 @@ class CouponCenter extends React.Component {
                         <li>
                             <span>区域：</span> 
                             <p> 
-                                {area.map((item,index) => (
+                                {this.state.area.map((item,index) => (
                                     <a onClick={this.areaClick.bind(this,item)}  className={this.state.activaArea===item?'active':''} key={index}>{item}</a>
                                 ))}
                             </p>
@@ -270,4 +298,3 @@ class CouponCenter extends React.Component {
     }
 }
  
-export default CouponCenter;
