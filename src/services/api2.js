@@ -18,6 +18,8 @@ export const CouponService = {
     moneyConvertCoupon:async(param)=>req.post('/zjb-website/coupon/convert/coupon',param), 
     //获取优惠券的地理位置
     getCouponPlace:async() =>req.get('/zjb-website/coupon/place'),
+    //优惠券详情
+    myCouponDetail:async(param) =>req.get('/zjb-website/coupon/borrower/myCoupon/detail',param),
     
 };
 
