@@ -2,11 +2,14 @@ import React from 'react';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/mycoupon.scss';
 import Coupon from '../common/Coupon';
+import CouponSmall from '../common/CouponSmall';
 import {CouponService} from '../../services/api2';
 import {getLoginData} from  '../../services/api.js';
 import { get } from 'http';
 import { Pagination,message} from 'antd';
 import { connect } from 'dva';
+import Sideslip from '../Sideslip/Sideslip';
+
 @connect((state)=>({ 
   })) 
 export default class  MyCoupon extends React.Component {
@@ -142,6 +145,7 @@ export default class  MyCoupon extends React.Component {
     handlerShiyongClick=async(fcoupon_id,data)=>{
         message.info(fcoupon_id);
         console.log(data);
+        this.sideslip.showModal();
     }
     //点击兑换
     handlerExchangeClick=async (couponId,pieces)=>{ 
@@ -189,13 +193,13 @@ export default class  MyCoupon extends React.Component {
                         {
                             this.state.data.map((item,index)=>{ 
                                 if(item.fflag==1){
-                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerLingquClick} ></Coupon> </div>
+                                    return <div  key={item.fid}>  <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerLingquClick} ></Coupon> </div>
                                 }else if(item.fflag==2){
-                                    return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
+                                    return <div  key={item.fid}>  <Coupon  data={item}   showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
                                 }else if(item.fflag==3){
-                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友'></Coupon> </div>  
+                                    return <div  key={item.fid}>  <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友'></Coupon> </div>  
                                 }else{
-                                    return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true'></Coupon> </div>
+                                    return <div  key={item.fid}>  <Coupon  data={item}   showVal='true'  hasLine='true'></Coupon> </div>
                                 } 
                             })
                         }  
@@ -205,7 +209,14 @@ export default class  MyCoupon extends React.Component {
                                 </div>:null
                         } 
                     </div>
-                </div> 
+                    {/* <CouponSmall data={{fflag:1}}/>
+                    <CouponSmall data={{fflag:2}}/>
+                    <CouponSmall data={{fflag:4}}/>
+                    <CouponSmall data={{fflag:5}}/> */}
+                </div>
+                {/* <Sideslip ref={ref=>this.sideslip = ref}>
+                      
+                </Sideslip> */}
             </div>
         )
     }
