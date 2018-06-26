@@ -115,11 +115,12 @@ export default class Header extends React.Component {
                   }}>注册</span>
                 </p>
                 </a> :
-              <a className={'btn btn2 '+(fontColor=='uCenter'?'uCenter':null)} onClick={()=>{
+              <a className={'a1 '+(fontColor=='uCenter'?'uCenter':null)} style={styles.titleBtn} onClick={()=>{
                   history.push('/index/uCenter/personAccount');
                   $("#fix").removeClass('fix');
                   $(window).scrollTop(0);
-                }}>个人中心</a>
+                 
+                }} >个人中心</a>
             }
           </span>
         </div>
@@ -165,23 +166,22 @@ export default class Header extends React.Component {
               <a className="btn btn2" style={{width: 122, height: 40}}
                  >
                  <p style={{paddingTop:7}}>
-                  <span onClick={()=>{
-                    history.push('/index/login');
-                    $("#fix").removeClass('fix');
-                    $(window).scrollTop(0)}} style={{fontSize:14}}>登录</span>
-                  <span style={{display:'inline-block',marginRight:10,marginLeft:10,fontSize:14}}>|</span>
-                  <span onClick={()=>{
-                    history.push('/index/register');
-                    $("#fix").removeClass('fix');
-                    $(window).scrollTop(0)}} style={{fontSize:14}}>注册</span>
-                 </p>
-                 
-                 </a> :
-              <a className={'btn btn2 '+(fontColor=='uCenter'?'uCenter':null)} onClick={()=>{
+                    <span onClick={()=>{
+                      history.push('/index/login');
+                      $("#fix").removeClass('fix');
+                      $(window).scrollTop(0)}} style={{fontSize:14}}>登录</span>
+                    <span style={{display:'inline-block',marginRight:10,marginLeft:10,fontSize:14}}>|</span>
+                    <span onClick={()=>{
+                      history.push('/index/register');
+                      $("#fix").removeClass('fix');
+                      $(window).scrollTop(0)}} style={{fontSize:14}}>注册</span>
+                 </p>         
+              </a> :
+              <a className={'a1'+(fontColor=='uCenter'?'uCenter':null)} style={styles.titleBtn} onClick={()=>{
                 history.push('/index/uCenter/personAccount');
                 $("#fix").removeClass('fix');
                 $(window).scrollTop(0);
-              }}>个人中心</a>
+              }} >个人中心</a>
             }
           </span>
         </div>
