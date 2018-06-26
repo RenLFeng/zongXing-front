@@ -563,12 +563,7 @@ export async function getInvest(param) {
 
 //回款计划
 export async function repayPlan(params) {
-  return request(`${BASE_URL}/zjb-website/account/getRepayPlan`,{
-    method:'POST',
-    body: {
-      ...params
-    }
-  })
+  return request(`${BASE_URL}/zjb-website/account/getRepayPlan`)
 }
 
 // 项目收藏接口
@@ -746,4 +741,14 @@ export async function receivePlanByBottom(param) {
       ...param,
     },
   });
+}
+
+// 账户总览优惠券
+export async function getAccountCoupon(param) {
+  return request(`${BASE_URL}/zjb-website/account/mycoupon`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  })
 }
