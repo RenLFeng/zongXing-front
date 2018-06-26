@@ -131,6 +131,29 @@
               }
                
             }
-        } 
+            &>.question-info{
+                margin: 120px 30px 30px 30px ;
+                &>.text1{
+                    font-size: 20px;
+                    color: #333;
+                    margin: 10px 0;
+                }
+                &>.text2{
+                    font-size: 14px;
+                    color: #999;
+                    float: right;
+                }
+                &>div>.question-title{
+                    margin: 10px 0;
+                    font-size: 18px;
+                    color: #333;
+                }
+                &>div>.question-content{
+                    font-size: 14px;
+                    color: #999;
+                    text-indent: 15px;
+                }
+            }
+        }
     } 
 }

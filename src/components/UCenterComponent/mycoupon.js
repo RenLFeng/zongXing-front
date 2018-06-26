@@ -3,10 +3,13 @@ import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/mycoupon.scss';
 import Coupon from '../common/Coupon';
 import {CouponService} from '../../services/api2';
+import {getLoginData} from  '../../services/api.js';
 import { get } from 'http';
 import { Pagination,message} from 'antd';
-  
-class MyCoupon extends React.Component {
+import { connect } from 'dva';
+@connect((state)=>({ 
+  })) 
+export default class  MyCoupon extends React.Component {
     // "flag":1,   状态    0：待生效   1.待领取， 2：正常  3:兑换券  4：过期  5.已使用 
     constructor(props){
         super(props); 
@@ -48,6 +51,12 @@ class MyCoupon extends React.Component {
     }
     componentWillMount(){
         this.getSlelectLable();
+    }
+    async reashLoginData(){
+        const response = await getLoginData(); 
+        if (response.code === 0) {
+            this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
+        }
     }
     //获取顶部查询列表
     async getSlelectLable(){ 
@@ -118,7 +127,7 @@ class MyCoupon extends React.Component {
         });  
     }
     //点击领取
-    handlerBtnClick =async (fcoupon_id)=>{
+    handlerLingquClick =async (fcoupon_id)=>{
         let rest = await CouponService.receiveCoupon({
             couponId :fcoupon_id
         }); 
@@ -129,7 +138,11 @@ class MyCoupon extends React.Component {
             rest.msg && message.error(rest.msg);
         }
     }
-
+    //去使用
+    handlerShiyongClick=async(fcoupon_id,data)=>{
+        message.info(fcoupon_id);
+        console.log(data);
+    }
     //点击兑换
     handlerExchangeClick=async (couponId,pieces)=>{ 
         let rest = await CouponService.convertCoupon({
@@ -140,10 +153,12 @@ class MyCoupon extends React.Component {
         if(rest.code===0){
             message.info(rest.msg);
             this.getSlelectLable();
+            this.reashLoginData();
         }else{
             rest.msg && message.error(rest.msg);
         }
     }
+
 
     render() { 
         return (
@@ -174,11 +189,11 @@ class MyCoupon extends React.Component {
                         {
                             this.state.data.map((item,index)=>{ 
                                 if(item.fflag==1){
-                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerBtnClick} ></Coupon> </div>
+                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerLingquClick} ></Coupon> </div>
                                 }else if(item.fflag==2){
-                                    return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true' giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
+                                    return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
                                 }else if(item.fflag==3){
-                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友'></Coupon> </div>  
+                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友'></Coupon> </div>  
                                 }else{
                                     return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true'></Coupon> </div>
                                 } 
@@ -194,6 +209,4 @@ class MyCoupon extends React.Component {
             </div>
         )
     }
-}
- 
-export default MyCoupon;
+} 
