@@ -53,7 +53,7 @@ export default class Header extends React.Component {
             fontColor='companyDiscount';
           }else if(localPath.indexOf('/index/loanCollege')!== -1){
             fontColor='loanCollege';
-          }else if(localPath.indexOf('/index/uCenter/personAccount')!== -1){
+          }else if(localPath.indexOf('/index/uCenter')!== -1){
             fontColor='uCenter';
           }
     let shouldFix=true;
@@ -115,7 +115,7 @@ export default class Header extends React.Component {
                   }}>注册</span>
                 </p>
                 </a> :
-              <a className={'btn btn2 '+(fontColor=='uCenter'?'uCenter':null)} onClick={()=>{
+              <a className={'a1 '+(fontColor=='uCenter'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
                   history.push('/index/uCenter/personAccount');
                   $("#fix").removeClass('fix');
                   $(window).scrollTop(0);
@@ -177,7 +177,7 @@ export default class Header extends React.Component {
                  </p>
                  
                  </a> :
-              <a className={'btn btn2 '+(fontColor=='uCenter'?'uCenter':null)} onClick={()=>{
+              <a className={'a1 '+(fontColor=='uCenter'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
                 history.push('/index/uCenter/personAccount');
                 $("#fix").removeClass('fix');
                 $(window).scrollTop(0);

@@ -104,6 +104,7 @@
   margin-top: 23px;
   display: inline-block;
   width: 443px;
+  vertical-align: top;
   .rp_detail_top {
     position: relative;
     width: 100%;
@@ -124,6 +125,7 @@
     }
   }
   .rp_detail_content {
+    vertical-align: top;
     width: 100%;
     padding: 17px 17px;
     background-color: #f9f9f9;
