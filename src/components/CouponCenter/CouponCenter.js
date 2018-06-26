@@ -35,12 +35,13 @@ export default class  CouponCenter extends React.Component {
             fcoupon_id:'',//代金券的id
             coupon_count:0,//代金券的数量
             faceMoney:0, //兑换代金券的券额
-            area:[],
+            area:[],//优惠券的地区
          }
     }
     componentWillMount(){
         this.getMyCoupons();
         this.getAllCoupons();
+        this.getCouponsArea();
     }
     //获取我的兑换优惠券信息
     async getMyCoupons(){ 
@@ -57,6 +58,20 @@ export default class  CouponCenter extends React.Component {
                 kdhMoney:rest.data.money,
                 totalNumMy:rest.data.totalSize,
                 myCoupon:rest.data.list,
+            });
+        }else{
+            message.error(rest.msg);
+        } 
+    } 
+    //获取优惠券地理位置信息
+    async getCouponsArea(){
+        const rest = await CouponService.getCouponPlace();
+        console.log('获取优惠券地理位置信息',rest);
+        if(rest.code===0){
+            let area = ['全部'];
+            area = area.concat(rest.data);
+            this.setState({
+                area:area
             });
         }else{
             message.error(rest.msg);
@@ -182,9 +197,6 @@ export default class  CouponCenter extends React.Component {
             {text:'新农业',val:'xny'},
             {text:'新娱乐',val:'xyl'},
             {text:'其他',val:'other'},
-        ]; 
-        const area =[
-            '全部','北京','深圳','上海','成都','重庆','武汉'
         ];  
         return ( 
         <div className='coupon-center'>
@@ -258,14 +270,18 @@ export default class  CouponCenter extends React.Component {
                                 ))}
                             </p>
                         </li>
-                        <li>
-                            <span>区域：</span> 
-                            <p> 
-                                {this.state.area.map((item,index) => (
-                                    <a onClick={this.areaClick.bind(this,item)}  className={this.state.activaArea===item?'active':''} key={index}>{item}</a>
-                                ))}
-                            </p>
-                        </li>
+                        {
+                            this.state.area.length>0?
+                            <li>
+                                <span>区域：</span> 
+                                <p> 
+                                    {this.state.area.map((item,index) => (
+                                        <a onClick={this.areaClick.bind(this,item)}  className={this.state.activaArea===item?'active':''} key={index}>{item}</a>
+                                    ))}
+                                </p>
+                            </li>:null 
+                        }
+                        
                     </ul> 
                     <div className='coupons'>
                         {/* 优惠券中心 */}
@@ -281,7 +297,11 @@ export default class  CouponCenter extends React.Component {
                     </div>
                     <div className='coupons-paging'>
                         <div className='paging-info'>
+                        {
+                            this.state.allCount>0? 
                             <span>共有<span className='light'>{this.state.allCount}张</span>优惠券</span>
+                            :null
+                        } 
                         </div>
                         <div  className='paging-component'>
                             {
@@ -291,6 +311,18 @@ export default class  CouponCenter extends React.Component {
                             } 
                         </div>
                     </div>
+                    {/* 优惠券介绍 */}
+                    <div className='question-info'>
+                        <span className='text1'>代金券交换中心的常见问题：</span>
+                        <span className='text2'>更多></span>
+                        <div>
+                            <p className='question-title'>1 代金券是怎么来的？</p>
+                            <p className='question-content'>代金券是众借帮平台的借款企业答谢平台投资人的一种方式，可直接消费得优惠，也可以赠送朋友提升友谊，还可以直接交换，物尽其用。</p>
+                            <p className='question-title'>2 代金券是怎么来的？</p>
+                            <p className='question-content'>代金券是众借帮平台的借款企业答谢平台投资人的一种方式，可直接消费得优惠，也可以赠送朋友提升友谊，还可以直接交换，物尽其用。代金券是众借帮平台的借款企业答谢平台投资人的一种方式，可直接消费得优惠，也可以赠送朋友提升友谊，还可以直接交换，物尽其用.代金券是众借帮平台的借款企业答谢平台投资人的一种方式，可直接消费得优惠，也可以赠送朋友提升友谊，还可以直接交换，物尽其用</p>
+                        </div>
+                    </div>
+
                 </div>
             </div> 
         </div> 
