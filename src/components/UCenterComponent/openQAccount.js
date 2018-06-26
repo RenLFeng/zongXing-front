@@ -87,7 +87,7 @@ export default class OpenQAccount extends React.Component {
               <div>
                 <div className="real_title_">
                   <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
-                  <span>&gt; 开通乾多多资金托管账户 &gt; 发起开通申请</span>
+                  <span style={{fontSize: 16}}>&gt; 开通乾多多资金托管账户 &gt; 发起开通申请</span>
                 </div>
                 <div className="page_content">
                   <div className="openingHints">
