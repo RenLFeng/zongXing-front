@@ -11,8 +11,8 @@
   background-color: rgba(0,0,0,.65);
   height: 100%;
   animation: fade-in;/*动画名称*/  
-  animation-duration: 0.5s;/*动画持续时间*/  
-  -webkit-animation:fade-in 0.5s;/*针对webkit内核*/  
+  animation-duration: 0.1s;/*动画持续时间*/  
+  -webkit-animation:fade-in 0.1s;/*针对webkit内核*/  
 }
 
 .ss_modal_hide {
@@ -28,29 +28,26 @@
     background-color: rgba(0,0,0,.65);
     height: 100%;
     animation: fade-out;/*动画名称*/  
-    animation-duration: 1.5s;/*动画持续时间*/  
-    -webkit-animation:fade-out 1.5s;/*针对webkit内核*/  
+    animation-duration: 0.5s;/*动画持续时间*/  
+    -webkit-animation:fade-out 0.5s;/*针对webkit内核*/  
 }
 
 @keyframes fade-out {  
   0% {opacity: 1;}/*初始状态 透明度为0*/  
-  40% {opacity: 1;}/*过渡状态 透明度为0*/  
   100% {opacity: 0;}/*结束状态 透明度为1*/  
 }  
+
 @-webkit-keyframes fade-out {/*针对webkit内核*/  
   0% {opacity: 1;}  
-  40% {opacity: 1;}  
   100% {opacity: 0;}  
 }
 
 @keyframes fade-in {  
   0% {opacity: 0;}/*初始状态 透明度为0*/  
-  40% {opacity: 0;}/*过渡状态 透明度为0*/  
   100% {opacity: 1;}/*结束状态 透明度为1*/  
 }  
 @-webkit-keyframes fade-in {/*针对webkit内核*/  
   0% {opacity: 0;}  
-  40% {opacity: 0;}  
   100% {opacity: 1;}  
 }  
 
@@ -61,8 +58,8 @@
   background-color: #fff;
   right: 0px;
   animation:right-over;/*动画名称*/  
-  animation-duration: 1.5s;/*动画持续时间*/  
-  -webkit-animation:right-over 1.5s;/*针对webkit内核*/  
+  animation-duration:0.5s;/*动画持续时间*/  
+  -webkit-animation:right-over 0.5s;/*针对webkit内核*/  
 }
 
 .ss_modal_content_hide {
@@ -72,8 +69,8 @@
   background-color: #fff;
   right: 0px;
   animation: right-remove;/*动画名称*/  
-  animation-duration: 1.0s;/*动画持续时间*/  
-  -webkit-animation:right-remove 1.0s;/*针对webkit内核*/  
+  animation-duration: 0.5s;/*动画持续时间*/  
+  -webkit-animation:right-remove 0.5s;/*针对webkit内核*/  
 }
 
 @keyframes right-over {  

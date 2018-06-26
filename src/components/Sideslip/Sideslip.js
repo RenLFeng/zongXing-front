@@ -24,7 +24,7 @@ export default class Sideslip extends React.Component {
           show: false,
           leave: false
         })
-      }, 1000)
+      },250);
     })
   }
 
@@ -33,7 +33,6 @@ export default class Sideslip extends React.Component {
       show: true,
       leave: false
     });
-    
   }
 
   render() {
