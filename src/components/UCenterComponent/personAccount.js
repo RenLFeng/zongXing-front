@@ -6,12 +6,13 @@ import Path from '../../common/pagePath';
 import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
-import { Modal, Button,Table,message } from 'antd';
+import { Modal, Button,Table,message, Pagination } from 'antd';
 import Coupon from '../common/Coupon';
 import '../../assets/personal/personal.scss';
 import Statement from '../common/Statement';
-import { accountService } from '../../services/api2.js'; 
-import { repayPlan, getAccountCoupon } from '../../services/api.js';
+import { accountService, CouponService } from '../../services/api2.js'; 
+import { repayPlan, getAccountCoupon, getLoginData } from '../../services/api.js';
+import CouponSmall from '../../components/common/CouponSmall';
 
 @connect((state)=>({
   personal: state.account.personal,
@@ -140,31 +141,6 @@ export default class PersonAccount extends React.Component {
         }]
       },
       couponList: [
-        {
-          fproject_no:'P18060007',
-          fid:2,
-          ffull_sub_condition:100,
-          ffull_sub_money:30,
-          fname:'陕西魏家凉皮优惠券',
-          fbus_type:'xfw',
-          fuser_place:'西安',
-          fend_time_str:'2018年12月30日',
-          flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-          fsurplus_num:9,
-          ffalg:5
-        }, {
-          fproject_no:'P18060007',
-          fid:2,
-          ffull_sub_condition:100,
-          ffull_sub_money:30,
-          fname:'陕西魏家凉皮优惠券',
-          fbus_type:'xfw',
-          fuser_place:'西安',
-          fend_time_str:'2018年12月30日',
-          flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-          fsurplus_num:9,
-          ffalg:1
-        }
       ],
       allMoney: 0, // 待收总额
       daishoubenjin: 0, // 待收本金
@@ -242,7 +218,7 @@ export default class PersonAccount extends React.Component {
     this.getInitData();
     this.initFetchSafeData();
     this.getAccountStatement();
-    this.getCouponList();
+    
   }
 
   // 初始化安全中心首页数据
@@ -368,7 +344,8 @@ export default class PersonAccount extends React.Component {
     if (this.props.personal !== nextProps.personal) {
       const money = nextProps.personal.totalAssets;
       const data = nextProps.personal;
-      this.getReceivePlan()
+      this.getReceivePlan();
+      this.getCouponList();
       // 回款计划
       const plan = nextProps.personal.plan?nextProps.personal.plan: [];
       let planArr = [];
@@ -478,6 +455,36 @@ export default class PersonAccount extends React.Component {
     this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
   };
 
+  clickCoupon = (data) => {
+    console.log(data);
+    if (data.fflag == 1) {
+      this.receiveCoupon(data.fcoupon_id)
+    }
+  };
+
+  // 领取优惠券
+  async receiveCoupon(fid) {
+    if (this.state.receiveLoading) {
+      return;
+    }
+    this.setState({receiveLoading: true});
+    const response = await CouponService.receiveCoupon({couponId :fid});
+    this.setState({receiveLoading: false});
+    if (response.code === 0) {
+      this.getCouponList();
+      this.reashLoginData();
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
+  async reashLoginData(){
+    const response = await getLoginData(); 
+    if (response.code === 0) {
+        this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
+    }
+  }
+
   render() {
     const { openStatus, errorMessage } = this.props;
     if (openStatus === 0) {
@@ -543,14 +550,18 @@ export default class PersonAccount extends React.Component {
           </div>
           {/* 未领取优惠券 */}
           { this.state.couponList.length >0 ?
-            <div className="per_account coupon_list" style={{marginTop: 30}}>
-              <span className="tips">您有多少张优惠券待领取 有多少张优惠券即将过期</span>
+            <div className="per_account coupon_list" style={{marginTop: 30, clear: 'both'}}>
+              <span className="tips">{this.props.personal.totalAssets.receiveCoupon?`您有${this.props.personal.totalAssets.receiveCoupon}张优惠券待领取`:''} {this.props.personal.totalAssets.willExpireCoupon?`有${this.props.personal.totalAssets.willExpireCoupon}张优惠券即将过期`:''}</span>
               {this.state.couponList.map((data, index)=>{
                 return (
-                  <Coupon key={index} data={data} hasLine='true' handlerBtnClick={(id,data)=>{
-                    }}/>
+                  <CouponSmall key={index} data={data} hasLine='true' handlerBtnClick={this.clickCoupon}/>
                 );
               })}
+              {
+                Math.ceil(this.state.pageParam.total/this.state.pageParam.pageSize)>1?<div style={{widht: '100%', textAlign: 'center'}}>
+                    <Pagination current={this.state.pageParam.currPage} pageSize={this.state.pageParam.pageSize} onChange={this.handlerPageChange} total={this.state.pageParam.total} />
+                </div>:null
+            } 
             </div> : null
           }
           {/* 回款计划 */}
