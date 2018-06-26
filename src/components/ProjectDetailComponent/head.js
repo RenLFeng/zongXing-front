@@ -1,8 +1,18 @@
 import React from 'react';
 import moment from 'moment';
+import Right from '../../components/ProjectDetailComponent/time';
 import {IMG_BASE_URL} from '../../common/systemParam';
 
 export default class Head extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      projectDetail: {},
+      countDay: 0,
+      countDown: '00 : 00 : 00'
+    };
+    this.countDown = null;
+  }
   render() {
     let video_src = '';
     const { projectDetail } = this.props;
@@ -13,8 +23,9 @@ export default class Head extends React.Component {
       }
     }
     return (
-      <div className="banner autosize pd-head">
+      <div className="banner autosize pd-head g">
         <img className="big" src={`${IMG_BASE_URL}/${projectDetail.fbanner_pic_path}`} />
+        <div className='masker'></div>
         <div className="w">
           <video className="video"
                  preload="metadata" controls="controls"
@@ -22,13 +33,24 @@ export default class Head extends React.Component {
                  src={video_src}>
             您的浏览器不支持视频播放，请升级浏览器
           </video>
-
-          <div className="info">
+          <div className="info clearfix pd-body">
             <p className="tit" style={{textAlign: 'left'}}>{projectDetail.fname}</p>
+            <p className="tit tit2" style={{textAlign: 'left'}}>
+              <span>信用评级:<i>{projectDetail.fleve_name}+</i></span>
+              <span>项目编号:<i>{projectDetail.fproject_no}</i></span>
+              <span>食品行业</span>
+            </p>
             <div className="user">
               <img className="av" src={require("../../assets/img/project-detail/av1.png")} />
-              <p className="t1" style={{textAlign: 'left'}}>{projectDetail.fnickname}</p>
+              <p className="t1" style={{textAlign: 'left'}}>{projectDetail.fname}</p>
               <p className="t2" style={{textAlign: 'left'}}>{moment(projectDetail.fpublish_time).format('YYYY年MM月DD日')} {projectDetail.fprovincial_name === projectDetail.fcity_name ? projectDetail.fprovincial_name : `${projectDetail.fprovincial_name} - ${projectDetail.fcity_name}`}</p>
+            </div>
+            <div className="fr rbody">
+              <Right
+                projectDetail={projectDetail}
+                history={this.props.history}
+                time={{countDay: this.state.countDay, countDown: this.state.countDown}}
+                />
             </div>
             <div className="data clearfix">
               <div>

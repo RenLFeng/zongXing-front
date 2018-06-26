@@ -1,6 +1,6 @@
 //优惠券交易中心
-import React from 'react'; 
-import Path from '../../common/pagePath'; 
+import React from 'react';
+import Path from '../../common/pagePath';
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import '../../assets/couponCenter/couponcenter.scss';
 import Coupon from '../common/Coupon';
@@ -17,8 +17,8 @@ class CouponCenter extends React.Component {
             coupons:[1,2,3,4,5]
          }
     }
-    render() { 
-        return ( 
+    render() {
+        return (
         <div className='coupon-center'>
             {/* 用户账户信息 */}
             <LoginInfo />
@@ -37,19 +37,19 @@ class CouponCenter extends React.Component {
                     <span className='text-2'>
                         <span>账户中还有</span>
                         <span>16张</span>
-                        <span>已领取的优惠券</span>  
+                        <span>已领取的优惠券</span>
                     </span>
                 </div>
                 {/* 我的优惠券 */}
-                <div className='coupon-items'> 
-                    <Coupon hasLine='true' giveFriend='赠送好友'></Coupon> 
-                    <Coupon hasLine='true' giveFriend='赠送好友' exchange='兑换'></Coupon> 
-                    <Coupon hasLine='true' exchange='兑换'></Coupon> 
-                    <Coupon hasLine='true'></Coupon> 
-                    <Coupon hasLine='true'></Coupon>  
-                </div> 
+                <div className='coupon-items'>
+                    <Coupon hasLine='true' giveFriend='赠送好友'></Coupon>
+                    <Coupon hasLine='true' giveFriend='赠送好友' exchange='兑换'></Coupon>
+                    <Coupon hasLine='true' exchange='兑换'></Coupon>
+                    <Coupon hasLine='true'></Coupon>
+                    <Coupon hasLine='true'></Coupon>
+                </div>
                 <div className='search-area'>
-                    {/* 搜索区域 */} 
+                    {/* 搜索区域 */}
                     <ul >
                         <li>
                             <span>面值：</span>
@@ -78,11 +78,11 @@ class CouponCenter extends React.Component {
                                 ))}
                             </p>
                         </li>
-                    </ul> 
+                    </ul>
                     <div className='coupons'>
                         {/* 优惠券中心 */}
-                        {this.state.coupons.map((item) => ( 
-                            <Coupon showVal='true' exchange='兑换'/> 
+                        {this.state.coupons.map((item) => (
+                            <Coupon showVal='true' exchange='兑换'/>
                         ))}
                     </div>
                     <div className='coupons-paging'>
@@ -94,10 +94,10 @@ class CouponCenter extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div> 
+            </div>
+        </div>
         )
     }
 }
- 
+
 export default CouponCenter;
