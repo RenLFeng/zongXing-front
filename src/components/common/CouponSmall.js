@@ -16,8 +16,8 @@ export default class CouponSmall extends React.Component {
     } 
 
     setCouponSmall(props){ 
-        let fflag_class ='';
-        let btn_text ='';
+        let fflag_class ='qsy';
+        let btn_text ='去使用';
         if(props.data){
             switch(props.data.fflag){
                 case 0:case 1:
@@ -67,7 +67,7 @@ export default class CouponSmall extends React.Component {
                 <div className='coupon-right'>
                     <img className="logo" src={this.state.data.flogo_pic||this.state.logo}/>
                     <p className='coupon-flag'>{this.state.btn_text}</p>
-                    <p className='coupon-count'>共 <span>8</span> 张</p>
+                    <p className='coupon-count'>共 <span>{this.state.data.countNum>0?this.state.data.countNum:1}</span> 张</p>
                 </div>
             </div> 
          )

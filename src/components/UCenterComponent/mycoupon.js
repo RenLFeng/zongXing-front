@@ -2,7 +2,7 @@ import React from 'react';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/mycoupon.scss';
 import Coupon from '../common/Coupon';
-import CouponSmall from '../common/CouponSmall';
+import CouponDetail from '../common/CouponDetail';
 import {CouponService} from '../../services/api2';
 import {getLoginData} from  '../../services/api.js'; 
 import { Pagination,message} from 'antd';
@@ -35,7 +35,7 @@ export default class  MyCoupon extends React.Component {
                 canConvert: 0,// 可兑换额度
             },
             data:[], 
-            activeCoupon:{},
+            fid:'',
         }
     }
     componentWillMount(){
@@ -130,8 +130,8 @@ export default class  MyCoupon extends React.Component {
     //去使用
     handlerShiyongClick=(fcoupon_id,data)=>{ 
         this.setState({
-            activeCoupon:data
-        },()=>{
+            fid:data.fid
+        },()=>{ 
             this.sideslip.showModal();
         }); 
     }
@@ -196,10 +196,8 @@ export default class  MyCoupon extends React.Component {
                     </div> 
                 </div>
                 <div className='slip_model'>
-                    <Sideslip ref={ref=>this.sideslip = ref}>
-                        <div className='mc-detail'>
-                            <CouponSmall data={this.state.activeCoupon}></CouponSmall>
-                        </div> 
+                    <Sideslip ref={ref=>this.sideslip = ref}> 
+                        <CouponDetail fid={this.state.fid}/> 
                     </Sideslip>
                 </div>
             </div>
