@@ -85,7 +85,7 @@ export default class Authentication extends React.Component {
       <div className="pages">
         <div className="real_title_">
           <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>安全中心</span>
-          <span>&gt; 身份认证 &gt; 中国大陆居民身份认证</span>
+          <span style={{fontSize: 16}}>&gt; 身份认证 &gt; 中国大陆居民身份认证</span>
         </div>
         {
           this.state.showPage === 'idcard' ?

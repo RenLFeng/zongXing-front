@@ -41,7 +41,7 @@ export default class BindSuccess extends React.Component {
         <div>
           <div className="real_title_">
             <span className="safeCenter_">实名认证</span>
-            <span> &gt; 身份认证 &gt; 身份认证成功</span>
+            <span style={{fontSize: 16}}> &gt; 身份认证 &gt; 身份认证成功</span>
           </div>
           { this.state.realName ? 
             <div className="bind_success_div">

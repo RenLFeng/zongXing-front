@@ -738,6 +738,55 @@ export async function receivePlanByTop() {
   return request(`${BASE_URL}/zjb-website/account/repayPlan/top`)
 }
 
+//校验邮箱是否存在
+export async function checkEmail(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/checkEmail?email=${param}`);
+}
+//邮箱绑定
+export async function bindEmail(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/bindEmail?email=${param}`);
+}
+
+//更改邮箱
+export async function UpdateEmail(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/updateEmail`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  });
+}
+
+//更改绑定邮箱
+export async function UpdateEmail_(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/bindingNewEmail`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  });
+}
+
+//修改登陆密码1
+export async function UpdatePass(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/updatePassword`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  });
+}
+
+//
+export async function changePass(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/verifyForPassword`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  });
+}
+
 // 获取回款计划页面下半部分数据
 export async function receivePlanByBottom(param) {
   return request(`${BASE_URL}/zjb-website/account/repayPlan/bottom/project`, {

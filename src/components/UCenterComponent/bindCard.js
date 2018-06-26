@@ -248,7 +248,7 @@ class BindCard extends React.Component {
       <div className="pages">
         <div className="real_title_">
           <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
-          <span>&gt; 我的银行卡 &gt; 绑定新银行卡</span>
+          <span style={{fontSize: 16}}>&gt; 我的银行卡 &gt; 绑定新银行卡</span>
         </div>
         <div className="forms">
           <div className="bind_item_view">

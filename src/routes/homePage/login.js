@@ -230,8 +230,7 @@ export default class Login extends React.Component {
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
                             placeholder="手机号|用户名" onBlur={()=>this.checkPhone()} onKeyDown={(e)=>this.pressKey(e)}/>
                             <i className="zjb zjb-shouji-copy" style={{position:'absolute',top:'4px',left:'11px',fontSize:25,color:'#d5d5d5'}}></i>
-                            <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
-                     
+                            <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>      
                       {
                         this.state.loginError ? this.state.loginNameErr?
                         <p className="registration-prompts_" >
