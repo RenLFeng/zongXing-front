@@ -5,6 +5,7 @@ import LeftMenu from '../UCenterComponent/leftMenu'
 import '../../assets/ucenter/receivePlan.scss';
 import LineReact from '../../components/Echarts/LineReact';
 import { receivePlanByTop, receivePlanByTime, receivePlanByBottom } from '../../services/api';
+import Sideslip from '../../components/Sideslip/Sideslip.js'
 export default class ReceivePlan extends React.Component {
   constructor(props) {
     super(props);
@@ -26,8 +27,15 @@ export default class ReceivePlan extends React.Component {
           interval: 1,
           name: '月'
         },
+        tooltip: {
+          trigger: 'axis'
+        },
         yAxis: {
           name: '元'
+        },
+        grid: {
+          width: 800,
+          left: '6%'
         },
         series: [{
           data: [],
@@ -41,6 +49,7 @@ export default class ReceivePlan extends React.Component {
         }]
       },
       lastRepayBill: null, // 最近一次回款计划
+      count: 0,
       showPro: true, // 按项目查看
       interest: 0, // 待收利息
       money: 0, // 待回款总额度
@@ -57,7 +66,10 @@ export default class ReceivePlan extends React.Component {
         pageSize: 4,
         pageCurrent: 1,
         total: 0
-      }
+      },
+      allMoney: 0, // 已回款总额
+      receivePrincipal: 0, //已收本金
+      receiveInterest: 0, //已收利息
     }
   }
 
@@ -83,6 +95,7 @@ export default class ReceivePlan extends React.Component {
         interest: response.data.interest,
         money: response.data.money,
         principal: response.data.principal,
+        count: response.data.count,
         lineOption: {
           xAxis: {
             type: 'value',
@@ -93,6 +106,19 @@ export default class ReceivePlan extends React.Component {
             scale: true,
             interval: 1,
             name: '月'
+          },
+          tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+              const data = params[0];
+              const money = data.data[1];
+              return `${data.axisValue}月
+              ${`${money}`.fm()}元`;
+            }
+          },
+          grid: {
+            width: 800,
+            left: '6%'
           },
           yAxis: {
             name: '元'
@@ -151,7 +177,10 @@ export default class ReceivePlan extends React.Component {
           ...this.state.proPageParam,
           total: response.data.totalNumber
         },
-        proPageList: response.data.infoList
+        proPageList: response.data.list,
+        allMoney: response.data.money, // 已回款总额
+        receivePrincipal: response.data.principal, //已收本金
+        receiveInterest: response.data.interest, //已收利息
       })
     } else {
       response.msg && message.error(response.msg);
@@ -195,11 +224,12 @@ export default class ReceivePlan extends React.Component {
     let success = true;
     return (
       <div>
+        <Sideslip ref={ref=>this.sideslip = ref}/>
         <LeftMenu param={this.props}/>
         <div className="fr uc-rbody"> 
           <div className="rp_top">
-            <span className="rp_top_left">回款计划</span>
-            <span className="rp_top_right">目前共有<span style={{color: '#ff9900'}}>8个</span>项目正在回款</span>
+            <span className="rp_top_left" onClick={()=>this.sideslip.showModal()}>回款计划</span>
+            <span className="rp_top_right">目前共有<span style={{color: '#ff9900'}}>{this.state.count}个</span>项目正在回款</span>
           </div>
           {this.state.lastRepayBill ? 
             <div className="rp_current_plan">
@@ -238,7 +268,9 @@ export default class ReceivePlan extends React.Component {
         <div className="fr uc-rbody rp" style={{marginTop: 35}}> 
           <div className="rp_top" style={{border: 0}}>
             <div className="rp_top_left">
-              <span className={`${this.state.showPro?'time_detail': 'time_detail_choose'}`} onClick={()=>this.setState({showPro: false})}>按时间查看</span><span style={{color: '#f3f3f3',fontSize: 18}}>丨</span><span className={`${this.state.showPro?'pro_detail_choose': 'pro_detail'}`} onClick={()=>this.setState({showPro: true})}>按项目查看</span>
+              <span className={`${this.state.showPro?'time_detail': 'time_detail_choose'}`} onClick={()=>this.setState({showPro: false})}>按时间查看</span>
+              <span style={{color: '#f3f3f3',fontSize: 18}}>丨</span>
+              <span className={`${this.state.showPro?'pro_detail_choose': 'pro_detail'}`} onClick={()=>{this.setState({showPro: true})}}>按项目查看</span>
             </div>
             {this.state.showPro ? null: 
               <div className="rp_top_right">
@@ -254,9 +286,9 @@ export default class ReceivePlan extends React.Component {
             <div>
               {
                 this.state.proPageList.length > 0 ? 
-                this.state.proPageList.map((data)=> {
+                this.state.proPageList.map((data, index)=> {
                   return (
-                    <ReceiveDetail id={data.projectNo} data={data}/> 
+                    <ReceiveDetail key={index} id={data.projectNo} data={data}/> 
                   )
                 }) : 
                 <span style={{width: '100%',fontSize: '18px', textAlign: 'center',color: '#a4a4a4', display: 'inline-block'}}>暂无数据</span>
@@ -268,7 +300,9 @@ export default class ReceivePlan extends React.Component {
               } 
               {this.state.proPageList.length > 0 ?
                 <span style={{display:'inline-block',width: '100%',textAlign: 'right', marginTop: 10,fontSize: 16, color: '#A4A4A4'}}>
-                  已回款总额：<span style={{color: '#ff9900'}}>￥{`500`.fm()}</span>&nbsp;已收本金：<span style={{color: '#ff9900'}}>￥{`500`.fm()}</span>&nbsp;已收利息：<span style={{color: '#ff9900'}}>￥{`500`.fm()}</span>
+                  已回款总额：<span style={{color: '#ff9900'}}>￥{`${this.state.allMoney}`.fm()}</span>
+                  &nbsp;已收本金：<span style={{color: '#ff9900'}}>￥{`${this.state.receivePrincipal}`.fm()}</span>
+                  &nbsp;已收利息：<span style={{color: '#ff9900'}}>￥{`${this.state.receiveInterest}500`.fm()}</span>
                 </span> : null} 
             </div> :
             <div className="rp_detail_time_div">
@@ -280,7 +314,7 @@ export default class ReceivePlan extends React.Component {
                       <span>{moment(data.fpayTime).format('YYYY/MM/DD')}</span>
                     </div>
                     <div className="rp_detail_time_item_center" >
-                      {
+                      { 
                         !data.ispay ? 
                         <div className="rp_detail_time_item_tip"/> :
                         <div className='rp_detail_time_item_tip_choose'>
@@ -352,11 +386,11 @@ class ReceiveDetail extends React.Component {
         { this.state.showCircle ?
         <div className="rp_detail_content">
           <p className="rp_pro_title">{data.projectName}</p>
-          {this.state.isComplete?null:
+          {this.state.data.flag==13?null:
             <p className="rp_pro_time" >{moment(data.minTime).format('YYYY/MM/DD')} - {moment(data.maxTime).format('YYYY/MM/DD')}</p>
           }
-          {this.state.isComplete?
-            <i className="zjb zjb-yiwancheng" style={{color: '#4cd964', fontSize: 150,marginLeft: 130}}/>:
+          {this.state.data.flag==13?
+            <i className="zjb zjb-yiwancheng" style={{color: '#4cd964', fontSize: 150,marginLeft: 130,display: 'inline-block',marginTop: -21,marginLeft: 128}}/>:
             <div style={{width: '100%', paddingLeft: 70,marginTop: '10px',marginBottom: '15px'}}>
               <CanvasCircle id={this.props.id} width={300} height={155} data={data.repayPlanByProjectInfoVos}/>
             </div> }
@@ -364,21 +398,21 @@ class ReceiveDetail extends React.Component {
             <div className="rp_pro_money_div">
               <div style={{width: `${100/3}%`,display: 'inline-block'}}>
                 <p className="rp_pro_label">利息收入</p>
-                <p className="rp_pro_value">{data.allInterest}元</p>
+                <p className="rp_pro_value">{data.allInterest.toString().fm()}元</p>
                 <p className="rp_pro_label" style={{marginTop: 10}}>投资金额</p>
-                <p className="rp_pro_value">{data.allInvMoney}元</p>
+                <p className="rp_pro_value">{data.allInvMoney.toString().fm()}元</p>
               </div>
               <div style={{width: `${100/3}%`,display: 'inline-block'}}>
                 <p className="rp_pro_label">待收本金</p>
-                <p className="rp_pro_value">{data.supulsPrincipal}元</p>
+                <p className="rp_pro_value">{data.supulsPrincipal.toString().fm()}元</p>
                 <p className="rp_pro_label" style={{marginTop: 10}}>已收本金</p>
-                <p className="rp_pro_value">{data.principal}元</p>
+                <p className="rp_pro_value">{data.principal.toString().fm()}元</p>
               </div>
               <div style={{width: `${100/3}%`,display: 'inline-block'}}>
                 <p className="rp_pro_label">待收利息</p>
-                <p className="rp_pro_value">{data.supulsInterest}元</p>
+                <p className="rp_pro_value">{data.supulsInterest.toString().fm()}元</p>
                 <p className="rp_pro_label" style={{marginTop: 10}}>已收利息</p>
-                <p className="rp_pro_value">{data.interest}元</p>
+                <p className="rp_pro_value">{data.interest.toString().fm()}元</p>
               </div>
             </div>
           </div>: 
@@ -435,13 +469,22 @@ class CanvasCircle extends React.Component {
     };
     console.log('this.state.list', this.state.list);
     let arr = [];
+    let status = {}
     for (let obj of this.state.list) {
-      if (obj.fispay) {
-        data.current += 1;
-        arr.push({status: 2});
+      if (obj.overdueMoney > 0) {
+        status.status = 3
+        if (obj.fispay) {
+          data.current += 1;
+        }
       } else {
-        arr.push({status: 1});
+        if (obj.fispay) {
+          data.current += 1;
+          status.status = 2;
+        } else {
+          status.status = 1;
+        }
       }
+      arr.push(status);
       if (obj.iscurrent) {
         data.allMoney = obj.allMoney; // 总金额
         data.principal = obj.principal; // 本金
@@ -489,14 +532,14 @@ class CanvasCircle extends React.Component {
     cxt.beginPath();
     cxt.font="14px Microsoft YaHei";
     cxt.fillStyle = '#999';
-    cxt.fillText(`佣金 ${obj.kickBack}`,215,90);
-    cxt.fillText(`利息 ${obj.interest}`,215,72);
-    cxt.fillText(`本金 ${obj.principal}`,215,55);
+    cxt.fillText(`佣金 ${`${obj.kickBack}`.fm()}`,215,90);
+    cxt.fillText(`利息 ${`${obj.interest}`.fm()}`,215,72);
+    cxt.fillText(`本金 ${`${obj.principal}`.fm()}`,215,55);
     cxt.stroke();
     cxt.beginPath();
     cxt.fillStyle = '#ff9900';
     cxt.font="16px Microsoft YaHei";
-    cxt.fillText(`￥${obj.allMoney}`,210,35);
+    cxt.fillText(`￥${`${obj.allMoney}`.fm()}`,210,35);
     cxt.stroke();
     cxt.beginPath();
     cxt.fillStyle = '#84e192';
