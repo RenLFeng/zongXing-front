@@ -786,3 +786,13 @@ export async function changePass(param) {
     },
   });
 }
+
+// 获取回款计划页面下半部分数据
+export async function receivePlanByBottom(param) {
+  return request(`${BASE_URL}/zjb-website/account/repayPlan/bottom/project`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  });
+}

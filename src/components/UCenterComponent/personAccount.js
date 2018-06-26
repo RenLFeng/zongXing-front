@@ -461,28 +461,28 @@ export default class PersonAccount extends React.Component {
         <div className="fr uc-rbody" style={{backgroundColor: '#F5F5F5',padding: 0}}>
           <div className="per_account">
             <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>
-              <i>账户总资产</i>
-              <b>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</b>
-              <em>单位：元</em>
+              <i style={{fontSize: '20px',lineHeight: '14px',marginRight: '18px'}}>账户总资产</i>
+              <b style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</b>
+              <em style={{marginTop: 0}}>单位：元</em>
             </div>
-            <div className="tright hd1">
+            <div className="tright hd1" style={{margin: '10px 0 10px 0'}}>
               <a className="fl" style={{cursor: 'default'}}>
-                <i>累计充值</i>
+                <i>累计利息收益</i>
                 <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
               </a>
               <a className="fl" style={{cursor: 'default'}}>
-                <i>累计提现</i>
+                <i>累计投资金额</i>
                 <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
               </a>
             </div>
-            <div className="border shadow box1" style={{marginTop: 90}}>
-              <div className="pieDiv">
+            <div className="border shadow box1" style={{marginTop: 70}}>
+              <div className="pieDiv" style={{left: '60px'}}>
                 <div>
                   <span style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</span>
                   <span style={{fontSize: '14px'}}>账户总资产</span>
                 </div>
               </div>
-              <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
+              <PieReact width='600px' height="200px"  option={this.state.pieOption}/>
             </div>
           </div>
           {/* 未领取优惠券 */}
