@@ -51,6 +51,7 @@ export default class ProjectDetail extends React.Component {
         });
         marker.setMap(map);
       }
+      console.log(this.state.projectDetail);
     } else {
       message.error(response.msg);
     }
@@ -75,8 +76,8 @@ export default class ProjectDetail extends React.Component {
     return (
       <div>
         <Head projectDetail={projectDetail}/>
-        <div className="w clearfix pd-body">
-          <div className="fl lbody shadow">
+        <div className="w clearfix pd-body pd-body2">
+          <div className="fl lbody shadow g">
             <div className="tnav">
               <a onClick={()=>this.setState({titleFlag: false})} className="hover">借款项目</a>
               <a onClick={()=>this.setState({titleFlag: false})}>投前咨询{this.state.projectDetail.topicCount? <em>{this.state.projectDetail.topicCount}</em> : null}</a>

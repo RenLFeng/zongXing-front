@@ -2,20 +2,22 @@ import './index.scss';
 import {knob} from '../common/module/knob';
 
 export default function () {
+
     initPage();
     bindEvent();
 }
 
 function initPage() {
     knob();
+  imgEvent();
 }
 
 function bindEvent() {
-    // leftNav();
-    // picView();
+    leftNav();
+     //picView();
     comment();
 
-    $('.pd-body .tnav>a').on('click', function () {
+    $('.pd-body2 .tnav>a').on('click', function () {
         let $t = $(this);
         $t.addClass('hover').siblings().removeClass('hover');
         $('.pd-con').addClass('none').eq($t.index()).removeClass('none');
@@ -23,27 +25,30 @@ function bindEvent() {
             genzong();
         }
     });
+  $('.imgsdiv .box').on('click', 'a', function () {
+    $(this).addClass('hover').siblings().removeClass('hover');
+  });
     rightEvent();
 }
 
 function leftNav() {
-    let nav = $('.pd-body>.lbody .lnav');
+    let nav = $('.pd-body2>.lbody .lnav');
     nav.on('click', 'a', function () {
         let $t = $(this);
         //$t.addClass('hover').siblings().removeClass('hover');
-        let $d = $('.pd-body>.lbody .textbox').eq($t.index());
+        let $d = $('.pd-body2>.lbody .textbox').eq($t.index());
         av.top($d.offset().top - 20);
     });
     let t0 = parseInt(nav.css('top'), 10);
     $(window).on('scroll', function () {
         let top = av.top();
-        let t1 = top - $('.pd-body').offset().top;
+        let t1 = top - $('.pd-body2').offset().top;
         if (t1 > t0) {
             nav.addClass('fixed');
         } else {
             nav.removeClass('fixed');
         }
-        $('.pd-body>.lbody .textbox').each(function (i, e) {
+        $('.pd-body2>.lbody .textbox').each(function (i, e) {
             if ($(e).offset().top - 30 < top) {
                 nav.find('a').eq(i).addClass('hover').siblings().removeClass('hover');
             }
@@ -115,19 +120,39 @@ function rightEvent() {
     // }
     // $('.pd-data .list').append(ss);
 
-    $('.pd-body>.rbody .box1 .bot .btn').on('click', function () {
-        $('.pd-data').before('<div class="_masker"></div>');
-        $('.pd-data').removeClass('none').css('top', av.top() + 50 + 'px');
+    $('.pd-body>.rbody .box2 .bot1 .btn').on('click', function () {
+        //$('.pd-data').before('<div class="_masker"></div>');
+        //$('.pd-data').removeClass('none').css('top', av.top() + 50 + 'px');
     });
     $('.pd-data .close').on('click', function () {
         $('._masker').remove();
         $('.pd-data').addClass('none');
     });
 
-    $('.pd-body>.rbody .box2 .bot1 .btn').on('click', function () {
-
+    $('.pd-body>.rbody .box2 .bot1 .btn2').on('click', function () {
+      //$('.pd-form').before('<div class="_masker"></div>');
+      //$('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
     });
     $('.pd-form .close,.pd-form .btn2').on('click', function () {
-
+      $('._masker').remove();
+      $('.pd-form').addClass('none');
     });
+}
+function imgEvent(){
+  (function(){
+    let $imgData=$(".imgsdiv>.fr .box a");
+    let box=$(".imgsdiv>.fr .box").css("width",$imgData.length*$imgData.eq(0).outerWidth()+"px");
+
+    let str="";
+    if($imgData.length<=3){
+      for(let j=0;j<$imgData.length;j++){
+        str+='<div class="bigpic" style="background-image:url('+$imgData.eq(j).data("big")+')"></div>';
+      }
+      $(".imgsdiv>.fr,.imgsdiv> .btn").hide();
+      $(".imgsdiv>.fl").addClass("len").html(str);
+    }else if($imgData.length==4){
+      $(".imgsdiv> .btn").hide();
+      $(".imgsdiv>.fr .box").css({"left":"50%","marginLeft":-$imgData.length*$imgData.eq(0).outerWidth()/2})
+    }
+  })();
 }
