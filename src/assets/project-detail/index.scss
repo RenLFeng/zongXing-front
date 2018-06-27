@@ -119,6 +119,9 @@
     }
 }
 .pd-head.g{
+  .w{
+    top: 50px;
+  }
   .masker{
     position: absolute;
     width:100%;
@@ -175,6 +178,7 @@
       .box1 {
         background: none;
         border:none;
+        box-shadow: none;
         padding: 30px 0;
         .trow .day,.trow .time{
           background: #fff;
@@ -239,7 +243,7 @@
         .bot{
           position: absolute;
           left: 50px;
-          bottom: -225px;
+          bottom: -150px;
           a{
             text-decoration: none;
             height: 50px;
