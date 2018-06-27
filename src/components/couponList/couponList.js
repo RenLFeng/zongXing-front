@@ -12,12 +12,12 @@ export default class CouponList extends React.Component {
       top: 0, // top值60 分割400
     }
   }
-  
+
   render() {
     return (
       <div className="cl_coupon">
         <div className="cl_coupon_detail" onMouseOver={()=>this.setState({show: true})}>
-          <CouponSmall />
+          <CouponSmall data={{}}/>
         </div>
         { !this.state.show? null: 
           <div className="cl_coupon_list" onMouseLeave={()=>this.setState({show: false})}>
