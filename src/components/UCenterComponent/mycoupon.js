@@ -2,10 +2,9 @@ import React from 'react';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/mycoupon.scss';
 import Coupon from '../common/Coupon';
-import CouponSmall from '../common/CouponSmall';
+import CouponDetail from '../common/CouponDetail';
 import {CouponService} from '../../services/api2';
-import {getLoginData} from  '../../services/api.js';
-import { get } from 'http';
+import {getLoginData} from  '../../services/api.js'; 
 import { Pagination,message} from 'antd';
 import { connect } from 'dva';
 import Sideslip from '../Sideslip/Sideslip';
@@ -25,7 +24,6 @@ export default class  MyCoupon extends React.Component {
             totalNum:0,
             lables:[
                 {flag:1,lable:'待领取',val:0},
-                // {flag:1,lable:'待生效',val:0},
                 {flag:2,lable:'待消费',val:0},
                 {flag:3,lable:'兑换券',val:0},
                 {flag:4,lable:'已使用',val:0},
@@ -36,20 +34,8 @@ export default class  MyCoupon extends React.Component {
                 allmoney: 0 , //总额度
                 canConvert: 0,// 可兑换额度
             },
-            data:[],
-            coupon:{
-                fproject_no:'P18060007',
-                fid:2,
-                ffull_sub_condition:100,
-                ffull_sub_money:30,
-                fname:'陕西魏家凉皮优惠券',
-                fbus_type:'xfw',
-                fuser_place:'西安',
-                fend_time_str:'2018年12月30日',
-                flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-                fsurplus_num:9, 
-                ffalg:1
-            }
+            data:[], 
+            fid:'',
         }
     }
     componentWillMount(){
@@ -142,18 +128,19 @@ export default class  MyCoupon extends React.Component {
         }
     }
     //去使用
-    handlerShiyongClick=async(fcoupon_id,data)=>{
-        message.info(fcoupon_id);
-        console.log(data);
-        this.sideslip.showModal();
+    handlerShiyongClick=(fcoupon_id,data)=>{ 
+        this.setState({
+            fid:data.fid
+        },()=>{ 
+            this.sideslip.showModal();
+        }); 
     }
     //点击兑换
     handlerExchangeClick=async (couponId,pieces)=>{ 
         let rest = await CouponService.convertCoupon({
             couponId :couponId,
             pieces:pieces,
-        }); 
-        console.log(rest);
+        });  
         if(rest.code===0){
             message.info(rest.msg);
             this.getSlelectLable();
@@ -161,9 +148,7 @@ export default class  MyCoupon extends React.Component {
         }else{
             rest.msg && message.error(rest.msg);
         }
-    }
-
-
+    } 
     render() { 
         return (
             <div>
@@ -208,15 +193,13 @@ export default class  MyCoupon extends React.Component {
                                     <Pagination   current={this.state.currPage} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
                                 </div>:null
                         } 
-                    </div>
-                    {/* <CouponSmall data={{fflag:1}}/>
-                    <CouponSmall data={{fflag:2}}/>
-                    <CouponSmall data={{fflag:4}}/>
-                    <CouponSmall data={{fflag:5}}/> */}
+                    </div> 
                 </div>
-                {/* <Sideslip ref={ref=>this.sideslip = ref}>
-                      
-                </Sideslip> */}
+                <div className='slip_model'>
+                    <Sideslip ref={ref=>this.sideslip = ref}> 
+                        <CouponDetail fid={this.state.fid}/> 
+                    </Sideslip>
+                </div>
             </div>
         )
     }
