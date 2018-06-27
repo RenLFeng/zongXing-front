@@ -2,11 +2,16 @@ import React from 'react';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/mycoupon.scss';
 import Coupon from '../common/Coupon';
+import CouponDetail from '../common/CouponDetail';
 import {CouponService} from '../../services/api2';
-import { get } from 'http';
+import {getLoginData} from  '../../services/api.js'; 
 import { Pagination,message} from 'antd';
-  
-class MyCoupon extends React.Component {
+import { connect } from 'dva';
+import Sideslip from '../Sideslip/Sideslip';
+
+@connect((state)=>({ 
+  })) 
+export default class  MyCoupon extends React.Component {
     // "flag":1,   状态    0：待生效   1.待领取， 2：正常  3:兑换券  4：过期  5.已使用 
     constructor(props){
         super(props); 
@@ -19,7 +24,6 @@ class MyCoupon extends React.Component {
             totalNum:0,
             lables:[
                 {flag:1,lable:'待领取',val:0},
-                // {flag:1,lable:'待生效',val:0},
                 {flag:2,lable:'待消费',val:0},
                 {flag:3,lable:'兑换券',val:0},
                 {flag:4,lable:'已使用',val:0},
@@ -30,24 +34,18 @@ class MyCoupon extends React.Component {
                 allmoney: 0 , //总额度
                 canConvert: 0,// 可兑换额度
             },
-            data:[],
-            coupon:{
-                fproject_no:'P18060007',
-                fid:2,
-                ffull_sub_condition:100,
-                ffull_sub_money:30,
-                fname:'陕西魏家凉皮优惠券',
-                fbus_type:'xfw',
-                fuser_place:'西安',
-                fend_time_str:'2018年12月30日',
-                flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-                fsurplus_num:9, 
-                ffalg:1
-            }
+            data:[], 
+            fid:'',
         }
     }
     componentWillMount(){
         this.getSlelectLable();
+    }
+    async reashLoginData(){
+        const response = await getLoginData(); 
+        if (response.code === 0) {
+            this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
+        }
     }
     //获取顶部查询列表
     async getSlelectLable(){ 
@@ -118,7 +116,7 @@ class MyCoupon extends React.Component {
         });  
     }
     //点击领取
-    handlerBtnClick =async (fcoupon_id)=>{
+    handlerLingquClick =async (fcoupon_id)=>{
         let rest = await CouponService.receiveCoupon({
             couponId :fcoupon_id
         }); 
@@ -129,22 +127,28 @@ class MyCoupon extends React.Component {
             rest.msg && message.error(rest.msg);
         }
     }
-
+    //去使用
+    handlerShiyongClick=(fcoupon_id,data)=>{ 
+        this.setState({
+            fid:data.fid
+        },()=>{ 
+            this.sideslip.showModal();
+        }); 
+    }
     //点击兑换
     handlerExchangeClick=async (couponId,pieces)=>{ 
         let rest = await CouponService.convertCoupon({
             couponId :couponId,
             pieces:pieces,
-        }); 
-        console.log(rest);
+        });  
         if(rest.code===0){
             message.info(rest.msg);
             this.getSlelectLable();
+            this.reashLoginData();
         }else{
             rest.msg && message.error(rest.msg);
         }
-    }
-
+    } 
     render() { 
         return (
             <div>
@@ -174,13 +178,13 @@ class MyCoupon extends React.Component {
                         {
                             this.state.data.map((item,index)=>{ 
                                 if(item.fflag==1){
-                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerBtnClick} ></Coupon> </div>
+                                    return <div  key={item.fid}>  <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerLingquClick} ></Coupon> </div>
                                 }else if(item.fflag==2){
-                                    return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true' giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
+                                    return <div  key={item.fid}>  <Coupon  data={item}   showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
                                 }else if(item.fflag==3){
-                                    return <div  key={item.fid}> <Coupon  data={item} showVal='true'  hasLine='true' giveFriend='赠送好友'></Coupon> </div>  
+                                    return <div  key={item.fid}>  <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友'></Coupon> </div>  
                                 }else{
-                                    return <div  key={item.fid}> <Coupon  data={item}   showVal='true'  hasLine='true'></Coupon> </div>
+                                    return <div  key={item.fid}>  <Coupon  data={item}   showVal='true'  hasLine='true'></Coupon> </div>
                                 } 
                             })
                         }  
@@ -189,11 +193,14 @@ class MyCoupon extends React.Component {
                                     <Pagination   current={this.state.currPage} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
                                 </div>:null
                         } 
-                    </div>
-                </div> 
+                    </div> 
+                </div>
+                <div className='slip_model'>
+                    <Sideslip ref={ref=>this.sideslip = ref}> 
+                        <CouponDetail fid={this.state.fid}/> 
+                    </Sideslip>
+                </div>
             </div>
         )
     }
-}
- 
-export default MyCoupon;
+} 

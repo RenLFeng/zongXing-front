@@ -40,8 +40,7 @@ class LoginInfo extends React.Component {
                 var $element=$marquee.children();	//滚动元素
                 var $kids=$element.children();		//滚动子元素
                 var scrollSize=0;					//滚动元素尺寸
-    
-                console.log('子元素',$kids)
+     
                 //滚动类型，1左右，0上下
                 var _type=(opts.direction=="left"||opts.direction=="right") ? 1:0;
     

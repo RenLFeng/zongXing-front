@@ -6,6 +6,7 @@ import '../../assets/ucenter/receivePlan.scss';
 import LineReact from '../../components/Echarts/LineReact';
 import { receivePlanByTop, receivePlanByTime, receivePlanByBottom } from '../../services/api';
 import Sideslip from '../../components/Sideslip/Sideslip.js'
+import CouponList from '../../components/couponList/couponList.js';
 export default class ReceivePlan extends React.Component {
   constructor(props) {
     super(props);
@@ -224,7 +225,6 @@ export default class ReceivePlan extends React.Component {
     let success = true;
     return (
       <div>
-        <Sideslip ref={ref=>this.sideslip = ref}/>
         <LeftMenu param={this.props}/>
         <div className="fr uc-rbody"> 
           <div className="rp_top">

@@ -11,10 +11,7 @@ export default class Sideslip extends React.Component {
     }
   }
 
-  componentDidMount() {
-    setTimeout(()=>{
-      this.showModal();
-    },2000);
+  componentDidMount() { 
   }
 
   hideModal() {

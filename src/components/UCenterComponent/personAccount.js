@@ -6,11 +6,13 @@ import Path from '../../common/pagePath';
 import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
-import { Modal, Button,Table } from 'antd';
+import { Modal, Button,Table,message, Pagination } from 'antd';
 import Coupon from '../common/Coupon';
 import '../../assets/personal/personal.scss';
 import Statement from '../common/Statement';
-import {accountService} from '../../services/api2.js'; 
+import { accountService, CouponService } from '../../services/api2.js'; 
+import { repayPlan, getAccountCoupon, getLoginData } from '../../services/api.js';
+import CouponSmall from '../../components/common/CouponSmall';
 
 @connect((state)=>({
   personal: state.account.personal,
@@ -112,7 +114,7 @@ export default class PersonAccount extends React.Component {
           }
         ]
       },
-    // 个人账户 折线图
+      // 个人账户 折线图
       lineOption: {
         xAxis: {
           type: 'value',
@@ -139,35 +141,18 @@ export default class PersonAccount extends React.Component {
         }]
       },
       couponList: [
-        {
-          fproject_no:'P18060007',
-          fid:2,
-          ffull_sub_condition:100,
-          ffull_sub_money:30,
-          fname:'陕西魏家凉皮优惠券',
-          fbus_type:'xfw',
-          fuser_place:'西安',
-          fend_time_str:'2018年12月30日',
-          flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-          fsurplus_num:9,
-          ffalg:5
-        }, {
-          fproject_no:'P18060007',
-          fid:2,
-          ffull_sub_condition:100,
-          ffull_sub_money:30,
-          fname:'陕西魏家凉皮优惠券',
-          fbus_type:'xfw',
-          fuser_place:'西安',
-          fend_time_str:'2018年12月30日',
-          flogo_pic:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/company-logo.jpg',//企业logo
-          fsurplus_num:9,
-          ffalg:1
-        }
       ],
+      allMoney: 0, // 待收总额
+      daishoubenjin: 0, // 待收本金
+      daishoulixi: 0,//待收利息
       showType: 'biaoge',
       reMoneyList: [{name: 1}, {name: 2}],
-      infoList: []
+      infoList: [],
+      pageParam: {
+        pageCurrent: 1,
+        pageSize: 10,
+        total: 0,
+      },
     };
     this.reMoneyColumn = [
       {
@@ -233,6 +218,7 @@ export default class PersonAccount extends React.Component {
     this.getInitData();
     this.initFetchSafeData();
     this.getAccountStatement();
+    
   }
 
   // 初始化安全中心首页数据
@@ -241,6 +227,81 @@ export default class PersonAccount extends React.Component {
       type: 'safeCenter/getSafe',
     });
   };
+
+  // 获取优惠券数据
+  async getCouponList() {
+    if (this.state.loadingPage) {
+      return;
+    }
+    this.setState({loadingPage: true});
+    const response= await getAccountCoupon(this.state.pageParam);
+    this.setState({loadingPage: false});
+    console.log('getCouponList', response);
+    if (response.code === 0) {
+      this.setState({
+        pageParam: {
+          ...this.state.pageParam,
+          total: response.data.totalNumber
+        },
+        couponList: response.data.infoList
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
+  // 获取回款计划折线图数据
+  async getReceivePlan() {
+    const response = await repayPlan();
+    console.log('getReceivePlan', response);
+    if (response.code === 0) {
+      let planArr = [];
+      for (let obj of response.data.list) {
+        planArr.push([obj.month, obj.money])
+      }
+      this.setState({
+        allMoney:  response.data.money, // 待收总额
+        daishoubenjin: response.data.principal, // 待收本金
+        daishoulixi: response.data.interest,//待收利息
+        lineOption: {
+          tooltip : {
+            trigger: 'axis',
+            formatter: function (params) {
+              params = params[0];
+              return `${params.axisValue}月
+              回款${params.data[1]}元`
+            },
+          },
+          xAxis: {
+            type: 'value',
+            nameLocation: 'end',
+            minInterval: 1,
+            min: 1,
+            max: 12,
+            scale: true,
+            interval: 1,
+            name: '月'
+          },
+          yAxis: {
+            name: '元'
+          },
+          series: [{
+            data: planArr,
+            type: 'line',
+            lineStyle: {
+              color: '#FEA063'
+            },
+            itemStyle: {
+              color: '#28F3AD'
+            }
+          }]
+        },
+      })
+    } else {
+      response.msg && message.error(response.mag);
+    }
+
+  }
 
   getInitData() {
     this.props.dispatch({
@@ -283,13 +344,14 @@ export default class PersonAccount extends React.Component {
     if (this.props.personal !== nextProps.personal) {
       const money = nextProps.personal.totalAssets;
       const data = nextProps.personal;
+      this.getReceivePlan();
+      this.getCouponList();
       // 回款计划
       const plan = nextProps.personal.plan?nextProps.personal.plan: [];
       let planArr = [];
       for (let obj of plan) {
         planArr.push([obj.month, obj.money])
       }
-      
       this.setState({
         pieOption: {
           tooltip: {
@@ -380,40 +442,8 @@ export default class PersonAccount extends React.Component {
             }
           ]
         },
-        lineOption: {
-          tooltip : {
-            trigger: 'axis',
-            formatter: function (params) {
-              params = params[0];
-              return `${params.axisValue}月
-              回款${params.data[1]}元`
-            },
-          },
-          xAxis: {
-            type: 'value',
-            nameLocation: 'end',
-            minInterval: 1,
-            min: 1,
-            max: 12,
-            scale: true,
-            interval: 1,
-            name: '月'
-          },
-          yAxis: {
-            name: '元'
-          },
-          series: [{
-            data: planArr,
-            type: 'line',
-            lineStyle: {
-              color: '#FEA063'
-            },
-            itemStyle: {
-              color: '#28F3AD'
-            }
-          }]
-        },
-      })
+        
+      });
     }
   }
 
@@ -424,6 +454,36 @@ export default class PersonAccount extends React.Component {
     console.log(accoundId);
     this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
   };
+
+  clickCoupon = (data) => {
+    console.log(data);
+    if (data.fflag == 1) {
+      this.receiveCoupon(data.fcoupon_id)
+    }
+  };
+
+  // 领取优惠券
+  async receiveCoupon(fid) {
+    if (this.state.receiveLoading) {
+      return;
+    }
+    this.setState({receiveLoading: true});
+    const response = await CouponService.receiveCoupon({couponId :fid});
+    this.setState({receiveLoading: false});
+    if (response.code === 0) {
+      this.getCouponList();
+      this.reashLoginData();
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
+  async reashLoginData(){
+    const response = await getLoginData(); 
+    if (response.code === 0) {
+        this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
+    }
+  }
 
   render() {
     const { openStatus, errorMessage } = this.props;
@@ -455,6 +515,9 @@ export default class PersonAccount extends React.Component {
         </div>
       );
     }
+    if (this.props.personal.totalAssets.totalAssets==null) {
+      return null;
+    }
     return (
       <div>
         <LeftMenu param={this.props}/>
@@ -468,11 +531,11 @@ export default class PersonAccount extends React.Component {
             <div className="tright hd1" style={{margin: '10px 0 10px 0'}}>
               <a className="fl" style={{cursor: 'default'}}>
                 <i>累计利息收益</i>
-                <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
+                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInterest+'').fm()}</b>
               </a>
               <a className="fl" style={{cursor: 'default'}}>
                 <i>累计投资金额</i>
-                <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
+                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInvMoney+'').fm()}</b>
               </a>
             </div>
             <div className="border shadow box1" style={{marginTop: 70}}>
@@ -487,49 +550,33 @@ export default class PersonAccount extends React.Component {
           </div>
           {/* 未领取优惠券 */}
           { this.state.couponList.length >0 ?
-            <div className="per_account coupon_list" style={{marginTop: 30}}>
-              <span className="tips">您有多少张优惠券待领取 有多少张优惠券即将过期</span>
+            <div className="per_account coupon_list" style={{marginTop: 30, clear: 'both'}}>
+              <span className="tips">{this.props.personal.totalAssets.receiveCoupon?`您有${this.props.personal.totalAssets.receiveCoupon}张优惠券待领取`:''} {this.props.personal.totalAssets.willExpireCoupon?`有${this.props.personal.totalAssets.willExpireCoupon}张优惠券即将过期`:''}</span>
               {this.state.couponList.map((data, index)=>{
                 return (
-                  <Coupon key={index} data={data} hasLine='true' handlerBtnClick={(id,data)=>{
-                    console.log(id);
-                    console.log(data);
-                    }}/>
+                  <CouponSmall key={index} data={data} hasLine='true' handlerBtnClick={this.clickCoupon}/>
                 );
               })}
+              {
+                Math.ceil(this.state.pageParam.total/this.state.pageParam.pageSize)>1?<div style={{widht: '100%', textAlign: 'center'}}>
+                    <Pagination current={this.state.pageParam.currPage} pageSize={this.state.pageParam.pageSize} onChange={this.handlerPageChange} total={this.state.pageParam.total} />
+                </div>:null
+            } 
             </div> : null
           }
           {/* 回款计划 */}
           <div className="per_account" style={{marginTop: 30}}>
             <div className="return_money">
               <em>回款计划</em>
-              <span>更多>></span>
+              <span style={{color: '#d6d6d6', cursor: 'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/receivePlan')}>更多>></span>
             </div>
             <div className="return_money_desc" style={{marginTop: 20}}>
-              <span>待收总额：172,581.00 &nbsp;&nbsp; 待收本金：170,000.00 &nbsp;&nbsp; 待收利息：2581.00</span>
-              <div className="icon_btn">
-                <i className={`zjb zjb-biaoge btn ${this.state.showType==='biaoge'?'orange_font':''}`} style={{fontSize: 20,marginRight: 10}} onClick={()=>this.setState({showType: 'biaoge'})}/>
-                <i className={`zjb zjb-shuju01 btn ${this.state.showType==='shuju'?'orange_font':''}`} style={{fontSize: 22}} onClick={()=>this.setState({showType: 'shuju'})}/>
-              </div>
-              { this.state.showType === 'shuju'?
-                <div style={{marginTop: 20}}>
-                  <LineReact height="450px" width="900px" option={this.state.lineOption}/>
-                </div> :
-                <div className="table_div">
-                  <Table
-                    dataSource={this.state.reMoneyList}
-                    columns={this.reMoneyColumn}
-                    bordered
-                    size="small"
-                    scroll={{y: 300}}
-                    pagination={{
-                      showTotal: (total, range)=>{
-                        return <span className="table_count_text" style={{color: '#C9C9C9'}}>共{total}条数据</span>
-                      }
-                    }}
-                  />
-                </div>
-              }
+              <span style={{color: '#666', marginRight: 100}}>待收总额：{`${this.state.allMoney}`.fm()}</span>
+              <span style={{color: '#666', marginRight: 100}}>待收本金：{`${this.state.daishoubenjin}`.fm()}</span>
+              <span style={{color: '#666'}}>待收利息：{`${this.state.daishoulixi}`.fm()}</span>
+              <div style={{marginTop: 20}}>
+                <LineReact height="450px" width="900px" option={this.state.lineOption}/>
+              </div> 
             </div>
           </div>
 
@@ -537,7 +584,7 @@ export default class PersonAccount extends React.Component {
           <div className="per_account" style={{marginTop: 30}}>
             <div className="return_money">
               <em>资金动态</em>
-              <span>更多>></span>
+              <span style={{color: '#d6d6d6', cursor: 'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/accountstatement')}>更多>></span>
             </div>
             <p style={{color: '#c9c9c9',marginBottom: 20}}>以下为您近期最新10笔资金动态</p>
             {
