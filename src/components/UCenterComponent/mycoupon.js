@@ -193,9 +193,9 @@ export default class  MyCoupon extends React.Component {
                                     <Pagination   current={this.state.currPage} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
                                 </div>:null
                         } 
-                    </div> 
+                    </div>  
                 </div>
-                <div className='slip_model'>
+                <div className='slip_model'> 
                     <Sideslip ref={ref=>this.sideslip = ref}> 
                         <CouponDetail fid={this.state.fid}/> 
                     </Sideslip>
