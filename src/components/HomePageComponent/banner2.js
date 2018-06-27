@@ -21,7 +21,6 @@ export default class Banner extends React.Component {
         show: true
       });
     }, 100)
-
   }
   jumpPage() {
     if (this.props.login) {
@@ -67,7 +66,7 @@ export default class Banner extends React.Component {
             <span className="h"><i className="f">成功获得</i></span>&nbsp;
             <span className="h"><i className="f"></i>丰厚回报</span>
           </p>
-          <p className="t2" style={{display: `${this.state.show?'block':'none'}`}}>
+          <p className="t2">
             <a className="btn finance" onClick={()=>this.jumpPage()}>我要借款</a>
             <a className="btn invest" onClick={()=>this.jumpPage()}>我要投资</a>
           </p>

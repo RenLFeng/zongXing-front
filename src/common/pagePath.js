@@ -42,8 +42,8 @@ export default {
   RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
   ACCOUNT_STATEMENT:'/index/uCenter/accountstatement',  //资金动态
   MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
-
   COUPON_CENTER:'/index/couponCenter',//优惠券交易中心
+  My_INVITATION_CODE:'/index/uCenter/myinvitationcode',
 
 
   NOTICE_DETAIL: '/infor/plantNotice', //平台公告页面

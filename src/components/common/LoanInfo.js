@@ -77,6 +77,7 @@ class LoanInfo extends React.Component {
 
   render() { 
 	const Step = Steps.Step;
+	
 	//投资
     const tableColumn = [{
         title: '期数', 
