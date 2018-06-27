@@ -146,6 +146,11 @@ export default class Investment extends React.Component {
         this.getMyinvest();
     });  
  }
+
+ handllerTZClick = (id, data) =>{
+  console.log(id, data)
+  this.props.history.push(`/index/projectDetail/${data.projectId}`)
+ }
   
   render() { 
     return (
@@ -175,7 +180,7 @@ export default class Investment extends React.Component {
             }
             {
               this.state.list.map(item=>{
-                return <LoanInfo key={item.projectId} data={item} /> 
+                return <LoanInfo key={item.projectId} data={item} handllerTZClick={this.handllerTZClick}/> 
               })
             } 
             {
