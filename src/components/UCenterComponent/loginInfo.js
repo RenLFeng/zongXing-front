@@ -30,100 +30,136 @@ class LoginInfo extends React.Component {
 
     componentDidUpdate() {
        
-        $.fn.kxbdMarquee=function(options){
-            var opts=$.extend({},$.fn.kxbdMarquee.defaults, options);
-            return this.each(function(){
-                var $marquee=$(this);				//滚动元素容器
-                var _scrollObj=$marquee.get(0);		//滚动元素容器DOM
-                var scrollW=$marquee.width();		//滚动元素容器的宽度
-                var scrollH=$marquee.height();		//滚动元素容器的高度
-                var $element=$marquee.children();	//滚动元素
-                var $kids=$element.children();		//滚动子元素
-                var scrollSize=0;					//滚动元素尺寸
+        // $.fn.kxbdMarquee=function(options){
+        //     var opts=$.extend({},$.fn.kxbdMarquee.defaults, options);
+        //     return this.each(function(){
+        //         var $marquee=$(this);				//滚动元素容器
+        //         var _scrollObj=$marquee.get(0);		//滚动元素容器DOM
+        //         var scrollW=$marquee.width();		//滚动元素容器的宽度
+        //         var scrollH=$marquee.height();		//滚动元素容器的高度
+        //         var $element=$marquee.children();	//滚动元素
+        //         var $kids=$element.children();		//滚动子元素
+        //         var scrollSize=0;					//滚动元素尺寸
      
-                //滚动类型，1左右，0上下
-                var _type=(opts.direction=="left"||opts.direction=="right") ? 1:0;
+        //         //滚动类型，1左右，0上下
+        //         var _type=(opts.direction=="left"||opts.direction=="right") ? 1:0;
     
-                //防止滚动子元素比滚动元素宽而取不到实际滚动子元素宽度
-                $element.css(_type?"width":"height",10000);
+        //         //防止滚动子元素比滚动元素宽而取不到实际滚动子元素宽度
+        //         $element.css(_type?"width":"height",10000);
     
-                //获取滚动元素的尺寸
-                if(opts.isEqual){
-                    scrollSize=$kids[_type?"outerWidth":"outerHeight"]()*$kids.length;
-                }else{
-                    $kids.each(function(){
-                        scrollSize+=$(this)[_type?"outerWidth":"outerHeight"]();
-                    });
-                };
+        //         //获取滚动元素的尺寸
+        //         if(opts.isEqual){
+        //             scrollSize=$kids[_type?"outerWidth":"outerHeight"]()*$kids.length;
+        //         }else{
+        //             $kids.each(function(){
+        //                 scrollSize+=$(this)[_type?"outerWidth":"outerHeight"]();
+        //             });
+        //         };
     
-                //滚动元素总尺寸小于容器尺寸，不滚动
-                if(scrollSize<(_type?scrollW:scrollH)){return;}; 
+        //         //滚动元素总尺寸小于容器尺寸，不滚动
+        //         if(scrollSize<(_type?scrollW:scrollH)){return;}; 
     
-                //克隆滚动子元素将其插入到滚动元素后，并设定滚动元素宽度
-                $element.append($kids.clone()).css(_type?"width":"height",scrollSize*2);
+        //         //克隆滚动子元素将其插入到滚动元素后，并设定滚动元素宽度
+        //         $element.append($kids.clone()).css(_type?"width":"height",scrollSize*2);
     
-                var numMoved=0;
-                function scrollFunc(){
-                    var _dir=(opts.direction=="left"||opts.direction=="right") ? "scrollLeft":"scrollTop";
-                    if (opts.loop>0) {
-                        numMoved+=opts.scrollAmount;
-                        if(numMoved>scrollSize*opts.loop){
-                            _scrollObj[_dir]=0;
-                            return clearInterval(moveId);
-                        };
-                    };
+        //         var numMoved=0;
+        //         function scrollFunc(){
+        //             var _dir=(opts.direction=="left"||opts.direction=="right") ? "scrollLeft":"scrollTop";
+        //             if (opts.loop>0) {
+        //                 numMoved+=opts.scrollAmount;
+        //                 if(numMoved>scrollSize*opts.loop){
+        //                     _scrollObj[_dir]=0;
+        //                     return clearInterval(moveId);
+        //                 };
+        //             };
     
-                    if(opts.direction=="left"||opts.direction=="up"){
-                        var newPos=_scrollObj[_dir]+opts.scrollAmount;
-                        if(newPos>=scrollSize){
-                            newPos-=scrollSize;
-                        }
-                        _scrollObj[_dir]=newPos;
-                    }else{
-                        var newPos=_scrollObj[_dir]-opts.scrollAmount;
-                        if(newPos<=0){
-                            newPos += scrollSize;
-                        };
-                        _scrollObj[_dir]=newPos;
-                    };
-                };
+        //             if(opts.direction=="left"||opts.direction=="up"){
+        //                 var newPos=_scrollObj[_dir]+opts.scrollAmount;
+        //                 if(newPos>=scrollSize){
+        //                     newPos-=scrollSize;
+        //                 }
+        //                 _scrollObj[_dir]=newPos;
+        //             }else{
+        //                 var newPos=_scrollObj[_dir]-opts.scrollAmount;
+        //                 if(newPos<=0){
+        //                     newPos += scrollSize;
+        //                 };
+        //                 _scrollObj[_dir]=newPos;
+        //             };
+        //         };
     
-                //滚动开始
-                var moveId=setInterval(scrollFunc, opts.scrollDelay);
+        //         //滚动开始
+        //         var moveId=setInterval(scrollFunc, opts.scrollDelay);
     
-                //鼠标划过停止滚动
-                $marquee.hover(function(){
-                    clearInterval(moveId);
-                },function(){
-                    clearInterval(moveId);
-                    moveId=setInterval(scrollFunc, opts.scrollDelay);
-                });
-            });
-        };
+        //         //鼠标划过停止滚动
+        //         $marquee.hover(function(){
+        //             console.log('hover了',moveId)
+        //             clearInterval(moveId);
+        //         },function(){
+        //             clearInterval(moveId);
+        //             moveId=setInterval(scrollFunc, opts.scrollDelay);
+        //         });
+        //     });
+        // };
     
-        $.fn.kxbdMarquee.defaults={
-            isEqual:false,		//所有滚动的元素长宽是否相等,true,false
-            loop: 0,			//循环滚动次数，0时无限
-            direction: "up",	//滚动方向，"left","right","up","down"
-            scrollAmount:1,		//步长
-            scrollDelay:100		//时长
+        // $.fn.kxbdMarquee.defaults={
+        //     isEqual:false,		//所有滚动的元素长宽是否相等,true,false
+        //     loop: 0,			//循环滚动次数，0时无限
+        //     direction: "up",	//滚动方向，"left","right","up","down"
+        //     scrollAmount:1,		//步长
+        //     scrollDelay:100		//时长
     
-        };
+        // };
     
-        $.fn.kxbdMarquee.setDefaults=function(settings) {
-            $.extend( $.fn.kxbdMarquee.defaults, settings );
-        };
+        // $.fn.kxbdMarquee.setDefaults=function(settings) {
+        //     $.extend( $.fn.kxbdMarquee.defaults, settings );
+        // };
 
-        $("#marquee4").kxbdMarquee();
+        // $("#marquee4").kxbdMarquee();
     
 
     }
 
+     init(arr) {
+        let ul = $('.news_li');
+        for (let i in arr) {
+          let str = '<li>' + arr[i] + '</li>'
+          ul.append(str)
+        }
+      }
+    
+    b() {
+        let x = $('.news_li');
+        let y = $('.swap');
+        let h = $('.news_li li').length * 20; //20为每个li的高度    
+        let t = parseInt(x.css('top'));
+            y.css('top', '20px');
+            x.animate({
+            top: t - 20 + 'px'
+            }, 'slow'); //20为每个li的高度
+            if (Math.abs(t) == h - 20) { //20为每个li的高度
+            y.animate({
+                top: '0px'
+            }, 'slow');
+            z = x;
+            x = y;
+            y = z;
+            }
+            setTimeout(this.b, 2000); //滚动间隔时间
+       }
+    
     async getNotice(){
         const response = await getSiteNotice(this.state.pageCurrent,this.state.pageSize);
         if(response.code === 0){
             this.setState({
                 dataInfo:response.data.notices,
+            },()=>{
+                // let arr = ['北京', '上海', '厦门'];
+                //     this.init(arr);
+                //     $('.swap').html($('.news_li').html());
+                //     let hh = $('.news_li li').length;
+                //     if (hh > 1) this.b();
+                //     this.b();
             })
         } else{
             response.msg && message.error( response.msg)
@@ -178,8 +214,23 @@ class LoginInfo extends React.Component {
                         </div>  
                     </div>
                     <div className="uc-message" style={{marginTop:10,marginBottom:25,height:34}}>       
-                            <span className="text1" style={this.state.dataInfo.length > 1 ?{verticalAlign: 'middle',height:20,lineHeight:'20px',display:'inline-block',marginTop:'5px'} :{verticalAlign: 'middle',height:20,lineHeight:'20px',display:'inline-block',marginTop:'0px'}}>系统消息：</span>  
-                            {
+                            {/* <span className="text1" style={this.state.dataInfo.length > 1 ?{verticalAlign: 'middle',height:20,lineHeight:'20px',display:'inline-block',marginTop:'5px'} :{verticalAlign: 'middle',height:20,lineHeight:'20px',display:'inline-block',marginTop:'0px'}}>系统消息：</span>   */}
+                           
+                            <div id="box">
+                                <div id="t_news">
+                                    <b>最新播报：</b>
+                                    <ul id="news_li">
+                                        {/* <li><a href="#" >水果忍者：穿靴子的猫</a></li>
+                                        <li><a href="#" >乐动魔方 Plus</a></li>
+                                        <li><a href="#" >亡灵杀手 汉化版</a></li>
+                                        <li><a href="#" >jq22 搜集整理</a></li>
+                                        <li><a href="#" >你疯啦 iphone壁纸</a></li> */}
+                                    </ul>
+                                    <ul id="swap"></ul>
+                                </div>
+                            </div>
+
+                            {/* {
                                 this.state.dataInfo.length > 1 ? 
                                 <div id="marquee4" style={{width:400,height:20,overflow:'hidden',display:'inline-block',marginTop:5,verticalAlign: 'middle'}}>
                                     <ul>
@@ -191,9 +242,9 @@ class LoginInfo extends React.Component {
                                         })
                                     }
                                     </ul>
-                                </div> : <span className="text2" style={{height:25}}>[{moment(this.state.dataInfo.fpublishTime).format('M-D')}]{this.state.dataInfo.ftitle}</span> 
+                                </div> : <span className="text2" style={{height:25}}>【{moment(this.state.dataInfo.fpublishTime).format('M-D')}】{this.state.dataInfo.ftitle}</span> 
                             }
-                       
+                        */}
 
                             { baseData.userSecurityCenter.fThirdAccount ?
 

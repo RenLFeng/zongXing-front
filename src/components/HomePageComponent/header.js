@@ -33,8 +33,7 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter,companyDiscount',
-      istrue:false
+      fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter,companyDiscount,commonProblem,uCenter'
     }
   }
   render() {
@@ -51,8 +50,8 @@ export default class Header extends React.Component {
             fontColor='howInvest';
           }else if(localPath.indexOf('/index/companyDiscount')!== -1){
             fontColor='companyDiscount';
-          }else if(localPath.indexOf('/index/loanCollege')!== -1){
-            fontColor='loanCollege';
+          }else if(localPath.indexOf('/index/commonProblem')!== -1){
+            fontColor='commonProblem';
           }else if(localPath.indexOf('/index/uCenter')!== -1){
             fontColor='uCenter';
           }
@@ -94,8 +93,8 @@ export default class Header extends React.Component {
               history.push(`${match.path}/howLoan`);
               $(window).scrollTop(0);
             }}>如何借款</a>
-            <a className={'a1 '+(fontColor=='loanCollege'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
-              history.push(`${match.path}/loanCollege`);
+            <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
+              history.push(`${match.path}/commonProblem`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>信息披露</a>
@@ -156,8 +155,8 @@ export default class Header extends React.Component {
               history.push(`${match.path}/howLoan`);
               $(window).scrollTop(0);
             }}>如何借款</a>
-            <a className={'a1 '+(fontColor=='loanCollege'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
-              history.push(`${match.path}/loanCollege`);
+            <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
+              history.push(`${match.path}/commonProblem`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>信息披露</a>

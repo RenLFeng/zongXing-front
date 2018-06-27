@@ -2,7 +2,6 @@
 @import '../common/_var.scss';
  
 .company-card {
-    padding: 15px;
     height: 237px; 
     position: relative;
     margin-bottom: 20px;
@@ -102,8 +101,9 @@
     &>.coupon-items{
         float: right;
         margin-left:25px;
-        border:1px dotted #eee;
-        width: 280px;
+        width: 300px;
+        top: 50px;
+        padding-top: 50px;
         height: 245px;
         .coupon-item{
             background-color: #999;
