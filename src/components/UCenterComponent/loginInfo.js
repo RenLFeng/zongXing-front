@@ -136,8 +136,9 @@ class LoginInfo extends React.Component {
         return ( 
             <div className='lg-login'>
                     {
-                    this.props.status ?  <div className="w">
-                    <div className="uc-tbody clearfix"> 
+                    this.props.status ? 
+                    <div className="w" >
+                    <div className="uc-tbody clearfix" style={{height:90, boxShadow: '1px 1px 16px rgba(0, 0, 0, 0.2)',padding:'20px 15px'}}> 
                         {/* 用户头像 */}
                         <a className="fl">
                             <img className="av" src={require('../../assets/img/ucenter/av1.png')} />
@@ -146,17 +147,17 @@ class LoginInfo extends React.Component {
                         <div className="fl">
                             {/* 用户名 */}
                             <p className="t1">
-                                <span>{this.props.nickName}</span>
-                                <span className="split">|</span>
+                                {/* <span>{this.props.nickName}</span> */}
+                                {/* <span className="split">|</span> */}
                                 {this.props.baseData.mobile}  
                                 <a onClick={()=>this.props.dispatch({type: 'login/logout'})}>退出登录</a> 
                             </p> 
                             <p className="uinfo" style={{position: 'relative'}}>
-                                <span className='uname'>{baseData.userSecurityCenter.fCertification?baseData?baseData.realName:'未认证':'未认证'}</span>
+                                <span className="nickname">{this.props.nickName}</span>
                                 <span className="split">|</span> 
                                 
                                 <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fMobileBinding?'active':''}`}></i>
-                                <i title="身份证认证" className={`zjb zjb-shenfenrenzheng ${baseData.userSecurityCenter.fCertification?'active':''}`}></i> 
+                                <i title="身份证认证" className={`zjb zjb-moban ${baseData.userSecurityCenter.fCertification?'active':''}`}></i> 
                                 <i title="银行卡绑定" className={`zjb zjb-icon ${baseData.userSecurityCenter.fBankCardBinding?'active':''}`}></i> 
                             </p>
                         </div>
@@ -177,16 +178,16 @@ class LoginInfo extends React.Component {
                             </div> 
                         </div>  
                     </div>
-                    <div className="uc-message">       
-                            <span className="text1" style={[{verticalAlign: 'middle',height:25,display:'inline-block'},this.state.dataInfo.length > 1 ? {marginTop:'-8px'}:{marginTop:'0px'}]}>系统消息：</span>    
+                    <div className="uc-message" style={{marginTop:10,marginBottom:25,height:34}}>       
+                            <span className="text1" style={this.state.dataInfo.length > 1 ?{verticalAlign: 'middle',height:20,lineHeight:'20px',display:'inline-block',marginTop:'5px'} :{verticalAlign: 'middle',height:20,lineHeight:'20px',display:'inline-block',marginTop:'0px'}}>系统消息：</span>  
                             {
                                 this.state.dataInfo.length > 1 ? 
-                                <div id="marquee4" style={{width:400,height:25,overflow:'hidden',display:'inline-block'}}>
+                                <div id="marquee4" style={{width:400,height:20,overflow:'hidden',display:'inline-block',marginTop:5,verticalAlign: 'middle'}}>
                                     <ul>
                                     {
                                         this.state.dataInfo.map((data,index)=>{
                                             return(
-                                                <li key={index} style={{float:'left', width:380, padding:' 5px 10px',color:'#7D7D7D'}}>[{moment(data.fpublishTime).format('M-D')}]<a onClick={()=>this.props.history.push(Path.SITE_NOTICE)} style={{color:'#7D7D7D'}}>{data.ftitle} &gt; </a></li>
+                                                <li key={index} style={{float:'left', width:380, padding:' 3px 10px',color:'#7D7D7D'}}>【{moment(data.fpublishTime).format('M-D')}】<a onClick={()=>this.props.history.push(Path.SITE_NOTICE)} style={{color:'#7D7D7D'}}>{data.ftitle} &gt; </a></li>
                                             )
                                         })
                                     }
@@ -197,11 +198,11 @@ class LoginInfo extends React.Component {
 
                             { baseData.userSecurityCenter.fThirdAccount ?
 
-                                <Button className="buttonl" style={{width: '136px'}} onClick={()=>this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
-                            }
-                            { baseData.userSecurityCenter.fThirdAccount ?
+                                <Button className="buttonl" style={{width: '64px',height:'34px'}} onClick={()=>this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
+                             }
+                            { baseData.userSecurityCenter.fThirdAccount ? 
 
-                                <Button type="primary" className="buttonl" style={{width: '136px'}} onClick={()=>this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null 
+                                <Button type="primary" className="buttonl" style={{width: '64px',height:'34px'}} onClick={()=>this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null 
                             }
                     </div> 
                 </div>:''

@@ -22,37 +22,37 @@ export default class TabBottom extends React.Component {
             <div className="swiper-container">
               <div className="swiper-wrapper">
                 <div className="swiper-slide clearfix">
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/invest/pic5.png')} />
                     <p className="t1">关于投资风险</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/invest/pic5.png')} />
                     <p className="t1">罗氏等级评分法</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/invest/pic5.png')} />
                     <p className="t1">产业内双向投资理论</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/invest/pic5.png')} />
                     <p className="t1">科尔内的投资需求理论</p>
                   </div>
                 </div>
                 <div className="swiper-slide clearfix">
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/invest/pic5.png')} />
                     <p className="t1">关于投资风险</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/invest/pic5.png')} />
                     <p className="t1">罗氏等级评分法</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/invest/pic5.png')} />
                     <p className="t1">产业内双向投资理论</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/invest/pic5.png')} />
                     <p className="t1">科尔内的投资需求理论</p>
                   </div>
@@ -66,4 +66,9 @@ export default class TabBottom extends React.Component {
 
     );
   }
+
+}
+
+const style = {
+  swiperSlide: {width : '1266px'}
 }

@@ -10,9 +10,11 @@ function initPage() {
         autoplay: 5000,
         speed: 1000,
         loop: true,
+        slidesPerView: 'auto',
         pagination: '.tab3con1 .swiper-pagination',
         paginationClickable: true
     });
+    console.info(swiper)
   function makesvg(percentage, inner_text){
     var inner_text = '';
     var abs_percentage = Math.abs(percentage).toString();
