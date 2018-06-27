@@ -11,26 +11,42 @@ export default class Images extends React.Component {
   }
 
   componentDidMount() {
-    const {id} = this.props;
+    const {pics,id} = this.props;
     let $d = $('.imgsdiv'),
-      $box = $d.find(`.box${id}`);
+        $box = $d.find(`.box${id}`),
+        $imgLen=$box.find("a").length,
+        $imgIndex=0;
+    //$d.find(`.${id}`).on('click', function () {
+    //  let $t = $(this);
+    //  let height = $box.find('a')[0].offsetHeight;
+    //  let tmp = height * ($t.hasClass('prev') ? -1 : 1);
+    //  $box[0].scrollTop += tmp;
+    //});
+
     $d.find(`.${id}`).on('click', function () {
       let $t = $(this);
-      let height = $box.find('a')[0].offsetHeight;
-      let tmp = height * ($t.hasClass('prev') ? -1 : 1);
-      $box[0].scrollTop += tmp;
+      let width=$box.find("a").eq(0).outerWidth();
+      if($t.is(".next")){
+        if($imgIndex>=$imgLen-5) return;
+        $imgIndex++;
+        $box.stop().animate({"left":-(width*$imgIndex)+"px"},500);
+      }else{
+        if($imgIndex==0) return;
+        $imgIndex--;
+        $box.stop().animate({"left":-(width*$imgIndex)+"px"},500);
+      }
     });
   }
 
   render() {
     const {pics, id} = this.props;
     return (
-      <div className="imgsdiv clearfix"  style={{position: 'relative',marginTop: 20}}>
+      <div className="imgsdiv clearfix g">
         <div className="fl">
-          <div className="bigpic" style={{backgroundImage:`url(${IMG_BASE_URL}${this.state.realUrl})`,position: 'absolute', top: 0}}/>
+          <div className="bigpic" style={{backgroundImage:`url(${IMG_BASE_URL}${this.state.realUrl})`}}/>
         </div>
+        <a className={`btn prev ${id}`}>PREV</a>
         <div className="fr">
-          <a className={`btn prev ${id}`} onClick={()=>console.log(1234)}>PREV</a>
           <div className={`box box${id}`}>
             {pics.map((data, index) => {
               return (
@@ -39,9 +55,17 @@ export default class Images extends React.Component {
                 </a>
               );
             })}
+            {pics.map((data, index) => {
+              return (
+                <a key={index} data-big={`${IMG_BASE_URL}/${data.realUrl}`} style={{zIndex: 10}}>
+                  <img src={`${IMG_BASE_URL}/${data.realUrl}`} onClick={()=>this.setState({realUrl: data.realUrl})}/>
+                </a>
+              );
+            })}
+
           </div>
-          <a className={`btn next ${id}`}>NEXT</a>
         </div>
+        <a className={`btn next ${id}`}>NEXT</a>
       </div>
     );
   }

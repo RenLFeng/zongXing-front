@@ -126,7 +126,7 @@ export default class SecLoan extends React.Component {
                     <Images pics={pics} id={item.fid}/>
                     :
                     pics.map((item) => (
-                      <img style={{width: '90%', marginTop: 20}} key={item.uid} src={`${IMG_BASE_URL}/${item.realUrl}`}/>
+                      <img style={{width: '100%', marginTop: 20}} key={item.uid} src={`${IMG_BASE_URL}/${item.realUrl}`}/>
                     ))
                   }
                 </div>

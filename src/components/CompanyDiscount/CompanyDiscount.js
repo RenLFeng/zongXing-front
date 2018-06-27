@@ -32,14 +32,14 @@ export default class CompanyDiscount extends React.Component {
         <div className="w cats clearfix">
           <i className="tit">行业筛选</i>
           <a>最新</a><a className="hover">餐饮美食</a><a>服装鞋包</a><a>美容保健</a><a>家居用品</a><a>生活服务</a><a>休闲娱乐</a><a>其他</a>
-          <Link className='to-coupon' to={Path.COUPON_CENTER}>
-            <img   src={require('../../assets/img/coupon/coupon-center.png')} />
-          </Link>  
+          <span className="to-coupon" onClick={()=>this.props.history.push(Path.COUPON_CENTER)}>
+            代金券交换中心
+          </span>
         </div>
         <div className="w clearfix">  
-              <CompanyCard data={this.state.card1}/>
-              <CompanyCard data={this.state.card1}/> 
-              <CompanyCard data={this.state.card1}/> 
+          <CompanyCard data={this.state.card1}/>
+          <CompanyCard data={this.state.card1}/> 
+          <CompanyCard data={this.state.card1}/> 
         </div>
 			</div>
 		);

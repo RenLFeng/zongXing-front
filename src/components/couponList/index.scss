@@ -1,45 +1,44 @@
 .cl_coupon {
   position: relative;
   .cl_coupon_detail {
-    width: 300px;
-    height: 70px;
-    background-color: #333;
+    width: 280px;
+    height: 104px;
   }
   .cl_coupon_list {
     position: absolute;
     overflow: hidden;
-    width: 274px;
-    height: 547px;
+    width: 320px;
+    height: 590px;
     top: -270px;
     background-color: #fff;
     padding: 55px 0;
     box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.2); 
+    z-index: 999;
   }
   .cl_coupon_list_top_icon {
     font-size: 40px;
     position: absolute;
     top: -5px;
-    left: 115px;
+    left: 140px;
     cursor: pointer;
   }
   .cl_coupon_list_bottom_icon {
     font-size: 40px;
     position: absolute;
-    top: 490px;
-    left: 115px;
+    top: 530px;
+    left: 140px;
     cursor: pointer;
   }
   .cl_coupon_list_div {
     position: absolute;
-    height: 440px;
-    width: 254px;
+    height: 469px;
+    width: 300px;
     left: 10px;
     overflow: hidden;
   }
   .cl_coupon_item {
     width: 253px;
     height: 100px;
-    border: 1px solid #333;
     position: absolute;
   }
 }
