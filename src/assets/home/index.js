@@ -3,11 +3,11 @@ import {animate} from './animate';
 import {init} from './_invest';
 
 export function startAnimate() {
+
   initPage();
   bindEvent();
   animate();
 }
-
 function initPage() {
   let speed=1200;
   let page=0;
@@ -76,7 +76,6 @@ function initPage() {
     $(".home-banner .w >p.item").eq(page).addClass("act").siblings().removeClass("act");
   }
 }
-
 function bindEvent() {
   $('.home-banner').on('click', function(){
     $('.home-banner video')[0].play();
