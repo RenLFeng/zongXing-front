@@ -22,37 +22,37 @@ export default class BottomTab extends React.Component {
             <div className="swiper-container">
               <div className="swiper-wrapper">
                 <div className="swiper-slide clearfix">
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/finance/step1.jpg')} />
                     <p className="t1">第一步：录入借款基本项目信息</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/finance/step2.jpg')} />
                     <p className="t1">第二步：填写个人借款信息</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/finance/step3.jpg')} />
                     <p className="t1">第三步：填写企业相关资料</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/finance/step4.jpg')} />
                     <p className="t1">第四步：确认优惠券</p>
                   </div>
                 </div>
                 <div className="swiper-slide clearfix">
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/finance/step1.jpg')} />
                     <p className="t1">第一步：录入借款基本项目信息</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/finance/step2.jpg')} />
                     <p className="t1">第二步：填写个人借款信息</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/finance/step3.jpg')} />
                     <p className="t1">第三步：填写企业相关资料</p>
                   </div>
-                  <div className="item">
+                  <div className="item" style={{padding:0}}>
                     <img className="pic" src={require('../../assets/img/finance/step4.jpg')} />
                     <p className="t1">第四步：确认优惠券</p>
                   </div>

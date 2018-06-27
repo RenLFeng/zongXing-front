@@ -11,7 +11,7 @@ import HowLoan from './homePage/HowLoan';
 import HowInvest from './homePage/HowInvest';
 import HomeIndex from './homePage/HomeIndex';
 import CompanyDiscount from '../components/CompanyDiscount/CompanyDiscount';
-import LoanCollege from './homePage/LoanCollege';
+import CommonProblem from './homePage/commonProblem';
 import ProjectList from './homePage/ProjectList';
 import ProjectDetail from './homePage/ProjectDetail';
 import Project from './homePage/Project';
@@ -138,7 +138,7 @@ export default class HomePage extends React.Component{
             {/* 优惠券兑换中心 */}
             <Route path={`${match.path}/couponCenter`} component={CouponCenter}/>
 
-            <Route path={`${match.path}/loanCollege`} component={LoanCollege}/>
+            <Route path={`${match.path}/commonProblem`} component={CommonProblem}/>
             <Route path={`${match.path}/applyLoan`} component={ApplyLoan} />
             <Route path={`${match.path}/uCenter`} component={UCenter} />
             <Route path={`${match.path}/login`} component={Login} />
