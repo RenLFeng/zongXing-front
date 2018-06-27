@@ -9,15 +9,12 @@ export default class CouponSmall extends React.Component {
             data:{},
         }
         
-    }
-
+    } 
     componentDidMount() {
         this.setCouponSmall(this.props);
-    }
+    } 
 
-
-    componentWillReceiveProps(props){
-        console.log(props);
+    componentWillReceiveProps(props){ 
         this.setCouponSmall(props);
     } 
 
@@ -73,7 +70,7 @@ export default class CouponSmall extends React.Component {
                     <img className={`logo ${this.props.onlyOne?'center':''}`} src={this.state.data.flogo_pic||this.state.logo}/>
                     {
                         this.props.onlyOne?null:
-                        <div>
+                        <div className='text'>
                             <p className='coupon-flag'>{this.state.btn_text}</p>
                             <p className='coupon-count'>共 <span>{this.state.data.countNum>0?this.state.data.countNum:1}</span> 张</p>
                         </div>

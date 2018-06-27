@@ -58,22 +58,24 @@
         .center{
             margin-top: 36px;
         }
-        &>.coupon-flag{
-            font-size: 14px;
-            color: #fff;
-            font-weight: bold;
-            text-align: center;
-        }
-        &>.coupon-count{
-            font-size: 7px;
-            color: #fff; 
-            text-align: center;
-            margin: 10px;
-            &>span{
-                font-size: 13px;
+        &>.text{
+            &>.coupon-flag{
+                font-size: 14px;
+                color: #fff;
                 font-weight: bold;
+                text-align: center;
             }
-        }
+            &>.coupon-count{
+                font-size: 7px;
+                color: #fff; 
+                text-align: center;
+                margin: 10px;
+                &>span{
+                    font-size: 13px;
+                    font-weight: bold;
+                }
+            }
+        } 
     }
 }
  
