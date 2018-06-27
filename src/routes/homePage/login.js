@@ -122,6 +122,7 @@ export default class Login extends React.Component {
 
   // 判断  手机号是否已被注册过
   async checkPhone() {
+    console.log(111)
     const {loginPhone} = this.state;
     if (loginPhone.length === 0) {
       this.setState({loginNameErr:'手机号|用户名不能为空'})
@@ -136,6 +137,7 @@ export default class Login extends React.Component {
     }
     this.setState({checkPhoneLoading: true});
     const response = await phoneExist(loginPhone);
+    console.log('登陆结果为',response)
     this.setState({checkPhoneLoading: false});
     if (response.code === 0) {
       this.setState({loginError: false});
@@ -180,7 +182,7 @@ export default class Login extends React.Component {
   render() {
     const {  loginPhone, loginPwd} = this.state;
     return (
-      <div className="logindiv1 shadow"  style={{height: 495}}>
+      <div className="logindiv1 "  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
       <Modal
           visible={this.state.authPhone}
           title="解除账号锁定"
@@ -227,7 +229,8 @@ export default class Login extends React.Component {
                       <input className="put" value={loginPhone} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
                             placeholder="手机号|用户名" onBlur={()=>this.checkPhone()} onKeyDown={(e)=>this.pressKey(e)}/>
-                      <Icon type="mobile" style={{position:'absolute',top:'10px',left:'8px',fontSize:25,color:'#D4D4D4'}}/>
+                            <i className="zjb zjb-shouji-copy" style={{position:'absolute',top:'4px',left:'11px',fontSize:25,color:'#d5d5d5'}}></i>
+                            <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>      
                       {
                         this.state.loginError ? this.state.loginNameErr?
                         <p className="registration-prompts_" >
@@ -246,20 +249,21 @@ export default class Login extends React.Component {
                     <div className="row" style={{position:'relative'}}>
                       <input className="put"  value={loginPwd} maxLength="16"
                             name="loginPwd" type="password" onChange={(e) => this.setState({loginPwd: e.target.value})}
-                            placeholder="请输入登录密码" onKeyDown={(e)=>this.pressKey(e)}/>
-                      <Icon type="lock" style={{position:'absolute',top:'7px',left:'8px',fontSize:28,color:'#D4D4D4'}} />
+                            placeholder="请输入登录密码" onKeyDown={(e)=>this.pressKey(e)} style={{marginTop:4}}/>  
+                            <i className="zjb zjb-mima" style={{position:'absolute',top:'7px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
+                            <span style={{position:'absolute',top:'8px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
                       <p className="prompts" style={{color: '#868686'}}>{this.state.loginPwdErr}</p>
                       <a className="gray f14"
-                          style={{marginTop: -5}}
+                          style={{marginTop: 1}}
                           onClick={() => this.props.history.push('./forgetPassWord')}>
-                          忘记密码?
+                          忘记密码
                         </a>
                     </div>
-                    <div style={{marginTop:89}}>
+                    <div style={{marginTop:96}}>
                       <a className="btn" onClick={this.submitLogin}>登录</a>
                     </div>
                     <p className="safe-info">
-                      <img src={require('../../assets/img/login/u30.png')} />
+                      <i className="zjb zjb-renzheng1" style={{color:'#4cd964',fontSize:14,marginRight:5}}/>
                       您的信息已使用SSL加密技术，数据传输安全
                     </p>
                   </Spin>

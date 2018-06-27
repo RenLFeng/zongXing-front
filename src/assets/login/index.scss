@@ -1,7 +1,6 @@
 @import '../common/_var.scss';
 
 .logindiv1 {
-    // position: relative;
     margin: 0 auto 300px auto;
     width: 1200px;
     height: 544px;
@@ -11,12 +10,10 @@
     transform: translate(0,200px);
     transition: transform ease 0.5s;
     a.blue {
-        color: #3399FF;
+        color: #268eff;
         text-decoration: underline;
     }
     a.gray {
-        // color: #666;
-        // text-decoration: underline;
         width: 80px;
         height: 17px;
         font-family: MicrosoftYaHeiUI;
@@ -29,20 +26,24 @@
         color: #c4c4c4;
         position: absolute;
         top:14px;
-        left:350px;
+        left:341px;
     }
     a:hover {
         opacity: 0.7;
     }
 }
+.shadows{
+    box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.2);
+    width:1200px;
+    height:590px;
+}
+
 .logindiv1 .show {
     transform: translate(0,0);
 }
 .logindiv1 .form {
     float: left;
-    padding: 0px 0 0 115px;
-  //position: relative;
-
+    padding: 0px 0 0 134px;
     .hd {
         margin-bottom: 50px;
         margin-top: 80px;
@@ -64,25 +65,29 @@
       .prompts {
         margin-top: 5px;
         color: red;
+        font-size: 13px !important;
+        margin-left: 53px;
       }
       .registration-prompts_{
-        font-size: 11px !important;
+        margin-top: 5px;
+        font-size: 13px !important;
         color: red !important;
       }
       .registration-prompts{
-        color: #868686 !important;
-        font-size: 11px !important;
+        margin-top: 5px;
+        color: #d5d5d5 !important;
+        font-size: 13px !important;
         // margin-left: 30px;
         a{
-            color: #FF9900;
+            color: #64a7ff;
             font-size: 13px;
         }
       }
     }
     .put {
         border: 1px solid #d9d9d9;
-        border-radius: 3px;
-        padding: 0 0 0 40px;
+        border-radius: 6px;
+        padding: 0 0 0 61px;
         width: 329px;
         line-height: 42px;
         height: 44px;
@@ -92,6 +97,23 @@
         &:focus {
             border-color: #FF8533;
         }
+    }
+    .put::-webkit-input-placeholder {
+        color: #e6e6e6;
+        font-size: 15px;
+    }
+        
+    .put:-moz-placeholder {
+        color:#e6e6e6;
+        font-size: 15px;
+    }
+    .put::-moz-placeholder{
+        color:#e6e6e6;
+        font-size: 15px;
+    }
+    .put:-ms-input-placeholder{
+        color:#e6e6e6;
+        font-size: 15px;
     }
     .mobile {
         background-image: url(../img/login/ic_mobile.png);
@@ -111,8 +133,8 @@
         line-height: 41px;
         height:44px;
         width: 124px;
-       border-bottom-right-radius: 3px;
-       border-top-right-radius: 3px;
+       border-bottom-right-radius: 6px;
+       border-top-right-radius: 6px;
     }
     .pwd {
         background-image: url(../img/login/ic_pwd.png);
@@ -126,6 +148,7 @@
         color: #fff;
         line-height: 42px;
         font-size: 14px;
+        border-radius: 6px;
     }
   .btns{
 
@@ -221,6 +244,8 @@
     width:603px;
     height:544px;
     display: inline-block;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     .forget{
         position: relative;
         top:-160px;
@@ -249,11 +274,10 @@
 }
 
 .safe-info{
-    margin-top: 10px;
+    margin-top: 6px;
     font-size: 13px;
-    color: #333333;
+	color: #999999;
     text-align: center;
-    vertical-align: auto;
 }
 .statistics{
     margin-top: 55px;
@@ -276,28 +300,19 @@
 .forget_page{
     width:970px;
     height:522px;
-    margin: 0 auto 300px auto;
-    // border:1px solid red;
-    box-shadow: -5px -5px 5px rgba(228, 228, 228, 1);
+    margin:5px auto 130px auto;
     background: white;
     .forget_title{
-        // font-size: 28px;
-        padding: 33px 0 0 0px;
-        border-bottom: 2px dashed #e6e6e6;
-        width:1157px;
+        padding: 40px 0 12px 0px;
+        border-bottom: 2px solid #ff9900;
+        width:1108px;
         margin: auto;
-        // height: 32px;
-        font-family: MicrosoftYaHeiUI;
         font-size: 20px;
-        font-weight: normal;
-        font-stretch: normal;
-        // line-height: 166px;
-        letter-spacing: 0px;
         color: #333333;
     }
     .forget_btnGroup{
         width:820px;
-        margin: 30px auto;
+        margin: 84px 0 88px 190px;
         Button{
             width:140px;
             height:40px;
@@ -322,7 +337,7 @@
     }
 
     .forget_form{
-        width:300px;
+        width:329px;
         margin: 65px auto 0 auto;
         .slider-div {
             // width: 300px;
@@ -351,16 +366,36 @@
         .forget_inp{
             position: relative;
             margin-top: 20px;
-            height:41px;
-            
+            height:44px;
+            width:329px;
             Input{
-                padding-left: 35px;
-                height:41px;
+                padding-left: 53px;
+                height:43px;
+                border-radius: 6px;
             }
             .forget_phone{
                 position: absolute;
                 top:13px;
                 left:10px;
+                font-size: 20px;
+                color: rgba(213, 213, 213, 0.5);
+                opacity: 0.5;
+            }
+            .forget_name{
+                position: absolute;
+                top:8px;
+                left:10px;
+                font-size: 20px;
+                color: rgba(213, 213, 213, 0.5);
+                opacity: 0.5;
+            }
+            .forget_card{
+                position: absolute;
+                top:9px;
+                left:10px;
+                font-size: 20px;
+                color: rgba(213, 213, 213, 0.5);
+                opacity: 0.5;
             }
             .input1{
                 position: relative;
@@ -372,15 +407,32 @@
                 // top:0;
                 // left:175px;  定位的按钮点击后按钮位置会动
                 float: right;
-                margin-top:-41px;
+                margin-top:-43px;
                 width:144px;
-                height:41px;
+                height:43px;
                
                 background: rgba(255, 153, 0, 1);
                 padding-left:10px;
                 color:white !important;
             }
-           
+
+            Input::-webkit-input-placeholder {
+                color: #e6e6e6;
+                font-size: 14px;
+            }
+                
+            Input:-moz-placeholder {
+                color:#e6e6e6;
+                font-size: 14px;
+            }
+            Input::-moz-placeholder{
+                color:#e6e6e6;
+                font-size: 14px;
+            }
+            Input:-ms-input-placeholder{
+                color:#e6e6e6;
+                font-size: 14px;
+            }   
         }
         .slider{
             width:300px;
@@ -407,10 +459,11 @@
         .forget-prompts{
             color: #868686 !important;
             font-size: 11px !important;
-            // margin-left: 30px;
-            margin-bottom: 20px;
+            margin-left: 53px;
+            margin-top: 10px;
+            // margin-bottom: 20px;
             a{
-                color: #FF9900;
+                color: #268eff;
                 font-size: 13px;
             }
           }
@@ -419,8 +472,9 @@
               width:46px;
           }
           .second_p{
-              color:#6B6B6B;
+              color:#999999;
               font-size: 13px;
+              margin-bottom: -8px;
               span{
                   display: inline-block;
                   margin-left: 30px;
@@ -431,19 +485,21 @@
             position: relative;
             .ft_inp{
                 height:41px;
-                padding-left: 30px;
+                padding-left: 60px;
             }
             .img1{
                position:absolute;
-               top:10px;
-               left:10px;
+               top:7px;
+               left:12px;
+               color: rgba(213, 213, 213, 0.5);
+               font-size: 20px;
             }
             .img2{
                 position: absolute;
-                top:12px;
+                top:4px;
                 right:10px;
-                width:25px;
-                height:16px;
+                color: rgba(213, 213, 213, 0.5);
+                font-size: 26px;
             }
         }
     }
@@ -469,11 +525,10 @@
   //滑块样式  
     .outer{
         position: relative;
-        margin: auto;
-        width: 300px;
-        height: 41px;
-        line-height: 41px;
-        border:1px solid #ccc;
+        margin-top: 21px;
+        width: 329px;
+        height: 43px;
+        line-height: 43px;
         background: #E8E8E8;
     }
     .outer span,.filter-box,.inner{
@@ -495,17 +550,18 @@
     }
   
     .inner{
-        width: 39px;
-        height: 41px;
+        width: 43px;
+        height: 43px;
         text-align: center;
         background: white;
+        line-height: 40px;
         cursor: pointer;
         font-family: "宋体";
+        font-size: 15px;
         z-index: 10;
         font-weight: bold;
-        color: #929292;
-        border:1px solid #ccc;
-        top:-1px;
+        color: #c4c4c4;
+        border: solid 1px #f0f0f0;
     }
     .outer.act .inner{
         color: #929292;
@@ -514,4 +570,3 @@
         z-index: 99;
     }
 }
-

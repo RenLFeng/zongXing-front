@@ -23,7 +23,7 @@ class Coupon extends React.Component {
         if(couponData.fflag==1||couponData.fflag==2||couponData.fflag==3){
             canEdit = true;
         }
-        let btnName = "";
+        let btnName = ""; 
         switch(couponData.fflag){
             case 0:
                 btnName ='待领取'; //待生效 
@@ -32,10 +32,10 @@ class Coupon extends React.Component {
                 btnName ='待领取'; 
                 break;
             case 2:
-                btnName ='待消费'; 
+                btnName ='去使用'; 
                 break;
             case 3:
-                btnName ='兑换券'; 
+                btnName ='去使用'; 
                 break;
             case 4:
                 btnName ='已使用'; 
@@ -45,24 +45,28 @@ class Coupon extends React.Component {
                 break;
             default:
                 btnName=''; 
-                break; 
-        }   
+                break;   
+        }
+        
         this.state = { 
             data: couponData,
             btnName:btnName,
             defaultHead:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg', 
             canEdit:canEdit,
             dh_select:0, //兑换选择的张数
+            dh_selectText:0,//兑换选择的文本
             dh_visable:false,//兑换是否显示
             
          }; 
     }
+    //点击兑换按钮显示 兑换优惠券面板
     handlerDhClick=()=>{
         this.setState({
             dh_visable:!this.state.dh_visable,
             dh_select:this.state.data.countNum,
         });
     }
+    //添加兑换优惠券张数
     handlerDhAddClick=()=>{
         if(this.state.dh_select<this.state.data.countNum){
             this.setState({ 
@@ -70,35 +74,26 @@ class Coupon extends React.Component {
             });
         }
     }
+    //减少优惠券张数
     handlerDhSubClick=()=>{
         if(this.state.dh_select>1){
             this.setState({ 
                 dh_select:this.state.dh_select-1, 
             });
         }
+    } 
+    handlerCouponChange=(e)=>{
+        let text = e.target.value;
+        text = text.replace('张','');
+        if(!isNaN(text)){
+            text = text*1;
+            if(text>0 && text<= this.state.data.countNum){
+                this.setState({
+                    dh_select:text
+                });
+            } 
+        } 
     }
-    // handlerDhInputBlure=()=>{
-    //     console.log(this.state.dh_select);
-    // }
-    // handlerDhChange=(e)=>{
-    //     let val = e.target.value;
-    //     if(val){
-    //         val = val.replace('张','');
-    //         if(!isNaN(val))
-    //         {
-    //             val =val*1;
-    //             if(val<=0){
-    //                 val = 1;
-    //             }else if(val>this.state.data.countNum){
-    //                 val  =this.state.data.countNum;
-    //             }
-    //             this.setState({
-    //                 dh_select:val
-    //             });
-    //         } 
-    //     }
-    // }
-    
     render() { 
         return ( 
             <div className='cp-coupon-content'>
@@ -154,10 +149,14 @@ class Coupon extends React.Component {
                 </div>
                 <div className={`doing-panle ${this.state.dh_visable?'':'hide'}`}>
                     <a onClick={this.handlerDhAddClick}>+</a>
-                    <Input type='text'  className='coupon-num' readOnly  value={this.state.dh_select+'张'}/>
+                    <Input type='text'  className='coupon-num'  value={this.state.dh_select+'张'} onChange={this.handlerCouponChange}/>
                     <a onClick={this.handlerDhSubClick}>-</a>
-                    <span className='money'>券额总额{ this.state.dh_select *this.state.data.ffull_sub_money  }元</span>
-                    <Button onClick={this.props.handlerExchangeClick?this.props.handlerExchangeClick.bind(this,this.state.data.fcoupon_id,this.state.dh_select ):()=>{alert('请绑定handlerExchangeClick回调事件');}}>兑换</Button>
+                    <span className='money'>
+                        {
+                            this.props.out?'需花费券额':'券额总额'
+                        } 
+                        { this.state.dh_select *this.state.data.ffull_sub_money  }元</span>
+                    <Button onClick={this.props.handlerExchangeClick?this.props.handlerExchangeClick.bind(this,this.state.data.fcoupon_id,this.state.dh_select,this.state.data.ffull_sub_money):()=>{alert('请绑定handlerExchangeClick回调事件');}}>兑换</Button>
                 </div>
             </div>
          )

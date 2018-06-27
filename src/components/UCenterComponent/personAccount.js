@@ -6,11 +6,12 @@ import Path from '../../common/pagePath';
 import {connect} from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
-import { Modal, Button,Table } from 'antd';
+import { Modal, Button,Table,message } from 'antd';
 import Coupon from '../common/Coupon';
 import '../../assets/personal/personal.scss';
 import Statement from '../common/Statement';
-import {accountService} from '../../services/api2.js'; 
+import { accountService } from '../../services/api2.js'; 
+import { repayPlan, getAccountCoupon } from '../../services/api.js';
 
 @connect((state)=>({
   personal: state.account.personal,
@@ -112,7 +113,7 @@ export default class PersonAccount extends React.Component {
           }
         ]
       },
-    // 个人账户 折线图
+      // 个人账户 折线图
       lineOption: {
         xAxis: {
           type: 'value',
@@ -165,9 +166,17 @@ export default class PersonAccount extends React.Component {
           ffalg:1
         }
       ],
+      allMoney: 0, // 待收总额
+      daishoubenjin: 0, // 待收本金
+      daishoulixi: 0,//待收利息
       showType: 'biaoge',
       reMoneyList: [{name: 1}, {name: 2}],
-      infoList: []
+      infoList: [],
+      pageParam: {
+        pageCurrent: 1,
+        pageSize: 10,
+        total: 0,
+      },
     };
     this.reMoneyColumn = [
       {
@@ -233,6 +242,7 @@ export default class PersonAccount extends React.Component {
     this.getInitData();
     this.initFetchSafeData();
     this.getAccountStatement();
+    this.getCouponList();
   }
 
   // 初始化安全中心首页数据
@@ -241,6 +251,81 @@ export default class PersonAccount extends React.Component {
       type: 'safeCenter/getSafe',
     });
   };
+
+  // 获取优惠券数据
+  async getCouponList() {
+    if (this.state.loadingPage) {
+      return;
+    }
+    this.setState({loadingPage: true});
+    const response= await getAccountCoupon(this.state.pageParam);
+    this.setState({loadingPage: false});
+    console.log('getCouponList', response);
+    if (response.code === 0) {
+      this.setState({
+        pageParam: {
+          ...this.state.pageParam,
+          total: response.data.totalNumber
+        },
+        couponList: response.data.infoList
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
+  // 获取回款计划折线图数据
+  async getReceivePlan() {
+    const response = await repayPlan();
+    console.log('getReceivePlan', response);
+    if (response.code === 0) {
+      let planArr = [];
+      for (let obj of response.data.list) {
+        planArr.push([obj.month, obj.money])
+      }
+      this.setState({
+        allMoney:  response.data.money, // 待收总额
+        daishoubenjin: response.data.principal, // 待收本金
+        daishoulixi: response.data.interest,//待收利息
+        lineOption: {
+          tooltip : {
+            trigger: 'axis',
+            formatter: function (params) {
+              params = params[0];
+              return `${params.axisValue}月
+              回款${params.data[1]}元`
+            },
+          },
+          xAxis: {
+            type: 'value',
+            nameLocation: 'end',
+            minInterval: 1,
+            min: 1,
+            max: 12,
+            scale: true,
+            interval: 1,
+            name: '月'
+          },
+          yAxis: {
+            name: '元'
+          },
+          series: [{
+            data: planArr,
+            type: 'line',
+            lineStyle: {
+              color: '#FEA063'
+            },
+            itemStyle: {
+              color: '#28F3AD'
+            }
+          }]
+        },
+      })
+    } else {
+      response.msg && message.error(response.mag);
+    }
+
+  }
 
   getInitData() {
     this.props.dispatch({
@@ -283,6 +368,7 @@ export default class PersonAccount extends React.Component {
     if (this.props.personal !== nextProps.personal) {
       const money = nextProps.personal.totalAssets;
       const data = nextProps.personal;
+      this.getReceivePlan()
       // 回款计划
       const plan = nextProps.personal.plan?nextProps.personal.plan: [];
       let planArr = [];
@@ -379,40 +465,8 @@ export default class PersonAccount extends React.Component {
             }
           ]
         },
-        lineOption: {
-          tooltip : {
-            trigger: 'axis',
-            formatter: function (params) {
-              params = params[0];
-              return `${params.axisValue}月
-              回款${params.data[1]}元`
-            },
-          },
-          xAxis: {
-            type: 'value',
-            nameLocation: 'end',
-            minInterval: 1,
-            min: 1,
-            max: 12,
-            scale: true,
-            interval: 1,
-            name: '月'
-          },
-          yAxis: {
-            name: '元'
-          },
-          series: [{
-            data: planArr,
-            type: 'line',
-            lineStyle: {
-              color: '#FEA063'
-            },
-            itemStyle: {
-              color: '#28F3AD'
-            }
-          }]
-        },
-      })
+        
+      });
     }
   }
 
@@ -454,34 +508,37 @@ export default class PersonAccount extends React.Component {
         </div>
       );
     }
+    if (this.props.personal.totalAssets.totalAssets==null) {
+      return null;
+    }
     return (
       <div>
         <LeftMenu param={this.props}/>
         <div className="fr uc-rbody" style={{backgroundColor: '#F5F5F5',padding: 0}}>
           <div className="per_account">
             <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>
-              <i>账户总资产</i>
-              <b>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</b>
-              <em>单位：元</em>
+              <i style={{fontSize: '20px',lineHeight: '14px',marginRight: '18px'}}>账户总资产</i>
+              <b style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</b>
+              <em style={{marginTop: 0}}>单位：元</em>
             </div>
-            <div className="tright hd1">
+            <div className="tright hd1" style={{margin: '10px 0 10px 0'}}>
               <a className="fl" style={{cursor: 'default'}}>
-                <i>累计充值</i>
-                <b className="f18">{(this.props.personal.totalAssets.totalRecharge+'').fm()}</b>
+                <i>累计利息收益</i>
+                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInterest+'').fm()}</b>
               </a>
               <a className="fl" style={{cursor: 'default'}}>
-                <i>累计提现</i>
-                <b className="f18">{(this.props.personal.totalAssets.totalWithdrawals+'').fm()}</b>
+                <i>累计投资金额</i>
+                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInvMoney+'').fm()}</b>
               </a>
             </div>
-            <div className="border shadow box1" style={{marginTop: 90}}>
-              <div className="pieDiv">
+            <div className="border shadow box1" style={{marginTop: 70}}>
+              <div className="pieDiv" style={{left: '60px'}}>
                 <div>
                   <span style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</span>
                   <span style={{fontSize: '14px'}}>账户总资产</span>
                 </div>
               </div>
-              <PieReact width='500px' height="200px"  option={this.state.pieOption}/>
+              <PieReact width='600px' height="200px"  option={this.state.pieOption}/>
             </div>
           </div>
           {/* 未领取优惠券 */}
@@ -491,8 +548,6 @@ export default class PersonAccount extends React.Component {
               {this.state.couponList.map((data, index)=>{
                 return (
                   <Coupon key={index} data={data} hasLine='true' handlerBtnClick={(id,data)=>{
-                    console.log(id);
-                    console.log(data);
                     }}/>
                 );
               })}
@@ -502,33 +557,15 @@ export default class PersonAccount extends React.Component {
           <div className="per_account" style={{marginTop: 30}}>
             <div className="return_money">
               <em>回款计划</em>
-              <span>更多>></span>
+              <span style={{color: '#d6d6d6', cursor: 'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/receivePlan')}>更多>></span>
             </div>
             <div className="return_money_desc" style={{marginTop: 20}}>
-              <span>待收总额：172,581.00 &nbsp;&nbsp; 待收本金：170,000.00 &nbsp;&nbsp; 待收利息：2581.00</span>
-              <div className="icon_btn">
-                <i className={`zjb zjb-biaoge btn ${this.state.showType==='biaoge'?'orange_font':''}`} style={{fontSize: 20,marginRight: 10}} onClick={()=>this.setState({showType: 'biaoge'})}/>
-                <i className={`zjb zjb-shuju01 btn ${this.state.showType==='shuju'?'orange_font':''}`} style={{fontSize: 22}} onClick={()=>this.setState({showType: 'shuju'})}/>
-              </div>
-              { this.state.showType === 'shuju'?
-                <div style={{marginTop: 20}}>
-                  <LineReact height="450px" width="900px" option={this.state.lineOption}/>
-                </div> :
-                <div className="table_div">
-                  <Table
-                    dataSource={this.state.reMoneyList}
-                    columns={this.reMoneyColumn}
-                    bordered
-                    size="small"
-                    scroll={{y: 300}}
-                    pagination={{
-                      showTotal: (total, range)=>{
-                        return <span className="table_count_text" style={{color: '#C9C9C9'}}>共{total}条数据</span>
-                      }
-                    }}
-                  />
-                </div>
-              }
+              <span style={{color: '#666', marginRight: 100}}>待收总额：{`${this.state.allMoney}`.fm()}</span>
+              <span style={{color: '#666', marginRight: 100}}>待收本金：{`${this.state.daishoubenjin}`.fm()}</span>
+              <span style={{color: '#666'}}>待收利息：{`${this.state.daishoulixi}`.fm()}</span>
+              <div style={{marginTop: 20}}>
+                <LineReact height="450px" width="900px" option={this.state.lineOption}/>
+              </div> 
             </div>
           </div>
 
@@ -536,7 +573,7 @@ export default class PersonAccount extends React.Component {
           <div className="per_account" style={{marginTop: 30}}>
             <div className="return_money">
               <em>资金动态</em>
-              <span>更多>></span>
+              <span style={{color: '#d6d6d6', cursor: 'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/accountstatement')}>更多>></span>
             </div>
             <p style={{color: '#c9c9c9',marginBottom: 20}}>以下为您近期最新10笔资金动态</p>
             {

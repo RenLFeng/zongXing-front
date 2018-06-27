@@ -10,7 +10,15 @@ export const CouponService = {
     receiveCoupon:async(param)=>req.get('/zjb-website/coupon/receive',param),
     //兑换优惠券
     convertCoupon:async(param)=>req.post('/zjb-website/coupon/convert',param), 
-
+    //获取交换中心中我的优惠券
+    getMyConvertCoupon:async(param)=>req.post('/zjb-website/coupon/exchange/centre/top',param), 
+    //交换中心
+    getCenterCoupon:async(param)=>req.post('/zjb-website/coupon/exchange/centre',param), 
+    //券额兑换优惠券
+    moneyConvertCoupon:async(param)=>req.post('/zjb-website/coupon/convert/coupon',param), 
+    //获取优惠券的地理位置
+    getCouponPlace:async() =>req.get('/zjb-website/coupon/place'),
+    
 };
 
 // 账户服务

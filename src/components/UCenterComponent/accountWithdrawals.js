@@ -44,7 +44,7 @@ export default class EnterprisePresentation extends React.Component {
       // accountId:this.props.location.state ? this.props.location.state.account: '',
       accountId: '',
       bankCodes: [],   //银行列表
-      bankcardInfos: [],   //银行信息
+      bankcardInfos: [{fbankcard: '323156456456456'}, {fbankcard: '323156456456456'} , {fbankcard: '323156456456456'}],   //银行信息
       provinces: [],   //省份列表
       withdrawals: {},  //提交表单后返回的数据
       loading: false,
@@ -70,7 +70,11 @@ export default class EnterprisePresentation extends React.Component {
 
   componentDidMount() {
     // 获取跳转类型 0：个人 1：企业
-    this.getCardInformation(this.props.accountId); 
+    if (!this.props.accountId) {
+      this.props.history.push('/index/uCenter/realName');
+      return;
+    }
+    // this.getCardInformation(this.props.accountId); 
   }
 
   //获取银行卡
@@ -246,23 +250,36 @@ export default class EnterprisePresentation extends React.Component {
           </div>
           <span className="withdrawals_title">请选择到账银行卡</span>
           <div style={{padding: '0 0 30px 52px', borderBottom: '1px dashed #e6e6e6'}}>
-            <div style={{display:'flex',justifyContent: 'space-between'}}>
-            {
+            <div style={{display:'inline-block'}}>
+            {/* {
               this.state.bankcardInfos.map((data)=>{
                  return(
-                     <div style={{cursor:"pointer"}} key={data.fid} onClick={()=>{this.setState({selectedCard: data,selectedCardError: false})}} >
+                     <div style={{cursor:"pointer",display: 'inline-block'}} key={data.fid} onClick={()=>{this.setState({selectedCard: data,selectedCardError: false})}} >
                           <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={data.fbank} cardId={data.fbankcard.substr(0,4) +'**** **** '+data.fbankcard.substr(12)}  /> 
                      </div>
                      
                  )
               })
-            }
+            } */}
+                      <div style={{cursor:"pointer",display: 'inline-block'}} >
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={1543253535}  /> 
+                     </div>
+
+                     <div style={{cursor:"pointer",display: 'inline-block'}} >
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={4245245232543}  /> 
+                     </div>
+
+                     <div style={{cursor:"pointer",display: 'inline-block'}} >
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={148757825542453254}  /> 
+                     </div>
+
+                <div className="card_add" onClick={() => this.props.history.push(Path.BINDCARD)}>
+                  <Icon type="plus" className="pluc"/>
+                  <p className="add">绑定新银行卡</p>
+                  <p className="card_type">（只支持储蓄卡）</p>
+                </div>
             </div> 
-            <div className="card_add" >
-              <Icon type="plus" onClick={() => this.props.history.push(Path.BINDCARD)}/>
-              <p className="add">绑定新银行卡</p>
-              <p className="card_type">（只支持储蓄卡）</p>
-            </div>
+            
           </div>
           <div className="rech_center" style={{position: 'relative', paddingTop: 0, }}>
             <div className="label_div" style={{width: '116px'}}>
@@ -270,7 +287,7 @@ export default class EnterprisePresentation extends React.Component {
               <span className="label_text" style={{position: 'absolute', top: 105}}>提现金额</span>
             </div>
             <div className="label_div" style={{paddingTop: '32px'}}>
-              <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px'}}>{this.state.selectedCard ? this.state.selectedCard.fbank : null}</span>
+              <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px'}}>{this.state.selectedCard ? this.state.selectedCard.fbank : ''}</span>
               <div className="input-view" style={{marginTop: 36}}>
                 <span className="money_tip">￥</span>
                 <input type="text" className="input_money" onChange={this.changeMoney} value={this.state.amount}/>

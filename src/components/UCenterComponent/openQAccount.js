@@ -81,24 +81,26 @@ export default class OpenQAccount extends React.Component {
     const suffix = realName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     let formRef = null;
       return(
-        <div className="pages">
+        <div className="pages" style={{}}>
           {
             this.state.showPage === 'mmmpage-warn' ?
               <div>
                 <div className="real_title_">
-                  <span className="safeCenter_">实名认证</span>
-                  <span>&gt; 开通乾多多资金托管账户 &gt; 发起开通申请</span>
+                  <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
+                  <span style={{fontSize: 16}}>&gt; 开通乾多多资金托管账户 &gt; 发起开通申请</span>
                 </div>
                 <div className="page_content">
                   <div className="openingHints">
-                    <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
-                    <p style={{ marginTop: 60 }}>开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</p>
-                    <p style={{ marginTop: 25 }}>保障您的资金安全</p>
+                    <img alt="" src={require('../../assets/img/ucenter/u4288.jpg')} />   
+                  </div>
+                  <div className="titleWord">
+                    <p >开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</p>
+                    <p style={{marginTop:15}}>保障您的资金安全</p>
                   </div>
                   <div className="buttonGroup">
                     <Button type="primary" className="open" disabled={!this.state.param} loading={this.state.loading} onClick={() => this.handleSubmitParam()}>申请开通</Button>
-                    <p>系统提交用户身份资料给乾多多，进行是否已有账户判断</p>
                   </div>
+                 
                 </div>
                 <form ref={ref => { this.formId = ref}} action={submitParam.submitUrl} method="post" style={{ display: 'none' }}>
                   <input id="AccountType" name="AccountType" value={0} />

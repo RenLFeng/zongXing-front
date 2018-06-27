@@ -10,10 +10,12 @@ export default class Authentication extends React.Component {
     super(props);
     this.state = {
       showPage: 'idcard',
+      // showPage: 'ok',
       realName: '',
       idcard: '',
       openName: '',
       num: 5, // 5秒后
+      // loading:false,
     };
     this.countDown = null;
   }
@@ -81,16 +83,17 @@ export default class Authentication extends React.Component {
 
     return (
       <div className="pages">
+        <div className="real_title_">
+          <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>安全中心</span>
+          <span style={{fontSize: 16}}>&gt; 身份认证 &gt; 中国大陆居民身份认证</span>
+        </div>
         {
           this.state.showPage === 'idcard' ?
             <div>
-              <div className="real_title_">
-                <span className="safeCenter_">安全中心</span>
-                <span> &gt; 身份认证 &gt; 选择身份认证证件类型</span>
-              </div>
               <div className="card">
                 <div className="id_card">
-                  <Icon type="idcard" className="id_Card" />
+                  <img src={require('../../assets/img/card.png')}/>
+                  {/* <Icon type="idcard" className="id_Card" /> */}
                 </div>
                 <span className="china">中国大陆居民身份认证</span>
                 <Button
@@ -102,8 +105,7 @@ export default class Authentication extends React.Component {
               </div>
               <div className="card top">
                 <div className="id_card">
-                  <Icon type="idcard" className="id_Card" />
-                  <Icon type="close-circle-o" className="close" />
+                <img src={require('../../assets/img/card.png')}/>
                 </div>
                 <span className="china">港澳台居民身份认证</span>
                 <Button type="primary">我要认证</Button>
@@ -111,25 +113,23 @@ export default class Authentication extends React.Component {
             </div> :
           (this.state.showPage === 'chinaCard') ?
             <div>
-              <div className="real_title_">
-                <span className="safeCenter_">安全中心</span>
-                <span>&gt; 身份认证 &gt; 中国大陆居民身份认证</span>
-              </div>
               <div className="Prompt">
                 <img alt="提示" src={require('../../assets/img/u3530.png')} />
               
-                <p className="p1" style={{textAlign:'center'}}> 成身份认证，有助于建立完善可靠的互联网信用体系</p>
+                <p className="p1" style={{textAlign:'center'}}>完成身份认证，有助于建立完善可靠的互联网信用体系</p>
                 <p className="p2"  style={{textAlign:'center'}}>姓名必须与充值、提现的银行卡开户名保持一致</p>
               </div>
               {/* <Spin style={{height: 200}}> */}
                 <div className="info">
                   <div className="inp">
                     <Input placeholder="请输入真实姓名" onChange={this.updateRealName} />
-                    <img alt="真实姓名" src={require('../../assets/img/u186.png')} />
+                    <img alt="真实姓名" src={require('../../assets/img/u186.png')} className="img1"/>
+                    <span className="span_">|</span>
                   </div>
                   <div className="inp">
-                    <Input placeholder="请输入第二代身份证号码" onChange={this.updateIdcard} />
-                    <img alt="身份证id" src={require('../../assets/img/u192.png')} />
+                    <Input placeholder="请输入第二代身份证号码" onChange={this.updateIdcard} style={{marginTop:23}}/>
+                    <img alt="身份证id" src={require('../../assets/img/u192.png')}  className="img2"/>
+                    <span className="span_1">|</span>
                   </div>
       
                   <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button">立即身份认证</span>
@@ -137,20 +137,15 @@ export default class Authentication extends React.Component {
               {/* </Spin> */}
             </div> :
           (this.state.showPage === 'ok') ?
-            <div>
-              <div className="real_title_">
-                <span className="safeCenter_">安全中心</span>
-                <span> &gt; 身份认证 &gt; 身份认证成功</span>
-              </div>
+           
               <div className="info">
-                <p>众借帮使用“全国公民身份证号码查询服务中心”（NCIIC）权威认证</p>
                 <h1>
                   <img alt="ok" src={require('../../assets/img/u3551.png')} />
                   {this.state.openName}，恭喜您已经通过身份认证
                 </h1>
-                <a className="goback" onClick={()=>this.props.history.push('/index/uCenter/openQAccount')}>{this.state.num}秒后自动返回</a>
-              </div>
-            </div> : null
+                <h3>下一步：前往开通资金托管账户</h3>
+                <a className="goback" onClick={()=>this.props.history.push('/index/uCenter/openQAccount')}>{this.state.num}秒后自动跳转</a>
+              </div> : null
         }
       </div>
     );

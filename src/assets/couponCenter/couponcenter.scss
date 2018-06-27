@@ -1,7 +1,13 @@
 
 @import '../common/_var.scss';
 .coupon-center{
-    margin-top: 135px;   
+    margin-top: 135px;
+    .cc-no-data{
+        color: $c9;
+        text-align: center;
+        width: 100%;
+        font-size: 16px;
+    }
     &>.coupon-center-content{
         width: 1248px;
         margin:  60px auto 0; 
@@ -44,10 +50,13 @@
                 }
             }
             &>.to-mycoupon{
-                float: right;
-                text-decoration: underline;
-                font-size: 16px;
-                color:#2400ff;
+                &>a{
+                    float: right;
+                    text-decoration: underline;
+                    font-size: 16px;
+                    color:#2400ff;
+                }
+                
             }
         }
    
@@ -55,6 +64,11 @@
             padding: 30px 60px;
             margin: 30px 0; 
             background-color: #fff; 
+            &>.coupon-paging{
+                text-align: center;
+                margin-top: 30px;
+                padding: 0 30px;
+            }
         }
         &>.search-area{
             margin: 30px 0;
@@ -82,6 +96,14 @@
                             font-size: 16px;
                             color: #333;
                             background-color: #f9f9f9;
+                            border-radius: 5px;
+                            &:hover{ 
+                                opacity: .7;
+                            }
+                            &.active{
+                                color: #fff;
+                                background: $f90; 
+                            }
                         }
                     }
                     
@@ -93,9 +115,10 @@
             }
             &>.coupons-paging{
                margin-top: 10px;
-               padding: 0 30px;
-               margin: 0 auto;
+               padding: 0 30px; 
+               position: relative;
                .paging-info{
+                   position: absolute;
                    float: left;
                    font-size: 18px;
                     color: $c9;
@@ -103,12 +126,34 @@
                         color: $f90;
                     }
                }
-              .paging-component{
-                  
+              .paging-component{ 
                   text-align: center;
               }
                
             }
-        } 
+            &>.question-info{
+                margin: 120px 30px 30px 30px ;
+                &>.text1{
+                    font-size: 20px;
+                    color: #333;
+                    margin: 10px 0;
+                }
+                &>.text2{
+                    font-size: 14px;
+                    color: #999;
+                    float: right;
+                }
+                &>div>.question-title{
+                    margin: 10px 0;
+                    font-size: 18px;
+                    color: #333;
+                }
+                &>div>.question-content{
+                    font-size: 14px;
+                    color: #999;
+                    text-indent: 15px;
+                }
+            }
+        }
     } 
 }

@@ -247,8 +247,8 @@ class BindCard extends React.Component {
     return (
       <div className="pages">
         <div className="real_title_">
-          <span className="safeCenter_">实名认证</span>
-          <span>&gt; 我的银行卡 &gt; 绑定新银行卡</span>
+          <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
+          <span style={{fontSize: 16}}>&gt; 我的银行卡 &gt; 绑定新银行卡</span>
         </div>
         <div className="forms">
           <div className="bind_item_view">
@@ -299,7 +299,7 @@ class BindCard extends React.Component {
             <span/>
             <div className="bind_password" style={{paddingLeft: 10}}>
               <i className="zjb zjb-mima2" />
-              <input type={this.state.showPwd?'text':'password'} onChange={(e)=>this.setState({userPassword: e.target.value.trim()})}/>
+              <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})}/>
               <i className="zjb zjb-htmal5icon08" onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
             </div>
           </div>
