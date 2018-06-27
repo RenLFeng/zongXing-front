@@ -10,6 +10,7 @@ function initPage() {
         autoplay: 5000,
         speed: 1000,
         loop: true,
+        slidesPerView: 'auto',
         pagination: '.tab3con1 .swiper-pagination',
         paginationClickable: true
     });
