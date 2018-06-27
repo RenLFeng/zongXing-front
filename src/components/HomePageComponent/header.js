@@ -36,7 +36,6 @@ export default class Header extends React.Component {
       fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter,companyDiscount,commonProblem,uCenter'
     }
   }
-
   render() {
     // couponCenter
     const {match, location, history} = this.props.param;
@@ -175,7 +174,7 @@ export default class Header extends React.Component {
                     $("#fix").removeClass('fix');
                     $(window).scrollTop(0)}} style={{fontSize:14}}>注册</span>
                  </p>
-                 
+
                  </a> :
               <a className={'a1 '+(fontColor=='uCenter'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
                 history.push('/index/uCenter/personAccount');

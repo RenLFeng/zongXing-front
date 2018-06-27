@@ -13,14 +13,14 @@ const styles = {
     width: '258px',
     padding: '0 26px',
     minHeight: '570px',
-    
+
   },
   fr: {
     width: '900px',
     fontSize: '22px',
     backgroundColor: '#f5f5f5',
     paddingBottom: '240px',
-    height: '600px',
+    height: '635px',
     overflowY: 'scroll',
   },
   t2: {
@@ -49,7 +49,7 @@ export default class Qa extends React.Component {
 
   render() {
     return (
-      <div className="section sec-qa">
+      <div className="section sec-qa g">
         <div className="w clearfix">
           <div className="fl shadow center" style={styles.center}>
             <p className="t1" style={styles.allTitle}>全部问题</p>

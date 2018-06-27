@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import Right from '../../components/ProjectDetailComponent/time';
+import Time from '../../components/ProjectDetailComponent/time';
 import {IMG_BASE_URL} from '../../common/systemParam';
 
 export default class Head extends React.Component {
@@ -46,7 +46,7 @@ export default class Head extends React.Component {
               <p className="t2" style={{textAlign: 'left'}}>{moment(projectDetail.fpublish_time).format('YYYY年MM月DD日')} {projectDetail.fprovincial_name === projectDetail.fcity_name ? projectDetail.fprovincial_name : `${projectDetail.fprovincial_name} - ${projectDetail.fcity_name}`}</p>
             </div>
             <div className="fr rbody">
-              <Right
+              <Time
                 projectDetail={projectDetail}
                 history={this.props.history}
                 time={{countDay: this.state.countDay, countDown: this.state.countDown}}

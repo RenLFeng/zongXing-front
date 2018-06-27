@@ -221,7 +221,7 @@ render(){
           {
             userCount ?
               <a className="btn"  onClick={() => this.getData(1)}><i>已投资人数</i><b>{userCount}</b>人</a> :
-              <a style={{backgroundColor: '#ccc', width: '200',lineHeight: '50px',textAlign: 'center',position: 'absolute',top:'26',left: '50%',marginLeft: '-100',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>已投资人数</i><b>{userCount}</b>人</a>
+              <a onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} style={{backgroundColor: '#ccc', width: '200',lineHeight: '50px',textAlign: 'center',position: 'absolute',top:'26',left: '50%',marginLeft: '-100',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>已投资人数</i><b>{userCount}</b>人</a>
           }
         </div>
       </div>

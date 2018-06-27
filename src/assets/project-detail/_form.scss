@@ -151,3 +151,24 @@
         }
     }
 }
+.pd-form.g{
+  box-sizing: content-box;
+  *{
+    box-sizing: content-box;
+  }
+  .card{
+    border: none;
+    border-bottom: 1px solid #ccc;
+  }
+  .ant-input-number-lg input{
+    box-sizing: border-box;
+  }
+   .form .put.chk{
+     width:18px;
+     height: 22px;
+   }
+  .form label{
+    line-height: 20px;
+  }
+}
+

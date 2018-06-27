@@ -13,14 +13,14 @@ const styles = {
     width: '258px',
     padding: '0 26px',
     minHeight: '570px',
-    
+
   },
   fr: {
     width: '900px',
     fontSize: '22px',
     backgroundColor: '#f5f5f5',
     paddingBottom: '240px',
-    height: '600px',
+    height: '655px',
     overflowY: 'scroll',
   },
   t2: {
