@@ -1,17 +1,19 @@
 
 
 .lg-login{ 
+   
     .av {
-        width: 100px;
-        height: 100px;
-        border-radius: 100%;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
     }
     div.fl { 
-        margin: 10px 0 0 50px;
+        margin: 2px 0 0 10px;
         font-size: 18px;
         color: #333;
         &>.t1 {
-            line-height: 30px; 
+            line-height: 14px; 
+            font-size: 14px;
             &>a{
                 margin-left: 10px;
                 font-size: 14px;
@@ -32,39 +34,49 @@
             }
         } 
         &>.uinfo{
-            margin-top: 20px;
+            margin-top: 10px;
+            .nickname{
+                font-size: 14px;
+            }
             &>.split{
-                color: #999;
-                margin: 0 19px 0 14px;
+                color: rgba(195, 195, 195, 0.3);
+                // opacity: 0.3;
+                margin: 0 10px 0 10px;
             }
             &>.uname{
                 font-size: 20px;
                 line-height: 20px;
             }
             &>i{ 
-                padding: 0 8px;
-                font-size: 20px;
+                padding: 4px 5px;
+                font-size: 10px;
                 cursor: pointer;
                 color: #e6e6e6;
+                background: #d5d8dc;
+                width:22px;
+                height:22px;
+                border-radius: 50%;
+                margin-right: 12px;
+                color:white;
                 &.active{
-                    color: #f90;
+                    // color: #f90;
+                    background: #f90;
                 }
             }  
         } 
     }
     div.fr { 
-        margin-top: 10px;
-        font-size: 18px;
+        font-size: 14px;
         div.account-content{
-            min-width: 150px; 
+            min-width: 160px; 
             display: inline-block; 
             border-right: 1px solid #f0f0f0;
             text-align: center;
-            height: 90px;
+            // height: 90px;
             .account-money{
-                margin-top: 18px;
+                // margin-top: 18px;
                 color:#f90;
-                font-size: 30px;
+                font-size: 22px;
                 font-weight: 500;
                
             }
