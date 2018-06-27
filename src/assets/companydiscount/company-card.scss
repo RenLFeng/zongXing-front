@@ -30,38 +30,43 @@
                 padding: 2px 10px;
                 line-height: 20px;
                 margin-right: 20px; 
-                &.xcy-color{
-                    background-color: $xcy !important;
-                }
-                &.xfw-color{
-                    background-color: $xfw !important;
-                }
-                &.xls-color{
-                    background-color: $xls !important;
-                }
-                &.xny-color{
-                    background-color: $xny !important;
-                }
-                &.xyl-color{
-                    background-color: $xyl !important;
-                }
-                &.other-color{
-                    background-color: $other !important;
-                } 
+                border-radius: 5px;
+                font-size: 11px;
+                background-color: #ff9900 !important;
+                // &.xcy-color{
+                //     background-color: $xcy !important;
+                // }
+                // &.xfw-color{
+                //     background-color: $xfw !important;
+                // }
+                // &.xls-color{
+                //     background-color: $xls !important;
+                // }
+                // &.xny-color{
+                //     background-color: $xny !important;
+                // }
+                // &.xyl-color{
+                //     background-color: $xyl !important;
+                // }
+                // &.other-color{
+                //     background-color: $other !important;
+                // } 
             }
             &>.name {
                 font-weight: bold;
-                font-size: 16px;
+                font-size: 19px;
             }
         }
         .tit2 {
             font-size: 16px;
-            padding: 10px 0;
+            padding: 25px 0 10px;
+            color: #333;
         }
         .desc {
             height: 60px;
             margin-bottom: 16px;
-            color: $c6;
+            color: #c6c6c6;
+            font-size: 14px;
         }
         .tags {
             a {

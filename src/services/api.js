@@ -801,3 +801,23 @@ export async function getAccountCoupon(param) {
     },
   })
 }
+
+// 商家优惠获取数据
+export async function getCompanyDiscount(param) {
+  return request(`${BASE_URL}/zjb-website/merchantsPreferential/list`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  })
+}
+
+// 领取优惠券 
+export async function getDiscount(param) {
+  return request(`${BASE_URL}/zjb-website/coupon/manual/grant`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  })
+}
