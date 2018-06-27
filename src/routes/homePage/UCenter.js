@@ -35,6 +35,7 @@ import AllInvest from '../../components/UCenterComponent/AllInvest';
 import Test from '../../components/UCenterComponent/test';
 import CompanyList from '../../components/UCenterComponent/companyList';
 import BindSuccess from '../../components/UCenterComponent/bindSuccess';
+import MyIvititonCode from '../../components/UCenterComponent/myInvitationCode';
 
 //我的优惠券
 import myCoupon from '../../components/UCenterComponent/mycoupon';
@@ -85,6 +86,8 @@ export default class UCenter extends React.Component {
             <Route path={Path.MY_COUPON}  component={myCoupon} />
             {/* 项目收藏 */}
             <Route path={Path.Project_Collection} component={projectCollection}/>
+            {/* 我的邀请码 */}
+            <Route path={Path.My_INVITATION_CODE} component={MyIvititonCode}/>
 
             {/* 用户基本信息 */}
             <Route path={Path.USER_BASIC} component={UserBasic} />
