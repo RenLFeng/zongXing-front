@@ -21,7 +21,7 @@ export default class HowInvest extends React.Component {
 	render() {
 		return(
       <div className="g" >
-        <div className="banner autosize">
+        <div className="banner autosize" style={{marginBottom:0}}>
           <img className="big" src={require('../../assets/img/invest/banner.jpg')} />
           <div className="w">
             <a className="btn "

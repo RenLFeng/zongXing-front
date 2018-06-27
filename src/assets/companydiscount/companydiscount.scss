@@ -27,8 +27,18 @@
     }
     .to-coupon{
         position: absolute;
-        right: 20px;
+        right: 0px;
         bottom: 15px; 
+        width: 152px;
+        height: 40px;
+        background-color: #2286e4;
+        text-align: center;
+        color: #fff;
+        font-size: 14px;
+        line-height: 40px;
+    }
+    .to-coupon:hover{
+        background-color: #1C6AB7;
     }
 }
   .item {

@@ -227,3 +227,61 @@
         }
     }
 }
+.pd-body2{
+  > .lbody.g{
+    width: 828px;
+    padding: 30px 26px 50px;
+   .lnav > a{
+     height: 55px;
+   }
+    .rbody .textbox{
+      padding: 25px 25px;
+    }
+
+  }
+  > .lbody{
+    .tnav a{
+      display:inline-block;
+    }
+  }
+  > .rbody{
+    ._masker{
+     z-index: 10;
+    }
+    .box2{
+      margin-top:0;
+      .bot1{
+        button{
+          margin-right: 10px;
+          font-size: 18px;
+        }
+        button.y{
+          margin-left: 5px;
+          background: #2FA6A6;
+          border-color: #2FA6A6;
+        }
+      }
+    }
+    .box3{
+      margin-top:30px;
+      .tit{
+        font-size: 18px;
+        padding:30px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+      }
+      >.coupon >.cp-coupon-content{
+        padding: 10px;
+        margin-bottom:0;
+        .btns{
+          button{
+            border-radius: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
