@@ -17,27 +17,25 @@ export default class CouponSmall extends React.Component {
 
     setCouponSmall(props){ 
         let fflag_class ='qsy';
-        let btn_text ='去使用';
-        if(props.data){
-            switch(props.data.fflag){
-                case 0:case 1:
-                fflag_class ='dlq';
-                btn_text='待领取';
-                break;
-                case 2:case 3:
-                fflag_class ='qsy';
-                btn_text='去使用';
-                break;
-                case 4:
-                fflag_class ='ysy';
-                btn_text='已使用';
-                break;
-                case 5:
-                fflag_class ='ysx';
-                btn_text='已失效';
-                break; 
-            } 
-        }
+        let btn_text ='去使用'; 
+        switch(props.data.fflag){
+            case 0:case 1:
+            fflag_class ='dlq';
+            btn_text='待领取';
+            break;
+            case 2:case 3:
+            fflag_class ='qsy';
+            btn_text='去使用';
+            break;
+            case 4:
+            fflag_class ='ysy';
+            btn_text='已使用';
+            break;
+            case 5:
+            fflag_class ='ysx';
+            btn_text='已失效';
+            break; 
+        }  
         this.setState({ 
             data:props.data?props.data:{},
             fflag_class:fflag_class, 
@@ -66,9 +64,14 @@ export default class CouponSmall extends React.Component {
                     <p className='coupon-time'>有效期：{this.state.data.fend_time?moment(this.state.data.fend_time).format('YYYY年MM月DD日'):'----年--月--日'}</p>
                 </div>
                 <div className='coupon-right' onClick={this.props.handlerBtnClick?()=>this.props.handlerBtnClick(this.state.data):()=>{}} style={this.props.handlerBtnClick?{cursor: 'pointer'}:null}>
-                    <img className="logo" src={this.state.data.flogo_pic||this.state.logo}/>
-                    <p className='coupon-flag'>{this.state.btn_text}</p>
-                    <p className='coupon-count'>共 <span>{this.state.data.countNum>0?this.state.data.countNum:1}</span> 张</p>
+                    <img className={`logo ${this.props.onlyOne?'center':''}`} src={this.state.data.flogo_pic||this.state.logo}/>
+                    {
+                        this.props.onlyOne?null:
+                        <div>
+                            <p className='coupon-flag'>{this.state.btn_text}</p>
+                            <p className='coupon-count'>共 <span>{this.state.data.countNum>0?this.state.data.countNum:1}</span> 张</p>
+                        </div>
+                    } 
                 </div>
             </div> 
          )
