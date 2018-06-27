@@ -8,10 +8,16 @@ export default class CouponSmall extends React.Component {
         this.state = { 
             data:{},
         }
-        this.setCouponSmall(props);
+        
     }
 
+    componentDidMount() {
+        this.setCouponSmall(this.props);
+    }
+
+
     componentWillReceiveProps(props){
+        console.log(props);
         this.setCouponSmall(props);
     } 
 

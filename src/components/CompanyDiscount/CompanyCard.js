@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../../assets/companydiscount/company-card.scss'; 
+import CouponList from '../../components/couponList/couponList';
 class CompanyCard extends React.Component {
     constructor(props) {
         super(props);
@@ -31,7 +32,7 @@ class CompanyCard extends React.Component {
     }
     render() { 
         return (  
-            <div className="company-card shadow clearfix">
+            <div className="company-card shadow">
                 <div className="logo">
                     <img  src={this.state.data.logo||'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'} />
                 </div>
@@ -42,17 +43,9 @@ class CompanyCard extends React.Component {
                     </p>
                     <p className="tit2">{this.state.data.ftitle||'一级标题'}</p>
                     <p className="desc">{this.state.data.fsub_title||'二级标题'}</p>
-                    <p className="tags">
-                        <a>活动集</a> 
-                    </p>
-                    <div className='ics'>
-                        <a className="ic ic_like" onClick={this.props.handlerLikeClick?this.props.handlerLikeClick.bind(this,this.state.data.fid,this.state.data):()=>{}}>{this.state.data.flike||0}</a>
-                        <a className="ic ic_share" onClick={this.props.handlerShareClick?this.props.handlerShareClick.bind(this,this.state.data.fid,this.state.data):()=>{}}>{this.state.data.fshare||0}</a>
-                    </div>    
                 </div> 
                <div className='coupon-items' >
-                   <div className='coupon-item'>这里是小优惠券</div> 
-                   <div className='coupon-item'>这里是小优惠券</div>
+                   <CouponList />
                </div>
             </div> 
          )
