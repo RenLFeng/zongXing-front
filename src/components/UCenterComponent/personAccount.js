@@ -531,11 +531,11 @@ export default class PersonAccount extends React.Component {
             <div className="tright hd1" style={{margin: '10px 0 10px 0'}}>
               <a className="fl" style={{cursor: 'default'}}>
                 <i>累计利息收益</i>
-                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInterest+'').fm()}</b>
+                <b className="f18" style={{marginLeft: 20,fontSize: 16}}>{(this.props.personal.totalAssets.totalInterest+'').fm()}</b>
               </a>
               <a className="fl" style={{cursor: 'default'}}>
                 <i>累计投资金额</i>
-                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInvMoney+'').fm()}</b>
+                <b className="f18" style={{marginLeft: 20,fontSize: 16}}>{(this.props.personal.totalAssets.totalInvMoney+'').fm()}</b>
               </a>
             </div>
             <div className="border shadow box1" style={{marginTop: 70}}>

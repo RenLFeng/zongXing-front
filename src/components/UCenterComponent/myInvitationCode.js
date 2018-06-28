@@ -27,6 +27,7 @@ class MyInvitationCode extends React.Component {
         title: '序号', 
         align:'center',
         width:80,
+        size:16,
         render:function(text,record,index){
           return index+1;
         }
@@ -56,7 +57,7 @@ class MyInvitationCode extends React.Component {
                         <p className='t2'>
                             <span >邀请链接</span>
                             <span className='text2'>http://localhost:8000/#/index/uCenter/myinvitationcode</span>
-                            <Button type='primary'>复制链接</Button>
+                            <Button type='primary' style={{fontSize:16}}>复制链接</Button>
                         </p>
                         <div className='t3'>
                             <div className='div1'>
@@ -64,7 +65,7 @@ class MyInvitationCode extends React.Component {
                                 <p>邀请码：24356668059</p>
                             </div>
                             <div className='text1'>
-                                <p>可用手机拍照，将照片分享给朋友；通过长按图片识别图中二维码，来打开邀请链接</p>
+                                <p style={{fontSize:14}}>可用手机拍照，将照片分享给朋友；通过长按图片识别图中二维码，来打开邀请链接</p>
                             </div>
                         </div>
                         <p className='t4'>

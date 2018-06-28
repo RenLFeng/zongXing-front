@@ -295,7 +295,7 @@ export default class ReceivePlan extends React.Component {
                 </div>:null
               } 
               {this.state.proPageList.length > 0 ?
-                <span style={{display:'inline-block',width: '100%',textAlign: 'right', marginTop: 10,fontSize: 16, color: '#A4A4A4'}}>
+                <span style={{display:'inline-block',width: '100%',textAlign: 'right', marginTop: 10,fontSize: 12, color: '#A4A4A4'}}>
                   已回款总额：<span style={{color: '#ff9900'}}>￥{`${this.state.allMoney}`.fm()}</span>
                   &nbsp;已收本金：<span style={{color: '#ff9900'}}>￥{`${this.state.receivePrincipal}`.fm()}</span>
                   &nbsp;已收利息：<span style={{color: '#ff9900'}}>￥{`${this.state.receiveInterest}500`.fm()}</span>
@@ -549,16 +549,16 @@ class CanvasCircle extends React.Component {
     cxt.beginPath();
     cxt.fillStyle = '#84e192';
     cxt.font="12px Microsoft YaHei";
-    cxt.fillText("还款中",107,65);
+    cxt.fillText("还款中",115,65);
     cxt.font="12px Microsoft YaHei";
     if (current > 10 && sum > 10) {
-      cxt.fillText(`第${current}/${sum}期`,97,85);
+      cxt.fillText(`第${current}/${sum}期`,107,85);
     } else if (current < 10 && sum > 10) {
-      cxt.fillText(`第${current}/${sum}期`,97,85);
+      cxt.fillText(`第${current}/${sum}期`,107,85);
     } else if (current < 10 && sum < 10) {
-      cxt.fillText(`第${current}/${sum}期`,103,85);
+      cxt.fillText(`第${current}/${sum}期`,113,85);
     } else {
-      cxt.fillText(`第${current}/${sum}期`,103,85);
+      cxt.fillText(`第${current}/${sum}期`,113,85);
     }
     cxt.stroke();
 

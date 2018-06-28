@@ -90,10 +90,9 @@ export default class Authentication extends React.Component {
         {
           this.state.showPage === 'idcard' ?
             <div>
-              <div className="card">
+              <div className="cards">
                 <div className="id_card">
                   <img src={require('../../assets/img/card.png')}/>
-                  {/* <Icon type="idcard" className="id_Card" /> */}
                 </div>
                 <span className="china">中国大陆居民身份认证</span>
                 <Button
@@ -103,7 +102,7 @@ export default class Authentication extends React.Component {
                 我要认证
                 </Button>
               </div>
-              <div className="card top">
+              <div className="cards top">
                 <div className="id_card">
                 <img src={require('../../assets/img/card.png')}/>
                 </div>
