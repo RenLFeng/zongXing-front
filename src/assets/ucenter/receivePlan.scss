@@ -201,10 +201,10 @@
   .rp_detail_time_item {
     vertical-align: top;
     width: 100%;
+    margin-bottom: -10px;
   }
   .rp_detail_time_item_left {
     vertical-align: top;
-    margin-top: -5px;
     display: inline-block;
     width: 111px;
     text-align: center;
@@ -225,8 +225,16 @@
       height: 20px;
       border-radius: 50px;
       background-color: #ff9900;
-      margin: -10px auto 0px;
+      margin: 0px auto;
       text-align: center;
+      position: relative;
+      .rp_detail_time_item_tip_icon {
+        color: #fff;
+        font-size: 14px;
+        position: absolute;
+        top: 0;
+        right: 3px;
+      }
     }
     .rp_detail_time_item_line {
       margin-left: 14px;
@@ -235,7 +243,6 @@
     }
   }
   .rp_detail_time_item_right {
-    margin-top: -5px;
     margin-left: 20px;
     display: inline-block;
     vertical-align: top;
