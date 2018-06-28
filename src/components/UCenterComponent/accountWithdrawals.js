@@ -288,7 +288,7 @@ export default class EnterprisePresentation extends React.Component {
             </div>
             {this.state.selectedCardError ? <div><span style={{ color:'red', fontSize:'10px' }}>请选择到账银行卡</span></div> : null}
             {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px' }}>{this.state.moneyErrorMsg}</span></div> : null}
-            <Button type="primary" style={{width: 279, marginTop: 30,height:35,fontSize: 17}} onClick={this.handleSubmit}>发起提现</Button>
+            <Button type="primary" style={{width: 279, marginTop: 30,height:35,fontSize: 17, marginBottom:30}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
           <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
             <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />

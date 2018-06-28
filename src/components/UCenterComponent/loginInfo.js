@@ -133,7 +133,7 @@ class LoginInfo extends React.Component {
                             <div className="uc-message" >
                                 <div id="box">
                                     <div id="t_news">
-                                         <b >系统消息：</b> 
+                                         <span id="b">系统消息：</span> 
                                          {
                                              this.state.dataInfo.length > 1  ?
                                              <div>

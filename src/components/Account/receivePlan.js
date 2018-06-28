@@ -246,13 +246,13 @@ export default class ReceivePlan extends React.Component {
               </div>
             </div> : 
             <div className="rp_current_plan" style={{height: 60}}>
-              <span style={{display: 'inline-block',fontSize: 18, width: '100%', textAlign: 'center',color: '#a4a4a4'}}>暂无近期回款计划</span>
+              <span style={{display: 'inline-block',fontSize: 16, width: '100%', textAlign: 'center',color: '#a4a4a4'}}>暂无近期回款计划</span>
             </div> 
           }
         </div>  
         <div className="fr uc-rbody" style={{marginTop: 35}}> 
           <div className="rp_top" style={{border: '0px',verticalAlign:'bottom',marginTop: '-10px'}}>
-            <span className="rp_top_left" style={{fontSize: '16px',marginTop: '10px'}}>全部回款</span>
+            <span className="rp_top_left" style={{fontSize: '18px',marginTop: '10px'}}>全部回款</span>
             <span className="rp_top_right">
               待回款总额度:&nbsp;<span style={{color: '#ff9900'}}>￥{`${this.state.money}`.fm()}</span>&nbsp;&nbsp;&nbsp;
               待收本金:&nbsp;<span style={{color: '#ff9900'}}>￥{`${this.state.principal}`.fm()}</span>&nbsp;&nbsp;&nbsp;
@@ -345,9 +345,7 @@ export default class ReceivePlan extends React.Component {
                 </div>:null
               } 
             </div>
-          }
-          
-          
+          }   
         </div>
       </div> 
     );
@@ -380,7 +378,7 @@ class ReceiveDetail extends React.Component {
           <span className="rp_detail_top_left">项目编号: {data.projectNo} </span>
           <div className="rp_detail_top_right">
             <i className={`zjb zjb-bingtu ${this.state.showCircle?'rp_pro_icon_choose': 'rp_pro_icon'}`} onClick={()=>this.setState({showCircle: true})} style={{marginRight: 8}}/>
-            <i className={`zjb zjb-biaoge ${this.state.showCircle?'rp_pro_icon': 'rp_pro_icon_choose'}`} onClick={()=>this.setState({showCircle: false})}/>
+            <i className={`zjb zjb-biaoge ${this.state.showCircle?'rp_pro_icon': 'rp_pro_icon_choose'}`} onClick={()=>this.setState({showCircle: false})} style={{color:'#999999'}}/>
           </div>
         </div>
         { this.state.showCircle ?
@@ -533,11 +531,14 @@ class CanvasCircle extends React.Component {
     cxt.lineTo(248, 98.5);
     cxt.stroke();
     cxt.beginPath();
-    cxt.font="14px Microsoft YaHei";
+    cxt.font="12px Microsoft YaHei";
     cxt.fillStyle = '#999';
     cxt.fillText(`佣金 ${`${obj.kickBack}`.fm()}`,215,90);
+    cxt.font="12px Microsoft YaHei";
     cxt.fillText(`利息 ${`${obj.interest}`.fm()}`,215,72);
+    cxt.font="12px Microsoft YaHei";
     cxt.fillText(`本金 ${`${obj.principal}`.fm()}`,215,55);
+    cxt.font="12px Microsoft YaHei";
     cxt.stroke();
     cxt.beginPath();
     cxt.fillStyle = '#ff9900';
@@ -546,7 +547,9 @@ class CanvasCircle extends React.Component {
     cxt.stroke();
     cxt.beginPath();
     cxt.fillStyle = '#84e192';
+    cxt.font="12px Microsoft YaHei";
     cxt.fillText("还款中",107,65);
+    cxt.font="12px Microsoft YaHei";
     if (current > 10 && sum > 10) {
       cxt.fillText(`第${current}/${sum}期`,97,85);
     } else if (current < 10 && sum > 10) {
