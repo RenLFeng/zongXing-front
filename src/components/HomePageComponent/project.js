@@ -34,7 +34,7 @@ export default class Project extends React.Component {
       <div className="section sec-proj">
         <div className="w center">
           <h1>最新发布众借项目</h1>
-          <p className="tit-line"><i>LATEST BUSSINESS LOANS</i></p>
+          <p className="tit-line"><i>LATEST BUSSINES LOANS</i></p>
           <p className="f18 c6">点击进入项目详情，可以收藏和分享</p>
         </div>
         <div className="w box6 clearfix g">
