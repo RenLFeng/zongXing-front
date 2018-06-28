@@ -97,25 +97,25 @@ export default class HomePage extends React.Component{
     //   type: 'login/saveSocketData',
     //   socketData: socket
     // });
-    
-    socket.on('connect', ()=> { 
+
+    socket.on('connect', ()=> {
       // setInterval(()=>{
       //   testSocket();
       // }, 2000)
     });
 
-    
-    
+
+
   }
 
-  componentWillReceiveProps(nextProps) { 
+  componentWillReceiveProps(nextProps) {
     if (this.props.userId !== nextProps.userId && nextProps.userId) {
       // this.connectSocket(nextProps.userId);
     }
   }
 
   async getUserBaseData() {
-    const response = await getLoginData(); 
+    const response = await getLoginData();
     if (response.code === 0) {
       this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
     }
@@ -133,7 +133,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/projectLoan`} component={ProjectLoan}/>
             <Route path={`${match.path}/howLoan`} component={HowLoan}/>
             <Route path={`${match.path}/howInvest`} component={HowInvest}/>
-            {/* 商家优惠 */}  
+            {/* 商家优惠 */}
             <Route path={`${match.path}/companyDiscount`} component={CompanyDiscount}/>
             {/* 优惠券兑换中心 */}
             <Route path={`${match.path}/couponCenter`} component={CouponCenter}/>

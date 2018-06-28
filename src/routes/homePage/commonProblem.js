@@ -226,7 +226,7 @@ export default class CommonProblem extends React.Component{
                 this.setState({
                     [`fontColor${this.state.detail[i].id}`]: false
                 })
-               
+
             }
         }
     }
@@ -239,7 +239,7 @@ export default class CommonProblem extends React.Component{
     render(){
         return(
             <div className="problem">
-               <div style={{height: '148px'}}>  
+               <div style={{height: '148px'}}>
                 </div>
                 <LoginInfo />
                 <div className="w clearfix" style={{paddingBottom:80}}>
@@ -251,21 +251,21 @@ export default class CommonProblem extends React.Component{
                                   <li key={data.id} onClick={()=>{this.getDetail(data.id)}} style={this.state[`fontColor${data.id}`] ? {color:'#ff9900'} :{}}>{data.name}({data.num})</li>
                               )
                           })
-                      }       
+                      }
                       </ul>
                     </div>
-                    <div className="fr uc-rbody" style={{padding:30}}>  
+                    <div className="fr uc-rbody" style={{padding:30}}>
                         <div className="hang">
                            <p>常见问题 <span> &gt; {this.state.info.title}({this.state.info.num})</span></p>
                            <div className="search">
                              <Search placeholder="请输入搜索内容" onSearch={value => console.log(value)} className="search" />
-                           </div>       
+                           </div>
                         </div>
                         <div className="contents">
                           {
                               this.state.question.map((data,index)=>{
                                 return(
-                                        this.state[`show${data.id}`] ? 
+                                        this.state[`show${data.id}`] ?
                                            <div className="question" key={index}>
                                                <p onClick={()=>{this.show('show',data.id)}} style={{color:'#ff9900'}}>{data.question}</p>
                                                <div className="answer">{data.answer}</div>
@@ -276,11 +276,11 @@ export default class CommonProblem extends React.Component{
                                             </div>
                                 )
                               })
-                          }   
+                          }
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         )
     }
