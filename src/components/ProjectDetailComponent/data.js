@@ -14,13 +14,6 @@ export default class Data extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      // pageParam:{
-      //   pageCurrent: 1, //当前页，初始值为第一页
-      //   pageSize: 20,    //每页可显示的消息条数
-      // },
-      // projectId:'',
-      // maxPage: 0,     //最大页  
-      
       city:{},        //所在城市结构
       cityShow:true,
       gender:{},      //性别

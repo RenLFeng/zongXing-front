@@ -3,14 +3,14 @@
         list-style: none;
         // border:1px solid red;
     }
-    li{
+    .problem_type{
         font-size: 16px;
         line-height: 42px;
         // text-align: center;
         padding-left: 73px;
         color:#323232;
     }
-    li:hover{
+    .problem_type:hover{
         color:#f29827;
         cursor: pointer;
     }
@@ -50,11 +50,12 @@
         .question{
             p{
                 padding: 10px 0;
+                span:hover{
+                    color:#ff9900;
+                    cursor: pointer;
+                }
             }
-            p:hover{
-                color:#ff9900;
-                cursor: pointer;
-            }
+            
         }
         .answer{
             width:840px;

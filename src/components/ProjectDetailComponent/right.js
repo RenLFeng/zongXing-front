@@ -25,7 +25,8 @@ export default class Right extends React.Component {
       arr:[],
       maxPage: 0,     //最大页
       showForm: false,
-      loading: false,
+      loading: false,  //我要投资loading
+      Loading: false,  //已投资人数loading
       canPay: false,
       coupons:[1,2,3]
     };
@@ -150,6 +151,7 @@ export default class Right extends React.Component {
     this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
     this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
     console.log(page);
+    this.setState({Loading:true})
     const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectDetail.fpeoject_id});
     //判断请求状态
     if (response.code === 0) {
@@ -161,9 +163,13 @@ export default class Right extends React.Component {
         },
         projectId: this.props.projectDetail.fpeoject_id,
         arr: response.data,
-        maxPage: maxPage
+        maxPage: maxPage,
+        Loading:false
       });
+      $('.pd-data').before('<div class="_masker"></div>');
+      $('.pd-data').removeClass('none').css('top', av.top() + 50 + 'px');
     } else {
+      this.setState({Loading:false})
       message.error(response.msg);
     }
   }
@@ -242,8 +248,8 @@ export default class Right extends React.Component {
                 <Button className="btn2" loading={this.state.loading} type="primary" style={{width: 130, height: 50}}
                       onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} >我要投资
                 </Button>
-                <Button className="y btn" loading={this.state.loading} type="primary" style={{width: 130, height: 50}}
-                       onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} >已投资人数
+                <Button className="y btn" loading={this.state.Loading} type="primary" style={{width: 130, height: 50}}
+                       onClick={() => this.getData(1)} >已投资人数
                 </Button>
               </p> : null
             }

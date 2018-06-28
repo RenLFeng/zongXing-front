@@ -495,6 +495,7 @@ export default class RealName extends React.Component {
                           </div>
                           {
                             safeData.userSecurityCenter.fThirdAccount ?
+                          
                               <div className="personal" style={{ marginTop: 0,background:'#f9f9f9'}}>
                                 <span style={{ color: 'black',color:'#999999' }} >你的钱多多账户:{safeData.fThirdAccountNo}</span>
                                 <div className="findPass">

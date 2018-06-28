@@ -7,6 +7,7 @@ import { getSiteNotice } from '../../services/api';
 import Path from '../../common/pagePath';
 import moment from 'moment';
 import { setInterval, setTimeout } from 'timers';
+import { Link } from 'dva/router';
 
 @connect((state) => ({
     nickName: state.login.nickName,
@@ -56,10 +57,7 @@ class LoginInfo extends React.Component {
         y_.css('top', '20px');
 
         x_.animate({ top: t - 20 + 'px' }, 'slow'); //20为每个li的高度
-        console.log(y_.css('top') ,'== ',x_.css('top'))
-
         if (Math.abs(t) == h_ - 20) { //20为每个li的高度
-            console.log('innnnnnn')
             y_.animate({ top: '0px' }, 'slow');  
             let z = x_;
             x_ = y_;
@@ -77,7 +75,6 @@ class LoginInfo extends React.Component {
             this.setState({
                 dataInfo: response.data.notices,
             },()=>{
-                console.log('getNotice',this.state.dataInfo);
                 this.init.call(this);
             })
         } else {
@@ -87,7 +84,7 @@ class LoginInfo extends React.Component {
 
     render() {
         const { baseData } = this.props;
-        console.log('xxx',this.state.dataInfo)
+        console.log('dizhi',this)
         return (
             <div className='lg-login'>
                 {
@@ -108,7 +105,7 @@ class LoginInfo extends React.Component {
                                         <a onClick={() => this.props.dispatch({ type: 'login/logout' })}>退出登录</a>
                                     </p>
                                     <p className="uinfo" style={{ position: 'relative' }}>
-                                        <span className="nickname">{this.props.nickName}</span>
+                                        <span className="nickname">{baseData.realName}</span>
                                         <span className="split">|</span>
 
                                         <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fMobileBinding ? 'active' : ''}`}></i>
@@ -136,25 +133,31 @@ class LoginInfo extends React.Component {
                             <div className="uc-message" >
                                 <div id="box">
                                     <div id="t_news">
-                                         <b >系统消息：</b>  
-                                        <ul id="news_li">
-                                        {
-                                            this.state.dataInfo.map((data,index)=>{
-                                                return(
-                                                    <li key={index} >【{moment(data.fpublishTime).format('M-D')}】<a onClick={()=>this.props.history.push(Path.SITE_NOTICE)} style={{color:'#7D7D7D'}}>{data.ftitle} &gt; </a></li>
-                                                )      
-                                            })
-                                        }
-                                        </ul>
-                                        <ul id="swap" >
-                                        {
-                                            this.state.dataInfo.map((data,index)=>{
-                                                return(
-                                                    <li key={index} >【{moment(data.fpublishTime).format('M-D')}】<a onClick={()=>this.props.history.push(Path.SITE_NOTICE)} style={{color:'#7D7D7D'}}>{data.ftitle} &gt; </a></li>
-                                                )      
-                                            })
-                                        }
-                                        </ul>
+                                         <b >系统消息：</b> 
+                                         {
+                                             this.state.dataInfo.length > 1  ?
+                                             <div>
+                                                    <ul id="news_li">
+                                                    {
+                                                        this.state.dataInfo.map((data,index)=>{
+                                                            return(
+                                                                <li key={index} >【{moment(data.fpublishTime).format('M-D')}】<Link to={Path.SITE_NOTICE} style={{color:'#7D7D7D'}}>{data.ftitle} &gt; </Link></li>
+                                                            )      
+                                                        })
+                                                    }
+                                                    </ul>
+                                                    <ul id="swap" >
+                                                    {
+                                                        this.state.dataInfo.map((data,index)=>{
+                                                            return(
+                                                                <li key={index} >【{moment(data.fpublishTime).format('M-D')}】<Link to={Path.SITE_NOTICE} style={{color:'#7D7D7D'}}>{data.ftitle} &gt; </Link></li>
+                                                            )      
+                                                        })
+                                                    }
+                                                    </ul>
+                                             </div> :
+                                                <li >【{moment(this.state.dataInfo.fpublishTime).format('M-D')}】<Link to={Path.SITE_NOTICE} style={{color:'#7D7D7D'}}>{this.state.dataInfo.ftitle} &gt; </Link></li>
+                                         } 
                                     </div>
                                 </div>
                                 {baseData.userSecurityCenter.fThirdAccount ?

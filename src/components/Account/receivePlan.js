@@ -84,7 +84,6 @@ export default class ReceivePlan extends React.Component {
   // 获取回款计划顶部数据
   async getReceivePlanTopData() {
     const response = await receivePlanByTop();
-    console.log('getReceivePlanTopData', response);
     if (response.code === 0) {
       // 生成全部回款折线图数据结构
       let planArr = [];
@@ -170,7 +169,6 @@ export default class ReceivePlan extends React.Component {
     }
     this.setState({planByProLoading: true});
     const response = await receivePlanByBottom(this.state.proPageParam);
-    console.log('getReceivePlanByPro', response);
     this.setState({planByProLoading: false});
     if (response.code === 0) {
       this.setState({
@@ -215,8 +213,6 @@ export default class ReceivePlan extends React.Component {
   // 渲染圆图
   renderCanvas() {
     const canvasDom = this.canvas;
-    console.log(canvasDom);
-
   }
 
   
@@ -309,9 +305,9 @@ export default class ReceivePlan extends React.Component {
               {/* 按照时间查看样式 */}
               {this.state.timePageList.length > 0 ? this.state.timePageList.map((data, index)=> {
                 return (
-                  <div className="rp_detail_time_item" key={index}>
+                  <div className="rp_detail_time_item" key={index} style={{fontSize:16}}>
                     <div className="rp_detail_time_item_left" style={data.ispay ? {marginTop: '0px'}:{marginTop: '-5px'}}>
-                      <span>{moment(data.fpayTime).format('YYYY/MM/DD')}</span>
+                      <span style={{color:'#666666'}}>{moment(data.fpayTime).format('YYYY/MM/DD')}</span>
                     </div>
                     <div className="rp_detail_time_item_center" >
                       { 
@@ -324,13 +320,18 @@ export default class ReceivePlan extends React.Component {
                       <div className="rp_detail_time_item_line" />
                     </div>
                     <div className="rp_detail_time_item_right" style={data.ispay ? {marginTop: '0px'}:{marginTop: '-5px'}}>
-                      <span style={{display:'block'}}><span style={{color: '#ff9900'}}>￥{`${data.allMoney}`.fm()}</span>&nbsp;&nbsp;&nbsp;本金:&nbsp;{`${data.fprincipal}`.fm()}&nbsp;&nbsp;&nbsp;利息:&nbsp;{`${data.finterest}`.fm()}&nbsp;&nbsp;&nbsp;佣金:&nbsp;{`${data.fkickBack}`.fm()}</span>
-                      <span style={{display: 'block', marginTop: '16px'}}>{data.fsort}/{data.month}期回款</span>
-                      <span style={{display: 'block', marginTop: '4px'}}>项目编号:&nbsp;{data.fprojectNo}</span>
-                      <span style={{display: 'block', marginTop: '4px'}}>项目名称:&nbsp;{data.fname}</span>
+                      <div style={{color:'#666666'}}>
+                        <span style={{color: '#ff9900',width:120}}>￥{`${data.allMoney}`.fm()}</span>
+                        <span style={{marginRight:10}}>本金:</span><span style={{width:120}}>{`${data.fprincipal}`.fm()}</span>
+                        <span style={{marginRight:10}}>利息:</span><span style={{width:120}}>{`${data.finterest}`.fm()}</span>
+                        <span style={{marginRight:10}}>佣金:</span><span style={{width:120}}>{`${data.fkickBack}`.fm()}</span>
+                      </div>
+                      <div style={{ marginTop: '14px',color:'#666666'}}>{data.fsort}/{data.month}期回款</div>
+                      <div style={{ marginTop: '4px',color:'#666666'}}>项目编号:&nbsp;{data.fprojectNo}</div>
+                      <div style={{ marginTop: '4px',color:'#666666'}}>项目名称:&nbsp;{data.fname}</div>
                       {
                         data.ispay ? 
-                        <span style={{display: 'block', marginTop: '4px',color: '#ff9900'}}>到账日期:&nbsp;{moment(data.fpayTime).format('YYYY/MM/DD HH:mm')}</span>
+                        <div style={{ marginTop: '4px',color: '#ff9900'}}>到账日期:&nbsp;{moment(data.fpayTime).format('YYYY/MM/DD HH:mm')}</div>
                         :null
                       }
                     </div>
@@ -372,7 +373,6 @@ class ReceiveDetail extends React.Component {
   }
 
   render() {
-    console.log(this.state.data);
     const { data } = this.state;
     return (
       <div className='rp_detail'>
@@ -416,7 +416,7 @@ class ReceiveDetail extends React.Component {
               </div>
             </div>
           </div>: 
-          <div className="rp_detail_content">
+          <div className="rp_detail_content" style={{border:'1px solid red'}}>
             {/* 表格 */}
             {data.repayPlanByProjectInfoVos.map((data, index)=> {
               return (
@@ -426,7 +426,10 @@ class ReceiveDetail extends React.Component {
                     <div className="rp_detail_table_item_left_line"/>
                   </div>
                   <div style={{display: 'inline-block'}}>
-                    <span style={{display:'block'}}><span style={data.fispay?{color: '#ff9900'}:null}>￥{`${data.allMoney}`.fm()}</span>&nbsp;&nbsp;&nbsp;本金:{`${data.allMoney}`.fm()}&nbsp;&nbsp;&nbsp;利息:{`${data.interest}`.fm()}&nbsp;&nbsp;&nbsp;佣金:{`${data.kickBack}`.fm()}</span>
+                    <span style={{display:'block'}}>
+                      <span style={data.fispay?{color: '#ff9900'}:null}>￥{`${data.allMoney}`.fm()}</span>
+                       &nbsp;&nbsp;&nbsp;本金:{`${data.allMoney}`.fm()}&nbsp;&nbsp;&nbsp;利息:{`${data.interest}`.fm()}&nbsp;&nbsp;&nbsp;佣金:{`${data.kickBack}`.fm()}
+                    </span>
                     <span style={{display: 'block', marginTop: '16px'}}>回款日期:&nbsp;{moment(data.forPayTime).format('YYYY/MM/DD')}</span>
                     {!data.fispay? null:
                      <span style={{display: 'block', marginTop: '4px',color: '#ff9900'}}>到账日期:{moment(data.payTime).format('YYYY/MM/DD')}</span>
