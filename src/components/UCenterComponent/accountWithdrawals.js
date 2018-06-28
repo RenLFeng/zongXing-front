@@ -44,7 +44,7 @@ export default class EnterprisePresentation extends React.Component {
       // accountId:this.props.location.state ? this.props.location.state.account: '',
       accountId: '',
       bankCodes: [],   //银行列表
-      bankcardInfos: [{fbankcard: '323156456456456'}, {fbankcard: '323156456456456'} , {fbankcard: '323156456456456'}],   //银行信息
+      bankcardInfos: [],   //银行信息
       provinces: [],   //省份列表
       withdrawals: {},  //提交表单后返回的数据
       loading: false,
@@ -251,7 +251,7 @@ export default class EnterprisePresentation extends React.Component {
           <span className="withdrawals_title">请选择到账银行卡</span>
           <div style={{padding: '0 0 30px 52px', borderBottom: '1px dashed #e6e6e6'}}>
             <div style={{display:'inline-block'}}>
-            {/* {
+            {
               this.state.bankcardInfos.map((data)=>{
                  return(
                      <div style={{cursor:"pointer",display: 'inline-block'}} key={data.fid} onClick={()=>{this.setState({selectedCard: data,selectedCardError: false})}} >
@@ -260,18 +260,7 @@ export default class EnterprisePresentation extends React.Component {
                      
                  )
               })
-            } */}
-                      <div style={{cursor:"pointer",display: 'inline-block'}} >
-                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={1543253535}  /> 
-                     </div>
-
-                     <div style={{cursor:"pointer",display: 'inline-block'}} >
-                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={4245245232543}  /> 
-                     </div>
-
-                     <div style={{cursor:"pointer",display: 'inline-block'}} >
-                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={'data.fbank'} cardId={148757825542453254}  /> 
-                     </div>
+            }
 
                 <div className="card_add" onClick={() => this.props.history.push(Path.BINDCARD)}>
                   <Icon type="plus" className="pluc"/>
@@ -287,7 +276,9 @@ export default class EnterprisePresentation extends React.Component {
               <span className="label_text" style={{position: 'absolute', top: 105}}>提现金额</span>
             </div>
             <div className="label_div" style={{paddingTop: '32px'}}>
-              <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px'}}>{this.state.selectedCard ? this.state.selectedCard.fbank : ''}</span>
+              <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px',marginLeft: -2}}>
+                &nbsp;{this.state.selectedCard ? this.state.selectedCard.fbank : ''}
+              </span>
               <div className="input-view" style={{marginTop: 36}}>
                 <span className="money_tip">￥</span>
                 <input type="text" className="input_money" onChange={this.changeMoney} value={this.state.amount}/>
@@ -297,7 +288,7 @@ export default class EnterprisePresentation extends React.Component {
             </div>
             {this.state.selectedCardError ? <div><span style={{ color:'red', fontSize:'10px' }}>请选择到账银行卡</span></div> : null}
             {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px' }}>{this.state.moneyErrorMsg}</span></div> : null}
-            <Button type="primary" style={{width: 279, marginTop: 30,height:35}} onClick={this.handleSubmit}>发起提现</Button>
+            <Button type="primary" style={{width: 279, marginTop: 30,height:35,fontSize: 17, marginBottom:30}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
           <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
             <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />

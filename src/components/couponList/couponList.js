@@ -16,11 +16,10 @@ export default class CouponList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if ('list' in nextProps) {
-      console.log('nextProps.lis', nextProps.list)
-      console.log(Math.ceil(nextProps.list.length / 4))
       this.setState({
         dataSource: nextProps.list || [],
-        maxPage: Math.ceil(nextProps.list.length / 4)
+        maxPage: Math.ceil(nextProps.list.length / 4),
+        show: false
       });
     }
   }

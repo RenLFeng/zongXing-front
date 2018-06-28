@@ -55,7 +55,7 @@ export default class Qa extends React.Component {
             <p className="t1" style={styles.allTitle}>全部问题</p>
             {investQa.map((data, index)=>{
               return (
-                <p className={"t2"} style={styles.t2}>
+                <p key={index} className={"t2"} style={styles.t2}>
                   <a style={{cursor: 'pointer'}} onClick={()=>this.chooseType(data.type)}>{data.type}</a>
                 </p>
               )
@@ -69,8 +69,8 @@ export default class Qa extends React.Component {
                   <div>
                     <p className="q" key={index}>{`${index+1}. ${data.question}`}<i className="dl"/></p>
                     <p className="a">
-                      {data.answer.map((data)=>{
-                        return (<p key={data} >{data}</p>)
+                      {data.answer.map((data,index)=>{
+                        return (<p key={index} >{data}</p>)
                       })}
                     </p>
                   </div>

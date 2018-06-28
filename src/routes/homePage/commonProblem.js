@@ -212,15 +212,12 @@ export default class CommonProblem extends React.Component{
         this.getDetail(1)
     }
     getDetail(id){
-        console.log('id',id);
         for(let i=0;i<this.state.detail.length;i++){
             if(id === this.state.detail[i].id){
               this.setState({
                   info:this.state.detail[i],
                   question:this.state.detail[i].content,
                   [`fontColor${id}`]: true
-              },()=>{
-                  console.log('xaingqing',this.state.info)
               })
             } else {
                 this.setState({
@@ -248,7 +245,7 @@ export default class CommonProblem extends React.Component{
                       {
                           this.state.list.map((data,id)=>{
                               return(
-                                  <li key={data.id} onClick={()=>{this.getDetail(data.id)}} style={this.state[`fontColor${data.id}`] ? {color:'#ff9900'} :{}}>{data.name}({data.num})</li>
+                                  <li className="problem_type" key={data.id} onClick={()=>{this.getDetail(data.id)}} style={this.state[`fontColor${data.id}`] ? {color:'#ff9900'} :{}}>{data.name}({data.num})</li>
                               )
                           })
                       }       
@@ -267,11 +264,11 @@ export default class CommonProblem extends React.Component{
                                 return(
                                         this.state[`show${data.id}`] ? 
                                            <div className="question" key={index}>
-                                               <p onClick={()=>{this.show('show',data.id)}} style={{color:'#ff9900'}}>{data.question}</p>
+                                               <p onClick={()=>{this.show('show',data.id)}} style={{color:'#ff9900'}}><span>{data.question}</span></p>
                                                <div className="answer">{data.answer}</div>
                                            </div>:
                                             <div className="question" key={index}>
-                                                <p onClick={()=>{this.show('hide',data.id)}} >{data.question}</p>
+                                                <p onClick={()=>{this.show('hide',data.id)}} ><span>{data.question}</span></p>
                                                 <div className="answer" style={{display:'none'}}>{data.answer}</div>
                                             </div>
                                 )

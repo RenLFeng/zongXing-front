@@ -5,12 +5,12 @@
   position: relative;
   .rp_top_left {
     float: left;
-    font-size: 22px;
+    font-size: 20px;
     color: #333;
   }
   .rp_top_right {
     float: right;
-    font-size: 16px;
+    font-size: 12px;
     color: #d0d0d0;
     margin-top: 8px;
   }
@@ -110,6 +110,7 @@
     width: 100%;
     .rp_detail_top_left {
       float: left;
+      color:#999999;
     }
     .rp_detail_top_right {
       float: right;
@@ -140,8 +141,8 @@
     .rp_pro_time {
       width: 100%;
       text-align: center;
-      color: #666;
-      font-size: 14px;
+      color: #999;
+      font-size: 12px;
     }
     .rp_detail_table_item {
       width: 100%;
@@ -201,10 +202,10 @@
   .rp_detail_time_item {
     vertical-align: top;
     width: 100%;
+    margin-bottom: -10px;
   }
   .rp_detail_time_item_left {
     vertical-align: top;
-    margin-top: -5px;
     display: inline-block;
     width: 111px;
     text-align: center;
@@ -225,8 +226,16 @@
       height: 20px;
       border-radius: 50px;
       background-color: #ff9900;
-      margin: -10px auto 0px;
+      margin: 0px auto;
       text-align: center;
+      position: relative;
+      .rp_detail_time_item_tip_icon {
+        color: #fff;
+        font-size: 14px;
+        position: absolute;
+        top: 0;
+        right: 3px;
+      }
     }
     .rp_detail_time_item_line {
       margin-left: 14px;
@@ -235,9 +244,11 @@
     }
   }
   .rp_detail_time_item_right {
-    margin-top: -5px;
     margin-left: 20px;
     display: inline-block;
     vertical-align: top;
+    span{
+      display: inline-block;
+    }
   }
 }
