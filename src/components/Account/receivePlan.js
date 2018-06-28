@@ -306,20 +306,21 @@ export default class ReceivePlan extends React.Component {
               {this.state.timePageList.length > 0 ? this.state.timePageList.map((data, index)=> {
                 return (
                   <div className="rp_detail_time_item" key={index} style={{fontSize:16}}>
-                    <div className="rp_detail_time_item_left" style={data.ispay ? {marginTop: '0px'}:{marginTop: '-5px'}}>
-                      <span style={{color:'#666666'}}>{moment(data.fpayTime).format('YYYY/MM/DD')}</span>
+                    <div className="rp_detail_time_item_left">
+                      <span style={{color:'#666666'}}>{moment(data.fforPayTime).format('YYYY/MM/DD')}</span>
                     </div>
                     <div className="rp_detail_time_item_center" >
+                      <div className="rp_detail_time_item_line" style={{height: `${data.fispay?'2px':'6px'}`, borderLeft: `${index==0?'0px solid #e6e6e6':'1px solid #e6e6e6'}`}}/>
                       { 
-                        !data.ispay ? 
+                        !data.fispay ? 
                         <div className="rp_detail_time_item_tip"/> :
                         <div className='rp_detail_time_item_tip_choose'>
-                          <i className="zjb zjb-duihao1"  style={{color: '#fff',fontSize: '14px'}}/>
+                          <i className="zjb zjb-duihao1 rp_detail_time_item_tip_icon"/>
                         </div>
                       }
                       <div className="rp_detail_time_item_line" />
                     </div>
-                    <div className="rp_detail_time_item_right" style={data.ispay ? {marginTop: '0px'}:{marginTop: '-5px'}}>
+                    <div className="rp_detail_time_item_right" >
                       <div style={{color:'#666666'}}>
                         <span style={{color: '#ff9900',width:120}}>￥{`${data.allMoney}`.fm()}</span>
                         <span style={{marginRight:10}}>本金:</span><span style={{width:120}}>{`${data.fprincipal}`.fm()}</span>
@@ -330,7 +331,7 @@ export default class ReceivePlan extends React.Component {
                       <div style={{ marginTop: '4px',color:'#666666'}}>项目编号:&nbsp;{data.fprojectNo}</div>
                       <div style={{ marginTop: '4px',color:'#666666'}}>项目名称:&nbsp;{data.fname}</div>
                       {
-                        data.ispay ? 
+                        data.fispay ? 
                         <div style={{ marginTop: '4px',color: '#ff9900'}}>到账日期:&nbsp;{moment(data.fpayTime).format('YYYY/MM/DD HH:mm')}</div>
                         :null
                       }
