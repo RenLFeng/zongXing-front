@@ -150,7 +150,7 @@ class LoanInfo extends React.Component {
          {/* 顶部标题 */}
          <p>
            <span>项目编号：</span>
-           <span>{this.state.data.projectNo||''}</span>
+           <span style={{color:'#999'}}>{this.state.data.projectNo||''}</span>
            <span>{this.state.data.companyName||''}</span> 
          </p>
 		{/* 中间内容 */}

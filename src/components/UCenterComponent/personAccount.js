@@ -531,11 +531,11 @@ export default class PersonAccount extends React.Component {
             <div className="tright hd1" style={{margin: '10px 0 10px 0'}}>
               <a className="fl" style={{cursor: 'default'}}>
                 <i>累计利息收益</i>
-                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInterest+'').fm()}</b>
+                <b className="f18" style={{marginLeft: 20,fontSize: 16}}>{(this.props.personal.totalAssets.totalInterest+'').fm()}</b>
               </a>
               <a className="fl" style={{cursor: 'default'}}>
                 <i>累计投资金额</i>
-                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInvMoney+'').fm()}</b>
+                <b className="f18" style={{marginLeft: 20,fontSize: 16}}>{(this.props.personal.totalAssets.totalInvMoney+'').fm()}</b>
               </a>
             </div>
             <div className="border shadow box1" style={{marginTop: 70}}>
@@ -586,7 +586,7 @@ export default class PersonAccount extends React.Component {
               <em>资金动态</em>
               <span style={{color: '#d6d6d6', cursor: 'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/accountstatement')}>更多>></span>
             </div>
-            <p style={{color: '#c9c9c9',marginBottom: 20}}>以下为您近期最新10笔资金动态</p>
+            <p style={{color: '#c9c9c9',marginBottom: 20,marginTop:10}}>以下为您近期最新10笔资金动态</p>
             {
               this.state.infoList.map((data, index)=> {
                 return <Statement key={index} showTitle={index==0} data={data}></Statement>

@@ -9,7 +9,7 @@ export default class Authentication extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showPage: 'idcard',
+      showPage: 'chinaCard',
       // showPage: 'ok',
       realName: '',
       idcard: '',
@@ -85,33 +85,10 @@ export default class Authentication extends React.Component {
       <div className="pages">
         <div className="real_title_">
           <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>安全中心</span>
-          <span style={{fontSize: 16}}>&gt; 身份认证 &gt; 中国大陆居民身份认证</span>
+          <span style={{fontSize: 16}}>&gt; 身份认证 &gt; 居民身份认证</span>
         </div>
         {
-          this.state.showPage === 'idcard' ?
-            <div>
-              <div className="card">
-                <div className="id_card">
-                  <img src={require('../../assets/img/card.png')}/>
-                  {/* <Icon type="idcard" className="id_Card" /> */}
-                </div>
-                <span className="china">中国大陆居民身份认证</span>
-                <Button
-                  type="primary"
-                  onClick={() => this.setState({ showPage: 'chinaCard' })}
-                >
-                我要认证
-                </Button>
-              </div>
-              <div className="card top">
-                <div className="id_card">
-                <img src={require('../../assets/img/card.png')}/>
-                </div>
-                <span className="china">港澳台居民身份认证</span>
-                <Button type="primary">我要认证</Button>
-              </div>
-            </div> :
-          (this.state.showPage === 'chinaCard') ?
+          this.state.showPage === 'chinaCard' ?
             <div>
               <div className="Prompt">
                 <img alt="提示" src={require('../../assets/img/u3530.png')} />
@@ -119,7 +96,6 @@ export default class Authentication extends React.Component {
                 <p className="p1" style={{textAlign:'center'}}>完成身份认证，有助于建立完善可靠的互联网信用体系</p>
                 <p className="p2"  style={{textAlign:'center'}}>姓名必须与充值、提现的银行卡开户名保持一致</p>
               </div>
-              {/* <Spin style={{height: 200}}> */}
                 <div className="info">
                   <div className="inp">
                     <Input placeholder="请输入真实姓名" onChange={this.updateRealName} />
@@ -134,10 +110,8 @@ export default class Authentication extends React.Component {
       
                   <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button">立即身份认证</span>
                 </div>
-              {/* </Spin> */}
             </div> :
           (this.state.showPage === 'ok') ?
-           
               <div className="info">
                 <h1>
                   <img alt="ok" src={require('../../assets/img/u3551.png')} />

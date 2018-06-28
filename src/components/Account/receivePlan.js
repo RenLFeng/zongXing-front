@@ -84,7 +84,6 @@ export default class ReceivePlan extends React.Component {
   // 获取回款计划顶部数据
   async getReceivePlanTopData() {
     const response = await receivePlanByTop();
-    console.log('getReceivePlanTopData', response);
     if (response.code === 0) {
       // 生成全部回款折线图数据结构
       let planArr = [];
@@ -170,7 +169,6 @@ export default class ReceivePlan extends React.Component {
     }
     this.setState({planByProLoading: true});
     const response = await receivePlanByBottom(this.state.proPageParam);
-    console.log('getReceivePlanByPro', response);
     this.setState({planByProLoading: false});
     if (response.code === 0) {
       this.setState({
@@ -215,8 +213,6 @@ export default class ReceivePlan extends React.Component {
   // 渲染圆图
   renderCanvas() {
     const canvasDom = this.canvas;
-    console.log(canvasDom);
-
   }
 
   
@@ -250,13 +246,13 @@ export default class ReceivePlan extends React.Component {
               </div>
             </div> : 
             <div className="rp_current_plan" style={{height: 60}}>
-              <span style={{display: 'inline-block',fontSize: 18, width: '100%', textAlign: 'center',color: '#a4a4a4'}}>暂无近期回款计划</span>
+              <span style={{display: 'inline-block',fontSize: 16, width: '100%', textAlign: 'center',color: '#a4a4a4'}}>暂无近期回款计划</span>
             </div> 
           }
         </div>  
         <div className="fr uc-rbody" style={{marginTop: 35}}> 
           <div className="rp_top" style={{border: '0px',verticalAlign:'bottom',marginTop: '-10px'}}>
-            <span className="rp_top_left" style={{fontSize: '16px',marginTop: '10px'}}>全部回款</span>
+            <span className="rp_top_left" style={{fontSize: '18px',marginTop: '10px'}}>全部回款</span>
             <span className="rp_top_right">
               待回款总额度:&nbsp;<span style={{color: '#ff9900'}}>￥{`${this.state.money}`.fm()}</span>&nbsp;&nbsp;&nbsp;
               待收本金:&nbsp;<span style={{color: '#ff9900'}}>￥{`${this.state.principal}`.fm()}</span>&nbsp;&nbsp;&nbsp;
@@ -299,7 +295,7 @@ export default class ReceivePlan extends React.Component {
                 </div>:null
               } 
               {this.state.proPageList.length > 0 ?
-                <span style={{display:'inline-block',width: '100%',textAlign: 'right', marginTop: 10,fontSize: 16, color: '#A4A4A4'}}>
+                <span style={{display:'inline-block',width: '100%',textAlign: 'right', marginTop: 10,fontSize: 12, color: '#A4A4A4'}}>
                   已回款总额：<span style={{color: '#ff9900'}}>￥{`${this.state.allMoney}`.fm()}</span>
                   &nbsp;已收本金：<span style={{color: '#ff9900'}}>￥{`${this.state.receivePrincipal}`.fm()}</span>
                   &nbsp;已收利息：<span style={{color: '#ff9900'}}>￥{`${this.state.receiveInterest}500`.fm()}</span>
@@ -309,28 +305,34 @@ export default class ReceivePlan extends React.Component {
               {/* 按照时间查看样式 */}
               {this.state.timePageList.length > 0 ? this.state.timePageList.map((data, index)=> {
                 return (
-                  <div className="rp_detail_time_item" key={index}>
-                    <div className="rp_detail_time_item_left" style={data.ispay ? {marginTop: '0px'}:{marginTop: '-5px'}}>
-                      <span>{moment(data.fpayTime).format('YYYY/MM/DD')}</span>
+                  <div className="rp_detail_time_item" key={index} style={{fontSize:16}}>
+                    <div className="rp_detail_time_item_left">
+                      <span style={{color:'#666666'}}>{moment(data.fforPayTime).format('YYYY/MM/DD')}</span>
                     </div>
                     <div className="rp_detail_time_item_center" >
+                      <div className="rp_detail_time_item_line" style={{height: `${data.fispay?'2px':'6px'}`, borderLeft: `${index==0?'0px solid #e6e6e6':'1px solid #e6e6e6'}`}}/>
                       { 
-                        !data.ispay ? 
+                        !data.fispay ? 
                         <div className="rp_detail_time_item_tip"/> :
                         <div className='rp_detail_time_item_tip_choose'>
-                          <i className="zjb zjb-duihao1"  style={{color: '#fff',fontSize: '14px'}}/>
+                          <i className="zjb zjb-duihao1 rp_detail_time_item_tip_icon"/>
                         </div>
                       }
                       <div className="rp_detail_time_item_line" />
                     </div>
-                    <div className="rp_detail_time_item_right" style={data.ispay ? {marginTop: '0px'}:{marginTop: '-5px'}}>
-                      <span style={{display:'block'}}><span style={{color: '#ff9900'}}>￥{`${data.allMoney}`.fm()}</span>&nbsp;&nbsp;&nbsp;本金:&nbsp;{`${data.fprincipal}`.fm()}&nbsp;&nbsp;&nbsp;利息:&nbsp;{`${data.finterest}`.fm()}&nbsp;&nbsp;&nbsp;佣金:&nbsp;{`${data.fkickBack}`.fm()}</span>
-                      <span style={{display: 'block', marginTop: '16px'}}>{data.fsort}/{data.month}期回款</span>
-                      <span style={{display: 'block', marginTop: '4px'}}>项目编号:&nbsp;{data.fprojectNo}</span>
-                      <span style={{display: 'block', marginTop: '4px'}}>项目名称:&nbsp;{data.fname}</span>
+                    <div className="rp_detail_time_item_right" >
+                      <div style={{color:'#666666'}}>
+                        <span style={{color: '#ff9900',width:120}}>￥{`${data.allMoney}`.fm()}</span>
+                        <span style={{marginRight:10}}>本金:</span><span style={{width:120}}>{`${data.fprincipal}`.fm()}</span>
+                        <span style={{marginRight:10}}>利息:</span><span style={{width:120}}>{`${data.finterest}`.fm()}</span>
+                        <span style={{marginRight:10}}>佣金:</span><span style={{width:120}}>{`${data.fkickBack}`.fm()}</span>
+                      </div>
+                      <div style={{ marginTop: '14px',color:'#666666'}}>{data.fsort}/{data.month}期回款</div>
+                      <div style={{ marginTop: '4px',color:'#666666'}}>项目编号:&nbsp;{data.fprojectNo}</div>
+                      <div style={{ marginTop: '4px',color:'#666666'}}>项目名称:&nbsp;{data.fname}</div>
                       {
-                        data.ispay ? 
-                        <span style={{display: 'block', marginTop: '4px',color: '#ff9900'}}>到账日期:&nbsp;{moment(data.fpayTime).format('YYYY/MM/DD HH:mm')}</span>
+                        data.fispay ? 
+                        <div style={{ marginTop: '4px',color: '#ff9900'}}>到账日期:&nbsp;{moment(data.fpayTime).format('YYYY/MM/DD HH:mm')}</div>
                         :null
                       }
                     </div>
@@ -344,9 +346,7 @@ export default class ReceivePlan extends React.Component {
                 </div>:null
               } 
             </div>
-          }
-          
-          
+          }   
         </div>
       </div> 
     );
@@ -372,7 +372,6 @@ class ReceiveDetail extends React.Component {
   }
 
   render() {
-    console.log(this.state.data);
     const { data } = this.state;
     return (
       <div className='rp_detail'>
@@ -380,7 +379,7 @@ class ReceiveDetail extends React.Component {
           <span className="rp_detail_top_left">项目编号: {data.projectNo} </span>
           <div className="rp_detail_top_right">
             <i className={`zjb zjb-bingtu ${this.state.showCircle?'rp_pro_icon_choose': 'rp_pro_icon'}`} onClick={()=>this.setState({showCircle: true})} style={{marginRight: 8}}/>
-            <i className={`zjb zjb-biaoge ${this.state.showCircle?'rp_pro_icon': 'rp_pro_icon_choose'}`} onClick={()=>this.setState({showCircle: false})}/>
+            <i className={`zjb zjb-biaoge ${this.state.showCircle?'rp_pro_icon': 'rp_pro_icon_choose'}`} onClick={()=>this.setState({showCircle: false})} style={{color:'#999999'}}/>
           </div>
         </div>
         { this.state.showCircle ?
@@ -416,7 +415,7 @@ class ReceiveDetail extends React.Component {
               </div>
             </div>
           </div>: 
-          <div className="rp_detail_content">
+          <div className="rp_detail_content" style={{border:'1px solid red'}}>
             {/* 表格 */}
             {data.repayPlanByProjectInfoVos.map((data, index)=> {
               return (
@@ -426,7 +425,10 @@ class ReceiveDetail extends React.Component {
                     <div className="rp_detail_table_item_left_line"/>
                   </div>
                   <div style={{display: 'inline-block'}}>
-                    <span style={{display:'block'}}><span style={data.fispay?{color: '#ff9900'}:null}>￥{`${data.allMoney}`.fm()}</span>&nbsp;&nbsp;&nbsp;本金:{`${data.allMoney}`.fm()}&nbsp;&nbsp;&nbsp;利息:{`${data.interest}`.fm()}&nbsp;&nbsp;&nbsp;佣金:{`${data.kickBack}`.fm()}</span>
+                    <span style={{display:'block'}}>
+                      <span style={data.fispay?{color: '#ff9900'}:null}>￥{`${data.allMoney}`.fm()}</span>
+                       &nbsp;&nbsp;&nbsp;本金:{`${data.allMoney}`.fm()}&nbsp;&nbsp;&nbsp;利息:{`${data.interest}`.fm()}&nbsp;&nbsp;&nbsp;佣金:{`${data.kickBack}`.fm()}
+                    </span>
                     <span style={{display: 'block', marginTop: '16px'}}>回款日期:&nbsp;{moment(data.forPayTime).format('YYYY/MM/DD')}</span>
                     {!data.fispay? null:
                      <span style={{display: 'block', marginTop: '4px',color: '#ff9900'}}>到账日期:{moment(data.payTime).format('YYYY/MM/DD')}</span>
@@ -530,11 +532,14 @@ class CanvasCircle extends React.Component {
     cxt.lineTo(248, 98.5);
     cxt.stroke();
     cxt.beginPath();
-    cxt.font="14px Microsoft YaHei";
+    cxt.font="12px Microsoft YaHei";
     cxt.fillStyle = '#999';
     cxt.fillText(`佣金 ${`${obj.kickBack}`.fm()}`,215,90);
+    cxt.font="12px Microsoft YaHei";
     cxt.fillText(`利息 ${`${obj.interest}`.fm()}`,215,72);
+    cxt.font="12px Microsoft YaHei";
     cxt.fillText(`本金 ${`${obj.principal}`.fm()}`,215,55);
+    cxt.font="12px Microsoft YaHei";
     cxt.stroke();
     cxt.beginPath();
     cxt.fillStyle = '#ff9900';
@@ -543,15 +548,17 @@ class CanvasCircle extends React.Component {
     cxt.stroke();
     cxt.beginPath();
     cxt.fillStyle = '#84e192';
-    cxt.fillText("还款中",107,65);
+    cxt.font="12px Microsoft YaHei";
+    cxt.fillText("还款中",115,65);
+    cxt.font="12px Microsoft YaHei";
     if (current > 10 && sum > 10) {
-      cxt.fillText(`第${current}/${sum}期`,97,85);
+      cxt.fillText(`第${current}/${sum}期`,107,85);
     } else if (current < 10 && sum > 10) {
-      cxt.fillText(`第${current}/${sum}期`,97,85);
+      cxt.fillText(`第${current}/${sum}期`,107,85);
     } else if (current < 10 && sum < 10) {
-      cxt.fillText(`第${current}/${sum}期`,103,85);
+      cxt.fillText(`第${current}/${sum}期`,113,85);
     } else {
-      cxt.fillText(`第${current}/${sum}期`,103,85);
+      cxt.fillText(`第${current}/${sum}期`,113,85);
     }
     cxt.stroke();
 

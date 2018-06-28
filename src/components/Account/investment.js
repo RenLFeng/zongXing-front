@@ -180,7 +180,7 @@ export default class Investment extends React.Component {
             }
             {
               this.state.list.map(item=>{
-                return <LoanInfo key={item.projectId} data={item} handllerTZClick={this.handllerTZClick}/> 
+                return <LoanInfo key={item.projectId} data={item} handllerMXClick={this.handllerTZClick} handllerTZClick={this.handllerTZClick}/> 
               })
             } 
             {

@@ -78,10 +78,10 @@ class Statement extends React.Component {
                     {
                         this.state.data.busType==='1405'&&this.state.data.resultObj?
                         <div className='text2'>
-                            <span>￥{String(this.state.data.resultObj.sumAmount).fm()||'0'}</span>
-                            <span>本金：￥{String(this.state.data.resultObj.fprincipal).fm()||'0'}</span> 
-                            <span>利息：￥{String(this.state.data.resultObj.finterest).fm()||'0'}</span> 
-                            <span>佣金：￥{String(this.state.data.resultObj.fkickBack).fm()||'0'}</span> 
+                            <span style={{width:120}}>￥{String(this.state.data.resultObj.sumAmount).fm()||'0'}</span>
+                            <span style={{width:150}}>本金:￥{String(this.state.data.resultObj.fprincipal).fm()||'0'}</span>  
+                            <span style={{width:150}}>利息:￥{String(this.state.data.resultObj.finterest).fm()||'0'}</span> 
+                            <span style={{width:150}}>佣金:￥{String(this.state.data.resultObj.fkickBack).fm()||'0'}</span> 
                         </div>:null
                     } 
                     {
