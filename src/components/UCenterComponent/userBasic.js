@@ -292,7 +292,7 @@ export default class UserBasic extends React.Component {
       <div>
         <div className="fr uc-rbody user-form-box" style={{width:"100%",float:"none"}}>
           <Spin spinning={this.props.loading} tip="请稍后" size="large">
-            <div className="real_title_">
+            <div className="real_title_" style={{marginBottom: '46px'}}>
               <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
               <span style={{fontSize: 16}}> &gt; 基础资料</span>
             </div>

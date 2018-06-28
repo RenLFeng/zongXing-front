@@ -39,11 +39,11 @@ export default class Data extends React.Component {
          cityShow:false,
         })
       }
-      
+
     } else {
       response.msg && message.error(response.msg);
     }
-   
+
   }
 
   //获取性别
@@ -60,7 +60,7 @@ export default class Data extends React.Component {
           genderShow:false,
         })
       }
-     
+
     } else {
       response.msg && message.error(response.msg);
     }
@@ -79,7 +79,7 @@ export default class Data extends React.Component {
         this.setState({
           ageShow:false,
         })
-      } 
+      }
     } else {
       response.msg && message.error(response.msg);
     }
@@ -107,7 +107,7 @@ export default class Data extends React.Component {
   render() {
     const page_num = pageShows(this.props.pageCurrent, this.props.maxPage);
     return (
-      <div className="pd-data shadow none" style={{zIndex: 170}}>
+      <div className="pd-data shadow none g" style={{zIndex: 170}}>
         <a className="close"/>
         <p className="tit">投资人统计{this.props.userCount?<i>（<em className="cf60">{this.props.userCount}</em>人）</i>: null}</p>
         <div className="clearfix">
@@ -129,10 +129,10 @@ export default class Data extends React.Component {
                       </div>
                       )
                   }) :
-              
+
                 <div className="row_" >暂无数据</div>
                 }
-             
+
               <div className="box_1">
                 <dxiv className="pagination_">
                   {page_num.lastPage ?
@@ -182,17 +182,17 @@ export default class Data extends React.Component {
              <UrbanStructure city={this.state.city}/>
             </div> : null
           }
-          
+
           {
-            this.state.genderShow ? 
+            this.state.genderShow ?
             <div >
             <p className="pictit">男女比例</p>
              <Gender gender={this.state.gender}/>
             </div> : null
           }
-            
-            
-            
+
+
+
             {
               this.state.ageShow ?
               <div>
@@ -202,15 +202,15 @@ export default class Data extends React.Component {
             }
 
             {
-              this.state.investShow ? 
+              this.state.investShow ?
               <div>
                 <p className="pictit">投资额度结构</p>
                 <Invest invest={this.state.invest} />
               </div> : null
             }
-            
-            
-            
+
+
+
           </div>
         </div>
       </div>

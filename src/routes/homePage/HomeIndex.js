@@ -12,7 +12,6 @@ export default class HomeIndex extends React.Component {
   componentDidMount() {
     startAnimate();
   }
-
   render() {
     return (
       <div className="body">

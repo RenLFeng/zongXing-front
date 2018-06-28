@@ -22,17 +22,17 @@ export default class FormProject extends React.Component {
   }
 
   componentDidMount() {
-    // document.Browser.Name.value=navigator.appName; 
-    // document.Browser.Version.value=navigator.appVersion; 
-    // document.Browser.Code.value=navigator.appCodeName; 
-    // document.Browser.Agent.value=navigator.userAgent; 
+    // document.Browser.Name.value=navigator.appName;
+    // document.Browser.Version.value=navigator.appVersion;
+    // document.Browser.Code.value=navigator.appCodeName;
+    // document.Browser.Agent.value=navigator.userAgent;
     // -2
     if (window.navigator.userAgent.indexOf('AppleWebKit') != -1) {
       console.log('------------------', true);
       this.setState({browser: true});
     }
   }
-  
+
   checkFormat(value) {
     if (!MUN_INTEGER.test(value+'')) {
       this.setState({errMsg: '金额格式不正确'});
@@ -157,7 +157,7 @@ export default class FormProject extends React.Component {
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
     const {data} = this.state;
     return (
-      <div className="pd-form shadow none">
+      <div className="pd-form shadow none g">
         <a className="close" onClick={()=>this.closeDiv()}/>
         <div className="card">
           <i className="level">{project.fleve_name}</i>
@@ -230,7 +230,8 @@ export default class FormProject extends React.Component {
           <div className="row clearfix">
             <div className="col1"/>
             <div className="col2">
-              <textarea className="put" rows="8" value={`1.我司发行QQ卡号为9位数字，密码为12位数字，没有英文字母，若您购买的QQ卡含有英文字母或位数不够，请联系第三方卖家处理；
+              <textarea className="put" rows="8" value={`
+              1.我司发行QQ卡号为9位数字，密码为12位数字，没有英文字母，若您购买的QQ卡含有英文字母或位数不够，请联系第三方卖家处理；
 
                 2.购买QQ卡可在附近的网吧或报刊亭、电脑城等地购买，请在购买时留意QQ卡位数；
 

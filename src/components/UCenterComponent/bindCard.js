@@ -53,6 +53,12 @@ class BindCard extends React.Component {
     };
   }
   componentDidMount() {
+    this.props.dispatch({
+      type: 'account/getPersonalAccount',
+      payload:{
+        showNumInfo:4,
+      }
+    });
     this.queryUserBaseInfo();
   }
 
@@ -245,7 +251,7 @@ class BindCard extends React.Component {
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;
     return (
-      <div className="pages">
+      <div className="pages" style={{padding: '30px', width: '100%'}}>
         <div className="real_title_">
           <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
           <span style={{fontSize: 16}}>&gt; 我的银行卡 &gt; 绑定新银行卡</span>

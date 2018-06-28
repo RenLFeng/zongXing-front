@@ -2,6 +2,7 @@ import React from 'react';
 
 import '../../assets/companydiscount/company-card.scss'; 
 import CouponList from '../../components/couponList/couponList';
+import { IMG_BASE_URL } from '../../common/systemParam';
 class CompanyCard extends React.Component {
     constructor(props) {
         super(props);
@@ -30,22 +31,53 @@ class CompanyCard extends React.Component {
             company_type:company_type, 
          }
     }
+    
+    componentWillReceiveProps(nextProps) {
+        if ('data' in nextProps) {
+            let data = nextProps.data;
+            if(data==null){
+                data = {};
+            } 
+            let company_type =''; 
+            if(data.busType==='xcy'){
+                company_type ='新餐饮';
+            }else if(data.busType==='xfw'){
+                company_type ='新服务';
+            }else if(data.busType==='xls'){
+                company_type ='新零售';
+            }else if(data.busType==='xny'){
+                company_type ='新农业';
+            }else if(data.busType==='xyl'){
+                company_type ='新娱乐';
+            }else{
+                company_type ='其他';
+                data.busType = 'other';
+            } 
+            this.setState({
+                data: nextProps.data,
+                company_type:company_type, 
+            });
+        }
+    }
+
+
+
     render() { 
         return (  
             <div className="company-card shadow">
                 <div className="logo">
-                    <img  src={this.state.data.logo||'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'} />
+                    <img  src={this.state.data.companyPicture?`${IMG_BASE_URL}${this.state.data.companyPicture}`:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'} />
                 </div>
                 <div className="card-content">
                     <p className="tit">
                         <span className={`tag ${this.state.data.bustype||'other'}-color`}>{this.state.company_type}</span>
-                        <span className="name">{this.state.data.fname||'企业名称'}</span>
+                        <span className="name">{this.state.data.companyName||''}</span>
                     </p>
-                    <p className="tit2">{this.state.data.ftitle||'一级标题'}</p>
-                    <p className="desc">{this.state.data.fsub_title||'二级标题'}</p>
+                    <p className="tit2">{this.state.data.projectName||''}</p>
+                    <p className="desc">{this.state.data.projectContent||''}</p>
                 </div> 
                <div className='coupon-items' >
-                   <CouponList />
+                   <CouponList list={this.state.data.couponList} handlerBtnClick={this.props.handlerBtnClick}/>
                </div>
             </div> 
          )

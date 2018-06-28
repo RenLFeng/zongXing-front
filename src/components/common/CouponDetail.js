@@ -70,8 +70,7 @@ export default class  CouponDetail extends React.Component {
             this.setState({
                 detail:detail,
                 data:rest.data,
-            },() =>{
-                console.log( this.state.data.couponUsePlaces);
+            },() =>{ 
                 $("#qrcodeCanvas").qrcode({
                     render : "canvas",    //设置渲染方式，有table和canvas，使用canvas方式渲染性能相对来说比较好
                     text : '请采用商家小程序扫描二维码',    //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
