@@ -341,7 +341,7 @@ export default class AccountStatement extends React.Component{
         dataIndex: 'resultObj.periods',
         align:'center',
         render:function(text,record,index){
-          return <span>text</span>
+          return text;
         }
       }]; 
 
@@ -360,8 +360,8 @@ export default class AccountStatement extends React.Component{
                 <p className='top-title'>资金流水 </p>
                 <ul className='search-tag'>
                     {
-                      this.state.lables.map((item,index)=>{
-                        return <li key={index} onClick={this.handlerClcikLable.bind(this,item.code)} className={item.code===this.state.activeCode?'active':''} >{item.lable}</li>
+                      this.state.lables.map(item=>{
+                        return <li key={item.lable} onClick={this.handlerClcikLable.bind(this,item.code)} className={item.code===this.state.activeCode?'active':''} >{item.lable}</li>
                       })
                     }
                 </ul>
