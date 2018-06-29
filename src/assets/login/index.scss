@@ -67,6 +67,7 @@
         color: red;
         font-size: 13px !important;
         margin-left: 53px;
+        width:329px;
       }
       .registration-prompts_{
         margin-top: 5px;
@@ -522,9 +523,21 @@
     }
 
 
+    .mask{
+        width: 329px;
+        height: 43px;
+        position: relative;
+        // top:200px;
+        top:14px;
+        left:0;
+        z-index: 11;
+        background: transparent;
+    }
+
   //滑块样式  
     .outer{
         position: relative;
+        top:-50px;
         margin-top: 21px;
         width: 329px;
         height: 43px;
@@ -541,6 +554,9 @@
         width: 100%;
         height: 100%;
         text-align: center;
+     
+       font-size:15;
+       background:"#f2f2f2";
     }
     .filter-box{
         width: 0;
@@ -568,5 +584,6 @@
     }
     .outer.act span{
         z-index: 99;
+        background: #0F9B30;
     }
 }

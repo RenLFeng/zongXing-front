@@ -141,27 +141,27 @@ class projectcollection extends React.Component {
                                     {/* <div className='li-title'>
                                         {
                                             this.state.data.projectFlag===this.state.fstate.ckz?
-                                            <spna className='state ckz'>筹款中</spna> :null
+                                            <span className='state ckz'>筹款中</span> :null
                                         }
                                         {
                                             this.state.data.projectFlag===this.state.fstate.dfk?
-                                            <spna className='state dfk'>待放款</spna> :null
+                                            <span className='state dfk'>待放款</span> :null
                                         }
                                         {
                                             this.state.data.projectFlag===this.state.fstate.hkz||
                                             this.state.data.projectFlag===this.state.fstate.hkyc?
-                                            <spna className='state hkz'>回款中</spna> :null
+                                            <span className='state hkz'>回款中</span> :null
                                         }
                                         {
                                             this.state.data.projectFlag===this.state.fstate.yjq?
-                                            <spna className='state yjq'>已结清</spna> :null
+                                            <span className='state yjq'>已结清</span> :null
                                         }
                                         {
                                             this.state.data.projectFlag===this.state.fstate.ylb?
-                                            <spna className='state ylb'>已流标</spna> :null
+                                            <span className='state ylb'>已流标</span> :null
                                         } 
                                     </div> */}
-                                        <span className="pro_colect_Title">项目编号&nbsp;<span style={{color: '#333'}}>{item.fproject_no}</span></span>
+                                        <span className="pro_colect_Title">项目编号：&nbsp;<span style={{color: '#333'}}>{item.fproject_no}</span></span>
                                         <div className="colect_item" style={{ cursor:'pointer' }}>
                                             <div className="pic_box"><img className="pic" src={`${IMG_BASE_URL}${item.fcard_pic_path}`} /></div>
                                             <p className="name">{item.fname}</p>

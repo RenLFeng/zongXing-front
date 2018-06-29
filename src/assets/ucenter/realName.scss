@@ -147,6 +147,12 @@
         cursor: pointer;
     }
   }
+  .inp{
+    .prompts{
+        color:red;
+    }
+  }
+  
 
 .Prompt{
     width: 780px;
@@ -182,44 +188,46 @@
   position: relative;
   .inp{
     position: relative;
+    width:300px;
+    margin: auto;
     Input{
         width:300px;
         height:40px;
         padding-left:40px;
-        margin: 33px auto 0 auto; 
-        margin-left: 465px;
+        margin-top: 33px; 
+        // margin-left: 465px;
     }
     .img1{
         position: absolute;
         top:45px;
-        left:475px;
+        left:10px;
         z-index: 1;
     }
     .img2{
         position: absolute;
         top:35px;
-        left:475px;
+        left:10px;
         z-index: 1;
     }
     .span_{
         position: absolute;
         top:42px;
-        left:495px;
+        left:32px;
         z-index: 1;
         color:#D2D2D2;
     }
     .span_1{
         position: absolute;
         top:32px;
-        left:495px;
+        left:32px;
         z-index: 1;
         color:#D2D2D2;
     }
   }
   .Button{
       position: absolute;
-      top:173px;
-      left:465px;
+      top:195px;
+      left:450px;
       width:300px;
       height:40px;
       font-size: 16px;
