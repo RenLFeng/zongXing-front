@@ -87,6 +87,21 @@ export default class Register extends React.Component {
     }
   }
 
+  
+  checkInfo(){
+    const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
+    if(regPhone.length > 0 && regPwd.length > 0 && regAuthCode.length > 0 ){
+      console.log(regPhone,regPwd,regAuthCode)
+      this.setState({
+        disabled_:true
+      })
+    } else {
+      this.setState({
+        disabled_:false
+      })
+    }
+  }
+
   //检验手机号是否存在
   async checkPhoneNumber() {
     const phoneNum = this.state.regPhone;
@@ -111,19 +126,20 @@ export default class Register extends React.Component {
             registerShow_: false,
             loginError: false
           });
+         
           return;
         }
         this.setState({
           regNameErr: response.msg,
           // registerShow: true,
-        });
-      this.checkInfo()
+        }); 
       } else {
         this.setState({
           registerShow: true,
           registerShow_:true
         },()=>{
           this.setState({regNameErr: ''});
+          this.checkInfo()
         })  
       }
     }
@@ -188,21 +204,10 @@ export default class Register extends React.Component {
     });
   }
 
-  checkInfo(){
-    const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
-    if(regPhone.length > 0 && regPwd.length > 0 && regAuthCode.length > 0 && readStatus === true ){
-      this.setState({
-        disabled_:true
-      })
-    } else {
-      this.setState({
-        disabled_:false
-      })
-    }
-  }
 
   //注册提交方法
   async submitReg() {
+    console.log(11111111)
     if (this.state.regLoading) {
       return;
     }
@@ -251,7 +256,7 @@ export default class Register extends React.Component {
     }
     if (readStatus) {
       this.setState({textErr: '请先阅读注册协议'});
-      flag = false;
+      flag = true;
     } else {
       this.setState({textErr: ''});
     }
@@ -400,7 +405,7 @@ export default class Register extends React.Component {
                     <div style={{marginTop:95}}>
                      {
                        this.state.disabled_  && this.state.readStatus? 
-                       <a className="btn" onClick={()=>{this.submitReg()}} >注册</a>:
+                       <a className="btn" onClick={this.submitReg} loading={this.state.regLoading}>注册</a>:
                        <a className="btn" style={{backgroundColor: '#D1D1D1'}}>注册</a>
                     }
         
