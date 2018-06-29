@@ -824,3 +824,14 @@ export async function getDiscount(param) {
     },
   })
 }
+
+//登录-忘记密码时获取验证码
+export async function f_getCode(param) {
+  return request(`${BASE_URL}/zjb-website/userInfo/sendAuthCode`, {
+    method: 'POST',
+    body: {
+      ...param,
+    },
+  })
+}
+

@@ -111,8 +111,17 @@ class LoginInfo extends React.Component {
                                         <span className="split">|</span>
 
                                         <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fMobileBinding ? 'active' : ''}`}></i>
-                                        <i title="身份证认证" className={`zjb zjb-moban ${baseData.userSecurityCenter.fCertification ? 'active' : ''}`}></i>
-                                        <i title="银行卡绑定" className={`zjb zjb-icon ${baseData.userSecurityCenter.fBankCardBinding ? 'active' : ''}`}></i>
+                                        {
+                                            baseData.userSecurityCenter.fCertification ? 
+                                            <i title="身份证认证" className="zjb zjb-moban active"></i>:
+                                            <i title="身份证认证" className="zjb zjb-moban" onClick={()=>{this.props.history.push(Path.REALNAME_AUTHENTICATION)}}></i>
+                                        }
+                                        {
+                                            baseData.userSecurityCenter.fBankCardBinding ?  
+                                            <i title="银行卡绑定" className="zjb zjb-icon active"></i> :
+                                            <i title="银行卡绑定" className="zjb zjb-icon " onClick={()=>{this.props.history.push(Path.BINDCARD)}}></i> 
+                                        }
+                                         
                                     </p>
                                 </div>
                                 <div className="fr">

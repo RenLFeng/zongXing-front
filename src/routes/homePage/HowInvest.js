@@ -27,7 +27,7 @@ export default class HowInvest extends React.Component {
             <a className="btn "
                onClick={()=>{
                  $("#fix").removeClass('fix');
-                 this.props.history.push(Path.PROJECT_LIST)}}><i>我要投资</i></a>
+                 this.props.history.push(Path.PROJECT_LIST)}}>我要投资</a>
           </div>
         </div>
         <TabBottom />

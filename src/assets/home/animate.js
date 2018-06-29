@@ -16,7 +16,7 @@ export function animate(){
         el: $('.sec-tab3'),
         func: tab3
     }];
-    try {
+      try {
         secs.forEach(function (e) {
             e.middle = e.el[0].offsetTop + e.el[0].offsetHeight/2;
         });

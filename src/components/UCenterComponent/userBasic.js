@@ -200,7 +200,7 @@ class UserBaseFormInput extends React.Component {
             label="微信号" className="upload_text"
             >
             {getFieldDecorator('fweichat', {
-              rules:[{pattern: WeChat_REG, message:'请输入合法的微信号'}],
+              rules:[{pattern: WeChat_REG, message:'请输入正确的微信号'}],
               initialValue: userBase.fweichat ? userBase.fweichat : null
             })(<Input maxLength={'50'} placeholder={'请输入微信号'}/>)}
           </FormItem>
@@ -211,7 +211,7 @@ class UserBaseFormInput extends React.Component {
             {getFieldDecorator('fQQ', {
               rules:[
                 //{ required: true, message: '请输入您QQ号' },
-                {pattern: QQ_REG, message: '请输入合法的QQ号'}
+                {pattern: QQ_REG, message: '请输入正确的QQ号'}
               ],
               initialValue: userBase.fqq?userBase.fqq: null
             })(<Input maxLength={'50'} placeholder={'请输入QQ号'}/>)}
@@ -221,7 +221,7 @@ class UserBaseFormInput extends React.Component {
             label="工作" className="upload_text"
             >
             {getFieldDecorator('fJob', {
-              rules:[{pattern: HOBBY_REG, message: '请输入合法的内容'}],
+              rules:[{pattern: HOBBY_REG, message: '请输入正确的内容'}],
               initialValue: userBase.fjob?userBase.fjob: null,
             })(<Input maxLength={'50'} placeholder={'输入工作职位'}/>)}
           </FormItem>
@@ -240,7 +240,7 @@ class UserBaseFormInput extends React.Component {
             label="家庭住址" className="upload_text"
             >
             {getFieldDecorator('fAddress', {
-              rules:[{pattern: ZHUZHI_REG, message:'请输入合法的家庭住址信息' }],
+              rules:[{pattern: ZHUZHI_REG, message:'请输入正确的家庭住址信息' }],
               initialValue: userBase.faddress? userBase.faddress: null
             })(<Input.TextArea autosize={{ minRows: 5, maxRows: 8 }} maxLength={200}/>)}
           </FormItem>

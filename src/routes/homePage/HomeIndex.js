@@ -5,6 +5,7 @@ import Project from '../../components/HomePageComponent/project';
 import Invest from '../../components/HomePageComponent/invest';
 import Finance from '../../components/HomePageComponent/finance';
 import Tab3 from '../../components/HomePageComponent/tab3';
+import Path from '../../common/pagePath';
 import { startAnimate } from '../../assets/home/index';
 
 export default class HomeIndex extends React.Component {
@@ -45,7 +46,9 @@ export default class HomeIndex extends React.Component {
                   <p>直接参与小微企业成长</p>
                   <p>企业让利，额外惊喜</p>
                 </div>
-                <p><a className="btn btn-green" href="">详细了解如何投资</a></p>
+                <p><a className="btn btn-green g"   
+               onClick={()=>{
+                this.props.history.push(Path.HOW_INVEST)}}>详细了解如何投资</a></p>
               </div>
             </div>
           </div>
@@ -74,7 +77,10 @@ export default class HomeIndex extends React.Component {
                   <p>线上申请，快速便捷</p>
                   <p>融资过程，就是营销</p>
                 </div>
-                <p><a className="btn btn-green" href="">详细了解如何借款</a></p>
+                <p><a className="btn btn-green g"
+                 onClick={()=>{
+                  this.props.history.push(Path.HOW_LOAN)}}
+                >详细了解如何借款</a></p>
               </div>
             </div>
           </div>

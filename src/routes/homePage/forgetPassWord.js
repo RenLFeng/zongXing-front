@@ -1,10 +1,10 @@
 import React from 'react';
 import '../../assets/login/index.scss';
-import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg } from '../../common/systemParam';
+import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,word_reg} from '../../common/systemParam';
 import { connect } from 'dva';
 
 import { Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
-import { phoneExist, getAuthCode, regUser, changePW, changePassword, relieveAccountAjax, fp_getCode, fp_checkInfo } from '../../services/api';
+import { phoneExist, getAuthCode, regUser, changePW, changePassword, relieveAccountAjax, fp_getCode, fp_checkInfo,f_getCode } from '../../services/api';
 
 
 const Step = Steps.Step;
@@ -37,10 +37,14 @@ export default class ForgetPassWord extends React.Component {
       show: false,   //默认隐藏密码
       code_prompt: '',   //验证码长度提示
       loading: false,   //获取验证码按钮loading
+      nextLoading:false,
       slider:false,   //滑块默认不能滑动
       silderOver:true,   //滑块滑动之后
+
+      message2:"",   //第二步是姓名提示
+      meaasge3:"",   //第二步是身份证提示
     };
-    this.fp_getCode = this.fp_getCode.bind(this);
+    this.fp_getCodes = this.fp_getCodes.bind(this);
     this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
     this.countDownFun = null;
   }
@@ -123,55 +127,122 @@ export default class ForgetPassWord extends React.Component {
 
   
 
-  //下一步按钮触发的事件
-  next() {
-    if (this.state.firstPhone.length === 0) {
-      message.warning('请填写手机号')
-      return
-    }
-    if (this.spanText.innerHTML === '按住滑块，请拖到最右边') {
-      message.warning('请拖动滑块完成验证')
-      return
-    }
-    if (this.state.phoneExist === false) {
-      message.warning('该手机号未注册')
-      return
-    }
-    if (this.spanText.innerHTML === '验证通过！' && VER_PHONE.test(this.state.firstPhone)) {
-      this.fp_getCode();
-      // this.setState({
-      //   // down:true,
-      //   flagPage: 'second',
-      //   currentNum: 1
-      // })
-     
+  //下一步校验是否实名认证
+  async next() {
+    // if (this.state.firstPhone.length === 0) {
+    //   message.warning('请填写手机号')
+    //   return
+    // }
+    // if (this.spanText.innerHTML === '按住滑块，请拖到最右边') {
+    //   message.warning('请拖动滑块完成验证')
+    //   return
+    // }
+    // if (this.state.phoneExist === false) {
+    //   message.warning('该手机号未注册')
+    //   return
+    // }
+    // if (this.spanText.innerHTML === '验证通过！' && VER_PHONE.test(this.state.firstPhone)) {
+      
+    // }
+
+    this.setState({nextLoading:true})
+    const response = await fp_getCode(this.state.firstPhone);
+    console.log('response',response)
+    if(response.code === 0){
+      this.setState({
+        whetherAuthentication:response.data.isCertification,
+        flagPage: 'second',
+        currentNum: 1,  
+        nextLoading:false
+      })
+    } else {
+      this.setState({nextLoading:false})
+      response.msg && message.error( response.msg)
     }
   }
 
+infoCheck(){
+  const { realName} = this.state;
+  if(realName.length === 0){
+    this.setState({
+      message2:'姓名不能为空'
+    })
+    return
+  } else {
+    this.setState({
+      message2:''
+    })
+  }
+  if(!word_reg.test(realName)){
+     this.setState({
+       message2:'请输入汉字'
+     })
+     return
+  } else{
+    this.setState({
+      message2:''
+    })
+  }
+}
+
+infoCheck_(){
+  const { idCard } = this.state;
+  if(idCard.length === 0){
+    this.setState({
+      message3:'身份证号不能为空'
+    })
+    return
+  }
+  if(!CARD_REG.test(idCard)){
+    this.setState({
+      message3:'身份证号码格式不正确'
+    })
+    return
+  } else{
+   this.setState({
+     message3:''
+   })
+  }
+  
+}
 
 
-  //获取验证码及判断是否实名认证
-  async fp_getCode() {
-    const { firstPhone } = this.state;
-    // 发送验证码的时间存在本地
-    const sendTime = localStorage.getItem(firstPhone);
+  //获取验证码
+  async fp_getCodes() {
+    const { firstPhone ,realName ,idCard ,code} = this.state; 
+    let params = {
+      mobile:firstPhone,
+      realName:realName,
+      idCard:idCard,
+    }
+    //发送验证码的时间存在本地
+    const sendTime = localStorage.getItem(params);
     if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME * 1000) {
       alert(`${AUTH_CODE_TIME}秒内仅能获取一次验证码，请稍后重试`);
       return;
     }
     this.setState({ authLoading: true, loading: true });
     try {
-      const response = await fp_getCode(firstPhone);
+      const response = await f_getCode(params);
       if (response.code === 0) {
         message.info('发送成功');
         this.setState({
-          whetherAuthentication: response.data.isCertification,
-          showAuthCode: false,
           loading: false,
-          flagPage: 'second',
-          currentNum: 1
         })
+        localStorage.setItem(params, new Date().getTime());
+        //   //发送请求 按钮变不可点状态
+        this.setState({ showAuthCode: false });
+        //成功之后倒计时开始启动
+        this.countDownFun = setInterval(() => {
+          if (this.state.countDown === 0) {
+            clearInterval(this.countDownFun);
+            this.setState({ countDown: AUTH_CODE_TIME, showAuthCode: true });
+          } else {
+            this.setState({ countDown: this.state.countDown - 1 });
+          }
+        }, 1000);
       } else {
+        this.setState({loading: false })
         response.msg && message.error(response.msg)
       }
     } catch (e) {
@@ -179,31 +250,20 @@ export default class ForgetPassWord extends React.Component {
       message.error('请求失败');
       return;
     }
-    localStorage.setItem(firstPhone, new Date().getTime());
-    //   //发送请求 按钮变不可点状态
-    this.setState({ showAuthCode: false });
-    //成功之后倒计时开始启动
-    this.countDownFun = setInterval(() => {
-      if (this.state.countDown === 0) {
-        clearInterval(this.countDownFun);
-        this.setState({ countDown: AUTH_CODE_TIME, showAuthCode: true });
-      } else {
-        this.setState({ countDown: this.state.countDown - 1 });
-      }
-    }, 1000);
+   
   }
 
 
   //校验用户信息
-  async fp_checkInfo() {
+  async fp_checkInfos() {
     if (this.state.idCard && !CARD_REG.test(this.state.idCard)) {
       this.setState({
-        id_prompt: '身份证格式不正确'
+        message3: '身份证格式不正确'
       })
       return;
     } else {
       this.setState({
-        id_prompt: ''
+        message3: ''
       })
     }
     if (this.state.code.length != 6) {
@@ -317,7 +377,7 @@ export default class ForgetPassWord extends React.Component {
                
                 {
                   this.state.phoneExist ?this.state.prompt?
-                  <p className="prompts" style={{ marginTop: 10, color: 'red',marginLeft:53 }}>{this.state.prompt}</p>:
+                  <p className="prompts" style={{ color: 'red',marginLeft:53 }}>{this.state.prompt}</p>:
                     <p className="forget-prompts">  &nbsp;</p> :
                     <p className="forget-prompts" >该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
                 }
@@ -344,42 +404,51 @@ export default class ForgetPassWord extends React.Component {
                   </div>
                } 
                
-                <Button style={{ width: 329, marginTop: -7, height: 43, fontSize: 18 }} type="primary" onClick={() => this.next()} disabled={this.state.silderOver} loading={this.state.loading}>下一步</Button>
+                <Button style={{ width: 329, marginTop: -7, height: 43, fontSize: 18 }} type="primary" onClick={() => this.next()} disabled={this.state.silderOver} loading={this.state.nextLoading}>下一步</Button>
               </div> :
               (this.state.flagPage === 'second') ?
                 <div className="forget_form" style={{marginTop:-35}}>
                   <p className="second_p">手机号      <span>{this.state.firstPhone.substr(0, 3) + '****' + this.state.firstPhone.substr(7)}</span> </p>
-                  <div className="forget_inp" style={{ marginBottom: 15 }}>
+
+                  {
+                    this.state.whetherAuthentication ?
+                      <div style={{marginTop:20}}>
+                        <div className="forget_inp">
+                          <Input placeholder="请输入姓名" value={realName} onChange={(e) => { this.setState({ realName: e.target.value }) }} style={{width:329,marginTop:-2}} onBlur={()=>{this.infoCheck()}}/>
+                          <i className="zjb zjb-moban forget_name" />
+                          <span style={{position:'absolute',top:'3px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
+                        </div>
+                        {
+                          this.state.message2 ?
+                            <p className="prompts" style={{ color: 'red',marginLeft:53 }}>{this.state.message2}</p>:
+                            <p className="forget-prompts">  &nbsp;</p> 
+                         }
+                        <div className="forget_inp">
+                          <Input placeholder="请输入身份证号" value={idCard} onChange={(e) => { this.setState({ idCard: e.target.value }) }}  style={{width:329,marginTop:-5}} onBlur={()=>{this.infoCheck_()}}/>
+                          <i className="zjb zjb-credentials forget_card" />
+                          <span style={{position:'absolute',top:'1px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
+                        </div>
+                        {
+                          this.state.message3 ?
+                            <p className="prompts" style={{ color: 'red',marginLeft:53 }}>{this.state.message3}</p>:
+                            <p className="forget-prompts">  &nbsp;</p> 
+                         }
+                      </div> : null
+                  } 
+                  <div className="forget_inp" style={{ marginBottom: 15,marginTop:5 }}>
                     <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} maxLength={6}/>
                     {// 根据倒计时时间显示是否可以点击获取验证码按钮
                       this.state.showAuthCode ?
-                        <Button className="input2" onClick={() => this.fp_getCode()} loading={this.state.loading}>点击获取验证码</Button> :
+                        <Button className="input2" onClick={() => this.fp_getCodes()} loading={this.state.loading}>点击获取验证码</Button> :
                         <Button className="input2" style={{ backgroundColor: '#D1D1D1' }}>{countDown}s后重新获取</Button>
                       // <Button className="input2" style={{backgroundColor: '#D1D1D1'}}>点击获取验证码</Button>
                     }
                     <p className="prompts" style={{ marginBottom: 15, color: 'red', position: 'relative' }}>{this.state.code_prompt}</p>
                     {/* <Button className="input2">点击获取验证码</Button> */}
 
-
                   </div>
-                  {
-                    this.state.whetherAuthentication ?
-                      <div>
-                        <div className="forget_inp">
-                          <Input placeholder="请输入姓名" value={realName} onChange={(e) => { this.setState({ realName: e.target.value }) }} style={{width:329,marginTop:-2}} />
-                          <i className="zjb zjb-moban forget_name" />
-                          <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
-                        </div>
-                        <div className="forget_inp">
-                          <Input placeholder="请输入身份证号" value={idCard} onChange={(e) => { this.setState({ idCard: e.target.value }) }}  style={{width:329,marginTop:-5}}/>
-                          <i className="zjb zjb-credentials forget_card" />
-                          <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
-                        </div>
-                        <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.id_prompt}</p>
-                      </div> : null
-                  } 
 
-                  <Button style={{ width: 329, marginTop:30, height: 43, fontSize: 18, }} type="primary" onClick={() => this.fp_checkInfo()}>下一步</Button>
+                  <Button style={{ width: 329, marginTop:20, height: 43, fontSize: 18, }} type="primary" onClick={() => this.fp_checkInfos()}>下一步</Button>
                 </div> :
                 (this.state.flagPage === 'third') ?
                   <div className="forget_form" style={{marginTop:130}}>

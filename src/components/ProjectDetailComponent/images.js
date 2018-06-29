@@ -45,7 +45,7 @@ export default class Images extends React.Component {
         <div className="fl">
           <div className="bigpic" style={{backgroundImage:`url(${IMG_BASE_URL}${this.state.realUrl})`}}/>
         </div>
-        <a className={`btn prev ${id}`}>PREV</a>
+        <a className={`btn prev ${id}`}></a>
         <div className="fr">
           <div className={`box box${id}`}>
             {pics.map((data, index) => {
@@ -65,7 +65,7 @@ export default class Images extends React.Component {
 
           </div>
         </div>
-        <a className={`btn next ${id}`}>NEXT</a>
+        <a className={`btn next ${id}`}></a>
       </div>
     );
   }
