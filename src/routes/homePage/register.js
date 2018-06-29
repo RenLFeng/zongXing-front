@@ -28,7 +28,7 @@ export default class Register extends React.Component {
       regAuthCode: '', //注册验证码
       loginPhone: '', //登录手机号
       loginPwd: '', //登录密码
-      readStatus: true, //阅读注册协议状态
+      readStatus: false, //阅读注册协议状态
       regLoading: false,
       loginNameErr: '', //登录用户名提示
       loginPwdErr: '', //登录密码提示
@@ -57,8 +57,11 @@ export default class Register extends React.Component {
       registerShow_:true,  //校验手机号是否存在时，发送验证码按钮的状态
       loginError: true,
       regPwdErrShow: true,
+
+      infoCurrent:false,  //注册信息完整
       
       status:false,  //密码是否可见
+      disabled_:false  //是否可点
 
     };
     this.getAuthCode = this.getAuthCode.bind(this);
@@ -114,6 +117,7 @@ export default class Register extends React.Component {
           regNameErr: response.msg,
           // registerShow: true,
         });
+      
       } else {
         this.setState({
           registerShow: true,
@@ -184,6 +188,7 @@ export default class Register extends React.Component {
     });
   }
 
+
   //注册提交方法
   async submitReg() {
     if (this.state.regLoading) {
@@ -192,6 +197,7 @@ export default class Register extends React.Component {
     const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
     let that = this.props;
     let flag = true;
+   
     if (regPhone.trim().length === 0) {
       this.setState({regNameErr: '请输入手机号'});
       flag = false;
@@ -231,7 +237,7 @@ export default class Register extends React.Component {
     } else {
       this.setState({regPwdErr: '',regPwdErrShow:true});
     }
-    if (!readStatus) {
+    if (readStatus) {
       this.setState({textErr: '请先阅读注册协议'});
       flag = false;
     } else {
@@ -248,7 +254,6 @@ export default class Register extends React.Component {
     const reg = {
       fmobile: regPhone.trim(),
       fpwd: regPwd.trim(),
-      // fpwd: regPwd,
       authcode:regAuthCode.trim(),
       type: 0, //投资用户
     };
@@ -310,16 +315,21 @@ export default class Register extends React.Component {
                       
                       {
                         this.state.registerShow ?this.state.regNameErr?
-                        <p className="prompts">{this.state.regNameErr}</p>:
+                        <p className="prompts" style={{marginLeft:0}}>{this.state.regNameErr}</p>:
                         <p className="registration-prompts"> &nbsp;</p> : 
                         <p className="registration-prompts">该手机号已注册，<a onClick={() => this.props.history.push('./login')}>立即登录</a></p>
                        }
                      
                     </div>
-                    <div className="row relative" style={{marginBottom:30}}>
+                    <div className="row relative" style={{marginBottom:15}}>
                       <input className="put" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
-                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}}/>
-                      <p className="prompts">{this.state.regAuthErr}</p>
+                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}} />
+                            {
+                              this.state.regAuthErr ?
+                             <p className="prompts" style={{marginLeft:0}}>{this.state.regAuthErr}</p> :
+                            <p className="prompts" style={{marginLeft:0}}>&nbsp;</p> }
+                      
+
                       {// 根据倒计时时间显示是否可以点击获取验证码按钮
                         this.state.registerShow_ ? 
                           ((showAuthCode) ?
@@ -344,7 +354,7 @@ export default class Register extends React.Component {
                              <div>
                                <input className="put "  value={regPwd} maxLength={15}
                             name="regPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
-                            placeholder="请设置登录密码" />
+                            placeholder="请设置登录密码"/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
                            <i className="zjb zjb-htmal5icon08" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('hide')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
@@ -352,7 +362,7 @@ export default class Register extends React.Component {
                             
                            }
                            
-                      <p className="prompts">{this.state.regPwdErr}</p>
+                      <p className="prompts" style={{marginLeft:0}} >{this.state.regPwdErr}</p>
                       {
                         this.state.regPwdErrShow ?  <p className="registration-prompts">密码不可纯数字，区分大小写，8-15位字符</p>  : null
                       }
@@ -376,10 +386,12 @@ export default class Register extends React.Component {
                       </p>
                     
                     <div style={{marginTop:95}}>
-                      {
-                        this.state.readStatus ? <a className="btn" onClick={this.submitReg}>注册</a> :<a className="btn" style={{backgroundColor: '#D1D1D1'}}>注册</a>
-                      }
-                      
+                     {
+                       this.state.disabled_  && this.state.readStatus? 
+                       <a className="btn" onClick={()=>{this.submitReg()}} >注册</a>:
+                       <a className="btn" style={{backgroundColor: '#D1D1D1'}}>注册</a>
+                    }
+        
                     </div>
                     <p className="safe-info">
                       <i className="zjb zjb-renzheng1" style={{color:'#4cd964',fontSize:14,marginRight:5}}/>

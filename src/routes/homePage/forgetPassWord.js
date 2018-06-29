@@ -37,7 +37,8 @@ export default class ForgetPassWord extends React.Component {
       show: false,   //默认隐藏密码
       code_prompt: '',   //验证码长度提示
       loading: false,   //获取验证码按钮loading
-
+      slider:false,   //滑块默认不能滑动
+      silderOver:true,   //滑块滑动之后
     };
     this.fp_getCode = this.fp_getCode.bind(this);
     this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
@@ -45,6 +46,7 @@ export default class ForgetPassWord extends React.Component {
   }
 
   componentDidMount() {
+    let this_ = this;
     $(".inner").mousedown(function (e) {
       var el = $(".inner"), os = el.offset(), dx, $span = $(".outer>span"), $filter = $(".filter-box"), _differ = $(".outer").width() - el.width();
       $(document).mousemove(function (e) {
@@ -68,18 +70,23 @@ export default class ForgetPassWord extends React.Component {
           dx = _differ;
           $(".outer").addClass("act");
           $span.html("验证通过！");
+          this_.setState({
+            silderOver:false,
+          })
           el.html('&radic;');
         }
         $filter.css('width', dx);
         el.css("left", dx);
       })
     })
+
   }
 
   componentWillUnmount() {
     if (this.countDownFun) {
       clearInterval(this.countDownFun);
     }
+   
   }
 
 
@@ -91,7 +98,9 @@ export default class ForgetPassWord extends React.Component {
       return;
     }
     if (!VER_PHONE.test(phoneNum)) {
-      this.setState({ prompt: '请输入正确的手机号' });
+      this.setState({ 
+        prompt: '请输入正确的手机号' ,
+      });
       return;
     } 
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
@@ -99,16 +108,20 @@ export default class ForgetPassWord extends React.Component {
       if (response.code !== 0) {
         this.setState({
           prompt: '',
-          phoneExist: true
+          phoneExist: true,
+          slider:true
         });
       } else {
         this.setState({
           phoneExist: false,
           prompt: '',
+          silder:false
         });
       }
     }
   }
+
+  
 
   //下一步按钮触发的事件
   next() {
@@ -125,13 +138,17 @@ export default class ForgetPassWord extends React.Component {
       return
     }
     if (this.spanText.innerHTML === '验证通过！' && VER_PHONE.test(this.state.firstPhone)) {
-      this.setState({
-        // down:true,
-        flagPage: 'second',
-        currentNum: 1
-      })
+      this.fp_getCode();
+      // this.setState({
+      //   // down:true,
+      //   flagPage: 'second',
+      //   currentNum: 1
+      // })
+     
     }
   }
+
+
 
   //获取验证码及判断是否实名认证
   async fp_getCode() {
@@ -150,7 +167,9 @@ export default class ForgetPassWord extends React.Component {
         this.setState({
           whetherAuthentication: response.data.isCertification,
           showAuthCode: false,
-          loading: false
+          loading: false,
+          flagPage: 'second',
+          currentNum: 1
         })
       } else {
         response.msg && message.error(response.msg)
@@ -302,16 +321,30 @@ export default class ForgetPassWord extends React.Component {
                     <p className="forget-prompts">  &nbsp;</p> :
                     <p className="forget-prompts" >该手机号还未注册，<a onClick={() => this.props.history.push('./register')}>立即注册</a></p>
                 }
-
-
-                <div className="outer">
-                  <div className="filter-box"></div>
-                  <span className="span" ref={(ref) => this.spanText = ref} style={{color:'#c4c4c4',fontSize:15,background:"#f2f2f2"}}>
-                    按住滑块，请拖到最右边
-                  </span>
-                  <div className="inner">&gt;&gt;</div>
-                </div>
-                <Button style={{ width: 329, marginTop: 33, height: 43, fontSize: 18 }} type="primary" onClick={() => this.next()}>下一步</Button>
+               {
+                 this.state.slider ?  
+                 <div  className="mask" style={{display:'none'}}></div>
+                 : <div  className="mask" ></div>
+               }
+               {
+                 this.state.slider ?  
+                 <div className="outer" style={{marginTop:64,}}>
+                    <div className="filter-box"></div>
+                    <span className="span" ref={(ref) => this.spanText = ref} style={{  color: 'white'}}>
+                      按住滑块，请拖到最右边
+                    </span>
+                    <div className="inner">&gt;&gt;</div>
+                </div>  :
+                 <div className="outer">
+                    <div className="filter-box"></div>
+                    <span className="span" ref={(ref) => this.spanText = ref} style={{  color: 'white'}}>
+                      按住滑块，请拖到最右边
+                    </span>
+                    <div className="inner">&gt;&gt;</div>
+                  </div>
+               } 
+               
+                <Button style={{ width: 329, marginTop: -7, height: 43, fontSize: 18 }} type="primary" onClick={() => this.next()} disabled={this.state.silderOver} loading={this.state.loading}>下一步</Button>
               </div> :
               (this.state.flagPage === 'second') ?
                 <div className="forget_form" style={{marginTop:-35}}>
@@ -353,14 +386,14 @@ export default class ForgetPassWord extends React.Component {
                     {/* 根据点击状态判断密码是否隐藏 */}
                     {this.state.show ?
                       <div className="forget_third">
-                        <Input placeholder="请输入重新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                        <Input placeholder="请输入新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} />
                         <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.message1}</p>
                         <i className="zjb zjb-mima img1" />
                         <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
                         <i className="zjb zjb-mimakejian img2" onClick={() => { this.changePassStatus('show') }} />
                       </div> :
                        <div className="forget_third">
-                       <Input placeholder="请输入重新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} type="password" />
+                       <Input placeholder="请输入新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} type="password" />
                        <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.message1}</p>
                        <i className="zjb zjb-mima img1" />
                        <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>

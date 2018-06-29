@@ -259,7 +259,7 @@ export default class Login extends React.Component {
                           忘记密码
                         </a>
                     </div>
-                    <div style={{marginTop:96}}>
+                    <div style={{marginTop:96,width:329}}>
                       <a className="btn" onClick={this.submitLogin}>登录</a>
                     </div>
                     <p className="safe-info">
