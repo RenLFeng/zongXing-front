@@ -104,6 +104,7 @@ class LoginInfo extends React.Component {
                                         <a onClick={() => this.props.dispatch({ type: 'login/logout' })}>退出登录</a>
                                     </p>
                                     <p className="uinfo" style={{ position: 'relative' }}>
+                                     
                                         <span className="nickname">{baseData.realName ? baseData.realName : '未认证'}</span>
                                         <span className="split">|</span>
 
