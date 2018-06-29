@@ -8,6 +8,7 @@ import Path from '../../common/pagePath';
 import moment from 'moment';
 import { setInterval, setTimeout } from 'timers';
 import { Link } from 'dva/router';
+import { IMG_BASE_URL } from '../../common/systemParam';
 
 @connect((state) => ({
     nickName: state.login.nickName,
@@ -84,6 +85,7 @@ class LoginInfo extends React.Component {
 
     render() {
         const { baseData } = this.props;
+        console.log(baseData);
         return (
             <div className='lg-login'>
                 {
@@ -92,7 +94,7 @@ class LoginInfo extends React.Component {
                             <div className="uc-tbody clearfix" style={{ height: 90, boxShadow: '1px 1px 16px rgba(0, 0, 0, 0.2)', padding: '20px 15px' }}>
                                 {/* 用户头像 */}
                                 <a className="fl">
-                                    <img className="av" src={require('../../assets/img/ucenter/av1.png')} />
+                                    <img className="av" src={this.props.baseData.headPic?`${IMG_BASE_URL}${this.props.baseData.headPic}`:require('../../assets/img/ucenter/av1.png')} />
                                 </a>
                                 {/* 用户信息 */}
                                 <div className="fl">
@@ -104,7 +106,8 @@ class LoginInfo extends React.Component {
                                         <a onClick={() => this.props.dispatch({ type: 'login/logout' })}>退出登录</a>
                                     </p>
                                     <p className="uinfo" style={{ position: 'relative' }}>
-                                        <span className="nickname">{baseData.realName?baseData.realName:'未认证'}</span>
+                                     
+                                        <span className="nickname">{baseData.realName ? baseData.realName : '未认证'}</span>
                                         <span className="split">|</span>
 
                                         <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fMobileBinding ? 'active' : ''}`}></i>

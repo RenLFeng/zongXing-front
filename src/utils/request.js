@@ -3,7 +3,6 @@ import { routerRedux } from 'dva/router';
 import store from '../index';
 
 import { build } from '../common/systemParam';
-import { debug } from 'util';
 
 let BASE_URL = 'http://test.5izjb.com:8001'; // 测试服务器
 if (build === 'production') {
@@ -37,13 +36,21 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护',
   504: '网关超时',
 };
-function checkStatus(response) { 
-  const { dispatch } = store;
-  if (response.status === 288) {
-    dispatch({ type: 'login/logout' });
-    dispatch(routerRedux.push('/index/login'));
-    throw {name: 288};
+function checkStatus(response) {
+  if (store) {
+    const { dispatch } = store;
+    if (response.status === 288) {
+      dispatch({ type: 'login/logout' });
+      dispatch(routerRedux.push('/index/login'));
+      throw {name: 288};
+    }
+  } else {
+    if (response.status === 288) {
+      
+      throw {name: 288};
+    }
   }
+  
   if (response.status >= 200 && response.status < 300) {
     return response;
   }

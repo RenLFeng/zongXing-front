@@ -16,9 +16,13 @@ export function animate(){
         el: $('.sec-tab3'),
         func: tab3
     }];
-    secs.forEach(function (e) {
-        e.middle = e.el[0].offsetTop + e.el[0].offsetHeight/2;
-    });
+    try {
+        secs.forEach(function (e) {
+            e.middle = e.el[0].offsetTop + e.el[0].offsetHeight/2;
+        });
+    } catch(e) {
+
+    }
     let wh = $(window).height();
     function scroll() {
         let top = av.top();

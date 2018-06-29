@@ -4,6 +4,7 @@ import { Icon, Input, Button, message, Spin } from 'antd';
 import '../../assets/ucenter/realName.scss';
 import { verifyIdcard } from '../../services/api';
 import Path from '../../common/pagePath';
+import {CARD_REG} from '../../common/systemParam'
 
 export default class Authentication extends React.Component {
   constructor(props) {
@@ -16,6 +17,8 @@ export default class Authentication extends React.Component {
       openName: '',
       num: 5, // 5秒后
       // loading:false,
+      message1:"",
+      message2:""
     };
     this.countDown = null;
   }
@@ -44,6 +47,16 @@ export default class Authentication extends React.Component {
       realName: this.state.realName.trim(),
       idcard: this.state.idcard,
     };
+    if(!CARD_REG.test(param.idcard)){
+      this.setState({
+        message2:'身份证格式不正确'
+      })
+      return
+    } else {
+      this.setState({
+        message2:''
+      })
+    }
     if (!param.realName) {
       message.error('真实姓名不能为空！');
       return;
@@ -71,7 +84,9 @@ export default class Authentication extends React.Component {
          });
       }, 1000);
     } else {
-      response.msg && message.error(response.msg);
+      this.setState({
+        message2:'信息不匹配'
+      })
     }
   };
 
@@ -106,6 +121,7 @@ export default class Authentication extends React.Component {
                     <Input placeholder="请输入第二代身份证号码" onChange={this.updateIdcard} style={{marginTop:23}}/>
                     <img alt="身份证id" src={require('../../assets/img/u192.png')}  className="img2"/>
                     <span className="span_1">|</span>
+                    <span className="prompts">{this.state.message2}</span>
                   </div>
       
                   <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button">立即身份认证</span>

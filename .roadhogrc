@@ -21,7 +21,7 @@
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }]
   ],
   "theme": {
-    "primary-color": "#FF7E10"
+    "primary-color": "#ff9900"
   },
   "publicPath": "./"
 

@@ -134,9 +134,9 @@ class LoanInfo extends React.Component {
         title: '到账日期',
         dataIndex: 'fpay_time',
         align:'center',
-		render:function(text,record,index){
-			return text||'';
-		}
+				render:function(text,record,index){
+					return text?moment(text).format('YYYY/MM/DD HH:mm'):'';
+				}
       }]; 
 	const locale = {
 		filterTitle: '筛选',

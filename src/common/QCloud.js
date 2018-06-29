@@ -1,7 +1,7 @@
 import Config  from './myqcloudConfig';
 import CryptoJS from './CryptoJS';
 
-const QCloud ={
+export default QCloud ={
   GetSign(){
     let random = parseInt(Math.random() * Math.pow(2, 32));
     let now = parseInt(new Date().getTime() / 1000);
@@ -59,5 +59,5 @@ const QCloud ={
       .then((response) => response.json());
   }
 };
-module.exports = QCloud;
+
 
