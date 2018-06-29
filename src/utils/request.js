@@ -3,7 +3,6 @@ import { routerRedux } from 'dva/router';
 import store from '../index';
 
 import { build } from '../common/systemParam';
-import { debug } from 'util';
 
 let BASE_URL = 'http://test.5izjb.com:8001'; // 测试服务器
 if (build === 'production') {
