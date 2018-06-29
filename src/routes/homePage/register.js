@@ -117,7 +117,7 @@ export default class Register extends React.Component {
           regNameErr: response.msg,
           // registerShow: true,
         });
-      
+      this.checkInfo()
       } else {
         this.setState({
           registerShow: true,
@@ -188,6 +188,18 @@ export default class Register extends React.Component {
     });
   }
 
+  checkInfo(){
+    const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
+    if(regPhone.length > 0 && regPwd.length > 0 && regAuthCode.length > 0 && readStatus === true ){
+      this.setState({
+        disabled_:true
+      })
+    } else {
+      this.setState({
+        disabled_:false
+      })
+    }
+  }
 
   //注册提交方法
   async submitReg() {
@@ -323,7 +335,7 @@ export default class Register extends React.Component {
                     </div>
                     <div className="row relative" style={{marginBottom:15}}>
                       <input className="put" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
-                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}} />
+                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}} onBlur={()=>{this.checkInfo()}}/>
                             {
                               this.state.regAuthErr ?
                              <p className="prompts" style={{marginLeft:0}}>{this.state.regAuthErr}</p> :
@@ -345,7 +357,7 @@ export default class Register extends React.Component {
                              <div>
                                   <input className="put "  value={regPwd} maxLength={15}
                             name="regPwd" onChange={(e) => this.setState({regPwd: e.target.value})}
-                            placeholder="请设置登录密码" />
+                            placeholder="请设置登录密码" onBlur={()=>{this.checkInfo()}}/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
                            <i className="zjb zjb-mimakejian" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('show')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
@@ -354,7 +366,7 @@ export default class Register extends React.Component {
                              <div>
                                <input className="put "  value={regPwd} maxLength={15}
                             name="regPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
-                            placeholder="请设置登录密码"/>
+                            placeholder="请设置登录密码" onBlur={()=>{this.checkInfo()}}/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
                            <i className="zjb zjb-htmal5icon08" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('hide')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
