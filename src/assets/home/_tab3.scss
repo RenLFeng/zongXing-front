@@ -61,3 +61,34 @@
         border: 5px solid #fff;
     }
 }
+.sec-tab3.g{
+    .tab3_ i{
+        display:inline-block;
+    }
+    .tab-con {
+        width: 750px;
+        height: 567px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        .con{
+            position: absolute;
+            left:0;
+            top:0;
+            width:2250px;
+            height:100%;
+            display:none;
+            li{
+                width:750px;
+                height: 100%;
+                float:left;
+              video{
+                width: 100%;
+              }
+            }
+        }
+      .con1{
+        display: block;
+      }
+    }
+}

@@ -35,6 +35,8 @@ export default {
 
   ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
 
+  HOW_INVEST: '/index/howInvest',  // 如何投资页面
+  HOW_LOAN: '/index/howLoan',  // 如何投资页面
 
 
   Project_Collection:'/index/uCenter/projectcollection',
