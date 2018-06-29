@@ -151,7 +151,7 @@ class BindCard extends React.Component {
     } else {
       let result = {
         bankCardImg: 'error',
-        bankCardErr: response.msg,
+        bankCardErr: '信息不匹配',
         showBankName: '', // 银行名
         cardType: '', // 卡类型
         tipCityName: '', // 省市
