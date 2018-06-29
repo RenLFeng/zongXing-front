@@ -73,6 +73,9 @@ export default class Register extends React.Component {
     this.countDownErrorCode = null;
   }
 
+  componentDidMount(){
+    console.log(this.state.regAuthCode,this.state.regPwd);
+  }
   componentWillUnmount() {
     if (this.countDownFun) {
       clearInterval(this.countDownFun);
@@ -84,6 +87,20 @@ export default class Register extends React.Component {
 
     if (this.countDownErrorCode) {
       clearInterval(this.countDownErrorCode);
+    }
+  }
+
+  
+  checkInfo(){
+    const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
+    if(regPhone.length > 0 && regPwd.length > 0 && regAuthCode.length > 0 && readStatus === true ){
+      this.setState({
+        disabled_:true
+      })
+    } else {
+      this.setState({
+        disabled_:false
+      })
     }
   }
 
@@ -188,21 +205,10 @@ export default class Register extends React.Component {
     });
   }
 
-  checkInfo(){
-    const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
-    if(regPhone.length > 0 && regPwd.length > 0 && regAuthCode.length > 0 && readStatus === true ){
-      this.setState({
-        disabled_:true
-      })
-    } else {
-      this.setState({
-        disabled_:false
-      })
-    }
-  }
 
   //注册提交方法
   async submitReg() {
+    console.log(11111111)
     if (this.state.regLoading) {
       return;
     }
@@ -400,7 +406,7 @@ export default class Register extends React.Component {
                     <div style={{marginTop:95}}>
                      {
                        this.state.disabled_  && this.state.readStatus? 
-                       <a className="btn" onClick={()=>{this.submitReg()}} >注册</a>:
+                       <a className="btn" onClick={this.submitReg} >注册</a>:
                        <a className="btn" style={{backgroundColor: '#D1D1D1'}}>注册</a>
                     }
         
