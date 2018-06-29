@@ -43,6 +43,7 @@ class Statement extends React.Component {
                     <p>{this.state.data.ftime?moment(this.state.data.ftime).format('YYYY/MM/DD HH:mm'):'----/--/--/ --:--'}</p>
                     <p>{this.state.typeName}</p>
                     <div className='text1'>
+                        {/* 金额 */}
                         {
                             //充值 提现
                             this.state.data.busType==='1201'|| this.state.data.busType==='1301'?  <span className='span1'>￥{String(this.state.data.resultObj.famount).fm()}</span>:null
@@ -53,19 +54,20 @@ class Statement extends React.Component {
                         } 
                         
                         {
-                            //提现
+                            //提现银行卡卡号
                            this.state.data.busType==='1301'?
                            <span className='span2'>{this.state.data.resultObj && this.state.data.resultObj.bankName||''}  尾号{this.state.data.resultObj.fcardNo.substring(this.state.data.resultObj.fcardNo.length-4)}</span>
                            :null
                         } 
+                        {/* 结果 */}
                         {
-                            this.state.data.resultCode==='88'&&this.state.data.busType !='1405'? <span className='success'>完成</span>:null
+                            this.state.data.resultCode==='88'&&this.state.data.busType !='1405'? <span className='msg success'>成功</span>:null
                         }
                         {
-                            this.state.data.resultCode==='90'&&this.state.data.busType !='1405'? <span className='todo'>{this.state.data.resultMessage}</span>:null
+                            this.state.data.resultCode==='90'&&this.state.data.busType !='1405'? <span className='msg todo'>正在处理中…… </span>:null
                         }
                         {
-                            this.state.data.resultCode !='88' && this.state.data.resultCode !='90'&&this.state.data.busType !='1405'? <span className='error'>失败（{this.state.data.resultMessage}）</span>:null
+                            this.state.data.resultCode !='88' && this.state.data.resultCode !='90'&&this.state.data.busType !='1405'? <span className='msg error'>失败（{this.state.data.resultMessage}）</span>:null
                         } 
                     </div>
                     {
@@ -79,9 +81,9 @@ class Statement extends React.Component {
                         this.state.data.busType==='1405'&&this.state.data.resultObj?
                         <div className='text2'>
                             <span style={{width:120}}>￥{String(this.state.data.resultObj.sumAmount).fm()||'0'}</span>
-                            <span style={{width:150}}>本金:￥{String(this.state.data.resultObj.fprincipal).fm()||'0'}</span>  
-                            <span style={{width:150}}>利息:￥{String(this.state.data.resultObj.finterest).fm()||'0'}</span> 
-                            <span style={{width:150}}>佣金:￥{String(this.state.data.resultObj.fkickBack).fm()||'0'}</span> 
+                            <span style={{width:150,color:'#999'}}>本金:￥{String(this.state.data.resultObj.fprincipal).fm()||'0'}</span>  
+                            <span style={{width:150,color:'#999'}}>利息:￥{String(this.state.data.resultObj.finterest).fm()||'0'}</span> 
+                            <span style={{width:150,color:'#999'}}>佣金:￥{String(this.state.data.resultObj.fkickBack).fm()||'0'}</span> 
                         </div>:null
                     } 
                     {

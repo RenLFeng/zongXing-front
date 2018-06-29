@@ -50,13 +50,18 @@
         &>div.text1{
             color: $c3;
             margin-top: 10px;
+            position: relative;
             &>span.span1{
                 display: inline-block;
                 width: 100px;
             }
             &>span.span2{
-                display: inline-block;
-                width: 240px;
+                display: inline-block; 
+            }
+            &>.msg{
+                position: absolute;
+                width: 300px;
+                left: 350px;
             }
             .success{
                 color: #4cd964;
