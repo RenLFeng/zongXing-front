@@ -13,6 +13,7 @@ export default class HomeIndex extends React.Component {
   componentDidMount() {
     //startAnimate();
   }
+
   render() {
     return (
       <div className="body">
@@ -46,7 +47,7 @@ export default class HomeIndex extends React.Component {
                   <p>直接参与小微企业成长</p>
                   <p>企业让利，额外惊喜</p>
                 </div>
-                <p><a className="btn btn-green g"   
+                <p><a className="btn btn-green g"
                onClick={()=>{
                 this.props.history.push(Path.HOW_INVEST)}}>详细了解如何投资</a></p>
               </div>

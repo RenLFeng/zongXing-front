@@ -13,6 +13,9 @@ export default class Head extends React.Component {
     };
     this.countDown = null;
   }
+  componentDidMount(){
+
+  }
   render() {
     let video_src = '';
     const { projectDetail } = this.props;
