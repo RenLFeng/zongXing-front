@@ -55,16 +55,18 @@ export default class OpenQAccount extends React.Component {
     }
     this.setState({loading: true});
     const response = await commitOpenAccount(this.state.param);
-    this.setState({loading: false});
+    // this.setState({loading: false});
     if (response.code === 0) {
       if (response.data) {
         this.setState({
-          submitParam: response.data
+          submitParam: response.data,
+          loading: false
         }, ()=>{
           this.formId.submit();
         })
       }
     } else {
+      this.setState({loading: false});
       response.msg && message.error(response.msg);
     }
   }
