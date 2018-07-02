@@ -316,13 +316,14 @@ export default class PersonAccount extends React.Component {
 
   jumpAuth() {
     var that = this;
-    Modal.info({
-      title: '您目前还没有开户，请先开户！',
-      okText:'去开户',
-      onOk() {
-        that.props.history.push('/index/uCenter/realName')
-      },
-    });
+    // Modal.info({
+    //   title: '您目前还没有开户，请先开户！',
+    //   okText:'去开户',
+    //   onOk() {
+    //     that.props.history.push('/index/uCenter/realName')
+    //   },
+    // });
+    that.props.history.push('/index/uCenter/authentication')
   }
 
   async getAccountStatement() {
