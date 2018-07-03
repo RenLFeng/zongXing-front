@@ -35,6 +35,7 @@ const btnLayout = {
 @connect((state)=>({
   accountId: state.login.baseData.accountId,
   baseData: state.login.baseData,
+  safeData: state.safeCenter.safeData,
 }))
 
 export default class EnterprisePresentation extends React.Component {
@@ -74,7 +75,7 @@ export default class EnterprisePresentation extends React.Component {
       this.props.history.push('/index/uCenter/realName');
       return;
     }
-    // this.getCardInformation(this.props.accountId); 
+    this.getCardInformation(this.props.accountId); 
   }
 
   //获取银行卡
@@ -241,7 +242,8 @@ export default class EnterprisePresentation extends React.Component {
 
   render() {
     const {withdrawals} = this.state;
-    const {baseData} = this.props;
+    const {baseData, safeData} = this.props;
+    console.log('safeData',baseData)
     const Option = Select.Option;
     return (
         <div className="fr uc-rbody" style={{width: 1248,padding: '30px 20px'}}>

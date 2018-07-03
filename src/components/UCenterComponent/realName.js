@@ -480,7 +480,7 @@ export default class RealName extends React.Component {
                             <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
                             {!safeData.userSecurityCenter.fThirdAccount && safeData.userSecurityCenter.fCertification ? 
                             <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a>
-                             : null}
+                             : null} 
                           </div>
                           <div style={{marginTop:9,marginBottom:5}}>
                             <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
@@ -491,13 +491,13 @@ export default class RealName extends React.Component {
                               <div className="personal" style={{ marginTop: 0,background:'#f9f9f9'}}>
                                 <span style={{ color: 'black',color:'#999999' }} >你的乾多多账户:{safeData.fThirdAccountNo}</span>
                                 <div className="findPass">
-                                  <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: true, showMMMChangeLoginPass: false })}>找回乾多多支付密码 </span>
+                                  <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: !this.state.showMMMChangepayPassword })}>找回乾多多支付密码 </span>
                                   <span className="line" >|</span>
-                                  <span className="a" onClick={() => this.setState({ showMMMChangeLoginPass: true, showMMMChangepayPassword: false })}>找回乾多多支付登录密码 </span>
+                                  <span className="a" onClick={() => this.setState({ showMMMChangeLoginPass: !this.state.showMMMChangeLoginPass})}>找回乾多多登录密码 </span>
                                 </div>
                               </div>
-                              : null
-                          }
+                               : null
+                          } 
                           {
                             this.state.showMMMChangepayPassword === true ?
                               <ChangePayPayPass /> 
@@ -528,9 +528,12 @@ export default class RealName extends React.Component {
                                     <div className="IDCard">
                                       <div>
                                       <div className="card_info">
-                                          <div className="card_img"></div>
+                                          <div className="card_img">
+                                            {/* <img src={`${data.flogo}`}/> */}
+                                          </div>
                                           <div className="card_text">
                                             <p>{data.fbank}</p>
+                                            {/* <span>{data.fcardType}</span> */}
                                             <span>储蓄卡</span>
                                           </div>
                                         </div>
@@ -608,14 +611,18 @@ export default class RealName extends React.Component {
             <div className="baseInfo">
             <i className="zjb zjb-mima1"></i>
               <h3 onClick={()=>{this.props.history.push(CHANGE_LPWD)}}>修改登陆密码</h3>
-              <p>定期更改账户密码让你的账户更安全</p>
-              <span>2018/6/15（最新设置时间）</span>
+              <p>定期更改登录密码让你的账户更安全</p>
+              <span>2018/6/15</span>
             </div>
             <div className="baseInfo">
               <i className="zjb zjb-youxiang"></i>
               <h3 onClick={()=>{this.props.history.push(CHANGE_BINDEMAIL)}}>变更绑定邮箱</h3>
               <p>绑定电子邮箱后便于接收平台各种通知</p>
+              {
+                safeData.userSecurityCenter.fEmailBinding ? 
+                <p><span>{safeData.fEmail}</span></p>:
               <p><span>还未绑定邮箱，</span><a onClick={()=>{this.props.history.push(BIND_EMAIL)}}>点击绑定</a></p>
+              }
             </div>
           </div>
         </div>

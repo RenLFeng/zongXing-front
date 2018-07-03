@@ -73,6 +73,7 @@ class UserBaseFormInput extends React.Component {
   // 获取个人基础资料
   async getUserBase() {
     const response = await getUserBaseData();
+    console.log(response);
     if(response.code===0){
       if(response.data){
         let base = response.data;
@@ -89,6 +90,7 @@ class UserBaseFormInput extends React.Component {
     }
   }
   async judgeUserName(e) {
+    
     const response = await getJudgeUserName(e.target.value.trim());
     if (response.code === 0 ) {
       this.setState({error: false});
@@ -97,10 +99,12 @@ class UserBaseFormInput extends React.Component {
     }
   }
   handleSubmit(e) {
+  
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async(err, values) => {
       if (!err) {
         // 数据格式转换 cityCode
+        console.log(values)
         let fCityCode = '';
         if (values.fCityCode && values.fCityCode.length > 0) {
           fCityCode = values.fCityCode[values.fCityCode.length - 1];
@@ -124,13 +128,13 @@ class UserBaseFormInput extends React.Component {
           }
         };
         const response = await saveUserBase(userBase);
-        console.log(response);
-        if (response.code === 0) {
+        if (response.code === 0) { 
           this.props.param.history.push('/index/uCenter/realName');
         } else {
           response.msg && message.error(response.msg);
         }
 
+        console.log(response);
 
         //this.props.param.dispatch({
         //  type: 'userData/commitUserBase',
