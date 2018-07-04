@@ -70,17 +70,12 @@ export default class EnterprisePresentation extends React.Component {
   }
 
   componentDidMount() {
-    // 获取跳转类型 0：个人 1：企业
-    if (!this.props.accountId) {
-      this.props.history.push('/index/uCenter/realName');
-      return;
-    }
-    this.getCardInformation(this.props.accountId); 
+    this.getCardInformation(); 
   }
 
   //获取银行卡
-  async getCardInformation(data) {
-    const response = await getBankCardList(data);
+  async getCardInformation() {
+    const response = await getBankCardList();
     console.log('提现银行卡接口',response);
     if (response.code === 0) {
       this.setState({
