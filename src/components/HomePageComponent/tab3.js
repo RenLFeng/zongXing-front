@@ -12,19 +12,24 @@ export default class Tab3 extends React.Component {
       projectList: [1, 2, 3, 4, 5, 6, 7]
     }
   }
-
-
+  componentDidMount() {
+    $(".tab3_ >a").on("click",function(){
+      let tit=$(this).data("tit");
+      $(this).addClass("hover").siblings().removeClass("hover");
+      $(".sec-tab3.g .tab-con").find("."+tit).addClass("con1").siblings().removeClass("con1");
+    })
+  }
 
   render() {
     return (
       <div className="section sec-tab3 g">
         <div className="w">
           <div className="tab3_ center_">
-
+            <i></i>
             <a className="hover" data-tit="lj">了解众借帮</a>
-
+            <i></i>
             <a className="" data-tit="jm">加盟众借帮</a>
-
+            <i></i>
             <a className="" data-tit="cg">成功的案例</a>
 
           </div>
@@ -32,9 +37,9 @@ export default class Tab3 extends React.Component {
         <div className="line line1"/>
         <div className="line line2"/>
         <div className="tab-con">
-          <ul className="con con1">
+          <ul className="con con1 lj">
             <li>
-              <p className="tit2">成功借款企业的采访</p>
+              <p className="tit2">了解众借帮 &nbsp;成功借款企业的采访</p>
               <video className="hide"
                      preload="metadata" controls="controls"
                      poster={require('../../assets/img/home/1.jpg')}
@@ -43,9 +48,9 @@ export default class Tab3 extends React.Component {
               </video>
             </li>
           </ul>
-          <ul className="con">
+          <ul className="con jm">
             <li>
-              <p className="tit2">成功借款企业的采访 加盟众借帮</p>
+              <p className="tit2">加盟众借帮 &nbsp;成功借款企业的采访</p>
               <video className="hide"
                      preload="metadata" controls="controls"
                      poster={require('../../assets/img/home/2.jpg')}
@@ -54,9 +59,9 @@ export default class Tab3 extends React.Component {
               </video>
             </li>
           </ul>
-          <ul className="con">
+          <ul className="con cg">
             <li>
-              <p className="tit2">成功借款企业的采访 成功的案例</p>
+              <p className="tit2">成功的案例 &nbsp;成功借款企业的采访</p>
               <video className="hide"
                      preload="metadata" controls="controls"
                      poster={require('../../assets/img/home/3.jpg')}

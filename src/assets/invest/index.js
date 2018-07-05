@@ -74,25 +74,13 @@ function bindEvent() {
   $('body').on('click', '.sec-qa .q', function () {
     $(this).toggleClass('close');
   });
-  $(".card2 .item.fensan .bd .dot").hover(function(){
-    var index=$(this).index();
-    $(".card2 .item.fensan .bd .info>p").eq(index).show();
+
+  $(".card2 .item .bd .dot >i").hover(function(){
+   $(this).parent().addClass("act").next().stop(true).slideDown();
   },function(){
-    var index=$(this).index();
-    $(".card2 .item.fensan .bd .info >p").eq(index).hide();
+    $(this).parent().removeClass("act").next().stop(true).hide(500);
   });
-  $(".card2 .item.xiaoe .bd .dot").hover(function(){
-    var index=$(this).index();
-    $(".card2 .item.xiaoe .bd .info>p").eq(index).show();
-  },function(){
-    var index=$(this).index();
-    $(".card2 .item.xiaoe .bd .info >p").eq(index).hide();
-  });
-  $(".card2 .item.fensan .bd .info >p,.card2 .item.xiaoe .bd .info >p").hover(function(){
-    $(this).show();
-  },function(){
-    $(this).hide();
-  });
+
   let d1 = $('.topnav'),
     d2 = $('.sec-tabs .tabs');
   let d2top = 0;

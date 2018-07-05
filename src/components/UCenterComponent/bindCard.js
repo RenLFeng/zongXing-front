@@ -126,12 +126,13 @@ class BindCard extends React.Component {
       this.setState({
         ...global[bankCard.trim()]
       });
+      this.chooseCity(global[bankCard.trim()].provinceId);
       return;
     }
     this.setState({checkLoading: true})
     const response = await verifyBankCard(bankCard.trim());
     this.setState({checkLoading: false})
-    if (response.code === 0) {
+    if (response.code === 0 && response.data.verifyBankcard3Dto.res === 1) {
       const jhBankcardcoreDto = response.data.jhBankcardcoreDto;
       let result = {
         bankCardImg: 'success',
@@ -140,21 +141,24 @@ class BindCard extends React.Component {
         cardType: jhBankcardcoreDto.cardtype, // 卡类型
         tipCityName: `${jhBankcardcoreDto.province?jhBankcardcoreDto.province:''} ${jhBankcardcoreDto.city?jhBankcardcoreDto.city:''}`, // 省市
         provinceId: this.judgeProvince(jhBankcardcoreDto.province), //省val
-        cityId: this.judgeCity(jhBankcardcoreDto.province), // 市val
+        cityId: this.judgeCity(jhBankcardcoreDto.city), // 市val
         openName: this.judgeOpenBank(jhBankcardcoreDto.bankname),// 开户银行
         fbankType: jhBankcardcoreDto.bankTypeId,
         idcard: response.data.verifyBankcard3Dto.idcard, // 身份证
         realname: response.data.verifyBankcard3Dto.realname
       }
       console.log(result.tipCityName);
+      console.log('result.provinceId', result.provinceId);
+      this.chooseCity(result.provinceId);
       this.setState({
         ...result
       });
       global[bankCard.trim()] = { ...result};
+      
     } else {
       let result = {
         bankCardImg: 'error',
-        bankCardErr: '信息不匹配',
+        bankCardErr: response.data.res ? "认证信息不匹配" : response.msg,
         showBankName: '', // 银行名
         cardType: '', // 卡类型
         tipCityName: '', // 省市
@@ -201,6 +205,7 @@ class BindCard extends React.Component {
     if (!param) {
       return '';
     }
+
     for (let data of moneyCity.cityList) {
       if (data.fname === param) {
         return data.fcode;
@@ -210,6 +215,7 @@ class BindCard extends React.Component {
   }
   // 选择省市
   chooseCity(val) {
+    console.log('val', val);
     let cityArr = [];
     for (let data of moneyCity.cityList) {
       if (data.fparentCode == val) {
@@ -218,7 +224,8 @@ class BindCard extends React.Component {
     }
     this.setState({
       provinceId: val,
-      cityArr
+      cityArr,
+      cityId: cityArr[0].fcode
     });
   }
 

@@ -10,6 +10,7 @@ export default function () {
 function initPage() {
     knob();
   imgEvent();
+  bannerHeight();
 }
 
 function bindEvent() {
@@ -137,6 +138,10 @@ function rightEvent() {
       $('._masker').remove();
       $('.pd-form').addClass('none');
     });
+}
+function bannerHeight(){
+  let windowH=$(window).height();
+  $(".autosize").height(windowH);
 }
 function imgEvent(){
   (function(){

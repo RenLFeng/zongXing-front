@@ -80,14 +80,6 @@ function bindEvent() {
   $('.home-banner').on('click', function(){
     $('.home-banner video')[0].play();
   });
-  $(".tab3_ >a").on("click",function(){
-    let index=$(this).index();
-    let tit=$(this).data("tit");
-    $(this).addClass("hover").siblings().removeClass("hover")
-    //$(".sec-tab3.g .tab-con").find("."+tit).show().siblings().hide();
-    // $(".sec-tab3.g .tab-con .con").eq(index).addClas("con1").siblings().removeClass("con1");
-    $(".sec-tab3.g .tab-con .con").eq(index).addClass("con1").siblings().removeClass("con1");
-    //$(".sec-tab3.g .tab-con .con").addClass(tit);
-  })
 }
+
 

@@ -15,7 +15,10 @@ if (build === 'production') {
   /*开发配置*/
   BASE_URL = 'http://192.168.1.4:8001';
   document.title ="众借帮--开发环境";
-
+} else if (build === 'ys') {
+   /*演示配置*/
+  BASE_URL = 'http://193.112.97.50:8001';
+  document.title ="众借帮--演示环境";
 }
 
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图key
@@ -638,8 +641,8 @@ export async function bindBankCard(params) {
 }
 
 // 获取已绑定的银行卡列表
-export async function getBankCardList(param) {
-  return request(`${BASE_URL}/zjb-website/bankcard/list?accountId=${param}`);
+export async function getBankCardList() {
+  return request(`${BASE_URL}/zjb-website/bankcard/list/person`);
 }
 
 // 获取用户基础信息与login相同

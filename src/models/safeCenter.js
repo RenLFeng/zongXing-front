@@ -9,15 +9,24 @@ export default {
     safeDataLoading: false
   },
   effects: {
-    *getSafe(_, { call, put }) {
+    *getSafe({payload}, { call, put }) {
+      console.log("payload1",payload);
       //请求安全中心首页数据
       yield put({
         type: 'startSafeData'
       });
       try {
         const response = yield call(getSafeData);
-        console.log(response);
+        console.log("safeData",response);
         if (response.code === 0) {
+          if(payload){
+            let resObj = response.data;
+            if(!resObj.userSecurityCenter.fCertification){
+              payload.jumpAuth();
+            }else if(!resObj.userSecurityCenter.fThirdAccount){
+              payload.jumpCreateAccount();  
+            }
+          }
           yield put({
             type: 'endSafeData',
             payload: response.data
