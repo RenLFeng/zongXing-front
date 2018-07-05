@@ -10,6 +10,7 @@ import Path from '../../common/pagePath';
 import {BANK_CARD} from '../../common/systemParam';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 const formItemLayout = {
   labelCol: {
@@ -39,6 +40,8 @@ const btnLayout = {
   safeDataLoading: state.safeCenter.safeDataLoading,
   accountId: state.account.personal.totalAssets.accountId
 }))
+
+
 class BindCard extends React.Component {
   constructor(props) {
     super(props);
@@ -60,6 +63,7 @@ class BindCard extends React.Component {
       }
     });
     this.queryUserBaseInfo();
+    this.sort();
   }
 
   // 查询当前登录的用户
@@ -123,12 +127,13 @@ class BindCard extends React.Component {
       this.setState({
         ...global[bankCard.trim()]
       });
+      this.chooseCity(global[bankCard.trim()].provinceId);
       return;
     }
     this.setState({checkLoading: true})
     const response = await verifyBankCard(bankCard.trim());
     this.setState({checkLoading: false})
-    if (response.code === 0) {
+    if (response.code === 0 && response.data.verifyBankcard3Dto.res === 1) {
       const jhBankcardcoreDto = response.data.jhBankcardcoreDto;
       let result = {
         bankCardImg: 'success',
@@ -137,21 +142,24 @@ class BindCard extends React.Component {
         cardType: jhBankcardcoreDto.cardtype, // 卡类型
         tipCityName: `${jhBankcardcoreDto.province?jhBankcardcoreDto.province:''} ${jhBankcardcoreDto.city?jhBankcardcoreDto.city:''}`, // 省市
         provinceId: this.judgeProvince(jhBankcardcoreDto.province), //省val
-        cityId: this.judgeCity(jhBankcardcoreDto.province), // 市val
+        cityId: this.judgeCity(jhBankcardcoreDto.city), // 市val
         openName: this.judgeOpenBank(jhBankcardcoreDto.bankname),// 开户银行
         fbankType: jhBankcardcoreDto.bankTypeId,
         idcard: response.data.verifyBankcard3Dto.idcard, // 身份证
         realname: response.data.verifyBankcard3Dto.realname
       }
       console.log(result.tipCityName);
+      console.log('result.provinceId', result.provinceId);
+      this.chooseCity(result.provinceId);
       this.setState({
         ...result
       });
       global[bankCard.trim()] = { ...result};
+      
     } else {
       let result = {
         bankCardImg: 'error',
-        bankCardErr: '信息不匹配',
+        bankCardErr: response.data.res ? "认证信息不匹配" : response.msg,
         showBankName: '', // 银行名
         cardType: '', // 卡类型
         tipCityName: '', // 省市
@@ -174,6 +182,7 @@ class BindCard extends React.Component {
       return '';
     }
     for (let data of moneyBank) {
+
       if (data.fname === param) {
         return data.fcode;
       }
@@ -198,6 +207,7 @@ class BindCard extends React.Component {
     if (!param) {
       return '';
     }
+
     for (let data of moneyCity.cityList) {
       if (data.fname === param) {
         return data.fcode;
@@ -207,6 +217,7 @@ class BindCard extends React.Component {
   }
   // 选择省市
   chooseCity(val) {
+    console.log('val', val);
     let cityArr = [];
     for (let data of moneyCity.cityList) {
       if (data.fparentCode == val) {
@@ -215,7 +226,8 @@ class BindCard extends React.Component {
     }
     this.setState({
       provinceId: val,
-      cityArr
+      cityArr,
+      cityId: cityArr[0].fcode
     });
   }
 
@@ -244,9 +256,23 @@ class BindCard extends React.Component {
     }
   }
 
+  sort(){
+    console.log('开户行',moneyBank)
+    let array = moneyBank;
+
+    let arr = array.map(item => item.fname);
+    console.log('arr',arr)
+   
+    let resultArray = arr.sort(
+     function compareFunction(param1, param2) {
+      return param1.localeCompare(param2,"zh");
+     }
+    );
+    console.log('resultArray',resultArray);
+  }
+ 
+
   render() {
-    //console.log("this.props:",this.props);
-    console.log('this.state.tipCityName',this.state.tipCityName)
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;
@@ -275,9 +301,9 @@ class BindCard extends React.Component {
           <span className="bind_error_msg">{this.state.bankCardErr?this.state.bankCardErr: ''}</span>
           <div className="bind_item_view">
             <span>开户银行</span>
-            <Select size="large" value={this.state.openName} placeholder="请选择开户行" onChange={(val)=>this.setState({openName: val})}>
+            <Select size="large" value={this.state.openName} placeholder="请选择开户行" onChange={(val)=>this.setState({openName: val})}  showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
               {moneyBank.map((data,index)=>{
-                return <Select.Option value={data.fcode} key={data.fcode}>{data.fname}</Select.Option>
+                return <Option value={data.fcode} key={data.fcode}>{data.fname}</Option>
               })}
             </Select>
           </div>

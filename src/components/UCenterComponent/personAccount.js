@@ -309,21 +309,30 @@ export default class PersonAccount extends React.Component {
       payload:{
         showNumInfo:4,
         // jumpAuth:()=>this.jumpAuth()
-        jumpAuth:()=>this.jumpAuth()
+        // jumpAuth:()=>this.jumpAuth(),
+        // jumpCreateAccount:()=>this.jumpCreateAccount(),
+        // jumpRealName:()=>this.jumpRealName()
+      }
+    });
+    this.props.dispatch({
+      type: 'safeCenter/getSafe',
+      payload:{
+        showNumInfo:4,
+        jumpAuth:()=>this.jumpAuth(),
+        jumpCreateAccount:()=>this.jumpCreateAccount()
       }
     });
   }
-
+ 
+  /** 跳转到实名认证界面 */
   jumpAuth() {
     var that = this;
-    // Modal.info({
-    //   title: '您目前还没有开户，请先开户！',
-    //   okText:'去开户',
-    //   onOk() {
-    //     that.props.history.push('/index/uCenter/realName')
-    //   },
-    // });
     that.props.history.push('/index/uCenter/authentication')
+  }
+  /** 跳转到开户界面 */
+  jumpCreateAccount(){
+   var that = this;
+   that.props.history.push('/index/uCenter/openQAccount')
   }
 
   async getAccountStatement() {

@@ -641,8 +641,8 @@ export async function bindBankCard(params) {
 }
 
 // 获取已绑定的银行卡列表
-export async function getBankCardList(param) {
-  return request(`${BASE_URL}/zjb-website/bankcard/list?accountId=${param}`);
+export async function getBankCardList() {
+  return request(`${BASE_URL}/zjb-website/bankcard/list/person`);
 }
 
 // 获取用户基础信息与login相同
