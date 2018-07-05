@@ -63,6 +63,7 @@ class BindCard extends React.Component {
       }
     });
     this.queryUserBaseInfo();
+    this.sort();
   }
 
   // 查询当前登录的用户
@@ -181,6 +182,7 @@ class BindCard extends React.Component {
       return '';
     }
     for (let data of moneyBank) {
+
       if (data.fname === param) {
         return data.fcode;
       }
@@ -254,9 +256,23 @@ class BindCard extends React.Component {
     }
   }
 
+  sort(){
+    console.log('开户行',moneyBank)
+    let array = moneyBank;
+
+    let arr = array.map(item => item.fname);
+    console.log('arr',arr)
+   
+    let resultArray = arr.sort(
+     function compareFunction(param1, param2) {
+      return param1.localeCompare(param2,"zh");
+     }
+    );
+    console.log('resultArray',resultArray);
+  }
+ 
+
   render() {
-    //console.log("this.props:",this.props);
-    console.log('this.state.tipCityName',this.state.tipCityName)
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;
