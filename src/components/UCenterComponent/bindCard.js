@@ -10,6 +10,7 @@ import Path from '../../common/pagePath';
 import {BANK_CARD} from '../../common/systemParam';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 const formItemLayout = {
   labelCol: {
@@ -39,6 +40,8 @@ const btnLayout = {
   safeDataLoading: state.safeCenter.safeDataLoading,
   accountId: state.account.personal.totalAssets.accountId
 }))
+
+
 class BindCard extends React.Component {
   constructor(props) {
     super(props);
@@ -275,9 +278,9 @@ class BindCard extends React.Component {
           <span className="bind_error_msg">{this.state.bankCardErr?this.state.bankCardErr: ''}</span>
           <div className="bind_item_view">
             <span>开户银行</span>
-            <Select size="large" value={this.state.openName} placeholder="请选择开户行" onChange={(val)=>this.setState({openName: val})}>
+            <Select size="large" value={this.state.openName} placeholder="请选择开户行" onChange={(val)=>this.setState({openName: val})}  showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
               {moneyBank.map((data,index)=>{
-                return <Select.Option value={data.fcode} key={data.fcode}>{data.fname}</Select.Option>
+                return <Option value={data.fcode} key={data.fcode}>{data.fname}</Option>
               })}
             </Select>
           </div>

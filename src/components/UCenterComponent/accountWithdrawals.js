@@ -272,7 +272,7 @@ export default class EnterprisePresentation extends React.Component {
             </div> 
             
           </div>
-          <div className="rech_center" style={{position: 'relative', paddingTop: 0, }}>
+          <div className="rech_center" style={{position: 'relative', paddingTop: 0 }}>
             <div className="label_div" style={{width: '116px'}}>
               <span className="label_text" style={{position: 'absolute', top: 32}}>到账银行卡</span>
               <span className="label_text" style={{position: 'absolute', top: 105}}>提现金额</span>
@@ -286,11 +286,11 @@ export default class EnterprisePresentation extends React.Component {
                 <input type="text" className="input_money" onChange={this.changeMoney} value={this.state.amount}/>
                 <span className="rate_text_position" style={{display: 'inline-block'}}>账户可提现金额￥{baseData ? baseData.balance : 0}</span>
               </div>
-              <span className="rate_text">提现手续费￥<span>{this.state.amount * 0.01}</span>（费率1%）</span>
+              {/* <span className="rate_text">提现手续费￥<span>{this.state.amount * 0.01}</span>（费率1%）</span> */}
             </div>
             {this.state.selectedCardError ? <div><span style={{ color:'red', fontSize:'10px' }}>请选择到账银行卡</span></div> : null}
             {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px' }}>{this.state.moneyErrorMsg}</span></div> : null}
-            <Button type="primary" style={{width: 279, marginTop: 30,height:35,fontSize: 17, marginBottom:30}} onClick={this.handleSubmit}>发起提现</Button>
+            <Button type="primary" style={{width: 279, marginTop: 30,height:35,fontSize: 18, marginBottom:30}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
           <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
             <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />
