@@ -196,36 +196,27 @@ render(){
   }
 
   return (
-    <div>
-      <div className="box1 shadow">
-        <div className="trow clearfix" data-end={moment(project.fcollet_over_time).format('YYYY-MM-DD HH:mm:ss')}>
-          <i className="tit">还剩</i>
-          <div className="day">
-            <p className="t1">{this.state.countDay?this.state.countDay:0}</p>
-            <p className="t2">天</p>
-          </div>
-          <div className="time">
-            <p className="t1">{this.state.countDown?this.state.countDown:'00 : 00 : 00'}</p>
-            <p className="t2">小时<i/>分<i/>秒</p>
-          </div>
-        </div>
+      <div className="box1 shadow" >
         <div className="data clearfix">
           <div className="circle" data-value={rate}/>
           <i className="ctext">已筹款比例</i>
           <div className="fr">
-            <p className="t1">已经筹款</p>
-            <p className="t2">{allMoney}<em>元</em></p>
+            <p className="t1">已投资人数</p>
+            <p className="t2">{userCount}<em>人</em></p>
           </div>
-        </div>
-        <div className="bot">
-          {
-            userCount ?
-              <a className="btn"  onClick={() => this.getData(1)}><i>已投资人数</i><b>{userCount}</b>人</a> :
-              <a onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} style={{backgroundColor: '#ccc', width: '200',lineHeight: '50px',textAlign: 'center',position: 'absolute',top:'26',left: '50%',marginLeft: '-100',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>已投资人数</i><b>{userCount}</b>人</a>
-          }
+            <div className="fr">
+              <p className="t1">已经筹款</p>
+              <p className="t2">{allMoney}<em>元</em></p>
+            </div>
+              <div className="bot">
+                {
+                  userCount ?
+                    <a className=""  onClick={() => this.getData(1)} style={{backgroundColor: '#f90', width: '127',lineHeight: '40px',textAlign: 'center',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>我要投资</i></a> :
+                    <a onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} style={{backgroundColor: '#ccc', width: '127',lineHeight: '40px',textAlign: 'center',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>我要投资</i></a>
+                }
+              </div>
         </div>
       </div>
-    </div>
   );
 }
 }

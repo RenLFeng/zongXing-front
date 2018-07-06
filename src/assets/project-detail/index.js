@@ -74,7 +74,7 @@ function picView() {
 }
 
 function timeClock() {
-    let $d = $('.pd-body .box1 .trow');
+    let $d = $('.autosize .box1.time .trow');
     let end = $d.data('end').date(1).getTime();
 
     function timer() {
@@ -140,8 +140,11 @@ function rightEvent() {
     });
 }
 function bannerHeight(){
-  let windowH=$(window).height();
+    let windowH=$(window).height();
   $(".autosize").height(windowH);
+  let hei=$(".pd-head .container").height()/2;
+    $(".pd-head .container").css("margin-top",-hei+"px");
+  
 }
 function imgEvent(){
   (function(){
