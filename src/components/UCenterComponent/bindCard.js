@@ -134,6 +134,7 @@ class BindCard extends React.Component {
     const response = await verifyBankCard(bankCard.trim());
     this.setState({checkLoading: false})
     if (response.code === 0 && response.data.verifyBankcard3Dto.res === 1) {
+      //匹配
       const jhBankcardcoreDto = response.data.jhBankcardcoreDto;
       let result = {
         bankCardImg: 'success',
@@ -210,7 +211,9 @@ class BindCard extends React.Component {
 
     for (let data of moneyCity.cityList) {
       if (data.fname === param) {
-        return data.fcode;
+        if(this.state.provinceId){
+          return data.fcode;
+        }
       }
     }
     return '';
@@ -227,7 +230,7 @@ class BindCard extends React.Component {
     this.setState({
       provinceId: val,
       cityArr,
-      cityId: cityArr[0].fcode
+      cityId: cityArr.length > 0 ? cityArr[0].fcode : ''
     });
   }
 
@@ -256,16 +259,13 @@ class BindCard extends React.Component {
     }
   }
 
+  /** 按名称给银行排序 */
   sort(){
     console.log('开户行',moneyBank)
     let array = moneyBank;
-
-    let arr = array.map(item => item.fname);
-    console.log('arr',arr)
-   
-    let resultArray = arr.sort(
+    let resultArray = array.sort(
      function compareFunction(param1, param2) {
-      return param1.localeCompare(param2,"zh");
+      return param1.fname.localeCompare(param2.fname,"zh");
      }
     );
     console.log('resultArray',resultArray);
@@ -273,6 +273,7 @@ class BindCard extends React.Component {
  
 
   render() {
+    console.log("this.state.bankCardImg",this.state.bankCardImg);
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;
