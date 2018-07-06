@@ -2,6 +2,7 @@
 
 
 // 部署替换
+
 let build = 'production';  // production 是远端 test 是测试端 local 是本地端 ys 是演示端
 
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
