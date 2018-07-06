@@ -116,7 +116,7 @@ export default class AccountRecharge extends React.Component {
                 <span className={`recharge_btn ${this.state.rechargeType?'': 'recharge_btn_choose'}`} onClick={()=>this.setState({rechargeType: 0})}>网银充值</span>
               </div>
             </div>
-            <Button type="primary" onClick={this.handleSubmit} style={{width: 279}}>发起充值</Button>
+            <Button type="primary" onClick={this.handleSubmit} style={{width: 279,height:35,fontSize:18}}>发起充值</Button>
           </div>
         </div>
         <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
