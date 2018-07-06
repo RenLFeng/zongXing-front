@@ -270,7 +270,7 @@ export default class Login extends React.Component {
                 </div> 
         </div>
         <div className="back_">
-          <img src={require('../../assets/img/登陆_03.png')} />
+          <img src={require('../../assets/img/login_03.png')} />
         </div>
       </div>
       
