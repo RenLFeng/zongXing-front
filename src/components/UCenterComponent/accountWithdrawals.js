@@ -152,7 +152,7 @@ export default class EnterprisePresentation extends React.Component {
         }
         console.log("this.selectedCard:",this.selectedCard);
         let param = {
-          notifyPageUrl: `${window.location.host}/#/uCenter`,
+          notifyPageUrl: PERSONAL_PAGE,
           amount: this.state.amount,
           accountId: this.props.accountId,
           cardNo: this.state.selectedCard.fbankcard,
