@@ -2,7 +2,7 @@
 
 
 // 部署替换
-
+let build = 'ys';
 
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
