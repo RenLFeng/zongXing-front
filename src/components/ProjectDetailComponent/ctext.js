@@ -120,6 +120,7 @@ export default class Right extends React.Component {
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
       } else if (response.code === -2) {
+
         this.props.history.push(Path.PERSONAL_ACCOUNT);
       } else {
         message.error(response.msg);
@@ -134,6 +135,7 @@ export default class Right extends React.Component {
     }
   }
 
+  
   getData() {
     console.log(123123213);
     this.props.dispatch({
@@ -179,8 +181,10 @@ render(){
         <div className="data clearfix">
           <div className="circle" data-value={rate}/>
           <i className="ctext">已筹款比例</i>
-          <div className="fr">
+
+          <div className="fr tz">
             <p className="t1">已投资人数</p>
+
             <p className="t2" style={{cursor: 'pointer'}} onClick={()=>{if (!userCount) {return} this.getData();}}>{userCount}<em>人</em></p>
           </div>
             <div className="fr">

@@ -141,10 +141,14 @@ function rightEvent() {
 }
 function bannerHeight(){
     let windowH=$(window).height();
+    if(windowH<=700){
+        $(".pd-head .container").addClass("banner_max");
+    }else{
+        $(".pd-head .container").removeClass("banner_max");
+    }
   $(".autosize").height(windowH);
   let hei=$(".pd-head .container").height()/2;
     $(".pd-head .container").css("margin-top",-hei+"px");
-  
 }
 function imgEvent(){
   (function(){
