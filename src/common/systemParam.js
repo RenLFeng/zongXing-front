@@ -3,7 +3,7 @@
 
 // 部署替换
 
-
+let build='ys';
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
 let IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用

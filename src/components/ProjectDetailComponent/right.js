@@ -266,12 +266,31 @@ export default class Right extends React.Component {
             </i>
           </p>
         </div>
-        <div className="box3 shadow">
+        <div className="box3 shadow" style={{padding:'0 10px'}}>
           <p className="tit">商家优惠券</p>
           <div className="coupon">
-            {this.state.coupons.map((item) => (
-              <Coupon  hasLine='true' giveFriend='领取'/>
-            ))}
+          <ul style={{marginTop:'30px'}}>
+            <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys3.png')} /></li>
+            <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys1.png')} /></li>
+            <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys2.png')} /></li>
+          </ul>
+          <p className="center bot2">
+            <Button className="btn2" loading={this.state.loading} type="primary" style={{width: 130, height: 50}}
+                        onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} >我要投资
+            </Button>
+            <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber}</a>
+            <i className="share">
+              <span>32</span>
+              <span className="border shadow" style={{display:'none'}}>
+                <a className="qq"/>
+                <a className="sina"/>
+                <a className="weixin"/>
+            </span>
+            </i>
+          </p>
+            {/* {this.state.coupons.map((item) => (
+              <Coupon />
+            ))} */}
           </div>
         </div>
         <Data ref={ref => this.dataModal = ref} arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} projectId={this.props.projectDetail.fpeoject_id}/>

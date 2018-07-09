@@ -35,11 +35,11 @@ export default class Head extends React.Component {
           <div className="top">
             <div className="clearfix">
               <p className="tit fl" style={{textAlign: 'left'}}>{projectDetail.fname}
-              <span>信用评级:<i className="r">{projectDetail.fleve_name}+</i></span>
+              <span>信用评级:<i className="r">{projectDetail.fleve_name}</i></span>
               </p>
               {/* <p className="tit tit2" style={{textAlign: 'left'}}>    </p> */}
               <p className="fr"> 
-              <span className="line">北京</span><e></e><span>食品行业</span>
+              <span className="line">{projectDetail.fcity_name}</span><e></e><span>食品行业</span>
               </p>
             </div>
             {/* <div className="">
