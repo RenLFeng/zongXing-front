@@ -192,13 +192,13 @@ render(){
               <p className="t2">{allMoney}<em>元</em></p>
             </div>
               <div className="bot">
-                <a onClick={() => {
+                {/* <a onClick={() => {
                   if (this.props.projectDetail.fflag != 10) {
                     return;
                   }
                   this.getPersonalMoney(this.props.projectDetail.fpeoject_id);
                 }}
-                 style={{backgroundColor: `${this.props.projectDetail.fflag != 10?'#ccc': '#f90'}`, width: '127',lineHeight: '40px',textAlign: 'center',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>我要投资</i></a>
+                 style={{backgroundColor: `${this.props.projectDetail.fflag != 10?'#ccc': '#f90'}`, width: '127',lineHeight: '40px',textAlign: 'center',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>我要投资</i></a> */}
               </div>
         </div>
         {/* <DataModal ref={ref=>this.dataModal = ref} arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} /> */}

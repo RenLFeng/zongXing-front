@@ -107,7 +107,6 @@ export default class Right extends React.Component {
 
 
   async getPersonalMoney(fid) {
-    console.log(1231232131231232132213123)
     try {
       this.setState({loading: true});
       const response = await getPersonalMoney([fid]);
@@ -118,10 +117,15 @@ export default class Right extends React.Component {
           accountId: response.data.accountInfo.fid,
           canPay: response.data.hasWaitPayInv
         });
+        this.props.dispatch({
+          type: 'account/saveBalance',
+          payload:  response.data.accountInfo.fcapital+'',
+        })
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
       } else if (response.code === -2) {
-        this.props.history.push(Path.OPEN_ACCOUNT+'/0');
+
+        this.props.history.push(Path.PERSONAL_ACCOUNT);
       } else {
         message.error(response.msg);
       }
@@ -129,7 +133,6 @@ export default class Right extends React.Component {
       this.setState({loading: false});
       console.log(e);
       if (typeof e === 'object' && e.name === 288) {
-        message.error('未登录或登录超时');
         this.props.history.push('/index/login');
         throw e;
       }
@@ -267,8 +270,14 @@ export default class Right extends React.Component {
             <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys2.png')} /></li>
           </ul>
           <p className="center bot2">
-            <Button className="btn2" loading={this.state.loading} type="primary" style={{width: 130, height: 50}}
-                        onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} >我要投资
+            <Button 
+              className="btn2" loading={this.state.loading} disabled={this.props.projectDetail.fflag != 10} type="primary" style={{width: 130, height: 50}}
+              onClick={() => {
+                if (this.props.projectDetail.fflag != 10) {
+                  return;
+                }
+                this.getPersonalMoney(this.props.projectDetail.fpeoject_id);
+              }} >我要投资
             </Button>
             <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber}</a>
             <i className="share">
