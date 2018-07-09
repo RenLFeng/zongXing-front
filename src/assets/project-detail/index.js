@@ -141,7 +141,7 @@ function rightEvent() {
 }
 function bannerHeight(){
     let windowH=$(window).height();
-    if(windowH<=750){
+    if(windowH<=700){
         $(".pd-head .container").addClass("banner_max");
     }else{
         $(".pd-head .container").removeClass("banner_max");
