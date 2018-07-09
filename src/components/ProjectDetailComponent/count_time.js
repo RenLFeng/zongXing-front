@@ -115,16 +115,7 @@ export default class Right extends React.Component {
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
       } else if (response.code === -2) {
-        Modal.confirm({
-          title: '提示',
-          content: '您的账号未开户，请前往开户',
-          okText: '前往',
-          cancelText: '取消',
-          onOk: () => {
-            $(window).scrollTop(0);
-            this.props.history.push(Path.OPEN_ACCOUNT+'/0');
-          }
-        });
+        this.props.history.push(Path.OPEN_ACCOUNT+'/0');
       } else {
         message.error(response.msg);
       }

@@ -15,6 +15,10 @@ let SOCKET_URL = 'http://192.168.1.36:8899';
 let PERSONAL_PAGE = `http://${window.location.host}/#/index/uCenter/personAccount`;
 
 let AUTH_PAGE_URL = `http://${window.location.host}/#/index/uCenter/safeCenter`;
+
+let PROJECT_DETAIL_URL = `http://${window.location.host}/#/index/projectDetail`;
+
+let COL_URL = `http://${window.location.host}/#/index/collection`;
 /*测试楼下配置*/
 if (build === 'production') {
   // 远端
@@ -56,11 +60,13 @@ if (build === 'production') {
   SOCKET_URL = 'http://192.168.1.4:8001';
   PERSONAL_PAGE = `http://193.112.97.50:7764/front/#/index/uCenter/personAccount`;
   AUTH_PAGE_URL = `http://193.112.97.50:7764/front/#/index/uCenter/safeCenter`;
+  PROJECT_DETAIL_URL = `http://193.112.97.50:7764/front/#/index/projectDetail`;
+  COL_URL = `http://193.112.97.50:7764/front/#/index/collection`
 }
 
 // 导出环境变量配置
 
-export {PIC_BUCKET,REGION,IMG_BASE_URL,TURN_BACK,build,LIMIT_MOENY, SOCKET_URL,AUTH_ADDRESS, PERSONAL_PAGE, AUTH_PAGE_URL};
+export {PIC_BUCKET,REGION,IMG_BASE_URL,TURN_BACK,build,LIMIT_MOENY, SOCKET_URL,AUTH_ADDRESS, PERSONAL_PAGE, AUTH_PAGE_URL,PROJECT_DETAIL_URL,COL_URL};
 
 
 // 手机号验证正则

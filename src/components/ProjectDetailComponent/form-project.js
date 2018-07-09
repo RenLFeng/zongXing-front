@@ -1,12 +1,17 @@
 import React from 'react';
 import {Link} from 'dva/router';
 import { ACCOUNT_RECHARGE } from '../../common/pagePath';
-import { IMG_BASE_URL, MUN_INTEGER, LIMIT_MOENY  } from '../../common/systemParam';
+import { IMG_BASE_URL, MUN_INTEGER, LIMIT_MOENY, PROJECT_DETAIL_URL  } from '../../common/systemParam';
 import moment from 'moment';
 import {Button, message, Modal, InputNumber, Alert} from 'antd';
 import { Investment } from '../../services/api';
 import Path from '../../common/pagePath';
+import DataModal from './data';
+import {connect} from 'dva';
 
+@connect((state)=>({
+  balance: state.account.balance
+}))
 export default class FormProject extends React.Component {
   constructor(props) {
     super(props);
@@ -99,7 +104,7 @@ export default class FormProject extends React.Component {
         projectId: this.props.project.fpeoject_id,
         amount: this.state.money * 1,
         remark: '',
-        notifyPageUrl: `http://${window.location.host}/#/index/projectDetail/${this.props.project.fpeoject_id}`,
+        notifyPageUrl: `${PROJECT_DETAIL_URL}/${this.props.project.fpeoject_id}`,
       }];
       this.setState({loading: true});
       const response = await Investment(data);
@@ -154,6 +159,7 @@ export default class FormProject extends React.Component {
 
   render() {
     const {project} = this.props;
+    console.log('project', this.props);
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
     const {data} = this.state;
     return (
@@ -189,7 +195,7 @@ export default class FormProject extends React.Component {
               <i className="f16 c9">我可用的余额</i>
             </div>
             <div className="col2">
-              <i className="f24 cf60">{this.props.personalMoney.fm()}</i>
+              <i className="f24 cf60">{this.props.balance.fm()}</i>
               <i className="f18">元</i>
             </div>
           </div>

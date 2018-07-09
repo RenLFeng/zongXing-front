@@ -75,7 +75,7 @@ export default class ProjectDetail extends React.Component {
     const { projectDetail } = this.state;
     return (
       <div>
-        <Head projectDetail={projectDetail}/>
+        <Head projectDetail={projectDetail} history={this.props.history}/>
         <div className="w clearfix pd-body pd-body2">
           <div className="fl lbody shadow g">
             <div className="tnav">

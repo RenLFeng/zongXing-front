@@ -310,15 +310,7 @@ export default class Collection extends React.Component {
         this.props.history.push({pathname: '/index/collectionOrder', arr});
       }
     } else if (response.code === -2) {
-      Modal.confirm({
-        title: '提示',
-        content: '您的账号未开户，请前往开户',
-        okText: '前往',
-        cancelText: '取消',
-        onOk: () => {
-          this.props.history.push(Path.OPEN_ACCOUNT+'/0');
-        }
-      });
+      this.props.history.push(Path.PERSONAL_ACCOUNT);
     } else {
       message.error(response.msg);
     }

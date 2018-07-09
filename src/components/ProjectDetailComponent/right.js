@@ -35,7 +35,7 @@ export default class Right extends React.Component {
   }
 
   componentDidMount() {
-    console.log(123);
+    console.log('this.props111', this.props);
   }
 
   componentWillReceiveProps(props) {
@@ -107,6 +107,7 @@ export default class Right extends React.Component {
 
 
   async getPersonalMoney(fid) {
+    console.log(1231232131231232132213123)
     try {
       this.setState({loading: true});
       const response = await getPersonalMoney([fid]);
@@ -120,16 +121,7 @@ export default class Right extends React.Component {
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
       } else if (response.code === -2) {
-        Modal.confirm({
-          title: '提示',
-          content: '您的账号未开户，请前往开户',
-          okText: '前往',
-          cancelText: '取消',
-          onOk: () => {
-            $(window).scrollTop(0);
-            this.props.history.push(Path.OPEN_ACCOUNT+'/0');
-          }
-        });
+        this.props.history.push(Path.OPEN_ACCOUNT+'/0');
       } else {
         message.error(response.msg);
       }
@@ -274,7 +266,7 @@ export default class Right extends React.Component {
             ))}
           </div>
         </div>
-        <Data ref={ref => this.dataModal = ref} arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} projectId={this.props.projectDetail.fpeoject_id}/>
+        <Data arr={this.state.arr} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} projectId={this.props.projectDetail.fpeoject_id}/>
         <FormProject
           project={this.props.projectDetail}
           personalMoney={this.state.personalMoney}

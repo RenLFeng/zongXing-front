@@ -27,6 +27,7 @@ export default class Right extends React.Component {
   }
 
   componentDidMount() {
+    
   }
 
   async getPersonalMoney() {
@@ -42,16 +43,7 @@ export default class Right extends React.Component {
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
       } else if (response.code === -2) {
-        Modal.confirm({
-          title: '提示',
-          content: '您的账号未开户，请前往开户',
-          okText: '前往',
-          cancelText: '取消',
-          onOk: () => {
-            $(window).scrollTop(0);
-            this.props.history.push(Path.OPEN_ACCOUNT+'/0');
-          }
-        });
+        this.props.history.push(Path.OPEN_ACCOUNT+'/0');
       } else {
         message.error(response.msg);
       }
@@ -93,6 +85,7 @@ export default class Right extends React.Component {
     const project = this.props.projectDetail;
     const allMoney = project.allMoney?project.allMoney:0;
     const userCount = project.userCount ? project.userCount: 0;
+    console.log('this.props', this.props);
     return (
       <div>
         <div className="box1 shadow">
@@ -137,9 +130,11 @@ export default class Right extends React.Component {
             </i>
           </p>
         </div>
-        <Data arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} />
-        <FormProject project={this.props.projectDetail} personalMoney={this.state.personalMoney}
-                     accountId={this.state.accountId}/>
+        <Data userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney}  projectId={this.props.projectDetail.fpeoject_id}/>
+        <FormProject 
+          project={this.props.projectDetail} 
+          personalMoney={this.state.personalMoney}
+          accountId={this.state.accountId}/>
 
       </div>
     );

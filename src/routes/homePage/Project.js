@@ -55,11 +55,15 @@ export default class ProjectDetail extends React.Component {
     }
   }
 
+  ctext = (page) => {
+    this.head(page);
+  }
+
   render() {
     const { projectDetail } = this.state;
     return (
       <div>
-        <Head projectDetail={projectDetail}/>
+        <Head ref={ref => this.head = ref} projectDetail={projectDetail} history={this.props.history}/>
         <div className="w clearfix pd-body">
           <div className="fl lbody shadow">
             <div className="tnav">
@@ -70,7 +74,7 @@ export default class ProjectDetail extends React.Component {
             </div>
           </div>
           <div className="fr rbody">
-            <Right projectDetail={projectDetail} history={this.props.history} time={{countDay: this.state.countDay, countDown: this.state.countDown}}/>
+            {/* <Right ctext={this.ctext} projectDetail={projectDetail} history={this.props.history} time={{countDay: this.state.countDay, countDown: this.state.countDown}}/> */}
           </div>
         </div>
       </div>

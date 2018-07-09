@@ -15,7 +15,10 @@ export default class Head extends React.Component {
     this.countDown = null;
   }
   componentDidMount(){
-
+    console.log('12312312312321312312fdsfdsfds',this.props)
+  }
+  ctext(page) {
+    this.ctext.getData(page)
   }
   render() {
     let video_src = '';
@@ -35,7 +38,7 @@ export default class Head extends React.Component {
           <div className="top">
             <div className="clearfix">
               <p className="tit fl" style={{textAlign: 'left'}}>{projectDetail.fname}
-              <span>信用评级:<i className="r">{projectDetail.fleve_name}+</i></span>
+              <span>信用评级:<i className="r">{projectDetail.fleve_name}</i></span>
               </p>
               {/* <p className="tit tit2" style={{textAlign: 'left'}}>    </p> */}
               <p className="fr"> 
@@ -97,6 +100,7 @@ export default class Head extends React.Component {
               <div className="info clearfix pd-body">
                 <div className="fr rbody">
                   <Ctext
+                    ref={ref => this.ctext = ref}
                     projectDetail={projectDetail}
                     history={this.props.history}
                     time={{countDay: this.state.countDay, countDown: this.state.countDown}}

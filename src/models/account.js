@@ -33,11 +33,24 @@ export default {
       accountDynamicVos: [],
       plan: {},
       totalAssets: {}
-    }
+    },
+    balance: '0',
+    count: 0
   },
   effects: {
     *getCompanyNum({payload}){
 
+    },
+    *updateCount(_,{put}) {
+      yield put({
+        type: 'saveCount',
+      })
+    },
+    *saveBalance({payload},{call, put} ) {
+      yield put({
+        type: 'saveBalanceData',
+        data: payload
+      })
     },
     *getPersonalAccount({payload}, {call, put}) {
       let webToken = '';
@@ -127,6 +140,12 @@ export default {
     }
   },
   reducers: {
+    saveCount(state, _) {
+      return {
+        ...state,
+        count: state.count+ 1
+      }
+    },
     savePersonal(state, {payload}) {
       saveOpenStatus(payload.openStatus);
       return {
@@ -142,6 +161,12 @@ export default {
         companyStatus: true,
         company_page: payload
       };
+    },
+    saveBalanceData(state, {data}) {
+      return {
+        ...state,
+        balance: data
+      }
     },
     saveCompanyList(state, {payload}) {
       return {
