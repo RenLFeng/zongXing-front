@@ -8,9 +8,6 @@ import {getPersonalMoney, alreadyInvested, setProjectCollection} from '../../ser
 import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
 
-@connect(()=>{
-
-})
 export default class Right extends React.Component {
   constructor(props){
     super(props);
@@ -35,7 +32,6 @@ export default class Right extends React.Component {
   }
 
   componentDidMount() {
-    console.log('this.props111', this.props);
   }
 
   componentWillReceiveProps(props) {
@@ -47,7 +43,6 @@ export default class Right extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log(123);
     clearInterval(this.countDown);
   }
 
@@ -131,7 +126,6 @@ export default class Right extends React.Component {
       }
     } catch(e) {
       this.setState({loading: false});
-      console.log(e);
       if (typeof e === 'object' && e.name === 288) {
         this.props.history.push('/index/login');
         throw e;
@@ -145,7 +139,6 @@ export default class Right extends React.Component {
     this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
     this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
     this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
-    console.log(page);
     this.setState({Loading:true})
     const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectDetail.fpeoject_id});
     //判断请求状态
@@ -175,7 +168,6 @@ export default class Right extends React.Component {
       return;
     }
     const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
-    console.log(response);
     if (response.code === 0) {
       this.props.projectDetail.collectionNumber += 1;
       this.props.projectDetail.isCollected = true;
@@ -199,38 +191,8 @@ export default class Right extends React.Component {
     if (allMoney/project.fcredit_money !== 0 && allMoney/project.fcredit_money<0.01) {
       rate = 1;
     }
-
     return (
       <div>
-        <div className="box1 shadow" style={{display:'none'}}>
-          <div className="trow clearfix" data-end={moment(project.fcollet_over_time).format('YYYY-MM-DD HH:mm:ss')}>
-            <i className="tit">还剩</i>
-            <div className="day">
-              <p className="t1">{this.state.countDay?this.state.countDay:0}</p>
-              <p className="t2">天</p>
-            </div>
-            <div className="time">
-              <p className="t1">{this.state.countDown?this.state.countDown:'00 : 00 : 00'}</p>
-              <p className="t2">小时<i/>分<i/>秒</p>
-            </div>
-          </div>
-          <div className="data clearfix">
-            <div className="circle" data-value={rate}/>
-            <i className="ctext">已筹款比例</i>
-            <div className="fr">
-              <p className="t1">已经筹款</p>
-              <p className="t2">{allMoney}<em>元</em></p>
-            </div>
-          </div>
-          <div className="bot">
-            {
-              userCount ?
-                <a className="btn" onClick={() => this.getData(1)}><i>已投资人数</i><b>{userCount}</b>人</a> :
-                <a style={{backgroundColor: '#ccc', width: '200',lineHeight: '50px',textAlign: 'center',position: 'absolute',top:'26',left: '50%',marginLeft: '-100',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>已投资人数</i><b>{userCount}</b>人</a>
-            }
-
-          </div>
-        </div>
         <div className="box2 shadow">
           <p className="tit">投资提醒</p>
           <div className="text">
@@ -238,7 +200,7 @@ export default class Right extends React.Component {
             <p><b>分散：</b>投资项目尽量分散不同行业、不同地区、不同利率、不同借款周期。</p>
           </div>
           <div className="center bot1">
-            {this.props.projectDetail.fflag !== 10 ?
+            {this.props.onlyRead ? null :this.props.projectDetail.fflag !== 10 ?
               <p className="clearfix">
                 <Button className="btn2" loading={this.state.loading} type="primary" style={{width: 130, height: 50}}
                       onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} >我要投资
@@ -249,18 +211,8 @@ export default class Right extends React.Component {
               </p> : null
             }
           </div>
-          <p className="center bot2">
-            <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber}</a>
-            <i className="share">
-              <span>32</span>
-              <span className="border shadow">
-                <a className="qq"/>
-                <a className="sina"/>
-                <a className="weixin"/>
-            </span>
-            </i>
-          </p>
         </div>
+        { this.props.onlyRead ? null :
         <div className="box3 shadow" style={{padding:'0 10px'}}>
           <p className="tit">商家优惠券</p>
           <div className="coupon">
@@ -269,31 +221,30 @@ export default class Right extends React.Component {
             <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys1.png')} /></li>
             <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys2.png')} /></li>
           </ul>
-          <p className="center bot2">
-            <Button 
-              className="btn2" loading={this.state.loading} disabled={this.props.projectDetail.fflag != 10} type="primary" style={{width: 130, height: 50}}
-              onClick={() => {
-                if (this.props.projectDetail.fflag != 10) {
-                  return;
-                }
-                this.getPersonalMoney(this.props.projectDetail.fpeoject_id);
-              }} >我要投资
-            </Button>
-            <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber}</a>
-            <i className="share">
-              <span>32</span>
-              <span className="border shadow" style={{display:'none'}}>
-                <a className="qq"/>
-                <a className="sina"/>
-                <a className="weixin"/>
-            </span>
-            </i>
-          </p>
-            {/* {this.state.coupons.map((item) => (
-              <Coupon />
-            ))} */}
+            <p className="center bot2">
+              <Button 
+                className="btn2" loading={this.state.loading} disabled={this.props.projectDetail.fflag != 10} type="primary" style={{width: 130, height: 50}}
+                onClick={() => {
+                  if (this.props.projectDetail.fflag != 10) {
+                    return;
+                  }
+                  this.getPersonalMoney(this.props.projectDetail.fpeoject_id);
+                }} >我要投资
+              </Button>
+              <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber}</a>
+              <i className="share">
+                <span>32</span>
+                <span className="border shadow" style={{display:'none'}}>
+                  <a className="qq"/>
+                  <a className="sina"/>
+                  <a className="weixin"/>
+              </span>
+              </i>
+            </p>
           </div>
         </div>
+        }
+        
         <Data arr={this.state.arr} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} projectId={this.props.projectDetail.fpeoject_id}/>
         <FormProject
           project={this.props.projectDetail}

@@ -39,7 +39,7 @@ class UserBaseFormInput extends React.Component {
   }
 
   componentDidMount() {
-    console.log(123);
+    //console.log(123);
     this.props.param.dispatch({
       type: 'userData/getUserBase'
     });
@@ -60,7 +60,7 @@ class UserBaseFormInput extends React.Component {
           fCityCode: fCityCode,
           fBirthday: values.fBirthday?values.fBirthday.format('YYYY/MM/DD'): null
         };
-        console.log('数据接收后台需要的数据', userBase);
+        //console.log('数据接收后台需要的数据', userBase);
         this.props.param.dispatch({
           type: 'userData/commitUserBase',
           payload: userBase

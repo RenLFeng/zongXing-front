@@ -4,7 +4,6 @@ import {Link,Switch,Route} from 'dva/router';
 export default class Footer extends React.Component {
   componentDidMount() {
     $('.fl ul li a').on('click', ()=>{
-      console.log(123);
       $(window).scrollTop(0);
     })
   }

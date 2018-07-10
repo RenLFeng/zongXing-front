@@ -259,21 +259,21 @@ export default class CommonProblem extends React.Component{
                            </div>
                         </div>
                         <div className="contents">
-                          {
-                              this.state.question.map((data,index)=>{
-                                return(
-                                        this.state[`show${data.id}`] ?
-                                           <div className="question" key={index}>
-                                               <p onClick={()=>{this.show('show',data.id)}} style={{color:'#ff9900'}}><span>{data.question}</span></p>
-                                               <div className="answer">{data.answer}</div>
-                                           </div>:
-                                            <div className="question" key={index}>
-                                                <p onClick={()=>{this.show('hide',data.id)}} ><span>{data.question}</span></p>
-                                                <div className="answer" style={{display:'none'}}>{data.answer}</div>
-                                            </div>
+                        {
+                            this.state.question.map((data,index)=>{
+                                return (
+                                    this.state[`show${data.id}`] ?
+                                    <div className="question" key={index}>
+                                        <p onClick={()=>{this.show('show',data.id)}} style={{color:'#ff9900'}}><span>{data.question}</span></p>
+                                        <div className="answer">{data.answer}</div>
+                                    </div>:
+                                    <div className="question" key={index}>
+                                        <p onClick={()=>{this.show('hide',data.id)}} ><span>{data.question}</span></p>
+                                        <div className="answer" style={{display:'none'}}>{data.answer}</div>
+                                    </div>
                                 )
-                              })
-                          }
+                            })
+                        }
                         </div>
                     </div>
                 </div>

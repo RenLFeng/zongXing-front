@@ -6,10 +6,7 @@ import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
 import DataModal from './data';
 
-@connect(()=>{
-
-})
-export default class Right extends React.Component {
+export default class Ctext extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -31,7 +28,6 @@ export default class Right extends React.Component {
   }
 
   componentDidMount() {
-    console.log(123);
   }
 
   componentWillReceiveProps(props) {
@@ -43,7 +39,6 @@ export default class Right extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log(123);
     clearInterval(this.countDown);
   }
 
@@ -127,7 +122,6 @@ export default class Right extends React.Component {
       }
     } catch(e) {
       this.setState({loading: false});
-      console.log(e);
       if (typeof e === 'object' && e.name === 288) {
         this.props.history.push('/index/login');
         throw e;
@@ -137,7 +131,6 @@ export default class Right extends React.Component {
 
   
   getData() {
-    console.log(123123213);
     this.props.dispatch({
       type: 'account/updateCount',
     })
@@ -151,7 +144,6 @@ async projectCollection() {
     return;
   }
   const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
-  console.log(response);
   if (response.code === 0) {
     this.props.projectDetail.collectionNumber += 1;
     this.props.projectDetail.isCollected = true;

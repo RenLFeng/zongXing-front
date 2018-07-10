@@ -51,7 +51,7 @@ export default class ProjectDetail extends React.Component {
         });
         marker.setMap(map);
       }
-      console.log(this.state.projectDetail);
+      //console.log(this.state.projectDetail);
     } else {
       message.error(response.msg);
     }
@@ -99,6 +99,7 @@ export default class ProjectDetail extends React.Component {
           </div>
           <div className="fr rbody">
             <Right
+              
               projectDetail={projectDetail}
               history={this.props.history}
               time={{countDay: this.state.countDay, countDown: this.state.countDown}}

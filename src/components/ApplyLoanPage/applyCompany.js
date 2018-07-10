@@ -84,7 +84,6 @@ class Forms extends React.Component {
 
   async getCompany() {
     const response = await getCompanyByAccount();
-    console.log(response);
     if (response.code === 0) {
       this.setState({
         companyArr: response.data
@@ -180,7 +179,6 @@ class Forms extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('表单提交的数据');
         this.fetchParam();
       }
     });
@@ -217,8 +215,6 @@ class Forms extends React.Component {
     })
   }
   changeState(name, src) {
-    console.log('name', name);
-    console.log('src', src);
     this.setState({
       [name]: src
     });

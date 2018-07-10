@@ -32,11 +32,11 @@ export default class Authentication extends React.Component {
   }
 
   updateRealName = (e) => {
-    console.log('updateRealName', e.target.value);
+    //console.log('updateRealName', e.target.value);
     this.setState({ realName: e.target.value });
   };
   updateIdcard = (e) => {
-    console.log('updateIdcard', e.target.value);
+    //console.log('updateIdcard', e.target.value);
     this.setState({ idcard: e.target.value });
   };
   handleSubmit = async () => {

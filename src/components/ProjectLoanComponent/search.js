@@ -182,7 +182,7 @@ export default class Search extends React.Component {
                 type="text"
                 name="projectName"
                 className="key put1 fr"
-                onChange={(e)=>{ console.log('修改了搜索内容');this.setState({ [e.target.name]: e.target.value })}}
+                onChange={(e)=>{ this.setState({ [e.target.name]: e.target.value })}}
               />
             </div>
           </div>

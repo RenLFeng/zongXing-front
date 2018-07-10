@@ -1,7 +1,5 @@
 export function init () {
-  console.log(321435435);
   const canvas = document.getElementById("canvas-invest");
-  console.log(canvas);
   ctx = canvas.getContext("2d");
   cw = canvas.offsetWidth;
     cx = cw / 2;

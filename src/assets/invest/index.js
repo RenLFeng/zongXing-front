@@ -64,7 +64,6 @@ function bindEvent() {
     let $t = $(this);
     $t.addClass('hover').siblings().removeClass('hover');
     let d = secs[$t.index()];
-    console.log($t.index());
     if ($t.index() === 0) {
       av.top(812 - 130);
     } else {

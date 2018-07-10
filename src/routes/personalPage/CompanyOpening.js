@@ -42,9 +42,9 @@ class CompanyFormComponent extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log(err);
+      //console.log(err);
       if (!err) {
-        console.log('表单获取的数据', values);
+        //console.log('表单获取的数据', values);
         this.props.param.dispatch({
           type: 'userData/commitCompanyOpen',
           payload: values

@@ -5,7 +5,7 @@ import SecLoan from '../../components/ProjectDetailComponent/sec-loan';
 import SecConsultation from '../../components/ProjectDetailComponent/sec-consultation';
 import SecTrack from '../../components/ProjectDetailComponent/sec-track';
 import SecCourse from '../../components/ProjectDetailComponent/sec-course';
-import Right from '../../components/ProjectDetailComponent/right2';
+import Right from '../../components/ProjectDetailComponent/right';
 import {getProjectDetail, getInvestmentNum} from '../../services/api';
 import { message } from 'antd';
 import {IMG_BASE_URL} from '../../common/systemParam';
@@ -55,17 +55,13 @@ export default class ProjectDetail extends React.Component {
     }
   }
 
-  ctext = (page) => {
-    this.head(page);
-  }
-
   render() {
     const { projectDetail } = this.state;
     return (
       <div>
-        <Head ref={ref => this.head = ref} projectDetail={projectDetail} history={this.props.history}/>
-        <div className="w clearfix pd-body">
-          <div className="fl lbody shadow">
+        <Head projectDetail={projectDetail} history={this.props.history}/>
+        <div className="w clearfix pd-body pd-body2">
+          <div className="fl lbody shadow g">
             <div className="tnav">
               <a className="hover">借款项目</a>
             </div>
@@ -74,7 +70,7 @@ export default class ProjectDetail extends React.Component {
             </div>
           </div>
           <div className="fr rbody">
-            {/* <Right ctext={this.ctext} projectDetail={projectDetail} history={this.props.history} time={{countDay: this.state.countDay, countDown: this.state.countDown}}/> */}
+            <Right onlyRead={true} projectDetail={projectDetail} history={this.props.history} time={{countDay: this.state.countDay, countDown: this.state.countDown}}/>
           </div>
         </div>
       </div>

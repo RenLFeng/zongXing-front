@@ -52,7 +52,7 @@ export default class IncomePlan extends React.Component {
           incomeList: response.data
         })
       }
-      console.log(response);
+      //console.log(response);
     } else {
       response.msg && message.error(response.msg);
     }

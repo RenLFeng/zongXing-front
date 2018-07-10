@@ -47,7 +47,6 @@ export default class Data extends React.Component {
 
   // 获取以投资人数列表
   async getData(page) {
-    console.log(this.props);
     //调用子级方法
     this.getCityInvest(this.props.projectId);
     this.getGender(this.props.projectId);

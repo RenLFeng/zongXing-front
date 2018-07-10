@@ -22,8 +22,6 @@ export default class SecConsultation extends React.Component {
   componentDidMount() {
     this.setState({projectId: this.props.projectId});
     this.fetchAllTopic(this.props.projectId);
-    console.log(this.checkbox);
-    console.log(this.props);
   }
 
   // 当话题类型切换时发生的请求
@@ -50,7 +48,6 @@ export default class SecConsultation extends React.Component {
   // 获取项目下我的话题接口
   async fetchMyTopic(projectId = this.state.projectId) {
     const response = await getMyTopic(projectId);
-    console.log(response);
     if (response.code === 0) {
       this.setState({myTopic: response.data});
     } else {
@@ -108,7 +105,6 @@ export default class SecConsultation extends React.Component {
         message.error(response.msg);
       }
     } catch(e) {
-      console.log(e);
       if (e.name==288) {
         return;
       }
@@ -199,7 +195,6 @@ export default class SecConsultation extends React.Component {
         [`replayText${topicId}`]: '',
         [`${topicId}length`]: 0
       });
-      console.log(this.state[`replyStatus${topicId}`]);
       if (this.state[`replyStatus${topicId}`]) {
         return;
       }
@@ -303,7 +298,6 @@ export default class SecConsultation extends React.Component {
                       <div className="rebox">
                         <textarea className="put" rows="5" value={this.state[`replayText${data.fid}`]}
                                   onChange={(e) => {
-                                    console.log(e.target.value.length);
                                     this.setState({
                                       [`replayText${data.fid}`]: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value,
                                       [`${data.fid}length`]: e.target.value.length>240?e.target.value.substring(0, 240).length:e.target.value.length

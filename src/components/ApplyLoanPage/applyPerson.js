@@ -88,7 +88,6 @@ class Forms extends React.Component {
           }
         }
         if (!err) {
-          console.log('表单提交的数据');
           const arr = [];
           // 获取关系人社会信息
           for (let i = 1; i < 4; i++) {
@@ -150,7 +149,6 @@ class Forms extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('表单提交的数据');
         const arr = [];
         // 获取关系人社会信息
         for (let i = 1; i < 4; i++) {
@@ -169,7 +167,6 @@ class Forms extends React.Component {
           },
           lenderOtherContactList: arr
         };
-        console.log(data);
         this.props.switchPage(err, data, 2);
       } else {
         this.props.switchPage(err);
@@ -187,8 +184,6 @@ class Forms extends React.Component {
     })
   }
   changeState(name, src) {
-    console.log('name', name);
-    console.log('src', src);
     this.setState({
       [name]: src
     });

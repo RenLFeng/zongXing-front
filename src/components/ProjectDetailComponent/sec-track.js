@@ -37,8 +37,6 @@ export default class SecTrack extends React.Component {
     const response = await getProjectDetailNotice(this.props.projectId);
     if (response.code === 0) {
       this.setState({noticeImg: response.data},()=>{
-        // console.log(123123);
-        // setTimeout(()=>this.controlBanner(), 3000);
       });
     } else {
       message.error(response.msg);
@@ -46,7 +44,6 @@ export default class SecTrack extends React.Component {
   }
 
   controlBanner() {
-    console.log($('.lich-box1 .swiper-slide'));
     let count = $('.lich-box1 .swiper-slide').length;
     $('.lich-box1 .bot>i').html(count);
     const swiper = new Swiper('.lich-box1 .swiper-container', {
@@ -64,7 +61,6 @@ export default class SecTrack extends React.Component {
 
   resetCon(swiper) {
     let count = this.state.noticeImg.length;
-    console.log(count)
     let d = swiper.getSlide(swiper.activeIndex);
     let tit = $(d).find('.t0').html();
     $('.lich-box1 .hd .tit').html(tit);
@@ -159,7 +155,6 @@ export default class SecTrack extends React.Component {
           <div className="swiper-container">
             <div className="swiper-wrapper">
               { this.state.noticeImg.map((data, index)=>{
-                  console.log(index);
                   return(
                     <div className="swiper-slide"  key={index}>
                       <img src={`${IMG_BASE_URL}/${data.fCardPic}`}/>

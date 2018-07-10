@@ -50,7 +50,6 @@ export default class  CouponCenter extends React.Component {
       pageSize:this.state.pageSize,
     }
     const rest = await CouponService.getMyConvertCoupon(param);
-    console.log('获取我的兑换优惠券信息',rest);
     if(rest.code===0){
       this.setState({
         zhquane:rest.data.amount,
@@ -66,7 +65,6 @@ export default class  CouponCenter extends React.Component {
   //获取优惠券地理位置信息
   async getCouponsArea(){
     const rest = await CouponService.getCouponPlace();
-    console.log('获取优惠券地理位置信息',rest);
     if(rest.code===0){
       let area = ['全部'];
       area = area.concat(rest.data);
@@ -89,7 +87,6 @@ export default class  CouponCenter extends React.Component {
       }
     }
     const rest = await CouponService.getCenterCoupon(param);
-    console.log('获取众借帮可兑换的优惠券',rest);
     if(rest.code===0){
       this.setState({
         totalNum:rest.data.totalSize,

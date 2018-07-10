@@ -38,7 +38,7 @@ export default class LoanList extends React.Component {
     try {
       const response = await getCompanyByAccount({pageCurrent:page,pageSize: this.state.pageSize});
       this.setState({loading: false});
-      console.log(response);
+      //console.log(response);
       if (response.code === 0) {
         const maxPage = Math.ceil(response.data.totalNumber / this.state.pageSize);
         this.setState({
@@ -61,7 +61,7 @@ export default class LoanList extends React.Component {
         localStorage.removeItem('accessToken');
         this.props.history.push('/index/login');
       }
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -89,7 +89,7 @@ export default class LoanList extends React.Component {
           companyName: values.companyName.trim(),
           fsocialCreditCode: values.fsocialCreditCode.trim()
         });
-        console.log(response);
+        //console.log(response);
         this.setState({createLoading: false});
         if (response.code === 0) {
           this.fetchData(1);
@@ -134,7 +134,7 @@ export default class LoanList extends React.Component {
         return;
       }
       const response = await UpdataOrDele({companyId:id, companyName:name.trim(), flag:flag, fsocialCreditCode:code.trim()});
-      console.log(response);
+      //console.log(response);
       if(response.code === 0){
         this.setState({
           companyN:'',
@@ -147,7 +147,7 @@ export default class LoanList extends React.Component {
       }
     } else {  //删除操作
       const response = await UpdataOrDele({companyId:id, companyName:name, flag:flag, fsocialCreditCode:code});
-      console.log(response);
+      //console.log(response);
       if(response.code === 0){
         this.setState({
           companyN:'',
@@ -163,7 +163,7 @@ export default class LoanList extends React.Component {
 
   //修改列表内容
   change(data) {
-    console.log(data);
+    //console.log(data);
     data.inputStatus = true;
     this.setState({
       companyN:data.fname,
@@ -174,7 +174,7 @@ export default class LoanList extends React.Component {
 
   //获取修改后的企业名称
   changeValue(val){
-    console.log(val);
+    //console.log(val);
    this.setState({
      companyN:val
    })
@@ -182,7 +182,7 @@ export default class LoanList extends React.Component {
 
 //获取修改后的社会统一信用代码
   changeValue1(val){
-    console.log(val);
+    //console.log(val);
     this.setState({
       sCode:val
     })

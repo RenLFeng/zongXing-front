@@ -33,7 +33,6 @@ export default class FormProject extends React.Component {
     // document.Browser.Agent.value=navigator.userAgent;
     // -2
     if (window.navigator.userAgent.indexOf('AppleWebKit') != -1) {
-      console.log('------------------', true);
       this.setState({browser: true});
     }
   }
@@ -138,7 +137,6 @@ export default class FormProject extends React.Component {
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
-      console.log(e);
       message.error('服务器繁忙，请稍后重试');
 
     }
@@ -159,7 +157,6 @@ export default class FormProject extends React.Component {
 
   render() {
     const {project} = this.props;
-    console.log('project', this.props);
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
     const {data} = this.state;
     return (

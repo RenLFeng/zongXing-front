@@ -21,14 +21,14 @@ export default class Voucher extends React.Component{
 
     async getVoucher(){
         const response = await getVoucher({pageCurrent:this.state.pageCurrent,pageSize:this.state.pageSize});
-        console.log('券额明细',response)
+        //console.log('券额明细',response)
        
         if(response.code === 0){
             this.setState({
                 dataSource:response.data.infoList,
                 total:response.data.totalNumber
             }) 
-            console.log('555',response.data.infoList.ffull_sub_money)  
+            //console.log('555',response.data.infoList.ffull_sub_money)  
         } else {
             response.msg && message.error( response.msg)
         }

@@ -1,14 +1,11 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import {getPersonalMoney, alreadyInvested, setProjectCollection} from '../../services/api';
 import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
 
-@connect(()=>{
-
-})
-export default class Right extends React.Component {
+export default class CountTime extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -30,7 +27,6 @@ export default class Right extends React.Component {
   }
 
   componentDidMount() {
-    console.log(123);
   }
 
   componentWillReceiveProps(props) {
@@ -42,7 +38,6 @@ export default class Right extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log(123);
     clearInterval(this.countDown);
   }
 
@@ -121,7 +116,6 @@ export default class Right extends React.Component {
       }
     } catch(e) {
       this.setState({loading: false});
-      console.log(e);
       if (typeof e === 'object' && e.name === 288) {
         message.error('未登录或登录超时');
         this.props.history.push('/index/login');
@@ -136,7 +130,6 @@ export default class Right extends React.Component {
     this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
     this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
     this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
-    console.log(page);
     const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectDetail.fpeoject_id});
   //判断请求状态
   if (response.code === 0) {
@@ -161,7 +154,6 @@ async projectCollection() {
     return;
   }
   const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
-  console.log(response);
   if (response.code === 0) {
     this.props.projectDetail.collectionNumber += 1;
     this.props.projectDetail.isCollected = true;

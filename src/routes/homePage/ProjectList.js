@@ -57,7 +57,7 @@ export default class ProjectList extends React.Component {
           });
           startAnimate();
         } else {
-          console.log(data.msg);
+          //console.log(data.msg);
         }
       });
   }

@@ -153,19 +153,19 @@ export default class ChangeLPwd extends React.Component {
     }
     this.setState({sureloading:true})
     const response = await changePass(param);
-    console.log('reaponse',response)
+    //console.log('reaponse',response)
     if(response.code === 0){
        this.setState({
         firstShow:false,
         sureloading:false
        })
       this.countDowns = setInterval(()=>{ 
-        console.log(this.countDowns);
+        //console.log(this.countDowns);
         this.setState({
             num: this.state.num - 1
           }, () => {
             if (!this.state.num) {
-              console.log(111111)
+              //console.log(111111)
               clearInterval(this.countDowns);
               this.props.history.push('/index/uCenter/realName');
             }

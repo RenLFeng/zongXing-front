@@ -33,7 +33,6 @@ export default class AccountRecharge extends React.Component {
       data.notifyPageUrl = PERSONAL_PAGE;
       this.setState({loading: true});
       const response = await getRecharge(data);
-      console.log(response);
       this.setState({loading: false});
       if (response.code === 0) {
         this.setState({ recharge: response.data });
@@ -50,7 +49,6 @@ export default class AccountRecharge extends React.Component {
       }
     } catch (e) {
       this.setState({loading: false});
-      console.log(e);
       message.error('请求失败,请稍后重试');
     }
   }
@@ -67,7 +65,6 @@ export default class AccountRecharge extends React.Component {
   }
 
   handleMoneyChange = (event) => {
-    console.log("amount:",event.target.value);
     if(isNaN(Number(event.target.value))){
       this.setState({ amountError: true })
     }else{
@@ -91,9 +88,7 @@ export default class AccountRecharge extends React.Component {
 
   render() {
     const { match,accountId } = this.props;
-    console.log("this.props:",this.props);
     const { recharge } = this.state;
-    console.log(recharge);
     return (
       <div className="fr uc-rbody" style={{width: 1248,padding: '30px 20px'}}>
         <div className="rech_div">

@@ -109,7 +109,6 @@ class Forms extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { pageNum, data } = this.props;
     const {cityList} = this.state;
-    console.log(data);
     return (
       <div className={`aform ${pageNum===1 ? '' : 'none'}`} style={{paddingTop: 30}}>
         <Form onSubmit={this.handleSubmit}>

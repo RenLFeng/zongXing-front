@@ -15,7 +15,6 @@ export default class Head extends React.Component {
     this.countDown = null;
   }
   componentDidMount(){
-    console.log('12312312312321312312fdsfdsfds',this.props)
   }
   ctext(page) {
     this.ctext.getData(page)
