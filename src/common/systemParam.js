@@ -2,7 +2,7 @@
 
 
 // 部署替换
-let build = 'ys';
+let build = 'local'; // production 开发环境 test 测试服务环境  local  本地环境 ys 演示环境
 
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
@@ -47,7 +47,7 @@ if (build === 'production') {
   LIMIT_MOENY = false;
   AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 
-  SOCKET_URL = 'http://192.168.1.4:8001';
+  SOCKET_URL = 'http://192.168.1.59:8001';
 } else if (build === 'ys') {
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
   REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
