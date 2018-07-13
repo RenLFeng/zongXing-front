@@ -72,8 +72,11 @@ function bindEvent() {
     let d = secs[$t.index()];
     av.top(d.offsetTop - 130);
   });
+  $('body').on('click', '.sec-qa .t2', function () {
+    $(this).addClass("act").siblings().removeClass("act");
+  });
   $('body').on('click', '.sec-qa .q', function () {
-    $(this).toggleClass('close');
+    $(this).toggleClass("act").next().slideToggle();
   });
 
   let d1 = $('.topnav'),

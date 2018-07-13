@@ -51,8 +51,8 @@ export default class Banner extends React.Component {
         {/*</video>*/}
         <div className="masker"></div>
         <div className="w">
-          <p className="item act" style={{display: `${this.state.show?'block':'none'}`}}>
-            <span className="h act">小微企业</span>&nbsp;
+          <p className="item" style={{display: `${this.state.show?'block':'none'}`}}>
+            <span className="h">小微企业</span>&nbsp;
             <span className="h"><i className="f">能</i>精准营销</span>&nbsp;
             <span className="h"><i className="f">的</i>借贷平台</span>
           </p>
