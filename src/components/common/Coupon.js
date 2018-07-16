@@ -24,7 +24,7 @@ class Coupon extends React.Component {
             canEdit = true;
         }
         let btnName = ""; 
-        switch(couponData.fflag){
+       switch (couponData.fflag){
             case 0:
                 btnName ='待领取'; //待生效 
                 break;
