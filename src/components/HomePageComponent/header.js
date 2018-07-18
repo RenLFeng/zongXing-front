@@ -33,7 +33,7 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      fixContent:'uCenter,login,collection,register,forgetPassWord,couponCenter,companyDiscount,commonProblem,uCenter'
+      fixContent:'infor,uCenter,login,collection,register,forgetPassWord,couponCenter,companyDiscount,commonProblem,uCenter'
     }
   }
   componentDidMount() {
@@ -96,7 +96,7 @@ export default class Header extends React.Component {
               history.push(`${match.path}/howLoan`);
               $(window).scrollTop(0);
             }}>如何借款</a>
-            <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
+             <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/commonProblem`);
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);

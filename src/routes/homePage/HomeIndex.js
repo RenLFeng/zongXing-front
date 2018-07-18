@@ -11,7 +11,7 @@ import { startAnimate } from '../../assets/home/index';
 export default class HomeIndex extends React.Component {
 
   componentDidMount() {
-    // startAnimate();
+     //startAnimate();
   }
 
   render() {

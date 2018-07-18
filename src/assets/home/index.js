@@ -9,18 +9,15 @@ export function startAnimate() {
 }
 
 function initPage() {
-  if(!$(".sec-tab3.g .tab-con video").is(".zoomIn")){
-    console.log("edge");
-   }else{
-     console.log("no edge");
-   }
-  new TextSlider();
+  let page=0;
+  let index=0;
+  new TextSlider(page,index);
 }
 class TextSlider{
-  constructor(){
+  constructor(page,index){
     this.speed=1200;
-    this.page=0;
-    this.idex=0;
+    this.page=page;
+    this.idex=index;
     this.time=null;
     this.istrue=true;
     this.init();

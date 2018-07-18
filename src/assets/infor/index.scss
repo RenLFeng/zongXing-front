@@ -1,0 +1,17 @@
+@import './leftMenu.scss';
+@import './opDa.scss';
+.infor{
+  >.w >.fr{
+    background: #fff;
+    padding: 30px;
+    h2{
+      border-bottom: 1px dashed #ccc;
+      padding-bottom: 10px;
+      margin-bottom: 50px;
+      i{
+        margin: 0 20px;
+      }
+    }
+  }
+
+}

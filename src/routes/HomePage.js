@@ -26,6 +26,8 @@ import { getLocation } from '../services/api';
 import ApplyLoan from './homePage/ApplyLoan';
 import UCenter from './homePage/UCenter';
 import COS from 'cos-js-sdk-v5';
+
+import InformationPage from './InformationPage';
 import RecordInformation from "./information/recordInformation";
 import OrganizationInformation from "./information/organizationInformation";
 
@@ -36,9 +38,9 @@ import { BASE_URL, getAuth, getHobbyList } from '../services/api';
 import PlatformNotice from "./information/legalSupport";
 import NewsReports from "./information/newsReports";
 import LegalDeclaration from "./information/lawsRegulations";
+import OperateData from "./information/operateData";
 //优惠券兑换中心
 import CouponCenter from '../components/CouponCenter/CouponCenter';
-
 import io from 'socket.io-client';
 import { SOCKET_URL } from '../common/systemParam';
 
@@ -134,7 +136,6 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/companyDiscount`} component={CompanyDiscount}/>
             {/* 优惠券兑换中心 */}
             <Route path={`${match.path}/couponCenter`} component={CouponCenter}/>
-
             <Route path={`${match.path}/commonProblem`} component={CommonProblem}/>
             <Route path={`${match.path}/applyLoan`} component={ApplyLoan} />
             <Route path={`${match.path}/uCenter`} component={UCenter} />
@@ -142,6 +143,9 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/register`} component={Register} />
             <Route path={`${match.path}/forgetPassWord`} component={ForgetPassWord} />
             <Route path={`${match.path}/risk`} component={Risk} />
+
+            <Route path={`${match.path}/infor/operateData`} component={OperateData} />
+
             {/* 项目详情页面 */}
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
             {/* 预览使用的项目详情页面 */}
