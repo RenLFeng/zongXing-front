@@ -75,7 +75,7 @@
   .top1{
     position: relative;
     padding: 0;
-    margin-bottom: 58px;
+    margin-bottom: 80px;
     .mk{
       position: absolute;
       width: 11px;
@@ -107,12 +107,6 @@
       li{
         width:33%;
       }
-      //:nth-child(1){
-      //  text-align: left;
-      //}
-      //:nth-child(3){
-      //  text-align: right;
-      //}
     }
     .tp3{
       padding-top: 45px;
@@ -146,9 +140,11 @@
       }
     }
   }
+    //成交金额 柱形图
   .top2{  }
+   //逾期数据
   .top3{
-    margin-bottom: 28px;
+    margin: 55px 0;
     p.tit{
       font-size: 20px;
       color:#000;
@@ -185,7 +181,9 @@
       }
     }
   }
+  // 全国地图
   .top4{
+    position: relative;
     p.tit{
       font-size: 20px;
       color:#696969;
@@ -196,7 +194,37 @@
         }
       }
     }
+    .map-list{
+      position: absolute;
+      top: 100px;
+      left: 50px;
+      p{
+        font-size: 16px;
+        color:#696969;
+        margin-bottom: 20px;
+      }
+      li{
+        padding: 5px;
+        position: relative;
+        i{
+          position: absolute;
+          left: 0;
+        }
+        span{
+          display: inline-block;
+          width: 100px;
+          text-align: center;
+        }
+      }
+    }
+    canvas{
+      width: 850px !important;
+      height: 600px !important;
+      left:110px !important;
+      top:-60px !important;
+    }
   }
+   //环形图
   .top5{
     margin:50px 0 20px 0;
     p{
@@ -228,6 +256,33 @@
     .info-box{
       .pie{
         position: relative;
+        .pie-use-icon{
+          position: absolute;
+          width: 145px;
+          height:145px;
+          left:12%;
+          top:30%;
+          border: 3px solid #38a8da;
+          border-radius: 50%;
+          >div{
+            position: absolute;
+            width:100px;
+            height: 100px;
+            left: 50%;
+            margin-left: -50px;
+            top: 50%;
+            margin-top: -50px;
+            text-align: center;
+            .anticon{
+              color:#f90;
+              font-size: 50px;
+            }
+            p{
+              font-size: 14px;
+              margin-top: 10px;
+            }
+          }
+        }
         >p{
           font-size: 18px;
           margin-left: 30px;
@@ -249,14 +304,17 @@
             top:50%;
             margin-top: -6px;
             left:-25px;
-            background: #f90;
+            background: #38a8da;
             border-radius:50%;
+          }
+          span.wom:before{
+            background:#FFB19E;
           }
         }
         .bar-box{
           position: absolute;
           right: 0;
-          top: 20px;
+          top: 0;
           width: 50%;
           ul{
             border:none;

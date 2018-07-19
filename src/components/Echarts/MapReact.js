@@ -2,8 +2,9 @@
 import React from 'react'
 import echarts from 'echarts/lib/echarts' //必须
 import 'echarts/lib/component/tooltip'
+import 'echarts/map/js/china'
+import 'echarts/extension/bmap/bmap'
 import 'echarts/lib/chart/map'
-import 'echarts/map/js/china.js'
 
 export default class MapReact extends React.Component {
 
@@ -24,10 +25,11 @@ export default class MapReact extends React.Component {
   }
 
   componentDidMount() {
-    this.initPie()
+    this.initPie();
   }
 
   componentDidUpdate() {
+
     this.initPie()
   }
 

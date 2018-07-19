@@ -8,7 +8,42 @@ import '../../assets/infor/index';
 export default class OperateData extends React.Component {
   constructor(props) {
     super(props);
-    this.bl=67;
+    this.city={
+      "上海": 57.34,
+      "河北":86.1,
+      "山西": 86.,
+      "内蒙古": 92.6,
+      "辽宁": 45.49,
+      "吉林": 89.64,
+      "黑龙江": 59.78,
+      "江苏": 80.97,
+      "浙江": 4.26,
+      "安徽": 80.9,
+      "福建": 18.26,
+      "江西": 81.84,
+      "山东": 78.01,
+      "河南": 27.92,
+      "湖北": 80.98,
+      "湖南": 92.94,
+      "广东": 38,
+      "广西": 6.98,
+      "海南": 2.6,
+      "四川": 45.49,
+      "贵州": 89.64,
+      "云南": 59.78,
+      "西藏": 480.97,
+      "陕西": 4.26,
+      "甘肃": 21.9,
+      "青海": 18.26,
+      "宁夏": 51.84,
+      "新疆": 78.01,
+      "北京": 27.92,
+      "天津": 80.98,
+      "重庆": 72.94,
+      "香港": 68,
+      "澳门": 86.98
+    }
+    this.bl=69;
     this.state={
       data:{
         mey:[
@@ -111,11 +146,14 @@ export default class OperateData extends React.Component {
       },
       mapOption:{
         title: {
-          //text: '融资地域分布占比   丨  投资地域分布占比',
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{b}<br/>{c} (p / km2)'
+          //formatter: '地域分布占比<br>{b}{c}%'
+          formatter:(res)=>{
+            var name=res.name;
+            return '地域分布占比<br>'+res.name+':'+this.city[res.name]+'%';
+          }
         },
         toolbox: {
           show: true,
@@ -129,6 +167,7 @@ export default class OperateData extends React.Component {
           }
         },
         visualMap: {
+          show:false,
           min: 800,
           max: 50000,
           text:['High','Low'],
@@ -136,22 +175,29 @@ export default class OperateData extends React.Component {
           calculable: true,
           inRange: {
             color: ['lightskyblue','yellow', 'orangered']
+            //color: ['#FFB19E','#38a8da', '#f90']
           }
         },
         series: [
           {
-            name: '成交金额',
+            name: '',
             type: 'map',
-            mapType: 'HK', // 自定义扩展图表类型
+            mapType: 'china', // 自定义扩展图表类型
             itemStyle:{
               normal:{label:{show:true}},
               emphasis:{label:{show:true}}
             },
             data:[
+              {
+                name:"南海诸岛",value:0,
+                itemStyle:{
+                  normal:{opacity:0,label:{show:false}}
+                }
+              },
               {name: '上海', value: 20057.34},
-              {name: '河北', value:31686.1},
+              {name: '河北', value:10},
               {name: '山西', value: 31686.1},
-              {name: '内蒙古', value: 6992.6},
+              {name: '内蒙古', value: 40689.43},
               {name: '辽宁', value: 44045.49},
               {name: '吉林', value: 40689.64},
               {name: '黑龙江', value: 37659.78},
@@ -181,54 +227,18 @@ export default class OperateData extends React.Component {
               {name: '重庆', value: 9172.94},
               {name: '香港', value: 3368},
               {name: '澳门', value: 806.98}
-            ],
-            // 自定义名称映射
-            nameMap: {
-              'shanghai': '上海',
-              'hebei': '河北',
-              'shanxi': '山西',
-              'neimenggu': '内蒙古',
-              'liaoning': '辽宁',
-              'jilin': '吉林',
-              'heilongjiang': '黑龙江',
-              'jiangsu': '江苏',
-              'zhejiang': '浙江',
-              'anhui': '安徽',
-              'fujian': '福建',
-              'jiangxi': '江西',
-              'shandong': '山东',
-              'henan': '河南',
-              'hubei': '湖北',
-              'hunan': '湖南',
-              'guangdong': '广东',
-              'guangxi': '广西',
-              'hainan': '海南',
-              'sichuan': '四川',
-              'guizhou': '贵州',
-              'yunnan': '云南',
-              'xizang': '西藏',
-              'shanxi1': '陕西',
-              'gansu': '甘肃',
-              'qinghai': '青海',
-              'ningxia': '宁夏',
-              'xinjiang': '新疆',
-              'beijing': '北京',
-              'tianjin': '天津',
-              'chongqing': '重庆',
-              'xianggang': '香港',
-              'aomen': '澳门'
-            }
+            ]
           }
         ]
       },
       pieOption:{
         color:['#38a8da','#FFB19E'],
         title: {
-          //text: '融资人性别年龄占比  丨  投资人性别年龄占比'
+
         },
         tooltip: {
           trigger: 'item',
-          formatter: "{a} <br/>{b} ({d}%)"
+          formatter: "{a} <br/>{b} ({d}%)",
         },
         legend: {
           orient: 'vertical',
@@ -247,7 +257,7 @@ export default class OperateData extends React.Component {
                 position: 'center'
               },
               emphasis: {
-                show: true,
+                show: false,
                 textStyle: {
                   fontSize: '30',
                   fontWeight: 'bold'
@@ -366,7 +376,7 @@ export default class OperateData extends React.Component {
                   {
                     this.state.data.pro.map((item,index)=>{
                       return(
-                        <li key={index}><span>{item.tit}</span><span className="bar"><e style={{width:item.nb}}></e></span><i>{item.nb}%</i></li>
+                        <li key={index}><span>{item.tit}</span><span className="bar"><e style={{width:item.nb+'%'}}></e></span><i>{item.nb}%</i></li>
                       )
                     })
                   }
@@ -376,7 +386,7 @@ export default class OperateData extends React.Component {
                   {
                     this.state.data.mey.map((item,index)=>{
                       return(
-                        <li key={index}><span>{item.tit}</span><span className="bar"><e style={{width:item.nb}}></e></span><i>{item.nb}%</i></li>
+                        <li key={index}><span>{item.tit}</span><span className="bar"><e style={{width:item.nb+'%'}}></e></span><i>{item.nb}%</i></li>
                       )
                     })
                   }
@@ -386,23 +396,47 @@ export default class OperateData extends React.Component {
             {/*全国地图*/}
             <div className="top4">
               <p className="tit">融资地域分布占比  <span><i>丨</i>投资地域分布占比</span></p>
-              <MapReact width='800px' height="800px"  option={this.state.mapOption}/>
-              <p style={{textAlign:"center"}}>&nbsp;数据截止至 <span>2018-06-25</span></p>
+              <div className="map-list">
+                <p>地域分布</p>
+                <ul>
+                  <li><i>1</i><span>江苏省</span>13%</li>
+                  <li><i>2</i><span>浙江省</span>14%</li>
+                  <li><i>3</i><span>安徽省</span>13%</li>
+                  <li><i>4</i><span>福建省</span>14%</li>
+                  <li><i>5</i><span>江西省</span>13%</li>
+                  <li><i>6</i><span>山东省</span>14%</li>
+                  <li><i>7</i><span>河南省</span>13%</li>
+                  <li><i>8</i><span>湖北省</span>14%</li>
+                  <li><i>9</i><span>湖南省</span>13%</li>
+                  <li><i>10</i><span>广西省</span>14%</li>
+                </ul>
+              </div>
+              <MapReact width='850px' height="600px"  option={this.state.mapOption}/>
+              <p style={{textAlign:"center",position:"relative",bottom:"90px"}}>&nbsp;数据截止至 <span>2018-06-25</span></p>
             </div>
+            {/*环形图*/}
             <div className="top5">
               <p className="tit">融资人性别年龄占比  <span><i>丨</i>投资人性别年龄占比</span></p>
               <p className="p" style={{fontSize:"16px"}}><span>累计投资人数量 1790642</span><span>当期投资人数量 707942</span></p>
               <div className="info-box">
                 <div className="pie">
                   <PieReact width='360px' height="400px"  option={this.state.pieOption}/>
-                  <p><span>女<i>{100-this.bl}%</i></span><span>男<i>{this.bl}%</i></span></p>
+                  <a className="pie-use-icon">
+                    <div>
+                      <Icon type="user" />
+                      <p>性别分布<br/>
+                        男 {this.bl}%
+                      </p>
+                    </div>
+                  </a>
+                  <p><span className="wom">女<i>{100-this.bl}%</i></span><span>男<i>{this.bl}%</i></span></p>
                   <div className="bar-box">
                     <ul className="">
                       <li className="tit"><Icon type="team" />年龄阶段分布各占比</li>
                       {
                         this.state.data.pie.right.map((item,index)=>{
                           return(
-                            <li key={index}><span>{item.tit}</span><span className="bar"><e className="" style={{width:item.nb}}></e></span><i>{item.nb}%</i></li>
+                            <li key={index}><span>{item.tit}</span><span className="bar"><e className="" style={{width:item.nb+'%'}}></e></span><i>{item.nb}%</i></li>
                           )
                         })
                       }
