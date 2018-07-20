@@ -283,8 +283,9 @@ export default class OperateData extends React.Component {
       <div className="infor" style={{marginTop:"150px"}}>
         <div  className="w clearfix">
           {/**/}<LeftMenu param={this.props}/>
-          <div className="fr">
-            <h2><span>运营信息</span><i>></i><span>运营数据</span></h2>
+          <div className="fr opDa">
+            <h2><span>信息披露</span><i>></i><span className="last">运营信息</span></h2>
+            {/*top1*/}
             <div className="top1 item">
               <ul className="tp1">
                 <li>
@@ -318,7 +319,7 @@ export default class OperateData extends React.Component {
                   <span>累计融资人总数</span>
                 </li>
               </ul>
-              <div className="tp3">
+              <div className="tp3 iconL">
                 <ul>
                   <li>
                     <span className="icon"><Icon type="team" /></span>
@@ -336,14 +337,14 @@ export default class OperateData extends React.Component {
               <ul className="mk l"></ul>
               <ul className="mk r"></ul>
           </div>
-            {/*成交金额 柱形图*/}
+            {/* top2  成交金额 柱形图*/}
             <div className="top2">
               <BarReact width='800px' height="400px"  option={this.state.barOption}/>
               <p style={{textAlign:"center"}}>&nbsp;数据截止至 <span>2018-06-25</span></p>
             </div>
-            {/*逾期数据*/}
+            {/* top3   逾期数据*/}
             <div className="top3 item">
-              <p className="tit"><span></span>逾期数据<span></span></p>
+              <p className="dashed"><span className="dashed"></span>逾期数据<span className="dashed"></span></p>
               <ul className="tp1">
                 <li>
                   <span>0万元</span>
@@ -393,7 +394,7 @@ export default class OperateData extends React.Component {
                 </ul>
               </div>
             </div>
-            {/*全国地图*/}
+            {/* top4   全国地图*/}
             <div className="top4">
               <p className="tit">融资地域分布占比  <span><i>丨</i>投资地域分布占比</span></p>
               <div className="map-list">
@@ -414,7 +415,7 @@ export default class OperateData extends React.Component {
               <MapReact width='850px' height="600px"  option={this.state.mapOption}/>
               <p style={{textAlign:"center",position:"relative",bottom:"90px"}}>&nbsp;数据截止至 <span>2018-06-25</span></p>
             </div>
-            {/*环形图*/}
+            {/* top5  环形图*/}
             <div className="top5">
               <p className="tit">融资人性别年龄占比  <span><i>丨</i>投资人性别年龄占比</span></p>
               <p className="p" style={{fontSize:"16px"}}><span>累计投资人数量 1790642</span><span>当期投资人数量 707942</span></p>

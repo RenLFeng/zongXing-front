@@ -38,6 +38,8 @@ import { BASE_URL, getAuth, getHobbyList } from '../services/api';
 import PlatformNotice from "./information/legalSupport";
 import NewsReports from "./information/newsReports";
 import LegalDeclaration from "./information/lawsRegulations";
+import RiskManagement from "./information/riskManagement.js";
+import CompanyIntroduction from "./information/CompanyIntroduction.js";
 import OperateData from "./information/operateData";
 //优惠券兑换中心
 import CouponCenter from '../components/CouponCenter/CouponCenter';
@@ -143,14 +145,15 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/register`} component={Register} />
             <Route path={`${match.path}/forgetPassWord`} component={ForgetPassWord} />
             <Route path={`${match.path}/risk`} component={Risk} />
-
+            {/* 信息披露 */}
             <Route path={`${match.path}/infor/operateData`} component={OperateData} />
-
+            <Route path={`${match.path}/infor/riskManagement`} component={RiskManagement} />
+            <Route path={`${match.path}/infor/companyIntroduction`} component={CompanyIntroduction} />
             {/* 项目详情页面 */}
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
             {/* 预览使用的项目详情页面 */}
-            <Route path={`${match.path}/project/:projectId`} component={Project} /> 
-            
+            <Route path={`${match.path}/project/:projectId`} component={Project} />
+
             <Route path={`${match.path}/test`} component={Test} />
           </Switch>
         <Footer/>

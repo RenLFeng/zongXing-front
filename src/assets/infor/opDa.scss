@@ -1,353 +1,315 @@
 .infor{
-  .bar-box{
-    >ul{
-      width:49%;
-      display: inline-block;
-      position: relative;
-      border: 2px solid #FFD06D;
-      padding: 30px 10px 20px 10px;
-      li{
-        width:100%;
-        text-align: left;
+  .opDa{
+    .bar-box{
+      >ul{
+        width:49%;
+        display: inline-block;
         position: relative;
-        margin-bottom: 20px;
-        span{
-          display: inline-block;
-          width:51%;
-          height: 21px;
-          font-size:.9em;
-        }
-        span.bar{
-          background: #FFDA87;
-          width: 38%;
-          margin-left:1%;
-          position: absolute;
-          overflow: hidden;
-          e{
+        border: 2px solid #FFD06D;
+        padding: 30px 10px 20px 10px;
+        li{
+          width:100%;
+          text-align: left;
+          position: relative;
+          margin-bottom: 20px;
+          span{
+            display: inline-block;
+            width:51%;
+            height: 21px;
+            font-size:.9em;
+          }
+          span.bar{
+            background: #FFDA87;
+            width: 38%;
+            margin-left:1%;
             position: absolute;
-            height:100%;
-            background: #f90;
+            overflow: hidden;
+            e{
+              position: absolute;
+              height:100%;
+              background: #f90;
+              top:0;
+              left:0;
+            }
+          }
+          i{
+            position: absolute;
+            right: 0;
             top:0;
-            left:0;
+            font-size: 14px;
           }
         }
-        i{
+        li.tit{
           position: absolute;
-          right: 0;
-          top:0;
-          font-size: 14px;
-        }
-      }
-      li.tit{
-        position: absolute;
-        width: auto;
-        left: 22px;
-        top:-14px;
-        background:#fff;
-        padding: 0 10px;
-        color:#696969;
-      }
-    }
-  }
-  .item{
-    .anticon {
-      font-size: 48px;
-      color: #f90;
-    }
-    li{
-      display: inline-block;
-      height:auto;
-      text-align: center;
-      font-size: 16px;
-    }
-    span{
-       display:block;
-      color: #646464;
-     }
-    span.bor{
-      font-weight: bolder;
-    }
-    span.color-y{
-      color: #f29827;
-      margin-bottom: 10px;
-    }
-  }
-  .top1{
-    position: relative;
-    padding: 0;
-    margin-bottom: 80px;
-    .mk{
-      position: absolute;
-      width: 11px;
-      height: 100%;
-      top: 0;
-      background: #fff;
-    }
-    .mk.l{
-      left: -5px;
-    }
-    .mk.r{
-      right:-5px;
-    }
-    .tp1{
-      margin-bottom: 30px;
-      box-shadow: 0px 6px 4px #f0f0f0;
-      padding: 42px 0;
-      li{
-        width: 24%;
-        border-right: 1px solid #f29827;
-      }
-      li:last-of-type{
-        border: none;
-      }
-    }
-    .tp2{
-      padding:45px 0;
-      box-shadow: 0px -6px 4px #f0f0f0 inset;
-      li{
-        width:33%;
-      }
-    }
-    .tp3{
-      padding-top: 45px;
-      box-shadow: 0px 6px 4px #f0f0f0;
-      .icon{
-        position: absolute;
-        left:12%;
-        top: 50%;
-        width: 75px;
-        height: 75px;
-        text-align: center;
-        line-height: 100px;
-        margin-top:-37px;
-        border:1px solid #f90;
-        border-radius: 50%;
-      }
-      li{
-        position: relative;
-        width:50%;
-      }
-      p{
-        border-top:1px dashed #ccc;
-        margin-top:50px;
-        padding:20px 0;
-        span{
-          display: inline-block;
-          width: 50%;
-          font-size: 16px;
-          text-align: center;
+          width: auto;
+          left: 22px;
+          top:-14px;
+          background:#fff;
+          padding: 0 10px;
+          color:#696969;
         }
       }
     }
-  }
-    //成交金额 柱形图
-  .top2{  }
-   //逾期数据
-  .top3{
-    margin: 55px 0;
-    p.tit{
-      font-size: 20px;
-      color:#000;
-      text-align:center;
-      margin-bottom: 50px;
-      span{
+    .item{
+      .anticon {
+        font-size: 48px;
+        color: #f90;
+      }
+      li{
         display: inline-block;
-        width: 26%;
-        height: 1px;
-        border-bottom: 1px dashed #e5e5e5;
-        margin:0 30px 5px 30px;
+        height:auto;
+        text-align: center;
+        font-size: 16px;
       }
-    }
-    .tp1{
-      li{
-        width:16.6%;
-        span:nth-child(1){
-          width:100px;
-          height:100px;
-          margin:0 auto;
-          line-height: 100px;
-          border: 1px solid #ccc;
-          border-radius: 50%;
-        }
-        span:nth-child(2){
-          margin-top: 20px;
-        }
-      }
-    }
-    .tp2{
-      margin-top: 50px;
-      ul:nth-child(2){
-        margin-left:2%;
-      }
-    }
-  }
-  // 全国地图
-  .top4{
-    position: relative;
-    p.tit{
-      font-size: 20px;
-      color:#696969;
       span{
-        color: #999;
-        i{
-          color:#f90;
+        display:block;
+        color: #646464;
+      }
+      span.bor{
+        font-weight: bolder;
+      }
+      span.color-y{
+        color: #f29827;
+        margin-bottom: 10px;
+      }
+    }
+    .top1{
+      position: relative;
+      padding: 0;
+      margin-bottom: 80px;
+      .mk{
+        position: absolute;
+        width: 11px;
+        height: 100%;
+        top: 0;
+        background: #fff;
+      }
+      .mk.l{
+        left: -5px;
+      }
+      .mk.r{
+        right:-5px;
+      }
+      .tp1{
+        margin-bottom: 30px;
+        box-shadow: 0px 6px 4px #f0f0f0;
+        padding: 42px 0;
+        li{
+          width: 24%;
+          border-right: 1px solid #f29827;
+        }
+        li:last-of-type{
+          border: none;
+        }
+      }
+      .tp2{
+        padding:45px 0;
+        box-shadow: 0px -6px 4px #f0f0f0 inset;
+        li{
+          width:33%;
+        }
+      }
+      .tp3{
+        padding-top: 45px;
+        box-shadow: 0px 6px 4px #f0f0f0;
+      }
+    }
+    //成交金额 柱形图
+    .top2{  }
+    //逾期数据
+    .top3{
+      margin: 55px 0;
+      .tp1{
+        li{
+          width:16.6%;
+          span:nth-child(1){
+            width:100px;
+            height:100px;
+            margin:0 auto;
+            line-height: 100px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+          }
+          span:nth-child(2){
+            margin-top: 20px;
+          }
+        }
+      }
+      .tp2{
+        margin-top: 50px;
+        ul:nth-child(2){
+          margin-left:2%;
         }
       }
     }
-    .map-list{
-      position: absolute;
-      top: 100px;
-      left: 50px;
+    // 全国地图
+    .top4{
+      position: relative;
+      p.tit{
+        font-size: 20px;
+        color:#696969;
+        span{
+          color: #999;
+          i{
+            color:#f90;
+          }
+        }
+      }
+      .map-list{
+        position: absolute;
+        top: 100px;
+        left: 50px;
+        p{
+          font-size: 16px;
+          color:#696969;
+          margin-bottom: 20px;
+        }
+        li{
+          padding: 5px;
+          position: relative;
+          i{
+            position: absolute;
+            left: 0;
+          }
+          span{
+            display: inline-block;
+            width: 100px;
+            text-align: center;
+          }
+        }
+      }
+      canvas{
+        width: 850px !important;
+        height: 600px !important;
+        left:110px !important;
+        top:-60px !important;
+      }
+    }
+    //环形图
+    .top5{
+      margin:50px 0 20px 0;
       p{
         font-size: 16px;
         color:#696969;
-        margin-bottom: 20px;
       }
-      li{
-        padding: 5px;
-        position: relative;
-        i{
-          position: absolute;
-          left: 0;
-        }
+      p.tit{
+        font-size: 20px;
+        color:#696969;
         span{
-          display: inline-block;
-          width: 100px;
-          text-align: center;
-        }
-      }
-    }
-    canvas{
-      width: 850px !important;
-      height: 600px !important;
-      left:110px !important;
-      top:-60px !important;
-    }
-  }
-   //环形图
-  .top5{
-    margin:50px 0 20px 0;
-    p{
-      font-size: 16px;
-      color:#696969;
-    }
-    p.tit{
-      font-size: 20px;
-      color:#696969;
-      span{
-        color: #999;
-        i{
-          color:#f90;
-        }
-      }
-    }
-    p.p{
-      margin-left: 50px;
-      margin-top: 20px;
-      span{
-        margin-left: 30px;
-      }
-    }
-    >p{
-      font-size: 12px;
-      color:#333;
-      margin-top: 38px;
-    }
-    .info-box{
-      .pie{
-        position: relative;
-        .pie-use-icon{
-          position: absolute;
-          width: 145px;
-          height:145px;
-          left:12%;
-          top:30%;
-          border: 3px solid #38a8da;
-          border-radius: 50%;
-          >div{
-            position: absolute;
-            width:100px;
-            height: 100px;
-            left: 50%;
-            margin-left: -50px;
-            top: 50%;
-            margin-top: -50px;
-            text-align: center;
-            .anticon{
-              color:#f90;
-              font-size: 50px;
-            }
-            p{
-              font-size: 14px;
-              margin-top: 10px;
-            }
+          color: #999;
+          i{
+            color:#f90;
           }
         }
-        >p{
-          font-size: 18px;
+      }
+      p.p{
+        margin-left: 50px;
+        margin-top: 20px;
+        span{
           margin-left: 30px;
-          color:#696969;
-          span{
-            margin-left: 70px;
-            position: relative;
-            i{
-              margin-left: 2px;
-              padding-left: 15px;
+        }
+      }
+      >p{
+        font-size: 12px;
+        color:#333;
+        margin-top: 38px;
+      }
+      .info-box{
+        .pie{
+          position: relative;
+          .pie-use-icon{
+            position: absolute;
+            width: 145px;
+            height:145px;
+            left:12%;
+            top:30%;
+            border: 3px solid #FFDE89;
+            border-radius: 50%;
+            >div{
+              position: absolute;
+              width:100px;
+              height: 100px;
+              left: 50%;
+              margin-left: -50px;
+              top: 50%;
+              margin-top: -50px;
+              text-align: center;
+              .anticon{
+                color:#f90;
+                font-size: 50px;
+              }
+              p{
+                font-size: 14px;
+                margin-top: 10px;
+              }
             }
           }
-          span:before{
-            content: '';
-            display: inline-block;
-            position: absolute;
-            width: 12px;
-            height:12px;
-            top:50%;
-            margin-top: -6px;
-            left:-25px;
-            background: #38a8da;
-            border-radius:50%;
-          }
-          span.wom:before{
-            background:#FFB19E;
-          }
-        }
-        .bar-box{
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: 50%;
-          ul{
-            border:none;
-            width:100%;
-            li{
-              span{
-                width:30%;
-                margin-right: 2%;
-                text-align:right;
+          >p{
+            font-size: 18px;
+            margin-left: 30px;
+            color:#696969;
+            span{
+              margin-left: 70px;
+              position: relative;
+              i{
+                margin-left: 2px;
+                padding-left: 15px;
               }
-              .bar{
-                width:58%;
-                background: #d4effa;
-                e{
-                  background: #38a8da;
+            }
+            span:before{
+              content: '';
+              display: inline-block;
+              position: absolute;
+              width: 12px;
+              height:12px;
+              top:50%;
+              margin-top: -6px;
+              left:-25px;
+              background: #38a8da;
+              border-radius:50%;
+            }
+            span.wom:before{
+              background:#FFB19E;
+            }
+          }
+          .bar-box{
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 50%;
+            ul{
+              border:none;
+              width:100%;
+              li{
+                span{
+                  width:30%;
+                  margin-right: 2%;
+                  text-align:right;
+                }
+                .bar{
+                  width:58%;
+                  background: #d4effa;
+                  e{
+                    background: #38a8da;
+                  }
+                }
+              }
+              li.tit{
+                position: inherit;
+                text-align: right;
+                font-size: 18px;
+                padding-right:28px;
+                i{
+                  position: inherit;
+                  font-size: 30px;
+                  padding-right: 8px;
+                  color:#f90;
                 }
               }
             }
-            li.tit{
-              position: inherit;
-              text-align: right;
-              font-size: 18px;
-              padding-right:28px;
-              i{
-                position: inherit;
-                font-size: 30px;
-                padding-right: 8px;
-                color:#f90;
-              }
-            }
           }
         }
-       }
+      }
     }
   }
 }
