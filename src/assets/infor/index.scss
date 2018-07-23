@@ -35,44 +35,7 @@
         margin:0 30px 5px 30px;
       }
     }
-    .iconL{
-      .icon{
-        position: absolute;
-        left:12%;
-        top: 50%;
-        width: 75px;
-        height: 75px;
-        text-align: center;
-        line-height: 100px;
-        margin-top:-37px;
-        border:1px solid #f90;
-        border-radius: 50%;
-      }
-      li{
-        position: relative;
-        width:50%;
-      }
-      p{
-        border-top:1px dashed #ccc;
-        margin-top:50px;
-        padding:20px 0;
-        span{
-          display: inline-block;
-          width: 50%;
-          font-size: 16px;
-          text-align: center;
-        }
-      }
-    }
-    .iconL.risk{
-      .icon{
-        border-radius: 20%;
-        border: 1px dashed #f90;
-        left:0;
-        top:0;
-        margin-top: 0;
-      }
-    }
+
     .row-icon {
       .icon{
         width: 60px;
@@ -88,6 +51,33 @@
         .anticon{
           color:#fff;
         }
+      }
+    }
+    .iconL{
+      li{
+        position: relative;
+        width:50%;
+      }
+      .icon{
+        position: absolute;
+        left:12%;
+        top: 50%;
+        width: 75px;
+        height: 75px;
+        text-align: center;
+        line-height: 100px;
+        margin-top:-37px;
+        border:1px solid #f90;
+        border-radius: 50%;
+      }
+    }
+    .iconL.risk{
+      .icon{
+        border-radius: 20%;
+        border: 1px dashed #f90;
+        left:0;
+        top:0;
+        margin-top: 0;
       }
     }
   }

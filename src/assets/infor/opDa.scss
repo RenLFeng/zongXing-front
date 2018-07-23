@@ -1,5 +1,5 @@
 .infor{
-  .opDa{
+  >.w>.opDa{
     .bar-box{
       >ul{
         width:49%;
@@ -112,6 +112,17 @@
       .tp3{
         padding-top: 45px;
         box-shadow: 0px 6px 4px #f0f0f0;
+        >p{
+          border-top:1px dashed #ccc;
+          margin-top:50px;
+          padding:20px 0;
+          span{
+            display: inline-block;
+            width: 50%;
+            font-size: 16px;
+            text-align: center;
+          }
+        }
       }
     }
     //成交金额 柱形图

@@ -26,21 +26,27 @@ import { getLocation } from '../services/api';
 import ApplyLoan from './homePage/ApplyLoan';
 import UCenter from './homePage/UCenter';
 import COS from 'cos-js-sdk-v5';
-
 import InformationPage from './InformationPage';
+
+//信息披露
+import LetterStatement from './information/letterstatement';
+import OperateData from "./information/operateData";
 import RecordInformation from "./information/recordInformation";
 import OrganizationInformation from "./information/organizationInformation";
-
 import AuditInformation from "./information/auditInformation";
 import BusinessInformation from "./information/businessInformation";
 import ProjectInformation from "./information/projectInformation";
-import { BASE_URL, getAuth, getHobbyList } from '../services/api';
-import PlatformNotice from "./information/legalSupport";
-import NewsReports from "./information/newsReports";
-import LegalDeclaration from "./information/lawsRegulations";
-import RiskManagement from "./information/riskManagement.js";
+// 关于我们
 import CompanyIntroduction from "./information/CompanyIntroduction.js";
-import OperateData from "./information/operateData";
+import ContactUs from './information/contactUs.js'
+// 法律法规
+import RiskManagement from "./information/riskManagement.js";
+import PlatformNotice from "./information/legalSupport";
+import LegalDeclaration from "./information/lawsRegulations";
+// 合作伙伴
+import NewsReports from "./information/newsReports";
+
+import { BASE_URL, getAuth, getHobbyList } from '../services/api';
 //优惠券兑换中心
 import CouponCenter from '../components/CouponCenter/CouponCenter';
 import io from 'socket.io-client';
@@ -145,10 +151,19 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/register`} component={Register} />
             <Route path={`${match.path}/forgetPassWord`} component={ForgetPassWord} />
             <Route path={`${match.path}/risk`} component={Risk} />
+
+            {/* <Route path={`${match.path}/infor`} component={InformationPage} /> */}
             {/* 信息披露 */}
             <Route path={`${match.path}/infor/operateData`} component={OperateData} />
+            <Route path={`${match.path}/infor/RecordInformation`}  component={RecordInformation}/>
+            <Route path={`${match.path}/infor/letterstatement`}  component={LetterStatement}/>
+            {/*法律法规 */}
             <Route path={`${match.path}/infor/riskManagement`} component={RiskManagement} />
-            <Route path={`${match.path}/infor/companyIntroduction`} component={CompanyIntroduction} />
+            {/*关于我们*/}
+           <Route path={`${match.path}/infor/companyIntroduction`} component={CompanyIntroduction} /> 
+            <Route path={`${match.path}/infor/contactUs`} component={ContactUs} /> 
+            {/*合作伙伴*/}
+
             {/* 项目详情页面 */}
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
             {/* 预览使用的项目详情页面 */}
