@@ -53,7 +53,7 @@ export default class Header extends React.Component {
             fontColor='howInvest';
           }else if(localPath.indexOf('/index/companyDiscount')!== -1){
             fontColor='companyDiscount';
-          }else if(localPath.indexOf('/index/commonProblem')!== -1){
+          }else if(localPath.indexOf('/index/infor')!== -1){
             fontColor='commonProblem';
           }else if(localPath.indexOf('/index/uCenter')!== -1){
             fontColor='uCenter';
@@ -97,7 +97,7 @@ export default class Header extends React.Component {
               $(window).scrollTop(0);
             }}>如何借款</a>
              <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
-              history.push(`${match.path}/commonProblem`);
+             history.push('/index/infor/operateData');
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>信息披露</a>
@@ -159,7 +159,7 @@ export default class Header extends React.Component {
               $(window).scrollTop(0);
             }}>如何借款</a>
             <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
-              history.push(`${match.path}/commonProblem`);
+               history.push('/index/infor/operateData');
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>信息披露</a>

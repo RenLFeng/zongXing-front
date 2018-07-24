@@ -4,9 +4,9 @@ import '../../assets/infor/common/textInfo.scss'
 export default class LetterStatement extends React.Component{
   render(){
     return(
-      <div className="infor" style={{marginTop:"150px"}}>
+      <div className="infor">
         <div  className="w clearfix ">
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <div className="fr lett">
             <h2><span>信披声明</span><i></i><span className="last"></span></h2>
               <div className="container">

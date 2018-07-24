@@ -4,9 +4,9 @@ export default class CompanyIntroduction extends React.Component {
 
 	render() {
 		return (
-      <div className="infor" style={{marginTop:"150px"}}>
+      <div className="infor">
         <div  className="w clearfix compay">
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <div className="fr">
             <h2><span>关于我们</span><i>></i><span className="last">公司介绍</span></h2>
             <div className="top1 clearfix">

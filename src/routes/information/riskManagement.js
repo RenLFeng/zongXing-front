@@ -4,9 +4,9 @@ import LeftMenu from './leftMenu';
 export default class RiskManagement extends React.Component {
   render() {
     return (
-      <div className="infor" style={{marginTop:"150px"}}>
+      <div className="infor">
         <div  className="w clearfix">
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <div className="fr risk">
             <h2><span>法律法务</span><i>></i><span className="last">风险控制</span></h2>
             <div className="top1 bg"></div>
