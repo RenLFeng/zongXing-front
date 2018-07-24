@@ -16,7 +16,22 @@ export default class feeScale extends React.Component {
                   <p className="tit">收费标准</p>
                   <ul className="top1">
                     <li className="head"><span>业务类型</span><span>资费标准</span></li>
-                    <li><span>用户注册</span><span>免费</span></li>
+                    <li><span className="f">用户注册</span><span className="l">免费</span></li>
+                    <li><span className="f">投标</span><span className="l">免费</span></li>
+                    <li><span className="f">开通存管帐户</span><span className="l">免费</span></li>
+                    <li><span className="f">回款到账</span><span className="l">免费</span></li>
+                    <li><span className="f">充值</span><span className="l">免费</span></li>
+                    <li className="tix">
+                      <span className="f">提现</span>
+                      <a>
+                        <span>投资人</span>
+                        <span className="l">每月免费提现3次，超过3次，提现收取0.25%服务费，最低2元</span>
+                      </a>
+                      <a>
+                        <span>借款人</span>
+                        <span className="l">每月免费提现3次，超过3次，提现收取0.25%服务费，最低2元</span>
+                      </a>
+                    </li>
                   </ul>
                   <ul className="top2">
 

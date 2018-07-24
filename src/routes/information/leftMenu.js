@@ -23,6 +23,7 @@ export default class LeftMenu extends React.Component {
               <p className="t2 "><Link  className={path.indexOf(Path.BUSINESS_INFORMATION) ===-1?'':'hover'} to={Path.BUSINESS_INFORMATION}>运营信息</Link></p>
               <p className="t2 "><Link  className={path.indexOf(Path.OPEATE_DATA) ===-1?'':'hover'} to={Path.OPEATE_DATA}>运营数据</Link></p>
               <p className="t2 "><Link  className={path.indexOf(Path.PROJECT_INFORMATION) ===-1?'':'hover'} to={Path.PROJECT_INFORMATION}>项目信息</Link></p>
+              <p className="t2 "><Link  className={path.indexOf(Path.Fee_Scale) ===-1?'':'hover'} to={Path.Fee_Scale}>收费标准</Link></p>
           </div>
         <p className="t1"><Icon type="idcard" />关于我们</p>
            <div className="a">

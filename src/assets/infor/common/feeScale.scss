@@ -1,7 +1,49 @@
 .infor {
-  > .w > .feeScale {
-    li{
-
+  >.w > .feeScale {
+    .container .content-box {
+      padding: 100px 38px;
     }
+    .content{
+        li{
+          text-align: center;
+          font-size: 14px;
+          color:#696969;
+          margin-bottom: 10px;
+        span{
+          display: inline-block;
+           width:70%;
+          height: 43px;
+          line-height: 43px;
+        }
+          span:first-of-type{
+            width:30%;
+          }
+          span.f{
+            background: #f5f5f5;
+          }
+          span.l{
+            background: #fafafa;
+          }
+    }
+      li.head{
+        font-size: 16px;
+        span:first-of-type{
+          background: #fff8f1;
+        }
+        span:last-of-type{
+          background: rgba(255, 248, 241, 0.5);
+        }
+      }
+      li.tix{
+        a{
+          display: block;
+          width:70%;
+          span{
+            display: inline-block;
+          }
+        }
+      }
+    }
+
   }
 }
