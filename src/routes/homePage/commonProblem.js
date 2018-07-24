@@ -239,6 +239,7 @@ export default class CommonProblem extends React.Component{
                <div style={{height: '148px'}}>
                 </div>
                 <LoginInfo />
+              
                 <div className="w clearfix" style={{paddingBottom:80}}>
                     <div className="uc-left-menu">
                       <ul className="type">

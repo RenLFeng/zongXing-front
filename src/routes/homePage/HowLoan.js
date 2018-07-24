@@ -6,7 +6,7 @@ import TopTab from '../../components/HowLoanComponent/topTab';
 import BottomTab from '../../components/HowLoanComponent/bottomTab';
 import Qa from '../../components/HowLoanComponent/qa';
 import { startAnimate } from '../../assets/finance/index';
-
+import Path from '../../common/pagePath';
 export default class HowLoan extends React.Component {
   componentDidMount() {
     startAnimate();
@@ -20,6 +20,11 @@ export default class HowLoan extends React.Component {
       <div >
         <div className="banner1 autosize">
           <img className="big" src={require('../../assets/img/finance/bg0.png')} />
+          <div className="w">
+            <a className="btn "
+               onClick={()=>{
+                  $("#fix").removeClass('fix');}}>我要借款</a>
+          </div>
         </div>
         <BottomTab />
         <TopTab />

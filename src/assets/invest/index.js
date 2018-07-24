@@ -70,8 +70,11 @@ function bindEvent() {
       av.top(d.offsetTop - 130);
     }
   });
-  $('body').on('click', '.sec-qa .q', function () {
-    $(this).toggleClass('close');
+  $('body').on('click', '.sec-qa .t2', function () {
+    $(this).addClass("act").siblings().removeClass("act");
+  });
+  $('body').on('click', '.sec-qa .fr .q', function () {
+    $(this).toggleClass("act").next().slideToggle();
   });
 
   $(".card2 .item .bd .dot >i").hover(function(){

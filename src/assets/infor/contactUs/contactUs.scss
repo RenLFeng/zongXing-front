@@ -1,0 +1,54 @@
+.infor{
+  >.w >.conUs{
+    .map{
+      width:100%;
+      height: auto;
+      border:1px solid #F6F6F6;
+      padding:3px;
+      margin-bottom: 30px;
+      img{
+        width:100%;
+      }
+    }
+    .addres{
+      border: 10px solid #FAFAFA;
+      padding: 30px 0 0 50px;
+      li{
+        padding:8px 0;
+        span{
+          display: inline-block;
+          font-size: 14px;
+          color:#646464;
+        }
+        span:first-of-type{
+          width:30%;
+        }
+        span:last-of-type{
+        }
+      }
+    }
+    .qrCode{
+      margin-top:50px;
+      li{
+        width:25%;
+        float: left;
+        text-align: center;
+        span{
+          display: block;
+        }
+        .code{
+          width: 160px;
+          height: 160px;
+          line-height: 140px;
+          background: #fbfbfb;
+          border-radius:10px;
+          margin: 0 auto;
+          padding: 10px;
+        }
+        span:last-of-type{
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}

@@ -31,7 +31,7 @@ export default {
   COMPANY_LIST: '/index/uCenter/companyList', //借款项目列表
   NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
   BIND_SUCCESS: '/index/uCenter/bindSuccess',
-  INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //平台公告列表 
+  INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //平台公告列表
 
   ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
 
@@ -43,36 +43,40 @@ export default {
   INVEST_MENT: '/index/uCenter/InvestMent', //投资记录
   RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
   ACCOUNT_STATEMENT:'/index/uCenter/accountstatement',  //资金动态
-  MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
+  MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券
   COUPON_CENTER:'/index/couponCenter',//优惠券交易中心
   My_INVITATION_CODE:'/index/uCenter/myinvitationcode',
 
-
-  NOTICE_DETAIL: '/infor/plantNotice', //平台公告页面
-  RECORD_INFORMATION: '/infor/recordinformation',     //备案信息页面
-  ORGANIZATIONAL_INFORMATION: '/infor/organizationInformation',  //组织信息页面
-  AUDIT_INFORMATION: '/infor/auditInformation',   //审核信息
-  BUSINESS_INFORMATION: '/infor/businessInformation',   //运营信息
-  PROJECT_INFORMATION: '/infor/projectInformation',   //项目信息
-  LAWS_REGULATION: '/infor/lawsRegulations', //法律法规
-  LEGAL_SUPPORT: '/infor/legalSupport',//法务支持
-  RISK_MANAGEMENT: '/infor/riskManagement',//风险控制
-  SAFE_GUARANTEE: '/infor/safeGuarantee',//安全保障
-  TERM_SERVICE: '/infor/termService',//服务条款
-  COMPANY_INTRODUCTION: '/infor/companyIntroduction',  //公司介绍
-  MANAGEMENT_TEAM: '/infor/managementTeam', //管理团队
-  ENTERPRISE_WILL: '/infor/enterpriseWill', //企业意愿
-  SERVICE_IDEA:'/infor/serviceIdea', //服务理念
-  CONTACT_US: '/infor/contactUs', //联系我们
-  TECHNICAL_COOPERATION: '/infor/technicalCooperation',//技术合作
-  WIND_COOPERATION: '/infor/windCooperation', //风控合作
-  LEGAL_COOPERATION: '/infor/legalCooperation', //法务合作
-  SECURITY_COOPERATION: '/infor/securityCooperation', //安全合作
-  MEDIA_COOPERATION: '/infor/mediaCooperation', //媒体合作
-  ICON_TEST: '/infor/iconTest', //图标测试
-
-  OPEATE_DATA: '/infor/operateData', //运营数据
-  PLATFORM_REPORT: '/infor/platformReport', //平台报告
-  FINANCIAL_STATEMENTS: '/infor/financialStatements', //财务报表
-
+//信息披露
+  Letter_Statement:'/index/infor/letterstatement',//信披声明
+  OPEATE_DATA: '/index/infor/operateData', //运营数据
+  BUSINESS_INFORMATION: '/index/infor/businessInformation',   //运营信息
+  AUDIT_INFORMATION: '/index/infor/auditInformation',   //审核信息
+  RECORD_INFORMATION: '/index/infor/recordinformation',     //备案信息页面
+  Fee_Scale:'/index/infor/feeScale',//收费标准
+  ORGANIZATIONAL_INFORMATION: '/index/infor/organizationInformation',  //组织信息页面
+  PROJECT_INFORMATION: '/index/infor/projectInformation',   //项目信息
+  FINANCIAL_STATEMENTS: '/index/infor/financialStatements', //财务报表
+// 关于我们
+  COMPANY_INTRODUCTION: '/index/infor/companyIntroduction',  //公司介绍
+  NOTICE_DETAIL: '/index/infor/plantNotice', //平台公告页面
+  MANAGEMENT_TEAM: '/iindex/nfor/managementTeam', //管理团队
+  ENTERPRISE_WILL: '/index/infor/enterpriseWill', //企业意愿
+  SERVICE_IDEA:'/index/infor/serviceIdea', //服务理念
+  CONTACT_US: '/index/infor/contactUs', //联系我们
+// 法律法规
+  LAWS_REGULATION: '/index/infor/lawsRegulations', //法律法规
+  LEGAL_SUPPORT: '/index/infor/legalSupport',//法务支持
+  RISK_MANAGEMENT: '/index/infor/riskManagement',//风险控制
+  SAFE_GUARANTEE: '/index/infor/safeGuarantee',//安全保障
+  TERM_SERVICE: '/index/infor/termService',//服务条款
+// 合作伙伴
+  TECHNICAL_COOPERATION: '/index/infor/technicalCooperation',//技术合作
+  WIND_COOPERATION: '/index/infor/windCooperation', //风控合作
+  LEGAL_COOPERATION: '/index/infor/legalCooperation', //法务合作
+  SECURITY_COOPERATION: '/index/infor/securityCooperation', //安全合作
+  MEDIA_COOPERATION: '/index/infor/mediaCooperation', //媒体合作
+// 平台公告
+  PLATFORM_REPORT: '/index/infor/platformReport', //平台报告
+  ICON_TEST: '/index/infor/iconTest', //图标测试
 }
