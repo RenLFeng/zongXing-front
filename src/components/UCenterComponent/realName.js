@@ -26,7 +26,6 @@ const formItemLayout = {
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
   accountId: state.login.baseData.accountId,
-
 }))
 export default class RealName extends React.Component {
   constructor(props) {
