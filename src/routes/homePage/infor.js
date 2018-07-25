@@ -7,13 +7,16 @@ import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import LeftMenu from '../information/leftMenu';
 //信息披露
 import OperateData from '../information/operateData';
+import ComplianceLetter from '../information/complianceLetter';
+import ComplianceReport from '../information/complianceReport';
 import LetterStatement from '../information/letterstatement';
 import BusinessInformation from '../information/businessInformation';
-import AuditInformation from '../information/auditInformation';
 import RecordinFormation from '../information/recordInformation';
 import FeeScale from '../information/feeScale';
 import OrganizationInformation from '../information/organizationInformation';
 import ProjectInformation from '../information/projectInformation';
+import AuditInformation from '../information/auditInformation';
+import RiskWarning from '../information/riskWarning';
 import FinancialStatements from '../information/financialStatements';
 //关于我们
 import CompanyIntroduction from '../information/CompanyIntroduction.js';
@@ -26,7 +29,8 @@ import ContactUs from '../information/contactUs';
 import LawsRegulations from '../information/lawsRegulations';
 import LegalSupport from '../information/legalSupport';
 import RiskManagement from '../information/riskManagement';
-//import SafeGuarantee from '../information/safeGuarantee';
+import LegalDeclaration from '../information/legalDeclaration';
+import SafeGuarantee from '../information/safeGuarantee';
 //import TermService from '../information/termService';
 // 合作伙伴
 //import TechnicalCooperation from '../information/technicalCooperation';
@@ -38,7 +42,7 @@ import RiskManagement from '../information/riskManagement';
 import PlatformReport from '../information/platformReport';
 //import IconTest from '../information/iconTest';
 
-import '../../assets/infor/index'
+import {startAnimate} from '../../assets/infor/index'
 import Path from '../../common/pagePath';
 
 export default class Infor extends React.Component {
@@ -47,7 +51,7 @@ export default class Infor extends React.Component {
   }
 
   componentDidMount() {
-
+    startAnimate();
     setTimeout(()=>{
       this.initPage();
     }, 200);
@@ -70,10 +74,17 @@ export default class Infor extends React.Component {
           <Switch>
             {/*信披声明*/}
             <Route path={Path.Letter_Statement}  component={LetterStatement} />
+            {/*合规经营承诺书*/}
+            <Route path={Path.Compliance_Letter}  component={ComplianceLetter} />
+            {/*合规经营报告*/}
+            <Route path={Path.Compliance_Report}  component={ComplianceReport} />
             {/* 运营数据 */}
             <Route path={Path.OPEATE_DATA}  component={OperateData} />
             {/* 运营信息 */}
             {/* 审核信息 */}
+            <Route path={Path.Audit_Information}  component={AuditInformation} />
+            {/* 风险提醒告知书 */}
+            <Route path={Path.Risk_Warning}  component={RiskWarning} />
             {/* 备案信息页面 */}
             <Route path={Path.RECORD_INFORMATION}  component={RecordinFormation} />
             {/* 收费标准 */}
@@ -89,10 +100,14 @@ export default class Infor extends React.Component {
             {/* 服务理念 */}
             <Route path={Path.CONTACT_US}  component={ContactUs} />
             {/* 法律法规 */}
+            <Route path={Path.LAWS_REGULATION}  component={LawsRegulations} />
             {/* 法务支持 */}
             {/* 风险控制 */}
             <Route path={Path.RISK_MANAGEMENT}  component={RiskManagement} />
-            {/* 安全保障 */}
+            {/* 安全保障*/}
+            <Route path={Path.SAFE_GUARANTEE}  component={SafeGuarantee} />
+            {/* 法律声明 */}
+            <Route path={Path.LEGAL_DECLARATION}  component={LegalDeclaration} />
             {/* 服务条款 */}
             {/* 技术合作 */}
             {/* 风控合作 */}

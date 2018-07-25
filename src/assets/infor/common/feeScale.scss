@@ -35,13 +35,40 @@
         }
       }
       li.tix{
-        a{
-          display: block;
-          width:70%;
-          span{
-            display: inline-block;
-          }
-        }
+        text-align: left;
+       span.t1{
+         height:86px;
+         width:15%;
+         text-align: center;
+         line-height: 86px;
+         position: relative;
+       }
+       a.fr{
+         display: inline-block;
+         height:86px;
+         width:85%;
+         background: #fff;
+         >p{
+           width:100%;
+           font-size: 14px;
+           color:#696969;
+            span.t2{
+              display: inline-block;
+             height: 42px;
+             text-align: center;
+             float: left;
+           }
+           span.f{
+             width:18%;
+           }
+           span.l{
+             width:82%;
+           }
+         }
+         p:first-of-type{
+           margin-bottom: 2px;
+         }
+       }
       }
     }
 

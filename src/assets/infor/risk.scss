@@ -1,5 +1,18 @@
 .infor{
   >.w >.risk{
+    .risk{
+      li{
+        .icon i{
+          position: absolute;
+          width: 40px;
+          height: 40px;
+          top: 50%;
+          left: 50%;
+          margin-top: -20px;
+          margin-left: -20px;
+        }
+      }
+    }
       .top2,.top3,.top4{
         padding: 0;
       }
@@ -54,6 +67,34 @@
           height: 90px;
           margin-bottom: 38px;
         }
+        .risk{
+          li{
+            .icon1 i{
+              background: url("../../assets/img/infor/risk_ic1.png") no-repeat 50% 50% /100%;
+            }
+            .icon2 i{
+              background: url("../../assets/img/infor/risk_ic2.png") no-repeat 50% 50% /100%;
+            }
+            .icon3 i{
+              background: url("../../assets/img/infor/risk_ic3.png") no-repeat 50% 50% /100%;
+            }
+            .icon4 i{
+              background: url("../../assets/img/infor/risk_ic4.png") no-repeat 50% 50% /100%;
+            }
+            .icon5 i{
+              background: url("../../assets/img/infor/risk_ic5.png") no-repeat 50% 50% /100%;
+            }
+            .icon6 i{
+              background: url("../../assets/img/infor/risk_ic6.png") no-repeat 50% 50% /100%;
+            }
+            .icon7 i{
+              background: url("../../assets/img/infor/risk_ic7.png") no-repeat 50% 50% /100%;
+            }
+            .icon8 i{
+              background: url("../../assets/img/infor/risk_ic8.png") no-repeat 50% 50% /100%;
+            }
+          }
+        }
       }
       .top3{
         .bg{
@@ -64,6 +105,22 @@
           padding-left: 88px;
           height: 90px;
           margin-bottom: 38px;
+        }
+        .risk{
+          li{
+            .icon1 i{
+              background: url("../../assets/img/infor/risk_ic9.png") no-repeat 50% 50% /100%;
+            }
+            .icon2 i{
+              background: url("../../assets/img/infor/risk_ic10.png") no-repeat 50% 50% /100%;
+            }
+            .icon3 i{
+              background: url("../../assets/img/infor/risk_ic11.png") no-repeat 50% 50% /100%;
+            }
+            .icon4 i{
+              background: url("../../assets/img/infor/risk_ic12.png") no-repeat 50% 50% /100%;
+            }
+          }
         }
       }
       .top4{
@@ -101,6 +158,30 @@
                 background: #f90;
                 right: -208%;
                 top: 30px;
+              }
+              .icon i{
+                position: absolute;
+                width: 30px;
+                height: 35px;
+                top: 50%;
+                left: 50%;
+                margin-top: -17px;
+                margin-left: -14px;
+              }
+              .icon1 i{
+                background: url("../../assets/img/infor/risk_ic13.png") no-repeat 50% 50% /100%;
+              }
+              .icon2 i{
+                background: url("../../assets/img/infor/risk_ic14.png") no-repeat 50% 50% /100%;
+              }
+              .icon3 i{
+                background: url("../../assets/img/infor/risk_ic15.png") no-repeat 50% 50% /100%;
+              }
+              .icon4 i{
+                background: url("../../assets/img/infor/risk_ic16.png") no-repeat 50% 50% /100%;
+              }
+              .icon5 i{
+                background: url("../../assets/img/infor/risk_ic17.png") no-repeat 50% 50% /100%;
               }
             }
           }

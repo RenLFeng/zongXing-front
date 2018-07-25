@@ -63,7 +63,7 @@
           width:35px;
           height:55px;
           margin:0 auto;
-          line-height: 100px;
+          line-height: 33px;
           background: url("../../../assets/img/infor/recor_icon1.png") no-repeat 2px 0 /100%;
         }
         span:nth-child(1):after{
@@ -87,6 +87,7 @@
       li.act{
         span:nth-child(1){
           background: url("../../../assets/img/infor/recor_icon2.png") no-repeat 2px 0 /100%;
+          color:#f90;
         }
         span:nth-child(1):after{
           background: #f90;

@@ -5,9 +5,6 @@ import '../../assets/infor/common/feeScale.scss'
 export default class feeScale extends React.Component {
   render() {
     return(
-      <div className="infor">
-        <div  className="w clearfix ">
-          {/* <LeftMenu param={this.props}/> */}
           <div className="fr feeScale">
             <h2><span>收费标准</span><i></i><span className="last"></span></h2>
             <div className="container">
@@ -21,29 +18,25 @@ export default class feeScale extends React.Component {
                     <li><span className="f">开通存管帐户</span><span className="l">免费</span></li>
                     <li><span className="f">回款到账</span><span className="l">免费</span></li>
                     <li><span className="f">充值</span><span className="l">免费</span></li>
-                    <li className="tix">
-                      <span className="f">提现</span>
-                      <a>
-                        <span>投资人</span>
-                        <span className="l">每月免费提现3次，超过3次，提现收取0.25%服务费，最低2元</span>
-                      </a>
-                      <a>
-                        <span>借款人</span>
-                        <span className="l">每月免费提现3次，超过3次，提现收取0.25%服务费，最低2元</span>
+                    <li className="tix clearfix">
+                    <span className="fl t1 l">提现</span>
+                    <a className="fr">
+                      <p className="clearfix"><span className="t2 f">投资人</span>  <span className="t2 l">每月免费提现3次，超过3次，提现收取0.25%服务费，最低2元</span></p>
+                      <p className="clearfix"><span className="t2 f">借款人</span>  <span className="t2 l">提现收取0.25%服务费，最低2元</span></p>
+                    </a>
+                    </li>
+                    <li className="tix clearfix">
+                      <span className="fl t1 l">服务费</span>
+                      <a className="fr">
+                        <p className="clearfix"><span className="t2 f">投资人</span>  <span className="t2 l">众杰帮平台收报投资从利息5%</span></p>
+                        <p className="clearfix"><span className="t2 f">借款人</span>  <span className="t2 l">众杰帮平台对借款人收费不超过5%</span></p>
                       </a>
                     </li>
-                  </ul>
-                  <ul className="top2">
-
-                  </ul>
-                  <ul className="top3">
-
+                    <li><span className="f">借款人大数据风控费</span><span className="l">88元/笔</span></li>
                   </ul>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
       </div>
     )
   }
