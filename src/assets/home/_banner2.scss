@@ -45,7 +45,7 @@
     z-index: 2;
     left: 0;
     right: 0;
-    top: 35%;
+    top: 42%;
     padding-top: 140px;
     text-align: center;
     a.btn {
@@ -68,6 +68,13 @@
     .t2 a.btn{
       margin:0 20px;
       font-size: 24px !important;
+      border-radius:18px;
+      transition: all .3s;
+      &:hover{
+        background-color: rgba(255,255,255,0.8);
+        border-color: #f90;
+        color: #f90;
+      }
     }
     >p.item{
       position:absolute;

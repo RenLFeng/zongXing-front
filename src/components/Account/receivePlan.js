@@ -469,7 +469,6 @@ class CanvasCircle extends React.Component {
       interest: 0, // 利息
       kickBack: 0, // 佣金
     };
-    console.log('this.state.list', this.state.list);
     let arr = [];
     let status = {}
     for (let obj of this.state.list) {

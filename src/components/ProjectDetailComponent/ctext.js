@@ -4,11 +4,9 @@ import moment from 'moment';
 import {getPersonalMoney, alreadyInvested, setProjectCollection} from '../../services/api';
 import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
+import DataModal from './data';
 
-@connect(()=>{
-
-})
-export default class Right extends React.Component {
+export default class Ctext extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -30,7 +28,6 @@ export default class Right extends React.Component {
   }
 
   componentDidMount() {
-    console.log(123);
   }
 
   componentWillReceiveProps(props) {
@@ -42,7 +39,6 @@ export default class Right extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log(123);
     clearInterval(this.countDown);
   }
 
@@ -112,57 +108,35 @@ export default class Right extends React.Component {
           accountId: response.data.accountInfo.fid,
           canPay: response.data.hasWaitPayInv
         });
+        this.props.dispatch({
+          type: 'account/saveBalance',
+          payload:  response.data.accountInfo.fcapital+'',
+        })
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
       } else if (response.code === -2) {
-        Modal.confirm({
-          title: '提示',
-          content: '您的账号未开户，请前往开户',
-          okText: '前往',
-          cancelText: '取消',
-          onOk: () => {
-            $(window).scrollTop(0);
-            this.props.history.push(Path.OPEN_ACCOUNT+'/0');
-          }
-        });
+
+        this.props.history.push(Path.PERSONAL_ACCOUNT);
       } else {
         message.error(response.msg);
       }
     } catch(e) {
       this.setState({loading: false});
-      console.log(e);
       if (typeof e === 'object' && e.name === 288) {
-        message.error('未登录或登录超时');
         this.props.history.push('/index/login');
         throw e;
       }
     }
   }
 
-  async getData(page) {
-    //调用子级方法
-    this.dataModal.getCityInvest(this.props.projectDetail.fpeoject_id);
-    this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
-    this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
-    this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
-    console.log(page);
-    const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectDetail.fpeoject_id});
-  //判断请求状态
-  if (response.code === 0) {
-  const maxPage = Math.ceil(this.props.projectDetail.userCount*1 / this.state.pageParam.pageSize *1 );
-    this.setState({
-    pageParam:{
-      pageCurrent:page, //当前页，初始值为第一页
-      pageSize: 20,    //每页可显示的消息条数
-      },
-    projectId: this.props.projectDetail.fpeoject_id,
-    arr: response.data,
-    maxPage: maxPage
-});
-} else {
-  message.error(response.msg);
-}
-}
+  
+  getData() {
+    this.props.dispatch({
+      type: 'account/updateCount',
+    })
+    $('.pd-data').before('<div class="_masker"></div>');
+    $('.pd-data').removeClass('none').css('top', av.top() + 50 + 'px');
+  }
 
 // 收藏项目
 async projectCollection() {
@@ -170,7 +144,6 @@ async projectCollection() {
     return;
   }
   const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
-  console.log(response);
   if (response.code === 0) {
     this.props.projectDetail.collectionNumber += 1;
     this.props.projectDetail.isCollected = true;
@@ -194,38 +167,34 @@ render(){
   if (allMoney/project.fcredit_money !== 0 && allMoney/project.fcredit_money<0.01) {
     rate = 1;
   }
-
   return (
-    <div>
-      <div className="box1 shadow">
-        <div className="trow clearfix" data-end={moment(project.fcollet_over_time).format('YYYY-MM-DD HH:mm:ss')}>
-          <i className="tit">还剩</i>
-          <div className="day">
-            <p className="t1">{this.state.countDay?this.state.countDay:0}</p>
-            <p className="t2">天</p>
-          </div>
-          <div className="time">
-            <p className="t1">{this.state.countDown?this.state.countDown:'00 : 00 : 00'}</p>
-            <p className="t2">小时<i/>分<i/>秒</p>
-          </div>
-        </div>
+      <div className="box1 shadow" >
+        
         <div className="data clearfix">
           <div className="circle" data-value={rate}/>
           <i className="ctext">已筹款比例</i>
-          <div className="fr">
-            <p className="t1">已经筹款</p>
-            <p className="t2">{allMoney}<em>元</em></p>
+
+          <div className="fr tz">
+            <p className="t1">已投资人数</p>
+
+            <p className="t2" style={{cursor: 'pointer'}} onClick={()=>{if (!userCount) {return} this.getData();}}>{userCount}<em>人</em></p>
           </div>
+            <div className="fr">
+              <p className="t1">已经筹款</p>
+              <p className="t2">{allMoney}<em>元</em></p>
+            </div>
+              <div className="bot">
+                {/* <a onClick={() => {
+                  if (this.props.projectDetail.fflag != 10) {
+                    return;
+                  }
+                  this.getPersonalMoney(this.props.projectDetail.fpeoject_id);
+                }}
+                 style={{backgroundColor: `${this.props.projectDetail.fflag != 10?'#ccc': '#f90'}`, width: '127',lineHeight: '40px',textAlign: 'center',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>我要投资</i></a> */}
+              </div>
         </div>
-        <div className="bot">
-          {
-            userCount ?
-              <a className="btn"  onClick={() => this.getData(1)}><i>已投资人数</i><b>{userCount}</b>人</a> :
-              <a onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} style={{backgroundColor: '#ccc', width: '200',lineHeight: '50px',textAlign: 'center',position: 'absolute',top:'26',left: '50%',marginLeft: '-100',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>已投资人数</i><b>{userCount}</b>人</a>
-          }
-        </div>
+        {/* <DataModal ref={ref=>this.dataModal = ref} arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} /> */}
       </div>
-    </div>
   );
 }
 }

@@ -25,7 +25,7 @@ export default class IpRecord extends React.Component{
         pageSize:this.state.pageSize
       }
       const response = await getIPRecord(param);
-      console.log('444',response)
+      //console.log('444',response)
       if(response.code === 0){
          this.setState({
             dataSource:response.data.infoList,

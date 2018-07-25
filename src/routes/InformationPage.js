@@ -45,7 +45,7 @@ export default class InformationPage extends React.Component{
 
 	render() {
 		const {match} = this.props;
-		console.log(this.props.location.pathname);
+		//console.log(this.props.location.pathname);
     const path = this.props.location.pathname;
 		return (
       <div>

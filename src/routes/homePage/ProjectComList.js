@@ -79,7 +79,7 @@ export default class ProjectLoan extends React.Component {
           });
           startAnimate();
         } else {
-          console.log(data.msg);
+          //console.log(data.msg);
         }
       })
   }

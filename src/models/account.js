@@ -33,16 +33,29 @@ export default {
       accountDynamicVos: [],
       plan: {},
       totalAssets: {}
-    }
+    },
+    balance: '0',
+    count: 0
   },
   effects: {
     *getCompanyNum({payload}){
 
     },
+    *updateCount(_,{put}) {
+      yield put({
+        type: 'saveCount',
+      })
+    },
+    *saveBalance({payload},{call, put} ) {
+      yield put({
+        type: 'saveBalanceData',
+        data: payload
+      })
+    },
     *getPersonalAccount({payload}, {call, put}) {
       let webToken = '';
       const response = yield call(getPersonAccountNew, payload); 
-      console.log(response);
+      //console.log(response);
       if (response.code === 0) {
         if (!response.data) {
           yield put({
@@ -103,7 +116,7 @@ export default {
     },
     *getCompanyAccount({payload}, {call,put}) {
       const res = yield call(getPersonAccountNew, payload );
-      console.log(res);
+      //console.log(res);
       if (res.code === 0) {
         yield put({
           type: 'saveCompany',
@@ -115,7 +128,7 @@ export default {
     },
     *getCompanyLists({payload}, {call,put}) {
       const resp = yield call(getCompanylist, payload );
-      console.log(resp);
+      //console.log(resp);
       if(resp.code ===0) {
         yield put({
           type: 'saveCompanyList',
@@ -127,6 +140,12 @@ export default {
     }
   },
   reducers: {
+    saveCount(state, _) {
+      return {
+        ...state,
+        count: state.count+ 1
+      }
+    },
     savePersonal(state, {payload}) {
       saveOpenStatus(payload.openStatus);
       return {
@@ -143,6 +162,12 @@ export default {
         company_page: payload
       };
     },
+    saveBalanceData(state, {data}) {
+      return {
+        ...state,
+        balance: data
+      }
+    },
     saveCompanyList(state, {payload}) {
       return {
         ...state,
@@ -155,7 +180,7 @@ export default {
 
 
 function saveOpenStatus(param) {
-  console.log('保存开户状态', param);
+  //console.log('保存开户状态', param);
   let webToken = '';
   if (localStorage.getItem('accessToken')) {
     const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));

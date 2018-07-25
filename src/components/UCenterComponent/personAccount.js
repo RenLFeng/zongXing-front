@@ -214,7 +214,7 @@ export default class PersonAccount extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.openStatus);
+    //console.log(this.props.openStatus);
     this.getInitData();
     this.initFetchSafeData();
     this.getAccountStatement();
@@ -236,7 +236,7 @@ export default class PersonAccount extends React.Component {
     this.setState({loadingPage: true});
     const response= await getAccountCoupon(this.state.pageParam);
     this.setState({loadingPage: false});
-    console.log('getCouponList', response);
+    //console.log('getCouponList', response);
     if (response.code === 0) {
       this.setState({
         pageParam: {
@@ -253,7 +253,7 @@ export default class PersonAccount extends React.Component {
   // 获取回款计划折线图数据
   async getReceivePlan() {
     const response = await repayPlan();
-    console.log('getReceivePlan', response);
+    //console.log('getReceivePlan', response);
     if (response.code === 0) {
       let planArr = [];
       for (let obj of response.data.list) {
@@ -461,12 +461,12 @@ export default class PersonAccount extends React.Component {
     this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {account:accoundId}})
   };
   jumpRecharge_(accoundId) {
-    console.log(accoundId);
+    //console.log(accoundId);
     this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
   };
 
   clickCoupon = (data) => {
-    console.log(data);
+    //console.log(data);
     if (data.fflag == 1) {
       this.receiveCoupon(data.fcoupon_id)
     }

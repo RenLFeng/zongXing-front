@@ -94,7 +94,6 @@ class Forms extends React.Component {
           fMyProjectPic.push(this.state[`pic${i}`]);
         }
         if (!err) {
-          console.log('表单提交的数据');
           const data = {
             project: {
               fName: values.fNames,
@@ -143,8 +142,6 @@ class Forms extends React.Component {
     })
   }
   changeState(name, src) {
-    console.log('name', name);
-    console.log('src', src);
     this.setState({
       [name]: src
     });
@@ -154,7 +151,6 @@ class Forms extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('表单提交的数据');
         this.fetchParam();
       }
     });

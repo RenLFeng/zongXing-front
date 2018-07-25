@@ -65,7 +65,6 @@ export default class Investment extends React.Component {
       {lable:'回款异常',flag:-4,value:0},
     ];
     const rest = await accountService.getInvestmentRecordCount();
-    console.log('获取顶部标签的个数',rest)
     if(rest.code===0){
       if(!rest.data){
        return;
@@ -103,9 +102,7 @@ export default class Investment extends React.Component {
       flag: this.state.activeFlag==0?null:this.state.activeFlag,
       projectName:this.state.projectName,
     }; 
-    console.log(param);
     const rest = await accountService.getInvestmentRecord(param);
-    console.log('获取我的投资列表',rest);
     if(rest.code===0){
       this.setState({
         list:rest.data.infoList,
@@ -148,7 +145,6 @@ export default class Investment extends React.Component {
  }
 
  handllerTZClick = (id, data) =>{
-  console.log(id, data)
   this.props.history.push(`/index/projectDetail/${data.projectId}`)
  }
   

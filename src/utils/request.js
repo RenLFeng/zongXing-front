@@ -15,7 +15,7 @@ if (build === 'production') {
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.4:8001';
+  BASE_URL = 'http://192.168.1.59:8001';
   document.title ="众借帮--开发环境"; 
 } else if (build === 'ys') {
   /*演示配置*/
@@ -62,7 +62,7 @@ function checkStatus(response) {
   const error = new Error(errortext);
   error.name = response.status;
   error.response = response;
-  console.log(error);
+  //console.log(error);
   global.error = error;
   throw error;
 }
@@ -108,7 +108,7 @@ export default function request(url, options) {
     Origin: '*',
     ...newOptions.headers,
   };
-  console.log(url);
+  //console.log(url);
   return fetch(url, newOptions)
     .then(checkStatus)
     .then((response) => {
@@ -183,7 +183,7 @@ export const req={
         },
         body:JSON.stringify(param)
       };    
-      console.log(url);
+      //console.log(url);
       return fetch(url, newOptions)
         .then(checkStatus)
         .then((response) => {

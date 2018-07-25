@@ -66,6 +66,7 @@ export default class RealName extends React.Component {
     this.countDownFun_ = null;
   }
 
+
   getCodeNum(val) {
     this.setState({ getCodeMobile: val });
   }

@@ -71,7 +71,6 @@ export default class AccountStatement extends React.Component{
       }; 
       //调用后台
       const res = await accountService.getAccountStatement(param); 
-      //console.log("res",res);
       if(res.code === 0){  
         this.setState({  
           totalNum:res.data.totalNumber, 
@@ -119,7 +118,6 @@ export default class AccountStatement extends React.Component{
         localStorage.removeItem('accessToken');
         this.props.history.push('/index/login');
       }
-      //console.log(e);
     }
   } 
   //方法区域

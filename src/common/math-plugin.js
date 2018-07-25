@@ -26,7 +26,6 @@ String.prototype.fm = function (n) {
   }
   catch(err)
   {
-    console.log(err);
     return "";
   }
 }

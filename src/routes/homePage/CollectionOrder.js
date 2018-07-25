@@ -1,15 +1,12 @@
 import React from 'react';
 import '../../assets/collection/collection.scss';
 import { Table, Icon, Modal, Checkbox, Progress, Card, Row, Col, Button, Input, message, Alert } from 'antd';
-import { IMG_BASE_URL } from "../../common/systemParam";
+import { IMG_BASE_URL, COL_URL } from "../../common/systemParam";
 import { getCollectionProject, setCollectionMoney, delCollectionProject, Investment } from '../../services/api';
 import { connect } from 'dva'; 
 import Path from '../../common/pagePath';
 import './collection.scss';
 
-@connect(()=>{
-
-})
 export default class Collection extends React.Component {
   constructor(props) {
     super(props);
@@ -50,7 +47,7 @@ export default class Collection extends React.Component {
         projectId: obj.fid,
         amount: obj.amount * 1,
         remark: '',
-        notifyPageUrl: `http://${window.location.host}/#/index/collection`,
+        notifyPageUrl: COL_URL,
       });
     }
     this.setState({loading: true});
@@ -74,7 +71,7 @@ export default class Collection extends React.Component {
   }
 
   render() {
-    console.log(this.state.list);
+    //console.log(this.state.list);
     const {data} = this.state;
     return (
       <div style={{marginTop: '150px',width: '100%'}}>

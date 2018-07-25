@@ -16,6 +16,9 @@ export default class Qa extends React.Component {
       }
     }
   }
+  componentDidMount() {
+   $(".my-qa > .w > .fl .t2").eq(0).addClass("act");
+  }
 
   render() {
     return (

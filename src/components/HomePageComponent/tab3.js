@@ -4,7 +4,6 @@
 import React from 'react';
 import Login from '../LoginComponent/login';
 import { Link } from 'dva/router';
-
 export default class Tab3 extends React.Component {
   constructor(props) {
     super(props);
@@ -13,11 +12,12 @@ export default class Tab3 extends React.Component {
     }
   }
   componentDidMount() {
-    $(".tab3_ >a").on("click",function(){
+     $(".tab3_ >a").on("click",function(){
       let tit=$(this).data("tit");
       $(this).addClass("hover").siblings().removeClass("hover");
+      $(".sec-tab3.g .tab-con").find("video").removeClass("hide");
       $(".sec-tab3.g .tab-con").find("."+tit).addClass("con1").siblings().removeClass("con1");
-    })
+    });
   }
 
   render() {

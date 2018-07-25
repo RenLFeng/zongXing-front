@@ -57,12 +57,10 @@ export default class SecCourse extends React.Component {
       courseArr: this.state.courseArr
     });
    const response = await clickPraise(id);
-   console.log(response);
   }
 
   render() {
     const {projectDetail} = this.props;
-    console.log(this.state.courseArr);
     const dateCode = moment(projectDetail.fcreate_time).format('YYYY') + moment(projectDetail.fcreate_time).format('MM');
     return (
       <div>
@@ -74,7 +72,14 @@ export default class SecCourse extends React.Component {
           <div className="list">
             {this.state.courseArr.map((data, index)=>{
               if (data.ftype === 1) {
-                const imgArr = data.fpic_json?JSON.parse(data.fpic_json): [];
+                let imgArr = [];
+                if (data.fpic_json) {
+                  if (data.fpic_json.indexOf('[{') != -1) {
+                    imgArr = JSON.parse(data.fpic_json);
+                  } else {
+                    imgArr = [{realUrl: data.fpic_json}];
+                  }
+                }
                 return (
                   <div className="item" key={data.fid}>
                     <p className="date">

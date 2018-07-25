@@ -25,12 +25,9 @@ import '../assets/common/index';
 import { getLocation } from '../services/api';
 import ApplyLoan from './homePage/ApplyLoan';
 import UCenter from './homePage/UCenter';
-import Collection from './homePage/Collection';
 import COS from 'cos-js-sdk-v5';
 import RecordInformation from "./information/recordInformation";
 import OrganizationInformation from "./information/organizationInformation";
-import ContactUs from "./information/contactUs";
-import CollectionOrder from './homePage/CollectionOrder';
 
 import AuditInformation from "./information/auditInformation";
 import BusinessInformation from "./information/businessInformation";
@@ -65,7 +62,7 @@ export default class HomePage extends React.Component{
           getAuth({method: (options.Method || 'get').toLowerCase(),
             pathname: '/' + (options.Key || '')})
             .then((data) => {
-              console.log(data);
+              //console.log(data);
               if (data.code === 0) {
                 callback(data.data);
               }
@@ -80,7 +77,7 @@ export default class HomePage extends React.Component{
 
   async getHobby() {
     const response = await getHobbyList();
-    console.log('hobby', response);
+    //console.log('hobby', response);
     if (response.code === 0) {
         this.props.dispatch({
           type: 'login/hobby',
@@ -145,10 +142,11 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/register`} component={Register} />
             <Route path={`${match.path}/forgetPassWord`} component={ForgetPassWord} />
             <Route path={`${match.path}/risk`} component={Risk} />
+            {/* 项目详情页面 */}
             <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
-            <Route path={`${match.path}/project/:projectId`} component={Project} />
-            <Route path={`${match.path}/collection`} component={Collection} />
-            <Route path={`${match.path}/collectionOrder`} component={CollectionOrder} />
+            {/* 预览使用的项目详情页面 */}
+            <Route path={`${match.path}/project/:projectId`} component={Project} /> 
+            
             <Route path={`${match.path}/test`} component={Test} />
           </Switch>
         <Footer/>

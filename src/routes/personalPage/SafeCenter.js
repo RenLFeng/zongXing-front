@@ -43,7 +43,7 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      console.log('实名认证数据: ', values);
+      //console.log('实名认证数据: ', values);
       form.resetFields();
       this.handleCancel();
     });
@@ -56,7 +56,7 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      console.log('手机号认证数据: ', values);
+      //console.log('手机号认证数据: ', values);
       form.resetFields();
       this.handleCancel();
     });
@@ -69,7 +69,7 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      console.log('邮箱认证数据: ', values);
+      //console.log('邮箱认证数据: ', values);
       form.resetFields();
       this.handleCancel();
     });

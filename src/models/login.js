@@ -70,7 +70,7 @@ export default {
           message.error(response.msg);
         }
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         message.error('服务器繁忙，请稍后重试');
         yield put({
           type: 'changeLoginStatus',
@@ -161,7 +161,7 @@ export default {
       }
     },
     saveSocket(state, {socketData}) {
-      console.log(socketData);
+      //console.log(socketData);
       return {
         ...state,
         socketData

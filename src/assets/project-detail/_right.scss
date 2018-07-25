@@ -279,6 +279,41 @@
           }
         }
       }
+    .center{
+        padding: 10px 0;
+        position: relative;
+        margin-top: 15px;
+        .btn2{
+            display: block;
+            position: relative;
+            left: 50%;
+            margin-left:-65px;
+            margin-bottom: 15px;
+            font-size:18px;
+        }
+        >a,>i{
+            display: inline-block;
+            background: no-repeat left center;
+            color: #21c15f;
+            font-size: 14px;
+            padding: 10px 20px 10px 30px;
+            position: relative;
+            margin-left: 20px;
+            line-height: 0;
+            &:hover {
+                color: $f90;
+            }
+        }
+        .like{
+            background: url(../img/project-detail/ic_like.png) no-repeat ;
+        }
+        .share{
+            background: url(../img/project-detail/ic_share.png) no-repeat ;
+
+
+
+        }
+    }
     }
   }
 }

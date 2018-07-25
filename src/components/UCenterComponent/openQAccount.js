@@ -25,15 +25,15 @@ export default class OpenQAccount extends React.Component {
   }
 
   componentDidMount() {
-    console.log('this.state', this.state);
-    console.log('this.state.showPage', this.state.showPage);
+    //console.log('this.state', this.state);
+    //console.log('this.state.showPage', this.state.showPage);
     this.getUserPhone();
   }
 
    // 获取用户手机号
    async getUserPhone() {
     const response = await getUserBaseData();
-    console.log(response);
+    //console.log(response);
     if (response.code === 0) {
       if (response.data) {
         let param = {
@@ -55,7 +55,7 @@ export default class OpenQAccount extends React.Component {
     }
     this.setState({loading: true});
     const response = await commitOpenAccount(this.state.param);
-    console.log('response',response)
+    //console.log('response',response)
     if (response.code === 0) {
       if (response.data) {
         this.setState({
@@ -76,8 +76,8 @@ export default class OpenQAccount extends React.Component {
   }
 
   render() {
-    console.log('this.state.showPage', this.state.showPage);
-    console.log("submitParam:",this.state.submitParam);
+    //console.log('this.state.showPage', this.state.showPage);
+    //console.log("submitParam:",this.state.submitParam);
     const { realName, submitParam } = this.state;
     const suffix = realName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     let formRef = null;

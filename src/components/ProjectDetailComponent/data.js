@@ -7,9 +7,13 @@ import UrbanStructure from './echarts_urbanStructure';
 import Gender from './echarts_gender';
 import Age from './echarts_age';
 import Invest from './echarts_invest';
+import { connect } from 'dva';
 
-import {getCityInvest, getGender, getAge, getInvest} from '../../services/api';
+import {getCityInvest, getGender, getAge, getInvest, alreadyInvested} from '../../services/api';
 
+@connect((state)=>({
+  count: state.account.count
+}))
 export default class Data extends React.Component {
   constructor(props){
     super(props);
@@ -22,13 +26,55 @@ export default class Data extends React.Component {
       ageShow:true,
       invest:{},      //投资额度
       investShow:true,
+      pageParam:{
+        pageCurrent:1, //当前页，初始值为第一页
+        pageSize: 20,    //每页可显示的消息条数
+      },
+      maxPage: 0,
+      arr: []
+    }
   }
-}
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.count !== nextProps.count) {
+      this.setState({
+        arr: [],
+      }, ()=> {
+        this.getData(1);
+      });
+    }
+  }
+
+  // 获取以投资人数列表
+  async getData(page) {
+    //调用子级方法
+    this.getCityInvest(this.props.projectId);
+    this.getGender(this.props.projectId);
+    this.getAge(this.props.projectId);
+    this.getInvest(this.props.projectId);
+    const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectId});
+    //判断请求状态
+    if (response.code === 0) {
+      const maxPage = Math.ceil(this.props.userCount*1 / this.state.pageParam.pageSize *1 );
+      this.setState({
+        pageParam:{
+          pageCurrent:page, //当前页，初始值为第一页
+          pageSize: 20,    //每页可显示的消息条数
+        },
+        projectId: this.props.projectId,
+        arr: response.data,
+        maxPage: maxPage
+      });
+      $('.pd-data').before('<div class="_masker"></div>');
+      $('.pd-data').removeClass('none').css('top', av.top() + 50 + 'px');
+    } else {
+      message.error(response.msg);
+    }
+  }
 
   //获取所在城市结构相关数据
-  async getCityInvest() {
-    const response = await getCityInvest(this.props.projectId);
-    console.log(response);
+  async getCityInvest(id) {
+    const response = await getCityInvest(id);
     if(response.code === 0){
       if(response.data !== null){
         this.setState({
@@ -47,9 +93,8 @@ export default class Data extends React.Component {
   }
 
   //获取性别
-  async getGender() {
-    const response = await getGender(this.props.projectId);
-    console.log(response);
+  async getGender(id) {
+    const response = await getGender(id);
     if(response.code === 0){
       if(response.data !== null){
         this.setState({
@@ -67,9 +112,8 @@ export default class Data extends React.Component {
   }
 
   //获取年龄
-  async getAge() {
-    const response = await getAge(this.props.projectId);
-    console.log(response);
+  async getAge(id) {
+    const response = await getAge(id);
     if(response.code === 0){
       if(response.data !== null){
         this.setState({
@@ -86,9 +130,8 @@ export default class Data extends React.Component {
   }
 
   //获取投资额度
-  async getInvest() {
-    const response  = await getInvest(this.props.projectId);
-    console.log(response);
+  async getInvest(id) {
+    const response  = await getInvest(id);
     if(response.code === 0) {
       if(response.data !== null){
         this.setState({
@@ -105,7 +148,7 @@ export default class Data extends React.Component {
   }
 
   render() {
-    const page_num = pageShows(this.props.pageCurrent, this.props.maxPage);
+    const page_num = pageShows(this.state.pageParam.pageCurrent, this.state.pageParam.maxPage);
     return (
       <div className="pd-data shadow none g" style={{zIndex: 170}}>
         <a className="close"/>
@@ -115,39 +158,37 @@ export default class Data extends React.Component {
             {/*列表数据*/}
             <div className="list">
               <div className="row hd">
-                <i className="col1">投资人</i>
-                <i className="col2">投资资金</i>
-                <i className="col3">投资时间</i>
+                <span className="col1" style={{display: 'inline-block'}}>投资人</span>
+                <span className="col2">投资资金</span>
+                <span className="col3">投资时间</span>
               </div>
-               { this.props.arr.length>0  ?
-                  this.props.arr.map((data, index)=>{
+               { this.state.arr.length>0  ?
+                  this.state.arr.map((data, index)=>{
                     return(
                       <div className="row" key={index}>
-                        <i className="col1">{data.userName}</i>
-                        <i className="col2">{`${data.money}`.fm()}</i>
-                        <i className="col3">{moment(data.fTime).format("YYYY-MM-DD HH:mm:ss")}</i>
+                        <span className="col1" style={{display: 'inline-block'}}>{data.userName}</span>
+                        <span className="col2">{`${data.money}`.fm()}</span>
+                        <span className="col3">{moment(data.fTime).format("YYYY-MM-DD HH:mm:ss")}</span>
                       </div>
                       )
                   }) :
-
                 <div className="row_" >暂无数据</div>
                 }
-
               <div className="box_1">
                 <dxiv className="pagination_">
                   {page_num.lastPage ?
-                    <a className="" onClick={() => this.props.fetchData(this.props.pageCurrent - 1)}>&lt;</a> :
+                    <a className="" onClick={() => this.getData(this.state.pageParam.pageCurrent - 1)}>&lt;</a> :
                     <a className="" style={{backgroundColor: '#eee'}}>&lt;</a>}
                   {page_num.firstPage ?
-                    <a className={`${1 == this.props.pageCurrent ? 'hover_1' : ''}`} onClick={() => this.props.fetchData(1)}>1</a> :
+                    <a className={`${1 == this.state.pageParam.pageCurrent ? 'hover_1' : ''}`} onClick={() => this.getData(1)}>1</a> :
                     null}
                   {page_num.leftEllipsis ?
                     <a>...</a> :
                     null}
                   {page_num.page.map((pageNum) => {
                     return (
-                      <a key={pageNum} className={`${pageNum * 1 == this.props.pageCurrent ? 'hover_1' : ''}`}
-                         onClick={() => this.props.fetchData(pageNum)}>{pageNum}</a>
+                      <a key={pageNum} className={`${pageNum * 1 == this.state.pageParam.pageCurrent ? 'hover_1' : ''}`}
+                         onClick={() => this.getData(pageNum)}>{pageNum}</a>
                     );
                   })}
                   {page_num.rightEllipsis ?
@@ -155,14 +196,14 @@ export default class Data extends React.Component {
                     null}
                   {page_num.finalPage ?
                     <a
-                      className={`${this.props.maxPage == this.props.pageCurrent ? 'hover_1' : ''}`}
-                      onClick={() => this.props.fetchData(this.props.maxPage)}
-                    >{this.props.maxPage}</a> :
+                      className={`${this.state.pageParam.maxPage == this.state.pageParam.pageCurrent ? 'hover_1' : ''}`}
+                      onClick={() => this.getData(this.state.pageParam.maxPage)}
+                    >{this.state.pageParam.maxPage}</a> :
                     null}
                   {page_num.nextPage ?
                     <a
                       className=""
-                      onClick={() => this.props.fetchData(this.props.pageCurrent + 1)}
+                      onClick={() => this.getData(this.state.pageParam.pageCurrent + 1)}
                     >&gt;</a> :
                     <a className="" style={{backgroundColor: '#eee'}}>&gt;</a>}
                 </dxiv>

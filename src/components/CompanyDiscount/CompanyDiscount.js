@@ -44,7 +44,6 @@ export default class CompanyDiscount extends React.Component {
       busType: this.state.busType,
       pageParam: this.state.pageParam
     });
-    console.log('getCompanyDiscountAjax', response);
     this.setState({loading: false});
     if (response.code === 0) {
       this.setState({
@@ -61,7 +60,6 @@ export default class CompanyDiscount extends React.Component {
 
   // 点击选择行业
   changeBusType = (data) => {
-    console.log(data)
     for (let obj of this.state.bussiness) {
       if (data === obj.val) {
         obj.show = true;

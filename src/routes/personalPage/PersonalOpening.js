@@ -42,9 +42,9 @@ class FormComponent extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log(err);
+      //console.log(err);
       if (!err) {
-        console.log('Received values of form: ', values);
+        //console.log('Received values of form: ', values);
         this.props.param.dispatch({
           type: 'userData/commitUserOpen',
           payload: values

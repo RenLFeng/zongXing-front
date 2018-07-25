@@ -17,7 +17,7 @@ export default class Card extends React.Component {
 
   render() {
     return (
-     <div className={`card_bank_component ${this.props.className||''}`} style={this.props.style} onClick={()=>{console.log(11111)}}>
+     <div className={`card_bank_component ${this.props.className||''}`} style={this.props.style} onClick={()=>{}}>
        <div className="card_info">
          <div className="card_img"></div>
          <div className="card_text">

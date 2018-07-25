@@ -76,16 +76,16 @@ class BindCard extends React.Component {
     }
   }
   updateRealName = (e) => {
-    console.log('updateRealName', e.target.value);
+    //console.log('updateRealName', e.target.value);
     this.setState({ realName: e.target.value });
   };
   updateIdcard = (e) => {
-    console.log('updateIdcard', e.target.value);
+    //console.log('updateIdcard', e.target.value);
     this.setState({ idcard: e.target.value });
   };
 
   verifyBankCard = () => {
-    console.log("verifyBankCard,bankcard:",this.state.bankCardNo);
+    //console.log("verifyBankCard,bankcard:",this.state.bankCardNo);
   }
   updateBankCard = (e) => {
     this.setState({ bankCardNo: e.target.value });
@@ -93,7 +93,7 @@ class BindCard extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log("submit.value:",values);
+      //console.log("submit.value:",values);
       if (!err) {
 
       }
@@ -134,6 +134,7 @@ class BindCard extends React.Component {
     const response = await verifyBankCard(bankCard.trim());
     this.setState({checkLoading: false})
     if (response.code === 0 && response.data.verifyBankcard3Dto.res === 1) {
+      //匹配
       const jhBankcardcoreDto = response.data.jhBankcardcoreDto;
       let result = {
         bankCardImg: 'success',
@@ -148,8 +149,8 @@ class BindCard extends React.Component {
         idcard: response.data.verifyBankcard3Dto.idcard, // 身份证
         realname: response.data.verifyBankcard3Dto.realname
       }
-      console.log(result.tipCityName);
-      console.log('result.provinceId', result.provinceId);
+      //console.log(result.tipCityName);
+      //console.log('result.provinceId', result.provinceId);
       this.chooseCity(result.provinceId);
       this.setState({
         ...result
@@ -210,14 +211,16 @@ class BindCard extends React.Component {
 
     for (let data of moneyCity.cityList) {
       if (data.fname === param) {
-        return data.fcode;
+        if(this.state.provinceId){
+          return data.fcode;
+        }
       }
     }
     return '';
   }
   // 选择省市
   chooseCity(val) {
-    console.log('val', val);
+    //console.log('val', val);
     let cityArr = [];
     for (let data of moneyCity.cityList) {
       if (data.fparentCode == val) {
@@ -227,7 +230,7 @@ class BindCard extends React.Component {
     this.setState({
       provinceId: val,
       cityArr,
-      cityId: cityArr[0].fcode
+      cityId: cityArr.length > 0 ? cityArr[0].fcode : ''
     });
   }
 
@@ -256,23 +259,21 @@ class BindCard extends React.Component {
     }
   }
 
+  /** 按名称给银行排序 */
   sort(){
-    console.log('开户行',moneyBank)
+    //console.log('开户行',moneyBank)
     let array = moneyBank;
-
-    let arr = array.map(item => item.fname);
-    console.log('arr',arr)
-   
-    let resultArray = arr.sort(
+    let resultArray = array.sort(
      function compareFunction(param1, param2) {
-      return param1.localeCompare(param2,"zh");
+      return param1.fname.localeCompare(param2.fname,"zh");
      }
     );
-    console.log('resultArray',resultArray);
+    //console.log('resultArray',resultArray);
   }
  
 
   render() {
+    //console.log("this.state.bankCardImg",this.state.bankCardImg);
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;

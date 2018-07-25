@@ -38,7 +38,7 @@ export default class BankCard extends React.Component {
       if (err) {
         return;
       }
-      console.log('提交银行卡的数据 ', values);
+      //console.log('提交银行卡的数据 ', values);
       this.setState({addLoading: true});
       setTimeout(() => {
         //添加银行卡请求

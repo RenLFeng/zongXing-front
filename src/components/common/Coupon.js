@@ -99,6 +99,7 @@ class Coupon extends React.Component {
             <div className='cp-coupon-content'>
                 <p><span className='project-title'>项目编号：</span><span className='project-no'>{this.state.data.fproject_no||''}</span></p>
                 <div className={`cp-coupon ${this.state.data.fbus_type||'other'}${this.props.hasLine==='true'?'-line':''}-img`}> 
+        
                     {/* 左*/}
                     <div className="cp-coupon-left" >
                         {/* logo */}

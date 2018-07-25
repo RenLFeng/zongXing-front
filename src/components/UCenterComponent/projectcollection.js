@@ -36,13 +36,13 @@ class projectcollection extends React.Component {
     }
     async getCount() {
         const response = await getCollectionCount();
-        console.log('getCollectionCount', response);
+        //console.log('getCollectionCount', response);
         if (response.code === 0) {
             let obj = {};
             for (let val of response.data) {
                 obj[val.fflag] = val.count;
             }
-            this.setState({count: obj}, ()=>console.log(this.state.count));
+            this.setState({count: obj});
         } 
     }
 
@@ -52,7 +52,7 @@ class projectcollection extends React.Component {
         }
         this.setState({loading: true});
         const response = await getCollectionProjectNew(this.state.param);
-        console.log('getCollectPro', response);
+        //console.log('getCollectPro', response);
         this.setState({loading: false});
         if (response.code === 0) {
             this.setState({

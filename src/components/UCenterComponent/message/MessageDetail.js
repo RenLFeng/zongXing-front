@@ -24,7 +24,7 @@ export default class MessageDetail extends React.Component {
 //查询单个信息
   async getOneMessage(id){
     const response = await getOneMessage(id);
-    console.log(response);
+    //console.log(response);
     if(response.code === 0){
       this.setState({
         messageData:response.data,
