@@ -21,9 +21,9 @@ export default {
         if (response.code === 0) {
           if(payload){
             let resObj = response.data;
-            if(!resObj.userSecurityCenter.fCertification){
+            if(!resObj.userSecurityCenter.fidcardBind){
               payload.jumpAuth();
-            }else if(!resObj.userSecurityCenter.fThirdAccount){
+            }else if(!resObj.userSecurityCenter.faccountBind){
               payload.jumpCreateAccount();  
             }
           }
