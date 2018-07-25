@@ -68,6 +68,7 @@ export default class Footer extends React.Component {
               <div className="wxcode">
                 <img src={require('../../assets/img/wx_code.png')} />
                 <p className="center f14">微信公众号</p>
+                <p className="center f14">0755-86963117</p>
               </div>
             </div>
           </div>
