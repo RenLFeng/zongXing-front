@@ -1,0 +1,26 @@
+.compay{
+  .top1{
+    >.fl{
+      width:40%;
+      img{
+        width:100%;
+      }
+    }
+    >.fr{
+      width:60%;
+      padding:50px 30px;
+      .right-tx{
+        text-align: center;
+        img{
+          width:60%;
+          margin-bottom: 20px;
+        }
+        p{
+          font-size: 15px;
+          text-align: left;
+          color:#696969;
+        }
+      }
+    }
+  }
+}

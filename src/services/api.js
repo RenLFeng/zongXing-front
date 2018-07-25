@@ -2,10 +2,10 @@ import { stringify } from 'qs';
 import request from '../utils/request';
 import { build } from '../common/systemParam';
 
-let BASE_URL = 'http://test.5izjb.com:8001'; // 测试服务器
+let BASE_URL = 'http://139.199.77.147:8001'; // 测试服务器
 if (build === 'production') {
   // 远端
-  BASE_URL = 'http://test.5izjb.com:8001';
+  BASE_URL = 'http://139.199.77.147:8001';
   document.title ="众借帮--客户测试环境";
 } else if (build === 'test') {
   //  测试
@@ -13,7 +13,7 @@ if (build === 'production') {
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.59:8001';
+  BASE_URL = 'http://192.168.1.61:8001';
   document.title ="众借帮--开发环境";
 } else if (build === 'ys') {
    /*演示配置*/
