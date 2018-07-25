@@ -189,3 +189,6 @@ class LoginInfo extends React.Component {
 }
 
 export default LoginInfo;
+
+
+
