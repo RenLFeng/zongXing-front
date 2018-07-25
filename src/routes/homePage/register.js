@@ -418,7 +418,7 @@ export default class Register extends React.Component {
                 </div> 
         </div>
         <div className="back_">      
-          <img  src={require('../../assets/img/reg_03.png')}  />
+          <img  src={require('../../assets/img/register_03.png')}  />
         </div>
       </div>
       
