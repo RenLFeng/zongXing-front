@@ -73,7 +73,7 @@ export default class RealName extends React.Component {
   componentDidMount() {
     this.initFetchSafeData();
     // 第三方开户成功再去获取用户银行卡信息
-    if (this.props.safeData.userSecurityCenter.fThirdAccount) {
+    if (this.props.safeData.userSecurityCenter.faccountBind) {
       this.getBankCardListAjax(); // 获取用户绑定银行卡
     }
     if (this.countDownFun) {
@@ -87,7 +87,7 @@ export default class RealName extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.safeData.userSecurityCenter.fThirdAccount !== nextProps.safeData.userSecurityCenter.fThirdAccount) {
+    if (this.props.safeData.userSecurityCenter.faccountBind !== nextProps.safeData.userSecurityCenter.faccountBind) {
       this.getBankCardListAjax(); // 获取用户绑定银行卡
     }
     if (this.props.accountId !== nextProps.accountId) {
@@ -395,10 +395,10 @@ export default class RealName extends React.Component {
   // 判断步骤
   _judgeAccount(safeData) {
     let step = 0;
-    if (safeData.userSecurityCenter.fCertification) {
+    if (safeData.userSecurityCenter.fidcardBind) {
       step = 1;
     }
-    if (safeData.userSecurityCenter.fThirdAccount) {
+    if (safeData.userSecurityCenter.faccountBind) {
       step = 2;
     }
     return step;
@@ -444,7 +444,7 @@ export default class RealName extends React.Component {
         <div>
           <LeftMenu param={this.props} />
           {
-            safeData.userSecurityCenter.fCertification !== undefined ?
+            safeData.userSecurityCenter.fidcardBind !== undefined ?
               <div className="fr uc-rbody">
                 <div className="real_title">
                   <span className="safeCenter_">安全中心</span>
@@ -459,9 +459,9 @@ export default class RealName extends React.Component {
                             <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                             <span className="left">身份认证</span>
                             <span className="middle">用于提升账户安全性，认证后不能修改</span>
-                            {!safeData.userSecurityCenter.fCertification ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
+                            {!safeData.userSecurityCenter.fidcardBind ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
                           </div>
-                          {safeData.userSecurityCenter.fCertification ?
+                          {safeData.userSecurityCenter.fidcardBind ?
                             <div className="personal" style={{background:'#f9f9f9'}}>
                               <span className="name">{safeData.fRealName}&nbsp;|</span>
                               <span className="id">{safeData.fIdcardNo}</span>
@@ -478,7 +478,7 @@ export default class RealName extends React.Component {
                             <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                             <span className="left">开通乾多多资金托管账户</span>
                             <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                            {!safeData.userSecurityCenter.fThirdAccount && safeData.userSecurityCenter.fCertification ? 
+                            {!safeData.userSecurityCenter.faccountBind && safeData.userSecurityCenter.fidcardBind ? 
                             <a className="right" onClick={() => this.props.history.push(OPENQACCOUNT)}>开通账户</a>
                              : null} 
                           </div>
@@ -486,10 +486,10 @@ export default class RealName extends React.Component {
                             <img alt="" src={require('../../assets/img/ucenter/u4288.png')} />
                           </div>
                           {
-                            safeData.userSecurityCenter.fThirdAccount ?
+                            safeData.userSecurityCenter.faccountBind ?
                           
                               <div className="personal" style={{ marginTop: 0,background:'#f9f9f9'}}>
-                                <span style={{ color: 'black',color:'#999999' }} >你的乾多多账户:{safeData.fThirdAccountNo}</span>
+                                <span style={{ color: 'black',color:'#999999' }} >你的乾多多账户:{safeData.faccountBindNo}</span>
                                 <div className="findPass">
                                   <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: !this.state.showMMMChangepayPassword })}>找回乾多多支付密码 </span>
                                   <span className="line" >|</span>
@@ -583,7 +583,7 @@ export default class RealName extends React.Component {
                   </Steps>
                 </div>
               </div> : null}
-              {safeData.userSecurityCenter.fThirdAccount ?
+              {safeData.userSecurityCenter.faccountBind ?
                   <div className="fr uc-rbody" style={{ marginTop: '30px', padding: '0' }}>
                     <div className="safeCenter">
                       <div className="line">

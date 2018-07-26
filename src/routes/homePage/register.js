@@ -340,7 +340,7 @@ export default class Register extends React.Component {
                     </div>
                     <div className="row relative" style={{marginBottom:15}}>
                       <input className="put" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
-                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}} onBlur={()=>{this.checkInfo()}}/>
+                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2,width:329}} onBlur={()=>{this.checkInfo()}}/>
                             {
                               this.state.regAuthErr ?
                              <p className="prompts" style={{marginLeft:0}}>{this.state.regAuthErr}</p> :
@@ -364,7 +364,7 @@ export default class Register extends React.Component {
                             name="regPwd" onChange={(e) => this.setState({regPwd: e.target.value})}
                             placeholder="请设置登录密码" onBlur={()=>{this.checkInfo()}}/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
-                           <i className="zjb zjb-mimakejian" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('show')}}></i>
+                           <i className="zjb zjb-mimakejian" style={{position:'absolute',top:'4px',right:'78px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('show')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
                              </div>:
 
@@ -373,7 +373,7 @@ export default class Register extends React.Component {
                             name="regPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
                             placeholder="请设置登录密码" onBlur={()=>{this.checkInfo()}}/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
-                           <i className="zjb zjb-htmal5icon08" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('hide')}}></i>
+                           <i className="zjb zjb-htmal5icon08" style={{position:'absolute',top:'4px',right:'78px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('hide')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
                              </div>
                             

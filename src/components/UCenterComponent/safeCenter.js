@@ -381,30 +381,30 @@ export default class SafeCenter extends React.Component {
             <div className="line">
               <div className="block1">
                 {
-                  !!safeData.userSecurityCenter.fCertification?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                  !!safeData.userSecurityCenter.fidcardBind?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
                 }
 
                 <span className="word">实名认证</span>
                 {
-                  !!safeData.userSecurityCenter.fCertification?<span className="icon">V</span>:<span className="icon1">V</span>
+                  !!safeData.userSecurityCenter.fidcardBind?<span className="icon">V</span>:<span className="icon1">V</span>
                 }
               </div>
-              <div className="block2">{!!safeData.userSecurityCenter.fCertification?`您认证的实名信息：${safeData.fRealName}`:'您还未实名认证，请尽快去认证'}</div>
-              <div className="block3">{!!safeData.userSecurityCenter.fCertification?'已认证':<span>认证</span>}</div>
+              <div className="block2">{!!safeData.userSecurityCenter.fidcardBind?`您认证的实名信息：${safeData.fRealName}`:'您还未实名认证，请尽快去认证'}</div>
+              <div className="block3">{!!safeData.userSecurityCenter.fidcardBind?'已认证':<span>认证</span>}</div>
             </div>
 
             <div className="line">
               <div className="block1">
                 {
-                  !!safeData.userSecurityCenter.fThirdAccount?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
+                  !!safeData.userSecurityCenter.faccountBind?<Icon type="check" className="i1"/>:<Icon type="warning" className="i2" />
                 }
                 <span className="word">第三方开户</span>
                 {
-                  !!safeData.userSecurityCenter.fThirdAccount?<span className="icon">V</span>:<span className="icon1">V</span>
+                  !!safeData.userSecurityCenter.faccountBind?<span className="icon">V</span>:<span className="icon1">V</span>
                 }
               </div>
-              <div className="block2">{!!safeData.userSecurityCenter.fThirdAccount?'您已开通第三方开户，此信息不可更改':'您还未验证第三方开户，建议您尽快去开通'}</div>
-              <div className="block3">{!!safeData.userSecurityCenter.fThirdAccount?'已开通':<Link to={Path.OPEN_ACCOUNT+'/0'}>开通</Link>}</div>
+              <div className="block2">{!!safeData.userSecurityCenter.faccountBind?'您已开通第三方开户，此信息不可更改':'您还未验证第三方开户，建议您尽快去开通'}</div>
+              <div className="block3">{!!safeData.userSecurityCenter.faccountBind?'已开通':<Link to={Path.OPEN_ACCOUNT+'/0'}>开通</Link>}</div>
             </div>
 
             <div className="line">
