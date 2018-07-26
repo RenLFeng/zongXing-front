@@ -110,14 +110,14 @@ class LoginInfo extends React.Component {
                                         <span className="nickname">{baseData.realName ? baseData.realName : '未认证'}</span>
                                         <span className="split">|</span>
 
-                                        <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fMobileBinding ? 'active' : ''}`}></i>
+                                        <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fmobileBind ? 'active' : ''}`}></i>
                                         {
-                                            baseData.userSecurityCenter.fCertification ? 
+                                            baseData.userSecurityCenter.fidcardBind ? 
                                             <i title="身份证认证" className="zjb zjb-moban active"></i>:
                                             <i title="身份证认证" className="zjb zjb-moban" onClick={()=>{this.props.history.push(Path.REALNAME_AUTHENTICATION)}}></i>
                                         }
                                         {
-                                            baseData.userSecurityCenter.fBankCardBinding ?  
+                                            baseData.userSecurityCenter.fbankCardBind ?  
                                             <i title="银行卡绑定" className="zjb zjb-icon active"></i> :
                                             <i title="银行卡绑定" className="zjb zjb-icon " onClick={()=>{this.props.history.push(Path.BINDCARD)}}></i> 
                                         }
@@ -171,11 +171,11 @@ class LoginInfo extends React.Component {
                                          } 
                                     </div>
                                 </div>
-                                {baseData.userSecurityCenter.fThirdAccount ?
+                                {baseData.userSecurityCenter.faccountBind ?
 
                                     <Button className="buttonl" style={{ width: '64px', height: '34px' }} onClick={() => this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
                                 }
-                                {baseData.userSecurityCenter.fThirdAccount ?
+                                {baseData.userSecurityCenter.faccountBind ?
 
                                     <Button type="primary" className="buttonl" style={{ width: '64px', height: '34px' }} onClick={() => this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null
                                 }
