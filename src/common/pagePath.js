@@ -49,6 +49,8 @@ export default {
 
 //信息披露
   Letter_Statement:'/index/infor/letterstatement',//信披声明
+  Compliance_Letter:'/index/infor/complianceLetter',//合规经营承诺书
+  Compliance_Report:'/index/infor/complianceReport',//合规经营报告
   OPEATE_DATA: '/index/infor/operateData', //运营数据
   BUSINESS_INFORMATION: '/index/infor/businessInformation',   //运营信息
   AUDIT_INFORMATION: '/index/infor/auditInformation',   //审核信息
@@ -56,6 +58,8 @@ export default {
   Fee_Scale:'/index/infor/feeScale',//收费标准
   ORGANIZATIONAL_INFORMATION: '/index/infor/organizationInformation',  //组织信息页面
   PROJECT_INFORMATION: '/index/infor/projectInformation',   //项目信息
+  Audit_Information:'/index/infor/auditInformation',//审计信息
+  Risk_Warning:'/index/infor/riskwarning',//风险提醒告知书
   FINANCIAL_STATEMENTS: '/index/infor/financialStatements', //财务报表
 // 关于我们
   COMPANY_INTRODUCTION: '/index/infor/companyIntroduction',  //公司介绍
@@ -64,10 +68,11 @@ export default {
   ENTERPRISE_WILL: '/index/infor/enterpriseWill', //企业意愿
   SERVICE_IDEA:'/index/infor/serviceIdea', //服务理念
   CONTACT_US: '/index/infor/contactUs', //联系我们
-// 法律法规
+// 法律法务
   LAWS_REGULATION: '/index/infor/lawsRegulations', //法律法规
   LEGAL_SUPPORT: '/index/infor/legalSupport',//法务支持
   RISK_MANAGEMENT: '/index/infor/riskManagement',//风险控制
+  LEGAL_DECLARATION: '/index/infor/legalDeclaration',//法律声明
   SAFE_GUARANTEE: '/index/infor/safeGuarantee',//安全保障
   TERM_SERVICE: '/index/infor/termService',//服务条款
 // 合作伙伴

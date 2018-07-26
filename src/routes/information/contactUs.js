@@ -4,9 +4,6 @@ import '../../assets/infor/contactUs/contactUs.scss'
 export default class ContactUs extends React.Component {
   render() {
     return (
-      <div className="infor">
-        <div  className="w clearfix">
-          {/* <LeftMenu param={this.props}/> */}
           <div className="fr conUs">
             <h2><span>联系我们</span></h2>
             <div className="map">
@@ -30,8 +27,6 @@ export default class ContactUs extends React.Component {
                 <li><span className="code"><img src={require("../../assets/img/infor/con_q1.png")} alt=""/></span><span>众杰帮交流群</span></li>
               </ul>
             </div>
-          </div>
-        </div>
       </div>
 
     );

@@ -4,9 +4,6 @@ import '../../assets/infor/common/textInfo.scss'
 export default class LetterStatement extends React.Component{
   render(){
     return(
-      <div className="infor">
-        <div  className="w clearfix ">
-          {/* <LeftMenu param={this.props}/> */}
           <div className="fr lett">
             <h2><span>信披声明</span><i></i><span className="last"></span></h2>
               <div className="container">
@@ -20,16 +17,14 @@ export default class LetterStatement extends React.Component{
                       另外，通过众杰帮信息服务平台，吸引理性智慧的投资者，把大家闲置的资金投入到小微企业的发展中，一起实现万众创新、全民创业的中国梦。也给参与的投资者，带来参与感、归属感、荣誉感、和成就感。
                       众杰帮，是您身边的投资专家，也是您融资和拓展业务的新渠道。
                     </p>
-                    <div className="right-info">
-                      <p className="ltd">深圳众鑫互联网金融服务有限公司</p>
-                      <p className="name">法定代表人：</p>
-                      <p className="day">2108年5月1日</p>
-                    </div>
+                  </div>
+                  <div className="right-info">
+                    <p className="ltd">深圳众鑫互联网金融服务有限公司</p>
+                    <p className="name">法定代表人：</p>
+                    <p className="day">2108年5月1日</p>
                   </div>
                 </div>
               </div>
-          </div>
-        </div>
       </div>
     )
   }

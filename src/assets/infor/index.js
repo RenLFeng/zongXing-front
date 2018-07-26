@@ -4,4 +4,10 @@ export function startAnimate() {
   bindEvent();
 }
 function initPage(){}
-function bindEvent(){}
+function bindEvent(){
+
+  $(".fl.infor >p.t2").on("click",function(){
+    $(this).addClass("act").siblings().removeClass("act");
+  });
+
+}

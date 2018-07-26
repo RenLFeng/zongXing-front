@@ -280,9 +280,6 @@ export default class OperateData extends React.Component {
   }
   render() {
     return (
-      <div className="infor">
-        <div  className="w clearfix">
-          {/*<LeftMenu param={this.props}/>*/}
           <div className="fr opDa">
             <h2><span>信息披露</span><i>></i><span className="last">运营信息</span></h2>
             {/*top1*/}
@@ -447,8 +444,6 @@ export default class OperateData extends React.Component {
               </div>
               <p style={{textAlign:"center"}}>&nbsp;数据截止至 <span>2018-06-25</span></p>
             </div>
-          </div>
-        </div>
       </div>
     );
   }
