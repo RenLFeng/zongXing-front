@@ -448,7 +448,7 @@ export default class RealName extends React.Component {
               <div className="fr uc-rbody">
                 <div className="real_title">
                   <span className="safeCenter_">安全中心</span>
-                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
+                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fcreateTime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
                   <Steps progressDot direction="vertical" current={this._judgeAccount(safeData)}>
@@ -568,6 +568,7 @@ export default class RealName extends React.Component {
                               })}
                             {/* 绑定银行卡 */}
                               {this.props.accountId ?
+                               (this.state.cardList.length < 5) ? 
                               <div className="unbind_div" onClick={() => this.props.history.push(BINDCARD)} >
                                 <i className="zjb zjb-add icon-plus"></i>
                                 <span className="bind_new_bank" >绑定新银行卡</span>
@@ -575,7 +576,7 @@ export default class RealName extends React.Component {
                                   className="bind_new_bank"
                                   style={{ color: '#e6e6e6', fontSize: 14 ,color:'#e6e6e6'}}
                                 >(只支持储蓄卡)</span>
-                              </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}                               
+                              </div> : null : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}                               
                           </div>                          
                         </div>
                       }

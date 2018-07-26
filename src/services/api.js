@@ -742,8 +742,8 @@ export async function checkEmail(param) {
   return request(`${BASE_URL}/userInfo/checkEmail?email=${param}`);
 }
 //邮箱绑定
-export async function bindEmail(param) {
-  return request(`${BASE_URL}/userInfo/bindEmail?email=${param}`);
+export async function bindEmail(param,params) {
+  return request(`${BASE_URL}/userInfo/bindEmail?email=${param}&authCode=${params}`);
 }
 
 //更改邮箱

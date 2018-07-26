@@ -41,6 +41,7 @@ export default class AccountStatement extends React.Component{
   }
 
   componentDidMount() {
+    console.log("-----------------------------------------")
     if (this.props.openStatus == 3) {
       this.getCapitalDynamics();  //调用请求
       this.props.history.push('/index/uCenter/authentication')
