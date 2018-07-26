@@ -8,9 +8,6 @@ const Panel = Collapse.Panel;
 export default class RecordInformation extends React.Component {
 	render() {
 		return (
-      <div className="infor">
-        <div  className="w clearfix">
-          {/* <LeftMenu param={this.props}/> */}
           <div className="fr recor">
             <h2><span>备案信息</span></h2>
             {/*登记情况*/}
@@ -18,11 +15,11 @@ export default class RecordInformation extends React.Component {
               <p className="tit">在地方金融监管部门的备案登记情况</p>
               <p></p>
               <ul>
-                <li className="act"><span></span><span>备案材料准备</span></li>
-                <li><span><i></i></span><span>备案材料提交</span></li>
-                <li><span><i></i></span><span>备案材料审核</span></li>
-                <li><span><i></i></span><span>备案通过</span></li>
-                <li><span><i></i></span><span>备案登记核发</span></li>
+                <li className="act"><span>1</span><span>备案材料准备</span></li>
+                <li><span>2</span><span>备案材料提交</span></li>
+                <li><span>3</span><span>备案材料审核</span></li>
+                <li><span>4</span><span>备案通过</span></li>
+                <li><span>5</span><span>备案登记核发</span></li>
               </ul>
             </div>
             {/*许可情况*/}
@@ -74,8 +71,6 @@ export default class RecordInformation extends React.Component {
                 <li className="text">XXX银行存管系统升级</li>
               </ul>
             </div>
-          </div>
-        </div>
       </div>
 		);
 	}

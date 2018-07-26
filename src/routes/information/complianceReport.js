@@ -1,16 +1,17 @@
 import React from 'react';
 import LeftMenu from './leftMenu';
 import '../../assets/infor/common/textInfo.scss'
-export default class AuditInformation extends React.Component{
+export default class ComplianceReport extends React.Component{
   render(){
     return(
-          <div className="fr auditInfo">
-            <h2><span>审计信息</span><i></i><span className="last"></span></h2>
+          <div className="fr Creport">
+            <h2><span>合规经营报告</span><i></i><span className="last"></span></h2>
             <div className="container" style={{height:'1000px'}}>
               <div className="content-box">
                 <div className="content">
-                  <p className="tit">审计信息</p>
+                  <p className="tit">合规经营报告</p>
                   <p className="textInfo">
+
                   </p>
                 </div>
                 <div className="right-info">
