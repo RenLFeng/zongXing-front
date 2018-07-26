@@ -97,7 +97,7 @@ export default class Authentication extends React.Component {
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
 
     return (
-      <div className="pages">
+      <div className="pages" style={{width: '1246px'}}>
         <div className="real_title_">
           <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>安全中心</span>
           <span style={{fontSize: 16}}>&gt; 身份认证 &gt; 居民身份认证</span>

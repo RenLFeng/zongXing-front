@@ -589,7 +589,7 @@ export default class RealName extends React.Component {
                     <div className="safeCenter">
                       <div className="line">
                         <div className="block1">
-                         <i className="zjb zjb-duihao" style={{color:'#4cc261',fontSize:27,marginRight:10,verticalAlign:'middle',lineHeight:'20px',position:'relative',top:-2}}></i> 
+                        <i className={`zjb ${status.indexOf('3') !== -1?'zjb-duihao':'zjb-jinggao1'}`} style={{ color: `${status.indexOf('3') !== -1?'#4cc261':'#FFCB15'}`}}></i> 
                           <span className="word" style={{lineHeight:'20px'}}>二次分配授权</span>
                           <i className="zjb zjb-renzheng " style={{fontSize:27,color:'#ffcb15',marginRight:5,verticalAlign:'middle',lineHeight:'20px',position:'relative',top:-3,left:1}}></i> 
                         </div>
@@ -606,7 +606,6 @@ export default class RealName extends React.Component {
               <i className="zjb zjb-moban"></i>
               <h3 onClick={()=>{this.props.history.push(USER_BASIC)}}>基础资料</h3>
               <p>完善个人资料，增强账户安全等级</p>
-              <p><span>****</span>*</p>
             </div>
 
             <div className="baseInfo">
