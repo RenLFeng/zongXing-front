@@ -81,14 +81,14 @@ export default class SafeCenter extends React.Component {
         <div className="safeCenter">
           <div className="tab-row">
             <div><span>实名认证</span></div>
-            <div>{!!safeData.securityCenter.fCertification?<SuccessAuth/>:<FailAuth/>}</div>
+            <div>{!!safeData.securityCenter.fidcardBind?<SuccessAuth/>:<FailAuth/>}</div>
             <div><span>{safeData.fRealName} {safeData.fIdcardNo?`(${safeData.fIdcardNo})`: null}</span></div>
             <div><a onClick={()=>this.setState({nameAuth: true})}>认证</a></div>
           </div>
           <div className="tab-row">
             <div><span>第三方开户</span></div>
-            <div>{!!safeData.securityCenter.fThirdAccount?<SuccessAuth/>:<FailAuth/>}</div>
-            <div><span>{safeData.fThirdAccountName}</span></div>
+            <div>{!!safeData.securityCenter.faccountBind?<SuccessAuth/>:<FailAuth/>}</div>
+            <div><span>{safeData.faccountBindName}</span></div>
             <div><Link to={`/personal`}>开通</Link></div>
           </div>
           <div className="tab-row">

@@ -95,8 +95,6 @@ export default class Login extends React.Component {
   pressKey(e) {
     if (e.keyCode === 13) {
       this.submitLogin();
-    } else {
-
     }
   }
 
@@ -222,9 +220,9 @@ export default class Login extends React.Component {
         <div className="back">
                 <div className="form logf" onChange={this.onChange}>
                   <div className="hd center">
-                    <a className="hover">欢迎登录</a>
+                    <a className="hover" style={{marginLeft:-60}}>欢迎登录</a>
                   </div>
-                  <Spin tip="登录中..." spinning={this.props.submitting}>
+                  <Spin tip="登录中..." spinning={this.props.submitting} >
                     <div className="row" style={{position:'relative'}}>
                       <input className="put" value={loginPhone} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"

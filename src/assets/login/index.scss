@@ -127,7 +127,7 @@
   }
     .getvc {
         position: absolute;
-        right: 0;
+        right: 70px;
         top: 0;
         background-color: #ff9900;
         color: #fff;
@@ -150,6 +150,7 @@
         line-height: 42px;
         font-size: 14px;
         border-radius: 6px;
+        width:329px;
     }
   .btns{
 
@@ -252,6 +253,11 @@
         top:-160px;
         left:300px;
     }
+
+    .ant-spin-container{
+        width:400px;
+    }
+    
 }
 .back_{
     position: absolute;
@@ -588,3 +594,4 @@
         background: #0F9B30;
     }
 }
+

@@ -47,7 +47,7 @@ if (build === 'production') {
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
   REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
   PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
-  TURN_BACK = 'http://192.168.1.192:8001'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
+  TURN_BACK = `http://${window.location.host}`; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
   LIMIT_MOENY = false;
   AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 
@@ -177,9 +177,9 @@ export const COMPLETE_PAGE_SIZE = 8;
 // 正在筹款项目一页显示个数
 export const ING_PAGE_SIZE = 6;
 // 已完成项目 flag3
-export const COMPLETE_PROJECT_FLAG = 13;
+export const COMPLETE_PROJECT_FLAG = 16;
 
-export const ING_PROJECT_FLAG = 10;
+export const ING_PROJECT_FLAG = 13;
 //搜索项目时的默认值 分别是 信用等级 年华收益率 借款周期 项目名称
 export const PROJECT_LEAVE_CODE = '';
 export const PROJECT_RATE = -1;

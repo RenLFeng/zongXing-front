@@ -122,9 +122,9 @@ export default class CompanyDiscount extends React.Component {
         <div className="w cats clearfix">
           <i className="tit">行业筛选</i>
           {
-            this.state.bussiness.map((data)=>{
+            this.state.bussiness.map((data,index)=>{
               return (
-                <a className={data.show?'hover': ''} onClick={()=>{if (data.show){return;} this.changeBusType(data.val)}}>{data.text}</a>
+                <a key={index} className={data.show?'hover': ''} onClick={()=>{if (data.show){return;} this.changeBusType(data.val)}}>{data.text}</a>
               )
             })
           }

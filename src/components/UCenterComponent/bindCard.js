@@ -53,6 +53,7 @@ class BindCard extends React.Component {
       inputDisabled: true, // 标记input 是否可用
       bankCardNo: '', // 银行卡号
       userBaseInfo: null, // 当前登录用户的信息
+      message:''
     };
   }
   componentDidMount() {
@@ -241,22 +242,36 @@ class BindCard extends React.Component {
     }
     this.setState({commmitLoading: true});
     const response = await bindBankCard({
-      fbankCode: this.state.openName,
-      fcityCode: this.state.cityId,
-      fprovinceCode: this.state.provinceId,
-      fbankType: this.state.fbankType, // 银行类型id
-      faccountId: this.props.accountId,
-      idcard: this.state.idcard,
-      realname: this.state.realname,
-      fbankcard: this.state.bankCard.trim(),
-      fcardType: this.state.cardType
+      accountBankCard:{
+        fbankCode: this.state.openName,
+        fcityCode: this.state.cityId,
+        fprovinceCode: this.state.provinceId,
+        fbankType: this.state.fbankType, // 银行类型id
+        faccountId: this.props.accountId,
+        idcard: this.state.idcard,
+        realname: this.state.realname,
+        fbankcard: this.state.bankCard.trim(),
+        fcardType: this.state.cardType
+      },
+      userPassword:this.state.userPassword 
     });
     this.setState({commmitLoading: false});
     if (response.code === 0) {
+      message.info('绑定银行卡成功')
       this.props.history.push('/index/uCenter/realName');
     } else {
       response.msg && message.error(response.msg);
     }
+  }
+   //校验登陆密码
+   checkPass(val){
+    console.log('mima',val) 
+     if(!pass_reg.test(val)){
+       this.setState({ message:'密码输入不正确'})
+     return
+     } else {
+       this.setState({message:''})
+     }
   }
 
   /** 按名称给银行排序 */
@@ -332,10 +347,15 @@ class BindCard extends React.Component {
             <span/>
             <div className="bind_password" style={{paddingLeft: 10}}>
               <i className="zjb zjb-mima2" />
-              <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})}/>
+              <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})} onBlur={()=>this.checkPass(this.state.userPassword)}/>
               <i className="zjb zjb-htmal5icon08" onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
+              {
+                this.state.message ? 
+                <p style={{color:'red',marginTop:-10}}>{this.state.message}</p> : <p>&nbsp;</p>
+              }
             </div>
           </div>
+
           <div className="bind_item_view">
             <span/>
             <div className="bind_desc">
