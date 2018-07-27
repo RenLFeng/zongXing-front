@@ -4,6 +4,7 @@ import BarReact from '../../components/Echarts/BarReact.js';
 import MapReact from '../../components/Echarts/MapReact.js';
 import PieReact from '../../components/Echarts/PieReact.js';
 import LeftMenu from './leftMenu';
+import {OPERATION_INFORMATION} from '../../common/pagePath'
 import '../../assets/infor/index';
 export default class OperateData extends React.Component {
   constructor(props) {
@@ -281,7 +282,7 @@ export default class OperateData extends React.Component {
   render() {
     return (
           <div className="fr opDa">
-            <h2><span>运营信息</span><i>></i><span className="last">运营数据</span></h2>
+            <h2><span className="first" onClick={()=>{this.props.history.push(OPERATION_INFORMATION)}}>运营信息</span><i>></i><span className="last">运营数据</span></h2>
             {/*top1*/}
             <div className="top1 item">
               <ul className="tp1">

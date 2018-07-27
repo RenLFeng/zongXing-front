@@ -17,6 +17,13 @@
       i{
         margin: 0 15px;
       }
+      .first{
+        cursor: pointer;
+        border: none;
+      }
+      .first:hover{
+        color:#f90;
+      }
       .last{
         font-size: 16px;
         color:#555;

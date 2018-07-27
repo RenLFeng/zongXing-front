@@ -1,11 +1,12 @@
 import React from 'react';
+import {ORGANIZATIONAL_INFORMATION} from '../../common/pagePath'
 import LeftMenu from './leftMenu';
 import '../../assets/infor/information/import.scss'
 export default class ImportantMatters extends React.Component {
   render() {
     return (
       <div className="fr import">
-        <h2><span>组织信息</span><i>></i><span>重大事项</span></h2>
+        <h2><span className="first"  onClick={()=>{this.props.history.push(ORGANIZATIONAL_INFORMATION)}}>组织信息</span><i>></i><span className="last">重大事项</span></h2>
         <div className="wrap">
           <ul>
             <li><span>公司减资、合并、分立、解散或申请破产;</span><span>无</span></li>
