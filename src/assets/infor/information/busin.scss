@@ -2,6 +2,66 @@
   >.w{
     .busin{
       .warp{
+        li{
+          margin-top: 2px;
+          span{
+            font-size: 14px;
+            color:#696969;
+            background: #f8f8f8;
+            display: inline-block;
+            height:45px;
+            line-height:45px;
+            text-align: left;
+            padding: 0 15px;
+            float: left;
+          }
+          span.bg5{
+            background: #f5f5f5;
+          }
+        }
+        li.addr{
+          span{
+            height:80px;
+            line-height: 25px;
+          }
+          span:nth-child(1),span:nth-child(3){
+            line-height: 75px;
+          }
+
+        }
+        li.scope{
+          span{
+            height:162px;
+            line-height: 26px;
+          }
+          span:nth-child(1){
+            line-height: 155px;
+          }
+        }
+        .two{
+          span:first-of-type{
+            width:24%;
+          }
+          span:last-of-type{
+            width: 75.7%;
+            margin-left: .3%;
+          }
+        }
+        .four{
+          span:first-of-type{
+            width:24%;
+          }
+          span:nth-child(2),span:nth-child(3),span:nth-child(4){
+            width:25.1%;
+            margin-left: .3%;
+          }
+          span:nth-child(3){
+            margin-left: .2%;
+          }
+          span:nth-child(4){
+          margin-left: .2%;
+          }
+        }
       }
     }
   }

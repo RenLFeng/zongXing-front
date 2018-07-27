@@ -2,12 +2,12 @@ import React from 'react';
 import {Icon} from 'antd';
 import LeftMenu from './leftMenu';
 import '../../assets/infor/information/organ.scss'
-import {BUSINESS_INFORMATION,IMPORTANT_MATTERS,OFFICIAL_CHANNEL,AFFILIATED_AGENCY} from '../../common/pagePath'
+import {BUSINESS_INFORMATION,IMPORTANT_MATTERS,OFFICIAL_CHANNEL,AFFILIATED_AGENCY,ORGANIZATIONAL_STRUCTURE} from '../../common/pagePath'
 export default class OrganizationInformation extends React.Component{
   render(){
     return(
       <div className="fr organ">
-        <h2><span>组织信息</span><i></i><span className="last"></span></h2>
+        <h2><span calssName="first">组织信息</span><i></i><span className="last"></span></h2>
         <div className="warp">
           <ul className="item box1">
             <li>
@@ -19,7 +19,7 @@ export default class OrganizationInformation extends React.Component{
               <span>股东信息</span>
             </li>
             <li>
-              <span><Icon type="team" /></span>
+              <span onClick={()=>{this.props.history.push(ORGANIZATIONAL_STRUCTURE)}}><Icon type="team" /></span>
               <span>组织架构</span>
             </li>
             <li>
