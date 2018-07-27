@@ -116,15 +116,15 @@ class UserBaseFormInput extends React.Component {
             fheadPic:values.fhead_pic?values.fhead_pic:''
           },
           userInfo: {
-            fMarital: values.fMarital * 1,
-            fDeucation: values.fDeucation,
-            fQQ: values.fQQ,
-            fWeichat: values.fweichat,
-            fAddress: values.fAddress,
-            fGender: values.fGender,
-            fCityCode,
-            fJob: values.fJob,
-            fHobby: values.fHobby.join(',')
+            fmarital: values.fMarital * 1,
+            fdeucation: values.fDeucation,
+            fqq: values.fQQ,
+            fweichat: values.fweichat,
+            faddress: values.fAddress,
+            fgender: values.fGender,
+            fcityCode:values.fCityCode,
+            fjob: values.fJob,
+            fhobby: values.fHobby.join(',')
           }
         };
         const response = await saveUserBase(userBase);

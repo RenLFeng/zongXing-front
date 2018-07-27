@@ -115,7 +115,7 @@ export default class BindEmail extends React.Component {
       return
     }
     this.setState({sureloading:true})
-    const response = await bindEmail(email);
+    const response = await bindEmail(email,code);
     if(response.code === 0){
       this.setState({
         firstShow:false,

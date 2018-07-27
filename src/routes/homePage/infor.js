@@ -6,14 +6,21 @@ import {Button} from 'antd';
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import LeftMenu from '../information/leftMenu';
 //信息披露
-import OperateData from '../information/operateData';
+
 import ComplianceLetter from '../information/complianceLetter';
 import ComplianceReport from '../information/complianceReport';
 import LetterStatement from '../information/letterstatement';
-import BusinessInformation from '../information/businessInformation';
+import OperationInformation from '../information/operationInformation';
+import OperateData from '../information/operateData';
+import OperationalReport from '../information/operationalReport';
 import RecordinFormation from '../information/recordInformation';
 import FeeScale from '../information/feeScale';
 import OrganizationInformation from '../information/organizationInformation';
+import BusinessInformation from '../information/businessInformation'
+import ImportantMatters from '../information/importantMatters'
+import OfficialChannel from '../information/officialChannel'
+import AffiliatedAgency from '../information/affiliatedAgency'
+
 import ProjectInformation from '../information/projectInformation';
 import AuditInformation from '../information/auditInformation';
 import RiskWarning from '../information/riskWarning';
@@ -21,9 +28,10 @@ import FinancialStatements from '../information/financialStatements';
 //关于我们
 import CompanyIntroduction from '../information/CompanyIntroduction.js';
 import PlantNotice from '../information/plantNotice';
-//import ManagementTeam from '../information/managementTeam';
-//import EnterpriseWill from '../information/enterpriseWill';
+import ManagementTeam from '../information/managementTeam';
+import EnterpriseWill from '../information/enterpriseWill';
 //import ServiceIdea from '../information/serviceIdea';
+import JoinUs from '../information/joinUs';
 import ContactUs from '../information/contactUs';
 //法律法规
 import LawsRegulations from '../information/lawsRegulations';
@@ -78,9 +86,12 @@ export default class Infor extends React.Component {
             <Route path={Path.Compliance_Letter}  component={ComplianceLetter} />
             {/*合规经营报告*/}
             <Route path={Path.Compliance_Report}  component={ComplianceReport} />
+            {/* 运营信息 */}
+            <Route path={Path.OPERATION_INFORMATION}  component={OperationInformation} />
             {/* 运营数据 */}
             <Route path={Path.OPEATE_DATA}  component={OperateData} />
-            {/* 运营信息 */}
+            {/* 运营报告 */}
+            <Route path={Path.OPERATIONAL_REPORT}  component={OperationalReport} />
             {/* 审核信息 */}
             <Route path={Path.Audit_Information}  component={AuditInformation} />
             {/* 风险提醒告知书 */}
@@ -89,14 +100,25 @@ export default class Infor extends React.Component {
             <Route path={Path.RECORD_INFORMATION}  component={RecordinFormation} />
             {/* 收费标准 */}
             <Route path={Path.Fee_Scale}  component={FeeScale} />
-            {/* 组织信息页面 */}
-            {/* 项目信息 */}
-            {/* 财务报表 */}
+            {/* 组织信息*/}
+            <Route path={Path.ORGANIZATIONAL_INFORMATION}  component={OrganizationInformation} />
+            {/* 工商信息*/}
+            <Route path={Path.BUSINESS_INFORMATION}  component={BusinessInformation} />
+            {/* 重大事项 */}
+            <Route path={Path.IMPORTANT_MATTERS}  component={ImportantMatters} />
+            {/* 分支机构 */}
+            <Route path={Path.AFFILIATED_AGENCY}  component={AffiliatedAgency} />
+            {/* 官方渠道 */}
+            <Route path={Path.OFFICIAL_CHANNEL}  component={OfficialChannel} />
             {/* 公司介绍 */}
             <Route path={Path.COMPANY_INTRODUCTION}  component={CompanyIntroduction} />
             {/* 平台公告页面 */}
             {/* 管理团队 */}
-            {/* 企业意愿 */}
+            <Route path={Path.MANAGEMENT_TEAM}  component={ManagementTeam} />
+            {/* 加入我们 */}
+            <Route path={Path.JOIN_US}  component={JoinUs} />
+            {/* 企业文化 */}
+            <Route path={Path.ENTERPRISE_WILL}  component={EnterpriseWill} />
             {/* 服务理念 */}
             <Route path={Path.CONTACT_US}  component={ContactUs} />
             {/* 法律法规 */}

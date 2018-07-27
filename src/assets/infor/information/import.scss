@@ -1,0 +1,30 @@
+.infor{
+  >.w{
+    .wrap{
+      border-top:1px solid #f0f0f0;
+      li{
+        width:100%;
+        height:auto;
+        line-height: 45px;
+        font-size: 14px;
+        color:#696969;
+        border:1px solid #f0f0f0;
+        border-top:none;
+        span{
+          display: inline-block;
+          height:100%;
+          border-left:1px solid #f0f0f0;
+        }
+        span:first-of-type{
+          width: 90%;
+          border-left: none;
+          padding-left: 20px;
+        }
+        span:last-of-type{
+          width: 8%;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

@@ -281,7 +281,7 @@ export default class OperateData extends React.Component {
   render() {
     return (
           <div className="fr opDa">
-            <h2><span>信息披露</span><i>></i><span className="last">运营信息</span></h2>
+            <h2><span>运营信息</span><i>></i><span className="last">运营数据</span></h2>
             {/*top1*/}
             <div className="top1 item">
               <ul className="tp1">
