@@ -68,7 +68,7 @@ export default class ProjectDetail extends React.Component {
           questionCount: response.data.questionCount
         }
       })
-    }
+    } 
   }
 
   render() {
@@ -99,7 +99,7 @@ export default class ProjectDetail extends React.Component {
           </div>
           <div className="fr rbody">
             <Right
-              
+              ref={ref=>this.right=ref}
               projectDetail={projectDetail}
               history={this.props.history}
               time={{countDay: this.state.countDay, countDown: this.state.countDown}}

@@ -8,6 +8,7 @@ import {getPersonalMoney, alreadyInvested, setProjectCollection} from '../../ser
 import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
 
+@connect(()=>({}))
 export default class Right extends React.Component {
   constructor(props){
     super(props);
@@ -101,12 +102,17 @@ export default class Right extends React.Component {
   }
 
 
-  async getPersonalMoney(fid) {
+  async getPersonalMoney_(fid) {
+    console.log('fid',fid)
     try {
       this.setState({loading: true});
       const response = await getPersonalMoney([fid]);
+      console.log('response',response)
       this.setState({loading: false});
       if (response.code === 0) {
+        console.log(123123123)
+        $('.pd-form').before('<div class="_masker"></div>');
+        $('.pd-form').removeClass('none');
         this.setState({
           personalMoney: response.data.accountInfo.fcapital+'',
           accountId: response.data.accountInfo.fid,
@@ -116,8 +122,8 @@ export default class Right extends React.Component {
           type: 'account/saveBalance',
           payload:  response.data.accountInfo.fcapital+'',
         })
-        $('.pd-form').before('<div class="_masker"></div>');
-        $('.pd-form').removeClass('none').css('top', av.top() + 50 + 'px');
+        
+        // this.props.history.push(Path.PERSONAL_ACCOUNT);
       } else if (response.code === -2) {
 
         this.props.history.push(Path.PERSONAL_ACCOUNT);
@@ -135,14 +141,25 @@ export default class Right extends React.Component {
 
   async getData(page) {
     //调用子级方法
-    this.dataModal.getCityInvest(this.props.projectDetail.fpeoject_id);
-    this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
-    this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
-    this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
+    // console.log(this.dataModal);
+    // this.dataModal.getCityInvest_(this.props.projectDetail.fpeoject_id);
+    // this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
+    // this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
+    // this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
+    if (this.state.Loading) {
+      return;
+    }
     this.setState({Loading:true})
     const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectDetail.fpeoject_id});
+    console.log('yitouzirenxinxi ', response)
     //判断请求状态
     if (response.code === 0) {
+     
+      this.props.dispatch({
+        type: 'account/updateCount'
+      });
+      $('.pd-data').before('<div class="_masker"></div>');
+      $('.pd-data').removeClass('none').css('top', av.top() + 50 + 'px');
       const maxPage = Math.ceil(this.props.projectDetail.userCount*1 / this.state.pageParam.pageSize *1 );
       this.setState({
         pageParam:{
@@ -154,8 +171,7 @@ export default class Right extends React.Component {
         maxPage: maxPage,
         Loading:false
       });
-      $('.pd-data').before('<div class="_masker"></div>');
-      $('.pd-data').removeClass('none').css('top', av.top() + 50 + 'px');
+     
     } else {
       this.setState({Loading:false})
       message.error(response.msg);
@@ -200,10 +216,10 @@ export default class Right extends React.Component {
             <p><b>分散：</b>投资项目尽量分散不同行业、不同地区、不同利率、不同借款周期。</p>
           </div>
           <div className="center bot1">
-            {this.props.onlyRead ? null :this.props.projectDetail.fflag !== 10 ?
+            {this.props.onlyRead ? null :this.props.projectDetail.fflag !== 13 ?
               <p className="clearfix">
                 <Button className="btn2" loading={this.state.loading} type="primary" style={{width: 130, height: 50}}
-                      onClick={() => this.getPersonalMoney(this.props.projectDetail.fpeoject_id)} >我要投资
+                      onClick={() => this.getPersonalMoney_(this.props.projectDetail.fpeoject_id)} >我要投资
                 </Button>
                 <Button className="y btn" loading={this.state.Loading} type="primary" style={{width: 130, height: 50}}
                        onClick={() => this.getData(1)} >已投资人数
@@ -222,15 +238,15 @@ export default class Right extends React.Component {
             <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys2.png')} /></li>
           </ul>
             <p className="center bot2">
-              <Button 
+              {/* <Button 
                 className="btn2" loading={this.state.loading} disabled={this.props.projectDetail.fflag != 10} type="primary" style={{width: 130, height: 50}}
                 onClick={() => {
-                  if (this.props.projectDetail.fflag != 10) {
+                  if (this.props.projectDetail.fflag != 13) {
                     return;
                   }
-                  this.getPersonalMoney(this.props.projectDetail.fpeoject_id);
+                  this.getPersonalMoney_(this.props.projectDetail.fpeoject_id);
                 }} >我要投资
-              </Button>
+              </Button> */}
               <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber}</a>
               <i className="share">
                 <span>32</span>
@@ -245,7 +261,15 @@ export default class Right extends React.Component {
         </div>
         }
         
-        <Data arr={this.state.arr} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} projectId={this.props.projectDetail.fpeoject_id}/>
+        <Data 
+          ref={ref=>this.dataModal=ref}
+          arr={this.state.arr} 
+          userCount={this.props.projectDetail.userCount} 
+          allMoney={this.props.projectDetail.allMoney} 
+          maxPage={this.state.maxPage} 
+          pageCurrent={this.state.pageParam.pageCurrent} 
+          projectId={this.props.projectDetail.fpeoject_id}
+        />
         <FormProject
           project={this.props.projectDetail}
           personalMoney={this.state.personalMoney}

@@ -131,6 +131,7 @@ export default class CountTime extends React.Component {
     this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
     this.dataModal.getInvest(this.props.projectDetail.fpeoject_id);
     const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectDetail.fpeoject_id});
+    console.log('游资时间',response)
   //判断请求状态
   if (response.code === 0) {
   const maxPage = Math.ceil(this.props.projectDetail.userCount*1 / this.state.pageParam.pageSize *1 );
