@@ -262,7 +262,7 @@ class UserBaseFormInput extends React.Component {
         <FormItem {...btnLayout} className="ant_submit">
           <Button
             style={{width: '230px', marginLeft: -100,fontSize: 16}}
-            type="primary" htmlType="submit" loading={this.props.param.loading}>提交</Button>
+            type="primary" htmlType="submit" loading={this.props.param.loading}>保存</Button>
         </FormItem>
       </Form>
     );
