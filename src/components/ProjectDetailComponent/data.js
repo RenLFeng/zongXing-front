@@ -33,6 +33,8 @@ export default class Data extends React.Component {
       maxPage: 0,
       arr: []
     }
+   
+  
   }
 
   componentWillReceiveProps(nextProps) {
@@ -48,7 +50,7 @@ export default class Data extends React.Component {
   // 获取以投资人数列表
   async getData(page) {
     //调用子级方法
-    this.getCityInvest(this.props.projectId);
+    this.getCityInvest_(this.props.projectId);
     this.getGender(this.props.projectId);
     this.getAge(this.props.projectId);
     this.getInvest(this.props.projectId);
@@ -73,7 +75,7 @@ export default class Data extends React.Component {
   }
 
   //获取所在城市结构相关数据
-  async getCityInvest(id) {
+  getCityInvest_ = async (id) => {
     const response = await getCityInvest(id);
     if(response.code === 0){
       if(response.data !== null){
@@ -85,7 +87,6 @@ export default class Data extends React.Component {
          cityShow:false,
         })
       }
-
     } else {
       response.msg && message.error(response.msg);
     }
@@ -93,7 +94,7 @@ export default class Data extends React.Component {
   }
 
   //获取性别
-  async getGender(id) {
+ getGender  = async (id) => {
     const response = await getGender(id);
     if(response.code === 0){
       if(response.data !== null){
@@ -112,7 +113,7 @@ export default class Data extends React.Component {
   }
 
   //获取年龄
-  async getAge(id) {
+   getAge = async (id) => {
     const response = await getAge(id);
     if(response.code === 0){
       if(response.data !== null){
@@ -130,7 +131,7 @@ export default class Data extends React.Component {
   }
 
   //获取投资额度
-  async getInvest(id) {
+ getInvest = async (id)  => {
     const response  = await getInvest(id);
     if(response.code === 0) {
       if(response.data !== null){
