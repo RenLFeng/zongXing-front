@@ -16,7 +16,7 @@ export default class Authentication extends React.Component {
       idcard: '',
       openName: '',
       num: 5, // 5秒后
-      // loading:false,
+      // loading:true,
       message1:"",
       message2:""
     };
@@ -123,8 +123,8 @@ export default class Authentication extends React.Component {
                     <span className="span_1">|</span>
                     <span className="prompts">{this.state.message2}</span>
                   </div>
-      
-                  <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button">立即身份认证</span>
+
+                  <Button onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button" style={{left: '474px',top: `${this.state.loading?'27px':'27px'}`}}>立即身份认证</Button>
                 </div>
             </div> :
           (this.state.showPage === 'ok') ?

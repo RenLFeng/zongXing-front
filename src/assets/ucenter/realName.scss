@@ -150,6 +150,7 @@
   .inp{
     .prompts{
         color:red;
+
     }
   }
   
@@ -225,7 +226,7 @@
     }
   }
   .Button{
-      position: absolute;
+      position: inherit;
       top:195px;
       left:450px;
       width:300px;
