@@ -1,0 +1,27 @@
+.infor{
+  >.w{
+    .platform_A{
+      .wrap{
+        border: none;
+        li{
+          border: none;
+          position: relative;
+          border-bottom:1px solid #f0f0f0;
+          i{
+            position: absolute;
+            top:0;
+            right:10px;
+          }
+          &:hover{
+            color:#f90;
+            cursor: pointer;
+          }
+        }
+      }
+      .ant-pagination{
+        text-align: center;
+        margin-top: 35px;
+      }
+    }
+  }
+}

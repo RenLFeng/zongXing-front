@@ -78,8 +78,10 @@ export default {
   MANAGEMENT_TEAM: '/index/infor/managementTeam', //管理团队
   ENTERPRISE_WILL: '/index/infor/enterpriseWill', //企业文化
   JOIN_US: '/index/infor/joinUs', //加入我们
-  SERVICE_IDEA:'/index/infor/serviceIdea', //服务理念
+  PLATFORM_ANNOUNCEMENT:'/index/infor/platformAnnouncement', //平台公告
+  BIG_EVENTS:'/index/infor/bigEvents', //大事记
   CONTACT_US: '/index/infor/contactUs', //联系我们
+  SERVICE_IDEA:'/index/infor/serviceIdea', //服务理念
 // 法律法务
   LAWS_REGULATION: '/index/infor/lawsRegulations', //法律法规
   LEGAL_SUPPORT: '/index/infor/legalSupport',//法务支持
