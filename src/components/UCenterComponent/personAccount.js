@@ -218,7 +218,7 @@ export default class PersonAccount extends React.Component {
     this.getInitData();
     this.initFetchSafeData();
     this.getAccountStatement();
-    
+    this.reashLoginData();
   }
 
   // 初始化安全中心首页数据

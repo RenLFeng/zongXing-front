@@ -489,7 +489,7 @@ export default class RealName extends React.Component {
                             safeData.userSecurityCenter.faccountBind ?
                           
                               <div className="personal" style={{ marginTop: 0,background:'#f9f9f9'}}>
-                                <span style={{ color: 'black',color:'#999999' }} >你的乾多多账户:{safeData.faccountBindNo}</span>
+                                <span style={{ color: 'black',color:'#999999' }} >你的乾多多账户:{safeData.fThirdAccountNo}</span>
                                 <div className="findPass">
                                   <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: !this.state.showMMMChangepayPassword })}>找回乾多多支付密码 </span>
                                   <span className="line" >|</span>
