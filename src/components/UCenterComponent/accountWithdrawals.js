@@ -2,7 +2,7 @@ import React from 'react';
 import {Form, Input, Button, Select, Modal, message, Icon } from 'antd';
 import '../../assets/ucenter/withdrawals.scss';
 import {getBankCardList, getCity, putInformation} from '../../services/api';
-import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE,  } from '../../common/systemParam';
+import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE, NOTIFY_PAGE } from '../../common/systemParam';
 import Path from "../../common/pagePath";
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/recharge.scss';
@@ -112,7 +112,7 @@ export default class EnterprisePresentation extends React.Component {
 
   async getInformation(data) {
     try {
-      data.notifyPageUrl = PERSONAL_PAGE;
+      data.notifyPageUrl = `${NOTIFY_PAGE}/index/uCenter/personAccount`;
       this.setState({loading: true});
       const response = await putInformation(data);
       this.setState({loading: false});

@@ -3,7 +3,7 @@ import { Icon, Button,Modal,message  } from 'antd';
 import '../../assets/ucenter/realName.scss';
 import OpenAccount from './openAccount';
 import { getUserBaseData, commitOpenAccount} from '../../services/api';
-import { TURN_BACK } from '../../common/systemParam';
+import { TURN_BACK, NOTIFY_PAGE } from '../../common/systemParam';
 import { connect } from 'dva';
 @connect((state)=> ({
   openStatus: state.account.openStatus
@@ -41,7 +41,7 @@ export default class OpenQAccount extends React.Component {
           realName: response.data.freal_name,
           identificationNo: response.data.fidcard_No,
           accountType: '0',
-          notifyPageUrl: `${TURN_BACK}#/index/uCenter/bindCard`
+          notifyPageUrl: `${NOTIFY_PAGE}/index/uCenter/bindCard`
         }
         this.setState({param});
       }

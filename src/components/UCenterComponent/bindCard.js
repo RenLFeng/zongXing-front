@@ -149,13 +149,11 @@ class BindCard extends React.Component {
         idcard: response.data.verifyBankcard3Dto.idcard, // 身份证
         realname: response.data.verifyBankcard3Dto.realname
       }
-      
       this.chooseCity(result.provinceId);
       this.setState({
         ...result
       });
       global[bankCard.trim()] = { ...result};
-      
     } else {
       let result = {
         bankCardImg: 'error',

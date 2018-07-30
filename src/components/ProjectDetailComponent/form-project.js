@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'dva/router';
 import { ACCOUNT_RECHARGE } from '../../common/pagePath';
-import { IMG_BASE_URL, MUN_INTEGER, LIMIT_MOENY, PROJECT_DETAIL_URL  } from '../../common/systemParam';
+import { IMG_BASE_URL, MUN_INTEGER, LIMIT_MOENY, PROJECT_DETAIL_URL, NOTIFY_PAGE  } from '../../common/systemParam';
 import moment from 'moment';
 import {Button, message, Modal, InputNumber, Alert} from 'antd';
 import { Investment } from '../../services/api';
@@ -103,7 +103,7 @@ export default class FormProject extends React.Component {
         projectId: this.props.project.fpeoject_id,
         amount: this.state.money * 1,
         remark: '',
-        notifyPageUrl: `${PROJECT_DETAIL_URL}/${this.props.project.fpeoject_id}`,
+        notifyPageUrl: `${NOTIFY_PAGE}/index/projectDetail/${this.props.project.fpeoject_id}`,
       }];
       this.setState({loading: true});
       const response = await Investment(data);

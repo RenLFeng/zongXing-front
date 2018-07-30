@@ -3,7 +3,7 @@ import { connect } from 'dva'
 import Path from '../../common/pagePath';
 import {Link} from 'dva/router';
 import {Form, Input, Button, Select, Modal, message} from 'antd';
-import { MONEY_REG, MONEY_REG_, PERSONAL_PAGE} from '../../common/systemParam';
+import { MONEY_REG, MONEY_REG_, PERSONAL_PAGE, NOTIFY_PAGE} from '../../common/systemParam';
 import {getRecharge} from  '../../services/api';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/recharge.scss';
@@ -30,7 +30,7 @@ export default class AccountRecharge extends React.Component {
 
   async setRechargeData(data) {
     try {
-      data.notifyPageUrl = PERSONAL_PAGE;
+      data.notifyPageUrl = `${NOTIFY_PAGE}/index/uCenter/personAccount`;
       this.setState({loading: true});
       const response = await getRecharge(data);
       this.setState({loading: false});

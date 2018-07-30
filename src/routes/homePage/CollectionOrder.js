@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../assets/collection/collection.scss';
 import { Table, Icon, Modal, Checkbox, Progress, Card, Row, Col, Button, Input, message, Alert } from 'antd';
-import { IMG_BASE_URL, COL_URL } from "../../common/systemParam";
+import { IMG_BASE_URL, COL_URL , NOTIFY_PAGE} from "../../common/systemParam";
 import { getCollectionProject, setCollectionMoney, delCollectionProject, Investment } from '../../services/api';
 import { connect } from 'dva'; 
 import Path from '../../common/pagePath';
@@ -47,7 +47,7 @@ export default class Collection extends React.Component {
         projectId: obj.fid,
         amount: obj.amount * 1,
         remark: '',
-        notifyPageUrl: COL_URL,
+        notifyPageUrl: `${NOTIFY_PAGE}/index/collection`,
       });
     }
     this.setState({loading: true});
