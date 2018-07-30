@@ -35,8 +35,9 @@ export default class LeftMenu extends React.Component {
              <p className="t2"><Link  className={path.indexOf(Path.ENTERPRISE_WILL) ===-1?'':'hover'} to={Path.ENTERPRISE_WILL}>企业文化</Link></p>
         {/*<p className="t2"><Link  className={path.indexOf(Path.SERVICE_IDEA) ===-1?'':'hover'} to={Path.SERVICE_IDEA}>服务理念</Link></p>*/}
              <p className="t2"><Link  className={path.indexOf(Path.CONTACT_US) ===-1?'':'hover'} to={Path.CONTACT_US}>联系我们</Link></p>
-             <p className="t2"><Link  className={path.indexOf(Path.NOTICE_DETAIL) ===-1?'':'hover'} to={Path.NOTICE_DETAIL}>平台公告</Link></p>
-             <p className="t2"><Link  className={path.indexOf(Path.JOIN_US) ===-1?'':'hover'} to={Path.JOIN_US}>大事记</Link></p>
+             <p className="t2"><Link  className={path.indexOf(Path.PLATFORM_ANNOUNCEMENT) ===-1?'':'hover'} to={Path.PLATFORM_ANNOUNCEMENT}>平台公告</Link></p>
+        {/*<p className="t2"><Link  className={path.indexOf(Path.NOTICE_DETAIL) ===-1?'':'hover'} to={Path.NOTICE_DETAIL}>平台公告</Link></p>*/}
+             <p className="t2"><Link  className={path.indexOf(Path.BIG_EVENTS) ===-1?'':'hover'} to={Path.BIG_EVENTS}>大事记</Link></p>
              <p className="t2"><Link  className={path.indexOf(Path.JOIN_US) ===-1?'':'hover'} to={Path.JOIN_US}>加入我们</Link></p>
 
 

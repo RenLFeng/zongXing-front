@@ -155,6 +155,9 @@ class BindCard extends React.Component {
       });
       global[bankCard.trim()] = { ...result};
     } else {
+      if(response.code === -1){
+       response.msg && message.error(response.msg)
+      }
       let result = {
         bankCardImg: 'error',
         bankCardErr: response.data.res ? "认证信息不匹配" : response.msg,
@@ -180,7 +183,6 @@ class BindCard extends React.Component {
       return '';
     }
     for (let data of moneyBank) {
-
       if (data.fname === param) {
         return data.fcode;
       }
@@ -313,7 +315,7 @@ class BindCard extends React.Component {
           <span className="bind_error_msg">{this.state.bankCardErr?this.state.bankCardErr: ''}</span>
           <div className="bind_item_view">
             <span>开户银行</span>
-            <Select size="large" value={this.state.openName} placeholder="请选择开户行" onChange={(val)=>this.setState({openName: val})} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+            <Select size="large" value={this.state.openName} placeholder="请选择开户行" onChange={(val)=>this.setState({openName: val})} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} notFoundContent="无匹配结果">
               {moneyBank.map((data,index)=>{
                 return <Option value={data.fcode} key={data.fcode}>{data.fname}</Option>
               })}

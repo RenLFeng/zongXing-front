@@ -31,7 +31,8 @@ import CompanyIntroduction from '../information/CompanyIntroduction.js';
 import PlantNotice from '../information/plantNotice';
 import ManagementTeam from '../information/managementTeam';
 import EnterpriseWill from '../information/enterpriseWill';
-//import ServiceIdea from '../information/serviceIdea';
+import PlatformAnnouncement from '../information/platformAnnouncement';
+import BigEvents from '../information/bigEvents';
 import JoinUs from '../information/joinUs';
 import ContactUs from '../information/contactUs';
 //法律法规
@@ -47,8 +48,7 @@ import SafeGuarantee from '../information/safeGuarantee';
 //import LegalCooperation from '../information/legalCooperation';
 //import SecurityCooperation from '../information/securityCooperation';
 //import MediaCooperation from '../information/mediaCooperation';
-// 平台公告
-import PlatformReport from '../information/platformReport';
+
 //import IconTest from '../information/iconTest';
 
 import {startAnimate} from '../../assets/infor/index'
@@ -115,9 +115,12 @@ export default class Infor extends React.Component {
             <Route path={Path.OFFICIAL_CHANNEL}  component={OfficialChannel} />
             {/* 公司介绍 */}
             <Route path={Path.COMPANY_INTRODUCTION}  component={CompanyIntroduction} />
-            {/* 平台公告页面 */}
+            {/* 平台公告*/}
+            <Route path={Path.PLATFORM_ANNOUNCEMENT}  component={PlatformAnnouncement} />
             {/* 管理团队 */}
             <Route path={Path.MANAGEMENT_TEAM}  component={ManagementTeam} />
+            {/* 大事记 */}
+            <Route path={Path.BIG_EVENTS}  component={BigEvents} />
             {/* 加入我们 */}
             <Route path={Path.JOIN_US}  component={JoinUs} />
             {/* 企业文化 */}
