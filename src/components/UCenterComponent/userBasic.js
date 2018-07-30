@@ -98,8 +98,7 @@ class UserBaseFormInput extends React.Component {
       this.setState({error: true});
     }
   }
-  handleSubmit(e) {
-  
+  handleSubmit(e) { 
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async(err, values) => {
       if (!err) {
@@ -122,7 +121,7 @@ class UserBaseFormInput extends React.Component {
             fweichat: values.fweichat,
             faddress: values.fAddress,
             fgender: values.fGender,
-            fcityCode:values.fCityCode,
+            fcityCode:values.fCityCode.join(','),
             fjob: values.fJob,
             fhobby: values.fHobby.join(',')
           }
