@@ -1,0 +1,102 @@
+.infor{
+  >.w{
+    .ope-re{
+      .wrap{
+        border: none;
+        p{
+          color:#696969;
+          font-size: 14px;
+        }
+        p.tit{
+          font-size: 16px;
+        }
+        .bg_pic{
+          position: relative;
+          width:100%;
+          height:317px;
+        }
+        .bg_pic1{
+          background: url('../../../assets/img/infor/ope_re1.jpg') no-repeat 50% 50%/100%;
+        }
+        .bg_pic2{
+          background: url('../../../assets/img/infor/ope_re2.jpg') no-repeat 50% 50%/100%;
+        }
+        .bg_mk{
+          position: absolute;
+          width:90%;
+          height:90%;
+          top:50%;
+          margin-top: -45%;
+          left:50%;
+          margin-left: -45%;
+          background: rgba(255,255,255,.3);
+        }
+        .bg_border{
+          position: absolute;
+          width:90%;
+          height:90%;
+          top:50%;
+          margin-top: -45%;
+          left:50%;
+          margin-left: -45%;
+          border:3px solid #fff;
+          span{
+            position: absolute;
+            display: block;
+            width: 16px;
+            height:50px;
+            border: none;
+            color:#fff;
+            line-height: 18px;
+            padding:0;
+          }
+          .y_text{
+            right:-8px;
+            top:30%;
+            background: rgba(255,255,255,.5);
+          }
+          .bg_text{
+            position: absolute;
+            width:80%;
+            height:80%;
+            line-height: 100%;
+            top:50%;
+            left:50%;
+            margin-left: -40%;
+            margin-top: -40%;
+            font-size: 90px;
+            color:#fff;
+          }
+        }
+        .y_line{
+            li{
+              width:20%;
+              float: left;
+              border:none;
+              span{
+                border: none;
+                text-align: center;
+              }
+            }
+        }
+        .pic_items{
+          margin-top: 50px;
+            li{
+              width:36%;
+              float: left;
+              text-align: center;
+              padding: 3px;
+              margin:0 7% 30px;
+              border:1px solid #f0f0f0;
+              .tit{
+                height:54px;
+                line-height: 54px;
+                background: #fff9f2;
+                margin-bottom: 2px;
+              }
+            }
+        }
+      }
+    }
+  }
+}

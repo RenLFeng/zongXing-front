@@ -20,6 +20,7 @@ import BusinessInformation from '../information/businessInformation'
 import ImportantMatters from '../information/importantMatters'
 import OfficialChannel from '../information/officialChannel'
 import AffiliatedAgency from '../information/affiliatedAgency'
+import OrganizationalStructure from '../information/organizationalStructure';
 
 import ProjectInformation from '../information/projectInformation';
 import AuditInformation from '../information/auditInformation';
@@ -102,6 +103,8 @@ export default class Infor extends React.Component {
             <Route path={Path.Fee_Scale}  component={FeeScale} />
             {/* 组织信息*/}
             <Route path={Path.ORGANIZATIONAL_INFORMATION}  component={OrganizationInformation} />
+            {/* 组织架构*/}
+            <Route path={Path.ORGANIZATIONAL_STRUCTURE}  component={OrganizationalStructure} />
             {/* 工商信息*/}
             <Route path={Path.BUSINESS_INFORMATION}  component={BusinessInformation} />
             {/* 重大事项 */}
