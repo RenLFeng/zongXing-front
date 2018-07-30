@@ -63,7 +63,7 @@ export default class EnterprisePresentation extends React.Component {
       remark: '',
       num: 0,
       value:'',   
-      selectedCard: null, //选中的提现银行卡号
+      selectedCard: {}, //选中的提现银行卡号
       moneyError: false, //提现金额是否错误
       moneyErrorMsg:'', //金额错误提示语
     }
@@ -144,13 +144,17 @@ export default class EnterprisePresentation extends React.Component {
   handleSubmit = () => {
        //console.log("this.state.selectedCard:",this.state.selectedCard);
         this.state.selectedCard ? this.setState({selectedCardError: false}) : this.setState({selectedCardError: true});
-        if(this.moneyError){
+        if(this.moneyError || this.state.loading){
           return;
         }
         if(Number(this.state.amount) < 2){
           this.setState({moneyError:true, moneyErrorMsg: '金不能小于1'})
         }
         //console.log("this.selectedCard:",this.selectedCard);
+        if (!this.state.selectedCard.fbankcard) {
+          message.error('请选择银行卡');
+          return; 
+        }
         let param = {
           notifyPageUrl: PERSONAL_PAGE,
           amount: this.state.amount,
@@ -252,7 +256,7 @@ export default class EnterprisePresentation extends React.Component {
               this.state.bankcardInfos.map((data)=>{
                  return(
                      <div style={{cursor:"pointer",display: 'inline-block'}} key={data.fid} onClick={()=>{this.setState({selectedCard: data,selectedCardError: false})}} >
-                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={data.fbank} cardId={data.fbankcard.substr(0,4) +'**** **** '+data.fbankcard.substr(12)}  /> 
+                          <BankCard  style={{margin: '32px 32px 0 0',width:343,height:189}} cardName={data.fbank} cardId={data.fbankcard.substr(0,4) +' **** '+data.fbankcard.substr(data.fbankcard.length -4,data.fbankcard.length)}  /> 
                      </div>
                      
                  )
@@ -274,7 +278,7 @@ export default class EnterprisePresentation extends React.Component {
             </div>
             <div className="label_div" style={{paddingTop: '32px'}}>
               <span className="money_tip" style={{color: '#007aff', borderBottom: '0px',fontSize: '18px',marginLeft: -2}}>
-                &nbsp;{this.state.selectedCard ? this.state.selectedCard.fbank : ''}
+                {this.state.selectedCard?this.state.selectedCard.fbank:''} 尾号  &nbsp;{this.state.selectedCard.fbankcard ? this.state.selectedCard.fbankcard.substring(this.state.selectedCard.fbankcard.length-4) : ''}
               </span>
               <div className="input-view" style={{marginTop: 36}}>
                 <span className="money_tip">￥</span>
@@ -285,7 +289,7 @@ export default class EnterprisePresentation extends React.Component {
             </div>
             {this.state.selectedCardError ? <div><span style={{ color:'red', fontSize:'10px' }}>请选择到账银行卡</span></div> : null}
             {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px' }}>{this.state.moneyErrorMsg}</span></div> : null}
-            <Button type="primary" style={{width: 279, marginTop: 30,height:35,fontSize: 18, marginBottom:30}} onClick={this.handleSubmit}>发起提现</Button>
+            <Button type="primary" loading={this.state.loading} style={{width: 279, marginTop: 30,height:35,fontSize: 18, marginBottom:30,marginLeft: 56}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
           <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
             <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />

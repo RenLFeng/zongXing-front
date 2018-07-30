@@ -7,7 +7,7 @@ import { verifyBankCard, getUserBaseData, bindBankCard } from '../../services/ap
 import moneyBank from '../../common/moneyBank';
 import moneyCity from '../../common/moneyCity';
 import Path from '../../common/pagePath';
-import {BANK_CARD} from '../../common/systemParam';
+import {BANK_CARD, pass_reg} from '../../common/systemParam';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -38,7 +38,6 @@ const btnLayout = {
 @connect((state) => ({
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
-  accountId: state.account.personal.totalAssets.accountId
 }))
 
 
@@ -150,8 +149,7 @@ class BindCard extends React.Component {
         idcard: response.data.verifyBankcard3Dto.idcard, // 身份证
         realname: response.data.verifyBankcard3Dto.realname
       }
-      //console.log(result.tipCityName);
-      //console.log('result.provinceId', result.provinceId);
+      
       this.chooseCity(result.provinceId);
       this.setState({
         ...result
@@ -317,7 +315,7 @@ class BindCard extends React.Component {
           <span className="bind_error_msg">{this.state.bankCardErr?this.state.bankCardErr: ''}</span>
           <div className="bind_item_view">
             <span>开户银行</span>
-            <Select size="large" value={this.state.openName} placeholder="请选择开户行" onChange={(val)=>this.setState({openName: val})}  showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+            <Select size="large" value={this.state.openName} placeholder="请选择开户行" onChange={(val)=>this.setState({openName: val})} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
               {moneyBank.map((data,index)=>{
                 return <Option value={data.fcode} key={data.fcode}>{data.fname}</Option>
               })}
