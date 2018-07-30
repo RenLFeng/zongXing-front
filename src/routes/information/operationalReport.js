@@ -10,11 +10,11 @@ export default class OperationalReport extends React.Component {
         <div className="wrap">
           <p>说明<br/>为进一步加强平台透明化建设与信息公示披露，将定期推出运营月报、半年报、年报，欢迎查看！</p>
           <ul className="y_line clearfix">
-            <li><span>2018</span><span></span></li>
-            <li><span>2018</span><span></span></li>
-            <li><span>2018</span><span></span></li>
-            <li><span>2018</span><span></span></li>
-            <li><span>2018</span><span></span></li>
+            <li className="act"><span>2018</span><span></span></li>
+            <li><span>2017</span><span></span></li>
+            <li><span>2016</span><span></span></li>
+            <li><span>2015</span><span></span></li>
+            <li><span>2014</span><span></span></li>
           </ul>
           <ul className="pic_items clearfix">
             <li>
@@ -22,7 +22,7 @@ export default class OperationalReport extends React.Component {
               <div className="bg_pic bg_pic1">
                 <div className="bg_mk">
                   <div className="bg_border">
-                    <span className="y">2018</span><span className="y_text">年度</span>
+                    {/*<span className="y">2018</span><span className="y_text">年度</span>*/}
                     <div className="bg_text">运营报告</div>
                   </div>
                 </div>
@@ -33,7 +33,7 @@ export default class OperationalReport extends React.Component {
               <div className="bg_pic bg_pic2">
                 <div className="bg_mk">
                   <div className="bg_border">
-                    <span className="y">2018</span><span className="y_text"></span>
+                    {/*<span className="y">2018</span><span className="y_text"></span>*/}
                     <div className="bg_text">运营报告</div>
                   </div>
                 </div>
@@ -44,7 +44,7 @@ export default class OperationalReport extends React.Component {
               <div className="bg_pic bg_pic2">
                 <div className="bg_mk">
                   <div className="bg_border">
-                    <span className="y">2018</span><span className="y_text"></span>
+                    {/*<span className="y">2018</span><span className="y_text"></span>*/}
                     <div className="bg_text">运营报告</div>
                   </div>
                 </div>
@@ -55,7 +55,7 @@ export default class OperationalReport extends React.Component {
               <div className="bg_pic bg_pic1">
                 <div className="bg_mk">
                   <div className="bg_border">
-                    <span className="y">2018</span><span className="y_text"></span>
+                    {/*<span className="y">2018</span><span className="y_text"></span>*/}
                     <div className="bg_text">运营报告</div>
                   </div>
                 </div>
