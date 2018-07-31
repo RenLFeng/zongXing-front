@@ -25,6 +25,7 @@ import OrganizationalStructure from '../information/organizationalStructure';
 import ProjectInformation from '../information/projectInformation';
 import AuditInformation from '../information/auditInformation';
 import RiskWarning from '../information/riskWarning';
+import Education from '../information/education';
 import FinancialStatements from '../information/financialStatements';
 //关于我们
 import CompanyIntroduction from '../information/CompanyIntroduction.js';
@@ -43,7 +44,7 @@ import LegalDeclaration from '../information/legalDeclaration';
 import SafeGuarantee from '../information/safeGuarantee';
 //import TermService from '../information/termService';
 // 合作伙伴
-//import TechnicalCooperation from '../information/technicalCooperation';
+import CooperativePartner from '../information/CooperativePartner';
 //import WindCooperation from '../information/windCooperation';
 //import LegalCooperation from '../information/legalCooperation';
 //import SecurityCooperation from '../information/securityCooperation';
@@ -101,6 +102,8 @@ export default class Infor extends React.Component {
             <Route path={Path.RECORD_INFORMATION}  component={RecordinFormation} />
             {/* 收费标准 */}
             <Route path={Path.Fee_Scale}  component={FeeScale} />
+            {/* 投资者教育 */}
+            <Route path={Path.EDUCATION}  component={Education} />
             {/* 组织信息*/}
             <Route path={Path.ORGANIZATIONAL_INFORMATION}  component={OrganizationInformation} />
             {/* 组织架构*/}
@@ -136,7 +139,8 @@ export default class Infor extends React.Component {
             <Route path={Path.SAFE_GUARANTEE}  component={SafeGuarantee} />
             {/* 法律声明 */}
             <Route path={Path.LEGAL_DECLARATION}  component={LegalDeclaration} />
-            {/* 服务条款 */}
+            {/* 合作伙伴 */}
+            <Route path={Path.COOPERATION_PARTNE}  component={CooperativePartner} />
             {/* 技术合作 */}
             {/* 风控合作 */}
             {/* 法务合作 */}

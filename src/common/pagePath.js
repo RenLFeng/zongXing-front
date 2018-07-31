@@ -71,6 +71,7 @@ export default {
   PROJECT_INFORMATION: '/index/infor/projectInformation',   //项目信息
   Audit_Information:'/index/infor/auditInformation',//审计信息
   Risk_Warning:'/index/infor/riskwarning',//风险提醒告知书
+  EDUCATION: '/index/infor/education', //投资者教育
   FINANCIAL_STATEMENTS: '/index/infor/financialStatements', //财务报表
 // 关于我们
   COMPANY_INTRODUCTION: '/index/infor/companyIntroduction',  //公司介绍
