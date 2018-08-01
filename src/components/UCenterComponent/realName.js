@@ -619,7 +619,7 @@ export default class RealName extends React.Component {
               <h3 onClick={()=>{this.props.history.push(CHANGE_BINDEMAIL)}}>变更绑定邮箱</h3>
               <p>绑定电子邮箱后便于接收平台各种通知</p>
               {
-                safeData.userSecurityCenter.fEmailBinding ? 
+                safeData.userSecurityCenter.femailBind ? 
                 <p><span>{safeData.fEmail}</span></p>:
               <p><span>还未绑定邮箱，</span><a onClick={()=>{this.props.history.push(BIND_EMAIL)}}>点击绑定</a></p>
               }
