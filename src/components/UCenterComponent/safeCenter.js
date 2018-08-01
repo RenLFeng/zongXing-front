@@ -214,7 +214,7 @@ export default class SafeCenter extends React.Component {
       return;
     }
     this.setState({loading:true});
-    const res = await phoneExist(getCodeMobile);
+    const res = await phoneExist(getCodeMobile,0);
     if (res.code !== 0) {
       this.setState({loading:false});
       if (res.msg === '该手机号已注册，请直接登录！') {

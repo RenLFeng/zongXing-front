@@ -246,7 +246,7 @@ export default class RealName extends React.Component {
       return;
     }
     this.setState({ loading: true });
-    const res = await phoneExist(getCodeMobile);
+    const res = await phoneExist(getCodeMobile,0);
     if (res.code !== 0) {
       this.setState({ loading: false });
       if (res.msg === '该手机号已注册，请直接登录！') {
@@ -610,7 +610,7 @@ export default class RealName extends React.Component {
 
             <div className="baseInfo">
             <i className="zjb zjb-mima1"></i>
-              <h3 onClick={()=>{this.props.history.push(CHANGE_LPWD)}}>修改登陆密码</h3>
+              <h3 onClick={()=>{this.props.history.push(CHANGE_LPWD)}}>修改登录密码</h3>
               <p>定期更改登录密码让你的账户更安全</p>
               <span>2018/6/15</span>
             </div>

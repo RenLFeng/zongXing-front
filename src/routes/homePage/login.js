@@ -3,7 +3,7 @@ import '../../assets/login/index.scss';
 import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_} from '../../common/systemParam';
 import {connect} from 'dva';
 import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input} from 'antd';
-import {phoneExist, regUser, changePW, checkCode, relieveAccountAjax, getAuthCode} from '../../services/api';
+import {phoneExist, regUser,  relieveAccountAjax, getAuthCode} from '../../services/api';
 
 
 const Step = Steps.Step;
@@ -54,13 +54,13 @@ export default class Login extends React.Component {
     const {loginPhone, loginPwd} = this.state;
     if (loginPhone.trim().length === 0 && loginPwd.trim().length === 0) {
       this.setState({
-        loginNameErr: '请输入登录名',
+        loginNameErr: '请输入手机号',
         loginPwdErr: '请输入密码'
       });
       return;
     }
     if (loginPhone.trim().length === 0) {
-      this.setState({loginNameErr: '请输入登录名'});
+      this.setState({loginNameErr: '请输入手机号'});
       return;
     }
     if (loginPwd.trim().length === 0) {
@@ -123,18 +123,18 @@ export default class Login extends React.Component {
     //console.log(111)
     const {loginPhone} = this.state;
     if (loginPhone.length === 0) {
-      this.setState({loginNameErr:'手机号|用户名不能为空'})
+      this.setState({loginNameErr:'手机号不能为空'})
       return;
     }
-    if (loginPhone.length < 6 || loginPhone.length > 16) {
-      this.setState({loginNameErr:'用户名长度为6-16位字符',loginError: true})
+    if (!VER_PHONE.test(loginPhone)) {
+      this.setState({loginNameErr:'手机号格式不正确'})
       return;
     }
     if (this.state.checkPhoneLoading) {
       return;
     }
     this.setState({checkPhoneLoading: true});
-    const response = await phoneExist(loginPhone);
+    const response = await phoneExist(loginPhone,0);
     //console.log('登陆结果为',response)
     this.setState({checkPhoneLoading: false});
     if (response.code === 0) {
@@ -226,7 +226,7 @@ export default class Login extends React.Component {
                     <div className="row" style={{position:'relative'}}>
                       <input className="put" value={loginPhone} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
-                            placeholder="手机号|用户名" onBlur={()=>this.checkPhone()} onKeyDown={(e)=>this.pressKey(e)}/>
+                            placeholder="手机号" onBlur={()=>this.checkPhone()} onKeyDown={(e)=>this.pressKey(e)}/>
                             <i className="zjb zjb-shouji-copy" style={{position:'absolute',top:'4px',left:'11px',fontSize:25,color:'#d5d5d5'}}></i>
                             <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>      
                       {
@@ -250,7 +250,7 @@ export default class Login extends React.Component {
                             placeholder="请输入登录密码" onKeyDown={(e)=>this.pressKey(e)} style={{marginTop:4}}/>  
                             <i className="zjb zjb-mima" style={{position:'absolute',top:'7px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
                             <span style={{position:'absolute',top:'8px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
-                      <p className="prompts" style={{color: '#868686'}}>{this.state.loginPwdErr}</p>
+                      <p className="prompts" style={{color: 'red',marginLeft:0}}>{this.state.loginPwdErr}</p>
                       <a className="gray f14"
                           style={{marginTop: 1}}
                           onClick={() => this.props.history.push('./forgetPassWord')}>

@@ -415,7 +415,7 @@ class ReceiveDetail extends React.Component {
               </div>
             </div>
           </div>: 
-          <div className="rp_detail_content" style={{border:'1px solid red'}}>
+          <div className="rp_detail_content" style={{padding:0}}>
             {/* 表格 */}
             {data.repayPlanByProjectInfoVos.map((data, index)=> {
               return (

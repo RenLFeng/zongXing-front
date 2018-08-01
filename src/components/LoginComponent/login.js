@@ -153,7 +153,7 @@ export default class Login extends React.Component {
   async checkPhoneNumber() {
     const phoneNum = this.state.regPhone;
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
-      const response = await phoneExist(phoneNum);
+      const response = await phoneExist(phoneNum,0);
       if (response.code !== 0) {
         alert(response.msg);
       }

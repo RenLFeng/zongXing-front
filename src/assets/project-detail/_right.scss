@@ -154,7 +154,7 @@
             }
             .like {
                 background-image: url(../img/project-detail/ic_like.png);
-
+                border:1px solid red;
                 &::after {
                     content: "";
                     height: 18px;
@@ -166,7 +166,7 @@
             }
             .like1 {
                 background-image: url(../img/apply/ic_star.png);
-
+                border:1px solid red;
                 &::after {
                     content: "";
                     height: 18px;

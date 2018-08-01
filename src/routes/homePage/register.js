@@ -3,7 +3,7 @@ import '../../assets/login/index.scss';
 import {VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_,pass_reg} from '../../common/systemParam';
 import {connect} from 'dva';
 import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input} from 'antd';
-import {phoneExist, getAuthCode, regUser, changePW, checkCode, changePassword, relieveAccountAjax} from '../../services/api';
+import {phoneExist, getAuthCode, regUser,  relieveAccountAjax} from '../../services/api';
 import { setTimeout } from 'timers';
 
 
@@ -118,7 +118,7 @@ export default class Register extends React.Component {
       this.setState({regNameErr: ''});
     }
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
-      const response = await phoneExist(phoneNum);
+      const response = await phoneExist(phoneNum,0);
       if (response.code !== 0) {
         if (response.msg === '该手机号已注册，请直接登录！') {
           this.setState({

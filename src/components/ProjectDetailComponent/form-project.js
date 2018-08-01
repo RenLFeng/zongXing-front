@@ -157,7 +157,6 @@ export default class FormProject extends React.Component {
 
   render() {
     const {project} = this.props;
-    console.log('这是一个数据啊',this.props.project)
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
     const {data} = this.state;
     return (
