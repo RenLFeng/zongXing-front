@@ -141,7 +141,7 @@
         }
         .bot2 {
             padding: 5px 0 0 0;
-            .like1,.like,.share {
+            .like12,.like,.share {
                 background: no-repeat left center;
                 color: #21c15f;
                 font-size: 14px;
@@ -154,7 +154,6 @@
             }
             .like {
                 background-image: url(../img/project-detail/ic_like.png);
-                border:1px solid red;
                 &::after {
                     content: "";
                     height: 18px;
@@ -164,18 +163,7 @@
                     right: 0;
                 }
             }
-            .like1 {
-                background-image: url(../img/apply/ic_star.png);
-                border:1px solid red;
-                &::after {
-                    content: "";
-                    height: 18px;
-                    border-left: 1px solid #999;
-                    position: absolute;
-                    top: 10px;
-                    right: 0;
-                }
-            }
+            
             .share {
                 background-image: url(../img/project-detail/ic_share.png);
                 cursor: pointer;
@@ -291,7 +279,20 @@
             margin-bottom: 15px;
             font-size:18px;
         }
-        >a,>i{
+        >a{
+            display: inline-block;
+            background: no-repeat left center;
+            color: #21c15f;
+            font-size: 14px;
+            padding: 11px 20px 10px 25px;
+            position: relative;
+            margin-left: 20px;
+            line-height: 0;
+            &:hover {
+                color: $f90;
+            }
+        }
+        >i{
             display: inline-block;
             background: no-repeat left center;
             color: #21c15f;
@@ -320,3 +321,14 @@
 
 
 
+.collect_foucs {
+    background-image: url(../img/apply/ic_star.png) !important;
+    &::after {
+        content: "";
+        height: 18px;
+        border-left: 1px solid #999;
+        position: absolute;
+        top: 0px;
+        right: 0;
+    }
+}

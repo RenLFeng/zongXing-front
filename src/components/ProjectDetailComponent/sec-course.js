@@ -90,7 +90,7 @@ export default class SecCourse extends React.Component {
                     <p className="img">
                       {imgArr.map((data, index) => {
                         return (
-                          <img style={{width: 120, height: 96}} key={index} src={`${IMG_BASE_URL}${data.realUrl}`} />
+                          <img key={index} style={{width: 120, height: 96}} src={`${IMG_BASE_URL}${data.realUrl}`} />
                         );
                       })}
                     </p>
@@ -123,7 +123,7 @@ export default class SecCourse extends React.Component {
                 )
               } else if (data.ftype === 4) {
                 return (
-                  <div className="item">
+                  <div className="item" key={data.fid}>
                     <p className="date">
                       <i className="y">{moment(data.ftime).format('YYYY')}</i><br /><i className="d">{moment(data.ftime).format('MM-DD')}</i>
                     </p>
