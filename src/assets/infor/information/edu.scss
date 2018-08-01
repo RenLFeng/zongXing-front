@@ -1,0 +1,45 @@
+.infor{
+  >.w{
+    .edu{
+      .wrap{
+        border:none;
+        li{
+          border:none;
+          .answer{
+            background: #FAFAFA;
+            color:#696969;
+            padding: 5px 20px;
+            line-height: 25px;
+            display: none;
+          }
+        }
+        li.all{
+          padding:5px 20px;
+        }
+        >img{
+          width:100%;
+          margin-bottom: 20px;
+        }
+      }
+      .questions{
+        li{
+          margin-bottom: 15px;
+        }
+        .question{
+          border-bottom:1px dashed #f0f0f0;
+          cursor: pointer;
+          font-size: 16px;
+          padding-bottom:8px;
+          &:hover{
+            color:#f90;
+          }
+          &.act{
+            color:#f90;
+            border-bottom:1px solid #f0f0f0;
+        }
+        }
+
+      }
+    }
+  }
+}

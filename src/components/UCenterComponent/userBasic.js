@@ -8,7 +8,7 @@ import {USER_REG, VER_PHONE, TEL_PHONE, ID_CORD, NAME_REG_, QQ_REG, WeChat_REG, 
 import {city} from '../../common/cityData';
 import {REALNAME_AUTHENTICATION} from '../../common/pagePath';
 import UploadSingle from '../../components/Account/ImgUpload';
-import { getJudgeUserName,getUserBaseData,saveUserBase } from '../../services/api';
+import { getJudgeUserName,getUserBaseData,saveUserBase ,getLoginData} from '../../services/api';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 
 const formItemLayout = {
@@ -37,6 +37,7 @@ const btnLayout = {
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = ['Apple', 'Pear', 'Oranteteteteetg','gfgddhd','tfgfddfg'];
+
 class UserBaseFormInput extends React.Component {
   constructor(props) {
     super(props);
@@ -98,12 +99,18 @@ class UserBaseFormInput extends React.Component {
       this.setState({error: true});
     }
   }
+
+  async reashLoginData(){
+    const response = await getLoginData(); 
+    if (response.code === 0) {
+        this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
+    }
+  }
   handleSubmit(e) { 
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async(err, values) => {
       if (!err) {
         // 数据格式转换 cityCode
-        //console.log(values)
         let fCityCode = '';
         if (values.fCityCode && values.fCityCode.length > 0) {
           fCityCode = values.fCityCode[values.fCityCode.length - 1];
@@ -121,24 +128,19 @@ class UserBaseFormInput extends React.Component {
             fweichat: values.fweichat,
             faddress: values.fAddress,
             fgender: values.fGender,
-            fcityCode:values.fCityCode.join(','),
+            fcityCode:values.fCityCode?values.fCityCode.join(','):'',
             fjob: values.fJob,
-            fhobby: values.fHobby.join(',')
+            fhobby:values.fHobby?values.fHobby.join(','):''
           }
         };
         const response = await saveUserBase(userBase);
         if (response.code === 0) { 
+          message.info('基础资料保存成功')
           this.props.param.history.push('/index/uCenter/realName');
+          this.reashLoginData();
         } else {
           response.msg && message.error(response.msg);
         }
-
-        //console.log(response);
-
-        //this.props.param.dispatch({
-        //  type: 'userData/commitUserBase',
-        //  payload: userBase
-        //});
       }
     });
   }
@@ -160,7 +162,7 @@ class UserBaseFormInput extends React.Component {
             label="头像" className="upload_box"
             >
             {getFieldDecorator('fhead_pic', {
-              initialValue: userBase.fhead_pic?userBase.fhead_pic:null
+              initialValue: userBase.fhead_pic?userBase.fhead_pic:null,
             })(<UploadSingle {...this.data} prefix={'personal/'} tipText="点击上传"/>)}
           </FormItem>
           <FormItem
@@ -297,7 +299,7 @@ export default class UserBasic extends React.Component {
               <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>实名认证</span>
               <span style={{fontSize: 16}}> &gt; 基础资料</span>
             </div>
-            <UserBaseForm param={this.props} hobbyList={this.props.hobbyList}/>
+            <UserBaseForm dispatch={this.props.dispatch} param={this.props} hobbyList={this.props.hobbyList}/>
           </Spin>
         </div>
       </div>

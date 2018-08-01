@@ -3,10 +3,13 @@ import {message, Button} from 'antd';
 import {getProTopic, getMyTopic, addQuestionTopic, addReply, getReplyByTopic} from '../../services/api';
 import {connect} from 'dva';
 import moment from 'moment';
+import { IMG_BASE_URL } from '../../common/systemParam';
 
 @connect((state) => (({
-  loginStatus: state.login.status
+  loginStatus: state.login.status,
+  baseData: state.login.baseData,
 })))
+
 export default class SecConsultation extends React.Component {
   constructor(props) {
     super(props);
@@ -38,6 +41,7 @@ export default class SecConsultation extends React.Component {
   // 获取项目下所有话题的接口
   async fetchAllTopic(projectId = this.state.projectId) {
     const response = await getProTopic(projectId);
+    console.log('response',response)
     if (response.code === 0) {
       this.setState({allTopic: response.data});
     } else {
@@ -48,6 +52,7 @@ export default class SecConsultation extends React.Component {
   // 获取项目下我的话题接口
   async fetchMyTopic(projectId = this.state.projectId) {
     const response = await getMyTopic(projectId);
+    console.log('response------',response)
     if (response.code === 0) {
       this.setState({myTopic: response.data});
     } else {
@@ -266,7 +271,8 @@ export default class SecConsultation extends React.Component {
             this.state.allTopic.map((data, index) => {
               return (
                 <div className="item" key={data.fid+'1'+index}>
-                  <img className="av" src={require('../../assets/img/project-detail/av2.png')} />
+                  {/* <img className="av" src={require('../../assets/img/project-detail/av2.png')} /> */}
+                  <img className="av" src={data.fhead_pic ? `${IMG_BASE_URL}${data.fhead_pic}`:require('../../assets/img/project-detail/av2.png')}  />
                   <p className="t1" style={{wordBreak: 'break-all'}}>
                     <i className="c6">{data.fis_anonymity? '匿名用户': data.fnickname}：</i>
                     {data.fcontent}

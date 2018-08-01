@@ -167,7 +167,7 @@ export default class AccountStatement extends React.Component{
       }, {
         title: '充值金额',
         dataIndex: 'resultObj.famount',
-        align:'right',
+        align:'center',
         render:function(text,record,index){
           return String(text).fm();
         }
@@ -200,7 +200,7 @@ export default class AccountStatement extends React.Component{
         }
       }, {
         title: '手续费',
-        align:'right',
+        align:'center',
         dataIndex: 'resultObj.fuserFeeWithdraw',
         render:function(text,record,index){
           if(text){
@@ -211,7 +211,7 @@ export default class AccountStatement extends React.Component{
         }
       }, {
         title: '提现到账金额',
-        align:'right',
+        align:'center',
         dataIndex: 'resultObj',
         render:function(text,record,index){
           if(text.famount && text.fuserFeeWithdraw){
@@ -265,7 +265,7 @@ export default class AccountStatement extends React.Component{
       }, {
         title: '投资金额',
         dataIndex: 'resultObj.invAmount',
-        align:'right',
+        align:'center',
         render:function(text,record,index){
           return String(text).fm();
         }
@@ -307,28 +307,28 @@ export default class AccountStatement extends React.Component{
       }, {
         title: '本金',
         dataIndex: 'resultObj.fprincipal',
-        align:'right',
+        align:'center',
         render:function(text,record,index){
           return String(text).fm();
         }
       }, {
         title: '利息',
         dataIndex: 'resultObj.finterest',
-        align:'right',
+        align:'center',
         render:function(text,record,index){
           return String(text).fm();
         }
       }, {
         title: '佣金',
         dataIndex: 'resultObj.fkickBack',
-        align:'right',
+        align:'center',
         render:function(text,record,index){
           return String(text).fm();
         }
       }, {
         title: '当期回款总金额',
         dataIndex: 'resultObj.sumAmount',
-        align:'right',
+        align:'center',
         render:function(text,record,index){
           return String(text).fm();
         }

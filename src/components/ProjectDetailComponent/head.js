@@ -22,6 +22,7 @@ export default class Head extends React.Component {
   render() {
     let video_src = '';
     const { projectDetail } = this.props;
+
     if (projectDetail.fvideo_path) {
       const arr = JSON.parse(projectDetail.fvideo_path);
       if (arr.length > 0) {
@@ -41,7 +42,7 @@ export default class Head extends React.Component {
               </p>
               {/* <p className="tit tit2" style={{textAlign: 'left'}}>    </p> */}
               <p className="fr"> 
-              <span className="line">{projectDetail.fcity_name}</span><e></e><span>食品行业</span>
+              <span className="line">{projectDetail.fcity_name}</span><e></e><span>{projectDetail.ftype_name}</span>
               </p>
             </div>
             {/* <div className="">
