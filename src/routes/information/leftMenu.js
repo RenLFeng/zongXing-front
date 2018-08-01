@@ -23,9 +23,9 @@ export default class LeftMenu extends React.Component {
             <p className="t2 "><Link  className={path.indexOf(Path.OPERATION_INFORMATION) ===-1?'':'hover'} to={Path.OPERATION_INFORMATION}>运营信息</Link></p>
             <p className="t2 "><Link className={path.indexOf(Path.AUDIT_INFORMATION) ===-1?'':'hover'} to={Path.AUDIT_INFORMATION}>审计信息</Link></p>
             <p className="t2 "><Link  className={path.indexOf(Path.Fee_Scale) ===-1?'':'hover'} to={Path.Fee_Scale}>收费标准</Link></p>
-        {/*<p className="t2 "><Link  className={path.indexOf(Path.PROJECT_INFORMATION) ===-1?'':'hover'} to={Path.PROJECT_INFORMATION}>项目信息</Link></p>*/}
+            {/*<p className="t2 "><Link  className={path.indexOf(Path.PROJECT_INFORMATION) ===-1?'':'hover'} to={Path.PROJECT_INFORMATION}>项目信息</Link></p>*/}
             <p className="t2 "><Link  className={path.indexOf(Path.Risk_Warning) ===-1?'':'hover'} to={Path.Risk_Warning}>风险提醒告知书</Link></p>
-            <p className="t2 "><Link  className={path.indexOf(Path.Risk_Warning) ===-1?'':'hover'} to={Path.Risk_Warning}>投资者教育</Link></p>
+            <p className="t2 "><Link  className={path.indexOf(Path.EDUCATION) ===-1?'':'hover'} to={Path.EDUCATION}>投资者教育</Link></p>
 
 
         <p className="t1"><Icon type="idcard" />关于我们</p>

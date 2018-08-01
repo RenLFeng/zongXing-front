@@ -40,18 +40,18 @@ export default class platformAnnouncement extends React.Component {
   componentWillMount(){
 
     var _this = this;//如果不定义就会出现作用域的问题this.setState不是一个函数
-      _this.setState({totalData:lists})
-      _this.setState({totalNum:lists.length})
+      _this.setState({totalData:lists});
+      _this.setState({totalNum:lists.length});
       //计算总页数= 总记录数 / 每页显示的条数
       let totalPage =Math.ceil( _this.state.totalNum / _this.state.pageSize);
-      _this.setState({totalPage:totalPage})
+      _this.setState({totalPage:totalPage});
       _this.pageClick(1);
   };
   componentDidMount(){
       console.log(this.state.indexList);
   }
   onChange(pageNumber) {
-    this.pageClick(pageNumber)
+    this.pageClick(pageNumber);
     console.log(pageNumber);
   };
   //点击翻页
