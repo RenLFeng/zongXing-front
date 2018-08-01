@@ -9,7 +9,9 @@ export default class Education extends React.Component {
     }
   }
   componentDidMount(){
-
+    $(".questions .question").on("click",function(){
+      $(this).toggleClass("act").nextAll().slideToggle();
+    })
   }
   render() {
     return (
