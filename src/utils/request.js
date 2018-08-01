@@ -15,7 +15,7 @@ if (build === 'production') {
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.61:8001';
+  BASE_URL = 'http://192.168.1.30:8001';
   document.title ="众借帮--开发环境"; 
 } else if (build === 'ys') {
   /*演示配置*/
