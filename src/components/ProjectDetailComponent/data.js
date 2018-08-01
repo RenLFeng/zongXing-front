@@ -169,7 +169,7 @@ export default class Data extends React.Component {
                       <div className="row" key={index}>
                         <span className="col1" style={{display: 'inline-block'}}>{data.userName}</span>
                         <span className="col2">{`${data.money}`.fm()}</span>
-                        <span className="col3">{moment(data.fTime).format("YYYY-MM-DD HH:mm:ss")}</span>
+                        <span className="col3">{moment(data.ftime).format("YYYY-MM-DD HH:mm:ss")}</span>
                       </div>
                       )
                   }) :

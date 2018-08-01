@@ -88,7 +88,7 @@ export default class ProjectDetail extends React.Component {
               <SecLoan projectDetail={projectDetail}/>
             </div>
             <div className="pd-con none">
-              <SecConsultation changeNum={()=>this.changeNum()} {...this.props.match.params}/>
+              <SecConsultation changeNum={()=>this.changeNum()} {...this.props.match.params}  projectDetail={projectDetail}/>
             </div>
             <div className="pd-con none">
               <SecTrack titleFlag={this.state.titleFlag} projectDetail={projectDetail} changeNum={()=>this.changeNum()} {...this.props.match.params}/>

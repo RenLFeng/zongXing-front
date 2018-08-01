@@ -185,7 +185,7 @@ export default class Right extends React.Component {
     }
     const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
     if (response.code === 0) {
-      this.props.projectDetail.collectionNumber += 1;
+      this.props.projectDetail.collectionNumber += 1 ;
       this.props.projectDetail.isCollected = true;
       this.forceUpdate();
     } else {
@@ -201,6 +201,7 @@ export default class Right extends React.Component {
 
   render(){
     const project = this.props.projectDetail;
+    console.log('this.props.projectDetail===========',this.props.projectDetail)
     const allMoney = project.allMoney?project.allMoney:0;
     const userCount = project.userCount ? project.userCount: 0;
     let rate = Math.floor(allMoney/project.fcredit_money*100);
@@ -247,7 +248,7 @@ export default class Right extends React.Component {
                   this.getPersonalMoney_(this.props.projectDetail.fpeoject_id);
                 }} >我要投资
               </Button> */}
-              <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber}</a>
+              <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber ? this.props.projectDetail.collectionNumber : 0}</a>
               <i className="share">
                 <span>32</span>
                 <span className="border shadow" style={{display:'none'}}>

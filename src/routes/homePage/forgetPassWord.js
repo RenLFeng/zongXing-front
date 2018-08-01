@@ -4,7 +4,7 @@ import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,word_reg
 import { connect } from 'dva';
 
 import { Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
-import { phoneExist, getAuthCode, regUser, changePW, changePassword, relieveAccountAjax, fp_getCode, fp_checkInfo,f_getCode } from '../../services/api';
+import { phoneExist, getAuthCode, regUser, changePassword, relieveAccountAjax, fp_getCode, fp_checkInfo,f_getCode } from '../../services/api';
 
 
 const Step = Steps.Step;
@@ -108,7 +108,7 @@ export default class ForgetPassWord extends React.Component {
       return;
     } 
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
-      const response = await phoneExist(phoneNum);
+      const response = await phoneExist(phoneNum,0);
       if (response.code !== 0) {
         this.setState({
           prompt: '',
@@ -146,7 +146,7 @@ export default class ForgetPassWord extends React.Component {
     // }
 
     this.setState({nextLoading:true})
-    const response = await fp_getCode(this.state.firstPhone);
+    const response = await fp_getCode(this.state.firstPhone,0);
     //console.log('response',response)
     if(response.code === 0){
       this.setState({
@@ -214,6 +214,7 @@ infoCheck_(){
       mobile:firstPhone,
       realName:realName,
       idCard:idCard,
+      type:0
     }
     //发送验证码的时间存在本地
     const sendTime = localStorage.getItem(params);
@@ -280,7 +281,8 @@ infoCheck_(){
       mobile: this.state.firstPhone,
       authCode: this.state.code,
       realName: this.state.realName,
-      idCard: this.state.idCard
+      idCard: this.state.idCard,
+      type:0
     }
     const response = await fp_checkInfo(params);
     if (response.code === 0) {
@@ -321,7 +323,8 @@ infoCheck_(){
     this.setState({ authLoading: true });
     const respondse = await changePassword({
       loginName: this.state.firstPhone,
-      password: this.state.password
+      password: this.state.password,
+      type:0
     });
     if (respondse.code === 0) {
       this.setState({

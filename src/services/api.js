@@ -13,7 +13,7 @@ if (build === 'production') {
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.61:8001';
+  BASE_URL = 'http://192.168.1.59:8001';
   document.title ="众借帮--开发环境";
 } else if (build === 'ys') {
    /*演示配置*/
@@ -115,8 +115,8 @@ export async function getSafeData() {
 }
 
 // 校验手机号是否存在的接口
-export async function phoneExist(param) {
-  return request(`${BASE_URL}/login/check?mobile=${param}`)
+export async function phoneExist(param,params) {
+  return request(`${BASE_URL}/login/check?mobile=${param}&type=${params}`)
 }
 
 // 获取注册验证码的接口
@@ -418,15 +418,10 @@ export async function loginCompany(param) {
 }
 
 
-//修改密码，获取手机号
-export async function changePW(param) {
-  return request(`${BASE_URL}/userInfo/forgetPwd?loginName=${param}`)
-}
-
-//校验修改密码时的验证码
-export async function checkCode(param, params) {
-  return request(`${BASE_URL}/userInfo/checkAuthCode?mobile=${param}&authCode=${params}`)
-}
+// //修改密码，获取手机号
+// export async function changePW(param,params) {
+//   return request(`${BASE_URL}/userInfo/forgetPwd?loginName=${param}&type=${params}`)
+// }
 
 //修改密码
 export async function changePassword(params){
@@ -667,8 +662,8 @@ export async function testSocket() {
 }
 
 //忘记密码获取验证码及检验是否实名认证
-export async function fp_getCode(param) {
-  return request(`${BASE_URL}/userInfo/forgetPwd?loginName=${param}`);
+export async function fp_getCode(param,params) {
+  return request(`${BASE_URL}/userInfo/forgetPwd?loginName=${param}&type=${params}`);
 }
 
 //忘记密码检验信息
