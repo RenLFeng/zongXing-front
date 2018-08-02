@@ -345,7 +345,7 @@ export default class PersonAccount extends React.Component {
     const res = await accountService.getAccountStatement(param); 
     if (res.code === 0) {
       this.setState({
-        infoList:res.data.infoList, 
+        infoList:res.data.resPage.infoList, 
       });
     }
   }
