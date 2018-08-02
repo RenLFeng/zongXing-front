@@ -41,7 +41,6 @@ export default class SecConsultation extends React.Component {
   // 获取项目下所有话题的接口
   async fetchAllTopic(projectId = this.state.projectId) {
     const response = await getProTopic(projectId);
-    console.log('response',response)
     if (response.code === 0) {
       this.setState({allTopic: response.data});
     } else {
@@ -52,7 +51,6 @@ export default class SecConsultation extends React.Component {
   // 获取项目下我的话题接口
   async fetchMyTopic(projectId = this.state.projectId) {
     const response = await getMyTopic(projectId);
-    console.log('response------',response)
     if (response.code === 0) {
       this.setState({myTopic: response.data});
     } else {

@@ -103,14 +103,11 @@ export default class Right extends React.Component {
 
 
   async getPersonalMoney_(fid) {
-    console.log('fid',fid)
     try {
       this.setState({loading: true});
       const response = await getPersonalMoney([fid]);
-      console.log('response',response)
       this.setState({loading: false});
       if (response.code === 0) {
-        console.log(123123123)
         $('.pd-form').before('<div class="_masker"></div>');
         $('.pd-form').removeClass('none');
         this.setState({
@@ -151,7 +148,6 @@ export default class Right extends React.Component {
     }
     this.setState({Loading:true})
     const response = await alreadyInvested({pageParam:{...this.state.pageParam,pageCurrent: page }, projectId:this.props.projectDetail.fpeoject_id});
-    console.log('yitouzirenxinxi ', response)
     //判断请求状态
     if (response.code === 0) {
      
@@ -180,13 +176,15 @@ export default class Right extends React.Component {
 
   // 收藏项目
   async projectCollection() {
-    if (this.props.projectDetail.isCollected) {
+    console.log('点击收藏')
+    if (this.props.projectDetail.isCollect) {
       return;
     }
     const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
+    console.log('response=======',response)
     if (response.code === 0) {
-      this.props.projectDetail.collectionNumber += 1 ;
-      this.props.projectDetail.isCollected = true;
+      this.props.projectDetail.collectNum += 1 ;
+      this.props.projectDetail.isCollect = true;
       this.forceUpdate();
     } else {
       if (response.msg === '用户未做权限验证') {
@@ -200,8 +198,8 @@ export default class Right extends React.Component {
   }
 
   render(){
+    console.log('父组件数据',this.props)
     const project = this.props.projectDetail;
-    console.log('this.props.projectDetail===========',this.props.projectDetail)
     const allMoney = project.allMoney?project.allMoney:0;
     const userCount = project.userCount ? project.userCount: 0;
     let rate = Math.floor(allMoney/project.fcredit_money*100);
@@ -248,7 +246,7 @@ export default class Right extends React.Component {
                   this.getPersonalMoney_(this.props.projectDetail.fpeoject_id);
                 }} >我要投资
               </Button> */}
-              <a className={`${this.props.projectDetail.isCollected?'like1':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectionNumber ? this.props.projectDetail.collectionNumber : 0}</a>
+              <a className={`${this.props.projectDetail.isCollect?'collect_foucs':'like'}`} onClick={()=>this.projectCollection()}>{this.props.projectDetail.collectNum ? this.props.projectDetail.collectNum : 0}</a>
               <i className="share">
                 <span>32</span>
                 <span className="border shadow" style={{display:'none'}}>
