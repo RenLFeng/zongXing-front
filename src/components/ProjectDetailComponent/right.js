@@ -198,7 +198,6 @@ export default class Right extends React.Component {
   }
 
   render(){
-    console.log('父组件数据',this.props)
     const project = this.props.projectDetail;
     const allMoney = project.allMoney?project.allMoney:0;
     const userCount = project.userCount ? project.userCount: 0;

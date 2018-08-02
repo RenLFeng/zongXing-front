@@ -24,10 +24,10 @@ class LoanInfo extends React.Component {
 	}
     this.state = {
 		fstate:{
-			ckz:10,//筹款中
-			dfk:11,//待放款
-			hkz:12,//回款中
-			yjq:13,//已结清
+			ckz:13,//筹款中
+			dfk:14,//待放款
+			hkz:15,//回款中
+			yjq:16,//已结清
 			ylb:-1,//已流标
 			hkyc:-4,//还款异常
 		}, 
@@ -263,7 +263,7 @@ class LoanInfo extends React.Component {
 				{
 					this.state.data.projectFlag ===this.state.fstate.ylb?
 					<Steps size="small" current={0} progressDot direction="vertical"> 
-						<Step   className='normary' title={`项目流标${this.state.data.upLineDate?moment(this.state.data.upLineDate).format('YYYY/MM/DD HH:mm'):''}`} />  
+						<Step className='normary' title={`项目流标${this.state.data.deadLineDate?moment(this.state.data.deadLineDate).format('YYYY/MM/DD HH:mm'):''}`} />  
 					</Steps>:null
 				} 
 			</div> 

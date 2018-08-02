@@ -80,19 +80,19 @@ export default class Search extends React.Component {
           this.changeRatePeriod({leaveCode: 'L1002', rate: '9'});
           break;
         case 3 :
-          this.changeRatePeriod({leaveCode: 'L2001', rate: '10'});
+          this.changeRatePeriod({leaveCode: 'L1003', rate: '10'});
           break;
         case 4 :
-          this.changeRatePeriod({leaveCode: 'L2002', rate: '11'});
+          this.changeRatePeriod({leaveCode: 'L2001', rate: '11'});
           break;
         case 5 :
-          this.changeRatePeriod({leaveCode: 'L3001', rate: '12'});
+          this.changeRatePeriod({leaveCode: 'L2002', rate: '12'});
           break;
         case 6 :
-          this.changeRatePeriod({leaveCode: 'L3002', rate: '13'});
+          this.changeRatePeriod({leaveCode: 'L2003', rate: '13'});
           break;
         case 7 :
-          this.changeRatePeriod({leaveCode: 'L4001', rate: '15'});
+          this.changeRatePeriod({leaveCode: 'L3001', rate: '15'});
           break;
         default:
           this.changeRatePeriod({leaveCode: '', rate: '-1'});
@@ -130,11 +130,11 @@ export default class Search extends React.Component {
                   <i value="" data-value="">不限</i>
                   <i value="L1001">A+</i>
                   <i value="L1002">A</i>
+                  <i value="L1003">A-</i>
                   <i value="L2001">B+</i>
                   <i value="L2002">B</i>
-                  <i value="L3001">C+</i>
+                  <i value="L2003">B-</i>
                   <i value="L3002">C</i>
-                  <i value="L4001">D</i>
                 </dd>
               </dl>
               <dl className="select">

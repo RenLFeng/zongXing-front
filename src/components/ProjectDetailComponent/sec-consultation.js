@@ -299,7 +299,7 @@ export default class SecConsultation extends React.Component {
                           }): null
                         }
                       </div>
-                      <div className="rebox">
+                      {/* <div className="rebox">
                         <textarea className="put" rows="5" value={this.state[`replayText${data.fid}`]}
                                   onChange={(e) => {
                                     this.setState({
@@ -312,7 +312,7 @@ export default class SecConsultation extends React.Component {
                           <Button type="primary" loading={this.state[`loading${data.fid}`]} style={{borderRadius: 3}}
                                   onClick={() => this.saveTopic(data.fid, 0)}>回复</Button>
                         </p>
-                      </div>
+                      </div> */}
                     </div> : null
                   }
                 </div >
