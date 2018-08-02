@@ -77,6 +77,8 @@ export default {
   COMPANY_INTRODUCTION: '/index/infor/companyIntroduction',  //公司介绍
   NOTICE_DETAIL: '/index/infor/plantNotice', //平台公告页面
   MANAGEMENT_TEAM: '/index/infor/managementTeam', //管理团队
+  TEAM_PROFILE: '/index/infor/teamProfile', //团队简介
+  PROFILE: '/index/infor/profile', //人员概况
   ENTERPRISE_WILL: '/index/infor/enterpriseWill', //企业文化
   JOIN_US: '/index/infor/joinUs', //加入我们
   PLATFORM_ANNOUNCEMENT:'/index/infor/platformAnnouncement', //平台公告
