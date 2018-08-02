@@ -37,6 +37,9 @@ export default class AccountStatement extends React.Component{
       tixianData:[],
       touziData:[],
       huiKuanData:[], 
+      //累计金额
+      amountText: '',
+      totalAmount: 0.00,
     }
   }
 
@@ -82,25 +85,33 @@ export default class AccountStatement extends React.Component{
         }); 
         if(this.state.activeCode==='0000'){
           this.setState({  
-            infoList:res.data.infoList, 
+            infoList:res.data.resPage.infoList, 
           }); 
         }else if(this.state.activeCode==='1201'){
           this.setState({  
-            chongzData:res.data.infoList, 
+            amountText: '累积充值金额',
+            totalAmount:res.data.totalAmount,
+            chongzData:res.data.resPage.infoList, 
           }); 
         }else if(this.state.activeCode==='1301'){
-          this.setState({  
-            tixianData:res.data.infoList, 
+          this.setState({ 
+            amountText: '累积提现金额',
+            totalAmount:res.data.totalAmount, 
+            tixianData:res.data.resPage.infoList, 
           }); 
         }else if(this.state.activeCode==='1404'){
           this.setState({  
-            touziData:res.data.infoList, 
+            amountText: '累积投资金额',
+            totalAmount:res.data.totalAmount,
+            touziData:res.data.resPage.infoList, 
           }); 
         }else if(this.state.activeCode==='1405'){
           this.setState({  
-            huiKuanData:res.data.infoList, 
+            amountText: '累积投资利息收益',
+            totalAmount:res.data.getInterestAmount,
+            huiKuanData:res.data.resPage.infoList, 
           }); 
-        } 
+        }     
       } else {
         this.setState({ 
           totalNum:0,
@@ -384,6 +395,7 @@ export default class AccountStatement extends React.Component{
                 this.state.infoList.length===0?<span className='no-data'>暂无数据</span>:null
               }
             </div>
+            {this.state.activeCode !=='0000' ? <span>{this.state.amountText}: ￥{this.state.totalAmount}</span> : null}
             {/* 充值 */}
             <div className={this.state.activeCode==='1201'?'':'hide'}>
               <Table columns={chongzColumn} locale={locale} dataSource={this.state.chongzData} loading={this.state.loading} pagination={false} bordered size="small" />

@@ -14,7 +14,7 @@ export default class Investment extends React.Component {
     super(props); 
     this.state = {
       pageCurrent: 1, //当前页，初始值为第一页
-      pageSize: 2,    //每页可显示的消息条数
+      pageSize: 5,    //每页可显示的消息条数
       totalNum:0,
       activeFlag:0,
       projectName:'',
@@ -103,6 +103,7 @@ export default class Investment extends React.Component {
       projectName:this.state.projectName,
     }; 
     const rest = await accountService.getInvestmentRecord(param);
+    console.log('投资记录列表',rest)
     if(rest.code===0){
       this.setState({
         list:rest.data.infoList,
