@@ -28,14 +28,16 @@ import RiskWarning from '../information/riskWarning';
 import Education from '../information/education';
 import FinancialStatements from '../information/financialStatements';
 //关于我们
-import CompanyIntroduction from '../information/CompanyIntroduction.js';
+import CompanyIntroduction from '../information/CompanyIntroduction';//公司介绍
 import PlantNotice from '../information/plantNotice';
-import ManagementTeam from '../information/managementTeam';
-import EnterpriseWill from '../information/enterpriseWill';
-import PlatformAnnouncement from '../information/platformAnnouncement';
-import BigEvents from '../information/bigEvents';
-import JoinUs from '../information/joinUs';
-import ContactUs from '../information/contactUs';
+import ManagementTeam from '../information/managementTeam';//管理团队
+import TeamProfile from '../information/teamProfile';//团队简介
+import Profile from '../information/profile';//人员概况
+import EnterpriseWill from '../information/enterpriseWill';//企业文化
+import PlatformAnnouncement from '../information/platformAnnouncement';//加入我们
+import BigEvents from '../information/bigEvents';//平台公告
+import JoinUs from '../information/joinUs';//大事记
+import ContactUs from '../information/contactUs';//联系我们
 //法律法规
 import LawsRegulations from '../information/lawsRegulations';
 import LegalSupport from '../information/legalSupport';
@@ -122,6 +124,10 @@ export default class Infor extends React.Component {
             <Route path={Path.PLATFORM_ANNOUNCEMENT}  component={PlatformAnnouncement} />
             {/* 管理团队 */}
             <Route path={Path.MANAGEMENT_TEAM}  component={ManagementTeam} />
+            {/* 团队简介 */}
+            <Route path={Path.TEAM_PROFILE}  component={TeamProfile} />
+            {/* 人员概况 */}
+            <Route path={Path.PROFILE}  component={Profile} />
             {/* 大事记 */}
             <Route path={Path.BIG_EVENTS}  component={BigEvents} />
             {/* 加入我们 */}

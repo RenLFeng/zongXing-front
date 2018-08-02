@@ -160,6 +160,7 @@ class LoanInfo extends React.Component {
 				{/* 左  logo*/}
 			<div className='li-left'>
 				<img  src={'http://zjb01-1255741041.picsh.myqcloud.com/'+this.state.data.cardPicPath||'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'} />
+				{/* <span>筹款中</span> */}
 				<span> {this.state.data.leveName} </span>
 			</div>
 				{/* 中 */}
@@ -195,7 +196,7 @@ class LoanInfo extends React.Component {
 				<div className='text li-nh'>
 					<span>年化收益率</span>
 					<p>{this.state.data.rate}<span>%</span></p> 
-					<span className='tip'>{this.state.data.cityName}/
+					<span className='tip' style={{color:'#333'}}>{this.state.data.cityName}<span style={{display:'inline-block',margin:'0px 8px'}}>|</span>
 						{
 							this.state.data.busType==='xcy'?'新餐饮':''
 						}
@@ -224,7 +225,7 @@ class LoanInfo extends React.Component {
 				<div className='text li-je'>
 					<span>借款金额</span>
 					<p>{this.state.data.practicalLoanMoney}<span>万</span></p> 
-					<span className='tip'>按月等额本息还款</span>
+					<span className='tip' style={{color:'#FF9900'}}>按月等额本息还款</span>
 				</div> 
 			</div>
 			{/* 右 */}

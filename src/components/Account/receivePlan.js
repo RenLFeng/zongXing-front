@@ -304,6 +304,7 @@ export default class ReceivePlan extends React.Component {
             <div className="rp_detail_time_div">
               {/* 按照时间查看样式 */}
               {this.state.timePageList.length > 0 ? this.state.timePageList.map((data, index)=> {
+                console.log('数据信息',this.state.timePageList)
                 return (
                   <div className="rp_detail_time_item" key={index} style={{fontSize:16}}>
                     <div className="rp_detail_time_item_left">
