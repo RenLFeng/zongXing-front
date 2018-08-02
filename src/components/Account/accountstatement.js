@@ -40,7 +40,6 @@ export default class AccountStatement extends React.Component{
       //累计金额
       amountText: '',
       totalAmount: 0.00,
-      interestAmount: 0.00,
     }
   }
 
@@ -109,7 +108,7 @@ export default class AccountStatement extends React.Component{
         }else if(this.state.activeCode==='1405'){
           this.setState({  
             amountText: '累积投资利息收益',
-            interestAmount:res.data.getInterestAmount,
+            totalAmount:res.data.getInterestAmount,
             huiKuanData:res.data.resPage.infoList, 
           }); 
         }     
