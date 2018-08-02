@@ -16,7 +16,9 @@ export default class ProjectDetail extends React.Component {
     this.state = {
       projectDetail: {},
       countDay: 0,
-      countDown: '00 : 00 : 00'
+      countDown: '00 : 00 : 00',
+      collectNum:0,
+      isCollect:false
     };
     this.countDown = null;
   }
@@ -60,12 +62,15 @@ export default class ProjectDetail extends React.Component {
   async changeNum() {
     const {projectId} = this.props.match.params;
     const response = await getInvestmentNum(projectId);
+    console.log('shujuaaaaaaaaaaaaa',response)
     if (response.code === 0) {
       this.setState({
         projectDetail: {
           ...this.state.projectDetail,
           topicCount: response.data.topicCount,
-          questionCount: response.data.questionCount
+          questionCount: response.data.questionCount,
+          collectNum:response.data.collectionNumber,
+          isCollect:response.data.isCollected
         }
       })
     } 
@@ -103,6 +108,8 @@ export default class ProjectDetail extends React.Component {
               projectDetail={projectDetail}
               history={this.props.history}
               time={{countDay: this.state.countDay, countDown: this.state.countDown}}
+              // collectNum={this.state.collectNum}
+              // isCollect={this.state.isCollect}
             />
           </div>
         </div>
