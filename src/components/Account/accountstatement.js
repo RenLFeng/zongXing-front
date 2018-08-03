@@ -79,6 +79,7 @@ export default class AccountStatement extends React.Component{
       }; 
       //调用后台
       const res = await accountService.getAccountStatement(param); 
+      console.log('资金流水',res)
       if(res.code === 0){  
         this.setState({  
           totalNum:res.data.totalNumber, 
@@ -102,7 +103,7 @@ export default class AccountStatement extends React.Component{
         }else if(this.state.activeCode==='1404'){
           this.setState({  
             amountText: '累积投资金额',
-            totalAmount:res.data.totalAmount,
+            totalAmount:String(res.data.totalAmount).fm(),
             touziData:res.data.resPage.infoList, 
           }); 
         }else if(this.state.activeCode==='1405'){

@@ -222,9 +222,9 @@ class LoanInfo extends React.Component {
 					<p>{this.state.data.month}<span>个月</span></p>
 					
 				</div>
-				<div className='text li-je'>
+				<div className='text li-je' style={{width:190}}>
 					<span>借款金额</span>
-					<p>{(this.state.data.practicalLoanMoney/10000+'').fm()}<span>万</span></p> 
+					<p>{String(this.state.data.practicalLoanMoney).fm()}<span>元</span></p> 
 					<span className='tip' style={{color:'#FF9900'}}>按月等额本息还款</span>
 				</div> 
 			</div>
