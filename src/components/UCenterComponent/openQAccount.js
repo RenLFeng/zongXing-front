@@ -121,23 +121,6 @@ export default class OpenQAccount extends React.Component {
                   <input id="SignInfo" name="SignInfo" value={submitParam.reqParam.SignInfo} />
                 </form>
 
-                <form ref={ref => { this.formId_ = ref}} action="www.baidu.com" method="post" target="_blank" style={{ display: 'none' }}>
-                  <input id="AccountType" name="AccountType" value={0} />
-                  <input id="Email" name="Email" value={submitParam.reqParam.Email} />
-                  <input id="IdentificationNo" name="IdentificationNo" value={submitParam.reqParam.IdentificationNo} />
-                  <input id="LoanPlatformAccount" name="LoanPlatformAccount" value={submitParam.reqParam.LoanPlatformAccount} />
-                  <input id="Mobile" name="Mobile" value={submitParam.reqParam.Mobile} />
-                  <input id="NotifyURL" name="NotifyURL" value={submitParam.reqParam.NotifyURL} />
-                  <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={submitParam.reqParam.PlatformMoneymoremore} />
-                  <input id="RandomTimeStamp" name="RandomTimeStamp" value={submitParam.reqParam.RandomTimeStamp} />
-                  <input id="RealName" name="RealName" value={submitParam.reqParam.RealName} />
-                  <input id="RegisterType" name="RegisterType" value={submitParam.reqParam.RegisterType} />
-                  <input id="Remark1" name="Remark1" value={submitParam.reqParam.Remark1} />
-                  <input id="Remark2" name="Remark2" value={submitParam.reqParam.Remark2} />
-                  <input id="Remark3" name="Remark3" value={submitParam.reqParam.Remark3} />
-                  <input id="ReturnURL" name="ReturnURL" value={submitParam.reqParam.ReturnURL} />
-                  <input id="SignInfo" name="SignInfo" value={submitParam.reqParam.SignInfo} />
-                </form>
               </div> : null
           }
         </div>

@@ -258,7 +258,7 @@ export default class FormProject extends React.Component {
           </div>
         </div>
         }
-        <form ref={ref => this.formId = ref} id="form1" name="form1" action={data.submitURL} method="post" target="_blank">
+        <form ref={ref => this.formId = ref} id="form1" name="form1" action={data.submitURL} method="post">
           <input id="Action" name="Action" value={data.action?data.action: ''} type="hidden" />
           <input id="ArrivalTime" name="ArrivalTime" value={data.arrivalTime?data.arrivalTime: ''} type="hidden" />
           <input id="LoanJsonList" name="LoanJsonList" value={data.loanJsonList} type="hidden" />

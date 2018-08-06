@@ -20,10 +20,10 @@ export default class Investment extends React.Component {
       projectName:'',
       Lables:[
         {lable:'全部',flag:0,value:0},
-        {lable:'筹款中',flag:10,value:0},
-        {lable:'待放款',flag:11,value:0},
-        {lable:'回款中',flag:12,value:0},
-        {lable:'已结清',flag:13,value:0},
+        {lable:'筹款中',flag:13,value:0},
+        {lable:'待放款',flag:14,value:0},
+        {lable:'回款中',flag:15,value:0},
+        {lable:'已结清',flag:16,value:0},
         {lable:'已流标',flag:-1,value:0},
         {lable:'回款异常',flag:-4,value:0},
       ], 
@@ -57,10 +57,10 @@ export default class Investment extends React.Component {
   async getLables(){
     let lables =[
       {lable:'全部',flag:0,value:0},
-      {lable:'筹款中',flag:10,value:0},
-      {lable:'待放款',flag:11,value:0},
-      {lable:'回款中',flag:12,value:0},
-      {lable:'已结清',flag:13,value:0},
+      {lable:'筹款中',flag:13,value:0},
+      {lable:'待放款',flag:14,value:0},
+      {lable:'回款中',flag:15,value:0},
+      {lable:'已结清',flag:16,value:0},
       {lable:'已流标',flag:-1,value:0},
       {lable:'回款异常',flag:-4,value:0},
     ];

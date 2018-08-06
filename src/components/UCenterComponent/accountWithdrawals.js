@@ -291,7 +291,7 @@ export default class EnterprisePresentation extends React.Component {
             {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px' }}>{this.state.moneyErrorMsg}</span></div> : null}
             <Button type="primary" loading={this.state.loading} style={{width: 279, marginTop: 30,height:35,fontSize: 18, marginBottom:30,marginLeft: 56}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
-          <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
+          <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" style={{display:'none'}}>
             <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />
             <input id="OrderNo" name="OrderNo" value={withdrawals.orderNo} />
             <input id="Amount" name="Amount" value={withdrawals.amount} />

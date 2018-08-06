@@ -31,7 +31,7 @@ export default class UserBasic extends React.Component {
       <div>
         <LeftMenu param={this.props}/>
         <div className="fr uc-rbody">
-          <form id="form1" name="form1" action={data.submitURL} method="post" target="_blank">
+          <form id="form1" name="form1" action={data.submitURL} method="post" >
             <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={data.rechargeMoneymoremore} />
             <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={data.platformMoneymoremore}  />
             <input id="OrderNo" name="OrderNo" value={data.orderNo} />
