@@ -4,6 +4,7 @@
 // 部署替换
 let build = 'local'; // production 开发环境 test 测试服务环境  local  本地环境 ys 演示环境
 
+
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
 let IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用

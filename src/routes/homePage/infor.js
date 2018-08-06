@@ -34,9 +34,9 @@ import ManagementTeam from '../information/managementTeam';//管理团队
 import TeamProfile from '../information/teamProfile';//团队简介
 import Profile from '../information/profile';//人员概况
 import EnterpriseWill from '../information/enterpriseWill';//企业文化
-import PlatformAnnouncement from '../information/platformAnnouncement';//加入我们
-import BigEvents from '../information/bigEvents';//平台公告
-import JoinUs from '../information/joinUs';//大事记
+import PlatformAnnouncement from '../information/platformAnnouncement';//平台公告
+import BigEvents from '../information/bigEvents';//大事记
+import JoinUs from '../information/joinUs';//加入我们
 import ContactUs from '../information/contactUs';//联系我们
 //法律法规
 import LawsRegulations from '../information/lawsRegulations';

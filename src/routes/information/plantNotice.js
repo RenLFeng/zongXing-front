@@ -5,7 +5,28 @@ import moment from 'moment';
 import '../../assets/MessageList/messageList.scss';
 import {pageShows} from "../../common/systemParam";
 import {NOTICE_DETAIL} from "../../common/pagePath";
-
+const lists=[
+  {"title":"1大事记","time":"2018年8月8日"},
+  {"title":"2大事记","time":"2018年8月8日"},
+  {"title":"3大事记","time":"2018年8月8日"},
+  {"title":"4大事记","time":"2018年8月8日"},
+  {"title":"5大事记","time":"2018年8月8日"},
+  {"title":"6大事记","time":"2018年8月8日"},
+  {"title":"7大事记","time":"2018年8月8日"},
+  {"title":"8大事记","time":"2018年8月8日"},
+  {"title":"9大事记","time":"2018年8月8日"},
+  {"title":"10大事记","time":"2018年8月8日"},
+  {"title":"11大事记","time":"2018年8月8日"},
+  {"title":"12大事记","time":"2018年8月8日"},
+  {"title":"13大事记","time":"2018年8月8日"},
+  {"title":"14大事记","time":"2018年8月8日"},
+  {"title":"15大事记","time":"2018年8月8日"},
+  {"title":"16大事记","time":"2018年8月8日"},
+  {"title":"17大事记","time":"2018年8月8日"},
+  {"title":"18大事记","time":"2018年8月8日"},
+  {"title":"19大事记","time":"2018年8月8日"},
+  {"title":"20大事记","time":"2018年8月8日"}
+]
 export default class Plant extends React.Component {
   constructor(props){
     super(props);
@@ -20,6 +41,7 @@ export default class Plant extends React.Component {
   componentDidMount() {
     this.getPlantNotice(1);  //调用请求
   }
+
 
   async getPlantNotice(page){
     const response = await getSiteNotice(page,this.state.pageSize);
