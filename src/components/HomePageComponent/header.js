@@ -97,7 +97,7 @@ export default class Header extends React.Component {
               $(window).scrollTop(0);
             }}>如何借款</a>
              <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
-             history.push('/index/infor/letterstatement');
+             history.push('/index/infor/companyIntroduction');
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>信息披露</a>
@@ -159,7 +159,7 @@ export default class Header extends React.Component {
               $(window).scrollTop(0);
             }}>如何借款</a>
             <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
-               history.push('/index/infor/letterstatement');
+               history.push('/index/infor/companyIntroduction');
               $("#fix").removeClass('fix');
               $(window).scrollTop(0);
             }}>信息披露</a>

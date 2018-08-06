@@ -19,6 +19,11 @@
           font-size: 15px;
           text-align: left;
           color:#696969;
+          text-indent: 15px;
+          line-height: 30px;
+          &.red{
+            color:rgba(219, 28, 28, 0.973);
+          }
         }
       }
     }
