@@ -2,6 +2,7 @@ import React from 'react';
 import '../../assets/component/common/coupon.scss';
 import {Button,Input} from 'antd';
 import moment from 'moment';
+import {IMG_BASE_URL} from '../../common/systemParam';
 
 class Coupon extends React.Component {
     
@@ -103,7 +104,7 @@ class Coupon extends React.Component {
                     {/* 左*/}
                     <div className="cp-coupon-left" >
                         {/* logo */}
-                        <img className="logo" src={this.state.data.flogo_pic||this.state.defaultHead}/>
+                        <img className="logo" src={IMG_BASE_URL + this.state.data.flogo_pic|| IMG_BASE_URL + this.state.defaultHead}/>
                     </div>
                     {/* 中 */}
                     <div className="cp-coupon-center">
