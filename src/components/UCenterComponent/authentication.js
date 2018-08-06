@@ -85,7 +85,7 @@ export default class Authentication extends React.Component {
       }, 1000);
     } else {
       this.setState({
-        message2:'信息不匹配'
+        message2: response.msg
       })
     }
   };

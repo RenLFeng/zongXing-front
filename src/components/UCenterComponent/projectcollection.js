@@ -113,10 +113,10 @@ class projectcollection extends React.Component {
                         <p className='top-title'>项目收藏 </p>
                         <ul className='search-tag'>
                             <li className={`${param.flag?'': 'active'}`} onClick={()=>this.handleClick(null)}>全部{this.state.allNum?`(${this.state.allNum})`: ''}</li>
-                            <li className={`${param.flag==10?'active': ''}`} onClick={()=>this.handleClick(10)}>筹款中{count[10]?`(${count[10]})`:''}</li>
-                            <li className={`${param.flag==11?'active': ''}`} onClick={()=>this.handleClick(11)}>待放款{count[11]?`(${count[11]})`:''}</li>
-                            <li className={`${param.flag==12?'active': ''}`} onClick={()=>this.handleClick(12)}>回款中{count[12]?`(${count[12]})`:''}</li>
-                            <li className={`${param.flag==13?'active': ''}`} onClick={()=>this.handleClick(13)}>已结清{count[13]?`(${count[13]})`:''}</li>
+                            <li className={`${param.flag==13?'active': ''}`} onClick={()=>this.handleClick(13)}>筹款中{count[13]?`(${count[13]})`:''}</li>
+                            <li className={`${param.flag==14?'active': ''}`} onClick={()=>this.handleClick(14)}>待放款{count[14]?`(${count[14]})`:''}</li>
+                            <li className={`${param.flag==15?'active': ''}`} onClick={()=>this.handleClick(15)}>回款中{count[15]?`(${count[15]})`:''}</li>
+                            <li className={`${param.flag==16?'active': ''}`} onClick={()=>this.handleClick(16)}>已结清{count[16]?`(${count[16]})`:''}</li>
                             <li className={`${param.flag==-1?'active': ''}`} onClick={()=>this.handleClick(-1)}>已流标{count[-1]?`(${count[-1]})`:''}</li>
                             <li className='error' onClick={()=>this.handleClick(-4)}>回款异常{count[-4]?`(${count[-4]})`:''}</li>
                         </ul> 
