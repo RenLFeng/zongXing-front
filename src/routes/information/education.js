@@ -1,17 +1,15 @@
 import React from 'react';
 import LeftMenu from './leftMenu';
 import '../../assets/infor/information/edu.scss'
+import {startAnimate} from '../../assets/infor/index'
 export default class Education extends React.Component {
   constructor(props) {
     super();
     this.state = {
-
     }
   }
   componentDidMount(){
-    $(".questions .question").on("click",function(){
-      $(this).toggleClass("act").nextAll().slideToggle();
-    })
+    startAnimate();
   }
   render() {
     return (
