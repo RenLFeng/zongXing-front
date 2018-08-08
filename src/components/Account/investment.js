@@ -25,19 +25,24 @@ export default class Investment extends React.Component {
         {lable:'回款中',flag:15,value:0},
         {lable:'已结清',flag:16,value:0},
         {lable:'已流标',flag:-1,value:0},
-        {lable:'回款异常',flag:-4,value:0},
+        {lable:'回款异常',flag:-4,value:0}
       ], 
       list:[], 
+      wfkShowFlag:false,
+      hkycShowFlag:false,
     }
   }
 
-  componentDidMount() { 
-    if (this.props.openStatus == 3) {
-      this.getLables();
-      return;
-    }
-    this.jumpAuth();
-     
+  componentDidMount() {
+     if(this.props.location.state && this.props.location.state.flag){
+        this.handlerLableClick(null)
+      } else{
+        if (this.props.openStatus == 3) {
+          this.getMyinvest();
+          return;
+        }
+        this.jumpAuth();
+      } 
   }
   
   jumpAuth() {
@@ -54,7 +59,7 @@ export default class Investment extends React.Component {
 
 
   //获取顶部标签的个数
-  async getLables(){
+  async getLables(wfkFlag){
     let lables =[
       {lable:'全部',flag:0,value:0},
       {lable:'筹款中',flag:13,value:0},
@@ -65,6 +70,7 @@ export default class Investment extends React.Component {
       {lable:'回款异常',flag:-4,value:0},
     ];
     const rest = await accountService.getInvestmentRecordCount();
+    console.log('rest',rest)
     if(rest.code===0){
       if(!rest.data){
        return;
@@ -72,22 +78,26 @@ export default class Investment extends React.Component {
       var total = 0;
       rest.data.map(item=>{
         //全部  
-        total +=item.count;
+        total += item.count;
         //循环赋值
         lables.map(lab=>{
-          if(item.flag=== lab.flag){
+          if(item.flag === lab.flag){
             lab.value = item.count;
           }
         })
       });
       //设置全部值
       lables[0].value = total; 
+     if(!wfkFlag){
       this.setState({
         Lables:lables
-      },()=>{
-        //获取我的投资列表
-        this.getMyinvest();
-      }); 
+      });
+     } else {
+      lables.push({lable:'未付款',flag:null,value:0})
+      this.setState({
+        Lables:lables
+      });
+     }  
     }else{
       message.error(rest.msg);
     }
@@ -99,15 +109,20 @@ export default class Investment extends React.Component {
         pageSize: this.state.pageSize,
         pageCurrent: this.state.pageCurrent,
       },
-      flag: this.state.activeFlag==0?null:this.state.activeFlag,
-      projectName:this.state.projectName,
+      flag: this.state.activeFlag==0 ? null : this.state.activeFlag,
+      projectName: this.state.activeFlag=== null ? null : this.state.projectName,
+      invFlag:this.state.activeFlag===null ? 0 : null,
     }; 
     const rest = await accountService.getInvestmentRecord(param);
     console.log('投资记录列表',rest)
     if(rest.code===0){
       this.setState({
         list:rest.data.infoList,
-        totalNum:rest.data.totalNumber
+        totalNum:rest.data.totalNumber,
+        wfkShowFlag:rest.data.hasWaitPay,
+        hkycShowFlag:rest.data.hasLoanException
+      },()=>{
+        this.getLables(this.state.wfkShowFlag)
       });
     }else{
       message.error(rest.msg);
@@ -115,6 +130,7 @@ export default class Investment extends React.Component {
   }
   //点击顶部标签
   handlerLableClick =(flag)=>{
+    console.log('flag',flag)
      this.setState({
        activeFlag:flag,
        pageCurrent:1,
@@ -148,8 +164,10 @@ export default class Investment extends React.Component {
  handllerTZClick = (id, data) =>{
   this.props.history.push(`/index/projectDetail/${data.projectId}`)
  }
-  
+
+ 
   render() { 
+ 
     return (
       <div>
         <LeftMenu param={this.props}/>
@@ -158,10 +176,23 @@ export default class Investment extends React.Component {
             <p className='top-title'>投资记录 </p>
               <ul className='search-tag'>
                 {
+                  !this.state.hkycShowFlag ? 
                   this.state.Lables.map((item)=>{
+                    if(item.flag === null){
+                      return <li onClick={this.handlerLableClick.bind(this,item.flag)} key={item.flag} className={`${item.flag === -4?'error':''} ${item.flag === this.state.activeFlag?'active':''}`}>{item.lable}</li>
+                    } else {
                       return <li onClick={this.handlerLableClick.bind(this,item.flag)} key={item.flag} className={`${item.flag === -4?'error':''} ${item.flag === this.state.activeFlag?'active':''}`}>{item.lable}({item.value})</li>
+                    }
+                  }) :
+                  this.state.Lables.map((item)=>{
+                    if(item.flag === null){
+                      return <li onClick={this.handlerLableClick.bind(this,item.flag)} key={item.flag} className={`${item.flag === this.state.activeFlag?'active':''}`}>{item.lable}</li>
+                    } else {
+                      return <li onClick={this.handlerLableClick.bind(this,item.flag)} key={item.flag} className={`${item.flag === this.state.activeFlag?'active':''}`}>{item.lable}({item.value})</li>
+                    }
                   })
-                } 
+                }
+        
               </ul> 
               {/* 搜索文本区域 */}
               <div className='search-text'>
@@ -177,7 +208,7 @@ export default class Investment extends React.Component {
             }
             {
               this.state.list.map(item=>{
-                return <LoanInfo key={item.projectId} data={item} handllerMXClick={this.handllerTZClick} handllerTZClick={this.handllerTZClick}/> 
+                return <LoanInfo key={item.projectId} data={item} handllerMXClick={this.handllerTZClick} handllerTZClick={this.handllerTZClick} getMyinvest={this.getMyinvest.bind(this)}/> 
               })
             } 
             {

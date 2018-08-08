@@ -179,7 +179,7 @@ export default class FormProject extends React.Component {
         </div>
         {this.props.canPay ?
         <div className="form">
-          <Alert message={'您有一笔待付款的投资，请先前往处理'} type="warning" showIcon/>
+          <Alert message={'您有一笔未付款的投资，请先前往处理'} type="warning" showIcon/>
         </div> :
         <div className="form">
           { this.state.authError?
@@ -279,7 +279,7 @@ export default class FormProject extends React.Component {
           {this.props.canPay ?
             <Button
               type="primary"
-              onClick={()=>{this.props.history.push({pathname:'/index/uCenter/myInvest',state: {projectId: this.props.project.fpeoject_id}})}}
+              onClick={()=>{this.props.history.push({pathname:'/index/uCenter/InvestMent',state: {projectId: this.props.project.fpeoject_id,flag:true}})}}
               loading={this.state.loading} style={{width: 200, height: 40}}>去处理</Button>:
             <Button type="primary" onClick={()=>this.submit()} loading={this.state.loading} style={{width: 200, height: 40}}>提交</Button>
           }
