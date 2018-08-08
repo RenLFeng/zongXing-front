@@ -1,7 +1,11 @@
 import React from 'react';
 import {Icon} from 'antd'
 import LeftMenu from './leftMenu';
+import {startAnimate} from '../../assets/infor/index'
 export default class RiskManagement extends React.Component {
+  componentDidMount() {
+    startAnimate();
+  }
   render() {
     return (
           <div className="fr risk">
@@ -54,7 +58,7 @@ export default class RiskManagement extends React.Component {
                 </li>
               </ul>
             </div>
-            <div className="top3 item">
+            <div className="top3 item animetion none">
               <p className="dashed"><span className="dashed"></span>风险管理战略<span className="dashed"></span></p>
               <p className="t2">环环相扣,促进按时还款</p>
               <p className="bg"></p>
@@ -81,7 +85,7 @@ export default class RiskManagement extends React.Component {
                 </li>
               </ul>
             </div>
-            <div className="top4 item">
+            <div className="top4 item animetion none">
               <p className="dashed"><span className="dashed"></span>快速专业催收<span className="dashed"></span></p>
               <p className="t2">循序渐进,极力催回借款</p>
               <p className="bg"></p>

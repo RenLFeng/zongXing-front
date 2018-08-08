@@ -2,7 +2,7 @@ import React from 'react';
 import { Pagination } from 'antd';
 import LeftMenu from './leftMenu';
 import '../../assets/infor/contactUs/platform.scss'
-const lists=[
+const dataLists=[
   {"title":"1大事记","time":"2018年8月8日"},
   {"title":"2大事记","time":"2018年8月8日"},
   {"title":"3大事记","time":"2018年8月8日"},
@@ -29,35 +29,30 @@ export default class platformAnnouncement extends React.Component {
     super(props);
     this.state = {
       indexList : [], //获取数据的存放数组
-      totalNum:'',//总条数
+      totalNum:null,//总条数
       current: 1, //当前页码
       pageSize:5, //每页显示的条数5条
-      totalPage:''//总页数
     }
   };
-  componentWillMount(){
-    this.setState({totalData:lists});
-    this.setState({totalNum:lists.length});
-    let totalPage =Math.ceil( this.state.totalNum / this.state.pageSize);
-    this.setState({totalPage:totalPage});
-    this.pageClick(1);
-
-  };
   componentDidMount(){
-
+    this.setState({
+      totalData:dataLists,
+      totalNum:dataLists.length
+    });
+    this.pageClick(1);
   }
   handlerPageChange = (page) => {
     this.setState({
       current: page
     },()=>{
-      this.pageClick(page)
+      this.pageClick(page);
     });
   };
-  //点击翻页
+  //翻页
   pageClick(pageNum){
     this.state.indexList=[];
     for(var i=(pageNum - 1) * this.state.pageSize;i<this.state.pageSize * pageNum;i++){
-      this.state.indexList.push(lists[i]);
+      this.state.indexList.push(dataLists[i]);
     }
     this.setState({indexList:this.state.indexList})
   }

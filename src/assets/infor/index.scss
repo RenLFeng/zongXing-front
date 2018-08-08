@@ -2,6 +2,7 @@
 @import './opDa.scss';
 @import './risk.scss';
 @import './company.scss';
+@import './animate.scss';
 .infor{
   >.w >.fr{
     width: 956px;
@@ -9,7 +10,7 @@
     padding: 30px;
     margin-bottom: 40px;
     height: auto;
-    overflow-y: auto;
+    // overflow-y: auto;
     h2{
       border-bottom: 1px dashed #ccc;
       padding-bottom: 10px;

@@ -11,10 +11,10 @@ export default class OperationalReport extends React.Component {
           <p>说明<br/>为进一步加强平台透明化建设与信息公示披露，将定期推出运营月报、半年报、年报，欢迎查看！</p>
           <ul className="y_line clearfix">
             <li className="act"><span>2018</span><span></span></li>
-            <li><span>2017</span><span></span></li>
-            <li><span>2016</span><span></span></li>
-            <li><span>2015</span><span></span></li>
-            <li><span>2014</span><span></span></li>
+            <li><span style={{opacity:'0'}}>2017</span><span></span></li>
+            <li><span style={{opacity:'0'}}>2016</span><span></span></li>
+            <li><span style={{opacity:'0'}}>2015</span><span></span></li>
+            <li><span style={{opacity:'0'}}>2014</span><span></span></li>
           </ul>
           <ul className="pic_items clearfix">
             <li>

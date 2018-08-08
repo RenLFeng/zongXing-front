@@ -70,7 +70,12 @@
                         &.ylb{
                             background-color: #ff3b30;
                         }
-
+                        &.wfk{
+                            background-color: #36cbf8;
+                        }
+                        &.clz{
+                            background-color: #f3611e;
+                        }
                     }
                     &>.pname{
                         position: absolute;
@@ -178,7 +183,7 @@
             font-size: 14px;
             line-height: 20px;
             padding: 15px 0 15px 22px;
-            span{ 
+            .span{ 
                 color: #666;
                 &>.split{
                     color: #7e7e7e;
@@ -203,6 +208,21 @@
                 margin-right: 5px;
                 color: #268eff;
                 text-decoration: underline;
+                &:hover{
+                    opacity: .7;
+                }
+            }
+            &>div{
+                float: right;
+                margin-top: -15px;
+            }
+            &>div Button{
+                display: inline-block;
+                background-color: $f90;
+                padding: 14px;
+                width:120px;
+                height:50px;
+                color:#fff !important;
                 &:hover{
                     opacity: .7;
                 }

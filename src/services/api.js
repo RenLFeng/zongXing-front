@@ -831,3 +831,12 @@ export async function f_getCode(param) {
   })
 }
 
+//投资记录-去付款
+export async function goPay(param,params) {
+  return request(`${BASE_URL}/investment/payment?invRecordId=${param}&notifyPageUrl=${params}`);
+}
+
+//投资记录-删除订单
+export async function deleteInvestRecord(param) {
+  return request(`${BASE_URL}/invRecord/delInvRecord?invId=${param}`);
+}
