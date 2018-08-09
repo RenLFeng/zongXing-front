@@ -344,9 +344,9 @@ class BindCard extends React.Component {
           <div className="bind_item_view">
             <span/>
             <div className="bind_password" style={{paddingLeft: 10}}>
-              <i className="zjb zjb-mima2" />
+              <i className='zjb zjb-mima2' />
               <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})} onBlur={()=>this.checkPass(this.state.userPassword)}/>
-              <i className="zjb zjb-htmal5icon08" onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
+              <i className={ this.state.showPwd ? 'zjb zjb-mimakejian' :"zjb zjb-htmal5icon08" } onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
               {
                 this.state.message ? 
                 <p style={{color:'red',marginTop:-10}}>{this.state.message}</p> : <p>&nbsp;</p>

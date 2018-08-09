@@ -553,7 +553,9 @@ export default class RealName extends React.Component {
                                           placeholder="请输入登录密码"
                                           onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
                                           prefix={<Icon type="lock" />}
-                                          suffix={<Icon type="eye-o" onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                                           suffix={<i className={this.state[`${data.fid}hide`]? 'zjb zjb-mimakejian' :"zjb zjb-htmal5icon08" } onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                                          
+                                          //  suffix={<Icon type="eye-o" style={{border:'1px solid red'}} onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />} 
                                         />
                                         <Button
                                           type="primary"
