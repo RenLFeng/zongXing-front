@@ -95,6 +95,7 @@ export default class ReceivePlan extends React.Component {
         interest: response.data.interest,
         money: response.data.money,
         principal: response.data.principal,
+        lastRepayBill: response.data.lastRepayBill,
         count: response.data.count,
         lineOption: {
           xAxis: {
@@ -232,16 +233,18 @@ export default class ReceivePlan extends React.Component {
               <span className="rp_title">·<span style={{paddingLeft: '9px', fontSize: '18px', color: '#333', fontWeight: 'normal'}}>近期回款</span></span>
               <div className="rp_content">
                 {/* 时间 */}
-                <span className="rp_content_time">{moment().format('YYYY/MM/DD')}</span>
+                <span className="rp_content_time">{moment(this.state.lastRepayBill.fpayTime).format('YYYY/MM/DD')}</span>
                 <div className="rp_content_step">
                   <div className="rp_content_step_circle"/>
                   <div className="rp_content_step_line"/>
                 </div>
                 <div className="rp_content_moeny_div">
-                  <span style={{display:'block'}}>￥500&nbsp;&nbsp;&nbsp;&nbsp;本金:500.00&nbsp;&nbsp;&nbsp;&nbsp;利息:45.00&nbsp;&nbsp;&nbsp;&nbsp;佣金:32.00</span>
-                  <span style={{display: 'block', marginTop: '16px'}}>6/12期回款</span>
-                  <span style={{display: 'block', marginTop: '4px'}}>项目编号:</span>
-                  <span style={{display: 'block', marginTop: '4px'}}>项目名称:</span>
+                  <span style={{display:'block'}}>￥{`${this.state.lastRepayBill.allMoney}`.fm()}
+                  &nbsp;&nbsp;&nbsp;&nbsp;本金:{`${this.state.lastRepayBill.fprincipal}`.fm()}&nbsp;&nbsp;&nbsp;&nbsp;利息:{`${this.state.lastRepayBill.finterest}`.fm()}
+                  &nbsp;&nbsp;&nbsp;&nbsp;佣金:{`${this.state.lastRepayBill.fkickBack}`.fm()}</span>
+                  <span style={{display: 'block', marginTop: '16px'}}>{this.state.lastRepayBill.fsort}/{this.state.lastRepayBill.month}期回款</span>
+                  <span style={{display: 'block', marginTop: '4px'}}>项目编号: {this.state.lastRepayBill.fprojectNo}</span>
+                  <span style={{display: 'block', marginTop: '4px'}}>项目名称: {this.state.lastRepayBill.fname}</span>
                 </div>
               </div>
             </div> : 
@@ -428,11 +431,11 @@ class ReceiveDetail extends React.Component {
                   <div style={{display: 'inline-block'}}>
                     <span style={{display:'block'}}>
                       <span style={data.fispay?{color: '#ff9900'}:null}>￥{`${data.allMoney}`.fm()}</span>
-                       &nbsp;&nbsp;&nbsp;本金:{`${data.allMoney}`.fm()}&nbsp;&nbsp;&nbsp;利息:{`${data.interest}`.fm()}&nbsp;&nbsp;&nbsp;佣金:{`${data.kickBack}`.fm()}
+                       &nbsp;&nbsp;&nbsp;本金:{`${data.principal}`.fm()}&nbsp;&nbsp;&nbsp;利息:{`${data.interest}`.fm()}&nbsp;&nbsp;&nbsp;佣金:{`${data.kickBack}`.fm()}
                     </span>
                     <span style={{display: 'block', marginTop: '16px'}}>回款日期:&nbsp;{moment(data.forPayTime).format('YYYY/MM/DD')}</span>
                     {!data.fispay? null:
-                     <span style={{display: 'block', marginTop: '4px',color: '#ff9900'}}>到账日期:{moment(data.payTime).format('YYYY/MM/DD')}</span>
+                     <span style={{display: 'block', marginTop: '4px',color: '#ff9900'}}>到账日期:&nbsp;{moment(data.payTime).format('YYYY/MM/DD')}</span>
                     }
                   </div>
                 </div>
@@ -501,7 +504,7 @@ class CanvasCircle extends React.Component {
   initCircle(obj, arr) {
     const {width, height, data} = this.props;
     const {color} = this.state;
-    let current = obj.current + 1; // 当前期数
+    let current = obj.current; // 当前期数
     let sum = obj.total; // 总期数
     // 获取节点
     let ele = document.getElementById(this.props.id);
@@ -556,9 +559,9 @@ class CanvasCircle extends React.Component {
     } else if (current < 10 && sum > 10) {
       cxt.fillText(`第${current}/${sum}期`,107,85);
     } else if (current < 10 && sum < 10) {
-      cxt.fillText(`第${current}/${sum}期`,113,85);
+      cxt.fillText(`第${current}/${sum}期`,110,85);
     } else {
-      cxt.fillText(`第${current}/${sum}期`,113,85);
+      cxt.fillText(`第${current}/${sum}期`,110,85);
     }
     cxt.stroke();
 
