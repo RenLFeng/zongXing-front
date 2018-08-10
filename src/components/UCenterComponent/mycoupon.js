@@ -17,7 +17,7 @@ export default class  MyCoupon extends React.Component {
         super(props); 
         this.state = {
             loading:true,
-            activeFlag:1, 
+            activeFlag:0, 
             activemoney:0,//激活状态下的优惠券总额
             currPage:1,
             pageSize:6,
@@ -56,11 +56,11 @@ export default class  MyCoupon extends React.Component {
             let  haveDataFlag = 0; 
             if(rest.data.flagCount && rest.data.flagCount.length>0){
                 rest.data.flagCount.map(item=>{
-                    if(item.flag>0){ //待生效不显示
+                    if(item.flag > 0){ //待生效不显示
                         item.flag = item.flag-1; 
                     }
                     temp[item.flag].val = item.count; 
-                    if(haveDataFlag==0 && item.count!=0){
+                    if(haveDataFlag===0 && item.count!==0){
                         haveDataFlag = item.flag;
                     }
                 });
@@ -159,7 +159,7 @@ export default class  MyCoupon extends React.Component {
                         <ul className='search-tag'>
                             {
                                 this.state.lables.map((item,index)=>{
-                                    return  <li key={index} onClick={this.handlerLableClick.bind(this,item.flag)} className={this.state.activeFlag===item.flag?'active':''}>{item.lable}({item.val})</li>;
+                                    return  <li key={index} onClick={item.flag === 1 ? this.handlerLableClick.bind(this,0) : this.handlerLableClick.bind(this,item.flag)} className={this.state.activeFlag===item.flag?'active':''}>{item.lable}({item.val})</li>;
                                 })
                             }
                         </ul> 
@@ -178,13 +178,13 @@ export default class  MyCoupon extends React.Component {
                         {
                             this.state.data.map((item,index)=>{ 
                                 if(item.fflag==1){
-                                    return <div  key={item.fid}>  <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerLingquClick} ></Coupon> </div>
+                                    return <div  key={item.fid}>  <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerLingquClick.bind(this)} ></Coupon> </div>
                                 }else if(item.fflag==2){
-                                    return <div  key={item.fid}>  <Coupon  data={item}   showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
+                                    return <div  key={item.fid}>  <Coupon  data={item}   showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick.bind(this)} giveFriend='赠送好友' exchange='兑换券额' handlerExchangeClick={this.handlerExchangeClick}></Coupon> </div>  
                                 }else if(item.fflag==3){
-                                    return <div  key={item.fid}>  <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick} giveFriend='赠送好友'></Coupon> </div>  
+                                    return <div  key={item.fid}>  <Coupon  data={item} showVal='true'  hasLine='true' handlerBtnClick={this.handlerShiyongClick.bind(this)} giveFriend='赠送好友'></Coupon> </div>  
                                 }else{
-                                    return <div  key={item.fid}>  <Coupon  data={item}   showVal='true'  hasLine='true'></Coupon> </div>
+                                    return <div  key={item.fid}>  <Coupon  data={item}   showVal='true'  hasLine='true' ></Coupon> </div>
                                 } 
                             })
                         }  
