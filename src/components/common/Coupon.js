@@ -27,10 +27,10 @@ class Coupon extends React.Component {
         let btnName = ""; 
        switch (couponData.fflag){
             case 0:
-                btnName ='待领取'; //待生效 
+                btnName ='待生效'; //待生效 
                 break;
             case 1:
-                btnName ='待领取'; 
+                btnName ='领取'; 
                 break;
             case 2:
                 btnName ='去使用'; 
@@ -130,7 +130,7 @@ class Coupon extends React.Component {
                     <div className={`cp-coupon-right  ${this.state.data.fflag===5?(this.state.data.fbus_type+'-disable' || 'other-disable'):''}`}>
                         {/* 上 按钮 */}
                         { this.props.hasLine==='true'?
-                        <div className={`staus-btn ${this.state.canEdit?'canClick':''}`} onClick={this.props.handlerBtnClick?this.props.handlerBtnClick.bind(this,this.state.data.fcoupon_id,this.state.data):()=>{} }>
+                        <div className={`staus-btn ${this.state.canEdit?'canClick':''}`} onClick={this.props.handlerBtnClick?this.props.handlerBtnClick.bind(this,this.state.data.fcoupon_id,this.state.data):()=>{} } >
                             {this.state.btnName}
                         </div>:null
                         } 

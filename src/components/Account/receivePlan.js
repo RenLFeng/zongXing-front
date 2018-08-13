@@ -143,10 +143,6 @@ export default class ReceivePlan extends React.Component {
 
   // 按时间获取回款计划数据
   async getReceivePlanByTime() {
-    if (this.state.planByTimeLoading) {
-      return;
-    }
-    this.setState({planByTimeLoading: true});
     const response = await receivePlanByTime({
       pageParam: this.state.timePageParam,
       year: this.state.year.toString()
@@ -165,12 +161,7 @@ export default class ReceivePlan extends React.Component {
   }
   // 按项目获取数据
   async getReceivePlanByPro() {
-    if (this.state.planByProLoading) {
-      return;
-    }
-    this.setState({planByProLoading: true});
     const response = await receivePlanByBottom(this.state.proPageParam);
-    this.setState({planByProLoading: false});
     if (response.code === 0) {
       this.setState({
         proPageParam: {
@@ -187,13 +178,14 @@ export default class ReceivePlan extends React.Component {
     }
   }
   // 按时间获取翻页
-  handlerPageChange = (page) => {
+  handlerPageChange_ = (page) => {
+    console.log('page',page)
     this.setState({timePageParam: {...this.state.timePageParam, pageCurrent: page}},()=> {
       this.getReceivePlanByTime();
     })
   }
   // 按项目翻页
-  handlerPageChange = () => {
+  handlerPageChange = (page) => {
     this.setState({proPageParam: {...this.state.proPageParam, pageCurrent: page}},()=> {
       this.getReceivePlanByPro();
     })
@@ -346,7 +338,7 @@ export default class ReceivePlan extends React.Component {
               
               {
                 Math.ceil(this.state.timePageParam.total/this.state.timePageParam.pageSize)>1?<div className='page_switch'>
-                  <Pagination  current={this.state.timePageParam.pageCurrent} pageSize={this.state.timePageParam.pageSize} onChange={this.handlerPageChange} total={this.state.timePageParam.total} />
+                  <Pagination  current={this.state.timePageParam.pageCurrent} pageSize={this.state.timePageParam.pageSize} onChange={this.handlerPageChange_} total={this.state.timePageParam.total} />
                 </div>:null
               } 
             </div>
@@ -552,7 +544,11 @@ class CanvasCircle extends React.Component {
     cxt.beginPath();
     cxt.fillStyle = '#84e192';
     cxt.font="12px Microsoft YaHei";
-    cxt.fillText("还款中",115,65);
+    if(current === sum){
+      cxt.fillText("完成",120,65);
+    } else {
+      cxt.fillText("还款中",115,65);
+    }
     cxt.font="12px Microsoft YaHei";
     if (current > 10 && sum > 10) {
       cxt.fillText(`第${current}/${sum}期`,107,85);

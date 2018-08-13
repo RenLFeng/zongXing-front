@@ -532,7 +532,7 @@ export default class RealName extends React.Component {
                                             {/* <img src={`${data.flogo}`}/> */}
                                           </div>
                                           <div className="card_text">
-                                            <p>{data.fbank}</p>
+                                            <p title={data.fbank}>{data.fbank}</p>
                                             {/* <span>{data.fcardType}</span> */}
                                             <span>储蓄卡</span>
                                           </div>
@@ -553,7 +553,9 @@ export default class RealName extends React.Component {
                                           placeholder="请输入登录密码"
                                           onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
                                           prefix={<Icon type="lock" />}
-                                          suffix={<Icon type="eye-o" onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                                           suffix={<i className={this.state[`${data.fid}hide`]? 'zjb zjb-mimakejian' :"zjb zjb-htmal5icon08" } onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                                          
+                                          //  suffix={<Icon type="eye-o" style={{border:'1px solid red'}} onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />} 
                                         />
                                         <Button
                                           type="primary"

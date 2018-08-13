@@ -167,7 +167,7 @@ class projectcollection extends React.Component {
                                             <p className="name">{item.fname}</p>
                                             <div className="circle" data-value={item.ratio}/>
                                             <i className="price">￥{item.loanMoney}</i>
-                                            <i className="city"><span className="high">{item.fcredit_month}<i>借款期限</i></span>个月 | {item.cityName}</i>
+                                            <i className="city"><span className="high">{item.fmonth_last}<i>借款期限</i></span>个月 | {item.cityName}</i>
                                             <div className="line"/>
                                             <i className="botic botic1">年化利率<em>{item.frate_last}%</em></i>
                                             <span className="colect_desc">按月等额本息</span>
