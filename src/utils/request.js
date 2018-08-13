@@ -7,7 +7,7 @@ import { build } from '../common/systemParam';
 let BASE_URL = 'http://139.199.77.147:8001'; // 测试服务器
 if (build === 'production') {
   // 远端
-  BASE_URL = 'http://139.199.77.147:8001';
+  BASE_URL = 'http://139.199.77.147:8010';
   document.title ="众借帮--客户测试环境";
 } else if (build === 'test') { 
   //  测试
