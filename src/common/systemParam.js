@@ -2,8 +2,7 @@
 
 
 // 部署替换
-
-let build = 'local'; // production 开发环境 test 测试服务环境  local  本地环境 ys 演示环境
+let build = 'production'; // production 开发环境 test 测试服务环境  local  本地环境 ys 演示环境
 
 
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
@@ -25,17 +24,22 @@ let NOTIFY_PAGE = `http://${window.location.host}/#`;
 /*测试楼下配置*/
 if (build === 'production') {
   // 远端
-  // PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
-  // REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
-  // IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
-  // AUTH_ADDRESS = 'https://my.moneymoremore.com/';
-  IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
-  REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
-  PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
+  PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
+  REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
+  IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
+  AUTH_ADDRESS = 'https://my.moneymoremore.com/';
+  // IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
+  // REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
+  // PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
   TURN_BACK = 'http://www.5izjb.com/zjbindex.html'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
-  LIMIT_MOENY = true;
-  AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
-  SOCKET_URL = 'http://139.199.77.147:8001';
+  LIMIT_MOENY = false;
+  SOCKET_URL = 'http://139.199.77.147:8010';
+  NOTIFY_PAGE = `http://${window.location.host}/front/#`;
+  SOCKET_URL = 'http://192.168.1.4:8001';
+  PERSONAL_PAGE = `http://139.199.77.147:8010/front/#/index/uCenter/personAccount`;
+  AUTH_PAGE_URL = `http://139.199.77.147:8010/front/#/index/uCenter/safeCenter`;
+  PROJECT_DETAIL_URL = `http://139.199.77.147:8010/front/#/index/projectDetail`;
+  COL_URL = `http://139.199.77.147:8010/front/#/index/collection`
 } else if (build === 'test') {
   //  测试
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
