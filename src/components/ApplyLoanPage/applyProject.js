@@ -237,7 +237,7 @@ class Forms extends React.Component {
           <div className="tit">
             <i></i>
           </div>
-          <div className="imgbox border" style={{display: 'flex',flexWrap: 'wrap',padding: 25 }}>
+          <div className="imgbox border" style={{display: 'flex',flexWrap: 'wrap',padding: 25}}>
             <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic3} name="pic3" tipText="上传图片"/>
             <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic4} name="pic4" tipText="上传图片"/>
             <ImgUpload {...this.data} prefix={dataPath} imageUrl={this.state.pic5} name="pic5" tipText="上传图片"/>
