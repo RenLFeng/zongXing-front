@@ -11,38 +11,38 @@
             margin: 3px 10px;
         }
         &>.coupon-money{ 
-            margin-left:40px; 
+            margin-left:35px; 
             &>.t1{
                 font-size: 15px;
             }
             &>.t2{
-                font-size: 47px;
+                font-size: 32px;
                 font-weight: bold;
                 margin-top: 15px;
                 display: inline-block;
             }
             &>.sub-money{
                 display: inline-block;
-                width: 80px;
+                width: 60px;
                 &>.t3{
                     font-size: 16px;
                     font-weight: bold;
-                    margin-left: 10px;
+                    margin-left: 8px;
                 }
                 &>.t4{
                     font-size: 12px; 
                     margin-left: 10px;
-                    line-height: 10px;
+                    line-height: 8px;
                 }
             }
         }
           
         &>.coupon-rule{
-            margin-left: 55px; 
+            margin-left: 40px; 
             font-size: 10px;
         }
         &>.coupon-time{
-            margin-left: 55px;
+            margin-left: 40px;
             font-size: 10px;
         }
     }

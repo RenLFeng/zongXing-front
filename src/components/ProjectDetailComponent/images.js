@@ -55,13 +55,7 @@ export default class Images extends React.Component {
                 </a>
               );
             })}
-            {pics.map((data, index) => {
-              return (
-                <a key={index} data-big={`${IMG_BASE_URL}/${data.realUrl}`} style={{zIndex: 10}}>
-                  <img src={`${IMG_BASE_URL}/${data.realUrl}`} onClick={()=>this.setState({realUrl: data.realUrl})}/>
-                </a>
-              );
-            })}
+           
 
           </div>
         </div>

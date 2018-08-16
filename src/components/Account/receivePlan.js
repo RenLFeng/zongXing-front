@@ -55,7 +55,7 @@ export default class ReceivePlan extends React.Component {
       interest: 0, // 待收利息
       money: 0, // 待回款总额度
       principal: 0, // 待收本金
-      year: '',
+      year: null,
       timePageList: [],
       timePageParam: {  // 按时间查看翻页
         pageSize: 8,
@@ -145,7 +145,7 @@ export default class ReceivePlan extends React.Component {
   async getReceivePlanByTime() {
     const response = await receivePlanByTime({
       pageParam: this.state.timePageParam,
-      year: this.state.year.toString()
+      year: this.state.year === null ? null : this.state.year.toString()
     });
     if (response.code === 0) {
       this.setState({
@@ -192,13 +192,14 @@ export default class ReceivePlan extends React.Component {
   }
   // 使用年份切换 
   switchYear(param){
+    console.log(param)
     this.setState({
       timePageParam: {
         pageSize: 8,
         pageCurrent: 1,
         total: 0
       },
-      year: param.toString()
+      year: param === null ? param : param.toString()
     }, ()=> {
       this.getReceivePlanByTime();
     });
@@ -265,10 +266,10 @@ export default class ReceivePlan extends React.Component {
             </div>
             {this.state.showPro ? null: 
               <div className="rp_top_right">
-                <span className={`${this.state.year.length===0?'time_detail_choose':'time_detail'}`}>全部</span>
-                <span className={`${this.state.year.length==moment().format('YYYY')?'time_detail_choose':'time_detail'}`} onClick={()=>this.switchYear(moment().format('YYYY'))}>{moment().format('YYYY')}</span>
-                <span className={`${this.state.year.length==(moment().format('YYYY')*1+1)?'time_detail_choose':'time_detail'}`} onClick={()=>this.switchYear(moment().format('YYYY')*1+1)}>{moment().format('YYYY')*1+1}</span>
-                <span className={`${this.state.year.length==(moment().format('YYYY')*1+2)?'time_detail_choose':'time_detail'}`} onClick={()=>this.switchYear(moment().format('YYYY')*1+2)}>{moment().format('YYYY')*1+2}</span>
+                <span className={`${this.state.year ===  null  ? 'time_detail_choose':'time_detail'}`} onClick={()=>this.switchYear(null)}>全部</span>
+                <span className={`${this.state.year==moment().format('YYYY')?'time_detail_choose':'time_detail'}`} onClick={()=>this.switchYear(moment().format('YYYY'))}>{moment().format('YYYY')}</span>
+                <span className={`${this.state.year==(moment().format('YYYY')*1+1)?'time_detail_choose':'time_detail'}`} onClick={()=>this.switchYear(moment().format('YYYY')*1+1)}>{moment().format('YYYY')*1+1}</span>
+                <span className={`${this.state.year==(moment().format('YYYY')*1+2)?'time_detail_choose':'time_detail'}`} onClick={()=>this.switchYear(moment().format('YYYY')*1+2)}>{moment().format('YYYY')*1+2}</span>
               </div>
             }
           </div>

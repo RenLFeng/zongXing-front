@@ -83,7 +83,7 @@ onShowSizeChange = (current, pageSize) => {
         dataIndex: 'ffull_sub_money',
         key: 'ffull_sub_money',
         align:'center',
-        render:(val) => val+'元'
+        render:(val) => val ? val+'元' :''
       }, {
         title: '券额总额',
         dataIndex: 'famount',

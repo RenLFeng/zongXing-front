@@ -337,7 +337,7 @@ infoCheck_(){
       });
       message.info("密码修改成功！");
     } else {
-      message.error(response.msg);
+      respondse.msg && message.error(respondse.msg);
     }
   }
 

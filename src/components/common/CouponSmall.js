@@ -44,6 +44,7 @@ export default class CouponSmall extends React.Component {
             fflag_class:fflag_class, 
             btn_text:btn_text,
             logo:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'
+                
         });
     }
 
@@ -67,8 +68,8 @@ export default class CouponSmall extends React.Component {
                     <p className='coupon-time'>有效期：{this.state.data.fend_time?moment(this.state.data.fend_time).format('YYYY年MM月DD日'):'----年--月--日'}</p>
                 </div>
                 <div className='coupon-right' onClick={this.props.handlerBtnClick?()=>this.props.handlerBtnClick(this.state.data):()=>{}} style={this.props.handlerBtnClick?{cursor: 'pointer'}:null}>
-                    <img className={`logo ${this.props.onlyOne?'center':''}`} src={this.state.data.flogo_pic||this.state.logo}/>
-                    {
+                    <img className={`logo ${this.props.onlyOne?'center':''}`} src={'http://zjb01-1255741041.picsh.myqcloud.com/'+this.state.data.flogo_pic||this.state.logo}/>
+                   {
                         this.props.onlyOne?null:
                         <div className='text'>
                             <p className='coupon-flag'>{this.state.btn_text}</p>

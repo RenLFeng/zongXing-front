@@ -42,12 +42,15 @@ export default class  CouponDetail extends React.Component {
     
     //获取详细信息
     async getCouponDetail(){
+        //清除画布   避免页面出现多个二维码
+        $("#qrcodeCanvas").html("");  
         if(this.state.fid == ''){
             return ;
         }     
         const rest = await CouponService.myCouponDetail({
             couponUserId:this.state.fid,
         }); 
+        console.log('rest',rest)
         if(rest.code===0){ 
             //小优惠券的样式
             let detail = {
@@ -78,10 +81,14 @@ export default class  CouponDetail extends React.Component {
                     height : "160",              //二维码的高度
                     background : "#fff",       //二维码的后景色
                     foreground : "#000",        //二维码的前景色
-                    src: rest.data.flogo_pic||'',//二维码中间的图片
-                });
+                    src:rest.data.flogo_pic||'',//二维码中间的图片
+                }); 
+               
             });
-        }  
+           
+        }  else {
+
+        }
     }
  
     render() { 
