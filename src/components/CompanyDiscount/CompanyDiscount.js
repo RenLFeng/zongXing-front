@@ -7,6 +7,7 @@ import CompanyCard from '../../components/CompanyDiscount/CompanyCard.js';
 import { getCompanyDiscount, getDiscount } from '../../services/api';
 import { message, Pagination } from 'antd';
 
+
 export default class CompanyDiscount extends React.Component { 
   constructor(props) {
       super(props); 
@@ -134,11 +135,14 @@ export default class CompanyDiscount extends React.Component {
         </div>
         <div className="w clearfix">
           {
-            this.state.infoList.map((data)=> {
+            this.state.infoList.length > 0 ?this.state.infoList.map((data, index)=> {
               return (
-                <CompanyCard data={data} handlerBtnClick={(data)=>this.handlerBtnClick(data)}/>                
+                <CompanyCard key={index} data={data} handlerBtnClick={(data)=>this.handlerBtnClick(data)}/>                
               );
-            })
+            }) : 
+            <div style={{width: '100%',padding: '30px 0',backgroundColor: '#fff',marginBottom: 50}}>
+              <p style={{width: '100%', textAlign: 'center',fontSize: 18,color: '#000'}}>暂无数据</p>
+            </div>
           }  
           {
             Math.ceil(this.state.pageParam.total/this.state.pageParam.pageSize)>1?<div style={{width: '100%', textAlign: 'center',marginBottom: 10}}>

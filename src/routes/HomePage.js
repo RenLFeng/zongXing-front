@@ -5,33 +5,16 @@ import { connect } from 'dva';
 
 import { getLoginData, testSocket } from '../services/api';
 
-import Test from './homePage/Test';
-import ProjectLoan from './homePage/ProjectLoan';
-import HowLoan from './homePage/HowLoan';
-import HowInvest from './homePage/HowInvest';
-import HomeIndex from './homePage/HomeIndex';
-import CompanyDiscount from '../components/CompanyDiscount/CompanyDiscount';
-import CommonProblem from './homePage/commonProblem';
-import ProjectList from './homePage/ProjectList';
-import ProjectDetail from './homePage/ProjectDetail';
-import Project from './homePage/Project';
-import Risk from './homePage/Risk';
-import Login from './homePage/login';
-import Register from './homePage/register';
-import ForgetPassWord from './homePage/forgetPassWord';
-import Header from '../components/HomePageComponent/header';
-import Footer from '../components/HomePageComponent/footer';
 import '../assets/common/index';
 import { getLocation } from '../services/api';
-import ApplyLoan from './homePage/ApplyLoan';
-import UCenter from './homePage/UCenter';
-import Infor from './homePage/infor';
 import COS from 'cos-js-sdk-v5';
 import { BASE_URL, getAuth, getHobbyList } from '../services/api';
 //优惠券兑换中心
-import CouponCenter from '../components/CouponCenter/CouponCenter';
 import io from 'socket.io-client';
 import { SOCKET_URL } from '../common/systemParam';
+import asyncComponent from '../utils/AsyncComponent';
+import Header from '../components/HomePageComponent/header';
+import Footer from '../components/HomePageComponent/footer';
 
 @connect((state) => ({
   login: state.login,
@@ -116,29 +99,28 @@ export default class HomePage extends React.Component{
 				<Header param={this.props}/>
           <Switch>
             {/* 首界面 */}
-            <Route path={`${match.path}/`} exact component={HomeIndex}/>
+            <Route path={`${match.path}/`} exact component={asyncComponent(()=>import('./homePage/HomeIndex'))}/>
             {/* 借款项目 */}
-            <Route path={`${match.path}/projectLoan`} component={ProjectLoan}/>
-            <Route path={`${match.path}/howLoan`} component={HowLoan}/>
-            <Route path={`${match.path}/howInvest`} component={HowInvest}/>
+            <Route path={`${match.path}/projectLoan`} component={asyncComponent(()=>import('./homePage/ProjectLoan'))}/>
+            <Route path={`${match.path}/howLoan`} component={asyncComponent(()=>import('./homePage/HowLoan'))}/>
+            <Route path={`${match.path}/howInvest`} component={asyncComponent(()=>import('./homePage/HowInvest'))}/>
             {/* 商家优惠 */}
-            <Route path={`${match.path}/companyDiscount`} component={CompanyDiscount}/>
+            <Route path={`${match.path}/companyDiscount`} component={asyncComponent(()=>import('../components/CompanyDiscount/CompanyDiscount'))}/>
             {/* 优惠券兑换中心 */}
-            <Route path={`${match.path}/couponCenter`} component={CouponCenter}/>
-
-            <Route path={`${match.path}/commonProblem`} component={CommonProblem}/>
-            <Route path={`${match.path}/infor`} component={Infor}/>
-            <Route path={`${match.path}/applyLoan`} component={ApplyLoan} />
-            <Route path={`${match.path}/uCenter`} component={UCenter} />
-            <Route path={`${match.path}/login`} component={Login} />
-            <Route path={`${match.path}/register`} component={Register} />
-            <Route path={`${match.path}/forgetPassWord`} component={ForgetPassWord} />
-            <Route path={`${match.path}/risk`} component={Risk} />
+            <Route path={`${match.path}/couponCenter`} component={asyncComponent(()=>import('../components/CouponCenter/CouponCenter'))}/>
+            
+            <Route path={`${match.path}/commonProblem`} component={asyncComponent(()=>import('./homePage/commonProblem'))}/>
+            <Route path={`${match.path}/infor`} component={asyncComponent(()=>import('./homePage/infor'))}/>
+            <Route path={`${match.path}/applyLoan`} component={asyncComponent(()=>import('./homePage/ApplyLoan'))} />
+            <Route path={`${match.path}/uCenter`} component={asyncComponent(()=>import('./homePage/UCenter'))} />
+            <Route path={`${match.path}/login`} component={asyncComponent(()=>import('./homePage/login'))} />
+            <Route path={`${match.path}/register`} component={asyncComponent(()=>import('./homePage/register'))} />
+            <Route path={`${match.path}/forgetPassWord`} component={asyncComponent(()=>import('./homePage/forgetPassWord'))} />
+            <Route path={`${match.path}/risk`} component={asyncComponent(()=>import('./homePage/Risk'))} />
             {/* 项目详情页面 */}
-            <Route path={`${match.path}/projectDetail/:projectId`} component={ProjectDetail} />
+            <Route path={`${match.path}/projectDetail/:projectId`} component={asyncComponent(()=>import('./homePage/ProjectDetail'))} />
             {/* 预览使用的项目详情页面 */}
-            <Route path={`${match.path}/project/:projectId`} component={Project} />
-            <Route path={`${match.path}/test`} component={Test} />
+            <Route path={`${match.path}/project/:projectId`} component={asyncComponent(()=>import('./homePage/Project'))} />
           </Switch>
         <Footer/>
 			</div>

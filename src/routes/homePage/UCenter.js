@@ -6,44 +6,17 @@ import {Button} from 'antd';
 
 import '../../assets/ucenter/index';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
-import PersonAccount from '../../components/UCenterComponent/personAccount';
-import UserBasic from '../../components/UCenterComponent/userBasic';
-import ChangeLPwd from '../../components/UCenterComponent/changeLoginPwd';
-import ChangeBindEmail from '../../components/UCenterComponent/changeBindEmail';
-import BindEmail from '../../components/UCenterComponent/bindEmail';
-import OpenAccount from '../../components/UCenterComponent/openAccount';
-import SafeCenter from '../../components/UCenterComponent/safeCenter';
-import RealName from '../../components/UCenterComponent/realName';
-import Authentication from '../../components/UCenterComponent/authentication';
-import OpenQAccount from '../../components/UCenterComponent/openQAccount';
-import IpRecord from '../../components/UCenterComponent/IPRecord';
-import Voucher from '../../components/UCenterComponent/voucher';
-import PlatformNotice from '../../components/UCenterComponent/platformNotice';
-import SiteNotice from '../../components/UCenterComponent/siteNotice';
-import BindCard from '../../components/UCenterComponent/bindCard';
-import CompanyAccount from '../../components/UCenterComponent/companyAccount';
-import BankCard from '../../components/UCenterComponent/bankCard';
-import AccountRecharge from '../../components/UCenterComponent/accountRecharge';
-import AccountWithdrawals from '../../components/UCenterComponent/accountWithdrawals';
-import Message from '../../components/UCenterComponent/message';
-import NoticeList from '../../components/UCenterComponent/NoticeList';
-import InvestMent from '../../components/Account/investment';
-import receivePlan from '../../components/Account/receivePlan';
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
-import IncomePlan from '../../components/UCenterComponent/IncomePlan';
-import AllInvest from '../../components/UCenterComponent/AllInvest';
-import Test from '../../components/UCenterComponent/test';
-import CompanyList from '../../components/UCenterComponent/companyList';
-import BindSuccess from '../../components/UCenterComponent/bindSuccess';
-import MyIvititonCode from '../../components/UCenterComponent/myInvitationCode';
+
 
 //我的优惠券
-import myCoupon from '../../components/UCenterComponent/mycoupon';
+
 //项目收藏
 
-import projectCollection from '../../components/UCenterComponent/projectcollection'; 
 import Path from '../../common/pagePath';
-import AccountStatement from "../../components/Account/accountstatement";
+
+import asyncComponent from '../../utils/AsyncComponent';
+
 
 
 
@@ -75,67 +48,66 @@ export default class UCenter extends React.Component {
           {/* <LeftMenu param={this.props}/> */}
           <Switch>
             {/* 账户总览 */}
-            <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
+            <Route path={Path.PERSONAL_ACCOUNT} exact component={asyncComponent(()=>import('../../components/UCenterComponent/personAccount'))} />
             {/* 投资记录 */}
-            <Route path={Path.INVEST_MENT} exact component={InvestMent} />
+            <Route path={Path.INVEST_MENT} exact component={asyncComponent(()=>import('../../components/Account/investment'))} />
              {/* 回款计划 */}
-             <Route path={Path.RECEIVE_PLAN}  component={receivePlan} />
+             <Route path={Path.RECEIVE_PLAN}  component={asyncComponent(()=>import('../../components/Account/receivePlan'))} />
             {/* 资金动态 */}
-            <Route path={Path.ACCOUNT_STATEMENT}  component={AccountStatement} />
+            <Route path={Path.ACCOUNT_STATEMENT}  component={asyncComponent(()=>import("../../components/Account/accountstatement"))} />
             {/* 我的优惠券 */}
-            <Route path={Path.MY_COUPON}  component={myCoupon} />
+            <Route path={Path.MY_COUPON}  component={asyncComponent(()=>import('../../components/UCenterComponent/mycoupon'))} />
             {/* 项目收藏 */}
-            <Route path={Path.Project_Collection} component={projectCollection}/>
+            <Route path={Path.Project_Collection} component={asyncComponent(()=>import('../../components/UCenterComponent/projectcollection'))}/>
             {/* 我的邀请码 */}
-            <Route path={Path.My_INVITATION_CODE} component={MyIvititonCode}/>
+            <Route path={Path.My_INVITATION_CODE} component={asyncComponent(()=>import('../../components/UCenterComponent/myInvitationCode'))}/>
 
             {/* 用户基本信息 */}
-            <Route path={Path.USER_BASIC} component={UserBasic} />
+            <Route path={Path.USER_BASIC} component={asyncComponent(()=>import('../../components/UCenterComponent/userBasic'))} />
             {/* 修改登陆密码 */}
-            <Route path={Path.CHANGE_LPWD} component={ChangeLPwd} />  
+            <Route path={Path.CHANGE_LPWD} component={asyncComponent(()=>import('../../components/UCenterComponent/changeLoginPwd'))} />  
              {/* 邮箱绑定 */}
-             <Route path={Path.BIND_EMAIL} component={BindEmail} />    
+             <Route path={Path.BIND_EMAIL} component={asyncComponent(()=>import('../../components/UCenterComponent/bindEmail'))} />    
             {/* 变更邮箱绑定 */}
-            <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />      
+            <Route path={Path.CHANGE_BINDEMAIL} component={asyncComponent(()=>import('../../components/UCenterComponent/changeBindEmail'))} />      
             {/* 开户 */}
-            <Route path={Path.OPEN_ACCOUNT+'/:type'} component={OpenAccount} />
+            <Route path={Path.OPEN_ACCOUNT+'/:type'} component={asyncComponent(()=>import('../../components/UCenterComponent/openAccount'))} />
             {/* 企业账户 */}
-            <Route path={Path.COMPANY_ACCOUNT} component={CompanyAccount} />
+            <Route path={Path.COMPANY_ACCOUNT} component={asyncComponent(()=>import('../../components/UCenterComponent/companyAccount'))} />
             {/* 安全中心 */}
-            <Route path={Path.SAFE_CENTER} component={SafeCenter} />
+            <Route path={Path.SAFE_CENTER} component={asyncComponent(()=>import('../../components/UCenterComponent/safeCenter'))} />
              {/* 绑定成功界面 */}
-             <Route path={Path.BIND_SUCCESS} component={BindSuccess} />
+             <Route path={Path.BIND_SUCCESS} component={asyncComponent(()=>import('../../components/UCenterComponent/bindSuccess'))} />
             {/* 实名认证 类型调整页面地址 */}
-            <Route path={Path.REALNAME_AUTHENTICATION} component={RealName} />
+            <Route path={Path.REALNAME_AUTHENTICATION} component={asyncComponent(()=>import('../../components/UCenterComponent/realName'))} />
             {/* 实名认证 */}
-            <Route path={Path.AUTHENTICATION} component={Authentication} />
-            <Route path={Path.OPENQACCOUNT} component={OpenQAccount} />
-            <Route path={Path.BINDCARD} component={BindCard} />
-            <Route path={Path.BANK_CARD} exact component={BankCard} />
+            <Route path={Path.AUTHENTICATION} component={asyncComponent(()=>import('../../components/UCenterComponent/authentication'))} />
+            <Route path={Path.OPENQACCOUNT} component={asyncComponent(()=>import('../../components/UCenterComponent/openQAccount'))} />
+            <Route path={Path.BINDCARD} component={asyncComponent(()=>import('../../components/UCenterComponent/bindCard'))} />
+            <Route path={Path.BANK_CARD} exact component={asyncComponent(()=>import('../../components/UCenterComponent/bankCard'))} />
              {/* IP记录 */}
-            <Route path={Path.IPRECORD} exact component={IpRecord} />
+            <Route path={Path.IPRECORD} exact component={asyncComponent(()=>import('../../components/UCenterComponent/IPRecord'))} />
             {/* 券额明细 */}
-            <Route path={Path.VOUCHER} exact component={Voucher} />
+            <Route path={Path.VOUCHER} exact component={asyncComponent(()=>import('../../components/UCenterComponent/voucher'))} />
             {/* 平台通知 */}
-            <Route path={Path.PLATFORM_NOTICE} exact component={PlatformNotice} />
+            <Route path={Path.PLATFORM_NOTICE} exact component={asyncComponent(()=>import('../../components/UCenterComponent/platformNotice'))} />
              {/* 站内通知 */}
-             <Route path={Path.SITE_NOTICE} exact component={SiteNotice} />
+             <Route path={Path.SITE_NOTICE} exact component={asyncComponent(()=>import('../../components/UCenterComponent/siteNotice'))} />
             {/* 充值 */}
-            <Route path={Path.ACCOUNT_RECHARGE} component={AccountRecharge} />
+            <Route path={Path.ACCOUNT_RECHARGE} component={asyncComponent(()=>import('../../components/UCenterComponent/accountRecharge'))} />
             {/* 提现 */}
-            <Route path={Path.ACCOUNT_WITHDRAWALS} component={AccountWithdrawals} />
-            <Route path={'/index/uCenter/test'} exact component={Test} />
+            <Route path={Path.ACCOUNT_WITHDRAWALS} component={asyncComponent(()=>import('../../components/UCenterComponent/accountWithdrawals'))} />
             {/* 站内消息 */}
-            <Route path={Path.STATION_MESSAGE} component={Message} />
+            <Route path={Path.STATION_MESSAGE} component={asyncComponent(()=>import('../../components/UCenterComponent/message'))} />
             {/* 企业列表 */}
-            <Route path={Path.COMPANY_LIST} component={CompanyList} />
+            <Route path={Path.COMPANY_LIST} component={asyncComponent(()=>import('../../components/UCenterComponent/companyList'))} />
             {/* 站内公告列表 */}
-            <Route path={Path.NOTICE_LIST} component={NoticeList} />
+            <Route path={Path.NOTICE_LIST} component={asyncComponent(()=>import('../../components/UCenterComponent/NoticeList'))} />
            
             {/* 平台公告列表 */}
-            <Route path={Path.INCOME_PLAN} component={IncomePlan} /> 
+            <Route path={Path.INCOME_PLAN} component={asyncComponent(()=>import('../../components/UCenterComponent/IncomePlan'))} /> 
             {/* 投资总览 */}
-            <Route path={Path.ALL_INVEST}  component={AllInvest} />
+            <Route path={Path.ALL_INVEST}  component={asyncComponent(()=>import('../../components/UCenterComponent/AllInvest'))} />
            
           </Switch>
         </div>

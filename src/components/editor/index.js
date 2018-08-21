@@ -45,6 +45,7 @@ export default class EditorComponent extends React.Component {
     return (
       <div>
         <Editor
+          editorStyle={this.props.limtHeight?{height: 93}:null}
           editorState={editorState}
           wrapperClassName={styles["demo-wrapper"]}
           editorClassName={styles['demo-editor']}

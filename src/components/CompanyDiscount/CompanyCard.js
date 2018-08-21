@@ -3,6 +3,7 @@ import React from 'react';
 import '../../assets/companydiscount/company-card.scss'; 
 import CouponList from '../../components/couponList/couponList';
 import { IMG_BASE_URL } from '../../common/systemParam';
+import Editor from '../../components/editor';
 class CompanyCard extends React.Component {
     constructor(props) {
         super(props);
@@ -60,8 +61,6 @@ class CompanyCard extends React.Component {
         }
     }
 
-
-
     render() { 
         return (  
             <div className="company-card shadow">
@@ -74,7 +73,7 @@ class CompanyCard extends React.Component {
                         <span className="name">{this.state.data.companyName||''}</span>
                     </p>
                     <p className="tit2">{this.state.data.projectName||''}</p>
-                    <p className="desc">{this.state.data.projectContent||''}</p>
+                    <Editor limtHeight={true} value={this.state.data.projectContent||'<p></p>'}/>
                 </div> 
                <div className='coupon-items' >
                    <CouponList list={this.state.data.couponList} handlerBtnClick={this.props.handlerBtnClick}/>

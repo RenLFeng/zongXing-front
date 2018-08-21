@@ -162,6 +162,7 @@ export default class ReceivePlan extends React.Component {
   // 按项目获取数据
   async getReceivePlanByPro() {
     const response = await receivePlanByBottom(this.state.proPageParam);
+    console.log('77777777',response)
     if (response.code === 0) {
       this.setState({
         proPageParam: {
@@ -235,7 +236,7 @@ export default class ReceivePlan extends React.Component {
                   <span style={{display:'block'}}>￥{`${this.state.lastRepayBill.allMoney}`.fm()}
                   &nbsp;&nbsp;&nbsp;&nbsp;本金:{`${this.state.lastRepayBill.fprincipal}`.fm()}&nbsp;&nbsp;&nbsp;&nbsp;利息:{`${this.state.lastRepayBill.finterest}`.fm()}
                   &nbsp;&nbsp;&nbsp;&nbsp;佣金:{`${this.state.lastRepayBill.fkickBack}`.fm()}</span>
-                  <span style={{display: 'block', marginTop: '16px'}}>{this.state.lastRepayBill.fsort}/{this.state.lastRepayBill.month}期回款</span>
+                  <span style={{display: 'block', marginTop: '16px'}}>{this.state.lastRepayBill.projectFlag === 16 ? `${this.state.lastRepayBill.fsort}/${this.state.lastRepayBill.fsort}期回款`:`${this.state.lastRepayBill.fsort}/${this.state.lastRepayBill.month}期回款`}</span>
                   <span style={{display: 'block', marginTop: '4px'}}>项目编号: {this.state.lastRepayBill.fprojectNo}</span>
                   <span style={{display: 'block', marginTop: '4px'}}>项目名称: {this.state.lastRepayBill.fname}</span>
                 </div>
@@ -492,6 +493,7 @@ class CanvasCircle extends React.Component {
     } 
     data.total = this.state.list.length;
     this.initCircle(data, arr);
+    console.log('data',data,this.state.list)
   }
 
   initCircle(obj, arr) {
@@ -499,6 +501,7 @@ class CanvasCircle extends React.Component {
     const {color} = this.state;
     let current = obj.current; // 当前期数
     let sum = obj.total; // 总期数
+    
     // 获取节点
     let ele = document.getElementById(this.props.id);
     // 生成canvas对象
