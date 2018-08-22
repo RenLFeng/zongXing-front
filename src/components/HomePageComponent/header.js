@@ -130,7 +130,7 @@ export default class Header extends React.Component {
       );
     }
   	return (
-      <div id="fix" className="topnav" style={{backgroundColor:'#333'}}>
+      <div id="fix" className="topnav" style={{backgroundColor:'#333', position: 'absolute'}}>
         <div className="w clearfix">
           <a className="logo fl" onClick={()=>{
             history.push(`${match.path}/`);

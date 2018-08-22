@@ -14,7 +14,7 @@ export default class Footer extends React.Component {
 
   render() {
     return (
-      <div className="footer">
+      <div className="footer" style={{marginTop: 100}}>
         <div className="w">
           <div className="sec1 clearfix">
             <div className="fl col1">
