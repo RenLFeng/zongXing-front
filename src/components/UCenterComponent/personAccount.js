@@ -19,7 +19,6 @@ import CouponSmall from '../../components/common/CouponSmall';
   openStatus: state.account.openStatus,
   errorMessage: state.account.message
 }))
-
 export default class PersonAccount extends React.Component {
   constructor(props) {
     super(props);
@@ -214,11 +213,9 @@ export default class PersonAccount extends React.Component {
   }
 
   componentDidMount() {
-    //console.log(this.props.openStatus);
     this.getInitData();
     this.initFetchSafeData();
     this.getAccountStatement();
-    this.reashLoginData();
   }
 
   // 初始化安全中心首页数据
@@ -354,6 +351,8 @@ export default class PersonAccount extends React.Component {
     if (this.props.personal !== nextProps.personal) {
       const money = nextProps.personal.totalAssets;
       const data = nextProps.personal;
+      console.log(money)
+      console.log(data)
       this.getReceivePlan();
       this.getCouponList();
       // 回款计划

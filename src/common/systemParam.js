@@ -1,7 +1,6 @@
 
 // 部署替换
-let build = 'local'; // production 开发环境 test 测试服务环境  local  本地环境 ys 演示环境
-
+let build = 'ys'; // production 开发环境 test 测试服务环境  local  本地环境 ys 演示环境
 
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
@@ -29,15 +28,15 @@ if (build === 'production') {
   // IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
   // REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
   // PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
-  TURN_BACK = 'http://www.5izjb.com/zjbindex.html'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
+  TURN_BACK = 'http://www.5izjb.com/front'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
   LIMIT_MOENY = false;
   SOCKET_URL = 'http://139.199.77.147:8010';
   NOTIFY_PAGE = `http://${window.location.host}/front/#`;
   SOCKET_URL = 'http://192.168.1.4:8001';
-  PERSONAL_PAGE = `http://139.199.77.147:8010/front/#/index/uCenter/personAccount`;
-  AUTH_PAGE_URL = `http://139.199.77.147:8010/front/#/index/uCenter/safeCenter`;
-  PROJECT_DETAIL_URL = `http://139.199.77.147:8010/front/#/index/projectDetail`;
-  COL_URL = `http://139.199.77.147:8010/front/#/index/collection`
+  PERSONAL_PAGE = `http://www.5izjb.com/front/#/index/uCenter/personAccount`;
+  AUTH_PAGE_URL = `http://www.5izjb.com/front/#/index/uCenter/safeCenter`;
+  PROJECT_DETAIL_URL = `https://www.5izjb.com/front/#/index/projectDetail`;
+  COL_URL = `http://www.5izjb.com/front/#/index/collection`
 } else if (build === 'test') {
   //  测试
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用

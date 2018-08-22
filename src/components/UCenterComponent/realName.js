@@ -90,14 +90,11 @@ export default class RealName extends React.Component {
     if (this.props.safeData.userSecurityCenter.faccountBind !== nextProps.safeData.userSecurityCenter.faccountBind) {
       this.getBankCardListAjax(); // 获取用户绑定银行卡
     }
-    if (this.props.accountId !== nextProps.accountId) {
-      this.getBankCardListAjax(nextProps.accountId); // 获取用户绑定银行卡
-    }
   }
 
   // 获取用户绑定银行卡
-  getBankCardListAjax = async (param) => {
-    const response = await getBankCardList(param?param:this.props.accountId);
+  getBankCardListAjax = async () => {
+    const response = await getBankCardList();
     if (response.code === 0) {
       if (response.data) {
         this.setState({
