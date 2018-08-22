@@ -3,11 +3,13 @@ import {Link} from 'dva/router';
 import { ACCOUNT_RECHARGE } from '../../common/pagePath';
 import { IMG_BASE_URL, MUN_INTEGER, LIMIT_MOENY, PROJECT_DETAIL_URL, NOTIFY_PAGE  } from '../../common/systemParam';
 import moment from 'moment';
-import {Button, message, Modal, InputNumber, Alert} from 'antd';
-import { Investment } from '../../services/api';
+import {Button, message, Modal, InputNumber, Alert,Form,Input} from 'antd';
+import { Investment, getSign } from '../../services/api';
 import Path from '../../common/pagePath';
 import DataModal from './data';
 import {connect} from 'dva';
+
+
 
 @connect((state)=>({
   balance: state.account.balance
@@ -22,7 +24,10 @@ export default class FormProject extends React.Component {
       loading: false,
       errMsg: '',
       data: {},
-      browser: false
+      browser: false,
+      visible:false,
+      code:'',
+      Loading:false
     };
   }
 
@@ -70,10 +75,8 @@ export default class FormProject extends React.Component {
     });
   }
 
-  async submit() {
-    this.setState({
-      authError: false
-    });
+  async getSignMessage(){
+   
     if (!this.state.money) {
       message.warning('输入金额不能为空');
       return;
@@ -98,12 +101,31 @@ export default class FormProject extends React.Component {
       message.warning('所投金额不能超过剩余可投金额');
       return;
     }
+    this.setState({visible:true,Loading:true})
+    const res = await getSign(this.props.project.fpeoject_id);
+    this.setState({Loading:false})
+    if(res.code === 0 ){
+      
+    } else {
+      res.msg && message.error(res.msg)
+    }
+  }
+
+  async submit() {
+    this.setState({
+      authError: false
+    });
+    if(this.state.code.trim().length < 4){
+      message.info('请输入合法的验证码')
+      return;
+    }
     try {
       const data = [{
         projectId: this.props.project.fpeoject_id,
         amount: this.state.money * 1,
         remark: '',
         notifyPageUrl: `${NOTIFY_PAGE}/index/projectDetail/${this.props.project.fpeoject_id}`,
+        chickCode:this.state.code  
       }];
       this.setState({loading: true});
       const response = await Investment(data);
@@ -111,7 +133,8 @@ export default class FormProject extends React.Component {
       if (response.code === 0) {
         this.setState({
           data: response.data,
-          loading: false
+          loading: false,
+          visible:false
         }, () => {
           this.formId.submit();
           this.setState({
@@ -155,6 +178,13 @@ export default class FormProject extends React.Component {
     $('.pd-form').addClass('none');
   }
 
+  onchange(val){
+    this.setState({code:val})
+  }
+
+  hideModal(){
+    this.setState({visible:false})
+  }
   render() {
     const {project} = this.props;
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
@@ -281,9 +311,27 @@ export default class FormProject extends React.Component {
               type="primary"
               onClick={()=>{this.props.history.push({pathname:'/index/uCenter/InvestMent',state: {projectId: this.props.project.fpeoject_id,flag:true}})}}
               loading={this.state.loading} style={{width: 200, height: 40}}>去处理</Button>:
-            <Button type="primary" onClick={()=>this.submit()} loading={this.state.loading} style={{width: 200, height: 40}}>提交</Button>
+            <Button type="primary" onClick={()=>this.getSignMessage()} loading={this.state.loading} style={{width: 200, height: 40}}>提交</Button>
           }
         </div>
+
+
+
+        <Modal
+          title="验证"
+					visible={this.state.visible}
+					confirmLoading={this.state.loading}
+          onOk={this.submit.bind(this)}
+        	onCancel={this.hideModal.bind(this)}
+          okText="确认"
+					cancelText="取消"
+					maskClosable={false}
+        		>
+           <div>
+               <span>验证码：</span>
+               <Input style={{width:'30%'}} placeholder="请输入验证码" onChange={(e)=>this.onchange(e.target.value)} value={this.state.code} maxLength={6}/>
+          </div> 
+        </Modal>
       </div>
     );
   }

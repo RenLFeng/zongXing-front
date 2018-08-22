@@ -840,3 +840,9 @@ export async function goPay(param,params) {
 export async function deleteInvestRecord(param) {
   return request(`${BASE_URL}/invRecord/delInvRecord?invId=${param}`);
 }
+
+
+//安心签
+export async function getSign(param) {
+  return request(`${BASE_URL}/cfca/inv/sendMessage?projectId=${param}`);
+}
