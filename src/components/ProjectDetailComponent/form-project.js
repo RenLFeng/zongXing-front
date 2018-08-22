@@ -311,11 +311,9 @@ export default class FormProject extends React.Component {
               type="primary"
               onClick={()=>{this.props.history.push({pathname:'/index/uCenter/InvestMent',state: {projectId: this.props.project.fpeoject_id,flag:true}})}}
               loading={this.state.loading} style={{width: 200, height: 40}}>去处理</Button>:
-            <Button type="primary" onClick={()=>this.getSignMessage()} loading={this.state.loading} style={{width: 200, height: 40}}>提交</Button>
+            <Button type="primary" onClick={()=>this.getSignMessage()}  style={{width: 200, height: 40}}>提交</Button>
           }
         </div>
-
-
 
         <Modal
           title="验证"
