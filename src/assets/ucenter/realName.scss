@@ -808,33 +808,43 @@
 }
 
 .safeCenter{
-    padding-bottom: 0;
+    padding:24px;
     .line{
         border: none;
-        padding:0;
-        height:77px;
+        // padding:0;
+        line-height: 35px;
         position: relative;
         .block1,.block2,.block3{
-            margin-top: 25px;
+            // margin-top: 25px;
+            display:inline-block
         }
         .block1{
             width:212px;
             border-right:1px solid #e6e6e6;
+            .word{
+                font-family: MicrosoftYaHeiUI-Bold;
+                font-size: 18px;
+                font-weight: bold;
+                font-stretch: normal;
+                color: #999999;
+            }
         }
         .block2{
             width:55%;
             color:#e6e6e6;
             font-size: 14px;
+            padding-left: 30px;
+           
         }
         .block3{
-            
             Button{
+                display: inline-block;
                 width:135px;
                 height:35px;
                border-radius: 5px;
                position: absolute;
                right:0;
-               top:22px;
+               top:0;
             }
             
         }

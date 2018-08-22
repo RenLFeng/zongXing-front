@@ -1,6 +1,4 @@
 
-
-
 // 部署替换
 let build = 'local'; // production 开发环境 test 测试服务环境  local  本地环境 ys 演示环境
 

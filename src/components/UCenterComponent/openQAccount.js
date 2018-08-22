@@ -76,7 +76,7 @@ export default class OpenQAccount extends React.Component {
   }
 
   render() {
-    //console.log('this.state.showPage', this.state.showPage);
+    console.log('this.state.showPage', this.props.openStatus);
     //console.log("submitParam:",this.state.submitParam);
     const { realName, submitParam } = this.state;
     const suffix = realName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
