@@ -110,7 +110,7 @@ export default class HomePage extends React.Component{
             {/* 预览使用的项目详情页面 */}
             <Route path={`${match.path}/project/:projectId`} component={Loadable({loader: () => import('./homePage/Project'),loading: loading})} />
           </Switch>
-          <div onClick={()=>this.reashLoginData()} style={{zIndex: 9999}}>123123123</div>
+          {/* <div onClick={()=>this.reashLoginData()} style={{zIndex: 9999}}>123123123</div> */}
         <Footer/>
 			</div>
 		);

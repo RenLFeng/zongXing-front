@@ -150,7 +150,8 @@ export default class FormProject extends React.Component {
       } else if (response.code === -3) {
         // 处理未授权二次分配
         this.setState({
-          authError: true
+          authError: true,
+           visible:false
         });
       } else {
         message.error(response.msg);
@@ -183,7 +184,7 @@ export default class FormProject extends React.Component {
   }
 
   hideModal(){
-    this.setState({visible:false})
+    this.setState({visible:false,code:''})
   }
   render() {
     const {project} = this.props;
@@ -214,7 +215,7 @@ export default class FormProject extends React.Component {
         <div className="form">
           { this.state.authError?
             <Alert
-              message={<span>您尚未授权二次分配,暂无法投资,<Link to={Path.SAFE_CENTER} style={{color: 'blue'}}>请前往</Link>授权</span>}
+              message={<span>您尚未授权二次分配,暂无法投资,<Link to={Path.REALNAME_AUTHENTICATION} style={{color: 'blue'}}>请前往</Link>授权</span>}
               type="warning" showIcon/>: null
           }
           <div className="row clearfix">

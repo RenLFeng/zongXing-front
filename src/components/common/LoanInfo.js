@@ -5,7 +5,8 @@ import {Button,Steps,Table,message} from 'antd';
 import moment from 'moment'; 
 import {accountService}  from '../../services/api2';
 import {goPay,deleteInvestRecord} from '../../services/api';
-import {NOTIFY_PAGE} from '../../common/systemParam';
+import {NOTIFY_PAGE,fileDownLoad} from '../../common/systemParam';
+
 
 class LoanInfo extends React.Component {
   constructor(props) {
@@ -43,6 +44,8 @@ class LoanInfo extends React.Component {
 		payloading:false,
 		deleLoading:false,
 		paymentObj:{},
+		loanUrl:'',
+		chujieUrl:'',
 	}
   }
  //查看回款明细
@@ -78,8 +81,31 @@ class LoanInfo extends React.Component {
 	}) 
  }
 
- handllerHTClick = async ()=>{
-	alert('查看安心签投资合同')
+ //查看合同
+ handllerHTClick = async (type)=>{
+	const res = await accountService.getDownload(this.state.data.projectId,type)
+	console.log('下载',res)
+	if(res.code === 0){
+     if(type === 2){
+				this.setState({
+					loanUrl:res.data
+				},()=>{
+					fileDownLoad(this.state.loanUrl);
+					// message.info('下载成功')
+					// window.open(this.state.loanUrl)
+				})	
+		 } else if(type === 4){
+			  this.setState({
+					chujieUrl:res.data
+				},()=>{
+					fileDownLoad(this.state.loanUrl);
+					message.info('下载成功')
+				})
+		 }
+		} else {
+			res.msg && message.error(res.msg)
+		}
+
  }
 
  //去付款
@@ -404,7 +430,12 @@ class LoanInfo extends React.Component {
 		<div className={`detail ${this.state.visableTable?'':'hide'}`}>
 			<Table columns={tableColumn} locale={locale} dataSource={this.state.tableData} loading={this.state.loading} pagination={false} bordered size="small" /> 
 		</div>
-		<a  onClick={this.handllerHTClick.bind(this,this.state.data.projectId)}>《查看投资合同》</a>
+		<p>
+		  <a onClick={this.handllerHTClick.bind(this)}>《出借人承诺函》</a>
+			<a onClick={this.handllerHTClick.bind(this,4)}>《出借服务协议》</a>
+			<a onClick={this.handllerHTClick.bind(this,2)}>《借款协议》</a>
+		</p>
+		
 
 
 		   <form ref={ref => this.formId = ref} id="form1" name="form1" action={paymentObj.submitURL} method="post" >

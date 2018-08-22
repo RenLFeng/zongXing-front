@@ -230,12 +230,14 @@
 
         }
     }
-    &>a{
-        font-size: 12px;
-        color: #268eff;
-        float: right;
-        &:hover{
-            opacity: .7;
+    &>p{
+        a{
+                font-size: 12px;
+                color: #268eff;
+                float: right;
+                &:hover{
+                    opacity: .7;
+                }
         }
     }
     
