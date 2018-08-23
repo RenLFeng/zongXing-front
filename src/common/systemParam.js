@@ -304,13 +304,12 @@ export function scrollToAnchor(anchorName) {
 
 
 export function fileDownLoad(data){
-  let Url = data;
+  let Url = 'https://zjb-cfca-1255741041.cos.ap-guangzhou.myqcloud.com/'+ data;
   try{
       let elemIF = document.createElement("iframe");
       elemIF.src = Url;
       elemIF.style.display = "none";
       document.body.appendChild(elemIF);
-      console.log('xiazaixaizai ')
   }catch(e){
      this.$message.warning("下载文件失败!");
   }     

@@ -132,7 +132,6 @@ export default class EnterprisePresentation extends React.Component {
         message.error(response.msg);
       }
     } catch (e) {
-      //console.log(e);
       this.setState({loading: false});
       if (typeof e === 'object' && e.name === 288) {
         throw e;
@@ -142,7 +141,6 @@ export default class EnterprisePresentation extends React.Component {
   }
 
   handleSubmit = () => {
-       //console.log("this.state.selectedCard:",this.state.selectedCard);
         this.state.selectedCard ? this.setState({selectedCardError: false}) : this.setState({selectedCardError: true});
         if(this.moneyError || this.state.loading){
           return;
@@ -150,7 +148,6 @@ export default class EnterprisePresentation extends React.Component {
         if(Number(this.state.amount) < 2){
           this.setState({moneyError:true, moneyErrorMsg: '金不能小于1'})
         }
-        //console.log("this.selectedCard:",this.selectedCard);
         if (!this.state.selectedCard.fbankcard) {
           message.error('请选择银行卡');
           return; 

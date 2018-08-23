@@ -588,7 +588,7 @@ export default class RealName extends React.Component {
                     <div className="safeCenter">
                       <div className="line">
                         <div className="block1">
-                        <i className={`zjb ${status.indexOf('3') !== -1?'zjb-duihao':'zjb-jinggao1'}`} style={{ color: `${status.indexOf('3') !== -1?'#4cc261':'#FFCB15'}`}}></i> 
+                        <i className={`zjb ${status.indexOf('3') !== -1?'zjb-duihao':'zjb-jinggao1'}`} style={{ color: `${status.indexOf('3') !== -1?'#4cc261':'#FFCB15'}`,fontSize:27}}></i> 
                           <span className="word" style={{lineHeight:'20px'}}>二次分配授权</span>
                           <i className="zjb zjb-renzheng " style={{fontSize:27,color:'#ffcb15',marginRight:5,verticalAlign:'middle',lineHeight:'20px',position:'relative',top:-3,left:1}}></i> 
                         </div>
