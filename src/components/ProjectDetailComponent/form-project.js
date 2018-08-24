@@ -237,8 +237,8 @@ export default class FormProject extends React.Component {
                 className="put"
                 type="text"
                 value={this.state.money}
-                min={LIMIT_MOENY?0:100}
-                placeholder={LIMIT_MOENY?'请注意金额格式':'投资金额为100的整数倍'}
+                min={LIMIT_MOENY?1:100}
+                placeholder={LIMIT_MOENY?'投资金额最少1元':'投资金额为100的整数倍'}
                 onChange={(e)=>this.checkFormat(e)}
                 step={LIMIT_MOENY?1:100}
                 size={'large'}
