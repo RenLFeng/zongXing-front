@@ -3,23 +3,20 @@ import {Link, Route,Switch } from 'dva/router';
 import i18n from '../i18n/i18n'
 import { connect } from 'dva';
 
-import { getLoginData, testSocket } from '../services/api';
+import { getLoginData, testSocket,getuserID } from '../services/api';
 import '../assets/common/index';
 import { getLocation } from '../services/api';
 import COS from 'cos-js-sdk-v5';
-import { BASE_URL, getAuth, getHobbyList } from '../services/api';
+import { BASE_URL, getAuth, getHobbyList,socketUrl } from '../services/api';
 //优惠券兑换中心
 import { SOCKET_URL } from '../common/systemParam';
 import Header from '../components/HomePageComponent/header';
 import Footer from '../components/HomePageComponent/footer';
 import Loadable from 'react-loadable';
-
+import {  notification,Icon } from 'antd';
 
 // import UCenter from './homePage/UCenter';
 import io from 'socket.io-client';
-const socket = io('http://localhost:3000', { //指定后台的url地址
-    path: '/router', //如果需要的话添加 path 路径以及其他可选项
-});
 
 function loading() {
   return <p></p>
@@ -30,7 +27,8 @@ function loading() {
 }))
 export default class HomePage extends React.Component{
   componentDidMount() {
-    this.socketConn();    ////
+
+      this.getuserUuid();//获取用户id
     // 判断有没有token请求获取用户基础数据
     if (localStorage.getItem('accessToken')) {
       this.getUserBaseData();
@@ -56,22 +54,37 @@ export default class HomePage extends React.Component{
       });
     }
   }
+
+  async getuserUuid() {
+    const response = await getuserID();
+    if (response.code === 0) {
+     localStorage.setItem('userid',response.data)
+     this.socketConn();    //socket  mast userid
+    } else {
+      message.error(response.msg);
+    }
+  }
+
   socketConn(){
+    let that=this;
+    const socket = io(socketUrl+localStorage.getItem('userid'));  //指定后台的url地址  在service  api 中统一修改  打包记得替换
     socket.on('connect', function () {
       console.log('socket connect')
      });
      socket.on('disconnect', function () {
        console.log('socket again  connect')
-       this.socketConn();
+       that.socketConn();
      });
-     socket.on('kaihu', function (data) {
-      console.log(data)
+     socket.on('chat', function (data) {
+       console.log(data,"898989")
+      notification.open({
+        icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
+        message: data.data.busType,
+        description: data.data.message,
+      });
      });
 
-     socket.on('tuichu', function (data) {
-      console.log(data)
-     });
-     
+
   }
   async getHobby() {
     const response = await getHobbyList();
