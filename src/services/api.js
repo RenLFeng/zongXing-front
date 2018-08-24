@@ -3,6 +3,7 @@ import request from '../utils/request';
 import { build } from '../common/systemParam';
 
 let BASE_URL = 'http://139.199.77.147:8001'; // 测试服务器
+export const socketUrl='http://192.168.1.30:8899'  //socket url  打包记得替换
 if (build === 'production') {
   // 远端
   BASE_URL = 'http://139.199.77.147:8010';
@@ -23,6 +24,7 @@ if (build === 'production') {
 }
 
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图key
+
 
 // 获取图片签名token
 export async function getAuth({method, pathname}) {

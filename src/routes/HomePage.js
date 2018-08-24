@@ -7,7 +7,7 @@ import { getLoginData, testSocket } from '../services/api';
 import '../assets/common/index';
 import { getLocation } from '../services/api';
 import COS from 'cos-js-sdk-v5';
-import { BASE_URL, getAuth, getHobbyList } from '../services/api';
+import { BASE_URL, getAuth, getHobbyList,socketUrl } from '../services/api';
 //优惠券兑换中心
 import { SOCKET_URL } from '../common/systemParam';
 import Header from '../components/HomePageComponent/header';
@@ -17,9 +17,7 @@ import Loadable from 'react-loadable';
 
 // import UCenter from './homePage/UCenter';
 import io from 'socket.io-client';
-const socket = io('http://localhost:3000', { //指定后台的url地址
-    path: '/router', //如果需要的话添加 path 路径以及其他可选项
-});
+const socket = io(socketUrl);  //指定后台的url地址  在service  api 中统一修改  打包记得替换
 
 function loading() {
   return <p></p>
@@ -71,7 +69,7 @@ export default class HomePage extends React.Component{
      socket.on('tuichu', function (data) {
       console.log(data)
      });
-     
+
   }
   async getHobby() {
     const response = await getHobbyList();
