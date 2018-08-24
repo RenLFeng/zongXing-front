@@ -62,13 +62,14 @@ export default class HomePage extends React.Component{
        console.log('socket again  connect')
        this.socketConn();
      });
-     socket.on('kaihu', function (data) {
-      console.log(data)
+     socket.on('chat', function (data) {
+      notification.open({
+        icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
+        message: data.busType,
+        description: data.message,
+      });
      });
 
-     socket.on('tuichu', function (data) {
-      console.log(data)
-     });
 
   }
   async getHobby() {
