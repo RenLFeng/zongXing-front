@@ -9,12 +9,17 @@ import { getLocation } from '../services/api';
 import COS from 'cos-js-sdk-v5';
 import { BASE_URL, getAuth, getHobbyList } from '../services/api';
 //优惠券兑换中心
-import io from 'socket.io-client';
 import { SOCKET_URL } from '../common/systemParam';
 import Header from '../components/HomePageComponent/header';
 import Footer from '../components/HomePageComponent/footer';
 import Loadable from 'react-loadable';
+
+
 // import UCenter from './homePage/UCenter';
+import io from 'socket.io-client';
+const socket = io('http://localhost:3000', { //指定后台的url地址
+    path: '/router', //如果需要的话添加 path 路径以及其他可选项
+});
 
 function loading() {
   return <p></p>
@@ -25,6 +30,7 @@ function loading() {
 }))
 export default class HomePage extends React.Component{
   componentDidMount() {
+    this.socketConn();    ////
     // 判断有没有token请求获取用户基础数据
     if (localStorage.getItem('accessToken')) {
       this.getUserBaseData();
@@ -50,7 +56,23 @@ export default class HomePage extends React.Component{
       });
     }
   }
+  socketConn(){
+    socket.on('connect', function () {
+      console.log('socket connect')
+     });
+     socket.on('disconnect', function () {
+       console.log('socket again  connect')
+       this.socketConn();
+     });
+     socket.on('kaihu', function (data) {
+      console.log(data)
+     });
 
+     socket.on('tuichu', function (data) {
+      console.log(data)
+     });
+     
+  }
   async getHobby() {
     const response = await getHobbyList();
     //console.log('hobby', response);
