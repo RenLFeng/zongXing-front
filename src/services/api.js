@@ -3,7 +3,7 @@ import request from '../utils/request';
 import { build } from '../common/systemParam';
 
 let BASE_URL = 'http://139.199.77.147:8001'; // 测试服务器
-export const socketUrl='http://192.168.1.30:8899'  //socket url  打包记得替换
+export const socketUrl='http://192.168.1.30:8899?clientId='  //socket url  打包记得替换
 if (build === 'production') {
   // 远端
   BASE_URL = 'http://139.199.77.147:8010';
@@ -15,15 +15,24 @@ if (build === 'production') {
 } else if (build === 'local') {
   /*开发配置*/
 
-  BASE_URL = 'http://192.168.1.59:8001';
+  BASE_URL = 'http://192.168.1.30:8001';
   document.title ="众借帮--开发环境";
 } else if (build === 'ys') {
    /*演示配置*/
-  BASE_URL = 'http://193.112.97.50:8001';
+  BASE_URL = 'http://192.168.1.30:8001';
   document.title ="众借帮--演示环境";
 }
 
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图key
+
+
+
+//获取userid  
+// 获取一个问题下所有问题
+export async function   getuserID(){
+  return request(`${BASE_URL}/account/userid`);
+}
+
 
 
 // 获取图片签名token
