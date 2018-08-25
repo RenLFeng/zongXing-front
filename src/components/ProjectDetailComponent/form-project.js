@@ -27,7 +27,8 @@ export default class FormProject extends React.Component {
       browser: false,
       visible:false,
       code:'',
-      Loading:false
+      Loading:false,
+      showModal:true,
     };
   }
 
@@ -43,6 +44,7 @@ export default class FormProject extends React.Component {
   }
 
   checkFormat(value) {
+    
     if (!MUN_INTEGER.test(value+'')) {
       this.setState({errMsg: '金额格式不正确'});
     } else if (!LIMIT_MOENY && value * 1 % 100 !== 0) {
@@ -56,6 +58,17 @@ export default class FormProject extends React.Component {
       money: value
     });
 
+  }
+
+  checkmoney(){
+    if (this.state.money > this.props.balance) {
+      this.setState({errMsg: '要投金额大于账户余额，请前往充值'});
+      return;
+    }
+    if (this.state.money > this.props.project.fcredit_money.sub(this.props.project.allMoney)) {
+      this.setState({errMsg: '所投金额大于剩余可投金额'});
+      return;
+    }
   }
 
   closeDiv() {
@@ -76,7 +89,6 @@ export default class FormProject extends React.Component {
   }
 
   async getSignMessage(){
-   
     if (!this.state.money) {
       message.warning('输入金额不能为空');
       return;
@@ -98,15 +110,26 @@ export default class FormProject extends React.Component {
       return;
     }
     if (this.state.money > this.props.project.fcredit_money.sub(this.props.project.allMoney)) {
-      message.warning('所投金额不能超过剩余可投金额');
+      message.warning({errMsg: '所投金额大于剩余可投金额'});
       return;
     }
-    this.setState({visible:true,Loading:true})
+    if (this.state.money > this.props.balance) {
+      message.warning({errMsg: '要投金额大于账户余额，请前往充值'});
+      return;
+    }
+    this.setState({Loading:true})
     const res = await getSign(this.props.project.fpeoject_id);
     this.setState({Loading:false})
     if(res.code === 0 ){
+      this.setState({visible:true})
+    } else if(res.code === 2 ){
+      this.setState({
+        showModal:false
+      },()=>{
+        this.submit()
+      })
       
-    } else {
+    }else {
       res.msg && message.error(res.msg)
     }
   }
@@ -115,10 +138,13 @@ export default class FormProject extends React.Component {
     this.setState({
       authError: false
     });
-    if(this.state.code.trim().length < 4){
-      message.info('请输入合法的验证码')
-      return;
+    if(this.state.showModal){
+      if(this.state.code.trim().length < 6){
+        message.info('请输入合法的验证码')
+        return;
+      }
     }
+   
     try {
       const data = [{
         projectId: this.props.project.fpeoject_id,
@@ -242,6 +268,7 @@ export default class FormProject extends React.Component {
                 onChange={(e)=>this.checkFormat(e)}
                 step={LIMIT_MOENY?1:100}
                 size={'large'}
+                onBlur={()=>this.checkmoney()}
               />
               <i className="f16 c9">元</i>
             </div>
@@ -250,7 +277,12 @@ export default class FormProject extends React.Component {
           { this.state.errMsg ?
             <div className="row clearfix" style={{marginTop: -20}}>
               <div className="col2" style={{float: 'none'}}>
+              {
+                this.state.errMsg === '要投金额大于账户余额，请前往充值' ? 
+                <p style={{fontSize: 16, color: 'red',marginLeft: `${this.state.browser? '-2px' : '-345px'}`}}>要投金额大于账户余额，请前往<span style={{color:'#ff9900',cursor:'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/recharge')}>充值</span></p> :
                 <p style={{fontSize: 16, color: 'red',marginLeft: `${this.state.browser? '-2px' : '-345px'}`}}>{this.state.errMsg}</p>
+              }
+               
               </div>
             </div> : null
           }

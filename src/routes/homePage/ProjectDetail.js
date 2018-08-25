@@ -77,6 +77,7 @@ export default class ProjectDetail extends React.Component {
 
   render() {
     const { projectDetail } = this.state;
+    console.log('this.state.projectDetail',this.state.projectDetail)
     return (
       <div>
         <Head projectDetail={projectDetail} history={this.props.history}/>

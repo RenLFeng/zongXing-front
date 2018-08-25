@@ -14,8 +14,7 @@ if (build === 'production') {
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-
-  BASE_URL = 'http://192.168.1.30:8001';
+  BASE_URL = 'http://192.168.1.59:8001';
   document.title ="众借帮--开发环境";
 } else if (build === 'ys') {
    /*演示配置*/
@@ -28,12 +27,9 @@ export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图k
 
 
 //获取userid  
-// 获取一个问题下所有问题
 export async function   getuserID(){
   return request(`${BASE_URL}/account/userid`);
 }
-
-
 
 // 获取图片签名token
 export async function getAuth({method, pathname}) {
@@ -236,15 +232,6 @@ export async function selectProJourney(projectId) {
   return request(`${BASE_URL}/projectJourney/getOne?projectId=${projectId}`)
 }
 
-// 添加项目历程
-export async function addProJourney(params) {
-  return request(`${BASE_URL}/projectJourney/save`, {
-    method: 'POST',
-    body: {
-      ...params,
-    }
-  });
-}
 
 // 获取项目行业编码类别接口
 export async function getProjectType() {
@@ -288,11 +275,6 @@ export async function alreadyInvested(params) {
 export async function clickPraise(param) {
   return request(`${BASE_URL}/projectJourney/praise?journeyId=${param}`);
 }
-
-// //获取提现的银行卡的接口
-// export async function getBankCard(param) {
-//   return request(`${BASE_URL}/userBankCard/account/info?accountId=${param}`);
-// }
 
 //获取省份对应的城市
 export async function getCity(param) {
@@ -364,6 +346,8 @@ export async function getAddressCoordinate(params) {
 export async function getOldCode(param) {
   return request(`${BASE_URL}/securityCenter/checkAuthcode?authcode=${param}`)
 }
+
+//===============================================================================================================================
 //更新手机号码
 export async function changePhoneNum(params) {
   return request(`${BASE_URL}/securityCenter/updataMobile`, {
@@ -423,12 +407,6 @@ export async function saveCompany(params) {
     }
   })
 }
-
-// 公司登陆接口
-export async function loginCompany(param) {
-  return request(`${BASE_URL}/company/login?companyId=${param}`)
-}
-
 
 // //修改密码，获取手机号
 // export async function changePW(param,params) {

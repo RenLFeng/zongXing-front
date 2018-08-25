@@ -97,6 +97,7 @@ export default {
         },
       });
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('userid')
       yield put(routerRedux.replace('/'));
     },
     *logoutData(_, { put }) {
@@ -108,6 +109,7 @@ export default {
         },
       });
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('userid')
     },
     *changeNickName({payload}, { put }) {
       yield put({

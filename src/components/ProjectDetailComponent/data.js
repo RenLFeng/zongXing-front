@@ -167,7 +167,7 @@ export default class Data extends React.Component {
                   this.state.arr.map((data, index)=>{
                     return(
                       <div className="row" key={index}>
-                        <span className="col1" style={{display: 'inline-block'}}>{data.userName}</span>
+                        <span className="col1" style={{display: 'inline-block'}}>{data.userName.substr(0, 3) + '****' + data.userName.substr(7)}</span>
                         <span className="col2">{`${data.money}`.fm()}</span>
                         <span className="col3">{moment(data.ftime).format("YYYY-MM-DD HH:mm:ss")}</span>
                       </div>

@@ -13,7 +13,7 @@ import { SOCKET_URL } from '../common/systemParam';
 import Header from '../components/HomePageComponent/header';
 import Footer from '../components/HomePageComponent/footer';
 import Loadable from 'react-loadable';
-import {  notification,Icon } from 'antd';
+import {  notification,Icon,message } from 'antd';
 
 // import UCenter from './homePage/UCenter';
 import io from 'socket.io-client';
@@ -28,7 +28,7 @@ function loading() {
 export default class HomePage extends React.Component{
   componentDidMount() {
 
-      this.getuserUuid();//获取用户id
+      // this.getuserUuid();//获取用户id
     // 判断有没有token请求获取用户基础数据
     if (localStorage.getItem('accessToken')) {
       this.getUserBaseData();
@@ -76,15 +76,13 @@ export default class HomePage extends React.Component{
        that.socketConn();
      });
      socket.on('chat', function (data) {
-       console.log(data,"898989")
+       
       notification.open({
         icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
         message: data.data.busType,
         description: data.data.message,
       });
      });
-
-
   }
   async getHobby() {
     const response = await getHobbyList();

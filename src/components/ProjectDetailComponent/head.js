@@ -71,10 +71,6 @@ export default class Head extends React.Component {
               </div>
             </div>
 
-
-
-
-
             <div className="info-box fr clearfix">
 
               

@@ -52,7 +52,7 @@ if (build === 'production') {
   REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
   PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
   TURN_BACK = `http://${window.location.host}`; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
-  LIMIT_MOENY = true;
+  LIMIT_MOENY = false;
   AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
 
   SOCKET_URL = 'http://192.168.1.59:8001';

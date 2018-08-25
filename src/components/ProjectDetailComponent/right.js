@@ -216,9 +216,14 @@ export default class Right extends React.Component {
           <div className="center bot1">
             {this.props.onlyRead ? null :this.props.projectDetail.fflag !== 13 ?
               <p className="clearfix">
-                <Button className="btn2" loading={this.state.loading} type="primary" style={{width: 130, height: 50}}
-                      onClick={() => this.getPersonalMoney_(this.props.projectDetail.fpeoject_id)} >我要投资
-                </Button>
+                { 
+                  this.props.projectDetail.fcredit_money === this.props.projectDetail.allMoney ? 
+                  <span className="btn2" style={{display:'inline-block',width: 130, height: 50,borderRadius:4,background:'#ccc',verticalAlign:'top',lineHeight:'50px',fontSize:18,color:'#fff'}}>我要投资</span> :
+                  <Button className="btn2" loading={this.state.loading} type="primary" style={{width: 130, height: 50}}
+                        onClick={() => this.getPersonalMoney_(this.props.projectDetail.fpeoject_id)} >我要投资
+                  </Button>
+                }
+                
                 <Button className="y btn" loading={this.state.Loading} type="primary" style={{width: 130, height: 50}}
                        onClick={() => this.getData(1)} >已投资人数
                 </Button>
@@ -230,11 +235,11 @@ export default class Right extends React.Component {
         <div className="box3 shadow" style={{padding:'0 10px'}}>
           <p className="tit">商家优惠券</p>
           <div className="coupon">
-          <ul style={{marginTop:'30px'}}>
-            <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys3.png')} /></li>
-            <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys1.png')} /></li>
-            <li style={{marginTop:'20px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys2.png')} /></li>
-          </ul>
+            <ul style={{marginTop:'30px',listStyle:'none',paddingLeft:0}}>
+              <li style={{marginTop:'10px',listStyle:'none',padding:'10px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys3.png')} /></li>
+              <li style={{marginTop:'10px',listStyle:'none',padding:'10px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys1.png')} /></li>
+              <li style={{marginTop:'10px',listStyle:'none',padding:'10px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys2.png')} /></li>
+            </ul>
             <p className="center bot2">
               {/* <Button 
                 className="btn2" loading={this.state.loading} disabled={this.props.projectDetail.fflag != 10} type="primary" style={{width: 130, height: 50}}

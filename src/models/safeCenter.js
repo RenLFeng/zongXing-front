@@ -10,14 +10,12 @@ export default {
   },
   effects: {
     *getSafe({payload}, { call, put }) {
-      //console.log("payload1",payload);
       //请求安全中心首页数据
       yield put({
         type: 'startSafeData'
       });
       try {
         const response = yield call(getSafeData);
-        //console.log("safeData",response);
         if (response.code === 0) {
           if(payload){
             let resObj = response.data;
