@@ -56,7 +56,8 @@ class Statement extends React.Component {
                         } 
                         
                         { //金额
-                            
+                             
+                            this.state.data.busType==='1405' ? null :
                             <span className='span1'>￥{ this.state.data.finMoney > 0 ?  String(this.state.data.finMoney).fm() : String(this.state.data.foutMoney).fm()}</span>
                         } 
                         

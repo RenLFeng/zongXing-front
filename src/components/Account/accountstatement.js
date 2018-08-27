@@ -82,7 +82,7 @@ export default class AccountStatement extends React.Component{
       console.log('资金流水',res)
       if(res.code === 0){  
         this.setState({  
-          totalNum:res.data.totalNumber, 
+          totalNum:res.data.resPage.totalNumber, 
         }); 
         if(this.state.activeCode==='0000'){
           this.setState({  
@@ -417,7 +417,7 @@ export default class AccountStatement extends React.Component{
              {
                 Math.ceil(this.state.totalNum/this.state.pageSize)>1?
                 <div className='as-paging'>
-                  <Pagination   current={this.state.pageCurrent} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
+                  <Pagination  current={this.state.pageCurrent} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
                 </div>:null
               } 
           </div> 
