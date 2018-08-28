@@ -43,9 +43,10 @@ if (build === 'production') {
   REGION = 'ap-shanghai'; // 图片上传服务器区域配置 开发 服务器用
   PIC_BUCKET = 'zjb01-1255741041'; //zjb 开发服务器用
   TURN_BACK = 'http://dev3manage.zjb188.com:7956'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
-  LIMIT_MOENY = false;
-  AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
+  LIMIT_MOENY = true;
+  AUTH_ADDRESS = 'https://my.moneymoremore.com/';
   SOCKET_URL = 'http://192.168.1.36:8899';
+  NOTIFY_PAGE = `http://${window.location.host}/front/#`;
 } else if (build === 'local') {
   /*开发配置*/
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
