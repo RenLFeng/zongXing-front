@@ -13,6 +13,8 @@ import { SOCKET_URL } from '../common/systemParam';
 import Header from '../components/HomePageComponent/header';
 import Footer from '../components/HomePageComponent/footer';
 import Loadable from 'react-loadable';
+import Login from './homePage/login';
+
 import {  notification,Icon,message } from 'antd';
 
 // import UCenter from './homePage/UCenter';
@@ -129,7 +131,7 @@ export default class HomePage extends React.Component{
             <Route path={`${match.path}/infor`} component={Loadable({loader: () => import('./homePage/infor'),loading: loading})}/>
             <Route path={`${match.path}/applyLoan`} component={Loadable({loader: () => import('./homePage/ApplyLoan'),loading: loading})} />
             <Route path={`${match.path}/uCenter`} component={Loadable({loader: () => import('./homePage/UCenter'),loading: loading})} />
-            <Route path={`${match.path}/login`} component={Loadable({loader: () => import('./homePage/login'),loading: loading})} />
+            <Route path={`${match.path}/login`} component={Login} />
             <Route path={`${match.path}/register`} component={Loadable({loader: () => import('./homePage/register'),loading: loading})} />
             <Route path={`${match.path}/forgetPassWord`} component={Loadable({loader: () => import('./homePage/forgetPassWord'),loading: loading})} />
             <Route path={`${match.path}/risk`} component={Loadable({loader: () => import('./homePage/Risk'),loading: loading})} />
