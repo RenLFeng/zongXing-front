@@ -44,7 +44,6 @@ export default class CouponSmall extends React.Component {
             fflag_class:fflag_class, 
             btn_text:btn_text,
             logo:'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/base/defut-head.jpg'
-                
         });
     }
 

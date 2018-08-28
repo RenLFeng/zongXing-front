@@ -127,8 +127,7 @@ export default class FormProject extends React.Component {
         showModal:false
       },()=>{
         this.submit()
-      })
-      
+      }) 
     }else {
       res.msg && message.error(res.msg)
     }
@@ -238,7 +237,7 @@ export default class FormProject extends React.Component {
         <div className="form">
           <Alert message={'您有一笔未付款的投资，请先前往处理'} type="warning" showIcon/>
         </div> :
-        <div className="form">
+        <div className="form" style={{position:'relative'}}>
           { this.state.authError?
             <Alert
               message={<span>您尚未授权二次分配,暂无法投资,<Link to={Path.REALNAME_AUTHENTICATION} style={{color: 'blue'}}>请前往</Link>授权</span>}
@@ -253,7 +252,7 @@ export default class FormProject extends React.Component {
               <i className="f18">元</i>
             </div>
           </div>
-          <div className="row clearfix">
+          <div className="row clearfix" style={{marginBottom:20}}>
             <div className="col1">
               <i className="f16 c9">我要投</i>
             </div>
@@ -275,14 +274,13 @@ export default class FormProject extends React.Component {
           </div>
 
           { this.state.errMsg ?
-            <div className="row clearfix" style={{marginTop: -20}}>
+            <div className="row clearfix" style={{position:'absolute',top:120,right:350,width:260,textAlign:'left'}}>
               <div className="col2" style={{float: 'none'}}>
               {
                 this.state.errMsg === '要投金额大于账户余额，请前往充值' ? 
-                <p style={{fontSize: 16, color: 'red',marginLeft: `${this.state.browser? '-2px' : '-345px'}`}}>要投金额大于账户余额，请前往<span style={{color:'#ff9900',cursor:'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/recharge')}>充值</span></p> :
-                <p style={{fontSize: 16, color: 'red',marginLeft: `${this.state.browser? '-2px' : '-345px'}`}}>{this.state.errMsg}</p>
+                <p style={{fontSize: 16, color: 'red',marginLeft: `${this.state.browser? '-2px' : '0px'}`}}>要投金额大于账户余额，请前往<span style={{color:'#ff9900',cursor:'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/recharge')}>充值</span></p> :
+                <p style={{fontSize: 16, color: 'red',marginLeft: `${this.state.browser? '-2px' : '0px'}`}}>{this.state.errMsg}</p>
               }
-               
               </div>
             </div> : null
           }
