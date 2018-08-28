@@ -31,7 +31,7 @@ export default class CountTime extends React.Component {
 
   componentWillReceiveProps(props) {
     if (this.props.projectDetail !== props.projectDetail) {
-      if (!this.countDown && this.props.projectDetail.fcollet_over_time) {
+      if (!this.countDown && props.projectDetail.fcollet_over_time) {
         this.countDown = setInterval(()=>this.countDownTime(), 1000);
       }
     }
@@ -94,7 +94,6 @@ export default class CountTime extends React.Component {
       this.setState({countDown: '00 : 00 : 00', countDay: 0});
     }
   }
-
 
   async getPersonalMoney(fid) {
     try {

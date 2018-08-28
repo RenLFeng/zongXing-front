@@ -40,19 +40,10 @@ export default class Head extends React.Component {
               <p className="tit fl" style={{textAlign: 'left'}}>{projectDetail.fname}
               <span>信用评级:<i className="r">{projectDetail.fleve_name}</i></span>
               </p>
-              {/* <p className="tit tit2" style={{textAlign: 'left'}}>    </p> */}
               <p className="fr"> 
               <span className="line">{projectDetail.fcity_name}</span><e></e><span>{projectDetail.ftype_name}</span>
               </p>
             </div>
-            {/* <div className="">
-              <span>项目编号:<i>{projectDetail.fproject_no}</i></span>
-            
-            </div> */}
-            {/* <div className="user"> */}
-              {/* <img className="av" src={require("../../assets/img/project-detail/av1.png")} /> */}
-              {/* <p className="t2" style={{textAlign: 'left'}}>{moment(projectDetail.fpublish_time).format('YYYY年MM月DD日')} {projectDetail.fprovincial_name === projectDetail.fcity_name ? projectDetail.fprovincial_name : `${projectDetail.fprovincial_name} - ${projectDetail.fcity_name}`}</p>
-            </div> */}
           </div>
           <div className="content-box clearfix">
 

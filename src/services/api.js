@@ -18,7 +18,7 @@ if (build === 'production') {
   document.title ="众借帮--开发环境";
 } else if (build === 'ys') {
    /*演示配置*/
-  BASE_URL = 'http://192.168.1.30:8001';
+  BASE_URL = 'http://193.112.97.50:8001';
   document.title ="众借帮--演示环境";
 }
 
