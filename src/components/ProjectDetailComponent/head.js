@@ -80,10 +80,6 @@ export default class Head extends React.Component {
                   </div>
             
               </div>
-              
-
-
-
               <div className="info clearfix pd-body">
                 <div className="fr rbody">
                   <Ctext

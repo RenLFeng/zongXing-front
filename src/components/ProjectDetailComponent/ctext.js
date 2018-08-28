@@ -98,7 +98,7 @@ render(){
           <div className="fr tz">
             <p className="t1">已投资人数</p>
 
-            <p className="t2">{userCount}<em>人</em></p>
+            <p className="t2" style={{cursor: 'normal'}}>{userCount}<em>人</em></p>
           </div>
             <div className="fr">
               <p className="t1">已经筹款</p>

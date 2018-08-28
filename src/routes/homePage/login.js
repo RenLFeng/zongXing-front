@@ -17,7 +17,6 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-  
       loginPhone: '', //登录手机号
       loginPwd: '', //登录密码
       loginNameErr: '', //登录用户名提示
@@ -28,11 +27,13 @@ export default class Login extends React.Component {
       code: '', //忘记密码时验证码
       loginError: true, 
       errorTime: 60
-
     };
     this.onChange = this.onChange.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
     this.countDownErrorCode = null;
+  }
+
+  componentDidMount() {
   }
  
   componentWillUnmount() {
@@ -176,6 +177,7 @@ export default class Login extends React.Component {
 
   render() {
     const {  loginPhone, loginPwd} = this.state;
+    console.log(loginPhone, loginPwd)
     return (
       <div className="logindiv1 "  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
       <Modal
