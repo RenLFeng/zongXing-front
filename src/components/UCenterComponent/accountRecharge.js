@@ -114,7 +114,7 @@ export default class AccountRecharge extends React.Component {
             <Button type="primary" onClick={this.handleSubmit} loading={this.state.loading} style={{width: 279,height:35,fontSize:18,marginLeft: 30}}>发起充值</Button>
           </div>
         </div>
-        <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post">
+        <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
           <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
           <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
           <input id="OrderNo" name="OrderNo" value={recharge.orderNo} type="hidden" />
