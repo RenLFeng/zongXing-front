@@ -52,7 +52,7 @@ export default class CouponSmall extends React.Component {
             <div className={`small-coupon ${this.state.fflag_class}`}>
                 <div className='coupon-left'>
                     <p className='coupon-name'>{this.state.data.fname||'优惠券名称'}</p>
-                    <p className='coupon-money'>
+                    <div className='coupon-money'>
                         <span className='t1'>￥</span>
                         <span  className='t2'>{this.state.data.ffull_sub_money||'0'}</span>
                         <div className='sub-money'> 
@@ -62,7 +62,7 @@ export default class CouponSmall extends React.Component {
                             } 
                             <span  className='t3'>YUAN</span>
                         </div>
-                    </p>
+                    </div>
                     <p className='coupon-rule'>使用规则：满{this.state.data.ffull_sub_condition||0}使用</p>
                     <p className='coupon-time'>有效期：{this.state.data.fend_time?moment(this.state.data.fend_time).format('YYYY年MM月DD日'):'----年--月--日'}</p>
                 </div>

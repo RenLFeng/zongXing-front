@@ -27,76 +27,6 @@ export default class Ctext extends React.Component {
     this.countDown = null;
   }
 
-  componentDidMount() {
-  }
-
-  componentWillReceiveProps(props) {
-    if (this.props.projectDetail !== props.projectDetail) {
-      if (!this.countDown && this.props.projectDetail.fcollet_over_time) {
-        this.countDown = setInterval(()=>this.countDownTime(), 1000);
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.countDown);
-  }
-
-  countDownTime() {
-    if (this.props.projectDetail.fcollet_over_time) {
-      let overTime = this.props.projectDetail.fcollet_over_time - new Date().getTime();
-      if (overTime <= 0) {
-        this.setState({countDown: '00 : 00 : 00', countDay: 0});
-        clearInterval(this.countDown);
-      } else {
-        if (Math.floor(overTime/86400000) !== 0) {
-          this.setState({
-            countDay: Math.floor(overTime/86400000)
-          });
-        } else {
-          this.setState({
-            countDay: 0
-          });
-        }
-        overTime = overTime - Math.floor(overTime/86400000) * 86400000;
-        let time = '';
-        if (Math.floor(overTime/3600000) !== 0) {
-          if (Math.floor(overTime/3600000) >= 10) {
-            time = `${Math.floor(overTime/3600000)} :`;
-          } else {
-            time = `0${Math.floor(overTime/3600000)} :`;
-          }
-        } else {
-          time = `00 :`;
-        }
-        overTime = overTime - Math.floor(overTime/3600000) * 3600000;
-        if (Math.floor(overTime/60000) !== 0) {
-          if (Math.floor(overTime/60000) >= 10) {
-            time = `${time} ${Math.floor(overTime/60000)} :`;
-          } else {
-            time = `${time} 0${Math.floor(overTime/60000)} :`;
-          }
-        } else {
-          time = `${time} 00 :`;
-        }
-        overTime = overTime - Math.floor(overTime/60000) * 60000;
-        if (overTime !== 0) {
-          if (overTime/1000 >= 10) {
-            time = `${time} ${Math.floor(overTime/1000)}`;
-          } else {
-            time = `${time} 0${Math.floor(overTime/1000)}`;
-          }
-        } else {
-          time = `${time} 00`;
-        }
-        this.setState({countDown: time});
-      }
-    } else {
-      this.setState({countDown: '00 : 00 : 00', countDay: 0});
-    }
-  }
-
-
   async getPersonalMoney(fid) {
     try {
       this.setState({loading: true});
@@ -128,16 +58,7 @@ export default class Ctext extends React.Component {
       }
     }
   }
-
   
-  getData() {
-    this.props.dispatch({
-      type: 'account/updateCount',
-    })
-    $('.pd-data').before('<div class="_masker"></div>');
-    $('.pd-data').removeClass('none').css('top', av.top() + 50 + 'px');
-  }
-
 // 收藏项目
 async projectCollection() {
   if (this.props.projectDetail.isCollected) {
@@ -177,23 +98,15 @@ render(){
           <div className="fr tz">
             <p className="t1">已投资人数</p>
 
-            <p className="t2" style={{cursor: 'pointer'}} onClick={()=>{if (!userCount) {return} this.getData();}}>{userCount}<em>人</em></p>
+            <p className="t2">{userCount}<em>人</em></p>
           </div>
             <div className="fr">
               <p className="t1">已经筹款</p>
               <p className="t2">{allMoney}<em>元</em></p>
             </div>
               <div className="bot">
-                {/* <a onClick={() => {
-                  if (this.props.projectDetail.fflag != 10) {
-                    return;
-                  }
-                  this.getPersonalMoney(this.props.projectDetail.fpeoject_id);
-                }}
-                 style={{backgroundColor: `${this.props.projectDetail.fflag != 10?'#ccc': '#f90'}`, width: '127',lineHeight: '40px',textAlign: 'center',color: '#fff',fontSize: '18',borderRadius:'3px'}}><i>我要投资</i></a> */}
               </div>
         </div>
-        {/* <DataModal ref={ref=>this.dataModal = ref} arr={this.state.arr} fetchData={this.getData.bind(this)} userCount={this.props.projectDetail.userCount} allMoney={this.props.projectDetail.allMoney} maxPage={this.state.maxPage} pageCurrent={this.state.pageParam.pageCurrent} /> */}
       </div>
   );
 }
