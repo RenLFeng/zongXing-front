@@ -42,7 +42,6 @@ export default class HomePage extends React.Component{
           getAuth({method: (options.Method || 'get').toLowerCase(),
             pathname: '/' + (options.Key || '')})
             .then((data) => {
-              //console.log(data);
               if (data.code === 0) {
                 callback(data.data);
               }
@@ -69,10 +68,8 @@ export default class HomePage extends React.Component{
     let that=this;
     const socket = io(socketUrl+localStorage.getItem('userid'));  //指定后台的url地址  在service  api 中统一修改  打包记得替换
     socket.on('connect', function () {
-      console.log('socket connect')
      });
      socket.on('disconnect', function () {
-       console.log('socket again  connect')
        that.socketConn();
      });
      socket.on('chat', function (data) {
@@ -86,7 +83,6 @@ export default class HomePage extends React.Component{
   }
   async getHobby() {
     const response = await getHobbyList();
-    //console.log('hobby', response);
     if (response.code === 0) {
         this.props.dispatch({
           type: 'login/hobby',
@@ -105,7 +101,6 @@ export default class HomePage extends React.Component{
   }
 
   async reashLoginData(){
-    console.log(12312312312);
     const response = await getLoginData(); 
     if (response.code === 0) {
         this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})

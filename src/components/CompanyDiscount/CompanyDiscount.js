@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link,  } from 'dva/router'; 
 import  '../../assets/companydiscount/companydiscount.scss';
+import '../../assets/ucenter/index';
 import Path from '../../common/pagePath';
 import LoginInfo from '../../components/UCenterComponent/loginInfo';
 import CompanyCard from '../../components/CompanyDiscount/CompanyCard.js';

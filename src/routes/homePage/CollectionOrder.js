@@ -71,7 +71,6 @@ export default class Collection extends React.Component {
   }
 
   render() {
-    //console.log(this.state.list);
     const {data} = this.state;
     return (
       <div style={{marginTop: '150px',width: '100%'}}>

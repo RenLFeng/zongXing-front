@@ -50,7 +50,6 @@ export default {
           startAnimate();
         }, 300);
       } else {
-        //console.log(response.msg);
       }
     }
   },

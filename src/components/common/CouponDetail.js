@@ -50,7 +50,6 @@ export default class  CouponDetail extends React.Component {
         const rest = await CouponService.myCouponDetail({
             couponUserId:this.state.fid,
         }); 
-        console.log('rest',rest)
         if(rest.code===0){ 
             //小优惠券的样式
             let detail = {

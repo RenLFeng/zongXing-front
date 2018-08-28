@@ -74,7 +74,6 @@ class UserBaseFormInput extends React.Component {
   // 获取个人基础资料
   async getUserBase() {
     const response = await getUserBaseData();
-    //console.log(response);
     if(response.code===0){
       if(response.data){
         let base = response.data;

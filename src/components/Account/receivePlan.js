@@ -162,7 +162,6 @@ export default class ReceivePlan extends React.Component {
   // 按项目获取数据
   async getReceivePlanByPro() {
     const response = await receivePlanByBottom(this.state.proPageParam);
-    console.log('77777777',response)
     if (response.code === 0) {
       this.setState({
         proPageParam: {
@@ -180,7 +179,6 @@ export default class ReceivePlan extends React.Component {
   }
   // 按时间获取翻页
   handlerPageChange_ = (page) => {
-    console.log('page',page)
     this.setState({timePageParam: {...this.state.timePageParam, pageCurrent: page}},()=> {
       this.getReceivePlanByTime();
     })
@@ -193,7 +191,6 @@ export default class ReceivePlan extends React.Component {
   }
   // 使用年份切换 
   switchYear(param){
-    console.log(param)
     this.setState({
       timePageParam: {
         pageSize: 8,
@@ -301,7 +298,6 @@ export default class ReceivePlan extends React.Component {
             <div className="rp_detail_time_div">
               {/* 按照时间查看样式 */}
               {this.state.timePageList.length > 0 ? this.state.timePageList.map((data, index)=> {
-                console.log('数据信息',this.state.timePageList)
                 return (
                   <div className="rp_detail_time_item" key={index} style={{fontSize:16}}>
                     <div className="rp_detail_time_item_left">
@@ -493,7 +489,6 @@ class CanvasCircle extends React.Component {
     } 
     data.total = this.state.list.length;
     this.initCircle(data, arr);
-    console.log('data',data,this.state.list)
   }
 
   initCircle(obj, arr) {

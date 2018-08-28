@@ -19,7 +19,6 @@ export default class UserBasic extends React.Component {
 
   async fetch() {
     const response = await rechargeTest();
-    //console.log(response);
     this.setState({
       data: response
     });

@@ -39,13 +39,13 @@ export default class Qa extends React.Component {
             {
               this.state.answerArr.map((data,index)=>{
                 return (
-                  <div>
+                  <div key={index}>
                     <p className="q" key={index+'1'}>{`${index+1}. ${data.question}`}<i className="dl"/></p>
-                    <p className="a">
+                    <div className="a">
                       {data.answer.map((data,index)=>{
                         return (<p key={index} >{data}</p>)
                       })}
-                    </p>
+                    </div>
                   </div>
                 )
               })

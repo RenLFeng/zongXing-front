@@ -34,7 +34,6 @@ export default {
             type: 'endFetchUserBase',
           });
           message.error(response.msg);
-          //console.log(response.msg);
         }
       } catch(e) {
         yield put({
@@ -61,7 +60,6 @@ export default {
           yield put({
             type: 'endFetchUserBase',
           });
-          //console.log(response.msg);
         }
       } catch(e) {
         yield put({

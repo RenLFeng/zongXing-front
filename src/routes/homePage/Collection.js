@@ -27,7 +27,6 @@ export default class Collection extends React.Component {
   // 获取收藏列表
   async getCollectionProjectAjax() {
     const response = await getCollectionProject();
-    //console.log(response);
     if (response.code === 0) {
       if (response.data) {
         this.setState({
@@ -79,17 +78,14 @@ export default class Collection extends React.Component {
 
   // 点击按钮修改数量
   changeNumBtn(collectionId, type, amount) {
-    //console.log(this.state[`${collectionId}num`]);
     // 格式不对
     if (this.state[`${collectionId}num`] != null && this.state[`${collectionId}num`].length > 0 && !/^[+]{0,1}(\d+)$/.test(this.state[`${collectionId}num`])) {
-      //console.log(123);
       return;
     }
     // true 是加1 false是减1
     if (type) {
       // 如果是第一次 或者为0
       if (!this.state[`${collectionId}num`] || this.state[`${collectionId}num`] == 0) {
-        //console.log(amount);
         this.setState({[`${collectionId}num`]: Math.floor(amount/100)+1});
         this.changeAmount(collectionId, 100);
       } else {
@@ -147,7 +143,6 @@ export default class Collection extends React.Component {
   async deleteAll() {
     let arr = this.state.list.filter((data)=>{if (data.checkValue === true) return data.collectionId;});
     let collectIds = arr.map((data)=> data.collectionId);
-    //console.log(collectIds);
     if (collectIds.length === 0) {
       message.warning('您未选择需要删除的项目');
       return;
@@ -314,7 +309,6 @@ export default class Collection extends React.Component {
   }
 
   render() {
-    //console.log(this.state.list);
     return (
       <div style={{marginTop: '150px',width: '100%'}}>
         <Card style={{width: '80%',paddingBottom: 30,margin: '0 auto'}} title="收藏项目">

@@ -16,7 +16,6 @@ const asyncComponent = loadComponent => (
           this.setState({ Component });
         })
         .catch((err) => {
-          console.error(`Cannot load component in <AsyncComponent />`);
           throw err;
         });
     }

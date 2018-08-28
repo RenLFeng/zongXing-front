@@ -53,7 +53,6 @@ export default class ProjectDetail extends React.Component {
         });
         marker.setMap(map);
       }
-      //console.log(this.state.projectDetail);
     } else {
       message.error(response.msg);
     }
@@ -77,7 +76,6 @@ export default class ProjectDetail extends React.Component {
 
   render() {
     const { projectDetail } = this.state;
-    console.log('this.state.projectDetail',this.state.projectDetail)
     return (
       <div>
         <Head projectDetail={projectDetail} history={this.props.history}/>

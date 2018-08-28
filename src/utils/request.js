@@ -64,7 +64,6 @@ function checkStatus(response) {
   const error = new Error(errortext);
   error.name = response.status;
   error.response = response;
-  //console.log(error);
   global.error = error;
   throw error;
 }
@@ -110,7 +109,6 @@ export default function request(url, options) {
     Origin: '*',
     ...newOptions.headers,
   };
-  //console.log(url);
   return fetch(url, newOptions)
     .then(checkStatus)
     .then((response) => {
@@ -185,7 +183,6 @@ export const req={
         },
         body:JSON.stringify(param)
       };    
-      //console.log(url);
       return fetch(url, newOptions)
         .then(checkStatus)
         .then((response) => {

@@ -14,7 +14,6 @@ function initPage() {
         pagination: '.tab3con1 .swiper-pagination',
         paginationClickable: true
     });
-    console.info(swiper)
   function makesvg(percentage, inner_text){
     var inner_text = '';
     var abs_percentage = Math.abs(percentage).toString();

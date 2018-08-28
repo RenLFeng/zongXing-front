@@ -91,7 +91,6 @@ export default class Register extends React.Component {
   checkInfo(){
     const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
     if(regPhone.length > 0 && regPwd.length > 0 && regAuthCode.length > 0 ){
-      //console.log(regPhone,regPwd,regAuthCode)
       this.setState({
         disabled_:true
       })
@@ -207,7 +206,6 @@ export default class Register extends React.Component {
 
   //注册提交方法
   async submitReg() {
-    //console.log(11111111)
     if (this.state.regLoading) {
       return;
     }

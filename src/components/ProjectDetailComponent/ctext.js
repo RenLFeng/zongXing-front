@@ -144,7 +144,6 @@ async projectCollection() {
     return;
   }
   const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
-  console.log('response1111111',response)
   if (response.code === 0) {
     this.props.projectDetail.collectionNumber += 1;
     this.props.projectDetail.isCollected = true;

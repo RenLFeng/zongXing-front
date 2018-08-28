@@ -120,7 +120,6 @@ export default class Login extends React.Component {
 
   // 判断  手机号是否已被注册过
   async checkPhone() {
-    //console.log(111)
     const {loginPhone} = this.state;
     if (loginPhone.length === 0) {
       this.setState({loginNameErr:'手机号不能为空'})
@@ -135,7 +134,6 @@ export default class Login extends React.Component {
     }
     this.setState({checkPhoneLoading: true});
     const response = await phoneExist(loginPhone,0);
-    //console.log('登陆结果为',response)
     this.setState({checkPhoneLoading: false});
     if (response.code === 0) {
       this.setState({loginError: false});

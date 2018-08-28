@@ -44,7 +44,6 @@ export default class AccountStatement extends React.Component{
   }
 
   componentDidMount() {
-    console.log('this.props.openStatus', this.props.openStatus)
     if (this.props.openStatus == 3) {
       this.getCapitalDynamics();  //调用请求
       return;
@@ -79,7 +78,6 @@ export default class AccountStatement extends React.Component{
       }; 
       //调用后台
       const res = await accountService.getAccountStatement(param); 
-      console.log('资金流水',res)
       if(res.code === 0){  
         this.setState({  
           totalNum:res.data.resPage.totalNumber, 

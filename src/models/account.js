@@ -55,7 +55,6 @@ export default {
     *getPersonalAccount({payload}, {call, put}) {
       let webToken = '';
       const response = yield call(getPersonAccountNew, payload); 
-      //console.log(response);
       if (response.code === 0) {
         if (!response.data) {
           yield put({
@@ -116,7 +115,6 @@ export default {
     },
     *getCompanyAccount({payload}, {call,put}) {
       const res = yield call(getPersonAccountNew, payload );
-      //console.log(res);
       if (res.code === 0) {
         yield put({
           type: 'saveCompany',
@@ -128,7 +126,6 @@ export default {
     },
     *getCompanyLists({payload}, {call,put}) {
       const resp = yield call(getCompanylist, payload );
-      //console.log(resp);
       if(resp.code ===0) {
         yield put({
           type: 'saveCompanyList',
@@ -180,7 +177,6 @@ export default {
 
 
 function saveOpenStatus(param) {
-  //console.log('保存开户状态', param);
   let webToken = '';
   if (localStorage.getItem('accessToken')) {
     const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));

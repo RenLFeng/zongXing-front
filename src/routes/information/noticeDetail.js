@@ -22,7 +22,6 @@ export default class NoticeDetail extends React.Component {
 
 async getOneNotice(id) {
   const response = await getOPlantNotice(id);
-  //console.log(response);
   if(response.code ===0){
     this.setState({
       arr:response.data,

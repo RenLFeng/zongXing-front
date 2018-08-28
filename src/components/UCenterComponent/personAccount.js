@@ -233,7 +233,6 @@ export default class PersonAccount extends React.Component {
     this.setState({loadingPage: true});
     const response= await getAccountCoupon(this.state.pageParam);
     this.setState({loadingPage: false});
-    //console.log('getCouponList', response);
     if (response.code === 0) {
       this.setState({
         pageParam: {
@@ -250,7 +249,6 @@ export default class PersonAccount extends React.Component {
   // 获取回款计划折线图数据
   async getReceivePlan() {
     const response = await repayPlan();
-    //console.log('getReceivePlan', response);
     if (response.code === 0) {
       let planArr = [];
       for (let obj of response.data.list) {
@@ -351,8 +349,6 @@ export default class PersonAccount extends React.Component {
     if (this.props.personal !== nextProps.personal) {
       const money = nextProps.personal.totalAssets;
       const data = nextProps.personal;
-      console.log(money)
-      console.log(data)
       this.getReceivePlan();
       this.getCouponList();
       // 回款计划
@@ -460,12 +456,10 @@ export default class PersonAccount extends React.Component {
     this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {account:accoundId}})
   };
   jumpRecharge_(accoundId) {
-    //console.log(accoundId);
     this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
   };
 
   clickCoupon = (data) => {
-    //console.log(data);
     if (data.fflag == 1) {
       this.receiveCoupon(data.fcoupon_id)
     }

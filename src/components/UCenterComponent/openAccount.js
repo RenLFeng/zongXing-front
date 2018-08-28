@@ -32,7 +32,6 @@ export default class OpenAccount extends React.Component {
   // 获取用户手机号
   async getUserPhone() {
     const response = await getUserBaseData();
-    //console.log(response);
     if (response.code === 0) {
       if (response.data) {
         this.setState({
@@ -44,7 +43,6 @@ export default class OpenAccount extends React.Component {
     }
   }
   render() {
-    //console.log("match:",this.props.match);
     const { match, history, parentHandSubmit } = this.props;
     const type = match.params.type;
 
@@ -119,7 +117,6 @@ class FormComponent extends React.Component {
   async getCompany() {
     try {
       const response = await getNoAccountCompany();
-      //console.log(response);
       if (response.code === 0) {
         this.setState({regCompany: response.data});
       }
@@ -134,7 +131,6 @@ class FormComponent extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll( async (err, values) => {
-      //console.log(err);
       if (!err) {
         // 提交表单接口
         if (this.state.loading) {
@@ -180,7 +176,6 @@ class FormComponent extends React.Component {
           if (typeof e === 'object' && e.name === 288) {
             throw e;
           }
-          //console.log(e);
           message.error('服务器繁忙，请稍后重试');
         }
       }

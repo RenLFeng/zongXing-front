@@ -147,7 +147,6 @@ export default class ForgetPassWord extends React.Component {
 
     this.setState({nextLoading:true})
     const response = await fp_getCode(this.state.firstPhone,0);
-    //console.log('response',response)
     if(response.code === 0){
       this.setState({
         whetherAuthentication:response.data.isCertification,

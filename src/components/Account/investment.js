@@ -70,7 +70,6 @@ export default class Investment extends React.Component {
       {lable:'回款异常',flag:-4,value:0},
     ];
     const rest = await accountService.getInvestmentRecordCount();
-    console.log('rest',rest)
     if(rest.code===0){
       if(!rest.data){
        return;
@@ -114,7 +113,6 @@ export default class Investment extends React.Component {
       invFlag:this.state.activeFlag===null ? 0 : null,
     }; 
     const rest = await accountService.getInvestmentRecord(param);
-    console.log('投资记录列表',rest)
     if(rest.code===0){
       this.setState({
         list:rest.data.infoList,
@@ -130,7 +128,6 @@ export default class Investment extends React.Component {
   }
   //点击顶部标签
   handlerLableClick =(flag)=>{
-    console.log('flag',flag)
      this.setState({
        activeFlag:flag,
        pageCurrent:1,

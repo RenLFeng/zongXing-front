@@ -36,7 +36,6 @@ class projectcollection extends React.Component {
     }
     async getCount() {
         const response = await getCollectionCount();
-        //console.log('getCollectionCount', response);
         if (response.code === 0) {
             let obj = {};
             for (let val of response.data) {
@@ -52,7 +51,6 @@ class projectcollection extends React.Component {
         }
         this.setState({loading: true});
         const response = await getCollectionProjectNew(this.state.param);
-        //console.log('getCollectPro', response);
         this.setState({loading: false});
         if (response.code === 0) {
             this.setState({

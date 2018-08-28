@@ -256,7 +256,7 @@ export default class CommonProblem extends React.Component{
                         <div className="hang">
                            <p>常见问题 <span> &gt; {this.state.info.title}({this.state.info.num})</span></p>
                            <div className="search">
-                             <Search placeholder="请输入搜索内容" onSearch={value => console.log(value)} className="search" />
+                             <Search placeholder="请输入搜索内容" onSearch={value => {}} className="search" />
                            </div>
                         </div>
                         <div className="contents">

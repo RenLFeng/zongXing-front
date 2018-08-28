@@ -29,7 +29,6 @@ export default class NoticeList extends React.Component {
   //获取公告列表
   async getPlantNotice(page) {
     const response = await getPlantNotice(page,this.state.pageSize);
-    //console.log(response);
     if(response.code ===0){
       const maxPage = Math.ceil(response.data.itemCount / this.state.pageSize);
       this.setState({
@@ -49,7 +48,6 @@ export default class NoticeList extends React.Component {
       showMask:true
     });
     const response = await getOPlantNotice(id);
-    //console.log(response);
     if(response.code ===0){
        this.setState({
          detail:response.data,

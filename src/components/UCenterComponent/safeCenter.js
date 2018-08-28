@@ -116,7 +116,6 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      //console.log('实名认证数据: ', values);
       form.resetFields();
       this.handleCancel();
     });
@@ -131,7 +130,6 @@ export default class SafeCenter extends React.Component {
       }
       const response = await getOldCode(values.captcha);
       if (response.code === 0) {
-        //console.log('手机号认证数据: ', values);
         this.setState({changePhoneAuth:true});
         form.resetFields();
         this.handleCancel();
@@ -257,9 +255,7 @@ export default class SafeCenter extends React.Component {
       if (err) {
         return;
       }
-      //console.log('邮箱认证数据: ', values);
       const response = await getEmailAuth(values.email);
-      //console.log(response);
       if (response.code === 0) {
         message.info('邮件发送成功');
         form.resetFields();
@@ -313,7 +309,6 @@ export default class SafeCenter extends React.Component {
   async getAuthorizationState(){
     this.setState({loading:true});
     const response = await authorizationState('');
-    //console.log('1234', response);
     this.setState({loading:true});
     if(response.code === 0){
       this.setState({
@@ -332,7 +327,6 @@ export default class SafeCenter extends React.Component {
   //关闭授权
   async CloseAuthorization(type){
     const response = await closeAuthorization(type,'', encodeURIComponent(window.location.href));
-    //console.log(response);
     if(response.code === 0){
       this.setState({
         distribution:response.data.param,
@@ -356,7 +350,6 @@ export default class SafeCenter extends React.Component {
 
   render() {
     const {distribution,url,status} = this.state;
-    //console.log(status);
     const { safeData} = this.props;
     return (
       <div >

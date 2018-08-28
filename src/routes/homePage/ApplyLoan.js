@@ -40,7 +40,6 @@ export default class ApplyLoan extends React.Component {
   componentDidMount() {
     // 进入页面获取信息
     this.getBeforeData();
-    //console.log(this.props)
   }
 
   async getBeforeData() {
@@ -48,7 +47,6 @@ export default class ApplyLoan extends React.Component {
       this.setState({loadingState: true});
       const response = await getLoanInfo();
       this.setState({loadingState: false});
-      //console.log(response);
       let dateCode = 'error';
       if (response.data) {
         dateCode = moment(response.data.fcreate_time).format('YYYY') + moment(response.data.fcreate_time).format('MM');
@@ -66,7 +64,6 @@ export default class ApplyLoan extends React.Component {
     } catch(e) {
       this.setState({loadingState: false});
       if (typeof e === 'object' && e.name === 288) {
-        //console.log('抛出一个异常');
         message.error('未登录或登录超时');
         localStorage.removeItem('accessToken');
         this.props.history.push('/index/login');
@@ -75,7 +72,6 @@ export default class ApplyLoan extends React.Component {
         });
         return;
       }
-      //console.log(e);
       message.error('服务器繁忙，请稍后重试');
     }
   }
@@ -146,8 +142,6 @@ export default class ApplyLoan extends React.Component {
 
   // 切换页面
   async switchPage(err, data, page, type) {
-    //console.log('-------------', err, data, page, type);
-    //console.log(JSON.stringify(data));
     if (!err) {
       // this.setState({
       //   pageNum: this.state.savePage,
@@ -157,7 +151,6 @@ export default class ApplyLoan extends React.Component {
         try {
           this.setState({loadingState: true});
           const response = await applySave(data);
-          //console.log('-------', response);
           this.setState({loadingState: false});
           if (response.code === 0) {
             if (page === 1 && this.state.dateCode === 'error') {
@@ -220,7 +213,6 @@ export default class ApplyLoan extends React.Component {
             message.error(response.msg);
           }
         } catch(e) {
-          //console.log(e);
           this.setState({loadingState: false});
           message.error('服务器繁忙，请稍后重试');
         }
@@ -292,7 +284,6 @@ export default class ApplyLoan extends React.Component {
   }
 
   render() {
-    //console.log(this.props);
     const {pageNum,dateCode,fProjectNo, fid, beforeData, complete } = this.state;
     return (
       <div className="body1">

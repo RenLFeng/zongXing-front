@@ -138,7 +138,6 @@ export default class Right extends React.Component {
 
   async getData(page) {
     //调用子级方法
-    // console.log(this.dataModal);
     // this.dataModal.getCityInvest_(this.props.projectDetail.fpeoject_id);
     // this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
     // this.dataModal.getAge(this.props.projectDetail.fpeoject_id);
@@ -176,12 +175,10 @@ export default class Right extends React.Component {
 
   // 收藏项目
   async projectCollection() {
-    console.log('点击收藏')
     if (this.props.projectDetail.isCollect) {
       return;
     }
     const response = await setProjectCollection({fprojectId: this.props.projectDetail.fpeoject_id,famount: 0});
-    console.log('response=======',response)
     if (response.code === 0) {
       this.props.projectDetail.collectNum += 1 ;
       this.props.projectDetail.isCollect = true;

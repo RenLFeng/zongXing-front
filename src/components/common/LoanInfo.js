@@ -84,7 +84,6 @@ class LoanInfo extends React.Component {
  //查看合同
  handllerHTClick = async (type)=>{
 	const res = await accountService.getDownload(this.state.data.projectId,type)
-	console.log('下载',res)
 	if(res.code === 0){
      if(type === 2){
 				this.setState({
@@ -110,13 +109,11 @@ class LoanInfo extends React.Component {
 
  //去付款
  async goToPayment(){
-	 console.log('this')
 	 let id = this.state.data.invId;
 	 let url = `${NOTIFY_PAGE}/index/uCenter/InvestMent`;
 	 this.setState({payloading:true})
 	 const res = await goPay(id,url);
 	 this.setState({payloading:false})
-	 console.log('res',res);
 	 if(res.code === 0){
       this.setState({
 				paymentObj:res.data
@@ -133,7 +130,6 @@ class LoanInfo extends React.Component {
  async deleRecord(){
 	 this.setState({deleLoading:true})
 	 const res = await deleteInvestRecord(this.state.data.invId);
-	 console.log('delete',res)
 	 this.setState({deleLoading:false})
 	 if(res.code === 0){
 		message.info('删除成功');

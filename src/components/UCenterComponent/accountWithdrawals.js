@@ -76,7 +76,6 @@ export default class EnterprisePresentation extends React.Component {
   //获取银行卡
   async getCardInformation() {
     const response = await getBankCardList();
-    //console.log('提现银行卡接口',response);
     if (response.code === 0) {
       this.setState({
         bankcardInfos: response.data
@@ -161,17 +160,14 @@ export default class EnterprisePresentation extends React.Component {
           province: this.state.selectedCard.fprovinceCode,
           city: this.state.selectedCard.fcityCode
         }
-        //console.log('表单提交的数据', param);
         this.getInformation(param);
       
   };
 
 
   changeBank(val) {
-    //console.log(val);
     for (let data of this.state.bankcardInfos) {
       if (data.userBankId === val) {
-        //console.log('data.province', data.province);
         this.props.form.resetFields();
         this.setState({
           cardNo: data.cardNo,
@@ -215,18 +211,14 @@ export default class EnterprisePresentation extends React.Component {
   };
 
   handleChange(value) {
-    //console.log(`selected ${value}`);
   }
 
   handleBlur() {
-    //console.log('blur');
   }
   handleFocus() {
-    //console.log('focus');
   }
 
   changeMoney = (event) => {
-    //console.log("money:",event.target.value);
     if(isNaN(Number(event.target.value))){
       this.setState({ moneyError: true, moneyErrorMsg: '只能输入数字' })
       this.setState({})
@@ -239,7 +231,6 @@ export default class EnterprisePresentation extends React.Component {
   render() {
     const {withdrawals} = this.state;
     const {baseData, safeData} = this.props;
-    //console.log('safeData',baseData)
     const Option = Select.Option;
     return (
         <div className="fr uc-rbody" style={{width: 1248,padding: '30px 20px'}}>

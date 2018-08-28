@@ -140,7 +140,6 @@ export default class ChangeBindEmail extends React.Component {
       }
       this.setState({sureloading:true})
      const response = await UpdateEmail_(param);
-     //console.log('11111',response);
      if(response.code === 0){
        this.setState({
          firstShow:false,

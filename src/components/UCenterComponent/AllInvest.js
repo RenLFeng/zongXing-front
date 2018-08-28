@@ -179,7 +179,6 @@ export default class AllInvest extends React.Component {
   // 获取年度投资总览
   async getYearInvest() {
     const res = await selectYearInvest(this.state.yearValue);
-    //console.log(res);
     if (res.code === 0) {
       this.setState({
         investData: {
@@ -189,7 +188,6 @@ export default class AllInvest extends React.Component {
           waitAuditList: this.packageData(res.data.waitAuditList),
         }
       }, () => {
-        //console.log(this.state.investData)
         this.setState({
           barOption: {
             tooltip : {

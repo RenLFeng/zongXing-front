@@ -159,7 +159,6 @@ export default class CompanyAccount extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    //console.log(this.props.companyList);
     if (this.props.companyList !== nextProps.companyList && nextProps.companyList.length > 0) {
       this.setState({
         companyId: nextProps.companyList[0].companyNo
@@ -274,7 +273,6 @@ export default class CompanyAccount extends React.Component {
   }
 
   jumpRecharge_(accoundId) {
-    //console.log(accoundId);
     this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
   }
 
@@ -293,7 +291,6 @@ export default class CompanyAccount extends React.Component {
   }
 
   companyRender() {
-    //console.log(this.props.company_page);
     return (
       <div >
         <LeftMenu param={this.props}/>
@@ -370,7 +367,6 @@ export default class CompanyAccount extends React.Component {
   }
 
   render() {
-    //console.log(this.props.company_page.totalAssets);
     return (
       <div className="fr uc-rbody">
         { this.props.companyList.length !== 0 ?

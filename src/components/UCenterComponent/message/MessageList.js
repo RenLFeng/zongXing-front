@@ -32,7 +32,6 @@ export default class MessageList extends React.Component {
   //获取按钮类型
   async ButtonType(){
     const response = await getButtonType();
-    //console.log(response);
     if(response.code === 0){
       this.setState({
         buttonArr:response.data,
@@ -50,7 +49,6 @@ export default class MessageList extends React.Component {
   //按类型获取消息列表
   async MessageType(no,page) {
     const response = await getMessageType({pageIndex:page,pageSize:this.state.pageSize,typeNo:no});
-    //console.log(response);
     if(response.code === 0){
       const maxPage = Math.ceil(response.data.itemCount / this.state.pageSize);
       this.setState({
@@ -76,7 +74,6 @@ export default class MessageList extends React.Component {
     let list = this.state.arr1;
     const list1 = list.filter((item)=>(item.checkboxValue === true));
     const id = list1.map((item)=>(item.fid)).toString();
-    //console.log(id);
     const response = await setRead({fids:id});
     if(response.code ===0){
       this.MessageType(this.state.typeNo, this.state.pageIndex);
@@ -147,7 +144,6 @@ export default class MessageList extends React.Component {
       this.setState({
         num:arr_.length,
       });
-      //console.log(arr_);
     });
     this.forceUpdate();
   }

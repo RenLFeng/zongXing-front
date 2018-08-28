@@ -26,7 +26,6 @@ export default class Voucher extends React.Component{
     async getPlantNotices(current,size){
         
         const response = await getPlantNotice(current,size);
-        //console.log('站内消息',response)
         if(response.code === 0){
             this.setState({
                 dataInfo:response.data.notices,
@@ -50,7 +49,6 @@ export default class Voucher extends React.Component{
 
 //翻页触发的事件
 onchange = (page) => {
-    //console.log('翻页',page)
     this.setState({
         pageCurrent: page,
     },()=>{
@@ -60,7 +58,6 @@ onchange = (page) => {
 
 //页码数改变触发的事件
 onShowSizeChange = (current, pageSize) => {
-    //console.log('页码改变',current)
     this.setState({
         pageSize: pageSize,
         pageCurrent: current,

@@ -24,7 +24,6 @@ export default class BankCard extends React.Component {
       okType: 'danger',
       cancelText: '暂不删除',
       onOk() {
-        //console.log('OK');
       },
     });
   }
