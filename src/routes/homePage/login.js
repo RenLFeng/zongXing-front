@@ -72,11 +72,10 @@ export default class Login extends React.Component {
       password: loginPwd,
       type: 0, //投资用户
     };
-    this.setState({
-      loginNameErr: '',
-      loginPwdErr: '',
-     
-    });
+    // this.setState({
+    //   loginNameErr: '',
+    //   loginPwdErr: '', 
+    // });
     this.props.dispatch({
       type: 'login/login',
       payload: login,

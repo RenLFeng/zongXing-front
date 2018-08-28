@@ -213,6 +213,7 @@ export default class FormProject extends React.Component {
   }
   render() {
     const {project} = this.props;
+    console.log('组件的值',project)
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
     const {data} = this.state;
     return (
@@ -230,7 +231,7 @@ export default class FormProject extends React.Component {
           <div className="bar"><div style={{width: `${project.allMoney*100/project.fcredit_money}%`}} /></div>
           <p className="t2 f16 c9">
             <i className="fl">借款总额<em className="f24 cf60">{(project.fcredit_money+'').fm()}</em>元</i>
-            <i className="fr">剩余可投<em className="f24 cf60">{((project.fcredit_money-project.allMoney)+'').fm()}</em>元</i>
+            <i className="fr">剩余可投<em className="f24 cf60">{project.allMoney ? ((project.fcredit_money-project.allMoney)+'').fm() : ((project.fcredit_money)+'').fm() }</em>元</i>
           </p>
         </div>
         {this.props.canPay ?

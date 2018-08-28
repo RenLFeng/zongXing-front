@@ -103,7 +103,7 @@ export default class AccountRecharge extends React.Component {
             <div className="label_div">
               <div className="input-view">
                 <span className="money_tip">￥</span>
-                <input type="text" className="input_money" onChange={this.handleMoneyChange} />
+                <input type="text" className="input_money" onChange={this.handleMoneyChange} maxLength={9}/>
               </div>
               {this.state.amountError ? <div><span style={{ color:'red', fontSize:'10px' }}>只能输入数字</span></div> : null}
               <div className="select_div">
