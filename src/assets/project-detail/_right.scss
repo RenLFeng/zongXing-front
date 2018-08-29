@@ -153,7 +153,7 @@
                 }
             }
             .like {
-                background-image: url(../img/project-detail/ic_like.png);
+                background-image: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/ic_like1.png);
                 &::after {
                     content: "";
                     height: 18px;
@@ -196,14 +196,14 @@
                         }
                     }
                     &>a.qq {
-                        background-image: url(../img/login/qq.png);
+                        background-image: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/login/qq.png);
                     }
                     &>a.sina {
-                        background-image: url(../img/login/sina.png);
+                        background-image: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/login/sina.png);
                         margin: 0 10px;
                     }
                     &>a.weixin {
-                        background-image: url(../img/login/weixin.png);
+                        background-image: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/login/weixin.png);
                     }
                 }
                 &:hover {
@@ -306,7 +306,7 @@
             }
         }
         .like{
-            background: url(../img/project-detail/ic_like.png) no-repeat ;
+            background: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/ic_like1.png) no-repeat ;
         }
         .share{
             background: url(../img/project-detail/ic_share.png) no-repeat ;
@@ -322,7 +322,7 @@
 
 
 .collect_foucs {
-    background-image: url(../img/apply/ic_star.png) !important;
+    background-image: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/ic_star.png) !important;
     &::after {
         content: "";
         height: 18px;
