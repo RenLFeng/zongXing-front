@@ -800,6 +800,11 @@ export async function getCompanyDiscount(param) {
   })
 }
 
+//项目详情页获取优惠券 
+export async function getSelfCoupon(param) {
+  return request(`${BASE_URL}/coupon/self/coupon?projectId=${param}`);
+}
+
 // 领取优惠券 
 export async function getDiscount(param) {
   return request(`${BASE_URL}/coupon/manual/grant`, {
