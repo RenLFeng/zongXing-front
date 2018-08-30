@@ -121,7 +121,9 @@ export default class FormProject extends React.Component {
     const res = await getSign(this.props.project.fpeoject_id);
     this.setState({Loading:false})
     if(res.code === 0 ){
-      this.setState({visible:true})
+      this.setState({visible:true},()=>{
+        message.info('验证码发送成功')
+      })
     } else if(res.code === 2 ){
       this.setState({
         showModal:false
@@ -213,7 +215,6 @@ export default class FormProject extends React.Component {
   }
   render() {
     const {project} = this.props;
-    console.log('组件的值',project)
     const dateCode = moment(project.fcreate_time).format('YYYY') + moment(project.fcreate_time).format('MM');
     const {data} = this.state;
     return (
@@ -320,7 +321,7 @@ export default class FormProject extends React.Component {
           </div>
         </div>
         }
-        <form ref={ref => this.formId = ref} id="form1" name="form1" action={data.submitURL} method="post">
+        <form ref={ref => this.formId = ref} id="form1" name="form1" action={data.submitURL} method="post" target="_blank">
           <input id="Action" name="Action" value={data.action?data.action: ''} type="hidden" />
           <input id="ArrivalTime" name="ArrivalTime" value={data.arrivalTime?data.arrivalTime: ''} type="hidden" />
           <input id="LoanJsonList" name="LoanJsonList" value={data.loanJsonList} type="hidden" />

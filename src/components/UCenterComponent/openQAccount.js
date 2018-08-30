@@ -97,7 +97,7 @@ export default class OpenQAccount extends React.Component {
                   </div>
                  
                 </div>
-                <form ref={ref => { this.formId = ref}} action={submitParam.submitUrl} method="post" style={{ display: 'none' }}>
+                <form ref={ref => { this.formId = ref}} action={submitParam.submitUrl} method="post" style={{ display: 'none' }} target="_blank">
                   <input id="AccountType" name="AccountType" value={0} />
                   <input id="Email" name="Email" value={submitParam.reqParam.Email} />
                   <input id="IdentificationNo" name="IdentificationNo" value={submitParam.reqParam.IdentificationNo} />

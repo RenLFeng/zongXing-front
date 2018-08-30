@@ -177,7 +177,6 @@ export default class Login extends React.Component {
 
   render() {
     const {  loginPhone, loginPwd} = this.state;
-    console.log(loginPhone, loginPwd)
     return (
       <div className="logindiv1 "  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
       <Modal
