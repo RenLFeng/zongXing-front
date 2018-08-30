@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link,  } from 'dva/router'; 
+import { Link } from 'dva/router'; 
 import  '../../assets/companydiscount/companydiscount.scss';
 import '../../assets/ucenter/index';
 import Path from '../../common/pagePath';
@@ -116,8 +116,6 @@ export default class CompanyDiscount extends React.Component {
 		return(
 			<div>
         <div style={{height: '148px'}}>
-          {/* <img className="big" src={require('../../assets/img/companydiscount/banner.jpg')} />
-          <div className="w"/> */}
         </div>
         <LoginInfo />
 

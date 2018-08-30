@@ -79,6 +79,7 @@ export default class SecConsultation extends React.Component {
     const { topicText } = this.state;
     if (!this.judgeLogin())
       return;
+      console.log(topicText);
     if (!topicText) {
       message.warning('话题内容不能为空');
       return;

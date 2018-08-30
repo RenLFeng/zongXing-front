@@ -10,13 +10,14 @@ import asyncComponent from './utils/AsyncComponent';
 
 moment.locale('zh-cn');
 
+const HomePage = asyncComponent(()=>import('./routes/HomePage'));
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
       <ScrollToTop>
         <Switch>
           <Route path="/" exact render={() => (<Redirect to="/index"/>)}></Route >
-          <Route path="/index" component={asyncComponent(()=>import('./routes/HomePage'))}/>
+          <Route path="/index" component={HomePage}/>
           <Route path="/exception" component={Exception} />
           <Route component={NoMatch}/>
         </Switch>

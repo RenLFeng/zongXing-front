@@ -1,6 +1,5 @@
 import React from 'react';
 import LeftMenu from './leftMenu';
-import '../../assets/infor/common/textInfo.scss'
 export default class ComplianceLetter extends React.Component{
   render(){
     return(

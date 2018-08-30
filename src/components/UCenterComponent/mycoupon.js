@@ -23,7 +23,7 @@ export default class  MyCoupon extends React.Component {
             pageSize:6,
             totalNum:0,
             lables:[
-                {flag:1,lable:'待领取',val:0},
+                {flag:0,lable:'待领取',val:0},
                 {flag:2,lable:'待消费',val:0},
                 {flag:3,lable:'兑换券',val:0},
                 {flag:4,lable:'已使用',val:0},
@@ -60,9 +60,6 @@ export default class  MyCoupon extends React.Component {
                         item.flag = item.flag-1; 
                     }
                     temp[item.flag].val = item.count; 
-                    if(haveDataFlag===0 && item.count!==0){
-                        haveDataFlag = item.flag;
-                    }
                 });
             } 
             this.setState({
@@ -159,7 +156,7 @@ export default class  MyCoupon extends React.Component {
                         <ul className='search-tag'>
                             {
                                 this.state.lables.map((item,index)=>{
-                                    return  <li key={index} onClick={item.flag === 1 ? this.handlerLableClick.bind(this,0) : this.handlerLableClick.bind(this,item.flag)} className={this.state.activeFlag===item.flag?'active':''}>{item.lable}({item.val})</li>;
+                                    return  <li key={index} onClick={this.handlerLableClick.bind(this,item.flag)} className={this.state.activeFlag===item.flag?'active':''}>{item.lable}({item.val})</li>;
                                 })
                             }
                         </ul> 

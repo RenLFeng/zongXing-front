@@ -1,6 +1,5 @@
 import React from 'react';
-import {Table,Pagination, Modal} from 'antd';
-import {message} from "antd/lib/index";
+import {Table,Pagination, Modal, message} from 'antd';
 import moment from 'moment'; 
 import {pageShows} from "../../common/systemParam";
 import LeftMenu from '../UCenterComponent/leftMenu';
@@ -8,7 +7,7 @@ import {accountService} from '../../services/api2.js';
 import Statement from '../common/Statement';
 import {connect} from 'dva';
 import '../../assets/account/accountstatement.scss';
-/**
+/**;[]
  * 资金流水界面
  */
 @connect((state)=>({

@@ -1,6 +1,6 @@
 import React from 'react';
 import LeftMenu from './leftMenu';
-import '../../assets/infor/common/textInfo.scss'
+
 export default class RiskWarning extends React.Component{
   render(){
     return(
