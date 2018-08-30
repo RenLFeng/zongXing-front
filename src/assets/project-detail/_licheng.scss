@@ -20,7 +20,7 @@
     margin-left: 20px;
     padding: 0 10px 0 30px;
     line-height: 24px;
-    background: url(../img/project-detail/like.png) no-repeat 6px center;
+    background: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/project-detail/like.png) no-repeat 6px center;
     cursor: pointer;
     &::before {
         content: "";
@@ -45,7 +45,7 @@
   padding: 0 10px 0 30px;
   line-height: 24px;
   cursor: pointer;
-  background: url(../img/project-detail/unlike.png) no-repeat 6px center;
+  background: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/project-detail/unlike.png) no-repeat 6px center;
   &::before {
     content: "";
     position: absolute;
@@ -65,6 +65,6 @@
     padding-top: 20px;
 }
 .timetree .item.done {
-    background: url(../img/project-detail/pic11.png) no-repeat 300px top;
+    background: url(https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/project-detail/pic11.png) no-repeat 300px top;
     padding-bottom: 50px;
 }
