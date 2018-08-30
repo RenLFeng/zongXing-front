@@ -121,9 +121,8 @@ export default class FormProject extends React.Component {
     const res = await getSign(this.props.project.fpeoject_id);
     this.setState({Loading:false})
     if(res.code === 0 ){
-      this.setState({visible:true},()=>{
-        message.info('验证码发送成功')
-      })
+      message.info('验证码已发送')
+      this.setState({visible:true})
     } else if(res.code === 2 ){
       this.setState({
         showModal:false

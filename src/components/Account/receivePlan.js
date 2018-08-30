@@ -49,7 +49,7 @@ export default class ReceivePlan extends React.Component {
           }
         }]
       },
-      lastRepayBill: null, // 最近一次回款计划
+      lastRepayBill: [], // 最近一次回款计划
       count: 0,
       showPro: true, // 按项目查看
       interest: 0, // 待收利息
@@ -75,8 +75,8 @@ export default class ReceivePlan extends React.Component {
   }
 
   componentDidMount() {
-    this.renderCanvas();
     this.getReceivePlanTopData();
+    this.renderCanvas();
     this.getReceivePlanByTime();
     this.getReceivePlanByPro();
   } 
@@ -135,6 +135,8 @@ export default class ReceivePlan extends React.Component {
             }
           }]
         }
+      },()=>{
+        console.log('this.state.lastRepayBill',this.state.lastRepayBill)
       });
     } else {  
       response.msg && message.error(response.msg);
@@ -211,6 +213,7 @@ export default class ReceivePlan extends React.Component {
 
   render() { 
     let success = true;
+    console.log('this.state.lastRepayBill.length',this.state.lastRepayBill)
     return (
       <div>
         <LeftMenu param={this.props}/>
@@ -219,25 +222,32 @@ export default class ReceivePlan extends React.Component {
             <span className="rp_top_left" onClick={()=>this.sideslip.showModal()}>回款计划</span>
             <span className="rp_top_right">目前共有<span style={{color: '#ff9900'}}>{this.state.count}个</span>项目正在回款</span>
           </div>
-          {this.state.lastRepayBill ? 
-            <div className="rp_current_plan">
+          {this.state.lastRepayBill && this.state.lastRepayBill.length > 0 ? 
+            <div className="rp_current_plan" style={{height:auto}}>
               <span className="rp_title">·<span style={{paddingLeft: '9px', fontSize: '18px', color: '#333', fontWeight: 'normal'}}>近期回款</span></span>
-              <div className="rp_content">
-                {/* 时间 */}
-                <span className="rp_content_time">{moment(this.state.lastRepayBill.fpayTime).format('YYYY/MM/DD')}</span>
-                <div className="rp_content_step">
-                  <div className="rp_content_step_circle"/>
-                  <div className="rp_content_step_line"/>
-                </div>
-                <div className="rp_content_moeny_div">
-                  <span style={{display:'block'}}>￥{`${this.state.lastRepayBill.allMoney}`.fm()}
-                  &nbsp;&nbsp;&nbsp;&nbsp;本金:{`${this.state.lastRepayBill.fprincipal}`.fm()}&nbsp;&nbsp;&nbsp;&nbsp;利息:{`${this.state.lastRepayBill.finterest}`.fm()}
-                  &nbsp;&nbsp;&nbsp;&nbsp;佣金:{`${this.state.lastRepayBill.fkickBack}`.fm()}</span>
-                  <span style={{display: 'block', marginTop: '16px'}}>{this.state.lastRepayBill.projectFlag === 16 ? `${this.state.lastRepayBill.fsort}/${this.state.lastRepayBill.fsort}期回款`:`${this.state.lastRepayBill.fsort}/${this.state.lastRepayBill.month}期回款`}</span>
-                  <span style={{display: 'block', marginTop: '4px'}}>项目编号: {this.state.lastRepayBill.fprojectNo}</span>
-                  <span style={{display: 'block', marginTop: '4px'}}>项目名称: {this.state.lastRepayBill.fname}</span>
-                </div>
-              </div>
+             {
+                this.state.lastRepayBill.map((data,index)=>{
+                  return(
+                    <div className="rp_content" key={index}>
+                      {/* 时间 */}
+                      <span className="rp_content_time">{moment(data.fforPayTime).format('YYYY/MM/DD')}</span>
+                      <div className="rp_content_step">
+                        <div className="rp_content_step_circle"/>
+                        <div className="rp_content_step_line"/>
+                      </div>
+                      <div className="rp_content_moeny_div">
+                        <span style={{display:'block'}}>￥{`${data.allMoney}`.fm()}
+                        &nbsp;&nbsp;&nbsp;&nbsp;本金:{`${data.fprincipal}`.fm()}&nbsp;&nbsp;&nbsp;&nbsp;利息:{`${data.finterest}`.fm()}
+                        &nbsp;&nbsp;&nbsp;&nbsp;佣金:{`${data.fkickBack}`.fm()}</span>
+                        <span style={{display: 'block', marginTop: '16px'}}>{data.projectFlag === 16 ? `${data.fsort}/${data.fsort}期回款`:`${data.fsort}/${data.month}期回款`}</span>
+                        <span style={{display: 'block', marginTop: '4px'}}>项目编号: {data.fprojectNo}</span>
+                        <span style={{display: 'block', marginTop: '4px'}}>项目名称: {data.fname}</span>
+                      </div>
+                    </div>
+                  )
+                })
+             } 
+             
             </div> : 
             <div className="rp_current_plan" style={{height: 60}}>
               <span style={{display: 'inline-block',fontSize: 16, width: '100%', textAlign: 'center',color: '#a4a4a4'}}>暂无近期回款计划</span>
@@ -292,7 +302,7 @@ export default class ReceivePlan extends React.Component {
                 <span style={{display:'inline-block',width: '100%',textAlign: 'right', marginTop: 10,fontSize: 12, color: '#A4A4A4'}}>
                   已回款总额：<span style={{color: '#ff9900'}}>￥{`${this.state.allMoney}`.fm()}</span>
                   &nbsp;已收本金：<span style={{color: '#ff9900'}}>￥{`${this.state.receivePrincipal}`.fm()}</span>
-                  &nbsp;已收利息：<span style={{color: '#ff9900'}}>￥{`${this.state.receiveInterest}500`.fm()}</span>
+                  &nbsp;已收利息：<span style={{color: '#ff9900'}}>￥{`${this.state.receiveInterest}`.fm()}</span>
                 </span> : null} 
             </div> :
             <div className="rp_detail_time_div">
