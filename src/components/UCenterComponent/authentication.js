@@ -112,7 +112,7 @@ export default class Authentication extends React.Component {
                 <div className="info">
                   <div className="inp">
                     <Input placeholder="请输入真实姓名" onChange={this.updateRealName} />
-                    <img alt="真实姓名" src={require('../../assets/img/u186.png')} className="img1"/>
+                    <img alt="真实姓名" src={'https://zjb-test-1255741041.cos.ap-guangzhou.myqcloud.com/source/u186.png'} className="img1"/>
                     <span className="span_">|</span>
                   </div>
                   <div className="inp">
