@@ -2,7 +2,7 @@
 import React from 'react';
 import LeftMenu from '../../components/UCenterComponent/leftMenu';
 import '../../assets/ucenter/myinvitioncode.scss';
-import {Input,Button,Table} from 'antd';
+import {Button,Table} from 'antd';
 
 class MyInvitationCode extends React.Component {
     constructor(props) {

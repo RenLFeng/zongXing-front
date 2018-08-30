@@ -16,7 +16,7 @@ function initPage() {
 function bindEvent() {
     leftNav();
      //picView();
-    comment();
+    // comment();
 
     $('.pd-body2 .tnav>a').on('click', function () {
         let $t = $(this);
@@ -92,17 +92,7 @@ function timeClock() {
     setInterval(timer, 1000);
 }
 
-function comment() {
-    $('.cmt-box1,.cmt-list').on('input', '.put', function () {
-        let $t = $(this);
-        let len = 240 - $t.val().length;
-        if (len < 0) {
-            $t.val($t.val().substr(0, 240));
-            len = 0;
-        }
-        $t.next().find('em').html(len);
-    });
-}
+
 
 export function genzong() {
     if (av.genzong) return;
