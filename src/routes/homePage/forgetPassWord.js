@@ -43,6 +43,9 @@ export default class ForgetPassWord extends React.Component {
 
       message2:"",   //第二步是姓名提示
       meaasge3:"",   //第二步是身份证提示
+
+      fpsecondLoading:false,
+      sureLoading:false,
     };
     this.fp_getCodes = this.fp_getCodes.bind(this);
     this.checkPhoneNumber = this.checkPhoneNumber.bind(this);
@@ -96,8 +99,8 @@ export default class ForgetPassWord extends React.Component {
 
   //检验手机号是否存在
   async checkPhoneNumber() {
-    const phoneNum = this.state.firstPhone;
-    if (phoneNum.length === 0) {
+    const phoneNum = this.state.firstPhone ? this.state.firstPhone.trim() : '';
+    if (phoneNum&&phoneNum.length === 0) {
       this.setState({ prompt: '请输入手机号' });
       return;
     }
@@ -107,21 +110,20 @@ export default class ForgetPassWord extends React.Component {
       });
       return;
     } 
-    if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
-      const response = await phoneExist(phoneNum,0);
-      if (response.code !== 0) {
-        this.setState({
-          prompt: '',
-          phoneExist: true,
-          slider:true
-        });
-      } else {
-        this.setState({
-          phoneExist: false,
-          prompt: '',
-          silder:false
-        });
-      }
+    //0 投资用户
+    const response = await phoneExist(phoneNum,0);
+    if (response.code !== 0) {
+      this.setState({
+        prompt: '',
+        phoneExist: true,
+        slider:true
+      });
+    } else {
+      this.setState({
+        phoneExist: false,
+        prompt: '',
+        silder:false
+      });
     }
   }
 
@@ -144,25 +146,26 @@ export default class ForgetPassWord extends React.Component {
     // if (this.spanText.innerHTML === '验证通过！' && VER_PHONE.test(this.state.firstPhone)) {
       
     // }
-
+    if (this.state.nextLoading) {
+      return;
+    }
     this.setState({nextLoading:true})
     const response = await fp_getCode(this.state.firstPhone,0);
+    this.setState({nextLoading:false})
     if(response.code === 0){
       this.setState({
         whetherAuthentication:response.data.isCertification,
         flagPage: 'second',
-        currentNum: 1,  
-        nextLoading:false
+        currentNum: 1,
       })
     } else {
-      this.setState({nextLoading:false})
-      response.msg && message.error( response.msg)
+      response.msg && message.error(response.msg)
     }
   }
 
 infoCheck(){
-  const { realName} = this.state;
-  if(realName.length === 0){
+  const { realName } = this.state;
+  if(realName&&realName.trim().length === 0){
     this.setState({
       message2:'姓名不能为空'
     })
@@ -186,7 +189,7 @@ infoCheck(){
 
 infoCheck_(){
   const { idCard } = this.state;
-  if(idCard.length === 0){
+  if(idCard&&idCard.trim().length === 0){
     this.setState({
       message3:'身份证号不能为空'
     })
@@ -209,6 +212,9 @@ infoCheck_(){
   //获取验证码
   async fp_getCodes() {
     const { firstPhone ,realName ,idCard ,code} = this.state; 
+    if(this.state.authLoading){
+      return;
+    }
     let params = {
       mobile:firstPhone,
       realName:realName,
@@ -216,7 +222,7 @@ infoCheck_(){
       type:0
     }
     //发送验证码的时间存在本地
-    const sendTime = localStorage.getItem(params);
+    const sendTime = localStorage.getItem(firstPhone);
     if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME * 1000) {
       alert(`${AUTH_CODE_TIME}秒内仅能获取一次验证码，请稍后重试`);
       return;
@@ -224,12 +230,10 @@ infoCheck_(){
     this.setState({ authLoading: true, loading: true });
     try {
       const response = await f_getCode(params);
+      this.setState({loading: false })
       if (response.code === 0) {
         message.info('发送成功');
-        this.setState({
-          loading: false,
-        })
-        localStorage.setItem(params, new Date().getTime());
+        localStorage.setItem(firstPhone, new Date().getTime());
         //   //发送请求 按钮变不可点状态
         this.setState({ showAuthCode: false });
         //成功之后倒计时开始启动
@@ -242,7 +246,6 @@ infoCheck_(){
           }
         }, 1000);
       } else {
-        this.setState({loading: false })
         response.msg && message.error(response.msg)
       }
     } catch (e) {
@@ -266,7 +269,7 @@ infoCheck_(){
         message3: ''
       })
     }
-    if (this.state.code.length != 6) {
+    if (this.state.code&&this.state.code.trim().length != 6) {
       this.setState({
         code_prompt: '验证码长度为6位'
       })
@@ -283,7 +286,9 @@ infoCheck_(){
       idCard: this.state.idCard,
       type:0
     }
+    this.setState({fpsecondLoading:true})
     const response = await fp_checkInfo(params);
+    this.setState({fpsecondLoading:false})
     if (response.code === 0) {
       this.setState({
         flagPage: 'third',
@@ -319,15 +324,15 @@ infoCheck_(){
         message1: ''
       });
     }
-    this.setState({ authLoading: true });
-    const respondse = await changePassword({
+    this.setState({ sureLoading: true });
+    const response = await changePassword({
       loginName: this.state.firstPhone,
       password: this.state.password,
       type:0
     });
-    if (respondse.code === 0) {
+    this.setState({ sureLoading: false });
+    if (response.code === 0) {
       this.setState({
-        authLoading: false,
         password: '',
         message1: '',
         firstPhone: '',
@@ -336,21 +341,14 @@ infoCheck_(){
       });
       message.info("密码修改成功！");
     } else {
-      respondse.msg && message.error(respondse.msg);
+      response.msg && message.error(response.msg);
     }
   }
 
   changePassStatus(flag) {
-    if (flag === 'show') {
       this.setState({
-        show: false
+        show: flag
       })
-    }   
-    if (flag === 'hide') {
-      this.setState({
-        show: true
-      })
-    }
   }
 
 
@@ -450,9 +448,9 @@ infoCheck_(){
 
                   </div>
 
-                  <Button style={{ width: 329, marginTop:20, height: 43, fontSize: 18, }} type="primary" onClick={() => this.fp_checkInfos()}>下一步</Button>
+                  <Button style={{ width: 329, marginTop:20, height: 43, fontSize: 18, }} type="primary" onClick={() => this.fp_checkInfos()} loading={this.state.fpsecondLoading}>下一步</Button>
                 </div> :
-                (this.state.flagPage === 'third') ?
+                (this.state.flagPage === 'third') ?  
                   <div className="forget_form" style={{marginTop:130}}>
                     {/* 根据点击状态判断密码是否隐藏 */}
                     {this.state.show ?
@@ -461,18 +459,18 @@ infoCheck_(){
                         <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.message1}</p>
                         <i className="zjb zjb-mima img1" />
                         <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
-                        <i className="zjb zjb-mimakejian img2" onClick={() => { this.changePassStatus('show') }} />
+                        <i className="zjb zjb-mimakejian img2" onClick={() => { this.changePassStatus(false) }} />
                       </div> :
                        <div className="forget_third">
                        <Input placeholder="请输入新登录密码" className="ft_inp" value={password} onChange={(e) => { this.setState({ password: e.target.value }) }} type="password" />
                        <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.message1}</p>
                        <i className="zjb zjb-mima img1" />
                        <span style={{position:'absolute',top:'6px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
-                       <i  className="zjb zjb-htmal5icon08 img2"  onClick={() => { this.changePassStatus('hide') }} />
+                       <i  className="zjb zjb-htmal5icon08 img2"  onClick={() => { this.changePassStatus(true) }} />
                      </div> 
                     }
 
-                    <Button style={{ width: 329, marginTop: 84, height: 43, fontSize: 18 }} type="primary" onClick={() => this.changePassword()}>确认</Button>
+                    <Button style={{ width: 329, marginTop: 84, height: 43, fontSize: 18 }} type="primary" onClick={() => this.changePassword()} loading={this.state.sureLoading}>确认</Button>
                   </div> :
                   (this.state.flagPage === 'four') ?
                     <div className="forget_form4">

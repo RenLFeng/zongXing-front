@@ -320,15 +320,15 @@ export default class RealName extends React.Component {
         distribution: response.data.param,
         url: response.data,
       }, () => {
-        this.formId.submit();
         Modal.info({
           title: '提示',
           content: '请在新页面完成操作,可刷新页面查看结果',
           okText: '确定',
           onOk: () => {
-            this.getAuthorizationState();
+            // this.getAuthorizationState();
           },
         });
+        this.formId.submit();
       });
     } else {
       response.msg && message.error(response.msg);
@@ -584,9 +584,9 @@ export default class RealName extends React.Component {
                 </div>
               </div> : null}
               {safeData.userSecurityCenter.faccountBind ?
-                  <div className="fr uc-rbody" style={{ marginTop: '30px', padding: '0' }}>
-                    <div className="safeCenter">
-                      <div className="line">
+                  <div className="fr uc-rbody" style={{ marginTop: '30px', padding: '0px' }}>
+                    <div className="safeCenter" >
+                      <div className="lines_">
                         <div className="block1">
                         <i className={`zjb ${status.indexOf('3') !== -1?'zjb-duihao':'zjb-jinggao1'}`} style={{ color: `${status.indexOf('3') !== -1?'#4cc261':'#FFCB15'}`,fontSize:27}}></i> 
                           <span className="word" style={{lineHeight:'20px'}}>二次分配授权</span>
