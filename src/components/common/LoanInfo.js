@@ -434,7 +434,7 @@ class LoanInfo extends React.Component {
 		
 
 
-		   <form ref={ref => this.formId = ref} id="form1" name="form1" action={paymentObj.submitURL} method="post" >
+		   <form ref={ref => this.formId = ref} id="form1" name="form1" action={paymentObj.submitURL} method="post" target="_blank">
             <input id="Action" name="Action" value={paymentObj.action?paymentObj.action: ''} type="hidden" />
             <input id="ArrivalTime" name="ArrivalTime" value={paymentObj.arrivalTime?paymentObj.arrivalTime: ''} type="hidden" />
             <input id="LoanJsonList" name="LoanJsonList" value={paymentObj.loanJsonList} type="hidden" />

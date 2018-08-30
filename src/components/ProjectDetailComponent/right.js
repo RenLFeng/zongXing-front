@@ -4,10 +4,10 @@ import FormProject from './form-project';
 import Coupon from '../common/Coupon';
 import { connect } from 'dva';
 import moment from 'moment';
-import {getPersonalMoney, alreadyInvested, setProjectCollection} from '../../services/api';
+import CouponList from './proCoupon';
+import {getPersonalMoney, alreadyInvested, setProjectCollection,getSelfCoupon,getCompanyDiscount,getDiscount} from '../../services/api';
 import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
-
 @connect(()=>({}))
 export default class Right extends React.Component {
   constructor(props){
@@ -26,17 +26,19 @@ export default class Right extends React.Component {
       loading: false,  //我要投资loading
       Loading: false,  //已投资人数loading
       canPay: false,
-      coupons:[1,2,3]
+      infoList: [], // 优惠券数据结构
     };
     this.rate = 1;
     this.countDown = null;
   }
-
   componentDidMount() {
-  }
 
+  }
   componentWillReceiveProps(props) {
     if (this.props.projectDetail !== props.projectDetail) {
+    
+      this.getSelfCouponAjax(props.projectDetail.fpeoject_id);
+
       if (!this.countDown && this.props.projectDetail.fcollet_over_time) {
         this.countDown = setInterval(()=>this.countDownTime(), 1000);
       }
@@ -46,7 +48,38 @@ export default class Right extends React.Component {
   componentWillUnmount() {
     clearInterval(this.countDown);
   }
+// 右侧获取优惠券
+async getSelfCouponAjax(fid) {
+  const response = await getSelfCoupon(fid);
+  console.log(response);
+  if (response.code === 0) {
+    console.log(response);
+     this.setState({
+       infoList: response.data
+     });
+   } else {
+    //  response.msg && message.error(response.msg);
+   }
+ }
 
+ // 领取优惠券
+ async handlerBtnClick(data,fId) {
+  if (this.state.getLoading) {
+    return;
+  }
+  this.setState({getLoading: true});
+  const response = await getDiscount({couponId: data.couponId})
+  this.setState({getLoading: false});
+  if (response.code === 0) {
+    this.getSelfCouponAjax(fId);
+  } else {
+    if (response.msg === '用户未做权限验证') {
+      this.props.history.push('/index/login');
+      return;
+    }
+    response.msg && message.error(response.msg);
+  }
+}
   countDownTime() {
     if (this.props.projectDetail.fcollet_over_time) {
       let overTime = this.props.projectDetail.fcollet_over_time - new Date().getTime();
@@ -137,6 +170,7 @@ export default class Right extends React.Component {
   }
 
   async getData(page) {
+
     //调用子级方法
     // this.dataModal.getCityInvest_(this.props.projectDetail.fpeoject_id);
     // this.dataModal.getGender(this.props.projectDetail.fpeoject_id);
@@ -229,14 +263,18 @@ export default class Right extends React.Component {
           </div>
         </div>
         { this.props.onlyRead ? null :
-        <div className="box3 shadow" style={{padding:'0 10px'}}>
+        <div className="box3 shadow">
           <p className="tit">商家优惠券</p>
           <div className="coupon">
-            <ul style={{marginTop:'30px',listStyle:'none',paddingLeft:0}}>
-              <li style={{marginTop:'10px',listStyle:'none',padding:'10px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys3.png')} /></li>
-              <li style={{marginTop:'10px',listStyle:'none',padding:'10px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys1.png')} /></li>
-              <li style={{marginTop:'10px',listStyle:'none',padding:'10px'}}>  <img style={{width:'100%'}} className="big" src={require('../../assets/img/coupon/ys2.png')} /></li>
-            </ul>
+          {
+            this.state.infoList.length>0?
+            this.state.infoList.map((data,id)=> {
+              return (
+                    <CouponList key={id} data={data} handlerBtnClick={(data)=>this.handlerBtnClick(data,this.props.projectDetail.fpeoject_id)}/>           
+              );
+            }):<p style={{textAlign:'center',color:'#999'}}>敬请期待...</p>
+          }      
+            
             <p className="center bot2">
               {/* <Button 
                 className="btn2" loading={this.state.loading} disabled={this.props.projectDetail.fflag != 10} type="primary" style={{width: 130, height: 50}}
