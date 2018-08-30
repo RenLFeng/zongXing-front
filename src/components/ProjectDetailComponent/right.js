@@ -4,11 +4,10 @@ import FormProject from './form-project';
 import Coupon from '../common/Coupon';
 import { connect } from 'dva';
 import moment from 'moment';
-import CouponSmall from '../../components/common/CouponSmall';
+import CouponList from './proCoupon';
 import {getPersonalMoney, alreadyInvested, setProjectCollection,getSelfCoupon,getCompanyDiscount,getDiscount} from '../../services/api';
 import {message, Button, Modal} from 'antd';
 import Path from '../../common/pagePath';
-
 @connect(()=>({}))
 export default class Right extends React.Component {
   constructor(props){
@@ -27,29 +26,20 @@ export default class Right extends React.Component {
       loading: false,  //我要投资loading
       Loading: false,  //已投资人数loading
       canPay: false,
-
-      busType: null,
-      pageParam: {
-        pageCurrent: 1,
-        pageSize: 5,
-        total: 0
-      },
-      infoList: [], // 商家优惠数据结构
+      infoList: [], // 优惠数据结构
 
       coupons:[1,2,3]
     };
     this.rate = 1;
     this.countDown = null;
   }
-
   componentDidMount() {
-    this.getCompanyDiscountAjax();
-  }
 
+  }
   componentWillReceiveProps(props) {
     if (this.props.projectDetail !== props.projectDetail) {
-
-      // this.getSelfCouponAjax(props.projectDetail.fpeoject_id);
+    
+      this.getSelfCouponAjax(props.projectDetail.fpeoject_id);
 
       if (!this.countDown && this.props.projectDetail.fcollet_over_time) {
         this.countDown = setInterval(()=>this.countDownTime(), 1000);
@@ -61,37 +51,18 @@ export default class Right extends React.Component {
     clearInterval(this.countDown);
   }
 // 详情页获取优惠券
-// async getSelfCouponAjax(fid) {
-//   const response = await getSelfCoupon(fid);
-//   console.log(response);
-//   if (response.code === 0) {
-//     console.log(response);
-//      this.setState({
-//        infoList: response.data.infoList.couponList
-//      });
-//    } else {
-//      response.msg && message.error(response.msg);
-//    }
-//  }
-
- // 获取商家优惠
- async getCompanyDiscountAjax() {
-  const response = await getCompanyDiscount(
-    {
-      busType: this.state.busType,
-      pageParam: this.state.pageParam
-    }
-  );
-  this.setState({loading: false});
+async getSelfCouponAjax(fid) {
+  const response = await getSelfCoupon(fid);
+  console.log(response);
   if (response.code === 0) {
-   console.log(response);
-    this.setState({
-      infoList: response.data.infoList[0].couponList
-    });
-  } else {
-    response.msg && message.error(response.msg);
-  }
-}
+    console.log(response);
+     this.setState({
+       infoList: response.data
+     });
+   } else {
+    //  response.msg && message.error(response.msg);
+   }
+ }
 
  // 领取优惠券
  async handlerBtnClick(data,fId) {
@@ -99,7 +70,7 @@ export default class Right extends React.Component {
     return;
   }
   this.setState({getLoading: true});
-  const response = await getDiscount({couponId: data.coupon_id})
+  const response = await getDiscount({couponId: data.couponId})
   this.setState({getLoading: false});
   if (response.code === 0) {
     this.getSelfCouponAjax(fId);
@@ -298,10 +269,10 @@ export default class Right extends React.Component {
           <p className="tit">商家优惠券</p>
           <div className="coupon">
           {
-            this.state.infoList?
+            this.state.infoList.length>0?
             this.state.infoList.map((data,id)=> {
               return (
-                    <CouponSmall key={id} data={data} handlerBtnClick={(data)=>this.handlerBtnClick(data,this.props.projectDetail.fpeoject_id)}/>           
+                    <CouponList key={id} data={data} handlerBtnClick={(data)=>this.handlerBtnClick(data,this.props.projectDetail.fpeoject_id)}/>           
               );
             }):<p style={{textAlign:'center',color:'#999'}}>敬请期待...</p>
           }      
