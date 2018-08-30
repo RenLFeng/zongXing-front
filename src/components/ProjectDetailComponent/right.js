@@ -26,9 +26,7 @@ export default class Right extends React.Component {
       loading: false,  //我要投资loading
       Loading: false,  //已投资人数loading
       canPay: false,
-      infoList: [], // 优惠数据结构
-
-      coupons:[1,2,3]
+      infoList: [], // 优惠券数据结构
     };
     this.rate = 1;
     this.countDown = null;
@@ -50,7 +48,7 @@ export default class Right extends React.Component {
   componentWillUnmount() {
     clearInterval(this.countDown);
   }
-// 详情页获取优惠券
+// 右侧获取优惠券
 async getSelfCouponAjax(fid) {
   const response = await getSelfCoupon(fid);
   console.log(response);
