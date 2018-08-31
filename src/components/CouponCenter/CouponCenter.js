@@ -9,10 +9,8 @@ import {CouponService} from '../../services/api2.js';
 import {getLoginData} from  '../../services/api.js';
 import { Link } from 'dva/router';
 import { connect } from 'dva';
-@connect((state)=>({
-}))
 
-
+@connect((state)=>({}))
 export default class  CouponCenter extends React.Component {
   constructor(props) {
     super(props);

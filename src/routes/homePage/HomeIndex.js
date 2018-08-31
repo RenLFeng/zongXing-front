@@ -2,8 +2,6 @@ import React from 'react';
 import Banner from '../../components/HomePageComponent/banner2';
 import Company from '../../components/HomePageComponent/company';
 import Project from '../../components/HomePageComponent/project';
-import Invest from '../../components/HomePageComponent/invest';
-import Finance from '../../components/HomePageComponent/finance';
 import Tab3 from '../../components/HomePageComponent/tab3';
 import Path from '../../common/pagePath';
 import { startAnimate } from '../../assets/home/index';
