@@ -487,7 +487,6 @@ class CanvasCircle extends React.Component {
           status.status = 1;
         }
       }
-      console.log('this.state.list',this.state.list)
       arr.push(status);
       if (obj.iscurrent) {
         data.allMoney = obj.allMoney; // 总金额

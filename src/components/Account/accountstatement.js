@@ -84,6 +84,8 @@ export default class AccountStatement extends React.Component{
         if(this.state.activeCode==='0000'){
           this.setState({  
             infoList:res.data.resPage.infoList, 
+          },()=>{
+            console.log('this.state.infoList',this.state.infoList)
           }); 
         }else if(this.state.activeCode==='1201'){
           this.setState({  
@@ -364,6 +366,7 @@ export default class AccountStatement extends React.Component{
         filterReset: '重置',
         emptyText: '暂无数据',
       };
+     
     return(
       <div>
         <LeftMenu param={this.props}/>
@@ -385,12 +388,10 @@ export default class AccountStatement extends React.Component{
             {/* 总账 */}
             <div className={this.state.activeCode==='0000'?'':'hide'}>
               {
-                this.state.infoList.map((item,index)=>{
+                this.state.infoList.length > 0 ?
+                this.state.infoList && this.state.infoList.map((item,index)=>{
                   return <Statement key={index} showTitle={index==0} data={item}></Statement>
-                })
-              }
-              {
-                this.state.infoList.length===0?<span className='no-data'>暂无数据</span>:null
+                }) : <span className='no-data'>暂无数据</span>
               }
             </div>
             {this.state.activeCode !=='0000' ? <span>{this.state.amountText}: ￥{this.state.totalAmount}</span> : null}
@@ -412,7 +413,7 @@ export default class AccountStatement extends React.Component{
             </div>
              {/* 分页 */}
              {
-                Math.ceil(this.state.totalNum/this.state.pageSize)>1?
+                Math.ceil(this.state.totalNum/this.state.pageSize) > 1?
                 <div className='as-paging'>
                   <Pagination  current={this.state.pageCurrent} pageSize={this.state.pageSize} onChange={this.handlerPageChange} total={this.state.totalNum} />
                 </div>:null
