@@ -135,8 +135,6 @@ export default class ReceivePlan extends React.Component {
             }
           }]
         }
-      },()=>{
-        console.log('this.state.lastRepayBill',this.state.lastRepayBill)
       });
     } else {  
       response.msg && message.error(response.msg);
@@ -213,7 +211,6 @@ export default class ReceivePlan extends React.Component {
 
   render() { 
     let success = true;
-    console.log('this.state.lastRepayBill.length',this.state.lastRepayBill)
     return (
       <div>
         <LeftMenu param={this.props}/>
@@ -422,6 +419,7 @@ class ReceiveDetail extends React.Component {
           <div className="rp_detail_content" style={{padding:0}}>
             {/* 表格 */}
             {data.repayPlanByProjectInfoVos.map((data, index)=> {
+              console.log('data.repayPlanByProjectInfoVos',data.repayPlanByProjectInfoVos)
               return (
                 <div className="rp_detail_table_item" key={index}>
                   <div className="rp_detail_table_item_left">
@@ -489,12 +487,14 @@ class CanvasCircle extends React.Component {
           status.status = 1;
         }
       }
+      console.log('this.state.list',this.state.list)
       arr.push(status);
       if (obj.iscurrent) {
         data.allMoney = obj.allMoney; // 总金额
         data.principal = obj.principal; // 本金
         data.interest = obj.interest; // 利息
         data.kickBack = obj.kickBack; // 佣金
+        data.current = obj.sort; // 当前期数
       }
     } 
     data.total = this.state.list.length;
@@ -504,7 +504,7 @@ class CanvasCircle extends React.Component {
   initCircle(obj, arr) {
     const {width, height, data} = this.props;
     const {color} = this.state;
-    let current = obj.current; // 当前期数
+    let current =  obj.current; // 当前期数
     let sum = obj.total; // 总期数
     
     // 获取节点
