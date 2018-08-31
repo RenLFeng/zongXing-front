@@ -223,7 +223,7 @@ export default class ReceivePlan extends React.Component {
             <span className="rp_top_right">目前共有<span style={{color: '#ff9900'}}>{this.state.count}个</span>项目正在回款</span>
           </div>
           {this.state.lastRepayBill && this.state.lastRepayBill.length > 0 ? 
-            <div className="rp_current_plan" style={{height:auto}}>
+            <div className="rp_current_plan" style={{height:'auto'}}>
               <span className="rp_title">·<span style={{paddingLeft: '9px', fontSize: '18px', color: '#333', fontWeight: 'normal'}}>近期回款</span></span>
              {
                 this.state.lastRepayBill.map((data,index)=>{
