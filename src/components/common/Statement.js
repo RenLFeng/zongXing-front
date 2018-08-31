@@ -97,7 +97,7 @@ class Statement extends React.Component {
                     {
                         this.state.data.busType==='1405'?
                         <div className='sm-tz'>
-                            <p>{this.state.data.resultObj.periods}/{this.state.data.resultObj.totalPeriods}期回款</p> 
+                            <p>{this.state.data.resultObj ? this.state.data.resultObj.periods : ''}/{this.state.data.resultObj ? this.state.data.resultObj.totalPeriods : ''}期回款</p> 
                         </div>:null
                     }  
                    {
