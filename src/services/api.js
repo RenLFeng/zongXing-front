@@ -503,16 +503,6 @@ export async function closeAuthorization(num, companyNo, returnUrl) {
 export async function getIncomePlan(projectId, money) {
   return request(`${BASE_URL}/invRecord/getEarPlan?projectId=${projectId}&money=${money}`)
 }
- 
-//修改或删除企业列表信息
-export async function UpdataOrDele(params) {
-  return request(`${BASE_URL}/company/deleteOrUpdate`,{
-      method:'POST',
-      body: {
-        ...params
-      }
-    })
-}
 
 // 订单去付款接口
 export async function toPayment(param, returnUrl) {
@@ -551,7 +541,6 @@ export async function getInvest(param) {
 
 //回款计划
 export async function repayPlan(params) {
-
   return request(`${BASE_URL}/account/getRepayPlan`)
 }
 
@@ -761,7 +750,7 @@ export async function UpdatePass(param) {
   });
 }
 
-//
+//修改登陆密码
 export async function changePass(param) {
   return request(`${BASE_URL}/userInfo/verifyForPassword`, {
     method: 'POST',

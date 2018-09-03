@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../components/common/couponsmall.scss'
 import moment from 'moment';
+import {IMG_BASE_URL} from '../../common/systemParam';
 
 export default class CouponSmall extends React.Component {
     constructor(props) {
@@ -50,11 +51,11 @@ export default class CouponSmall extends React.Component {
     render() { 
         return ( 
             <div className={`small-coupon ${this.state.fflag_class}`}>
-                <div className='coupon-left'>
+                <div className='coupon-left' style={{width:239}}>
                     <p className='coupon-name'>{this.state.data.couponName||'优惠券名称'}</p>
                     <div className='coupon-money'>
                         <span className='t1'>￥</span>
-                        <span  className='t2'>{this.state.data.fullSubMoney||'0'}</span>
+                        <span  className='t2' style={{fontSize:40}}>{this.state.data.fullSubMoney||'0'}</span>
                         <div className='sub-money'> 
                             {
                                 this.state.fflag_class=='qsy'?
@@ -67,7 +68,7 @@ export default class CouponSmall extends React.Component {
                     <p className='coupon-time'>有效期：{this.state.data.endTime?moment(this.state.data.endTime).format('YYYY年MM月DD日'):'----年--月--日'}</p>
                 </div>
                 <div className='coupon-right' onClick={this.props.handlerBtnClick?()=>this.props.handlerBtnClick(this.state.data):()=>{}} style={this.props.handlerBtnClick?{cursor: 'pointer'}:null}>
-                    <img className={`logo ${this.props.onlyOne?'center':''}`} src={'http://zjb01-1255741041.picsh.myqcloud.com/'+this.state.logo}/>
+                    <img className={`logo ${this.props.onlyOne?'center':''}`} src={IMG_BASE_URL+this.state.data.logo} style={{width:70,height:70,margin:0}}/>
                    {
                         this.props.onlyOne?null:
                         <div className='text'>

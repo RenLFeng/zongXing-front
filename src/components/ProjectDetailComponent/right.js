@@ -72,6 +72,7 @@ async getSelfCouponAjax(fid) {
   this.setState({getLoading: false});
   if (response.code === 0) {
     this.getSelfCouponAjax(fId);
+    message.info('领取成功')
   } else {
     if (response.msg === '用户未做权限验证') {
       this.props.history.push('/index/login');
