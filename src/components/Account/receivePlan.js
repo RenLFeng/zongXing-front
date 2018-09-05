@@ -419,7 +419,6 @@ class ReceiveDetail extends React.Component {
           <div className="rp_detail_content" style={{padding:0}}>
             {/* 表格 */}
             {data.repayPlanByProjectInfoVos.map((data, index)=> {
-              console.log('data.repayPlanByProjectInfoVos',data.repayPlanByProjectInfoVos)
               return (
                 <div className="rp_detail_table_item" key={index}>
                   <div className="rp_detail_table_item_left">

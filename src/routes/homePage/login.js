@@ -93,7 +93,6 @@ export default class Login extends React.Component {
   }
 
   pressKey(e) {
-    console.log('e',e)
     if (e.keyCode === 13) {
       this.submitLogin();
     }

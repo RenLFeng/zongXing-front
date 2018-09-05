@@ -177,7 +177,7 @@ export default class SecTrack extends React.Component {
         </div>
         <div className="cmt-box1">
           <p className="f18">有什么疑问想告诉项目发起人的？</p>
-          <textarea className="put" rows="5" placeholder="输入您遇到的问题内容..." value={topicText} onChange={(e)=>this.setState({topicText: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value},()=>console.log('1111',this.state.topicText))}/>
+          <textarea className="put" rows="5" placeholder="输入您遇到的问题内容..." value={topicText} onChange={(e)=>this.setState({topicText: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value})}/>
           <p className="tright">
             <i className="fl c6">还可以输入<em>{this.state.topicText?`${240-this.state.topicText.length}`:'240'}</em>字</i>
             <label><input type="checkbox" checked={anonymous} onChange={()=>this.setState({anonymous: !anonymous})}/>匿名提问</label>

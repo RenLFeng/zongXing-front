@@ -40,7 +40,6 @@ export const accountService={
     getInvestmentRecordCount:async()=>req.get('/invRecord/MyInvRecord/count'),
     //获取投资回款明细
     getInvestmentPlan:async(param)=>req.get('/invRecord/MyInvRecord/plan',param),
-
     //安心签
     getDownload:async(param,params) => req.get(`cfca/inv/getDownloadPath?projectId=${param}&type=${params}`)
     

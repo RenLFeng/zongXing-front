@@ -79,7 +79,6 @@ export default class SecConsultation extends React.Component {
     const { topicText } = this.state;
     if (!this.judgeLogin())
       return;
-      console.log(topicText);
     if (!topicText) {
       message.warning('话题内容不能为空');
       return;
@@ -253,7 +252,7 @@ export default class SecConsultation extends React.Component {
             rows="5" 
             placeholder="输入您想跟大家交流的内容"
             value={topicText} 
-            onChange={(e)=>{console.log(e.target.value);this.setState({topicText: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value})}}
+            onChange={(e)=>{this.setState({topicText: e.target.value.length>240?e.target.value.substring(0, 240):e.target.value})}}
           />
           <p className="tright">
             <i className="fl c6">还可以输入<em>{this.state.topicText?`${240-this.state.topicText.length}`:'240'}</em>字</i>

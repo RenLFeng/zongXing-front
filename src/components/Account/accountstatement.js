@@ -84,8 +84,6 @@ export default class AccountStatement extends React.Component{
         if(this.state.activeCode==='0000'){
           this.setState({  
             infoList:res.data.resPage.infoList, 
-          },()=>{
-            console.log('this.state.infoList',this.state.infoList)
           }); 
         }else if(this.state.activeCode==='1201'){
           this.setState({  

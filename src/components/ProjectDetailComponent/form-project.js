@@ -29,6 +29,7 @@ export default class FormProject extends React.Component {
       code:'',
       Loading:false,
       showModal:true,
+      messages:''
     };
   }
 
@@ -122,14 +123,21 @@ export default class FormProject extends React.Component {
     this.setState({Loading:false})
     if(res.code === 0 ){
       message.info('验证码已发送')
-      this.setState({visible:true})
+      this.setState({
+        visible:true,
+        messages:'验证码已发送'
+      })
     } else if(res.code === 2 ){
       this.setState({
-        showModal:false
+        showModal:false,
+        messages:''
       },()=>{
         this.submit()
       }) 
     }else {
+      this.setState({
+        messages:''
+      })
       res.msg && message.error(res.msg)
     }
   }
@@ -360,6 +368,7 @@ export default class FormProject extends React.Component {
            <div>
                <span>验证码：</span>
                <Input style={{width:'30%'}} placeholder="请输入验证码" onChange={(e)=>this.onchange(e.target.value)} value={this.state.code} maxLength={6}/>
+               <p>{this.state.messages ? this.state.messages : ''}</p>
           </div> 
         </Modal>
       </div>

@@ -51,9 +51,7 @@ export default class Right extends React.Component {
 // 右侧获取优惠券
 async getSelfCouponAjax(fid) {
   const response = await getSelfCoupon(fid);
-  console.log(response);
   if (response.code === 0) {
-    console.log(response);
      this.setState({
        infoList: response.data
      });
